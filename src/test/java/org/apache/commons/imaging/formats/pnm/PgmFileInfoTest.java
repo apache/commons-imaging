@@ -25,14 +25,14 @@ import org.junit.jupiter.api.Test;
 public class PgmFileInfoTest {
 
     @Test
-    public void testCreateThrowsImageReadExceptionOne() throws ImageReadException {
+    public void testCreateThrowsImageReadExceptionOne() {
         Assertions.assertThrows(ImageReadException.class, () -> {
             new PgmFileInfo(16711680, 16711680, false, 16711680);
         });
     }
 
     @Test
-    public void testCreateThrowsImageReadExceptionTwo() throws ImageReadException {
+    public void testCreateThrowsImageReadExceptionTwo() {
         Assertions.assertThrows(ImageReadException.class, () -> {
             new PgmFileInfo(0, 0, true, 0);
         });

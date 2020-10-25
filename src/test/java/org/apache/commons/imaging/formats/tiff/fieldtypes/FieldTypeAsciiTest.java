@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
 public class FieldTypeAsciiTest {
 
   @Test
-  public void testCreatesFieldTypeAsciiAndCallsWriteData() throws ImageWriteException {
+  public void testCreatesFieldTypeAsciiAndCallsWriteData() {
       FieldTypeAscii fieldTypeAscii = new FieldTypeAscii(0, "1");
       byte[] byteArray = new byte[1];
       ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;

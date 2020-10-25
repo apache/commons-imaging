@@ -31,7 +31,7 @@ public class TiffOutputDirectoryTest {
     private TiffOutputDirectory directory;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         directory = new TiffOutputDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT, TiffConstants.DEFAULT_TIFF_BYTE_ORDER);
     }
 

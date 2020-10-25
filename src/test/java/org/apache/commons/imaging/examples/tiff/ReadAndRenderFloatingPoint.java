@@ -19,9 +19,10 @@ package org.apache.commons.imaging.examples.tiff;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.ByteOrder;
 import java.util.HashMap;
+
 import javax.imageio.ImageIO;
+
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;

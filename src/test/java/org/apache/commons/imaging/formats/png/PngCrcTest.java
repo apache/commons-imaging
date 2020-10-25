@@ -16,9 +16,9 @@
  */
 package org.apache.commons.imaging.formats.png;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests for class {@link PngCrc}.

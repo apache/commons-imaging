@@ -265,15 +265,14 @@ public final class T4AndT6Compression {
               entry.writeBits(outputStream);
               return a1;
 
-          } else {
-              final int a2 = nextChangingElement(codingLine, 1 - codingA0Color, a1 + 1);
-              final int a0a1 = a1 - a0;
-              final int a1a2 = a2 - a1;
-              T4_T6_Tables.H.writeBits(outputStream);
-              writeRunLength(outputStream, a0a1, codingA0Color);
-              writeRunLength(outputStream, a1a2, 1 - codingA0Color);
-              return a2;
           }
+        final int a2 = nextChangingElement(codingLine, 1 - codingA0Color, a1 + 1);
+          final int a0a1 = a1 - a0;
+          final int a1a2 = a2 - a1;
+          T4_T6_Tables.H.writeBits(outputStream);
+          writeRunLength(outputStream, a0a1, codingA0Color);
+          writeRunLength(outputStream, a1a2, 1 - codingA0Color);
+          return a2;
     }
     public static byte[] compressT4_2D(final byte[] uncompressed, final int width,
             final int height, final boolean hasFill, final int parameterK)

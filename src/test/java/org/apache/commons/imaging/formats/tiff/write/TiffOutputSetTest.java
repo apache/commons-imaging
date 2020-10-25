@@ -28,7 +28,7 @@ public class TiffOutputSetTest {
     private TiffOutputSet tiffOutputSet;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         tiffOutputSet = new TiffOutputSet();
     }
 

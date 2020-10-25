@@ -16,13 +16,13 @@
  */
 package org.apache.commons.imaging.formats.jpeg.segments;
 
-import org.apache.commons.imaging.ImageReadException;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import org.apache.commons.imaging.ImageReadException;
+import org.junit.jupiter.api.Test;
 
 public class JfifSegmentTest{
 

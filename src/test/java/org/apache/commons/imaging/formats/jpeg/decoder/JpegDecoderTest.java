@@ -18,7 +18,6 @@
 package org.apache.commons.imaging.formats.jpeg.decoder;
 
 import java.io.File;
-import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
@@ -32,12 +31,9 @@ public class JpegDecoderTest {
 
     /**
      * Test that a bad file does not hang or take too long to be processed.
-     *
-     * @throws IOException
-     * @throws ImageReadException
      */
     @Test
-    public void testDecodeBadFile() throws ImageReadException, IOException {
+    public void testDecodeBadFile() {
         // From IMAGING-220
         final File inputFile = new File(
                 JpegDecoderTest.class.getResource("/IMAGING-220/timeout-48eb4251935b4ca8b26d1859ea525c1b42ae0c78.jpeg")

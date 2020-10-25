@@ -35,7 +35,7 @@ public abstract class JpegBaseTest extends ImagingTest {
         return format == ImageFormats.JPEG;
     }
 
-    public static final ImageFilter imageFilter = file -> isJpeg(file);
+    public static final ImageFilter imageFilter = JpegBaseTest::isJpeg;
 
     protected static List<File> getJpegImages() throws IOException, ImageReadException {
         return getTestImages(imageFilter);

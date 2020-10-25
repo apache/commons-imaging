@@ -16,13 +16,13 @@
  */
 package org.apache.commons.imaging.color;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class ColorCieLabTest {
 
@@ -30,33 +30,33 @@ public class ColorCieLabTest {
     private ColorCieLab colorCopy;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         color = new ColorCieLab(1.0, 2.0, 3.0);
         colorCopy = new ColorCieLab(1.0, 2.0, 3.0);
     }
 
     @Test
-    public void testLAssignement() throws Exception {
+    public void testLAssignement() {
         assertEquals(1.0, color.L, 0.0);
     }
 
     @Test
-    public void testAAssignement() throws Exception {
+    public void testAAssignement() {
         assertEquals(2.0, color.a, 0.0);
     }
 
     @Test
-    public void testBAssignement() throws Exception {
+    public void testBAssignement() {
         assertEquals(3.0, color.b, 0.0);
     }
 
     @Test
-    public void testToString() throws Exception {
+    public void testToString() {
         assertEquals("{L: 1.0, a: 2.0, b: 3.0}", color.toString());
     }
 
     @Test
-    public void testHashCodeAndEquals() throws Exception {
+    public void testHashCodeAndEquals() {
         assertTrue(color.equals(colorCopy) && colorCopy.equals(color));
         assertThat(color.hashCode(), is(colorCopy.hashCode()));
     }

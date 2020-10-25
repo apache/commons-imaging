@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.palette;
 
 import java.util.List;
+
 import org.apache.commons.imaging.ImageWriteException;
 
 public class QuantizedPalette implements Palette {

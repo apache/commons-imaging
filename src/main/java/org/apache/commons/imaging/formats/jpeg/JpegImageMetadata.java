@@ -92,10 +92,8 @@ public class JpegImageMetadata implements ImageMetadata {
      * Returns the data of the first JPEG thumbnail found in the EXIF metadata.
      *
      * @return JPEG data or null if no thumbnail.
-     * @throws ImageReadException if it fails to read the image
-     * @throws IOException if an IO error occurred
      */
-    public byte[] getEXIFThumbnailData() throws ImageReadException, IOException {
+    public byte[] getEXIFThumbnailData() {
         if (exif == null) {
             return null;
         }

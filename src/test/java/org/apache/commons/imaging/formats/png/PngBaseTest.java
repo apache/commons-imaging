@@ -35,7 +35,7 @@ public abstract class PngBaseTest extends ImagingTest {
         return format == ImageFormats.PNG;
     }
 
-    private static final ImageFilter IMAGE_FILTER = file -> isPng(file);
+    private static final ImageFilter IMAGE_FILTER = PngBaseTest::isPng;
 
     protected List<File> getPngImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);

@@ -27,7 +27,7 @@ public abstract class XbmBaseTest extends ImagingTest {
         return file.getName().toLowerCase().endsWith(".xbm");
     }
 
-    private static final ImageFilter IMAGE_FILTER = file -> isXbm(file);
+    private static final ImageFilter IMAGE_FILTER = XbmBaseTest::isXbm;
 
     protected List<File> getXbmImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);

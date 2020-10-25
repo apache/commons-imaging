@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -54,12 +53,10 @@ public class IptcParserTest {
      *
      * @throws IOException when reading input
      * @throws ImageReadException when parsing file
-     * @throws NoSuchAlgorithmException 
-     *
      * @see https://www.adobe.com/devnet-apps/photoshop/fileformatashtml/
      */
     @Test
-    public void testSkipBlockTypes() throws ImageReadException, IOException, NoSuchAlgorithmException {
+    public void testSkipBlockTypes() throws ImageReadException, IOException {
         final String location = IptcParserTest.class
                 .getResource("/images/jpeg/photoshop/IMAGING-246/FallHarvestKitKat_07610.jpg")
                 .getFile();

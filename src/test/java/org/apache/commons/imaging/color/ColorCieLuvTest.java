@@ -30,33 +30,33 @@ public class ColorCieLuvTest {
     private ColorCieLuv colorCopy;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         color = new ColorCieLuv(1.0, 2.0, 3.0);
         colorCopy = new ColorCieLuv(1.0, 2.0, 3.0);
     }
 
     @Test
-    public void testLAssignment() throws Exception {
+    public void testLAssignment() {
         assertEquals(1.0, color.L, 0.0);
     }
 
     @Test
-    public void testUAssignment() throws Exception {
+    public void testUAssignment() {
         assertEquals(2.0, color.u, 0.0);
     }
 
     @Test
-    public void testVAssignment() throws Exception {
+    public void testVAssignment() {
         assertEquals(3.0, color.v, 0.0);
     }
 
     @Test
-    public void testToString() throws Exception {
+    public void testToString() {
         assertEquals("{L: 1.0, u: 2.0, v: 3.0}", color.toString());
     }
 
     @Test
-    public void testHashCodeAndEquals() throws Exception {
+    public void testHashCodeAndEquals() {
         assertTrue(color.equals(colorCopy) && colorCopy.equals(color));
         assertThat(color.hashCode(), is(colorCopy.hashCode()));
     }

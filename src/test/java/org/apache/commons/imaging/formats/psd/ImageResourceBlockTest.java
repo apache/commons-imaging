@@ -16,17 +16,16 @@
  */
 package org.apache.commons.imaging.formats.psd;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 public class ImageResourceBlockTest{
 
     @Test
-    public void testCreatesImageResourceBlockAndCallsGetName() throws UnsupportedEncodingException {
+    public void testCreatesImageResourceBlockAndCallsGetName() {
         final byte[] byteArray = new byte[3];
         final ImageResourceBlock imageResourceBlock = new ImageResourceBlock(0, byteArray, byteArray);
 

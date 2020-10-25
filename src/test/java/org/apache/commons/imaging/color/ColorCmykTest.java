@@ -30,38 +30,40 @@ public class ColorCmykTest {
     private ColorCmyk colorCopy;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         color = new ColorCmyk(1.0, 2.0, 3.0, 4.0);
         colorCopy = new ColorCmyk(1.0, 2.0, 3.0, 4.0);
     }
 
     @Test
-    public void testCAssignment() throws Exception {
+    public void testCAssignment() {
         assertEquals(1.0, color.C, 0.0);
     }
 
     @Test
-    public void testMAssignment() throws Exception {
+    public void testMAssignment() {
         assertEquals(2.0, color.M, 0.0);
     }
 
     @Test
-    public void testYAssignment() throws Exception {
+    public void testYAssignment() {
         assertEquals(3.0, color.Y, 0.0);
     }
 
+    /**
+     */
     @Test
-    public void testKAssignment() throws Exception {
+    public void testKAssignment() {
         assertEquals(4.0, color.K, 0.0);
     }
 
     @Test
-    public void testToString() throws Exception {
+    public void testToString() {
         assertEquals("{C: 1.0, M: 2.0, Y: 3.0, K: 4.0}", color.toString());
     }
 
     @Test
-    public void testHashCodeAndEquals() throws Exception {
+    public void testHashCodeAndEquals() {
         assertTrue(color.equals(colorCopy) && colorCopy.equals(color));
         assertThat(color.hashCode(), is(colorCopy.hashCode()));
     }

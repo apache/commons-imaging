@@ -16,11 +16,11 @@
  */
 package org.apache.commons.imaging.formats.gif;
 
-import org.apache.commons.imaging.common.ImageMetadata;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import org.apache.commons.imaging.common.ImageMetadata;
 
 public class GifImageMetadata implements ImageMetadata {
     private static final String NEWLINE = System.getProperty("line.separator");

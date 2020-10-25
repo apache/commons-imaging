@@ -16,9 +16,14 @@
  */
 package org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.awt.Color;
+
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Performs unit tests for palette entries based on single-value targets.

@@ -35,7 +35,7 @@ public abstract class PamBaseTest extends ImagingTest {
         return format == ImageFormats.PAM;
     }
 
-    private static final ImageFilter IMAGE_FILTER = file -> isPam(file);
+    private static final ImageFilter IMAGE_FILTER = PamBaseTest::isPam;
 
     protected List<File> getPamImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);

@@ -30,33 +30,33 @@ public class ColorHunterLabTest {
     private ColorHunterLab colorCopy;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         color = new ColorHunterLab(1.0, 2.0, 3.0);
         colorCopy = new ColorHunterLab(1.0, 2.0, 3.0);
     }
 
     @Test
-    public void testLAssignment() throws Exception {
+    public void testLAssignment() {
         assertEquals(1.0, color.L, 0.0);
     }
 
     @Test
-    public void testAAssignment() throws Exception {
+    public void testAAssignment() {
         assertEquals(2.0, color.a, 0.0);
     }
 
     @Test
-    public void testBAssignment() throws Exception {
+    public void testBAssignment() {
         assertEquals(3.0, color.b, 0.0);
     }
 
     @Test
-    public void testToString() throws Exception {
+    public void testToString() {
         assertEquals("{L: 1.0, a: 2.0, b: 3.0}", color.toString());
     }
 
     @Test
-    public void testHashCodeAndEquals() throws Exception {
+    public void testHashCodeAndEquals() {
         assertTrue(color.equals(colorCopy) && colorCopy.equals(color));
         assertThat(color.hashCode(), is(colorCopy.hashCode()));
     }

@@ -16,10 +16,10 @@
  */
 package org.apache.commons.imaging.formats.tiff.taginfos;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class TagInfoByteTest {
 

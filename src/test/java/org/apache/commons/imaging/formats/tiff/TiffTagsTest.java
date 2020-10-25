@@ -16,10 +16,10 @@
  */
 package org.apache.commons.imaging.formats.tiff;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TiffTagsTest{
 

@@ -16,12 +16,12 @@
  */
 package org.apache.commons.imaging.formats.tiff.taginfos;
 
-import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import java.nio.ByteOrder;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
+import org.junit.jupiter.api.Test;
 
 public class TagInfoSShortsTest{
 

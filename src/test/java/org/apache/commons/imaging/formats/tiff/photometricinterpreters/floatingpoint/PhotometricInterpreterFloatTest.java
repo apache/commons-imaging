@@ -16,16 +16,19 @@
  */
 package org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Provides a unit test for the TIFF photometric interpreter used for mapping
@@ -45,7 +48,7 @@ public class PhotometricInterpreterFloatTest {
     }
 
     @BeforeAll
-    public static void setUpClass() throws ImageWriteException, ImageReadException, IOException {
+    public static void setUpClass() throws ImageReadException, IOException {
         // the setup is to assign color (grayscale) values to the
         // pixels along the main diagonal at coordinates
         // (0, 0), (1, 1), ... (256, 256).
@@ -56,8 +59,8 @@ public class PhotometricInterpreterFloatTest {
         List<PaletteEntry> reverseList = new ArrayList<>();
         for (int i = 0; i < 256; i += 32) {
             int i1 = i + 31;
-            float f0 = (float) i / 256f;
-            float f1 = (float) (i + 32) / 256f;
+            float f0 = i / 256f;
+            float f1 = (i + 32) / 256f;
             int argb0 = 0xff000000 | (i << 8) | i;
             int argb1 = 0xff000000 | (i1 << 8) | i;
             Color c0 = new Color(argb0);
@@ -79,7 +82,7 @@ public class PhotometricInterpreterFloatTest {
         imageBuilder = new ImageBuilder(257, 257, false);
         int[] samples = new int[1];
         for (int i = 0; i <= 256; i++) {
-            float f = (float) i / 256f;
+            float f = i / 256f;
             samples[0] = Float.floatToRawIntBits(f);
             pInterp.interpretPixel(imageBuilder, samples, i, i);
         }
@@ -94,7 +97,7 @@ public class PhotometricInterpreterFloatTest {
         bandedInterp = new PhotometricInterpreterFloat(bandedPaletteList);
         bandedImageBuilder = new ImageBuilder(300, 200, false);
         for (int j = 0; j < 300; j++) {
-            float f = (float) j / 299.0f;
+            float f = j / 299.0f;
             samples[0] = Float.floatToRawIntBits(f);
             for (int i = 0; i < 200; i++) {
                 bandedInterp.interpretPixel(bandedImageBuilder, samples, j, i);
@@ -237,18 +240,18 @@ public class PhotometricInterpreterFloatTest {
         }
 
     }
-    
+
      /**
-     * Test of overlapping entries 
+     * Test of overlapping entries
      */
     @Test
-    public void testOverlappingEntriesEntry() throws ImageWriteException, ImageReadException, IOException  {
+    public void testOverlappingEntriesEntry() throws ImageReadException, IOException  {
         Color c0 = new Color(0xff0000ff);
         Color c1 = new Color(0xff00ff00);
         List<PaletteEntry> overlapList = new ArrayList<>();
         overlapList.add(new PaletteEntryForRange(0.0f, 1.0f, c0));
         overlapList.add(new PaletteEntryForRange(0.0f, 1.5f, c1));
-        
+
         PhotometricInterpreterFloat interpreter = new PhotometricInterpreterFloat(overlapList);
 
         imageBuilder = new ImageBuilder(257, 257, false);

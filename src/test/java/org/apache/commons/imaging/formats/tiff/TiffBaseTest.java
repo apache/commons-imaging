@@ -35,7 +35,7 @@ public abstract class TiffBaseTest extends ImagingTest {
         return format == ImageFormats.TIFF;
     }
 
-    private static final ImageFilter IMAGE_FILTER = file -> isTiff(file);
+    private static final ImageFilter IMAGE_FILTER = TiffBaseTest::isTiff;
 
     protected List<File> getTiffImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);

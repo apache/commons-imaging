@@ -16,12 +16,11 @@
  */
 package org.apache.commons.imaging.formats.png.chunks;
 
-import org.apache.commons.imaging.ImageReadException;
+import static org.apache.commons.imaging.common.BinaryFunctions.findNull;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-import static org.apache.commons.imaging.common.BinaryFunctions.findNull;
+import org.apache.commons.imaging.ImageReadException;
 
 public class PngChunkScal extends PngChunk {
    public final double unitsPerPixelXAxis;
@@ -29,7 +28,7 @@ public class PngChunkScal extends PngChunk {
    public final int unitSpecifier;
 
    public PngChunkScal(final int length, final int chunkType, final int crc, final byte[] bytes)
-         throws ImageReadException, IOException {
+         throws ImageReadException {
       super(length, chunkType, crc, bytes);
 
       unitSpecifier = bytes[0];

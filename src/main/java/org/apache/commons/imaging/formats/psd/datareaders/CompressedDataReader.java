@@ -28,8 +28,8 @@ import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.PackBits;
 import org.apache.commons.imaging.common.mylzw.BitsToByteInputStream;
 import org.apache.commons.imaging.common.mylzw.MyBitInputStream;
-import org.apache.commons.imaging.formats.psd.PsdImageContents;
 import org.apache.commons.imaging.formats.psd.PsdHeaderInfo;
+import org.apache.commons.imaging.formats.psd.PsdImageContents;
 import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
 
 public class CompressedDataReader implements DataReader {

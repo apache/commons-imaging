@@ -25,9 +25,9 @@ import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
-import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
+import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
@@ -424,10 +424,10 @@ public final class DataReaderStrips extends ImageDataReader {
                 bytesPerStrip, width, rowsInThisStrip);
 
             int[] blockData = unpackFloatingPointSamples(
-                width, (int) rowsInThisStrip, width,
+                width, rowsInThisStrip, width,
                 decompressed,
                 predictor, bitsPerPixel, byteOrder);
-            transferBlockToRaster(0, yStrip, width, (int) rowsInThisStrip, blockData,
+            transferBlockToRaster(0, yStrip, width, rowsInThisStrip, blockData,
                 xRaster, yRaster, rasterWidth, rasterHeight, rasterData);
         }
         return new TiffRasterData(rasterWidth, rasterHeight, rasterData);

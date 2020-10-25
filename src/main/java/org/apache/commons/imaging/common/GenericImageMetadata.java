@@ -92,9 +92,8 @@ public class GenericImageMetadata implements ImageMetadata {
             final String result = keyword + ": " + text;
             if (null != prefix) {
                 return prefix + result;
-            } else {
-                return result;
             }
+            return result;
         }
     }
 

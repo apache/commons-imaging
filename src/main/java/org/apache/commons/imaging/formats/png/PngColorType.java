@@ -77,9 +77,8 @@ public enum PngColorType {
         if (grayscale) {
             if (alpha) {
                 return PngColorType.GREYSCALE_WITH_ALPHA;
-            } else {
-                return PngColorType.GREYSCALE;
             }
+            return PngColorType.GREYSCALE;
         } else if (alpha) {
             return PngColorType.TRUE_COLOR_WITH_ALPHA;
         } else {

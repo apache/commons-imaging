@@ -16,8 +16,11 @@
  */
 package org.apache.commons.imaging.formats.tiff;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Provides unit test for the raster-data class.
@@ -54,7 +57,7 @@ public class TiffRasterDataTest {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int index = y * width + height;
-                instance.setValue(x, y, (float) index);
+                instance.setValue(x, y, index);
                 int test = (int) instance.getValue(x, y);
                 assertEquals(index, test, "Set/get value test failed");
             }
@@ -122,8 +125,8 @@ public class TiffRasterDataTest {
         float[] result = raster.getData();
         assertArrayEquals(data, result);
     }
-    
-    
+
+
      /**
      * Test of constructors with bad arguments, of class TiffRasterData.
      */
@@ -163,13 +166,13 @@ public class TiffRasterDataTest {
             // success!
         }
     }
-    
+
     /**
      * Test of access with bad coordinates, of class TiffRasterData.
      */
     @Test
     public void testBadCoordinates() {
-        
+
         try{
             float []f = new float[100];
             TiffRasterData raster = new TiffRasterData(10, 10, f);

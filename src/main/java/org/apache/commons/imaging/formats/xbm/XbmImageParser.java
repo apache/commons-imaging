@@ -179,15 +179,12 @@ public class XbmImageParser extends ImageParser {
             if (value.length() >= 2) {
                 if (value.charAt(1) == 'x' || value.charAt(1) == 'X') {
                     return Integer.parseInt(value.substring(2), 16);
-                } else {
-                    return Integer.parseInt(value.substring(1), 8);
                 }
-            } else {
-                return 0;
+                return Integer.parseInt(value.substring(1), 8);
             }
-        } else {
-            return Integer.parseInt(value);
+            return 0;
         }
+        return Integer.parseInt(value);
     }
 
     private BufferedImage readXbmImage(final XbmHeader xbmHeader, final BasicCParser cParser)

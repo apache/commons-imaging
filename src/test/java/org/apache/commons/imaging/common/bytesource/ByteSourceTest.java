@@ -16,13 +16,18 @@
  */
 package org.apache.commons.imaging.common.bytesource;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
 import org.apache.commons.imaging.ImagingTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.io.*;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public abstract class ByteSourceTest extends ImagingTest {
     protected File createTempFile(final byte src[]) throws IOException {
@@ -66,7 +71,7 @@ public abstract class ByteSourceTest extends ImagingTest {
     }
 
     @Test
-    public void testGetInputStreamThrowsNullPointerException() throws IOException {
+    public void testGetInputStreamThrowsNullPointerException() {
         final ByteSourceArray byteSourceArray = new ByteSourceArray(null);
 
         Assertions.assertThrows(NullPointerException.class, () -> {

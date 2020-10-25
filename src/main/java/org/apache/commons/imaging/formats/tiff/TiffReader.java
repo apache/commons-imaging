@@ -179,10 +179,9 @@ public class TiffReader extends BinaryFileParser {
                                             + "of length " + valueLength + " "
                                             + "which is outside the file's size of "
                                             + byteSource.getLength());
-                        } else {
-                            // corrupt field, ignore it
-                            continue;
                         }
+                        // corrupt field, ignore it
+                        continue;
                     }
                     value = byteSource.getBlock(offset, (int) valueLength);
                 } else {
@@ -463,21 +462,20 @@ public class TiffReader extends BinaryFileParser {
             }
 
             return new TiffImageData.Strips(data, rowsPerStrip);
-        } else {
-            final TiffField tileWidthField = directory.findField(TiffTagConstants.TIFF_TAG_TILE_WIDTH);
-            if (null == tileWidthField) {
-                throw new ImageReadException("Can't find tile width field.");
-            }
-            final int tileWidth = tileWidthField.getIntValue();
-
-            final TiffField tileLengthField = directory.findField(TiffTagConstants.TIFF_TAG_TILE_LENGTH);
-            if (null == tileLengthField) {
-                throw new ImageReadException("Can't find tile length field.");
-            }
-            final int tileLength = tileLengthField.getIntValue();
-
-            return new TiffImageData.Tiles(data, tileWidth, tileLength);
         }
+        final TiffField tileWidthField = directory.findField(TiffTagConstants.TIFF_TAG_TILE_WIDTH);
+        if (null == tileWidthField) {
+            throw new ImageReadException("Can't find tile width field.");
+        }
+        final int tileWidth = tileWidthField.getIntValue();
+
+        final TiffField tileLengthField = directory.findField(TiffTagConstants.TIFF_TAG_TILE_LENGTH);
+        if (null == tileLengthField) {
+            throw new ImageReadException("Can't find tile length field.");
+        }
+        final int tileLength = tileLengthField.getIntValue();
+
+        return new TiffImageData.Tiles(data, tileWidth, tileLength);
     }
 
     private JpegImageData getJpegRawImageData(final ByteSource byteSource,

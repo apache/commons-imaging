@@ -17,6 +17,9 @@
 
 package org.apache.commons.imaging.formats.png;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
@@ -27,9 +30,6 @@ import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class PngReadTest extends PngBaseTest {
 

@@ -18,7 +18,6 @@
 package org.apache.commons.imaging.formats.png;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,12 +37,9 @@ public class PngWithInvalidPngChunkSizeTest {
 	/**
 	 * Test that an image with an invalid PNG chunk size causes an
 	 * ImageReadException instead of other exception types.
-	 *
-	 * @throws IOException        if it fails to read from the input source
-	 * @throws ImageReadException if it fails to read the image
 	 */
 	@Test
-	public void testPngWithInvalidPngChunkSize() throws IOException, ImageReadException {
+	public void testPngWithInvalidPngChunkSize() {
 		final File imageFile = new File(
 				JpegWithInvalidDhtSegmentTest.class.getResource("/IMAGING-211/testfile_2.png").getFile());
 		final Map<String, Object> params = new HashMap<>();
@@ -56,12 +52,9 @@ public class PngWithInvalidPngChunkSizeTest {
 	/**
      * Test that an image with an invalid negative PNG chunk size causes an
      * ImageReadException instead of other exception types.
-     *
-     * @throws IOException        if it fails to read from the input source
-     * @throws ImageReadException if it fails to read the image
      */
     @Test
-    public void testPngWithInvalidNegativePngChunkSize() throws IOException, ImageReadException {
+    public void testPngWithInvalidNegativePngChunkSize() {
         final File imageFile = new File(
                 JpegWithInvalidDhtSegmentTest.class.getResource("/IMAGING-210/testfile.png").getFile());
         final Map<String, Object> params = new HashMap<>();

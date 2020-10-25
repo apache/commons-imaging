@@ -104,7 +104,7 @@ public final class MyLzwDecompressor {
         return bytes[0];
     }
 
-    private void addStringToTable(final byte[] bytes) throws IOException {
+    private void addStringToTable(final byte[] bytes) {
         if (codes < (1 << codeSize)) {
             table[codes] = bytes;
             codes++;

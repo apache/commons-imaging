@@ -16,12 +16,12 @@
  */
 package org.apache.commons.imaging.formats.png.scanlinefilters;
 
-import org.apache.commons.imaging.ImageReadException;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import org.apache.commons.imaging.ImageReadException;
+import org.junit.jupiter.api.Test;
 
 public class ScanlineFilterPaethTest{
 

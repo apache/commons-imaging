@@ -25,8 +25,8 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.mylzw.BitsToByteInputStream;
 import org.apache.commons.imaging.common.mylzw.MyBitInputStream;
-import org.apache.commons.imaging.formats.psd.PsdImageContents;
 import org.apache.commons.imaging.formats.psd.PsdHeaderInfo;
+import org.apache.commons.imaging.formats.psd.PsdImageContents;
 import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
 
 public class UncompressedDataReader implements DataReader {

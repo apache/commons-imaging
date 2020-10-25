@@ -16,6 +16,10 @@
  */
 package org.apache.commons.imaging.formats.tiff;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -24,7 +28,6 @@ import java.io.IOException;
 import java.nio.ByteOrder;
 import java.nio.file.Path;
 import java.util.HashMap;
-import javax.imageio.ImageIO;
 
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
@@ -37,10 +40,6 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingp
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -330,7 +329,7 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
             int rowInBlock = i - blockRow * nRowsInBlock;
             int blockOffset = rowInBlock * nColsInBlock;
             for (int j = 0; j < width; j++) {
-                long sample = Double.doubleToRawLongBits((double) f[i * width + j]);
+                long sample = Double.doubleToRawLongBits(f[i * width + j]);
                 int blockCol = j / nColsInBlock;
                 int colInBlock = j - blockCol * nColsInBlock;
                 int index = blockOffset + colInBlock;

@@ -296,7 +296,7 @@ public class ExifRewriteTest extends ExifBaseTest {
         final Map<Integer,TiffImageMetadata.Directory> oldDirectoryMap = makeDirectoryMap(oldDirectories);
         final Map<Integer,TiffImageMetadata.Directory> newDirectoryMap = makeDirectoryMap(newDirectories);
 
-        assertEquals(oldDirectories.size(), oldDirectoryMap.keySet().size());
+        assertEquals(oldDirectories.size(), oldDirectoryMap.size());
         final List<Integer> oldDirectoryTypes = new ArrayList<>(oldDirectoryMap.keySet());
         Collections.sort(oldDirectoryTypes);
         final List<Integer> newDirectoryTypes = new ArrayList<>(newDirectoryMap.keySet());
@@ -328,7 +328,7 @@ public class ExifRewriteTest extends ExifBaseTest {
             assertTrue(missingInNew.size() == 0);
             assertTrue(missingInOld.size() == 0);
 
-            assertEquals(oldItems.size(), oldFieldMap.keySet().size());
+            assertEquals(oldItems.size(), oldFieldMap.size());
             assertEquals(oldFieldMap.keySet(), newFieldMap.keySet());
             assertEquals(oldFieldMap.keySet(), newFieldMap.keySet());
 

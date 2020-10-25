@@ -19,8 +19,8 @@ package org.apache.commons.imaging.formats.psd.dataparsers;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 
-import org.apache.commons.imaging.formats.psd.PsdImageContents;
 import org.apache.commons.imaging.formats.psd.PsdHeaderInfo;
+import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
 public abstract class DataParser {
     public final void parseData(final int[][][] data, final BufferedImage bi,

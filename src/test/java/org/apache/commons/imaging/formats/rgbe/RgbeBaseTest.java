@@ -33,7 +33,7 @@ public abstract class RgbeBaseTest extends ImagingTest {
         return format == ImageFormats.RGBE;
     }
 
-    private static final ImageFilter IMAGE_FILTER = file -> isRgbe(file);
+    private static final ImageFilter IMAGE_FILTER = RgbeBaseTest::isRgbe;
 
     protected List<File> getRgbeImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);

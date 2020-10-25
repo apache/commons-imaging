@@ -112,7 +112,7 @@ class PcxWriter {
     }
 
     public void writeImage(final BufferedImage src, final OutputStream os)
-            throws ImageWriteException, IOException {
+            throws IOException {
         final PaletteFactory paletteFactory = new PaletteFactory();
         final SimplePalette palette = paletteFactory.makeExactRgbPaletteSimple(src, 256);
         final BinaryOutputStream bos = new BinaryOutputStream(os,
@@ -235,7 +235,7 @@ class PcxWriter {
     }
 
     private void writePixels(final BufferedImage src, final int bitDepth, final int planes,
-            final int bytesPerLine, final SimplePalette palette, final BinaryOutputStream bos) throws IOException, ImageWriteException {
+            final int bytesPerLine, final SimplePalette palette, final BinaryOutputStream bos) throws IOException {
         final byte[] plane0 = new byte[bytesPerLine];
         final byte[] plane1 = new byte[bytesPerLine];
         final byte[] plane2 = new byte[bytesPerLine];
@@ -317,7 +317,7 @@ class PcxWriter {
     }
 
     private void writePixels32(final BufferedImage src, final int bytesPerLine,
-            final BinaryOutputStream bos) throws IOException, ImageWriteException {
+            final BinaryOutputStream bos) throws IOException {
 
         final int[] rgbs = new int[src.getWidth()];
         final byte[] plane = new byte[4 * bytesPerLine];

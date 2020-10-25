@@ -31,7 +31,7 @@ public abstract class IcoBaseTest extends ImagingTest {
                 || file.getName().toLowerCase().endsWith(".cur");
     }
 
-    private static final ImageFilter IMAGE_FILTER = file -> isIco(file);
+    private static final ImageFilter IMAGE_FILTER = IcoBaseTest::isIco;
 
     protected static List<File> getIcoImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);

@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+
 import org.apache.commons.imaging.ImageReadException;
 
 /**
@@ -147,9 +148,8 @@ public class SurveyTiffFolder {
             // so order the entries so that the shortest array goes first
             if (a.length < b.length) {
                 return -1;
-            } else {
-                return 1;
             }
+            return 1;
         }
 
         private boolean isNumeric(String a) {

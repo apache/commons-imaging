@@ -35,7 +35,7 @@ public abstract class DcxBaseTest extends ImagingTest {
         return format == ImageFormats.DCX;
     }
 
-    private static final ImageFilter IMAGE_FILTER = file -> isDcx(file);
+    private static final ImageFilter IMAGE_FILTER = DcxBaseTest::isDcx;
 
     protected static List<File> getDcxImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);

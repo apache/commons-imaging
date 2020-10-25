@@ -27,7 +27,7 @@ public abstract class XpmBaseTest extends ImagingTest {
         return file.getName().toLowerCase().endsWith(".xpm");
     }
 
-    private static final ImageFilter IMAGE_FILTER = file -> isXpm(file);
+    private static final ImageFilter IMAGE_FILTER = XpmBaseTest::isXpm;
 
     protected List<File> getXpmImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);

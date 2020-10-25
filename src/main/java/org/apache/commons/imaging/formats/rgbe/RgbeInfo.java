@@ -26,8 +26,8 @@ import java.util.regex.Pattern;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.ByteConversions;
-import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.GenericImageMetadata;
+import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 
 class RgbeInfo implements Closeable {

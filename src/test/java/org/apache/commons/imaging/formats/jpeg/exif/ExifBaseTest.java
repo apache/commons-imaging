@@ -42,7 +42,7 @@ public abstract class ExifBaseTest extends ImagingTest {
         }
     }
 
-    private static final ImageFilter HAS_EXIF_IMAGE_FILTER = file -> hasExifData(file);
+    private static final ImageFilter HAS_EXIF_IMAGE_FILTER = ExifBaseTest::hasExifData;
 
     private static final ImageFilter JPEG_IMAGE_FILTER = file -> file.getName().toLowerCase().endsWith(".jpg");
 

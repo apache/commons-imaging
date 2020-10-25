@@ -17,6 +17,8 @@
 
 package org.apache.commons.imaging.roundtrip;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Arrays;
@@ -30,8 +32,6 @@ import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.PixelDensity;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PixelDensityRoundtrip extends RoundtripBase {
 

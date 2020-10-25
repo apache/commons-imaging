@@ -36,7 +36,7 @@ import org.junit.jupiter.api.Test;
 
 public class TiffSubImageTest extends TiffBaseTest {
     final List<File> imageFileList;
-    
+
     TiffSubImageTest() throws IOException, ImageReadException{
         imageFileList = getTiffImages();
     }
@@ -55,24 +55,24 @@ public class TiffSubImageTest extends TiffBaseTest {
         assertEquals(image.getWidth(), 2);
         assertEquals(image.getHeight(), 3);
     }
-    
+
     @Test
     public void testBadSubImage()  throws ImageReadException, IOException{
         File target = imageFileList.get(0);
         final BufferedImage referenceImage = Imaging.getBufferedImage(target);
         int width = referenceImage.getWidth();
         int height = referenceImage.getHeight();
-        
+
         final Map<String, Object> params = new HashMap<>();
         params.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, 0);
         params.put(TiffConstants.PARAM_KEY_SUBIMAGE_Y, 0);
         params.put(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, width);
         params.put(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, height);
-        
+
         BufferedImage image = Imaging.getBufferedImage(target, params);
         assertEquals(image.getWidth(), width, "Improper width when sub-imaging entire image");
         assertEquals(image.getHeight(), height, "Improper height when sub-imaging entire image");
-        
+
         processBadParams(target, -1, 0, width, height, "negative x position");
         processBadParams(target, 0, -1, width, height, "negative y position");
         processBadParams(target, 0, 0, 0, height, "zero width");
@@ -80,7 +80,7 @@ public class TiffSubImageTest extends TiffBaseTest {
         processBadParams(target, 1, 0, width, height, "sub-image width extends beyond bounds");
         processBadParams(target, 0, 1, width, height, "sub-image height extends beyond bounds");
     }
-        
+
     private void processBadParams(File target, int x, int y, int width, int height, String comment) throws IOException{
         try{
             final Map<String, Object> params = new HashMap<>();
@@ -94,7 +94,7 @@ public class TiffSubImageTest extends TiffBaseTest {
             // the test passed
         }
     }
-    
+
     @Test
     public void testSubImageCorrectness() throws ImageReadException, IOException {
         for(File target: imageFileList){
@@ -127,6 +127,6 @@ public class TiffSubImageTest extends TiffBaseTest {
             }
         }
     }
-    
-     
+
+
 }

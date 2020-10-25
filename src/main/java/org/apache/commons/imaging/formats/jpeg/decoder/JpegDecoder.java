@@ -15,6 +15,9 @@
 
 package org.apache.commons.imaging.formats.jpeg.decoder;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.read2Bytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
+
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.DataBuffer;
@@ -38,9 +41,6 @@ import org.apache.commons.imaging.formats.jpeg.segments.DhtSegment;
 import org.apache.commons.imaging.formats.jpeg.segments.DqtSegment;
 import org.apache.commons.imaging.formats.jpeg.segments.SofnSegment;
 import org.apache.commons.imaging.formats.jpeg.segments.SosSegment;
-
-import static org.apache.commons.imaging.common.BinaryFunctions.read2Bytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
 
 public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
     /*
@@ -337,7 +337,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
     }
 
     private void readMCU(final JpegInputStream is, final int[] preds, final Block[] mcu)
-            throws IOException, ImageReadException {
+            throws ImageReadException {
         for (int i = 0; i < sosSegment.numberOfComponents; i++) {
             final SosSegment.Component scanComponent = sosSegment.getComponents(i);
             SofnSegment.Component frameComponent = null;
@@ -388,9 +388,8 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
 
                             if (k == 63) {
                                 break;
-                            } else {
-                                k++;
                             }
+                            k++;
                         }
                     }
 
@@ -465,7 +464,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
      * @return the start positions
      */
     static List<Integer> getIntervalStartPositions(final int[] scanPayload) {
-        final List<Integer> intervalStarts = new ArrayList<Integer>();
+        final List<Integer> intervalStarts = new ArrayList<>();
         intervalStarts.add(0);
         boolean foundFF = false;
         boolean foundD0toD7 = false;
@@ -511,8 +510,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
         return v;
     }
 
-    private int receive(final int ssss, final JpegInputStream is) throws IOException,
-            ImageReadException {
+    private int receive(final int ssss, final JpegInputStream is) throws ImageReadException {
         // "RECEIVE", section F.2.2.4, figure F.17, page 110 of T.81
         int i = 0;
         int v = 0;
@@ -524,7 +522,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
     }
 
     private int decode(final JpegInputStream is, final DhtSegment.HuffmanTable huffmanTable)
-            throws IOException, ImageReadException {
+            throws ImageReadException {
         // "DECODE", section F.2.2.3, figure F.16, page 109 of T.81
         int i = 1;
         int code = is.nextBit();

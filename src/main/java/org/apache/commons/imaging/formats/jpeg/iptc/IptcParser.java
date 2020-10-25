@@ -142,8 +142,7 @@ public class IptcParser extends BinaryFileParser {
         return new PhotoshopApp13Data(records, blocks);
     }
 
-    protected List<IptcRecord> parseIPTCBlock(final byte[] bytes)
-            throws IOException {
+    protected List<IptcRecord> parseIPTCBlock(final byte[] bytes) {
         final List<IptcRecord> elements = new ArrayList<>();
 
         int index = 0;

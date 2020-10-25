@@ -16,11 +16,11 @@
  */
 package org.apache.commons.imaging.common.itu_t4;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 public class T4_T6_TablesTest{
 

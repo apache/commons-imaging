@@ -16,17 +16,6 @@
  */
 package org.apache.commons.imaging.examples.tiff;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.util.Formatter;
-import org.apache.commons.imaging.FormatCompliance;
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
-import org.apache.commons.imaging.formats.tiff.TiffContents;
-import org.apache.commons.imaging.formats.tiff.TiffDirectory;
-import org.apache.commons.imaging.formats.tiff.TiffField;
-import org.apache.commons.imaging.formats.tiff.TiffReader;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_1D;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_4;
@@ -36,6 +25,19 @@ import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TI
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_PACKBITS;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED_1;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Formatter;
+
+import org.apache.commons.imaging.FormatCompliance;
+import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.formats.tiff.TiffContents;
+import org.apache.commons.imaging.formats.tiff.TiffDirectory;
+import org.apache.commons.imaging.formats.tiff.TiffField;
+import org.apache.commons.imaging.formats.tiff.TiffReader;
 import org.apache.commons.imaging.formats.tiff.constants.TiffEpTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
@@ -323,9 +325,8 @@ public class SurveyTiffFile {
 
         if (planarConfiguration == TiffPlanarConfiguration.CHUNKY) {
             return "Chunky";
-        } else {
-            return "Planar";
         }
+        return "Planar";
     }
 
     /**
@@ -356,9 +357,8 @@ public class SurveyTiffFile {
             + "Predict  Data_Fmt   B/P B/S      Photo     ICC_Pro");
         if (csv) {
             return reformatHeaderForCsv(header);
-        } else {
-            return header;
         }
+        return header;
     }
 
     /**

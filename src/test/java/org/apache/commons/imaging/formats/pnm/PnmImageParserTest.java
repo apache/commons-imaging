@@ -16,6 +16,10 @@
  */
 package org.apache.commons.imaging.formats.pnm;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.IOException;
@@ -32,10 +36,6 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PnmImageParserTest {
 
@@ -82,7 +82,7 @@ public class PnmImageParserTest {
      * {@link NumberFormatException}.
      */
     @Test
-    public void testGetImageInfo_invalidWidth() throws ImageReadException, IOException {
+    public void testGetImageInfo_invalidWidth() {
         final byte[] bytes = "P1\na 2\n0 0 0 0 0 0 0 0 0 0 0\n1 1 1 1 1 1 1 1 1 1 1\n".getBytes(US_ASCII);
         final Map<String, Object> params = Collections.emptyMap();
         final PnmImageParser underTest = new PnmImageParser();
@@ -92,7 +92,7 @@ public class PnmImageParserTest {
     }
 
     @Test
-    public void testGetImageInfo_invalidHeight() throws ImageReadException, IOException {
+    public void testGetImageInfo_invalidHeight() {
         final byte[] bytes = "P1\n2 a\n0 0\n0 0\n0 0\n0 0\n0 0\n0 1\n1 1\n1 1\n1 1\n1 1\n1 1\n".getBytes(US_ASCII);
         final Map<String, Object> params = Collections.emptyMap();
         final PnmImageParser underTest = new PnmImageParser();
@@ -102,7 +102,7 @@ public class PnmImageParserTest {
     }
 
     @Test
-    public void testGetImageInfo_missingWidthValue() throws ImageReadException, IOException {
+    public void testGetImageInfo_missingWidthValue() {
         final byte[] bytes = "P7\nWIDTH \n".getBytes(US_ASCII);
         final Map<String, Object> params = Collections.emptyMap();
         final PnmImageParser underTest = new PnmImageParser();

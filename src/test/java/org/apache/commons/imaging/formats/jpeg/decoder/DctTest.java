@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
 public class DctTest {
 
     @Test
-    public void testVectors() throws Exception {
+    public void testVectors() {
         final float[] originalData = new float[8];
         for (int i = 0; i < 8; i++) {
             originalData[i] = i;
@@ -51,7 +51,7 @@ public class DctTest {
     }
 
     @Test
-    public void testMatrices() throws Exception {
+    public void testMatrices() {
         final float[] originalData = new float[8 * 8];
         final float[][] originalData8x8 = new float[8][8];
         for (int y = 0; y < 8; y++) {

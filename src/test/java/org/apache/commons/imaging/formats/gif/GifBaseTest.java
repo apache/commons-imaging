@@ -51,7 +51,7 @@ public abstract class GifBaseTest extends ImagingTest {
         return type.getName().equals(SINGLE_IMAGE_FOLDER_NAME);
     }
 
-    private static final ImageFilter IMAGE_FILTER = file -> isGif(file);
+    private static final ImageFilter IMAGE_FILTER = GifBaseTest::isGif;
 
     private static final ImageFilter ANIMATED_IMAGE_FILTER = file -> isGif(file) && isAnimated(file);
 

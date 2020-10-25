@@ -17,7 +17,6 @@ package org.apache.commons.imaging.formats.pcx;
 
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 
 class RleWriter {
@@ -30,7 +29,7 @@ class RleWriter {
     }
 
     void write(final BinaryOutputStream bos, final byte[] samples)
-            throws IOException, ImageWriteException {
+            throws IOException {
         if (isCompressed) {
             for (final byte element : samples) {
                 if ((element & 0xff) == previousByte

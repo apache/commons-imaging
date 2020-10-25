@@ -34,8 +34,8 @@ public class BmpImageParserTest {
 
     /**
      * For https://issues.apache.org/jira/browse/IMAGING-264.
-     * @throws IOException 
-     * @throws ImageReadException 
+     * @throws IOException
+     * @throws ImageReadException
      */
     @Test
     public void testImageWidthRounding() throws ImageReadException, IOException {

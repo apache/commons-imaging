@@ -59,12 +59,9 @@ public class RgbeReadTest extends RgbeBaseTest {
 
     /**
      * Test that a bad file does not gets the RgbeImageParser stuck reading it.
-     *
-     * @throws ImageReadException
-     * @throws IOException
      */
     @Test
-    public void testErrorDecompressingInvalidFile() throws ImageReadException, IOException {
+    public void testErrorDecompressingInvalidFile() {
         // From IMAGING-219
         final File inputFile = new File(
                 RgbeReadTest.class.getResource("/IMAGING-219/timeout-9713502c9c371f1654b493650c16ab17c0444369")

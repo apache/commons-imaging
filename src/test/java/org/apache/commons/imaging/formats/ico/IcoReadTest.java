@@ -39,7 +39,7 @@ public class IcoReadTest extends IcoBaseTest {
     @Disabled(value = "RoundtripTest has to be fixed before implementation can throw UnsupportedOperationException")
     @ParameterizedTest
     @MethodSource("data")
-    public void testMetadata(File imageFile) throws Exception {
+    public void testMetadata(File imageFile) {
         Assertions.assertThrows(UnsupportedOperationException.class, () -> {
             Imaging.getMetadata(imageFile);
         });
@@ -48,7 +48,7 @@ public class IcoReadTest extends IcoBaseTest {
     @Disabled(value = "RoundtripTest has to be fixed before implementation can throw UnsupportedOperationException")
     @ParameterizedTest
     @MethodSource("data")
-    public void testImageInfo(File imageFile) throws Exception {
+    public void testImageInfo(File imageFile) {
         Assertions.assertThrows(UnsupportedOperationException.class, () -> {
             Imaging.getImageInfo(imageFile, Collections.emptyMap());
         });

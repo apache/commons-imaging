@@ -30,33 +30,33 @@ public class ColorXyzTest {
     private ColorXyz colorCopy;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         color = new ColorXyz(1.0, 2.0, 3.0);
         colorCopy = new ColorXyz(1.0, 2.0, 3.0);
     }
 
     @Test
-    public void testXAssignment() throws Exception {
+    public void testXAssignment() {
         assertEquals(1.0, color.X, 0.0);
     }
 
     @Test
-    public void testYAssignment() throws Exception {
+    public void testYAssignment() {
         assertEquals(2.0, color.Y, 0.0);
     }
 
     @Test
-    public void testZAssignment() throws Exception {
+    public void testZAssignment() {
         assertEquals(3.0, color.Z, 0.0);
     }
 
     @Test
-    public void testToString() throws Exception {
+    public void testToString() {
         assertEquals("{X: 1.0, Y: 2.0, Z: 3.0}", color.toString());
     }
 
     @Test
-    public void testHashCodeAndEquals() throws Exception {
+    public void testHashCodeAndEquals() {
         assertTrue(color.equals(colorCopy) && colorCopy.equals(color));
         assertThat(color.hashCode(), is(colorCopy.hashCode()));
     }

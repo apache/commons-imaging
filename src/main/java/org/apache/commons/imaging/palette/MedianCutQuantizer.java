@@ -54,7 +54,7 @@ public class MedianCutQuantizer {
                 if (color == null) {
                     color = new ColorCount(argb);
                     colorMap.put(argb, color);
-                    if (colorMap.keySet().size() > max) {
+                    if (colorMap.size() > max) {
                         return null;
                     }
                 }
@@ -87,7 +87,7 @@ public class MedianCutQuantizer {
             throws ImageWriteException {
         final Map<Integer, ColorCount> colorMap = groupColors(image, maxColors);
 
-        final int discreteColors = colorMap.keySet().size();
+        final int discreteColors = colorMap.size();
         if (discreteColors <= maxColors) {
             Debug.debug("lossless palette: " + discreteColors);
 

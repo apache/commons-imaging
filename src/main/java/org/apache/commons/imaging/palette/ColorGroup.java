@@ -129,7 +129,7 @@ class ColorGroup {
      * @return a copy of the list of color counts
      */
     List<ColorCount> getColorCounts() {
-        return new ArrayList<ColorCount>(colorCounts);
+        return new ArrayList<>(colorCounts);
     }
 
     @Override

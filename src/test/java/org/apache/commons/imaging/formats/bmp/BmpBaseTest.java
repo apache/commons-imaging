@@ -34,7 +34,7 @@ public abstract class BmpBaseTest extends ImagingTest {
         return format == ImageFormats.BMP;
     }
 
-    private static final ImageFilter IMAGE_FILTER = file -> isBmp(file);
+    private static final ImageFilter IMAGE_FILTER = BmpBaseTest::isBmp;
 
     protected static List<File> getBmpImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);

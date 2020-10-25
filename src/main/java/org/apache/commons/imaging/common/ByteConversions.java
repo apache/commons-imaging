@@ -233,9 +233,8 @@ public final class ByteConversions {
         final int byte1 = 0xff & bytes[offset + 1];
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
             return ((byte0 << 8) | byte1);
-        } else {
-            return ((byte1 << 8) | byte0);
         }
+        return ((byte1 << 8) | byte0);
     }
 
     public static int[] toUInt16s(final byte[] bytes, final ByteOrder byteOrder) {
@@ -262,9 +261,8 @@ public final class ByteConversions {
         final int byte3 = 0xff & bytes[offset + 3];
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
             return (byte0 << 24) | (byte1 << 16) | (byte2 << 8) | byte3;
-        } else {
-            return (byte3 << 24) | (byte2 << 16) | (byte1 << 8) | byte0;
         }
+        return (byte3 << 24) | (byte2 << 16) | (byte1 << 8) | byte0;
     }
 
     public static int[] toInts(final byte[] bytes, final ByteOrder byteOrder) {

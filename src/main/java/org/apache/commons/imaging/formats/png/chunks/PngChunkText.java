@@ -18,7 +18,6 @@ package org.apache.commons.imaging.formats.png.chunks;
 
 import static org.apache.commons.imaging.common.BinaryFunctions.findNull;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,7 +33,7 @@ public class PngChunkText extends PngTextChunk {
     public final String text;
 
     public PngChunkText(final int length, final int chunkType, final int crc, final byte[] bytes)
-            throws ImageReadException, IOException {
+            throws ImageReadException {
         super(length, chunkType, crc, bytes);
         final int index = findNull(bytes);
         if (index < 0) {

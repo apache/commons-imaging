@@ -39,7 +39,7 @@ public class PngChunkIccpTest {
     private static final int chunkType = 1766015824;
 
     @Test
-    public void testErrorOnNoProfileName() throws ImageReadException, IOException {
+    public void testErrorOnNoProfileName() {
         final byte[] data = new byte[0];
         Assertions.assertThrows(ImageReadException.class, () -> {
             new PngChunkIccp(0, chunkType, 0, data);
@@ -55,10 +55,10 @@ public class PngChunkIccpTest {
         }
         bytes.add((byte) 0); // null
         bytes.add((byte) 0); // 0=deflate compression method
-        
+
         // generate some 100 bytes of dummy data
         byte[] uncompressedData = new byte[100];
-        IntStream.range(0, 100).forEach((i) -> {
+        IntStream.range(0, 100).forEach(i -> {
             uncompressedData[i] = (byte) (i + 1); // dummy data
         });
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream(100)) {
@@ -75,7 +75,7 @@ public class PngChunkIccpTest {
                 data[i] = bytes.get(i).byteValue();
             }
             // gather the compressed data
-            IntStream.range(0, compressedData.length).forEach((i) -> {
+            IntStream.range(0, compressedData.length).forEach(i -> {
                 data[bytes.size() + i] = compressedData[i];
             });
             // create the chunk

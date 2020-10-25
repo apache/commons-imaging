@@ -34,7 +34,7 @@ public class DitheringTest {
   public void testApplyFloydSteinbergDitheringWithNonNullOne() throws ImageWriteException {
       BufferedImage bufferedImage = new BufferedImage(8, 8, 8);
       bufferedImage.setRGB(2, 2, 2);
-      List<ColorSpaceSubset> linkedList = new LinkedList<ColorSpaceSubset>();
+      List<ColorSpaceSubset> linkedList = new LinkedList<>();
       ColorSpaceSubset colorSpaceSubset = new ColorSpaceSubset((-234), (-352));
       colorSpaceSubset.rgb = 8;
       linkedList.add(colorSpaceSubset);

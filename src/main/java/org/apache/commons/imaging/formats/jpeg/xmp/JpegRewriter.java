@@ -39,9 +39,9 @@ import org.apache.commons.imaging.formats.jpeg.iptc.IptcParser;
  */
 public class JpegRewriter extends BinaryFileParser {
     private static final ByteOrder JPEG_BYTE_ORDER = ByteOrder.BIG_ENDIAN;
-    private static final SegmentFilter EXIF_SEGMENT_FILTER = segment -> segment.isExifSegment();
-    private static final SegmentFilter XMP_SEGMENT_FILTER = segment -> segment.isXmpSegment();
-    private static final SegmentFilter PHOTOSHOP_APP13_SEGMENT_FILTER = segment -> segment.isPhotoshopApp13Segment();
+    private static final SegmentFilter EXIF_SEGMENT_FILTER = JFIFPieceSegment::isExifSegment;
+    private static final SegmentFilter XMP_SEGMENT_FILTER = JFIFPieceSegment::isXmpSegment;
+    private static final SegmentFilter PHOTOSHOP_APP13_SEGMENT_FILTER = JFIFPieceSegment::isPhotoshopApp13Segment;
 
     /**
      * Constructor. to guess whether a file contains an image based on its file

@@ -89,14 +89,14 @@ public class PhotometricInterpreterLogLuvTest {
     }
 
     @Test
-    public void testInterpretPixelNullSamples() throws ImageReadException, IOException {
+    public void testInterpretPixelNullSamples() {
         Assertions.assertThrows(ImageReadException.class, () -> {
             p.interpretPixel(null, null, 0, 0);
         });
     }
 
     @Test
-    public void testInterpretPixelEmptySamples() throws ImageReadException, IOException {
+    public void testInterpretPixelEmptySamples() {
         Assertions.assertThrows(ImageReadException.class, () -> {
             p.interpretPixel(null, new int[] {}, 0, 0);
         });

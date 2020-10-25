@@ -69,9 +69,8 @@ public class RationalNumber extends Number {
     private static long gcd(final long a, final long b) {
         if (b == 0) {
             return a;
-        } else {
-            return gcd(b, a % b);
         }
+        return gcd(b, a % b);
     }
 
     public RationalNumber negate() {

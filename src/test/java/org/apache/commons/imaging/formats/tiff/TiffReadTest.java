@@ -24,18 +24,12 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
-
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.internal.Debug;
-
-import org.apache.commons.imaging.formats.tiff.TiffContents;
-import org.apache.commons.imaging.formats.tiff.TiffDirectory;
-import org.apache.commons.imaging.formats.tiff.TiffReader;
-
 import org.junit.jupiter.api.Test;
 
 public class TiffReadTest extends TiffBaseTest {

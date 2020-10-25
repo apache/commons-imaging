@@ -23,9 +23,9 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
-import org.apache.commons.imaging.formats.tiff.datareaders.ImageDataReader;
 import org.apache.commons.imaging.formats.tiff.datareaders.DataReaderStrips;
 import org.apache.commons.imaging.formats.tiff.datareaders.DataReaderTiled;
+import org.apache.commons.imaging.formats.tiff.datareaders.ImageDataReader;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 
 public abstract class TiffImageData {
@@ -188,7 +188,7 @@ public abstract class TiffImageData {
         short[] sSampleFmt = directory.getFieldValue(
             TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, false);
         if (sSampleFmt != null && sSampleFmt.length > 0) {
-            return (int) sSampleFmt[0];
+            return sSampleFmt[0];
         }
         return 0;  // unspecified format
     }
