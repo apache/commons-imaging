@@ -30,7 +30,6 @@ import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TI
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE;
 
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -173,13 +172,19 @@ public abstract class ImageDataReader {
         last = new int[samplesPerPixel];
     }
 
-    // public abstract void readImageData(BufferedImage bi, ByteSource
-    // byteSource)
-    public abstract void readImageData(ImageBuilder imageBuilder)
-            throws ImageReadException, IOException;
 
-
-    public abstract BufferedImage readImageData(Rectangle subImage)
+    /**
+     * Read the image data from the IFD associated with this
+     * instance of ImageDataReader using the optional sub-image specification
+     * if desired.
+     * @param subImageSpecification a rectangle describing a sum-region of
+     * the image for reading, or a null if the whole image is to be read.
+     * @return a valid instance containing the pixel data from the image.
+     * @throws ImageReadException in the event of a data format error
+     * or other TIFF-specific failure.
+     * @throws IOException in the event of an unrecoverable I/O error.
+     */
+    public abstract ImageBuilder readImageData(Rectangle subImageSpecification)
             throws ImageReadException, IOException;
 
     /**

@@ -24,7 +24,6 @@
 package org.apache.commons.imaging.formats.tiff.datareaders;
 
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.ByteOrder;
@@ -32,7 +31,6 @@ import java.nio.ByteOrder;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
-import org.apache.commons.imaging.formats.tiff.TiffElement.DataElement;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
 import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
@@ -215,37 +213,18 @@ public final class DataReaderTiled extends ImageDataReader {
     }
 
     @Override
-    public void readImageData(final ImageBuilder imageBuilder)
+    public ImageBuilder readImageData(final Rectangle subImageSpecification)
             throws ImageReadException, IOException {
-        final int bitsPerRow = tileWidth * bitsPerPixel;
-        final int bytesPerRow = (bitsPerRow + 7) / 8;
-        final int bytesPerTile = bytesPerRow * tileLength;
-        int x = 0;
-        int y = 0;
 
-        for (final DataElement tile2 : imageData.tiles) {
-            final byte[] compressed = tile2.getData();
-
-            final byte[] decompressed = decompress(compressed, compression,
-                    bytesPerTile, tileWidth, tileLength);
-
-            interpretTile(imageBuilder, decompressed, x, y, width, height);
-
-            x += tileWidth;
-            if (x >= width) {
-                x = 0;
-                y += tileLength;
-                if (y >= height) {
-                    break;
-                }
-            }
-
+        final Rectangle subImage;
+        if (subImageSpecification == null) {
+            // configure subImage to read entire image
+            subImage = new Rectangle(0, 0, width, height);
+        } else {
+            subImage = subImageSpecification;
         }
-    }
 
-    @Override
-    public BufferedImage readImageData(final Rectangle subImage)
-            throws ImageReadException, IOException {
+
         final int bitsPerRow = tileWidth * bitsPerPixel;
         final int bytesPerRow = (bitsPerRow + 7) / 8;
         final int bytesPerTile = bytesPerRow * tileLength;
@@ -279,7 +258,7 @@ public final class DataReaderTiled extends ImageDataReader {
                         bytesPerTile, tileWidth, tileLength);
                 int x = iCol * tileWidth - x0;
                 int y = iRow * tileLength - y0;
-                interpretTile(workingBuilder, decompressed, x, y, workingWidth, workingHeight);
+                interpretTile(workingBuilder, decompressed, x, y, width, height);
             }
         }
 
@@ -287,9 +266,10 @@ public final class DataReaderTiled extends ImageDataReader {
                 && subImage.y == y0
                 && subImage.width == workingWidth
                 && subImage.height == workingHeight) {
-            return workingBuilder.getBufferedImage();
+            return workingBuilder;
         }
-        return workingBuilder.getSubimage(
+
+        return workingBuilder.getSubset(
             subImage.x - x0,
             subImage.y - y0,
             subImage.width,
