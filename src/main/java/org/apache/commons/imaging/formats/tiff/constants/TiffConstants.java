@@ -70,6 +70,15 @@ public final class TiffConstants {
     public static final String PARAM_KEY_SUBIMAGE_WIDTH = "SUBIMAGE_WIDTH";
     public static final String PARAM_KEY_SUBIMAGE_HEIGHT = "SUBIMAGE_HEIGHT";
 
+
+    /**
+     * Specifies that an application-specified photometric interpreter
+     * is to be used when reading TIFF files to convert raster data samples
+     * to RGB values for the output image.
+     * <p>
+     * The value supplied with this key should be a valid instance of
+     * a class that implements PhotometricInterpreter.
+     */
     public static final String PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER
         = "CUSTOM_PHOTOMETRIC_INTERPRETER";
 

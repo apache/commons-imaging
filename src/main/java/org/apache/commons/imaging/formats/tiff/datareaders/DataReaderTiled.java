@@ -30,9 +30,9 @@ import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
+import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
-import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
@@ -127,7 +127,7 @@ public final class DataReaderTiled extends ImageDataReader {
         // verify that all samples are one byte in size
         final boolean allSamplesAreOneByte = isHomogenous(8);
 
-          if (bitsPerPixel == 24 && allSamplesAreOneByte
+        if ((bitsPerPixel == 24 || bitsPerPixel == 32) && allSamplesAreOneByte
             && photometricInterpreter instanceof PhotometricInterpreterRgb) {
             final int i0 = startY;
             int i1 = startY + tileLength;
@@ -141,32 +141,37 @@ public final class DataReaderTiled extends ImageDataReader {
                 // the tile is padded to beyond the tile width
                 j1 = xLimit;
             }
-            if (predictor == 2) {
-                // pre-apply the predictor logic before feeding
-                // the bytes to the photometric interpretor.
-                for (int i = i0; i < i1; i++) {
-                    int k = (i - i0) * tileWidth * 3;
-                    int p0 = bytes[k++] & 0xff;
-                    int p1 = bytes[k++] & 0xff;
-                    int p2 = bytes[k++] & 0xff;
-                    for (int j = 1; j < tileWidth; j++) {
-                        p0 = (bytes[k] + p0) & 0xff;
-                        bytes[k++] = (byte) p0;
-                        p1 = (bytes[k] + p1) & 0xff;
-                        bytes[k++] = (byte) p1;
-                        p2 = (bytes[k] + p2) & 0xff;
-                        bytes[k++] = (byte) p2;
-                    }
-                }
+
+            if (predictor == TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING) {
+                applyPredictorToBlock(tileWidth, i1 - i0, samplesPerPixel, bytes);
             }
 
-            for (int i = i0; i < i1; i++) {
-                int k = (i - i0) * tileWidth * 3;
-                for (int j = j0; j < j1; j++, k += 3) {
-                    final int rgb = 0xff000000
-                        | (((bytes[k] << 8) | (bytes[k + 1] & 0xff)) << 8)
-                        | (bytes[k + 2] & 0xff);
-                    imageBuilder.setRGB(j, i, rgb);
+            if (bitsPerPixel == 24) {
+                // 24 bit case, we don't mask the red byte because any
+                // sign-extended bits get covered by opacity mask
+                for (int i = i0; i < i1; i++) {
+                    int k = (i - i0) * tileWidth * 3;
+                    for (int j = j0; j < j1; j++, k += 3) {
+                        final int rgb = 0xff000000
+                            | (bytes[k] << 16)
+                            | ((bytes[k + 1] & 0xff) << 8)
+                            | (bytes[k + 2] & 0xff);
+                        imageBuilder.setRGB(j, i, rgb);
+                    }
+                }
+            } else if (bitsPerPixel == 32) {
+                // 32 bit case, we don't mask the high byte because any
+                // sign-extended bits get shifted up and out of result.
+                for (int i = i0; i < i1; i++) {
+                    int k = (i - i0) * tileWidth * 4;
+                    for (int j = j0; j < j1; j++, k += 4) {
+                        final int rgb
+                            = ((bytes[k] & 0xff) << 16)
+                            | ((bytes[k + 1] & 0xff) << 8)
+                            | (bytes[k + 2] & 0xff)
+                            | (bytes[k + 3] << 24);
+                        imageBuilder.setRGB(j, i, rgb);
+                    }
                 }
             }
 
@@ -213,7 +218,9 @@ public final class DataReaderTiled extends ImageDataReader {
     }
 
     @Override
-    public ImageBuilder readImageData(final Rectangle subImageSpecification)
+    public ImageBuilder readImageData(final Rectangle subImageSpecification,
+        final boolean hasAlpha,
+        final boolean isAlphaPremultiplied)
             throws ImageReadException, IOException {
 
         final Rectangle subImage;
@@ -248,7 +255,8 @@ public final class DataReaderTiled extends ImageDataReader {
         final int y0 = row0 * tileLength;
 
         final ImageBuilder workingBuilder =
-                new ImageBuilder(workingWidth, workingHeight, false);
+                new ImageBuilder(workingWidth, workingHeight,
+                hasAlpha, isAlphaPremultiplied);
 
         for (int iRow = row0; iRow <= row1; iRow++) {
             for (int iCol = col0; iCol <= col1; iCol++) {

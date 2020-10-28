@@ -24,9 +24,9 @@ import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
+import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
-import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
@@ -167,7 +167,7 @@ public final class DataReaderStrips extends ImageDataReader {
                 }
             }
             return;
-        } else if (bitsPerPixel == 24 && allSamplesAreOneByte
+        } else if ((bitsPerPixel == 24  || bitsPerPixel==32) && allSamplesAreOneByte
             && photometricInterpreter instanceof PhotometricInterpreterRgb) {
             int k = 0;
             int nRows = pixelsPerStrip / width;
@@ -178,29 +178,36 @@ public final class DataReaderStrips extends ImageDataReader {
             final int i1 = y + nRows;
             x = 0;
             y += nRows;
-            if (predictor == 2) {
-                for (int i = i0; i < i1; i++) {
-                    int p0 = bytes[k++] & 0xff;
-                    int p1 = bytes[k++] & 0xff;
-                    int p2 = bytes[k++] & 0xff;
-                    for (int j = 1; j < width; j++) {
-                        p0 = (bytes[k] + p0) & 0xff;
-                        bytes[k++] = (byte) p0;
-                        p1 = (bytes[k] + p1) & 0xff;
-                        bytes[k++] = (byte) p1;
-                        p2 = (bytes[k] + p2) & 0xff;
-                        bytes[k++] = (byte) p2;
-                    }
-                }
+            if (predictor == TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING) {
+                applyPredictorToBlock(width, nRows, samplesPerPixel, bytes);
             }
 
-            k = 0;
-            for (int i = i0; i < i1; i++) {
-                for (int j = 0; j < width; j++, k += 3) {
-                    final int rgb = 0xff000000
-                        | (((bytes[k] << 8) | (bytes[k + 1] & 0xff)) << 8)
-                        | (bytes[k + 2] & 0xff);
-                    imageBuilder.setRGB(j, i, rgb);
+            if (bitsPerPixel == 24) {
+                // 24 bit case, we don't mask the red byte because any
+                // sign-extended bits get covered by opacity mask
+                k = 0;
+                for (int i = i0; i < i1; i++) {
+                    for (int j = 0; j < width; j++, k += 3) {
+                        final int rgb = 0xff000000
+                            | (bytes[k] << 16)
+                            | ((bytes[k + 1] & 0xff) << 8)
+                            | (bytes[k + 2] & 0xff);
+                        imageBuilder.setRGB(j, i, rgb);
+                    }
+                }
+            } else {
+                // 32 bit case, we don't mask the high byte because any
+                // sign-extended bits get shifted up and out of result
+                k = 0;
+                for (int i = i0; i < i1; i++) {
+                    for (int j = 0; j < width; j++, k += 4) {
+                        final int rgb
+                            = ((bytes[k] & 0xff) << 16)
+                            | ((bytes[k + 1] & 0xff) << 8)
+                            | (bytes[k + 2] & 0xff)
+                            | (bytes[k + 3] << 24);
+                        imageBuilder.setRGB(j, i, rgb);
+                    }
                 }
             }
 
@@ -241,7 +248,9 @@ public final class DataReaderStrips extends ImageDataReader {
 
 
     @Override
-    public ImageBuilder readImageData(final Rectangle subImageSpecification)
+    public ImageBuilder readImageData(final Rectangle subImageSpecification,
+        final boolean hasAlpha,
+        final boolean isAlphaPremultiplied)
             throws ImageReadException, IOException {
 
         final Rectangle subImage;
@@ -278,7 +287,8 @@ public final class DataReaderStrips extends ImageDataReader {
         // TO DO: we can probably save some processing by using yLimit instead
         //        or working
         final ImageBuilder workingBuilder =
-                new ImageBuilder(width, workingHeight, false);
+                new ImageBuilder(width, workingHeight,
+                    hasAlpha, isAlphaPremultiplied);
         if (planarConfiguration != TiffPlanarConfiguration.PLANAR) {
             for (int strip = strip0; strip <= strip1; strip++) {
                 final long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
@@ -384,10 +394,10 @@ public final class DataReaderStrips extends ImageDataReader {
                 bytesPerStrip, width, rowsInThisStrip);
 
             int[] blockData = unpackFloatingPointSamples(
-                width, rowsInThisStrip, width,
+                width, (int) rowsInThisStrip, width,
                 decompressed,
                 predictor, bitsPerPixel, byteOrder);
-            transferBlockToRaster(0, yStrip, width, rowsInThisStrip, blockData,
+            transferBlockToRaster(0, yStrip, width, (int) rowsInThisStrip, blockData,
                 xRaster, yRaster, rasterWidth, rasterHeight, rasterData);
         }
         return new TiffRasterData(rasterWidth, rasterHeight, rasterData);

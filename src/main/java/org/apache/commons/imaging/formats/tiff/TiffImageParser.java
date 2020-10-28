@@ -61,6 +61,7 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterLogLuv;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterPalette;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterRgb;
+import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterRgba;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterYCbCr;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 
@@ -554,8 +555,6 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
             throw new ImageReadException("TIFF missing entries");
         }
 
-        final int photometricInterpretation = 0xffff & directory.getFieldValue(
-                TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION);
         final short compressionFieldValue;
         if (directory.findField(TiffTagConstants.TIFF_TAG_COMPRESSION) != null) {
             compressionFieldValue = directory.getFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION);
@@ -628,6 +627,24 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
                     + bitsPerSample.length + ")");
         }
 
+
+        final int photometricInterpretation = 0xffff & directory.getFieldValue(
+                TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION);
+
+        final boolean hasAlpha =
+            photometricInterpretation == TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_RGB
+            && samplesPerPixel==4;
+        boolean isAlphaPremultiplied = false;
+        if(hasAlpha){
+            final TiffField extraSamplesField =
+                directory.findField(TiffTagConstants.TIFF_TAG_EXTRA_SAMPLES);
+            if (extraSamplesField != null) {
+                int extraSamplesValue = extraSamplesField.getIntValue();
+                isAlphaPremultiplied =
+                    (extraSamplesValue==TiffTagConstants.EXTRA_SAMPLE_ASSOCIATED_ALPHA);
+            }
+        }
+
         PhotometricInterpreter photometricInterpreter;
         Object test = params == null
             ? null
@@ -669,7 +686,8 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
           samplesPerPixel, width, height, compression,
           planarConfiguration, byteOrder);
 
-        final ImageBuilder iBuilder = dataReader.readImageData(subImage);
+        final ImageBuilder iBuilder = dataReader.readImageData(
+            subImage, hasAlpha, isAlphaPremultiplied);
         return iBuilder.getBufferedImage();
     }
 
@@ -702,6 +720,10 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
                     bitsPerSample, predictor, width, height, colorMap);
         }
         case 2: // RGB
+            if(samplesPerPixel==4){
+                return new PhotometricInterpreterRgba(samplesPerPixel,
+                    bitsPerSample, predictor, width, height);
+            }
             return new PhotometricInterpreterRgb(samplesPerPixel,
                     bitsPerSample, predictor, width, height);
         case 5: // CMYK
