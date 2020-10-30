@@ -347,6 +347,8 @@ public final class TiffTagConstants {
     public static final TagInfoShorts TIFF_TAG_EXTRA_SAMPLES = new TagInfoShorts(
             "ExtraSamples", 0x152, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
+    public static final int EXTRA_SAMPLE_ASSOCIATED_ALPHA = 1;
+    public static final int EXTRA_SAMPLE_UNASSOCIATED_ALPHA = 2;
 
     public static final TagInfoShorts TIFF_TAG_SAMPLE_FORMAT = new TagInfoShorts(
             "SampleFormat", 0x153, -1,

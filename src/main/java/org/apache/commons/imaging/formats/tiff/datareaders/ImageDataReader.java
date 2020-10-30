@@ -19,8 +19,8 @@ package org.apache.commons.imaging.formats.tiff.datareaders;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_1D;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_4;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_DEFLATE_ADOBE;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_DEFLATE_PKZIP;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_DEFLATE_ADOBE;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_LZW;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_PACKBITS;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED;
@@ -39,12 +39,12 @@ import java.util.Arrays;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.PackBits;
-import org.apache.commons.imaging.common.ZlibDeflate;
 import org.apache.commons.imaging.common.itu_t4.T4AndT6Compression;
 import org.apache.commons.imaging.common.mylzw.MyLzwDecompressor;
+import org.apache.commons.imaging.common.ZlibDeflate;
+import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffField;
-import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 
@@ -179,12 +179,19 @@ public abstract class ImageDataReader {
      * if desired.
      * @param subImageSpecification a rectangle describing a sum-region of
      * the image for reading, or a null if the whole image is to be read.
+     * @param hasAlpha indicates that the image has an alpha (transparency)
+     * channel (RGB color model only).
+     * @param isAlphaPremultiplied indicates that the image uses the
+     * associated alpha channel format (pre-multiplied alpha).
      * @return a valid instance containing the pixel data from the image.
      * @throws ImageReadException in the event of a data format error
      * or other TIFF-specific failure.
      * @throws IOException in the event of an unrecoverable I/O error.
      */
-    public abstract ImageBuilder readImageData(Rectangle subImageSpecification)
+    public abstract ImageBuilder readImageData(
+        Rectangle subImageSpecification,
+        boolean hasAlpha,
+        boolean isAlphaPremultiplied)
             throws ImageReadException, IOException;
 
     /**
@@ -242,6 +249,17 @@ public abstract class ImageDataReader {
         }
 
         return samples;
+    }
+
+    protected void applyPredictorToBlock(int width, int height, int nSamplesPerPixel, byte []p ){
+        final int k = width*nSamplesPerPixel;
+        for(int i=0; i<height; i++){
+            int j0  = i*k+nSamplesPerPixel;
+            int j1 = (i+1)*k;
+            for(int j=j0; j<j1; j++){
+                p[j]+=p[j-nSamplesPerPixel];
+            }
+        }
     }
 
     protected byte[] decompress(final byte[] compressedInput, final int compression,
