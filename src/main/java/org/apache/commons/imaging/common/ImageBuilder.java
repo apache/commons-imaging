@@ -40,8 +40,10 @@
  */
 package org.apache.commons.imaging.common;
 
+import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
+import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferInt;
 import java.awt.image.DirectColorModel;
 import java.awt.image.Raster;
@@ -58,6 +60,7 @@ public class ImageBuilder {
     private final int width;
     private final int height;
     private final boolean hasAlpha;
+    private final boolean isAlphaPremultiplied;
 
     /**
      * Construct an ImageBuilder instance
@@ -68,6 +71,38 @@ public class ImageBuilder {
      * requirements for the ImageBuilder or resulting BufferedImage.
      */
     public ImageBuilder(final int width, final int height, final boolean hasAlpha) {
+        checkDimensions(width, height);
+
+        data = new int[width * height];
+        this.width = width;
+        this.height = height;
+        this.hasAlpha = hasAlpha;
+        this.isAlphaPremultiplied = false;
+    }
+
+
+    /**
+     * Construct an ImageBuilder instance
+     * @param width the width of the image to be built
+     * @param height the height of the image to be built
+     * @param hasAlpha indicates whether the image has an alpha channel
+     * (the selection of alpha channel does not change the memory
+     * requirements for the ImageBuilder or resulting BufferedImage.
+     * @param isAlphaPremultiplied indicates whether alpha values are
+     * pre-multiplied; this setting is relevant only if alpha is true.
+     *
+     */
+    public ImageBuilder(final int width, final int height,
+        final boolean hasAlpha, boolean isAlphaPremultiplied) {
+        checkDimensions(width, height);
+        data = new int[width * height];
+        this.width = width;
+        this.height = height;
+        this.hasAlpha = hasAlpha;
+        this.isAlphaPremultiplied = isAlphaPremultiplied;
+    }
+
+    private void checkDimensions(int width, int height) {
         if (width <= 0) {
             throw new RasterFormatException("zero or negative width value");
         }
@@ -75,10 +110,6 @@ public class ImageBuilder {
             throw new RasterFormatException("zero or negative height value");
         }
 
-        data = new int[width * height];
-        this.width = width;
-        this.height = height;
-        this.hasAlpha = hasAlpha;
     }
 
     /**
@@ -131,6 +162,39 @@ public class ImageBuilder {
         return makeBufferedImage(data, width, height, hasAlpha);
     }
 
+    /**
+     * Performs a check on the specified sub-region to verify
+     * that it is within the constraints of the ImageBuilder bounds.
+     *
+     * @param x the X coordinate of the upper-left corner of the
+     * specified rectangular region
+     * @param y the Y coordinate of the upper-left corner of the
+     * specified rectangular region
+     * @param w the width of the specified rectangular region
+     * @param h the height of the specified rectangular region
+     */
+    private void checkBounds(int x, int y, int w, int h) {
+        if (w <= 0) {
+            throw new RasterFormatException("negative or zero subimage width");
+        }
+        if (h <= 0) {
+            throw new RasterFormatException("negative or zero subimage height");
+        }
+        if (x < 0 || x >= width) {
+            throw new RasterFormatException("subimage x is outside raster");
+        }
+        if (x + w > width) {
+            throw new RasterFormatException(
+                "subimage (x+width) is outside raster");
+        }
+        if (y < 0 || y >= height) {
+            throw new RasterFormatException("subimage y is outside raster");
+        }
+        if (y + h > height) {
+            throw new RasterFormatException(
+                "subimage (y+height) is outside raster");
+        }
+    }
 
      /**
      * Gets a subset of the ImageBuilder content using the specified parameters
@@ -150,28 +214,8 @@ public class ImageBuilder {
      *         within this ImageBuilder
      */
     public ImageBuilder getSubset(final int x, final int y, final int w, final int h) {
-        if (w <= 0) {
-            throw new RasterFormatException("negative or zero subimage width");
-        }
-        if (h <= 0) {
-            throw new RasterFormatException("negative or zero subimage height");
-        }
-        if (x < 0 || x >= width) {
-            throw new RasterFormatException("subimage x is outside raster");
-        }
-        if (x + w > width) {
-            throw new RasterFormatException(
-                    "subimage (x+width) is outside raster");
-        }
-        if (y < 0 || y >= height) {
-            throw new RasterFormatException("subimage y is outside raster");
-        }
-        if (y + h > height) {
-            throw new RasterFormatException(
-                    "subimage (y+height) is outside raster");
-        }
-
-        ImageBuilder b = new ImageBuilder(w, h, hasAlpha);
+        checkBounds(x, y, w, h);
+        ImageBuilder b = new ImageBuilder(w, h, hasAlpha, isAlphaPremultiplied);
         for(int i=0; i<h; i++){
             int srcDex = (i+y)*width+x;
             int outDex = i*w;
@@ -200,27 +244,7 @@ public class ImageBuilder {
      *         within this ImageBuilder
      */
     public BufferedImage getSubimage(final int x, final int y, final int w, final int h) {
-        if (w <= 0) {
-            throw new RasterFormatException("negative or zero subimage width");
-        }
-        if (h <= 0) {
-            throw new RasterFormatException("negative or zero subimage height");
-        }
-        if (x < 0 || x >= width) {
-            throw new RasterFormatException("subimage x is outside raster");
-        }
-        if (x + w > width) {
-            throw new RasterFormatException(
-                    "subimage (x+width) is outside raster");
-        }
-        if (y < 0 || y >= height) {
-            throw new RasterFormatException("subimage y is outside raster");
-        }
-        if (y + h > height) {
-            throw new RasterFormatException(
-                    "subimage (y+height) is outside raster");
-        }
-
+        checkBounds(x, y, w, h);
 
         // Transcribe the data to an output image array
         final int[] argb = new int[w * h];
@@ -242,16 +266,29 @@ public class ImageBuilder {
         WritableRaster raster;
         final DataBufferInt buffer = new DataBufferInt(argb, w * h);
         if (useAlpha) {
-            colorModel = new DirectColorModel(32, 0x00ff0000, 0x0000ff00,
-                    0x000000ff, 0xff000000);
-            raster = Raster.createPackedRaster(buffer, w, h,
-                    w, new int[]{0x00ff0000, 0x0000ff00, 0x000000ff,
-                            0xff000000}, null);
+            colorModel = new DirectColorModel(
+                    ColorSpace.getInstance(ColorSpace.CS_sRGB),
+                    32,
+                    0x00ff0000, 0x0000ff00,
+                    0x000000ff, 0xff000000,
+                    isAlphaPremultiplied, DataBuffer.TYPE_INT);
+            raster = Raster.createPackedRaster(
+                    buffer, w, h, w,
+                    new int[]{
+                            0x00ff0000,
+                            0x0000ff00,
+                            0x000000ff,
+                            0xff000000},
+                    null);
         } else {
             colorModel = new DirectColorModel(24, 0x00ff0000, 0x0000ff00,
                     0x000000ff);
-            raster = Raster.createPackedRaster(buffer, w, h,
-                    w, new int[]{0x00ff0000, 0x0000ff00, 0x000000ff},
+            raster = Raster.createPackedRaster(
+                    buffer, w, h, w,
+                    new int[]{
+                        0x00ff0000,
+                        0x0000ff00,
+                        0x000000ff},
                     null);
         }
         return new BufferedImage(colorModel, raster,

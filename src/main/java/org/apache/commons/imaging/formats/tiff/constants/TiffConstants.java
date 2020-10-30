@@ -18,6 +18,10 @@ package org.apache.commons.imaging.formats.tiff.constants;
 
 import java.nio.ByteOrder;
 
+/**
+ * Defines constants for internal elements from TIFF files and for allowing
+ * applications to define parameters for reading and writing TIFF files.
+ */
 public final class TiffConstants {
 
     public static final ByteOrder DEFAULT_TIFF_BYTE_ORDER = ByteOrder.LITTLE_ENDIAN;
@@ -70,6 +74,15 @@ public final class TiffConstants {
     public static final String PARAM_KEY_SUBIMAGE_WIDTH = "SUBIMAGE_WIDTH";
     public static final String PARAM_KEY_SUBIMAGE_HEIGHT = "SUBIMAGE_HEIGHT";
 
+
+    /**
+     * Specifies that an application-specified photometric interpreter
+     * is to be used when reading TIFF files to convert raster data samples
+     * to RGB values for the output image.
+     * <p>
+     * The value supplied with this key should be a valid instance of
+     * a class that implements PhotometricInterpreter.
+     */
     public static final String PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER
         = "CUSTOM_PHOTOMETRIC_INTERPRETER";
 
