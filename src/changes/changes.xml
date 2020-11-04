@@ -64,7 +64,7 @@ The <action> type attribute can be add,update,fix,remove.
         Bump junit-jupiter from 5.6.2 to 5.7.0 #97.
       </action>
       <action dev="kinow" type="update" due-to="Dependabot">
-        Bump actions/checkout from v2.3.2 to v2.3.3 #99.
+        Bump actions/checkout from v2.3.2 to v2.3.4 #99 #107.
       </action>
       <action issue="IMAGING-264" dev="kinow" type="fix">
         BMP Parser physicalWidthDpi and physicalHeightDpi truncated before rounding off.
