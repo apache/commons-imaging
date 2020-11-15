@@ -330,8 +330,18 @@ public abstract class TiffImageWriterBase {
         final int width = src.getWidth();
         final int height = src.getHeight();
 
+        // If the source image has a color model that supports alpha,
+        // this module performs a call to checkForActualAlpha() to see whether
+        // the image that was supplied to the API actually contains
+        // non-opaque data in its alpha channel. It is common for applications
+        // to create a BufferedImage using TYPE_INT_ARGB, and fill the entire
+        // image with opaque pixels. In such a case, the file size of the output
+        // can be reduced by 25 percent by storing the image in an 3-byte RGB
+        // format. This approach will also make a small reduction in the runtime
+        // to read the resulting file when it is accessed by an application.
         final ColorModel cModel = src.getColorModel();
         final boolean hasAlpha = cModel.hasAlpha() && checkForActualAlpha(src);
+
 
         // 10/2020: In the case of an image with pre-multiplied alpha
         // (what the TIFF specification calls "associated alpha"), the
