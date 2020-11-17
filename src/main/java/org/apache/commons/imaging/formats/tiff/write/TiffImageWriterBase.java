@@ -23,14 +23,15 @@ import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.PA
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_1D;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_4;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_DEFLATE_ADOBE;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_LZW;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_PACKBITS;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_DEFLATE_ADOBE;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_HEADER_SIZE;
 
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteOrder;
@@ -48,9 +49,9 @@ import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.PackBits;
 import org.apache.commons.imaging.common.RationalNumber;
-import org.apache.commons.imaging.common.ZlibDeflate;
 import org.apache.commons.imaging.common.itu_t4.T4AndT6Compression;
 import org.apache.commons.imaging.common.mylzw.MyLzwCompressor;
+import org.apache.commons.imaging.common.ZlibDeflate;
 import org.apache.commons.imaging.formats.tiff.TiffElement;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
@@ -257,6 +258,48 @@ public abstract class TiffImageWriterBase {
         // Debug.debug();
     }
 
+    private static final int MAX_PIXELS_FOR_RGB = 1024*1024;
+    /**
+     * Check an image to see if any of its pixels are non-opaque.
+     * @param src a valid image
+     * @return true if at least one non-opaque pixel is found.
+     */
+    private boolean checkForActualAlpha(BufferedImage src){
+        // to conserve memory, very large images may be read
+        // in pieces.
+        final int width = src.getWidth();
+        final int height = src.getHeight();
+        int nRowsPerRead = MAX_PIXELS_FOR_RGB/width;
+        if(nRowsPerRead<1){
+            nRowsPerRead = 1;
+        }
+        int nReads = (height+nRowsPerRead-1)/nRowsPerRead;
+        int []argb = new int[nRowsPerRead*width];
+        for(int iRead=0; iRead<nReads; iRead++){
+            final int i0 = iRead*nRowsPerRead;
+            final int i1 = i0+nRowsPerRead>height? height: i0+nRowsPerRead;
+            src.getRGB(0, i0, width, i1-i0, argb, 0, width);
+            int n = (i1-i0)*width;
+            for(int i=0; i<n; i++){
+                if((argb[i]&0xff000000)!=0xff000000){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private void applyPredictor(int width, int bytesPerSample, byte[] b) {
+        int nBytesPerRow = bytesPerSample * width;
+        int nRows = b.length / nBytesPerRow;
+        for (int iRow = 0; iRow < nRows; iRow++) {
+            int offset = iRow * nBytesPerRow;
+            for (int i = nBytesPerRow-1; i >= bytesPerSample; i--) {
+                b[offset + i] -= b[offset + i - bytesPerSample];
+            }
+        }
+    }
+
     public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
             throws ImageWriteException, IOException {
         // make copy of params; we'll clear keys as we consume them.
@@ -287,7 +330,30 @@ public abstract class TiffImageWriterBase {
         final int width = src.getWidth();
         final int height = src.getHeight();
 
-        int compression = TIFF_COMPRESSION_LZW; // LZW is default
+        // If the source image has a color model that supports alpha,
+        // this module performs a call to checkForActualAlpha() to see whether
+        // the image that was supplied to the API actually contains
+        // non-opaque data in its alpha channel. It is common for applications
+        // to create a BufferedImage using TYPE_INT_ARGB, and fill the entire
+        // image with opaque pixels. In such a case, the file size of the output
+        // can be reduced by 25 percent by storing the image in an 3-byte RGB
+        // format. This approach will also make a small reduction in the runtime
+        // to read the resulting file when it is accessed by an application.
+        final ColorModel cModel = src.getColorModel();
+        final boolean hasAlpha = cModel.hasAlpha() && checkForActualAlpha(src);
+
+
+        // 10/2020: In the case of an image with pre-multiplied alpha
+        // (what the TIFF specification calls "associated alpha"), the
+        // Java getRGB method adjusts the value to a non-premultiplied
+        // alpha state.  However, this class could access the pre-multiplied
+        // alpha data by obtaining the underlying raster.  At this time,
+        // the value of such a little-used feature does not seem
+        // commensurate with the complexity of the extra code it would require.
+
+        int compression = TIFF_COMPRESSION_LZW;
+        short predictor = TiffTagConstants.PREDICTOR_VALUE_NONE;
+
         int stripSizeInBits = 64000; // the default from legacy implementation
         if (params.containsKey(ImagingConstants.PARAM_KEY_COMPRESSION)) {
             final Object value = params.get(ImagingConstants.PARAM_KEY_COMPRESSION);
@@ -335,7 +401,7 @@ public abstract class TiffImageWriterBase {
             bitsPerSample = 1;
             photometricInterpretation = 0;
         } else {
-            samplesPerPixel = 3;
+            samplesPerPixel = hasAlpha? 4: 3;
             bitsPerSample = 8;
             photometricInterpretation = 2;
         }
@@ -402,19 +468,21 @@ public abstract class TiffImageWriterBase {
                 strips[i] = new PackBits().compress(strips[i]);
             }
         } else if (compression == TIFF_COMPRESSION_LZW) {
+            predictor =  TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING;
             for (int i = 0; i < strips.length; i++) {
                 final byte[] uncompressed = strips[i];
+                this.applyPredictor(width, samplesPerPixel, strips[i]);
 
                 final int LZW_MINIMUM_CODE_SIZE = 8;
-
                 final MyLzwCompressor compressor = new MyLzwCompressor(
                         LZW_MINIMUM_CODE_SIZE, ByteOrder.BIG_ENDIAN, true);
                 final byte[] compressed = compressor.compress(uncompressed);
-
                 strips[i] = compressed;
             }
         } else if (compression == TIFF_COMPRESSION_DEFLATE_ADOBE) {
+            predictor = TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING;
             for (int i = 0; i < strips.length; i++) {
+                this.applyPredictor(width, samplesPerPixel, strips[i]);
                 strips[i] = ZlibDeflate.compress(strips[i]);
             }
         } else if (compression == TIFF_COMPRESSION_UNCOMPRESSED) {
@@ -449,6 +517,12 @@ public abstract class TiffImageWriterBase {
                 directory.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE,
                         (short) bitsPerSample, (short) bitsPerSample,
                         (short) bitsPerSample);
+            }else if (samplesPerPixel == 4) {
+                directory.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE,
+                        (short) bitsPerSample, (short) bitsPerSample,
+                        (short) bitsPerSample, (short) bitsPerSample);
+                directory.add(TiffTagConstants.TIFF_TAG_EXTRA_SAMPLES,
+                    (short)TiffTagConstants.EXTRA_SAMPLE_UNASSOCIATED_ALPHA);
             } else if (samplesPerPixel == 1) {
                 directory.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE,
                         (short) bitsPerSample);
@@ -500,6 +574,10 @@ public abstract class TiffImageWriterBase {
             if (null != xmpXml) {
                 final byte[] xmpXmlBytes = xmpXml.getBytes(StandardCharsets.UTF_8);
                 directory.add(TiffTagConstants.TIFF_TAG_XMP, xmpXmlBytes);
+            }
+
+            if(predictor==TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING){
+                directory.add(TiffTagConstants.TIFF_TAG_PREDICTOR, predictor);
             }
 
         }
@@ -586,7 +664,13 @@ public abstract class TiffImageWriterBase {
                                 bitCache = 0;
                                 bitsInCache = 0;
                             }
-                        } else {
+                        } else if(samplesPerPixel==4){
+                            uncompressed[counter++] = (byte) red;
+                            uncompressed[counter++] = (byte) green;
+                            uncompressed[counter++] = (byte) blue;
+                            uncompressed[counter++] = (byte) (rgb>>24);
+                        }else {
+                            // samples per pixel is 3
                             uncompressed[counter++] = (byte) red;
                             uncompressed[counter++] = (byte) green;
                             uncompressed[counter++] = (byte) blue;
