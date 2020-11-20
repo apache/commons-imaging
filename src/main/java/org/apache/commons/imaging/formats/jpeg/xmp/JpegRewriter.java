@@ -235,7 +235,7 @@ public class JpegRewriter extends BinaryFileParser {
 
         for (final T piece : segments) {
             if (piece instanceof JFIFPieceSegment) {
-                if (filter.filter((JFIFPieceSegment) piece) ^ !reverse) {
+                if (filter.filter((JFIFPieceSegment) piece) == reverse) {
                     result.add(piece);
                 }
             } else if (!reverse) {
