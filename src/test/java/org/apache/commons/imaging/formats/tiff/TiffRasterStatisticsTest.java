@@ -21,6 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Arrays;
+
 import org.junit.jupiter.api.Test;
 
 /**
@@ -98,9 +100,7 @@ public class TiffRasterStatisticsTest {
         assertNotEquals(0, stat0.getMeanValue());
 
         float[] zero = new float[100];
-        for (int i = 0; i < zero.length; i++) {
-            zero[i] = 10;
-        }
+        Arrays.fill(zero, 10);
         TiffRasterData zeroData = new TiffRasterData(10, 10, zero);
         TiffRasterStatistics zeroStat = zeroData.getSimpleStatistics(10);
         assertEquals(0.0f, zeroStat.getMeanValue(),
