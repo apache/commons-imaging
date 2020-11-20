@@ -80,19 +80,24 @@ class PixelParserBitFields extends PixelParserSimple {
     public int getNextRGB() throws ImageReadException, IOException {
         int data;
 
-        if (bhi.bitsPerPixel == 8) {
+        switch (bhi.bitsPerPixel) {
+        case 8:
             data = 0xff & imageData[bytecount + 0];
             bytecount += 1;
-        } else if (bhi.bitsPerPixel == 24) {
+            break;
+        case 24:
             data = read3Bytes("Pixel", is, "BMP Image Data", ByteOrder.LITTLE_ENDIAN);
             bytecount += 3;
-        } else if (bhi.bitsPerPixel == 32) {
+            break;
+        case 32:
             data = read4Bytes("Pixel", is, "BMP Image Data", ByteOrder.LITTLE_ENDIAN);
             bytecount += 4;
-        } else if (bhi.bitsPerPixel == 16) {
+            break;
+        case 16:
             data = read2Bytes("Pixel", is, "BMP Image Data", ByteOrder.LITTLE_ENDIAN);
             bytecount += 2;
-        } else {
+            break;
+        default:
             throw new ImageReadException("Unknown BitsPerPixel: " + bhi.bitsPerPixel);
         }
 

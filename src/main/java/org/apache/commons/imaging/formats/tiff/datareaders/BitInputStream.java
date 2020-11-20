@@ -95,35 +95,33 @@ class BitInputStream extends InputStream {
          * (may be all) of the files will be of Little Endian.
          */
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
-            if (count == 16) {
+            switch (count) {
+            case 16:
                 bytesRead += 2;
                 return (is.read() << 8) | (is.read() << 0);
-            }
-
-            if (count == 24) {
+            case 24:
                 bytesRead += 3;
                 return (is.read() << 16) | (is.read() << 8) | (is.read() << 0);
-            }
-
-            if (count == 32) {
+            case 32:
                 bytesRead += 4;
                 return (is.read() << 24) | (is.read() << 16) | (is.read() << 8)
                         | (is.read() << 0);
+            default:
+                break;
             }
         } else {
-            if (count == 16) {
+            switch (count) {
+            case 16:
                 bytesRead += 2;
                 return ((is.read() << 0) | (is.read() << 8));
-            }
-
-            if (count == 24) {
+            case 24:
                 bytesRead += 3;
                 return ((is.read() << 0) | (is.read() << 8) | (is.read() << 16));
-            }
-
-            if (count == 32) {
+            case 32:
                 bytesRead += 4;
                 return ((is.read() << 0) | (is.read() << 8) | (is.read() << 16) | (is.read() << 24));
+            default:
+                break;
             }
         }
 

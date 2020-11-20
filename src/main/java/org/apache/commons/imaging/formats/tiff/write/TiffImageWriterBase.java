@@ -513,19 +513,25 @@ public abstract class TiffImageWriterBase {
             directory.add(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL,
                     (short) samplesPerPixel);
 
-            if (samplesPerPixel == 3) {
+            switch (samplesPerPixel) {
+            case 3:
                 directory.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE,
                         (short) bitsPerSample, (short) bitsPerSample,
                         (short) bitsPerSample);
-            }else if (samplesPerPixel == 4) {
+                break;
+            case 4:
                 directory.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE,
                         (short) bitsPerSample, (short) bitsPerSample,
                         (short) bitsPerSample, (short) bitsPerSample);
                 directory.add(TiffTagConstants.TIFF_TAG_EXTRA_SAMPLES,
                     (short)TiffTagConstants.EXTRA_SAMPLE_UNASSOCIATED_ALPHA);
-            } else if (samplesPerPixel == 1) {
+                break;
+            case 1:
                 directory.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE,
                         (short) bitsPerSample);
+                break;
+            default:
+                break;
             }
             // {
             // stripOffsetsField = new WriteField(TIFF_TAG_STRIP_OFFSETS,

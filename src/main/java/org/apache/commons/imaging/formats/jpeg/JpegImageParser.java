@@ -172,24 +172,32 @@ public class JpegImageParser extends ImageParser implements XmpEmbeddable {
                     return true;
                 }
 
-                if (marker == JpegConstants.JPEG_APP13_MARKER) {
+                switch (marker) {
+                case JpegConstants.JPEG_APP13_MARKER:
                     // Debug.debug("app 13 segment data", segmentData.length);
                     result.add(new App13Segment(parser, marker, segmentData));
-                } else if (marker == JpegConstants.JPEG_APP14_MARKER) {
+                    break;
+                case JpegConstants.JPEG_APP14_MARKER:
                     result.add(new App14Segment(marker, segmentData));
-                } else if (marker == JpegConstants.JPEG_APP2_MARKER) {
+                    break;
+                case JpegConstants.JPEG_APP2_MARKER:
                     result.add(new App2Segment(marker, segmentData));
-                } else if (marker == JpegConstants.JFIF_MARKER) {
+                    break;
+                case JpegConstants.JFIF_MARKER:
                     result.add(new JfifSegment(marker, segmentData));
-                } else if (Arrays.binarySearch(sofnSegments, marker) >= 0) {
-                    result.add(new SofnSegment(marker, segmentData));
-                } else if (marker == JpegConstants.DQT_MARKER) {
-                    result.add(new DqtSegment(marker, segmentData));
-                } else if ((marker >= JpegConstants.JPEG_APP1_MARKER)
-                        && (marker <= JpegConstants.JPEG_APP15_MARKER)) {
-                    result.add(new UnknownSegment(marker, segmentData));
-                } else if (marker == JpegConstants.COM_MARKER) {
-                    result.add(new ComSegment(marker, segmentData));
+                    break;
+                default:
+                    if (Arrays.binarySearch(sofnSegments, marker) >= 0) {
+                        result.add(new SofnSegment(marker, segmentData));
+                    } else if (marker == JpegConstants.DQT_MARKER) {
+                        result.add(new DqtSegment(marker, segmentData));
+                    } else if ((marker >= JpegConstants.JPEG_APP1_MARKER)
+                            && (marker <= JpegConstants.JPEG_APP15_MARKER)) {
+                        result.add(new UnknownSegment(marker, segmentData));
+                    } else if (marker == JpegConstants.COM_MARKER) {
+                        result.add(new ComSegment(marker, segmentData));
+                    }
+                    break;
                 }
 
                 if (returnAfterFirst) {
@@ -822,16 +830,22 @@ public class JpegImageParser extends ImageParser implements XmpEmbeddable {
         // JFIF is meant to win but in them APP14 is clearly right, so make it win.
         if (app14Segment != null && app14Segment.isAdobeJpegSegment()) {
             final int colorTransform = app14Segment.getAdobeColorTransform();
-            if (colorTransform == App14Segment.ADOBE_COLOR_TRANSFORM_UNKNOWN) {
+            switch (colorTransform) {
+            case App14Segment.ADOBE_COLOR_TRANSFORM_UNKNOWN:
                 if (numberOfComponents == 3) {
                     colorType = ImageInfo.ColorType.RGB;
                 } else if (numberOfComponents == 4) {
                     colorType = ImageInfo.ColorType.CMYK;
                 }
-            } else if (colorTransform == App14Segment.ADOBE_COLOR_TRANSFORM_YCbCr) {
+                break;
+            case App14Segment.ADOBE_COLOR_TRANSFORM_YCbCr:
                 colorType = ImageInfo.ColorType.YCbCr;
-            } else if (colorTransform == App14Segment.ADOBE_COLOR_TRANSFORM_YCCK) {
+                break;
+            case App14Segment.ADOBE_COLOR_TRANSFORM_YCCK:
                 colorType = ImageInfo.ColorType.YCCK;
+                break;
+            default:
+                break;
             }
         } else if (jfifSegment != null) {
             if (numberOfComponents == 1) {
@@ -840,12 +854,16 @@ public class JpegImageParser extends ImageParser implements XmpEmbeddable {
                 colorType = ImageInfo.ColorType.YCbCr;
             }
         } else {
-            if (numberOfComponents == 1) {
+            switch (numberOfComponents) {
+            case 1:
                 colorType = ImageInfo.ColorType.GRAYSCALE;
-            } else if (numberOfComponents == 2) {
+                break;
+            case 2:
                 colorType = ImageInfo.ColorType.GRAYSCALE;
                 transparent = true;
-            } else if (numberOfComponents == 3 || numberOfComponents == 4) {
+                break;
+            case 3:
+            case 4:
                 boolean have1 = false;
                 boolean have2 = false;
                 boolean have3 = false;
@@ -942,6 +960,9 @@ public class JpegImageParser extends ImageParser implements XmpEmbeddable {
                         }
                     }
                 }
+                break;
+            default:
+                break;
             }
         }
 

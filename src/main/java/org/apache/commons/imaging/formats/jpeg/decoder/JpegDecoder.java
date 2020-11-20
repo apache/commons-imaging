@@ -110,17 +110,20 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             final int[] preds = new int[sofnSegment.numberOfComponents];
             ColorModel colorModel;
             WritableRaster raster;
-            if (sofnSegment.numberOfComponents == 4) {
+            switch (sofnSegment.numberOfComponents) {
+            case 4:
                 colorModel = new DirectColorModel(24, 0x00ff0000, 0x0000ff00, 0x000000ff);
                 int bandMasks[] = new int[] { 0x00ff0000, 0x0000ff00, 0x000000ff };
                 raster = Raster.createPackedRaster(DataBuffer.TYPE_INT, sofnSegment.width, sofnSegment.height, bandMasks, null);
-            } else if (sofnSegment.numberOfComponents == 3) {
+                break;
+            case 3:
                 colorModel = new DirectColorModel(24, 0x00ff0000, 0x0000ff00,
                         0x000000ff);
                 raster = Raster.createPackedRaster(DataBuffer.TYPE_INT,
                         sofnSegment.width, sofnSegment.height, new int[] {
                                 0x00ff0000, 0x0000ff00, 0x000000ff }, null);
-            } else if (sofnSegment.numberOfComponents == 1) {
+                break;
+            case 1:
                 colorModel = new DirectColorModel(24, 0x00ff0000, 0x0000ff00,
                         0x000000ff);
                 raster = Raster.createPackedRaster(DataBuffer.TYPE_INT,
@@ -132,7 +135,8 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                 // Transparency.OPAQUE, DataBuffer.TYPE_BYTE);
                 // raster = colorModel.createCompatibleWritableRaster(
                 // sofnSegment.width, sofnSegment.height);
-            } else {
+                break;
+            default:
                 throw new ImageReadException(sofnSegment.numberOfComponents
                         + " components are invalid or unsupported");
             }

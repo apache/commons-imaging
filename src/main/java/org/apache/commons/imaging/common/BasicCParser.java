@@ -48,21 +48,26 @@ public class BasicCParser {
         final StringBuilder token = new StringBuilder();
         for (int c = is.read(); c != -1; c = is.read()) {
             if (inString) {
-                if (c == '\\') {
+                switch (c) {
+                case '\\':
                     token.append('\\');
                     hadBackSlash = !hadBackSlash;
-                } else if (c == '"') {
+                    break;
+                case '"':
                     token.append('"');
                     if (!hadBackSlash) {
                         return token.toString();
                     }
                     hadBackSlash = false;
-                } else if (c == '\r' || c == '\n') {
+                    break;
+                case '\r':
+                case '\n':
                     throw new ImageReadException(
                             "Unterminated string in XPM file");
-                } else {
+                default:
                     token.append((char) c);
                     hadBackSlash = false;
+                    break;
                 }
             } else if (inIdentifier) {
                 if (Character.isLetterOrDigit(c) || c == '_') {
@@ -141,7 +146,8 @@ public class BasicCParser {
                     }
                 }
             } else if (inSingleQuotes) {
-                if (c == '\\') {
+                switch (c) {
+                case '\\':
                     if (hadBackSlash) {
                         out.write('\\');
                         out.write('\\');
@@ -149,7 +155,8 @@ public class BasicCParser {
                     } else {
                         hadBackSlash = true;
                     }
-                } else if (c == '\'') {
+                    break;
+                case '\'':
                     if (hadBackSlash) {
                         out.write('\\');
                         hadBackSlash = false;
@@ -157,17 +164,21 @@ public class BasicCParser {
                         inSingleQuotes = false;
                     }
                     out.write('\'');
-                } else if (c == '\r' || c == '\n') {
+                    break;
+                case '\r':
+                case '\n':
                     throw new ImageReadException("Unterminated single quote in file");
-                } else {
+                default:
                     if (hadBackSlash) {
                         out.write('\\');
                         hadBackSlash = false;
                     }
                     out.write(c);
+                    break;
                 }
             } else if (inString) {
-                if (c == '\\') {
+                switch (c) {
+                case '\\':
                     if (hadBackSlash) {
                         out.write('\\');
                         out.write('\\');
@@ -175,7 +186,8 @@ public class BasicCParser {
                     } else {
                         hadBackSlash = true;
                     }
-                } else if (c == '"') {
+                    break;
+                case '"':
                     if (hadBackSlash) {
                         out.write('\\');
                         hadBackSlash = false;
@@ -183,14 +195,17 @@ public class BasicCParser {
                         inString = false;
                     }
                     out.write('"');
-                } else if (c == '\r' || c == '\n') {
+                    break;
+                case '\r':
+                case '\n':
                     throw new ImageReadException("Unterminated string in file");
-                } else {
+                default:
                     if (hadBackSlash) {
                         out.write('\\');
                         hadBackSlash = false;
                     }
                     out.write(c);
+                    break;
                 }
             } else if (inDirective) {
                 if (c == '\r' || c == '\n') {
@@ -210,38 +225,44 @@ public class BasicCParser {
                     directiveBuffer.append((char) c);
                 }
             } else {
-                if (c == '/') {
+                switch (c) {
+                case '/':
                     if (hadSlash) {
                         out.write('/');
                     }
                     hadSlash = true;
-                } else if (c == '*') {
+                    break;
+                case '*':
                     if (hadSlash) {
                         inComment = true;
                         hadSlash = false;
                     } else {
                         out.write(c);
                     }
-                } else if (c == '\'') {
+                    break;
+                case '\'':
                     if (hadSlash) {
                         out.write('/');
                     }
                     hadSlash = false;
                     out.write(c);
                     inSingleQuotes = true;
-                } else if (c == '"') {
+                    break;
+                case '"':
                     if (hadSlash) {
                         out.write('/');
                     }
                     hadSlash = false;
                     out.write(c);
                     inString = true;
-                } else if (c == '#') {
+                    break;
+                case '#':
                     if (defines == null) {
                         throw new ImageReadException("Unexpected preprocessor directive");
                     }
                     inDirective = true;
-                } else {
+                    break;
+                default:
                     if (hadSlash) {
                         out.write('/');
                     }
@@ -251,6 +272,7 @@ public class BasicCParser {
                     if (c != ' ' && c != '\t' && c != '\r' && c != '\n') {
                         seenFirstComment = true;
                     }
+                    break;
                 }
             }
         }
@@ -326,42 +348,58 @@ public class BasicCParser {
                                         + "hex constant invalid", nfe);
                     }
                     stringBuilder.append((char) constant);
-                } else if (c == '0' || c == '1' || c == '2' || c == '3'
-                        || c == '4' || c == '5' || c == '6' || c == '7') {
-                    int length = 1;
-                    if (i + 1 < string.length() && '0' <= string.charAt(i + 1)
-                            && string.charAt(i + 1) <= '7') {
-                        ++length;
+                } else
+                    switch (c) {
+                    case '0':
+                    case '1':
+                    case '2':
+                    case '3':
+                    case '4':
+                    case '5':
+                    case '6':
+                    case '7':
+                        int length = 1;
+                        if (i + 1 < string.length() && '0' <= string.charAt(i + 1)
+                                && string.charAt(i + 1) <= '7') {
+                            ++length;
+                        }
+                        if (i + 2 < string.length() && '0' <= string.charAt(i + 2)
+                                && string.charAt(i + 2) <= '7') {
+                            ++length;
+                        }
+                        int constant = 0;
+                        for (int j = 0; j < length; j++) {
+                            constant *= 8;
+                            constant += (string.charAt(i + j) - '0');
+                        }
+                        i += length - 1;
+                        stringBuilder.append((char) constant);
+                        break;
+                    case 'a':
+                        stringBuilder.append((char) 0x07);
+                        break;
+                    case 'b':
+                        stringBuilder.append((char) 0x08);
+                        break;
+                    case 'f':
+                        stringBuilder.append((char) 0x0c);
+                        break;
+                    case 'n':
+                        stringBuilder.append((char) 0x0a);
+                        break;
+                    case 'r':
+                        stringBuilder.append((char) 0x0d);
+                        break;
+                    case 't':
+                        stringBuilder.append((char) 0x09);
+                        break;
+                    case 'v':
+                        stringBuilder.append((char) 0x0b);
+                        break;
+                    default:
+                        throw new ImageReadException("Parsing XPM file failed, "
+                                + "invalid escape sequence");
                     }
-                    if (i + 2 < string.length() && '0' <= string.charAt(i + 2)
-                            && string.charAt(i + 2) <= '7') {
-                        ++length;
-                    }
-                    int constant = 0;
-                    for (int j = 0; j < length; j++) {
-                        constant *= 8;
-                        constant += (string.charAt(i + j) - '0');
-                    }
-                    i += length - 1;
-                    stringBuilder.append((char) constant);
-                } else if (c == 'a') {
-                    stringBuilder.append((char) 0x07);
-                } else if (c == 'b') {
-                    stringBuilder.append((char) 0x08);
-                } else if (c == 'f') {
-                    stringBuilder.append((char) 0x0c);
-                } else if (c == 'n') {
-                    stringBuilder.append((char) 0x0a);
-                } else if (c == 'r') {
-                    stringBuilder.append((char) 0x0d);
-                } else if (c == 't') {
-                    stringBuilder.append((char) 0x09);
-                } else if (c == 'v') {
-                    stringBuilder.append((char) 0x0b);
-                } else {
-                    throw new ImageReadException("Parsing XPM file failed, "
-                            + "invalid escape sequence");
-                }
                 hadBackSlash = false;
             } else {
                 if (c == '\\') {

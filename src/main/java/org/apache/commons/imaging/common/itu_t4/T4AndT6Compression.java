@@ -247,21 +247,29 @@ public final class T4AndT6Compression {
           final int a1b1 = a1 - b1;
           if (-3 <= a1b1 && a1b1 <= 3) {
               T4_T6_Tables.Entry entry;
-              if (a1b1 == -3) {
-                  entry = T4_T6_Tables.VL3;
-              } else if (a1b1 == -2) {
-                  entry = T4_T6_Tables.VL2;
-              } else if (a1b1 == -1) {
-                  entry = T4_T6_Tables.VL1;
-              } else if (a1b1 == 0) {
-                  entry = T4_T6_Tables.V0;
-              } else if (a1b1 == 1) {
-                  entry = T4_T6_Tables.VR1;
-              } else if (a1b1 == 2) {
-                  entry = T4_T6_Tables.VR2;
-              } else {
-                  entry = T4_T6_Tables.VR3;
-              }
+              switch (a1b1) {
+            case -3:
+                entry = T4_T6_Tables.VL3;
+                break;
+            case -2:
+                entry = T4_T6_Tables.VL2;
+                break;
+            case -1:
+                entry = T4_T6_Tables.VL1;
+                break;
+            case 0:
+                entry = T4_T6_Tables.V0;
+                break;
+            case 1:
+                entry = T4_T6_Tables.VR1;
+                break;
+            case 2:
+                entry = T4_T6_Tables.VR2;
+                break;
+            default:
+                entry = T4_T6_Tables.VR3;
+                break;
+            }
               entry.writeBits(outputStream);
               return a1;
 
