@@ -123,7 +123,6 @@ public class ExifRewriter extends BinaryFileParser {
         public final byte[] imageData;
 
         JFIFPieceImageData(final byte[] markerBytes, final byte[] imageData) {
-            super();
             this.markerBytes = markerBytes;
             this.imageData = imageData;
         }

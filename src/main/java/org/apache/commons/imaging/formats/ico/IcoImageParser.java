@@ -533,7 +533,6 @@ public class IcoImageParser extends ImageParser {
         public final IconData[] iconDatas;
 
         ImageContents(final FileHeader fileHeader, final IconData[] iconDatas) {
-            super();
             this.fileHeader = fileHeader;
             this.iconDatas = iconDatas;
         }

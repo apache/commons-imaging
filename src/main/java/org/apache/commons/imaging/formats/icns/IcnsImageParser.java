@@ -205,7 +205,6 @@ public class IcnsImageParser extends ImageParser {
         public final IcnsElement[] icnsElements;
 
         IcnsContents(final IcnsHeader icnsHeader, final IcnsElement[] icnsElements) {
-            super();
             this.icnsHeader = icnsHeader;
             this.icnsElements = icnsElements;
         }

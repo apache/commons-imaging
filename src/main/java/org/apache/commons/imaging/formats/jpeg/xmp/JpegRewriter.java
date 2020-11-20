@@ -155,7 +155,6 @@ public class JpegRewriter extends BinaryFileParser {
         private final byte[] imageData;
 
         JFIFPieceImageData(final byte[] markerBytes, final byte[] imageData) {
-            super();
             this.markerBytes = markerBytes;
             this.imageData = imageData;
         }

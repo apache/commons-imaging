@@ -39,7 +39,6 @@ public final class TiffOutputSet {
     }
 
     public TiffOutputSet(final ByteOrder byteOrder) {
-        super();
         this.byteOrder = byteOrder;
     }
 

@@ -44,7 +44,6 @@ class TiffOutputSummary {
         public final TiffOutputField itemOffsetField;
 
         OffsetItem(final TiffOutputItem item, final TiffOutputField itemOffsetField) {
-            super();
             this.itemOffsetField = itemOffsetField;
             this.item = item;
         }
