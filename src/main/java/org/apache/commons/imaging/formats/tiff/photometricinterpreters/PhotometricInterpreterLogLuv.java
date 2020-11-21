@@ -98,7 +98,7 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
      * @see <a href="https://en.wikipedia.org/wiki/CIELAB_color_space">CIELAB color space</a>
      * @see <a href="https://en.wikipedia.org/wiki/White_point">White point</a>
      */
-    TristimulusValues getTristimulusValues(int cieL, int cieA, int cieB) {
+    TristimulusValues getTristimulusValues(final int cieL, final int cieA, final int cieB) {
         float var_Y = ((cieL * 100.0f / 255.0f) + 16.0f) / 116.0f;
         float var_X = cieA / 500.0f + var_Y;
         float var_Z = var_Y - cieB / 200.0f;
@@ -149,7 +149,7 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
      * @return RGB values
      * @see <a href="https://en.wikipedia.org/wiki/CIELAB_color_space">CIELAB color space</a>
      */
-    RgbValues getRgbValues(TristimulusValues tristimulusValues) {
+    RgbValues getRgbValues(final TristimulusValues tristimulusValues) {
         final float var_X = tristimulusValues.x / 100f; // X = From 0 to ref_X
         final float var_Y = tristimulusValues.y / 100f; // Y = From 0 to ref_Y
         final float var_Z = tristimulusValues.z / 100f; // Z = From 0 to ref_Y

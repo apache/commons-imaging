@@ -78,7 +78,7 @@ class JpegInputStream {
         if (!this.hasNext()) {
             throw new IllegalStateException("This stream hasn't any other value, all values were already read.");
         }
-        int value = this.interval[nextPos];
+        final int value = this.interval[nextPos];
         this.nextPos++;
         return value;
     }

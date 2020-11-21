@@ -52,7 +52,7 @@ public class GifReadTest extends GifBaseTest {
     @Disabled(value = "RoundtripTest has to be fixed before implementation can throw UnsupportedOperationException")
     @ParameterizedTest
     @MethodSource("data")
-    public void testMetadata(File imageFile) {
+    public void testMetadata(final File imageFile) {
         Assertions.assertThrows(UnsupportedOperationException.class, () -> {
             Imaging.getMetadata(imageFile);
         });
@@ -60,7 +60,7 @@ public class GifReadTest extends GifBaseTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testImageInfo(File imageFile) throws Exception {
+    public void testImageInfo(final File imageFile) throws Exception {
         final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
         assertNotNull(imageInfo);
         // TODO assert more
@@ -68,7 +68,7 @@ public class GifReadTest extends GifBaseTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testImageDimensions(File imageFile) throws Exception {
+    public void testImageDimensions(final File imageFile) throws Exception {
         final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
         final GifImageMetadata metadata = (GifImageMetadata) Imaging.getMetadata(imageFile);
         final List<BufferedImage> images = Imaging.getAllBufferedImages(imageFile);
@@ -92,7 +92,7 @@ public class GifReadTest extends GifBaseTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testBufferedImage(File imageFile) throws Exception {
+    public void testBufferedImage(final File imageFile) throws Exception {
         final BufferedImage image = Imaging.getBufferedImage(imageFile);
         assertNotNull(image);
         // TODO assert more
@@ -100,36 +100,36 @@ public class GifReadTest extends GifBaseTest {
 
     @ParameterizedTest
     @MethodSource("singleImageData")
-    public void testBufferedImagesForSingleImageGif(File imageFile) throws Exception {
+    public void testBufferedImagesForSingleImageGif(final File imageFile) throws Exception {
         final List<BufferedImage> images = Imaging.getAllBufferedImages(imageFile);
         assertTrue(images.size() == 1);
     }
 
     @ParameterizedTest
     @MethodSource("animatedImageData")
-    public void testBufferedImagesForAnimatedImageGif(File imageFile) throws Exception {
+    public void testBufferedImagesForAnimatedImageGif(final File imageFile) throws Exception {
         final List<BufferedImage> images = Imaging.getAllBufferedImages(imageFile);
         assertTrue(images.size() > 1);
     }
 
     @Test
     public void testCreateMetadataWithDisposalMethods() {
-        for(DisposalMethod disposalMethod : DisposalMethod.values()) {
-            GifImageMetadataItem metadataItem = new GifImageMetadataItem(0, 0, 0, disposalMethod);
+        for(final DisposalMethod disposalMethod : DisposalMethod.values()) {
+            final GifImageMetadataItem metadataItem = new GifImageMetadataItem(0, 0, 0, disposalMethod);
             Assertions.assertEquals(disposalMethod, metadataItem.getDisposalMethod());
         }
     }
 
     @Test
     public void testConvertValidDisposalMethodValues() throws ImageReadException {
-        DisposalMethod unspecified = GifImageParser.createDisposalMethodFromIntValue(0);
-        DisposalMethod doNotDispose = GifImageParser.createDisposalMethodFromIntValue(1);
-        DisposalMethod restoreToBackground = GifImageParser.createDisposalMethodFromIntValue(2);
-        DisposalMethod restoreToPrevious = GifImageParser.createDisposalMethodFromIntValue(3);
-        DisposalMethod toBeDefined1 = GifImageParser.createDisposalMethodFromIntValue(4);
-        DisposalMethod toBeDefined2 = GifImageParser.createDisposalMethodFromIntValue(5);
-        DisposalMethod toBeDefined3 = GifImageParser.createDisposalMethodFromIntValue(6);
-        DisposalMethod toBeDefined4 = GifImageParser.createDisposalMethodFromIntValue(7);
+        final DisposalMethod unspecified = GifImageParser.createDisposalMethodFromIntValue(0);
+        final DisposalMethod doNotDispose = GifImageParser.createDisposalMethodFromIntValue(1);
+        final DisposalMethod restoreToBackground = GifImageParser.createDisposalMethodFromIntValue(2);
+        final DisposalMethod restoreToPrevious = GifImageParser.createDisposalMethodFromIntValue(3);
+        final DisposalMethod toBeDefined1 = GifImageParser.createDisposalMethodFromIntValue(4);
+        final DisposalMethod toBeDefined2 = GifImageParser.createDisposalMethodFromIntValue(5);
+        final DisposalMethod toBeDefined3 = GifImageParser.createDisposalMethodFromIntValue(6);
+        final DisposalMethod toBeDefined4 = GifImageParser.createDisposalMethodFromIntValue(7);
         Assertions.assertEquals(unspecified, DisposalMethod.UNSPECIFIED);
         Assertions.assertEquals(doNotDispose, DisposalMethod.DO_NOT_DISPOSE);
         Assertions.assertEquals(restoreToBackground, DisposalMethod.RESTORE_TO_BACKGROUND);

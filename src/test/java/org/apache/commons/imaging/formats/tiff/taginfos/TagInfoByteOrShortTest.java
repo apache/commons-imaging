@@ -28,22 +28,22 @@ public class TagInfoByteOrShortTest {
 
     @Test
     public void testEncodeValueTakingByteOrderAndByteArrayOne() {
-        TiffDirectoryType tiffDirectoryType = TiffDirectoryType.EXIF_DIRECTORY_MAKER_NOTES;
-        TagInfoByteOrShort tagInfoByteOrShort = new TagInfoByteOrShort("r", 500, 500, tiffDirectoryType);
-        ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
-        short[] shortArray = new short[2];
-        byte[] byteArray = tagInfoByteOrShort.encodeValue(byteOrder, shortArray);
+        final TiffDirectoryType tiffDirectoryType = TiffDirectoryType.EXIF_DIRECTORY_MAKER_NOTES;
+        final TagInfoByteOrShort tagInfoByteOrShort = new TagInfoByteOrShort("r", 500, 500, tiffDirectoryType);
+        final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
+        final short[] shortArray = new short[2];
+        final byte[] byteArray = tagInfoByteOrShort.encodeValue(byteOrder, shortArray);
 
         assertArrayEquals(new byte[]{(byte) 0, (byte) 0, (byte) 0, (byte) 0}, byteArray);
     }
 
     @Test
     public void testEncodeValueTakingByteOrderAndByteArrayTwo() {
-        TiffDirectoryType tiffDirectoryType = TiffDirectoryType.EXIF_DIRECTORY_MAKER_NOTES;
-        TagInfoByteOrShort tagInfoByteOrShort = new TagInfoByteOrShort("r", 500, 500, tiffDirectoryType);
-        ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
-        byte[] byteArray = new byte[2];
-        byte[] byteArrayTwo = tagInfoByteOrShort.encodeValue(byteOrder, byteArray);
+        final TiffDirectoryType tiffDirectoryType = TiffDirectoryType.EXIF_DIRECTORY_MAKER_NOTES;
+        final TagInfoByteOrShort tagInfoByteOrShort = new TagInfoByteOrShort("r", 500, 500, tiffDirectoryType);
+        final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
+        final byte[] byteArray = new byte[2];
+        final byte[] byteArrayTwo = tagInfoByteOrShort.encodeValue(byteOrder, byteArray);
 
         assertSame(byteArrayTwo, byteArray);
     }

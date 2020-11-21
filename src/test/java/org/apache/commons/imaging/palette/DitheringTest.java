@@ -32,13 +32,13 @@ public class DitheringTest {
 
   @Test
   public void testApplyFloydSteinbergDitheringWithNonNullOne() throws ImageWriteException {
-      BufferedImage bufferedImage = new BufferedImage(8, 8, 8);
+      final BufferedImage bufferedImage = new BufferedImage(8, 8, 8);
       bufferedImage.setRGB(2, 2, 2);
-      List<ColorSpaceSubset> linkedList = new LinkedList<>();
-      ColorSpaceSubset colorSpaceSubset = new ColorSpaceSubset((-234), (-352));
+      final List<ColorSpaceSubset> linkedList = new LinkedList<>();
+      final ColorSpaceSubset colorSpaceSubset = new ColorSpaceSubset((-234), (-352));
       colorSpaceSubset.rgb = 8;
       linkedList.add(colorSpaceSubset);
-      QuantizedPalette quantizedPalette = new QuantizedPalette(linkedList, 8);
+      final QuantizedPalette quantizedPalette = new QuantizedPalette(linkedList, 8);
       Dithering.applyFloydSteinbergDithering(bufferedImage, quantizedPalette);
 
       assertEquals(-16777208, bufferedImage.getRGB(0,0) );
@@ -49,12 +49,12 @@ public class DitheringTest {
 
   @Test
   public void testApplyFloydSteinbergDitheringWithNonNullTwo() throws ImageWriteException {
-      BufferedImage bufferedImage = new BufferedImage(3, 3, 3);
+      final BufferedImage bufferedImage = new BufferedImage(3, 3, 3);
       bufferedImage.setRGB(1, 2, 4);
-      List<ColorSpaceSubset> linkedList = new LinkedList<>();
-      ColorSpaceSubset colorSpaceSubset = new ColorSpaceSubset((-234), (-352));
+      final List<ColorSpaceSubset> linkedList = new LinkedList<>();
+      final ColorSpaceSubset colorSpaceSubset = new ColorSpaceSubset((-234), (-352));
       linkedList.add(colorSpaceSubset);
-      QuantizedPalette quantizedPalette = new QuantizedPalette(linkedList, 3);
+      final QuantizedPalette quantizedPalette = new QuantizedPalette(linkedList, 3);
       Dithering.applyFloydSteinbergDithering(bufferedImage, quantizedPalette);
 
       assertEquals(-1, bufferedImage.getRGB(0,0) );

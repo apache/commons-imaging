@@ -68,7 +68,7 @@ public class ImagingGuessFormatTest extends ImagingTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testGuessFormat(ImageFormats expectedFormat, String pathToFile) throws Exception {
+    public void testGuessFormat(final ImageFormats expectedFormat, final String pathToFile) throws Exception {
         final String imagePath = FilenameUtils.separatorsToSystem(pathToFile);
         final File imageFile = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, imagePath);
 

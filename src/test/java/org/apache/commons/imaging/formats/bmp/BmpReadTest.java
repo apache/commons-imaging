@@ -44,7 +44,7 @@ public class BmpReadTest extends BmpBaseTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testImageInfo(File imageFile) throws ImageReadException, IOException {
+    public void testImageInfo(final File imageFile) throws ImageReadException, IOException {
         final Map<String, Object> params = Collections.emptyMap();
         final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
         assertNotNull(imageInfo);
@@ -54,7 +54,7 @@ public class BmpReadTest extends BmpBaseTest {
     @Disabled(value = "RoundtripTest has to be fixed before implementation can throw UnsupportedOperationException")
     @ParameterizedTest
     @MethodSource("data")
-    public void testMetaData(File imageFile) {
+    public void testMetaData(final File imageFile) {
         Assertions.assertThrows(UnsupportedOperationException.class, () -> {
             Imaging.getMetadata(imageFile);
         });
@@ -62,7 +62,7 @@ public class BmpReadTest extends BmpBaseTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testBufferedImage(File imageFile) throws Exception {
+    public void testBufferedImage(final File imageFile) throws Exception {
         final BufferedImage image = Imaging.getBufferedImage(imageFile);
         assertNotNull(image);
         // TODO assert more
@@ -77,7 +77,7 @@ public class BmpReadTest extends BmpBaseTest {
      */
     @Test
     public void testGetMaskShiftZeroMask() throws ImageReadException, IOException {
-        File inputFile = new File(ImagingTestConstants.TEST_IMAGE_FOLDER +
+        final File inputFile = new File(ImagingTestConstants.TEST_IMAGE_FOLDER +
                 "/bmp/5/@broken/timeout-bd15dbfa26b4e88070de540c6603039e8a88626f");
         new BmpImageParser().dumpImageFile(new ByteSourceFile(inputFile));
     }

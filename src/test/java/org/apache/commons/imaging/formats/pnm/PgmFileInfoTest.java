@@ -40,7 +40,7 @@ public class PgmFileInfoTest {
 
     @Test
     public void testGetBitDepth() throws ImageReadException {
-        PgmFileInfo pgmFileInfo = new PgmFileInfo(65535, 65535, false, 65535);
+        final PgmFileInfo pgmFileInfo = new PgmFileInfo(65535, 65535, false, 65535);
 
         assertEquals(65535, pgmFileInfo.getBitDepth());
     }

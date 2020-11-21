@@ -41,7 +41,7 @@ public class IptcDumpTest extends IptcBaseTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void test(File imageFile) throws Exception {
+    public void test(final File imageFile) throws Exception {
         final Map<String, Object> params = new HashMap<>();
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
         params.put(ImagingConstants.PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));

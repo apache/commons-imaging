@@ -68,9 +68,9 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
     public TiffFloatingPointRoundTripTest() {
         // populate the image data
         for (int iCol = 0; iCol < width; iCol++) {
-            float s = iCol / (float) (width - 1);
+            final float s = iCol / (float) (width - 1);
             for (int iRow = 0; iRow < height; iRow++) {
-                int index = iRow * width + iCol;
+                final int index = iRow * width + iCol;
                 f[index] = s;
             }
         }
@@ -79,12 +79,12 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
         // floating-point input data.  The ultimate goal of the test is to verify
         // that the values read back from the TIFF file match the input.
         try {
-            PhotometricInterpreterFloat pi = getPhotometricInterpreter();
-            ImageBuilder builder = new ImageBuilder(width, height, false);
-            int samples[] = new int[1];
+            final PhotometricInterpreterFloat pi = getPhotometricInterpreter();
+            final ImageBuilder builder = new ImageBuilder(width, height, false);
+            final int samples[] = new int[1];
             for (int iCol = 0; iCol < width; iCol++) {
                 for (int iRow = 0; iRow < height; iRow++) {
-                    int index = iRow * width + iCol;
+                    final int index = iRow * width + iCol;
                     samples[0] = Float.floatToRawIntBits(f[index]);
                     pi.interpretPixel(builder, samples, iCol, iRow);
                     argb[index] = builder.getRGB(iCol, iRow);
@@ -115,7 +115,7 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
         // TIFF datareaders classes.  So that format is not yet exercised.
         // Note also that the compressed floating-point with predictor=3
         // is processed in other tests, but not here.
-        File[] testFile = new File[8];
+        final File[] testFile = new File[8];
         testFile[0] = writeFile(32, ByteOrder.LITTLE_ENDIAN, false);
         testFile[1] = writeFile(64, ByteOrder.LITTLE_ENDIAN, false);
         testFile[2] = writeFile(32, ByteOrder.BIG_ENDIAN, false);
@@ -125,28 +125,28 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
         testFile[6] = writeFile(32, ByteOrder.BIG_ENDIAN, true);
         testFile[7] = writeFile(64, ByteOrder.BIG_ENDIAN, true);
         for (int i = 0; i < testFile.length; i++) {
-            String name = testFile[i].getName();
-            ByteSourceFile byteSource = new ByteSourceFile(testFile[i]);
-            TiffReader tiffReader = new TiffReader(true);
-            TiffContents contents = tiffReader.readDirectories(
+            final String name = testFile[i].getName();
+            final ByteSourceFile byteSource = new ByteSourceFile(testFile[i]);
+            final TiffReader tiffReader = new TiffReader(true);
+            final TiffContents contents = tiffReader.readDirectories(
                 byteSource,
                 true, // indicates that application should read image data, if present
                 FormatCompliance.getDefault());
-            TiffDirectory directory = contents.directories.get(0);
-            PhotometricInterpreterFloat pi = getPhotometricInterpreter();
-            HashMap<String, Object> params = new HashMap<>();
+            final TiffDirectory directory = contents.directories.get(0);
+            final PhotometricInterpreterFloat pi = getPhotometricInterpreter();
+            final HashMap<String, Object> params = new HashMap<>();
             params.put(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER, pi);
-            ByteOrder byteOrder = tiffReader.getByteOrder();
-            BufferedImage bImage = directory.getTiffImage(byteOrder, params);
+            final ByteOrder byteOrder = tiffReader.getByteOrder();
+            final BufferedImage bImage = directory.getTiffImage(byteOrder, params);
             assertNotNull(bImage, "Failed to get image from " + name);
-            int[] pixel = new int[width * height];
+            final int[] pixel = new int[width * height];
             bImage.getRGB(0, 0, width, height, pixel, 0, width);
             for (int k = 0; k < pixel.length; k++) {
                 assertEquals(argb[k], pixel[k],
                     "Extracted data does not match original, test "
                     + i + ", index " + k);
             }
-            float meanValue = pi.getMeanFound();
+            final float meanValue = pi.getMeanFound();
             assertEquals(0.5, meanValue, 1.0e-5, "Invalid numeric values in " + name);
             // To write out an image file for inspection, use the following
             // (with appropriate adjustments for path and OS)
@@ -156,15 +156,15 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
         }
     }
 
-    private File writeFile(int bitsPerSample, ByteOrder byteOrder, boolean useTiles)
+    private File writeFile(final int bitsPerSample, final ByteOrder byteOrder, final boolean useTiles)
         throws IOException, ImageWriteException {
-        String name = String.format("FpRoundTrip_%2d_%s_%s.tiff",
+        final String name = String.format("FpRoundTrip_%2d_%s_%s.tiff",
             bitsPerSample,
             byteOrder == ByteOrder.LITTLE_ENDIAN ? "LE" : "BE",
             useTiles ? "Tiles" : "Strips");
-        File outputFile = new File(tempDir.toFile(), name);
+        final File outputFile = new File(tempDir.toFile(), name);
 
-        int bytesPerSample = bitsPerSample / 8;
+        final int bytesPerSample = bitsPerSample / 8;
         int nRowsInBlock;
         int nColsInBlock;
         int nBytesInBlock;
@@ -195,8 +195,8 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
         // NOTE:  At this time, Tile format is not supported.
         // When it is, modify the tags below to populate
         // TIFF_TAG_TILE_* appropriately.
-        TiffOutputSet outputSet = new TiffOutputSet(byteOrder);
-        TiffOutputDirectory outDir = outputSet.addRootDirectory();
+        final TiffOutputSet outputSet = new TiffOutputSet(byteOrder);
+        final TiffOutputDirectory outDir = outputSet.addRootDirectory();
         outDir.add(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH, width);
         outDir.add(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH, height);
         outDir.add(TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT,
@@ -237,7 +237,7 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
 
         try (FileOutputStream fos = new FileOutputStream(outputFile);
             BufferedOutputStream bos = new BufferedOutputStream(fos)) {
-            TiffImageWriterLossy writer = new TiffImageWriterLossy(byteOrder);
+            final TiffImageWriterLossy writer = new TiffImageWriterLossy(byteOrder);
             writer.write(bos, outputSet);
             bos.flush();
         }
@@ -261,26 +261,26 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
      * @return a valid array of equally sized array.
      */
     private byte[][] getBytesForOutput32(
-        float[] f, int width, int height,
-        int nRowsInBlock, int nColsInBlock,
-        ByteOrder byteOrder) {
-        int nColsOfBlocks = (width + nColsInBlock - 1) / nColsInBlock;
-        int nRowsOfBlocks = (height + nRowsInBlock + 1) / nRowsInBlock;
-        int bytesPerPixel = 4;
-        int nBlocks = nRowsOfBlocks * nColsOfBlocks;
-        int nBytesInBlock = bytesPerPixel * nRowsInBlock * nColsInBlock;
-        byte[][] blocks = new byte[nBlocks][nBytesInBlock];
+        final float[] f, final int width, final int height,
+        final int nRowsInBlock, final int nColsInBlock,
+        final ByteOrder byteOrder) {
+        final int nColsOfBlocks = (width + nColsInBlock - 1) / nColsInBlock;
+        final int nRowsOfBlocks = (height + nRowsInBlock + 1) / nRowsInBlock;
+        final int bytesPerPixel = 4;
+        final int nBlocks = nRowsOfBlocks * nColsOfBlocks;
+        final int nBytesInBlock = bytesPerPixel * nRowsInBlock * nColsInBlock;
+        final byte[][] blocks = new byte[nBlocks][nBytesInBlock];
         for (int i = 0; i < height; i++) {
-            int blockRow = i / nRowsInBlock;
-            int rowInBlock = i - blockRow * nRowsInBlock;
-            int blockOffset = rowInBlock * nColsInBlock;
+            final int blockRow = i / nRowsInBlock;
+            final int rowInBlock = i - blockRow * nRowsInBlock;
+            final int blockOffset = rowInBlock * nColsInBlock;
             for (int j = 0; j < width; j++) {
-                int sample = Float.floatToRawIntBits(f[i * width + j]);
-                int blockCol = j / nColsInBlock;
-                int colInBlock = j - blockCol * nColsInBlock;
-                int index = blockOffset + colInBlock;
-                int offset = index * bytesPerPixel;
-                byte[] b = blocks[blockRow * nColsOfBlocks + blockCol];
+                final int sample = Float.floatToRawIntBits(f[i * width + j]);
+                final int blockCol = j / nColsInBlock;
+                final int colInBlock = j - blockCol * nColsInBlock;
+                final int index = blockOffset + colInBlock;
+                final int offset = index * bytesPerPixel;
+                final byte[] b = blocks[blockRow * nColsOfBlocks + blockCol];
                 if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
                     b[offset] = (byte) (sample & 0xff);
                     b[offset + 1] = (byte) ((sample >> 8) & 0xff);
@@ -315,26 +315,26 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
      * @return a valid array of equally sized array.
      */
     private byte[][] getBytesForOutput64(
-        float[] f, int width, int height,
-        int nRowsInBlock, int nColsInBlock,
-        ByteOrder byteOrder) {
-        int nColsOfBlocks = (width + nColsInBlock - 1) / nColsInBlock;
-        int nRowsOfBlocks = (height + nRowsInBlock + 1) / nRowsInBlock;
-        int bytesPerPixel = 8;
-        int nBlocks = nRowsOfBlocks * nColsOfBlocks;
-        int nBytesInBlock = bytesPerPixel * nRowsInBlock * nColsInBlock;
-        byte[][] blocks = new byte[nBlocks][nBytesInBlock];
+        final float[] f, final int width, final int height,
+        final int nRowsInBlock, final int nColsInBlock,
+        final ByteOrder byteOrder) {
+        final int nColsOfBlocks = (width + nColsInBlock - 1) / nColsInBlock;
+        final int nRowsOfBlocks = (height + nRowsInBlock + 1) / nRowsInBlock;
+        final int bytesPerPixel = 8;
+        final int nBlocks = nRowsOfBlocks * nColsOfBlocks;
+        final int nBytesInBlock = bytesPerPixel * nRowsInBlock * nColsInBlock;
+        final byte[][] blocks = new byte[nBlocks][nBytesInBlock];
         for (int i = 0; i < height; i++) {
-            int blockRow = i / nRowsInBlock;
-            int rowInBlock = i - blockRow * nRowsInBlock;
-            int blockOffset = rowInBlock * nColsInBlock;
+            final int blockRow = i / nRowsInBlock;
+            final int rowInBlock = i - blockRow * nRowsInBlock;
+            final int blockOffset = rowInBlock * nColsInBlock;
             for (int j = 0; j < width; j++) {
-                long sample = Double.doubleToRawLongBits(f[i * width + j]);
-                int blockCol = j / nColsInBlock;
-                int colInBlock = j - blockCol * nColsInBlock;
-                int index = blockOffset + colInBlock;
-                int offset = index * bytesPerPixel;
-                byte[] b = blocks[blockRow * nColsOfBlocks + blockCol];
+                final long sample = Double.doubleToRawLongBits(f[i * width + j]);
+                final int blockCol = j / nColsInBlock;
+                final int colInBlock = j - blockCol * nColsInBlock;
+                final int index = blockOffset + colInBlock;
+                final int offset = index * bytesPerPixel;
+                final byte[] b = blocks[blockRow * nColsOfBlocks + blockCol];
                 if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
                     b[offset] = (byte) (sample & 0xff);
                     b[offset + 1] = (byte) ((sample >> 8) & 0xff);

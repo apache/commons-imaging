@@ -105,7 +105,7 @@ public class RationalNumberTest extends ImagingTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testRationalNumber(double testValue) {
+    public void testRationalNumber(final double testValue) {
         final RationalNumber rational = RationalNumber.valueOf(testValue);
         final double difference = Math.abs(testValue - rational.doubleValue());
 

@@ -45,7 +45,7 @@ class ByteSourceInputStreamTest {
         final File imageFile = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, imagePath);
         try(BufferedInputStream imageStream = new BufferedInputStream(new FileInputStream(imageFile))) {
          // ByteSourceInputStream is created inside of following method
-            BufferedImage bufferedImage = Imaging.getBufferedImage(imageStream,
+            final BufferedImage bufferedImage = Imaging.getBufferedImage(imageStream,
                     Collections.singletonMap(ImagingConstants.PARAM_KEY_FILENAME, ICO_IMAGE_FILE));
 
             assertEquals(bufferedImage.getWidth(), ICO_IMAGE_WIDTH);

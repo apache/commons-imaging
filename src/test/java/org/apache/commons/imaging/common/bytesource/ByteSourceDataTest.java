@@ -127,17 +127,17 @@ public class ByteSourceDataTest extends ByteSourceTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testByteSourceFileFactory(byte[] testByteArray) throws Exception {
+    public void testByteSourceFileFactory(final byte[] testByteArray) throws Exception {
         writeAndReadBytes(new ByteSourceFileFactory(), testByteArray);
     }
     @ParameterizedTest
     @MethodSource("data")
-    public void testByteSourceInputStreamFileFactory(byte[] testByteArray) throws Exception {
+    public void testByteSourceInputStreamFileFactory(final byte[] testByteArray) throws Exception {
         writeAndReadBytes(new ByteSourceInputStreamFileFactory(), testByteArray);
     }
     @ParameterizedTest
     @MethodSource("data")
-    public void testByteSourceInputStreamRawFactory(byte[] testByteArray) throws Exception {
+    public void testByteSourceInputStreamRawFactory(final byte[] testByteArray) throws Exception {
         writeAndReadBytes(new ByteSourceInputStreamRawFactory(), testByteArray);
     }
 }

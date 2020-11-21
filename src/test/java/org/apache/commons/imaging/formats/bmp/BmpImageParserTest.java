@@ -39,10 +39,10 @@ public class BmpImageParserTest {
      */
     @Test
     public void testImageWidthRounding() throws ImageReadException, IOException {
-        String file = "/images/bmp/IMAGING-264/test-72_6-dpi.bmp";
-        File bmp = new File(BmpImageParser.class.getResource(file).getFile());
+        final String file = "/images/bmp/IMAGING-264/test-72_6-dpi.bmp";
+        final File bmp = new File(BmpImageParser.class.getResource(file).getFile());
         final BmpImageParser parser = new BmpImageParser();
-        ImageInfo imageInfo = parser.getImageInfo(bmp, Collections.emptyMap());
+        final ImageInfo imageInfo = parser.getImageInfo(bmp, Collections.emptyMap());
         assertEquals(73, imageInfo.getPhysicalWidthDpi(), "Expected 72.6 resolution to be rounded to 73");
     }
 }

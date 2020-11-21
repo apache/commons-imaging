@@ -98,14 +98,14 @@ public final class DataReaderTiled extends ImageDataReader {
                 j1 = xLimit;
             }
             final int[] samples = new int[4];
-            int[] b = unpackFloatingPointSamples(
+            final int[] b = unpackFloatingPointSamples(
                 j1 - j0, i1 - i0, tileWidth, bytes,
                 predictor, bitsPerPixel, byteOrder);
             for (int i = i0; i < i1; i++) {
-                int row = i - startY;
-                int rowOffset = row * tileWidth;
+                final int row = i - startY;
+                final int rowOffset = row * tileWidth;
                 for (int j = j0; j < j1; j++) {
-                    int column = j - startX;
+                    final int column = j - startX;
                     samples[0] = b[rowOffset + column];
                     photometricInterpreter.interpretPixel(
                         imageBuilder, samples, j, i);
@@ -264,8 +264,8 @@ public final class DataReaderTiled extends ImageDataReader {
                 final byte[] compressed = imageData.tiles[tile].getData();
                 final byte[] decompressed = decompress(compressed, compression,
                         bytesPerTile, tileWidth, tileLength);
-                int x = iCol * tileWidth - x0;
-                int y = iRow * tileLength - y0;
+                final int x = iCol * tileWidth - x0;
+                final int y = iRow * tileLength - y0;
                 interpretTile(workingBuilder, decompressed, x, y, width, height);
             }
         }
@@ -305,7 +305,7 @@ public final class DataReaderTiled extends ImageDataReader {
             rasterWidth = width;
             rasterHeight = height;
         }
-        float[] rasterData = new float[rasterWidth * rasterHeight];
+        final float[] rasterData = new float[rasterWidth * rasterHeight];
 
         // tileWidth is the width of the tile
         // tileLength is the height of the tile
@@ -322,9 +322,9 @@ public final class DataReaderTiled extends ImageDataReader {
                 final byte[] compressed = imageData.tiles[tile].getData();
                 final byte[] decompressed = decompress(compressed, compression,
                     bytesPerTile, tileWidth, tileLength);
-                int x = iCol * tileWidth;
-                int y = iRow * tileLength;
-                int[] blockData = unpackFloatingPointSamples(
+                final int x = iCol * tileWidth;
+                final int y = iRow * tileLength;
+                final int[] blockData = unpackFloatingPointSamples(
                     tileWidth, tileLength, tileWidth,
                     decompressed,
                     predictor, bitsPerPixel, byteOrder);

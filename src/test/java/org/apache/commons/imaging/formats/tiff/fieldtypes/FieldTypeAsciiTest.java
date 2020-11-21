@@ -34,10 +34,10 @@ public class FieldTypeAsciiTest {
 
   @Test
   public void testCreatesFieldTypeAsciiAndCallsWriteData() {
-      FieldTypeAscii fieldTypeAscii = new FieldTypeAscii(0, "1");
-      byte[] byteArray = new byte[1];
-      ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
-      TiffField tiffField = new TiffField(0, 0, fieldTypeAscii, 0L, 0, byteArray, byteOrder, 1);
+      final FieldTypeAscii fieldTypeAscii = new FieldTypeAscii(0, "1");
+      final byte[] byteArray = new byte[1];
+      final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
+      final TiffField tiffField = new TiffField(0, 0, fieldTypeAscii, 0L, 0, byteArray, byteOrder, 1);
 
       Assertions.assertThrows(ImageWriteException.class, () -> {
           fieldTypeAscii.writeData(tiffField, byteOrder);
@@ -46,19 +46,19 @@ public class FieldTypeAsciiTest {
 
   @Test
   public void testCreatesFieldTypeAsciiAndWriteDataUsingByteArray() throws ImageWriteException {
-      FieldTypeAscii fieldTypeAscii = new FieldTypeAscii(0, "1");
-      byte[] byteArray = new byte[1];
-      ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
-      byte[] byteArrayTwo = fieldTypeAscii.writeData(byteArray, byteOrder);
+      final FieldTypeAscii fieldTypeAscii = new FieldTypeAscii(0, "1");
+      final byte[] byteArray = new byte[1];
+      final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
+      final byte[] byteArrayTwo = fieldTypeAscii.writeData(byteArray, byteOrder);
 
       assertArrayEquals(new byte[] {(byte)0, (byte)0}, byteArrayTwo);
   }
 
     @Test
     public void testCreatesFieldTypeAsciiAndWriteDataUsingString() throws ImageWriteException {
-        FieldTypeAscii fieldTypeAscii = new FieldTypeAscii(0, "1");
-        ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
-        byte[] byteArrayTwo = fieldTypeAscii.writeData("asdf", byteOrder);
+        final FieldTypeAscii fieldTypeAscii = new FieldTypeAscii(0, "1");
+        final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
+        final byte[] byteArrayTwo = fieldTypeAscii.writeData("asdf", byteOrder);
 
         assertArrayEquals(new byte[] {(byte)97, (byte)115, (byte)100, (byte)102, (byte)0}, byteArrayTwo);
     }

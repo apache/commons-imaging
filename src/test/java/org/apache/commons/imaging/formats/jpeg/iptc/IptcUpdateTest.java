@@ -52,7 +52,7 @@ public class IptcUpdateTest extends IptcBaseTest {
      */
     @ParameterizedTest
     @MethodSource("data")
-    public void testRemove(File imageFile) throws Exception {
+    public void testRemove(final File imageFile) throws Exception {
         final ByteSource byteSource = new ByteSourceFile(imageFile);
 
         final Map<String, Object> params = new HashMap<>();
@@ -73,7 +73,7 @@ public class IptcUpdateTest extends IptcBaseTest {
                 || outMetadata.getItems().size() == 0);
     }
 
-    public File removeIptc(final ByteSource byteSource, File imageFile) throws Exception {
+    public File removeIptc(final ByteSource byteSource, final File imageFile) throws Exception {
         final File noIptcFile = File.createTempFile(imageFile.getName() + ".iptc.remove.", ".jpg");
 
         try (OutputStream os = new BufferedOutputStream(new FileOutputStream(noIptcFile))) {
@@ -84,7 +84,7 @@ public class IptcUpdateTest extends IptcBaseTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testInsert(File imageFile) throws Exception {
+    public void testInsert(final File imageFile) throws Exception {
         final ByteSource byteSource = new ByteSourceFile(imageFile);
 
         final Map<String, Object> params = new HashMap<>();
@@ -125,7 +125,7 @@ public class IptcUpdateTest extends IptcBaseTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testUpdate(File imageFile) throws Exception {
+    public void testUpdate(final File imageFile) throws Exception {
         final ByteSource byteSource = new ByteSourceFile(imageFile);
 
         final Map<String, Object> params = new HashMap<>();
@@ -155,7 +155,7 @@ public class IptcUpdateTest extends IptcBaseTest {
         assertTrue(outMetadata.getItems().size() == 2);
     }
 
-    public File writeIptc(final ByteSource byteSource, final PhotoshopApp13Data newData, File imageFile) throws IOException, ImageReadException, ImageWriteException {
+    public File writeIptc(final ByteSource byteSource, final PhotoshopApp13Data newData, final File imageFile) throws IOException, ImageReadException, ImageWriteException {
         final File updated = File.createTempFile(imageFile.getName()
                 + ".iptc.update.", ".jpg");
         try (FileOutputStream fos = new FileOutputStream(updated);
@@ -167,7 +167,7 @@ public class IptcUpdateTest extends IptcBaseTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testNoChangeUpdate(File imageFile) throws Exception {
+    public void testNoChangeUpdate(final File imageFile) throws Exception {
         final ByteSource byteSource = new ByteSourceFile(imageFile);
 
         final Map<String, Object> params = new HashMap<>();

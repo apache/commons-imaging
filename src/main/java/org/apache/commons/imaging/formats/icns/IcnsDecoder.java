@@ -195,7 +195,7 @@ final class IcnsDecoder {
       throws ImageReadException {
         final List<BufferedImage> result = new ArrayList<>();
         for (int i = 0; i < icnsElements.length; i++) {
-            BufferedImage image = decodeImage(icnsElements, i);
+            final BufferedImage image = decodeImage(icnsElements, i);
             if (image != null) {
                 result.add(image);
             }
@@ -203,9 +203,9 @@ final class IcnsDecoder {
         return result;
     }
 
-    public static BufferedImage decodeImage(final IcnsImageParser.IcnsElement[] icnsElements, int index)
+    public static BufferedImage decodeImage(final IcnsImageParser.IcnsElement[] icnsElements, final int index)
             throws ImageReadException {
-        IcnsImageParser.IcnsElement imageElement = icnsElements[index];
+        final IcnsImageParser.IcnsElement imageElement = icnsElements[index];
         final IcnsType imageType = IcnsType.findImageType(imageElement.type);
         if (imageType == null) {
             return null;
@@ -226,11 +226,11 @@ final class IcnsDecoder {
             BufferedImage image = null;
             try {
                 image = Imaging.getBufferedImage(imageElement.data);
-            } catch (Exception ex) {
+            } catch (final Exception ex) {
                 if (imageType.getWidth() <= 32) {
                     try {
                         image = decodeImageImpl(imageType, imageElement, icnsElements);
-                    } catch (Exception ignored) { }
+                    } catch (final Exception ignored) { }
                 }
                 if (image == null) {
                     image = new BufferedImage(imageType.getWidth(), imageType.getHeight(), BufferedImage.TYPE_INT_ARGB);
@@ -242,9 +242,9 @@ final class IcnsDecoder {
         return decodeImageImpl(imageType, imageElement, icnsElements);
     }
 
-    private static BufferedImage decodeImageImpl(IcnsType imageType,
-                                                 IcnsElement imageElement,
-                                                 IcnsElement[] icnsElements) throws ImageReadException {
+    private static BufferedImage decodeImageImpl(final IcnsType imageType,
+                                                 final IcnsElement imageElement,
+                                                 final IcnsElement[] icnsElements) throws ImageReadException {
         final int expectedSize = (imageType.getWidth() * imageType.getHeight()
                                   * imageType.getBitsPerPixel() + 7) / 8;
         byte[] imageData;

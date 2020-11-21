@@ -58,10 +58,10 @@ public class TiffSubImageTest extends TiffBaseTest {
 
     @Test
     public void testBadSubImage()  throws ImageReadException, IOException{
-        File target = imageFileList.get(0);
+        final File target = imageFileList.get(0);
         final BufferedImage referenceImage = Imaging.getBufferedImage(target);
-        int width = referenceImage.getWidth();
-        int height = referenceImage.getHeight();
+        final int width = referenceImage.getWidth();
+        final int height = referenceImage.getHeight();
 
         final Map<String, Object> params = new HashMap<>();
         params.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, 0);
@@ -69,7 +69,7 @@ public class TiffSubImageTest extends TiffBaseTest {
         params.put(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, width);
         params.put(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, height);
 
-        BufferedImage image = Imaging.getBufferedImage(target, params);
+        final BufferedImage image = Imaging.getBufferedImage(target, params);
         assertEquals(image.getWidth(), width, "Improper width when sub-imaging entire image");
         assertEquals(image.getHeight(), height, "Improper height when sub-imaging entire image");
 
@@ -81,47 +81,47 @@ public class TiffSubImageTest extends TiffBaseTest {
         processBadParams(target, 0, 1, width, height, "sub-image height extends beyond bounds");
     }
 
-    private void processBadParams(File target, int x, int y, int width, int height, String comment) throws IOException{
+    private void processBadParams(final File target, final int x, final int y, final int width, final int height, final String comment) throws IOException{
         try{
             final Map<String, Object> params = new HashMap<>();
             params.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, x);
             params.put(TiffConstants.PARAM_KEY_SUBIMAGE_Y, y);
             params.put(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, width);
             params.put(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, height);
-            BufferedImage image = Imaging.getBufferedImage(target, params);
+            final BufferedImage image = Imaging.getBufferedImage(target, params);
             fail("Reading TIFF sub-image failed to detect bad parameter: "+comment);
-        }catch(ImageReadException ire){
+        }catch(final ImageReadException ire){
             // the test passed
         }
     }
 
     @Test
     public void testSubImageCorrectness() throws ImageReadException, IOException {
-        for(File target: imageFileList){
+        for(final File target: imageFileList){
             final BufferedImage referenceImage = Imaging.getBufferedImage(target);
-            int rW = referenceImage.getWidth();
-            int rH = referenceImage.getHeight();
+            final int rW = referenceImage.getWidth();
+            final int rH = referenceImage.getHeight();
             if(rW<3 || rH<3){
                 continue;
             }
-            int []rArgb = new int[rW*rH];
+            final int []rArgb = new int[rW*rH];
             referenceImage.getRGB(0, 0, rW, rH, rArgb, 0, rW);
             final Map<String, Object> params = new HashMap<>();
             params.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, 1);
             params.put(TiffConstants.PARAM_KEY_SUBIMAGE_Y, 1);
             params.put(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, rW-2);
             params.put(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, rH-2);
-            BufferedImage image = Imaging.getBufferedImage(target, params);
-            int iW = image.getWidth();
-            int iH = image.getHeight();
+            final BufferedImage image = Imaging.getBufferedImage(target, params);
+            final int iW = image.getWidth();
+            final int iH = image.getHeight();
             assertEquals(iW, rW-2, "Invalid subimage width");
             assertEquals(iH, rH-2, "Invalid subimage height");
-            int []iArgb= new int[iW*iH];
+            final int []iArgb= new int[iW*iH];
             image.getRGB(0, 0, iW, iH, iArgb, 0, iW);
             for(int i=0; i<iH; i++){
                 for(int j=0; j<iW; j++){
-                    int rTest = rArgb[(i+1)*rW+j+1];
-                    int iTest = iArgb[i*iW+j];
+                    final int rTest = rArgb[(i+1)*rW+j+1];
+                    final int iTest = iArgb[i*iW+j];
                     assertEquals(iTest, rTest, "Invalid pixel lookup for "+target.getName()+" at "+i+", "+j);
                 }
             }

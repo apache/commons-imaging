@@ -38,7 +38,7 @@ public class JpegXmpDumpTest extends JpegXmpBaseTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void test(File imageFile) throws Exception {
+    public void test(final File imageFile) throws Exception {
         final ByteSource byteSource = new ByteSourceFile(imageFile);
         final Map<String, Object> params = new HashMap<>();
         final String xmpXml = new JpegImageParser().getXmpXml(byteSource, params);

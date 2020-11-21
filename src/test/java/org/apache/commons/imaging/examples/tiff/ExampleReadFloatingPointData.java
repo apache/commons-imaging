@@ -66,36 +66,36 @@ public class ExampleReadFloatingPointData {
      * internal data format or version compatibility error reading the image.
      * @throws java.io.IOException in the event of an I/O error.
      */
-    public static void main(String[] args) throws ImageReadException, IOException {
+    public static void main(final String[] args) throws ImageReadException, IOException {
         if (args.length == 0) {
             // Print usage and exit
-            for (String s : USAGE) {
+            for (final String s : USAGE) {
                 System.err.println(s);
             }
             System.exit(0);
         }
 
-        File target = new File(args[0]);
+        final File target = new File(args[0]);
         String outputPath = null;
         if (args.length >= 2) {
             outputPath = args[1];
         }
-        boolean optionalImageWritingEnabled
+        final boolean optionalImageWritingEnabled
             = outputPath != null && !outputPath.isEmpty();
 
-        ByteSourceFile byteSource = new ByteSourceFile(target);
+        final ByteSourceFile byteSource = new ByteSourceFile(target);
 
         // Establish a TiffReader. This is just a simple constructor that
         // does not actually access the file until one of its methods such as
         // readDirectories is called.
-        TiffReader tiffReader = new TiffReader(true);
+        final TiffReader tiffReader = new TiffReader(true);
 
         // Read the directories in the TIFF file.  Directories are the
         // main data element of a TIFF file. They usually include an image
         // element, but sometimes just carry metadata. This example
         // reads all the directories in the file.   Typically reading
         // the directories is not a time-consuming operation.
-        TiffContents contents = tiffReader.readDirectories(
+        final TiffContents contents = tiffReader.readDirectories(
             byteSource,
             true, // indicates that application should read image data, if present
             FormatCompliance.getDefault());
@@ -103,7 +103,7 @@ public class ExampleReadFloatingPointData {
         // Read the first directory in the file.  A practical implementation
         // could use any of the directories in the file. This demo uses the
         // first one just for simplicity.
-        TiffDirectory directory = contents.directories.get(0);
+        final TiffDirectory directory = contents.directories.get(0);
         // Render the first directory in the file
         if (!directory.hasTiffFloatingPointRasterData()) {
             System.err.println("Specified directory does not contain floating-point data");
@@ -114,17 +114,17 @@ public class ExampleReadFloatingPointData {
         // If only a sub-image is desired, the params Mao can be used
         // to specify what section of the data is to be extracted.
         // See the Javadoc for readFloatingPointRasterData for more details.
-        long time0 = System.nanoTime();
-        HashMap<String, Object> params = new HashMap<>();
-        TiffRasterData rasterData
+        final long time0 = System.nanoTime();
+        final HashMap<String, Object> params = new HashMap<>();
+        final TiffRasterData rasterData
             = directory.getFloatingPointRasterData(params);
-        long time1 = System.nanoTime();
+        final long time1 = System.nanoTime();
         System.out.println("Data read in " + ((time1 - time0) / 1.0e+6) + " ms");
 
         // One of the test files in the Commons Imaging distribution uses
         // the value 9999 as a special "No Data" indicator.  In that case,
         // we do not want to include 9999 in the simple-statistics survey.
-        float excludedValue = Float.NaN;
+        final float excludedValue = Float.NaN;
         TiffRasterStatistics simpleStats;
         if ("Sample64BitFloatingPointPix451x337.tiff".equals(target.getName())) {
             simpleStats = rasterData.getSimpleStatistics(9999);
@@ -133,10 +133,10 @@ public class ExampleReadFloatingPointData {
             simpleStats = rasterData.getSimpleStatistics();
         }
 
-        int w = rasterData.getWidth();
-        int h = rasterData.getHeight();
-        float minValue = simpleStats.getMinValue();
-        float maxValue = simpleStats.getMaxValue();
+        final int w = rasterData.getWidth();
+        final int h = rasterData.getHeight();
+        final float minValue = simpleStats.getMinValue();
+        final float maxValue = simpleStats.getMaxValue();
 
         System.out.format("Image size %dx%d%n", w, h);
         System.out.format("Range of values in TIFF: %f %f%n", minValue, maxValue);
@@ -150,11 +150,11 @@ public class ExampleReadFloatingPointData {
             // ReadAndRenderFloatingPoint.java example,  But in this case,
             // we'll take the approach of building an image from the
             // raster data that was obtained above.
-            File output = new File(outputPath);
+            final File output = new File(outputPath);
             System.out.println("Writing image to " + output.getPath());
             // create a new photometric interpreter based on the range
             // of values found above.
-            List<PaletteEntry> paletteList = new ArrayList();
+            final List<PaletteEntry> paletteList = new ArrayList();
             if (!Float.isNaN(excludedValue)) {
                 // draw the excluded value in red.
                 paletteList.add(new PaletteEntryForValue(excludedValue, Color.red));
@@ -166,21 +166,21 @@ public class ExampleReadFloatingPointData {
             // color-coded unless we add an additional palette entry to
             // handle the single-value for the maximum.
             paletteList.add(new PaletteEntryForValue(maxValue, Color.white));
-            PhotometricInterpreterFloat photometricInterpreter
+            final PhotometricInterpreterFloat photometricInterpreter
                 = new PhotometricInterpreterFloat(paletteList);
 
             // Now construct an ImageBuilder to store the results
-            ImageBuilder builder = new ImageBuilder(w, h, false);
+            final ImageBuilder builder = new ImageBuilder(w, h, false);
             for (int y = 0; y < h; y++) {
                 for (int x = 0; x < w; x++) {
-                    float f = rasterData.getValue(x, y);
-                    int argb
+                    final float f = rasterData.getValue(x, y);
+                    final int argb
                         = photometricInterpreter.mapValueToARGB(f);
                     builder.setRGB(x, y, argb);
                 }
             }
 
-            BufferedImage bImage = builder.getBufferedImage();
+            final BufferedImage bImage = builder.getBufferedImage();
             ImageIO.write(bImage, "JPEG", output);
         }
     }

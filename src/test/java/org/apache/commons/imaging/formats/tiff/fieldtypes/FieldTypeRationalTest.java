@@ -33,17 +33,17 @@ public class FieldTypeRationalTest {
 
   @Test
   public void testWriteDataWithNull() throws ImageWriteException {
-      FieldTypeRational fieldTypeRational = new FieldTypeRational(9, null);
-      Double doubleOne = 2.2d;
-      byte[] byteArray = fieldTypeRational.writeData(doubleOne, null);
+      final FieldTypeRational fieldTypeRational = new FieldTypeRational(9, null);
+      final Double doubleOne = 2.2d;
+      final byte[] byteArray = fieldTypeRational.writeData(doubleOne, null);
 
       assertArrayEquals(new byte[] {(byte)11, (byte)0, (byte)0, (byte)0, (byte)5, (byte)0, (byte)0, (byte)0}, byteArray);
   }
 
   @Test
   public void testWriteDataWithNonNull() {
-      FieldTypeRational fieldTypeRational = new FieldTypeRational((-922), "z_AX");
-      ByteOrder byteOrder = ByteOrder.nativeOrder();
+      final FieldTypeRational fieldTypeRational = new FieldTypeRational((-922), "z_AX");
+      final ByteOrder byteOrder = ByteOrder.nativeOrder();
       Assertions.assertThrows(ImageWriteException.class, () -> {
           fieldTypeRational.writeData("z_AX", byteOrder);
       });

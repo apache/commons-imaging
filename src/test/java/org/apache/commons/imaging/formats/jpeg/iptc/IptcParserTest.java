@@ -67,14 +67,14 @@ public class IptcParserTest {
         final PhotoshopApp13Data photoshopApp13Data = photoshopMetadata.photoshopApp13Data;
         final List<IptcBlock> blocks = photoshopApp13Data.getRawBlocks();
         assertEquals(2, blocks.size());
-        for (IptcBlock block : blocks) {
+        for (final IptcBlock block : blocks) {
             if (block.getBlockType() == 1028) {
                 // 0x0404 IPTC-NAA record
-                byte[] data = block.getBlockData();
+                final byte[] data = block.getBlockData();
                 assertTrue(data.length > 0);
             } else if (block.getBlockType() == 1061) {
                 // 0x0425 (Photoshop 7.0) Caption digest
-                byte[] data = block.getBlockData();
+                final byte[] data = block.getBlockData();
                 assertTrue(data.length > 0);
             } else {
                 fail("Unexpected block type found: " + block.getBlockType());

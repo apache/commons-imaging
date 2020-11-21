@@ -50,25 +50,25 @@ public class PngChunkIccpTest {
     public void testParsingIccpChunk() throws ImageReadException, IOException {
         final List<Byte> bytes = new ArrayList<>();
         final String profileName = "my-profile-01";
-        for (byte b : profileName.getBytes(StandardCharsets.ISO_8859_1)) {
+        for (final byte b : profileName.getBytes(StandardCharsets.ISO_8859_1)) {
             bytes.add(b);
         }
         bytes.add((byte) 0); // null
         bytes.add((byte) 0); // 0=deflate compression method
 
         // generate some 100 bytes of dummy data
-        byte[] uncompressedData = new byte[100];
+        final byte[] uncompressedData = new byte[100];
         IntStream.range(0, 100).forEach(i -> {
             uncompressedData[i] = (byte) (i + 1); // dummy data
         });
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream(100)) {
             // compress the dummy data with deflate
-            Deflater def = new Deflater();
+            final Deflater def = new Deflater();
             try (DeflaterOutputStream ios = new DeflaterOutputStream(baos, def)) {
                 ios.write(uncompressedData);
             }
             baos.flush();
-            byte[] compressedData = baos.toByteArray();
+            final byte[] compressedData = baos.toByteArray();
             final byte[] data = new byte[bytes.size() + compressedData.length];
             // gather everything, except for the compressed data
             for (int i = 0; i < bytes.size(); ++i) {

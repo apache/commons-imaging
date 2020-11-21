@@ -251,11 +251,11 @@ public abstract class ImageDataReader {
         return samples;
     }
 
-    protected void applyPredictorToBlock(int width, int height, int nSamplesPerPixel, byte []p ){
+    protected void applyPredictorToBlock(final int width, final int height, final int nSamplesPerPixel, final byte []p ){
         final int k = width*nSamplesPerPixel;
         for(int i=0; i<height; i++){
-            int j0  = i*k+nSamplesPerPixel;
-            int j1 = (i+1)*k;
+            final int j0  = i*k+nSamplesPerPixel;
+            final int j1 = (i+1)*k;
             for(int j=j0; j<j1; j++){
                 p[j]+=p[j-nSamplesPerPixel];
             }
@@ -382,18 +382,18 @@ public abstract class ImageDataReader {
      * @throws ImageReadException in the event of an invalid format.
      */
     protected int[] unpackFloatingPointSamples(
-        int width,
-        int height,
-        int scansize,
-        byte[] bytes,
-        int predictor,
-        int bitsPerSample, ByteOrder byteOrder)
+        final int width,
+        final int height,
+        final int scansize,
+        final byte[] bytes,
+        final int predictor,
+        final int bitsPerSample, final ByteOrder byteOrder)
         throws ImageReadException {
-        int bytesPerSample = bitsPerSample / 8;
-        int nBytes = bytesPerSample * scansize * height;
-        int length = bytes.length < nBytes ? nBytes / scansize : height;
+        final int bytesPerSample = bitsPerSample / 8;
+        final int nBytes = bytesPerSample * scansize * height;
+        final int length = bytes.length < nBytes ? nBytes / scansize : height;
 
-        int[] samples = new int[scansize * height];
+        final int[] samples = new int[scansize * height];
         // floating-point differencing is indicated by a predictor value of 3.
         if (predictor == TiffTagConstants.PREDICTOR_VALUE_FLOATING_POINT_DIFFERENCING) {
             // at this time, this class supports the 32-bit format.  The
@@ -405,12 +405,12 @@ public abstract class ImageDataReader {
                     + " with predictor type 3 for "
                     + bitsPerSample + " bits per sample");
             }
-            int bytesInRow = scansize * 4;
+            final int bytesInRow = scansize * 4;
             for (int i = 0; i < length; i++) {
-                int aOffset = i * bytesInRow;
-                int bOffset = aOffset + scansize;
-                int cOffset = bOffset + scansize;
-                int dOffset = cOffset + scansize;
+                final int aOffset = i * bytesInRow;
+                final int bOffset = aOffset + scansize;
+                final int cOffset = bOffset + scansize;
+                final int dOffset = cOffset + scansize;
                 // in this loop, the source bytes give delta values.
                 // we adjust them to give true values.  This operation is
                 // done on a row-by-row basis.
@@ -421,10 +421,10 @@ public abstract class ImageDataReader {
                 // floating point values
                 int index = i * scansize;
                 for (int j = 0; j < width; j++) {
-                    int a = bytes[aOffset + j];
-                    int b = bytes[bOffset + j];
-                    int c = bytes[cOffset + j];
-                    int d = bytes[dOffset + j];
+                    final int a = bytes[aOffset + j];
+                    final int b = bytes[bOffset + j];
+                    final int c = bytes[cOffset + j];
+                    final int d = bytes[dOffset + j];
                     // Pack the 4 byte components into a single integer
                     // in the byte order used by the TIFF standard
                     samples[index++] = ((a & 0xff) << 24)
@@ -442,14 +442,14 @@ public abstract class ImageDataReader {
             int index = 0;
             for (int i = 0; i < length; i++) {
                 for (int j = 0; j < scansize; j++) {
-                    long b0 = bytes[k++] & 0xffL;
-                    long b1 = bytes[k++] & 0xffL;
-                    long b2 = bytes[k++] & 0xffL;
-                    long b3 = bytes[k++] & 0xffL;
-                    long b4 = bytes[k++] & 0xffL;
-                    long b5 = bytes[k++] & 0xffL;
-                    long b6 = bytes[k++] & 0xffL;
-                    long b7 = bytes[k++] & 0xffL;
+                    final long b0 = bytes[k++] & 0xffL;
+                    final long b1 = bytes[k++] & 0xffL;
+                    final long b2 = bytes[k++] & 0xffL;
+                    final long b3 = bytes[k++] & 0xffL;
+                    final long b4 = bytes[k++] & 0xffL;
+                    final long b5 = bytes[k++] & 0xffL;
+                    final long b6 = bytes[k++] & 0xffL;
+                    final long b7 = bytes[k++] & 0xffL;
                     long sbits;
                     if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
                         sbits = (b7 << 56)
@@ -475,7 +475,7 @@ public abstract class ImageDataReader {
                     // currently support doubles, we need to replace this
                     // element with a float.  This action is inefficient and
                     // should be improved.
-                    float f = (float) Double.longBitsToDouble(sbits);
+                    final float f = (float) Double.longBitsToDouble(sbits);
                     samples[index++] = Float.floatToRawIntBits(f);
                 }
             }
@@ -484,10 +484,10 @@ public abstract class ImageDataReader {
             int index = 0;
             for (int i = 0; i < length; i++) {
                 for (int j = 0; j < scansize; j++) {
-                    int b0 = bytes[k++] & 0xff;
-                    int b1 = bytes[k++] & 0xff;
-                    int b2 = bytes[k++] & 0xff;
-                    int b3 = bytes[k++] & 0xff;
+                    final int b0 = bytes[k++] & 0xff;
+                    final int b1 = bytes[k++] & 0xff;
+                    final int b2 = bytes[k++] & 0xff;
+                    final int b3 = bytes[k++] & 0xff;
                     int sbits;
                     if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
                         sbits
@@ -533,10 +533,10 @@ public abstract class ImageDataReader {
      * data)
      * @param rasterData the raster data.
      */
-    void transferBlockToRaster(int xBlock, int yBlock,
-        int blockWidth, int blockHeight, int blockData[],
-        int xRaster, int yRaster,
-        int rasterWidth, int rasterHeight, float[] rasterData) {
+    void transferBlockToRaster(final int xBlock, final int yBlock,
+        final int blockWidth, final int blockHeight, final int blockData[],
+        final int xRaster, final int yRaster,
+        final int rasterWidth, final int rasterHeight, final float[] rasterData) {
 
         // xR0, yR0 are the coordinates within the raster (upper-left corner)
         // xR1, yR1 are ONE PAST the coordinates of the lower-right corner
@@ -592,10 +592,10 @@ public abstract class ImageDataReader {
         }
 
         for (int i = 0; i < h; i++) {
-            int yR = yR0 + i;
-            int yB = yB0 + i;
-            int rOffset = yR * rasterWidth + xR0;
-            int bOffset = yB * blockWidth + xB0;
+            final int yR = yR0 + i;
+            final int yB = yB0 + i;
+            final int rOffset = yR * rasterWidth + xR0;
+            final int bOffset = yB * blockWidth + xB0;
             for (int j = 0; j < w; j++) {
                 rasterData[rOffset + j] = Float.intBitsToFloat(blockData[bOffset + j]);
             }

@@ -60,7 +60,7 @@ public abstract class TiffImageData {
           final int compression,
           final TiffPlanarConfiguration planarConfiguration,
           final ByteOrder byteOrder) throws IOException, ImageReadException {
-            int sampleFormat = extractSampleFormat(directory);
+            final int sampleFormat = extractSampleFormat(directory);
             return new DataReaderTiled(directory, photometricInterpreter,
               tileWidth, tileLength, bitsPerPixel, bitsPerSample,
               predictor, samplesPerPixel, sampleFormat, width, height, compression,
@@ -129,7 +129,7 @@ public abstract class TiffImageData {
           final int compression,
           final TiffPlanarConfiguration planarConfiguration,
           final ByteOrder byteorder) throws IOException, ImageReadException {
-            int sampleFormat = extractSampleFormat(directory);
+            final int sampleFormat = extractSampleFormat(directory);
             return new DataReaderStrips(directory, photometricInterpreter,
               bitsPerPixel, bitsPerSample, predictor,
               samplesPerPixel, sampleFormat, width, height,
@@ -184,8 +184,8 @@ public abstract class TiffImageData {
         }
     }
 
-    private static int extractSampleFormat(TiffDirectory directory) throws ImageReadException {
-        short[] sSampleFmt = directory.getFieldValue(
+    private static int extractSampleFormat(final TiffDirectory directory) throws ImageReadException {
+        final short[] sSampleFmt = directory.getFieldValue(
             TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, false);
         if (sSampleFmt != null && sSampleFmt.length > 0) {
             return sSampleFmt[0];

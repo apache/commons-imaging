@@ -56,20 +56,20 @@ public class TiffReadAlphaTest {
      * @param name a valid file name
      * @return a valid file reference.
      */
-    private File getTiffFile(String name) {
-        File tiffFolder = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, "tiff");
-        File alphaFolder = new File(tiffFolder, "12");
+    private File getTiffFile(final String name) {
+        final File tiffFolder = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, "tiff");
+        final File alphaFolder = new File(tiffFolder, "12");
         return new File(alphaFolder, name);
     }
 
     @Test
     public void test() {
-        for (String name : names) {
+        for (final String name : names) {
             try {
-                File subject = getTiffFile(name);
-                BufferedImage overlay = Imaging.getBufferedImage(subject);
-                BufferedImage composite = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
-                Graphics2D g2d = composite.createGraphics();
+                final File subject = getTiffFile(name);
+                final BufferedImage overlay = Imaging.getBufferedImage(subject);
+                final BufferedImage composite = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
+                final Graphics2D g2d = composite.createGraphics();
                 g2d.setColor(Color.white);
                 g2d.fillRect(0, 0, 101, 101);
                 g2d.setColor(Color.black);
@@ -77,10 +77,10 @@ public class TiffReadAlphaTest {
                 g2d.drawImage(overlay, 0, 0, null);
 
                 for (int i = 0; i < testSite.length; i++) {
-                    int x = testSite[i][0];
-                    int y = testSite[i][1];
-                    int p = testSite[i][2];
-                    int t = composite.getRGB(x, y);
+                    final int x = testSite[i][0];
+                    final int y = testSite[i][1];
+                    final int p = testSite[i][2];
+                    final int t = composite.getRGB(x, y);
                     assertEquals(t, p, "Error for " + name + " at position " + x + ", " + y);
                 }
             } catch (ImageReadException | IOException ex) {

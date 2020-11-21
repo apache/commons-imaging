@@ -99,10 +99,10 @@ public class TiffRasterStatisticsTest {
     public void testGetMeanValue() {
         assertNotEquals(0, stat0.getMeanValue());
 
-        float[] zero = new float[100];
+        final float[] zero = new float[100];
         Arrays.fill(zero, 10);
-        TiffRasterData zeroData = new TiffRasterData(10, 10, zero);
-        TiffRasterStatistics zeroStat = zeroData.getSimpleStatistics(10);
+        final TiffRasterData zeroData = new TiffRasterData(10, 10, zero);
+        final TiffRasterStatistics zeroStat = zeroData.getSimpleStatistics(10);
         assertEquals(0.0f, zeroStat.getMeanValue(),
             "Invalid mean data for excluded value");
     }

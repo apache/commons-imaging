@@ -57,26 +57,26 @@ public class ReadTagsAndImages {
      * internal data format or version compatibility error reading the image.
      * @throws java.io.IOException in the event of an I/O error.
      */
-    public static void main(String[] args)
+    public static void main(final String[] args)
         throws ImageReadException, IOException {
         if (args.length == 0) {
             // Print usage and exit
-            for (String s : USAGE) {
+            for (final String s : USAGE) {
                 System.err.println(s);
             }
             System.exit(0);
         }
 
-        File target = new File(args[0]);
+        final File target = new File(args[0]);
         String rootName = null;
         if (args.length == 2) {
             rootName = args[1];
         }
-        boolean optionalImageReadingEnabled
+        final boolean optionalImageReadingEnabled
             = rootName != null && !rootName.isEmpty();
 
-        ByteSourceFile byteSource = new ByteSourceFile(target);
-        HashMap<String, Object> params = new HashMap<>();
+        final ByteSourceFile byteSource = new ByteSourceFile(target);
+        final HashMap<String, Object> params = new HashMap<>();
 
 
         // Establish a TiffReader. This is just a simple constructor that
@@ -84,8 +84,8 @@ public class ReadTagsAndImages {
         // obtain the byteOrder, or other details, until the contents has
         // been read.  Then read the directories associated with the
         // file by passing in the byte source and options.
-        TiffReader tiffReader = new TiffReader(true);
-        TiffContents contents = tiffReader.readDirectories(
+        final TiffReader tiffReader = new TiffReader(true);
+        final TiffContents contents = tiffReader.readDirectories(
             byteSource,
             optionalImageReadingEnabled, // read image data, if present
             FormatCompliance.getDefault());
@@ -93,16 +93,16 @@ public class ReadTagsAndImages {
         // Loop on the directories and fetch the metadata and
         // image (if available, and configured to do so)
         int iDirectory = 0;
-        for (TiffDirectory directory : contents.directories) {
+        for (final TiffDirectory directory : contents.directories) {
             // Get the metadata (Tags) and write them to standard output
-            boolean hasTiffImageData = directory.hasTiffImageData();
+            final boolean hasTiffImageData = directory.hasTiffImageData();
             System.out.format("Directory %2d %s, description: %s%n",
                 iDirectory,
                 hasTiffImageData ? "Has TIFF Image Data" : "No TIFF Image Data",
                 directory.description());
             // Loop on the fields, printing the metadata (fields) ----------
-            List<TiffField> fieldList = directory.getDirectoryEntries();
-            for (TiffField tiffField : fieldList) {
+            final List<TiffField> fieldList = directory.getDirectoryEntries();
+            for (final TiffField tiffField : fieldList) {
                 String s = tiffField.toString();
                 if (s.length() > 90) {
                     s = s.substring(0, 90);
@@ -112,17 +112,17 @@ public class ReadTagsAndImages {
                 // will be truncated.  Therefore, indicate the numnber of entries.
                 // These fields are indicated by numerical tags 0x144 and 0x145
                 if (tiffField.getTag() == 0x144 || tiffField.getTag() == 0x145) {
-                    int i = s.indexOf(')');
-                    int[] a = tiffField.getIntArrayValue();
+                    final int i = s.indexOf(')');
+                    final int[] a = tiffField.getIntArrayValue();
                     s = s.substring(0, i + 2) + " [" + a.length + " entries]";
                 }
                 System.out.println(" " + s);
             }
 
             if (optionalImageReadingEnabled && hasTiffImageData) {
-                File output = new File(rootName + "_" + iDirectory + ".jpg");
+                final File output = new File(rootName + "_" + iDirectory + ".jpg");
                 System.out.println("Writing image to " + output.getPath());
-                BufferedImage bImage = directory.getTiffImage(params);
+                final BufferedImage bImage = directory.getTiffImage(params);
                 ImageIO.write(bImage, "JPEG", output);
             }
             System.out.println("");

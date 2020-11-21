@@ -28,7 +28,7 @@ public class GifImageMetadata implements ImageMetadata {
     private final int height;
     private final List<GifImageMetadataItem> items;
 
-    GifImageMetadata(int width, int height, List<GifImageMetadataItem> items) {
+    GifImageMetadata(final int width, final int height, final List<GifImageMetadataItem> items) {
         this.width = width;
         this.height = height;
         this.items = Collections.unmodifiableList(new ArrayList<>(items));
@@ -43,7 +43,7 @@ public class GifImageMetadata implements ImageMetadata {
         result.append(String.format("%sHeight: %d%s", prefix, height, NEWLINE));
         result.append(NEWLINE);
         result.append(String.format("%sImages:", prefix));
-        for (GifImageMetadataItem item : items) {
+        for (final GifImageMetadataItem item : items) {
             result.append(NEWLINE);
             result.append(item.toString(prefix));
         }

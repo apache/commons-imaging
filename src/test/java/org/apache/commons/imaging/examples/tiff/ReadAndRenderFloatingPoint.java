@@ -60,31 +60,31 @@ public class ReadAndRenderFloatingPoint {
      * internal data format or version compatibility error reading the image.
      * @throws java.io.IOException in the event of an I/O error.
      */
-    public static void main(String[] args) throws ImageReadException, IOException {
+    public static void main(final String[] args) throws ImageReadException, IOException {
         if (args.length == 0) {
             // Print usage and exit
-            for (String s : USAGE) {
+            for (final String s : USAGE) {
                 System.err.println(s);
             }
             System.exit(0);
         }
 
-        File target = new File(args[0]);
+        final File target = new File(args[0]);
         String outputPath = null;
         if (args.length == 2) {
             outputPath = args[1];
         }
-        boolean optionalImageWritingEnabled
+        final boolean optionalImageWritingEnabled
             = outputPath != null && !outputPath.isEmpty();
 
-        ByteSourceFile byteSource = new ByteSourceFile(target);
+        final ByteSourceFile byteSource = new ByteSourceFile(target);
 
         // Establish a TiffReader. This is just a simple constructor that
         // does not actually access the file.  So the application cannot
         // obtain the byteOrder, or other details, until the contents has
         // been read.  Then read the directories associated with the
         // file by passing in the byte source and options.
-        TiffReader tiffReader = new TiffReader(true);
+        final TiffReader tiffReader = new TiffReader(true);
 
         // Read the directories in the TIFF file.  Directories are the
         // main data element of a TIFF file. They usually include an image
@@ -92,7 +92,7 @@ public class ReadAndRenderFloatingPoint {
         // reads all the directories in the file, but if we were interested
         // in just the first element, Commons Imaging provides alternate API's
         // that would be more efficient.
-        TiffContents contents = tiffReader.readDirectories(
+        final TiffContents contents = tiffReader.readDirectories(
             byteSource,
             true, // indicates that application should read image data, if present
             FormatCompliance.getDefault());
@@ -101,7 +101,7 @@ public class ReadAndRenderFloatingPoint {
         // Render the first directory in the file.  A practical implementation
         // could use any of the directories in the file. This demo uses the
         // first one just for simplicity.
-        TiffDirectory directory = contents.directories.get(0);
+        final TiffDirectory directory = contents.directories.get(0);
         // Render the first directory in the file
         if (!directory.hasTiffImageData()) {
             System.err.println("First directory in file does not have image");
@@ -121,9 +121,9 @@ public class ReadAndRenderFloatingPoint {
         //    The getFieldValue call allows an application to provide a
         // boolean indicating that the field must be present for processing
         // to continue. If it does not, an exception is thrown.
-        short[] sampleFormat = directory.getFieldValue(TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, true);
-        short samplesPerPixel = directory.getFieldValue(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL);
-        short[] bitsPerPixel = directory.getFieldValue(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE, true);
+        final short[] sampleFormat = directory.getFieldValue(TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, true);
+        final short samplesPerPixel = directory.getFieldValue(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL);
+        final short[] bitsPerPixel = directory.getFieldValue(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE, true);
         if (sampleFormat[0] != TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT) {
             System.err.println("This example requires a data source with a floating-point format");
             System.exit(-1);
@@ -146,22 +146,22 @@ public class ReadAndRenderFloatingPoint {
         // good interpretation, we need to read the data twice.
         //    For this demo, we store the Photometric Interpreter instance
         // as a option-parameter to be passed into the read-image method.
-        PhotometricInterpreterFloat pi = new PhotometricInterpreterFloat(0.0f, 1.0f);
+        final PhotometricInterpreterFloat pi = new PhotometricInterpreterFloat(0.0f, 1.0f);
         HashMap<String, Object> params = new HashMap<>();
         params.put(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER, pi);
         BufferedImage bImage = directory.getTiffImage(params);
 
-        float maxValue = pi.getMaxFound();
-        float minValue = pi.getMinFound();
+        final float maxValue = pi.getMaxFound();
+        final float minValue = pi.getMinFound();
 
         // System.out.format("Image size %dx%d%n", bImage.getWidth(), bImage.getHeight());
         // System.out.format("Range of values in TIFF: %f %f%n", minValue, maxValue);
 
         if (optionalImageWritingEnabled) {
-            File output = new File(outputPath);
+            final File output = new File(outputPath);
             // create a new photometric interpreter based on the range
             // of values found above.
-            PhotometricInterpreterFloat grayScale
+            final PhotometricInterpreterFloat grayScale
                 = new PhotometricInterpreterFloat(minValue, maxValue);
             params = new HashMap<>();
             params.put(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER, grayScale);

@@ -113,7 +113,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             switch (sofnSegment.numberOfComponents) {
             case 4:
                 colorModel = new DirectColorModel(24, 0x00ff0000, 0x0000ff00, 0x000000ff);
-                int bandMasks[] = new int[] { 0x00ff0000, 0x0000ff00, 0x000000ff };
+                final int bandMasks[] = new int[] { 0x00ff0000, 0x0000ff00, 0x000000ff };
                 raster = Raster.createPackedRaster(DataBuffer.TYPE_INT, sofnSegment.width, sofnSegment.height, bandMasks, null);
                 break;
             case 3:
@@ -441,9 +441,9 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
         final List<Integer> intervalStarts = getIntervalStartPositions(scanPayload);
         // get number of intervals in payload to init an array of appropriate length
         final int intervalCount = intervalStarts.size();
-        JpegInputStream[] streams = new JpegInputStream[intervalCount];
+        final JpegInputStream[] streams = new JpegInputStream[intervalCount];
         for (int i = 0; i < intervalCount; i++) {
-            int from = intervalStarts.get(i);
+            final int from = intervalStarts.get(i);
             int to;
             if (i < intervalCount - 1) {
                 // because each restart marker needs two bytes the end of
@@ -452,7 +452,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             } else { // the last interval ends with the array
                 to = scanPayload.length;
             }
-            int[] interval = Arrays.copyOfRange(scanPayload, from, to);
+            final int[] interval = Arrays.copyOfRange(scanPayload, from, to);
             streams[i] = new JpegInputStream(interval);
         }
         return streams;

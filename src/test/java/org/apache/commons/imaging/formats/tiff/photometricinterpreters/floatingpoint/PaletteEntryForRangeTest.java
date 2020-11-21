@@ -38,9 +38,9 @@ public class PaletteEntryForRangeTest {
      */
     @Test
     public void testIsCovered() {
-        Color c0 = new Color(0xff0000ff);
-        Color c1 = new Color(0xff00ff00);
-        PaletteEntryForRange instance = new PaletteEntryForRange(0.0f, 1.0f, c0, c1);
+        final Color c0 = new Color(0xff0000ff);
+        final Color c1 = new Color(0xff00ff00);
+        final PaletteEntryForRange instance = new PaletteEntryForRange(0.0f, 1.0f, c0, c1);
         assertTrue(instance.isCovered(0.0f), "Zero value must be covered");
         assertFalse(instance.isCovered(1.0f), "Value 1.0 must not be covered");
     }
@@ -50,11 +50,11 @@ public class PaletteEntryForRangeTest {
      */
     @Test
     public void testGetARGB() {
-        Color c0 = new Color(0xff0000ff);
-        Color c1 = new Color(0xff00ff00);
-        PaletteEntryForRange instance = new PaletteEntryForRange(0.0f, 1.0f, c0, c1);
-        int a0 = instance.getARGB(0.0f);
-        int a1 = instance.getARGB(0.5f);
+        final Color c0 = new Color(0xff0000ff);
+        final Color c1 = new Color(0xff00ff00);
+        final PaletteEntryForRange instance = new PaletteEntryForRange(0.0f, 1.0f, c0, c1);
+        final int a0 = instance.getARGB(0.0f);
+        final int a1 = instance.getARGB(0.5f);
         assertEquals(0xff0000ff, a0, "Invalid value for 0.0f");
         assertEquals(0xff008080, a1, "Invalid interpolated values");
     }
@@ -66,11 +66,11 @@ public class PaletteEntryForRangeTest {
     public void testGetColor() {
         Color c0 = new Color(0xff0000ff);
         Color c1 = new Color(0xff00ff00);
-        PaletteEntryForRange instance = new PaletteEntryForRange(0.0f, 1.0f, c0, c1);
+        final PaletteEntryForRange instance = new PaletteEntryForRange(0.0f, 1.0f, c0, c1);
         c0 = instance.getColor(0.0f);
         c1 = instance.getColor(0.5f);
-        int a0 = c0.getRGB();
-        int a1 = c1.getRGB();
+        final int a0 = c0.getRGB();
+        final int a1 = c1.getRGB();
         assertEquals(0xff0000ff, a0, "Invalid value for 0.0f");
         assertEquals(0xff008080, a1, "Invalid interpolated values");
 
@@ -81,9 +81,9 @@ public class PaletteEntryForRangeTest {
      */
     @Test
     public void testCoversSingleEntry() {
-        Color c0 = new Color(0xff0000ff);
-        Color c1 = new Color(0xff00ff00);
-        PaletteEntryForRange instance = new PaletteEntryForRange(0.0f, 1.0f, c0, c1);
+        final Color c0 = new Color(0xff0000ff);
+        final Color c1 = new Color(0xff00ff00);
+        final PaletteEntryForRange instance = new PaletteEntryForRange(0.0f, 1.0f, c0, c1);
         assertFalse(instance.coversSingleEntry());
     }
 
@@ -92,9 +92,9 @@ public class PaletteEntryForRangeTest {
      */
     @Test
     public void testGetLowerBound() {
-        Color c0 = new Color(0xff0000ff);
-        Color c1 = new Color(0xff00ff00);
-        PaletteEntryForRange instance = new PaletteEntryForRange(0.0f, 1.0f, c0, c1);
+        final Color c0 = new Color(0xff0000ff);
+        final Color c1 = new Color(0xff00ff00);
+        final PaletteEntryForRange instance = new PaletteEntryForRange(0.0f, 1.0f, c0, c1);
         assertEquals(0.0f, instance.getLowerBound());
     }
 
@@ -103,36 +103,36 @@ public class PaletteEntryForRangeTest {
      */
     @Test
     public void testGetUpperBound() {
-        Color c0 = new Color(0xff0000ff);
-        Color c1 = new Color(0xff00ff00);
-        PaletteEntryForRange instance = new PaletteEntryForRange(0.0f, 1.0f, c0, c1);
+        final Color c0 = new Color(0xff0000ff);
+        final Color c1 = new Color(0xff00ff00);
+        final PaletteEntryForRange instance = new PaletteEntryForRange(0.0f, 1.0f, c0, c1);
         assertEquals(1.0f, instance.getUpperBound());
     }
 
     @Test
     public void testFaultyConstructors() {
-        Color c0 = new Color(0xff0000ff);
-        Color c1 = new Color(0xff00ff00);
+        final Color c0 = new Color(0xff0000ff);
+        final Color c1 = new Color(0xff00ff00);
         PaletteEntryForRange pTest;
 
         // test the two-color variations -----------------------
         try {
             pTest = new PaletteEntryForRange(0.0f, 0.0f, c0, c1);
             fail("Constructor failed to detect invalid range");
-        } catch (IllegalArgumentException iex) {
+        } catch (final IllegalArgumentException iex) {
             // successful test
         }
 
         try {
             pTest = new PaletteEntryForRange(0.0f, 1.0f, null, c1);
             fail("Constructor failed to detect null color");
-        } catch (IllegalArgumentException iex) {
+        } catch (final IllegalArgumentException iex) {
             // successful test
         }
         try {
             pTest = new PaletteEntryForRange(0.0f, 1.0f, c0, null);
             fail("Constructor failed to detect invalid color");
-        } catch (IllegalArgumentException iex) {
+        } catch (final IllegalArgumentException iex) {
             // successful test
         }
 
@@ -140,14 +140,14 @@ public class PaletteEntryForRangeTest {
         try {
             pTest = new PaletteEntryForRange(0.0f, 0.0f, c0);
             fail("Constructor failed to detect invalid range");
-        } catch (IllegalArgumentException iex) {
+        } catch (final IllegalArgumentException iex) {
             // successful test
         }
 
         try {
             pTest = new PaletteEntryForRange(0.0f, 1.0f, null);
             fail("Constructor failed to detect null color");
-        } catch (IllegalArgumentException iex) {
+        } catch (final IllegalArgumentException iex) {
             // successful test
         }
     }

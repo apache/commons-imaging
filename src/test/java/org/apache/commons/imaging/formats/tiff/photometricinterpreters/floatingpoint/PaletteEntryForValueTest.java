@@ -38,7 +38,7 @@ public class PaletteEntryForValueTest {
      */
     @Test
     public void testIsCovered() {
-        Color c0 = new Color(0xff0000ff);
+        final Color c0 = new Color(0xff0000ff);
         PaletteEntryForValue instance = new PaletteEntryForValue(0.0f, c0);
         assertTrue(instance.isCovered(0.0f), "Zero value must be covered");
         assertFalse(instance.isCovered(1.0f), "Value 1.0 must not be covered");
@@ -53,11 +53,11 @@ public class PaletteEntryForValueTest {
      */
     @Test
     public void testGetARGB() {
-        Color c0 = new Color(0xff0000ff);
+        final Color c0 = new Color(0xff0000ff);
         PaletteEntryForValue instance = new PaletteEntryForValue(0.0f, c0);
         int a0 = instance.getARGB(0.0f);
         int a1 = instance.getARGB(0.5f);
-        int a2 = instance.getARGB(Float.NaN);
+        final int a2 = instance.getARGB(Float.NaN);
         assertEquals(0xff0000ff, a0, "Invalid value for target 0.0f");
         assertEquals(0, a1, "Invalid value for target 0.5f");
         assertEquals(0, a2, "Invalid value for target NaN");
@@ -73,10 +73,10 @@ public class PaletteEntryForValueTest {
      */
     @Test
     public void testGetColor() {
-        Color cTest = new Color(0xff0000ff);
+        final Color cTest = new Color(0xff0000ff);
         PaletteEntryForValue instance = new PaletteEntryForValue(0.0f, cTest);
         Color c0 = instance.getColor(0.0f);
-        int a0 = c0.getRGB();
+        final int a0 = c0.getRGB();
         assertEquals(0xff0000ff, a0, "Invalid value for 0.0f");
         c0 = instance.getColor(1f);
         assertTrue(c0 == null, "Non-null return for invalid target 1.0f");
@@ -93,15 +93,15 @@ public class PaletteEntryForValueTest {
 
     @Test
     public void testFaultyConstructors() {
-        Color c0 = new Color(0xff0000ff);
-        Color c1 = new Color(0xff00ff00);
+        final Color c0 = new Color(0xff0000ff);
+        final Color c1 = new Color(0xff00ff00);
         PaletteEntryForValue pTest;
 
 
         try {
             pTest = new PaletteEntryForValue(0.0f, null);
             fail("Constructor failed to detect null color");
-        } catch (IllegalArgumentException iex) {
+        } catch (final IllegalArgumentException iex) {
             // successful test
         }
 

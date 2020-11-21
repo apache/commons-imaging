@@ -64,8 +64,8 @@ public class ColorHslTest {
 
     @Test
     public void testCreatesColorHslOne() {
-        ColorHsl colorHsl = ColorHsl.BLUE;
-        ColorHsl colorHslTwo = new ColorHsl(100.0, 667.226, (-687.72287636));
+        final ColorHsl colorHsl = ColorHsl.BLUE;
+        final ColorHsl colorHslTwo = new ColorHsl(100.0, 667.226, (-687.72287636));
 
         assertEquals(667.226, colorHslTwo.S, 0.01);
         assertEquals(100.0, colorHslTwo.H, 0.01);

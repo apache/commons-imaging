@@ -93,7 +93,7 @@ public class ImageBuilder {
      *
      */
     public ImageBuilder(final int width, final int height,
-        final boolean hasAlpha, boolean isAlphaPremultiplied) {
+        final boolean hasAlpha, final boolean isAlphaPremultiplied) {
         checkDimensions(width, height);
         data = new int[width * height];
         this.width = width;
@@ -102,7 +102,7 @@ public class ImageBuilder {
         this.isAlphaPremultiplied = isAlphaPremultiplied;
     }
 
-    private void checkDimensions(int width, int height) {
+    private void checkDimensions(final int width, final int height) {
         if (width <= 0) {
             throw new RasterFormatException("zero or negative width value");
         }
@@ -173,7 +173,7 @@ public class ImageBuilder {
      * @param w the width of the specified rectangular region
      * @param h the height of the specified rectangular region
      */
-    private void checkBounds(int x, int y, int w, int h) {
+    private void checkBounds(final int x, final int y, final int w, final int h) {
         if (w <= 0) {
             throw new RasterFormatException("negative or zero subimage width");
         }
@@ -215,10 +215,10 @@ public class ImageBuilder {
      */
     public ImageBuilder getSubset(final int x, final int y, final int w, final int h) {
         checkBounds(x, y, w, h);
-        ImageBuilder b = new ImageBuilder(w, h, hasAlpha, isAlphaPremultiplied);
+        final ImageBuilder b = new ImageBuilder(w, h, hasAlpha, isAlphaPremultiplied);
         for(int i=0; i<h; i++){
-            int srcDex = (i+y)*width+x;
-            int outDex = i*w;
+            final int srcDex = (i+y)*width+x;
+            final int outDex = i*w;
             System.arraycopy(data, srcDex, b.data, outDex, w);
         }
         return b;

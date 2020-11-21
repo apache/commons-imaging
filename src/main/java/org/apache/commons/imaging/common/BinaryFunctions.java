@@ -275,8 +275,8 @@ public final class BinaryFunctions {
      * @param quad quad
      * @return a byte array
      */
-    public static byte[] quadsToByteArray(int quad) {
-        byte[] arr = new byte[4];
+    public static byte[] quadsToByteArray(final int quad) {
+        final byte[] arr = new byte[4];
         arr[0] = (byte) (quad >> 24);
         arr[1] = (byte) (quad >> 16);
         arr[2] = (byte) (quad >> 8);
@@ -295,8 +295,8 @@ public final class BinaryFunctions {
      * @return {@code true} if it found the quad, and {@code false} otherwise
      * @throws IOException if it fails to read from the given input stream
      */
-    public static boolean searchQuad(int quad, InputStream bis) throws IOException {
-        byte[] needle = BinaryFunctions.quadsToByteArray(quad);
+    public static boolean searchQuad(final int quad, final InputStream bis) throws IOException {
+        final byte[] needle = BinaryFunctions.quadsToByteArray(quad);
         int b = -1;
         int position = 0;
         while ((b = bis.read()) != -1) {

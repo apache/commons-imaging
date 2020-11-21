@@ -38,7 +38,7 @@ public class GpsTest extends ExifBaseTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void test(File imageFile) throws Exception {
+    public void test(final File imageFile) throws Exception {
         if (imageFile.getParentFile().getName().toLowerCase().equals("@broken")) {
             return;
         }

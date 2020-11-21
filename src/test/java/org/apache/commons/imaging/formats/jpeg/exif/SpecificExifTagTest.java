@@ -43,7 +43,7 @@ public abstract class SpecificExifTagTest extends ExifBaseTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testAllImages(File imageFile) throws Exception {
+    public void testAllImages(final File imageFile) throws Exception {
         if (imageFile.getParentFile().getName().toLowerCase().equals("@broken")) {
             return;
         }

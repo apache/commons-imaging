@@ -50,10 +50,10 @@ public class PaletteEntryForRange implements PaletteEntry {
      * @param color0 the color assigned to value v0
      * @param color1 the color assigned to value v1
      */
-    public PaletteEntryForRange(float v0, float v1, Color color0, Color color1) {
+    public PaletteEntryForRange(final float v0, final float v1, final Color color0, final Color color1) {
         this.v0 = v0;
         this.v1 = v1;
-        float deltaV = v1 - v0;
+        final float deltaV = v1 - v0;
         // check for range volation
         if (deltaV <= 0 || Float.isNaN(deltaV)) {
             throw new IllegalArgumentException("Specified values must be v0<v1");
@@ -61,13 +61,13 @@ public class PaletteEntryForRange implements PaletteEntry {
         if (color0 == null || color1 == null) {
             throw new IllegalArgumentException("Null colors not allowed");
         }
-        int argb0 = color0.getRGB();
+        final int argb0 = color0.getRGB();
         a0 = (argb0 >> 24) & 0xff;
         r0 = (argb0 >> 16) & 0xff;
         g0 = (argb0 >> 8) & 0xff;
         b0 = argb0 & 0xff;
 
-        int argb1 = color1.getRGB();
+        final int argb1 = color1.getRGB();
         a1 = (argb1 >> 24) & 0xff;
         r1 = (argb1 >> 16) & 0xff;
         g1 = (argb1 >> 8) & 0xff;
@@ -82,10 +82,10 @@ public class PaletteEntryForRange implements PaletteEntry {
      * @param v1 the upper bounds (non-inclusive) of the covered range of value
      * @param color the color assigned to value v0
      */
-    public PaletteEntryForRange(float v0, float v1, Color color) {
+    public PaletteEntryForRange(final float v0, final float v1, final Color color) {
         this.v0 = v0;
         this.v1 = v1;
-        float deltaV = v1 - v0;
+        final float deltaV = v1 - v0;
         // check for range volation
         if (deltaV <= 0 || Float.isNaN(deltaV)) {
             throw new IllegalArgumentException("Specified values must be v0<v1");
@@ -94,13 +94,13 @@ public class PaletteEntryForRange implements PaletteEntry {
             throw new IllegalArgumentException("Null colors not allowed");
         }
 
-        int argb0 = color.getRGB();
+        final int argb0 = color.getRGB();
         a0 = (argb0 >> 24) & 0xff;
         r0 = (argb0 >> 16) & 0xff;
         g0 = (argb0 >> 8) & 0xff;
         b0 = argb0 & 0xff;
 
-        int argb1 = color.getRGB();
+        final int argb1 = color.getRGB();
         a1 = (argb1 >> 24) & 0xff;
         r1 = (argb1 >> 16) & 0xff;
         g1 = (argb1 >> 8) & 0xff;
@@ -108,31 +108,31 @@ public class PaletteEntryForRange implements PaletteEntry {
     }
 
     @Override
-    public boolean isCovered(float f) {
+    public boolean isCovered(final float f) {
         return v0 <= f && f < v1;
     }
 
     @Override
-    public int getARGB(float f) {
+    public int getARGB(final float f) {
         if (v0 <= f && f <= v1) {
-            float t = (f - v0) / (v1 - v0);
-            int a = (int) (t * (a1 - a0) + a0 + 0.5);
-            int r = (int) (t * (r1 - r0) + r0 + 0.5);
-            int g = (int) (t * (g1 - g0) + g0 + 0.5);
-            int b = (int) (t * (b1 - b0) + b0 + 0.5);
+            final float t = (f - v0) / (v1 - v0);
+            final int a = (int) (t * (a1 - a0) + a0 + 0.5);
+            final int r = (int) (t * (r1 - r0) + r0 + 0.5);
+            final int g = (int) (t * (g1 - g0) + g0 + 0.5);
+            final int b = (int) (t * (b1 - b0) + b0 + 0.5);
             return (((((a << 8) | r) << 8) | g) << 8) | b;
         }
         return 0;
     }
 
     @Override
-    public Color getColor(float f) {
+    public Color getColor(final float f) {
         if (v0 <= f && f <= v1) {
-            float t = (f - v0) / (v1 - v0);
-            int a = (int) (t * (a1 - a0) + a0 + 0.5);
-            int r = (int) (t * (r1 - r0) + r0 + 0.5);
-            int g = (int) (t * (g1 - g0) + g0 + 0.5);
-            int b = (int) (t * (b1 - b0) + b0 + 0.5);
+            final float t = (f - v0) / (v1 - v0);
+            final int a = (int) (t * (a1 - a0) + a0 + 0.5);
+            final int r = (int) (t * (r1 - r0) + r0 + 0.5);
+            final int g = (int) (t * (g1 - g0) + g0 + 0.5);
+            final int b = (int) (t * (b1 - b0) + b0 + 0.5);
             return new Color(r, g, b, a);
         }
         return null;

@@ -264,7 +264,7 @@ public abstract class TiffImageWriterBase {
      * @param src a valid image
      * @return true if at least one non-opaque pixel is found.
      */
-    private boolean checkForActualAlpha(BufferedImage src){
+    private boolean checkForActualAlpha(final BufferedImage src){
         // to conserve memory, very large images may be read
         // in pieces.
         final int width = src.getWidth();
@@ -273,13 +273,13 @@ public abstract class TiffImageWriterBase {
         if(nRowsPerRead<1){
             nRowsPerRead = 1;
         }
-        int nReads = (height+nRowsPerRead-1)/nRowsPerRead;
-        int []argb = new int[nRowsPerRead*width];
+        final int nReads = (height+nRowsPerRead-1)/nRowsPerRead;
+        final int []argb = new int[nRowsPerRead*width];
         for(int iRead=0; iRead<nReads; iRead++){
             final int i0 = iRead*nRowsPerRead;
             final int i1 = i0+nRowsPerRead>height? height: i0+nRowsPerRead;
             src.getRGB(0, i0, width, i1-i0, argb, 0, width);
-            int n = (i1-i0)*width;
+            final int n = (i1-i0)*width;
             for(int i=0; i<n; i++){
                 if((argb[i]&0xff000000)!=0xff000000){
                     return true;
@@ -289,11 +289,11 @@ public abstract class TiffImageWriterBase {
         return false;
     }
 
-    private void applyPredictor(int width, int bytesPerSample, byte[] b) {
-        int nBytesPerRow = bytesPerSample * width;
-        int nRows = b.length / nBytesPerRow;
+    private void applyPredictor(final int width, final int bytesPerSample, final byte[] b) {
+        final int nBytesPerRow = bytesPerSample * width;
+        final int nRows = b.length / nBytesPerRow;
         for (int iRow = 0; iRow < nRows; iRow++) {
-            int offset = iRow * nBytesPerRow;
+            final int offset = iRow * nBytesPerRow;
             for (int i = nBytesPerRow-1; i >= bytesPerSample; i--) {
                 b[offset + i] -= b[offset + i - bytesPerSample];
             }

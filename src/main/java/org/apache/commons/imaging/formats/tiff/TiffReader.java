@@ -390,7 +390,7 @@ public class TiffReader extends BinaryFileParser {
     public TiffContents readDirectories(final ByteSource byteSource,
             final boolean readImageData, final FormatCompliance formatCompliance)
             throws ImageReadException, IOException {
-        Map<String, Object> params = Collections.singletonMap(
+        final Map<String, Object> params = Collections.singletonMap(
           ImagingConstants.PARAM_KEY_READ_THUMBNAILS, readImageData);
         final Collector collector = new Collector(params);
         readDirectories(byteSource, formatCompliance, collector);

@@ -63,7 +63,7 @@ public class IcnsReadTest extends IcnsBaseTest {
     @Disabled(value = "RoundtripTest has to be fixed befor implementation can throw UnsupportedOperationException")
     @ParameterizedTest
     @MethodSource("data")
-    public void testImageMetadata(File imageFile) {
+    public void testImageMetadata(final File imageFile) {
         Assertions.assertThrows(UnsupportedOperationException.class, () -> {
             Imaging.getMetadata(imageFile);
         });
@@ -71,14 +71,14 @@ public class IcnsReadTest extends IcnsBaseTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testImageInfo(File imageFile) throws Exception {
+    public void testImageInfo(final File imageFile) throws Exception {
         final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, Collections.emptyMap());
         assertNotNull(imageInfo);
     }
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testBufferedImage(File imageFile) throws Exception {
+    public void testBufferedImage(final File imageFile) throws Exception {
         final BufferedImage image = Imaging.getBufferedImage(imageFile);
         assertNotNull(image);
         // TODO assert more
@@ -92,9 +92,9 @@ public class IcnsReadTest extends IcnsBaseTest {
      */
     @ParameterizedTest()
     @MethodSource("provideIcnsImagesWithMonoAndJpegPngData")
-    public void testIcnsElementMonoPngJpeg(String file, int numberOfImages) throws ImageReadException, IOException {
-    	File testFile = new File(IcnsReadTest.class.getResource(file).getFile());
-    	List<BufferedImage> images = new IcnsImageParser().getAllBufferedImages(testFile);
+    public void testIcnsElementMonoPngJpeg(final String file, final int numberOfImages) throws ImageReadException, IOException {
+    	final File testFile = new File(IcnsReadTest.class.getResource(file).getFile());
+    	final List<BufferedImage> images = new IcnsImageParser().getAllBufferedImages(testFile);
     	assertEquals(numberOfImages, images.size());
     }
 }

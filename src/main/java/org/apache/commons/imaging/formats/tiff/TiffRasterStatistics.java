@@ -36,16 +36,16 @@ public class TiffRasterStatistics {
      * @param excludedValue an optional value to ignore; use Float&#46;NaN if no
      * value is to be ignored.
      */
-    TiffRasterStatistics(TiffRasterData raster, float excludedValue) {
+    TiffRasterStatistics(final TiffRasterData raster, final float excludedValue) {
         this.excludedValue = excludedValue;
         float vMin = Float.POSITIVE_INFINITY;
         float vMax = Float.NEGATIVE_INFINITY;
         double vSum = 0;
         int nS = 0;
         int nN = 0;
-        float[] data = raster.getData();
+        final float[] data = raster.getData();
         for (int i = 0; i < data.length; i++) {
-            float test = data[i];
+            final float test = data[i];
             if (Float.isNaN(test)) {
                 nN++;
                 continue;

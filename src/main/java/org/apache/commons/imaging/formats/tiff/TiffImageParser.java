@@ -564,7 +564,7 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
         final int width = directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH);
         final int height = directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH);
 
-        Rectangle subImage = checkForSubImage(params);
+        final Rectangle subImage = checkForSubImage(params);
         if (subImage != null) {
             // Check for valid subimage specification. The following checks
             // are consistent with BufferedImage.getSubimage()
@@ -638,14 +638,14 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
             final TiffField extraSamplesField =
                 directory.findField(TiffTagConstants.TIFF_TAG_EXTRA_SAMPLES);
             if (extraSamplesField != null) {
-                int extraSamplesValue = extraSamplesField.getIntValue();
+                final int extraSamplesValue = extraSamplesField.getIntValue();
                 isAlphaPremultiplied =
                     (extraSamplesValue==TiffTagConstants.EXTRA_SAMPLE_ASSOCIATED_ALPHA);
             }
         }
 
         PhotometricInterpreter photometricInterpreter;
-        Object test = params == null
+        final Object test = params == null
             ? null
             : params.get(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER);
         if (test instanceof PhotometricInterpreter) {
@@ -810,7 +810,7 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
             throw new ImageReadException("TIFF missing entries");
         }
 
-        short[] sSampleFmt = directory.getFieldValue(
+        final short[] sSampleFmt = directory.getFieldValue(
             TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, true);
         if (sSampleFmt[0] != TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT) {
             throw new ImageReadException("TIFF does not provide floating-point data");
@@ -912,7 +912,7 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
 
         // The photometric interpreter is not used, but the image-based
         // data reader classes require one.  So we create a dummy interpreter.
-        PhotometricInterpreter photometricInterpreter
+        final PhotometricInterpreter photometricInterpreter
             = new PhotometricInterpreterBiLevel(samplesPerPixel,
                 bitsPerSample, predictor, width, height, false);
 

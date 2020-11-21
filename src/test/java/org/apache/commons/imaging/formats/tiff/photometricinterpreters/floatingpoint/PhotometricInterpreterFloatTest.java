@@ -55,23 +55,23 @@ public class PhotometricInterpreterFloatTest {
         // The floating point values at each pixel are just the
         // index divided by 256.
 
-        List<PaletteEntry> paletteList = new ArrayList<>();
-        List<PaletteEntry> reverseList = new ArrayList<>();
+        final List<PaletteEntry> paletteList = new ArrayList<>();
+        final List<PaletteEntry> reverseList = new ArrayList<>();
         for (int i = 0; i < 256; i += 32) {
-            int i1 = i + 31;
-            float f0 = i / 256f;
-            float f1 = (i + 32) / 256f;
-            int argb0 = 0xff000000 | (i << 8) | i;
-            int argb1 = 0xff000000 | (i1 << 8) | i;
-            Color c0 = new Color(argb0);
-            Color c1 = new Color(argb1);
-            PaletteEntryForRange entry = new PaletteEntryForRange(f0, f1, c0, c1);
+            final int i1 = i + 31;
+            final float f0 = i / 256f;
+            final float f1 = (i + 32) / 256f;
+            final int argb0 = 0xff000000 | (i << 8) | i;
+            final int argb1 = 0xff000000 | (i1 << 8) | i;
+            final Color c0 = new Color(argb0);
+            final Color c1 = new Color(argb1);
+            final PaletteEntryForRange entry = new PaletteEntryForRange(f0, f1, c0, c1);
             paletteList.add(entry);
         }
         // The interpreter is supposed to sort entries.  To test that,
         // we copy them to a list in reverse order.
         for (int i = paletteList.size() - 1; i >= 0; i--) {
-            PaletteEntry entry = paletteList.get(i);
+            final PaletteEntry entry = paletteList.get(i);
             reverseList.add(entry);
         }
 
@@ -80,15 +80,15 @@ public class PhotometricInterpreterFloatTest {
         // pre-populate the state data for the interpreter with
         // some values so that we can test min/max access methods.
         imageBuilder = new ImageBuilder(257, 257, false);
-        int[] samples = new int[1];
+        final int[] samples = new int[1];
         for (int i = 0; i <= 256; i++) {
-            float f = i / 256f;
+            final float f = i / 256f;
             samples[0] = Float.floatToRawIntBits(f);
             pInterp.interpretPixel(imageBuilder, samples, i, i);
         }
 
         // Now set up a palette than maps values in a range to a single color.
-        List<PaletteEntry> bandedPaletteList = new ArrayList<>();
+        final List<PaletteEntry> bandedPaletteList = new ArrayList<>();
         bandedPaletteList.add(new PaletteEntryForRange(0f, 0.33f, green));
         bandedPaletteList.add(new PaletteEntryForRange(0.33f, 0.66f, Color.white));
         bandedPaletteList.add(new PaletteEntryForRange(0.66f, 1.0f, orange));
@@ -97,7 +97,7 @@ public class PhotometricInterpreterFloatTest {
         bandedInterp = new PhotometricInterpreterFloat(bandedPaletteList);
         bandedImageBuilder = new ImageBuilder(300, 200, false);
         for (int j = 0; j < 300; j++) {
-            float f = j / 299.0f;
+            final float f = j / 299.0f;
             samples[0] = Float.floatToRawIntBits(f);
             for (int i = 0; i < 200; i++) {
                 bandedInterp.interpretPixel(bandedImageBuilder, samples, j, i);
@@ -121,9 +121,9 @@ public class PhotometricInterpreterFloatTest {
     @Test
     public void testInterpretPixel() {
         for (int i = 0; i < 256; i++) {
-            int lowTest = (i / 32) * 32;
-            int argb = imageBuilder.getRGB(i, i);
-            int b = argb & 0xff;
+            final int lowTest = (i / 32) * 32;
+            final int argb = imageBuilder.getRGB(i, i);
+            final int b = argb & 0xff;
             assertEquals(b, lowTest, "Invalid conversion for level " + i);
         }
 
@@ -151,8 +151,8 @@ public class PhotometricInterpreterFloatTest {
      */
     @Test
     public void testGetMinFound() {
-        float expResult = 0.0F;
-        float result = pInterp.getMinFound();
+        final float expResult = 0.0F;
+        final float result = pInterp.getMinFound();
         assertEquals(expResult, result, 0.0, "Invalid minimum value");
     }
 
@@ -161,8 +161,8 @@ public class PhotometricInterpreterFloatTest {
      */
     @Test
     public void testGetMaxXY() {
-        int[] expResult = new int[]{256, 256};
-        int[] result = pInterp.getMaxXY();
+        final int[] expResult = new int[]{256, 256};
+        final int[] result = pInterp.getMaxXY();
         assertArrayEquals(expResult, result);
     }
 
@@ -171,8 +171,8 @@ public class PhotometricInterpreterFloatTest {
      */
     @Test
     public void testGetMaxFound() {
-        float expResult = 1.0F;
-        float result = pInterp.getMinFound();
+        final float expResult = 1.0F;
+        final float result = pInterp.getMinFound();
         assertEquals(expResult, result, 1.0, "Invalid maximum value");
     }
 
@@ -181,8 +181,8 @@ public class PhotometricInterpreterFloatTest {
      */
     @Test
     public void testGetMinXY() {
-        int[] expResult = new int[]{0, 0};
-        int[] result = pInterp.getMinXY();
+        final int[] expResult = new int[]{0, 0};
+        final int[] result = pInterp.getMinXY();
         assertArrayEquals(expResult, result);
     }
 
@@ -191,8 +191,8 @@ public class PhotometricInterpreterFloatTest {
      */
     @Test
     public void testGetMeanFound() {
-        float expResult = 0.5F;
-        float result = pInterp.getMinFound();
+        final float expResult = 0.5F;
+        final float result = pInterp.getMinFound();
         assertEquals(expResult, result, 1.0, "Invalid mean value");
     }
 
@@ -228,14 +228,14 @@ public class PhotometricInterpreterFloatTest {
         try {
             ptest = new PhotometricInterpreterFloat(null);
             fail("Constructor failed to detect null arguments");
-        } catch (IllegalArgumentException iex) {
+        } catch (final IllegalArgumentException iex) {
 
         }
 
         try {
             ptest = new PhotometricInterpreterFloat(0.1f, 0.1f);
             fail("Constructor failed to detect bad-range argument values");
-        } catch (IllegalArgumentException iex) {
+        } catch (final IllegalArgumentException iex) {
 
         }
 
@@ -246,16 +246,16 @@ public class PhotometricInterpreterFloatTest {
      */
     @Test
     public void testOverlappingEntriesEntry() throws ImageReadException, IOException  {
-        Color c0 = new Color(0xff0000ff);
-        Color c1 = new Color(0xff00ff00);
-        List<PaletteEntry> overlapList = new ArrayList<>();
+        final Color c0 = new Color(0xff0000ff);
+        final Color c1 = new Color(0xff00ff00);
+        final List<PaletteEntry> overlapList = new ArrayList<>();
         overlapList.add(new PaletteEntryForRange(0.0f, 1.0f, c0));
         overlapList.add(new PaletteEntryForRange(0.0f, 1.5f, c1));
 
-        PhotometricInterpreterFloat interpreter = new PhotometricInterpreterFloat(overlapList);
+        final PhotometricInterpreterFloat interpreter = new PhotometricInterpreterFloat(overlapList);
 
         imageBuilder = new ImageBuilder(257, 257, false);
-        int[] samples = new int[1];
+        final int[] samples = new int[1];
         samples[0] = Float.floatToRawIntBits(0.5f);
         interpreter.interpretPixel(imageBuilder, samples, 0, 0);
         samples[0] = Float.floatToRawIntBits(1.2f);

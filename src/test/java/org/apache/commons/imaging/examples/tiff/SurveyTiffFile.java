@@ -49,23 +49,23 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
  */
 public class SurveyTiffFile {
 
-    public String surveyFile(File file, boolean csv) throws ImageReadException, IOException {
+    public String surveyFile(final File file, final boolean csv) throws ImageReadException, IOException {
         String delimiter = "  ";
         if (csv) {
             delimiter = ", ";
         }
 
-        StringBuilder sb = new StringBuilder();
-        Formatter fmt = new Formatter(sb);
+        final StringBuilder sb = new StringBuilder();
+        final Formatter fmt = new Formatter(sb);
 
         // Establish a TiffReader. This is just a simple constructor that
         // does not actually access the file.  So the application cannot
         // obtain the byteOrder, or other details, until the contents have
         // been read.  Then read the directories associated with the
         // file by passing in the byte source and options.
-        ByteSourceFile byteSource = new ByteSourceFile(file);
-        TiffReader tiffReader = new TiffReader(true);
-        TiffContents contents = tiffReader.readDirectories(
+        final ByteSourceFile byteSource = new ByteSourceFile(file);
+        final TiffReader tiffReader = new TiffReader(true);
+        final TiffContents contents = tiffReader.readDirectories(
             byteSource,
             false, // read image data, if present
             FormatCompliance.getDefault());
@@ -73,10 +73,10 @@ public class SurveyTiffFile {
         if (contents.directories.isEmpty()) {
             throw new ImageReadException("No Image File Directory (IFD) found");
         }
-        TiffDirectory directory = contents.directories.get(0);
+        final TiffDirectory directory = contents.directories.get(0);
 
         // Get the metadata (Tags) and write them to standard output
-        boolean hasTiffImageData = directory.hasTiffImageData();
+        final boolean hasTiffImageData = directory.hasTiffImageData();
         if (!hasTiffImageData) {
             throw new ImageReadException("No image data in file");
         }
@@ -108,7 +108,7 @@ public class SurveyTiffFile {
         int tileWidth = 0;
         int tileHeight = 0;
 
-        boolean imageDataInStrips = directory.imageDataInStrips();
+        final boolean imageDataInStrips = directory.imageDataInStrips();
         if (imageDataInStrips) {
             final TiffField rowsPerStripField
                 = directory.findField(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP);
@@ -138,13 +138,13 @@ public class SurveyTiffFile {
             tileHeight = tileLengthField.getIntValue();
         }
 
-        String compressionString = getCompressionString(directory);
-        String predictorString = getPredictorString(directory);
-        String planarConfigurationString = getPlanarConfigurationString(directory);
-        String bitsPerSampleString = getBitsPerSampleString(bitsPerSample);
-        String sampleFmtString = getSampleFormatString(directory);
-        String piString = getPhotometricInterpreterString(directory, bitsPerSample);
-        String iccString = getIccProfileString(directory);
+        final String compressionString = getCompressionString(directory);
+        final String predictorString = getPredictorString(directory);
+        final String planarConfigurationString = getPlanarConfigurationString(directory);
+        final String bitsPerSampleString = getBitsPerSampleString(bitsPerSample);
+        final String sampleFmtString = getSampleFormatString(directory);
+        final String piString = getPhotometricInterpreterString(directory, bitsPerSample);
+        final String iccString = getIccProfileString(directory);
 
         fmt.format("%s%4dx%-4d", delimiter, width, height);
         if (imageDataInStrips) {
@@ -168,7 +168,7 @@ public class SurveyTiffFile {
         return sb.toString();
     }
 
-    private String getCompressionString(TiffDirectory directory) throws ImageReadException {
+    private String getCompressionString(final TiffDirectory directory) throws ImageReadException {
         final short compressionFieldValue;
         if (directory.findField(TiffTagConstants.TIFF_TAG_COMPRESSION) != null) {
             compressionFieldValue
@@ -199,7 +199,7 @@ public class SurveyTiffFile {
         }
     }
 
-    String getPredictorString(TiffDirectory directory) throws ImageReadException {
+    String getPredictorString(final TiffDirectory directory) throws ImageReadException {
         int predictor = -1;
 
         final TiffField predictorField = directory.findField(
@@ -219,8 +219,8 @@ public class SurveyTiffFile {
         }
     }
 
-    String getSampleFormatString(TiffDirectory directory) throws ImageReadException {
-        short[] sSampleFmt = directory.getFieldValue(
+    String getSampleFormatString(final TiffDirectory directory) throws ImageReadException {
+        final short[] sSampleFmt = directory.getFieldValue(
             TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, false);
         if (sSampleFmt == null || sSampleFmt.length == 0) {
             return "Unknown";
@@ -232,7 +232,7 @@ public class SurveyTiffFile {
                 break;
             }
         }
-        int test = sSampleFmt[0];
+        final int test = sSampleFmt[0];
         switch (test) {
             case TiffTagConstants.SAMPLE_FORMAT_VALUE_COMPLEX_INTEGER:
                 return "Comp I" + heterogeneous;
@@ -248,8 +248,8 @@ public class SurveyTiffFile {
         }
     }
 
-    String getBitsPerSampleString(int[] bitsPerSample) {
-        StringBuilder s = new StringBuilder();
+    String getBitsPerSampleString(final int[] bitsPerSample) {
+        final StringBuilder s = new StringBuilder();
         for (int i = 0; i < bitsPerSample.length; i++) {
             if (i > 0) {
                 s.append(".");
@@ -259,7 +259,7 @@ public class SurveyTiffFile {
         return s.toString();
     }
 
-    private String getPhotometricInterpreterString(TiffDirectory directory, int[] bitsPerSample) throws ImageReadException {
+    private String getPhotometricInterpreterString(final TiffDirectory directory, final int[] bitsPerSample) throws ImageReadException {
         final int photometricInterpretation = 0xffff & directory.getFieldValue(
             TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION);
 
@@ -271,7 +271,7 @@ public class SurveyTiffFile {
             case 2:
                 String a = "RGB";
                 if (bitsPerSample.length == 4) {
-                    Object o = directory.getFieldValue(TiffTagConstants.TIFF_TAG_EXTRA_SAMPLES);
+                    final Object o = directory.getFieldValue(TiffTagConstants.TIFF_TAG_EXTRA_SAMPLES);
                     short extraSamples = 0;
                     if (o instanceof Short) {
                         extraSamples = ((Short) o);
@@ -304,8 +304,8 @@ public class SurveyTiffFile {
 
     }
 
-    String getIccProfileString(TiffDirectory directory) throws ImageReadException {
-        byte[] b = directory.getFieldValue(TiffEpTagConstants.EXIF_TAG_INTER_COLOR_PROFILE,
+    String getIccProfileString(final TiffDirectory directory) throws ImageReadException {
+        final byte[] b = directory.getFieldValue(TiffEpTagConstants.EXIF_TAG_INTER_COLOR_PROFILE,
             false);
         if (b == null || b.length == 0) {
             return "N";
@@ -313,7 +313,7 @@ public class SurveyTiffFile {
         return "Y";
     }
 
-    String getPlanarConfigurationString(TiffDirectory directory) throws ImageReadException {
+    String getPlanarConfigurationString(final TiffDirectory directory) throws ImageReadException {
 
         // Obtain the planar configuration
         final TiffField pcField = directory.findField(
@@ -340,7 +340,7 @@ public class SurveyTiffFile {
      * files.
      * @return a valid string.
      */
-    String formatHeader(int maxPathLen, boolean csv) {
+    String formatHeader(final int maxPathLen, final boolean csv) {
         // After some false starts, it turned out that the easiest
         // way to do this is just to create a regular header and then
         // search-and-replace spaces with comma as appropriate.
@@ -348,10 +348,10 @@ public class SurveyTiffFile {
         if (n < 10) {
             n = 10;
         }
-        int k0 = (n - 4) / 2;
-        int k1 = (n - 4 - k0);
+        final int k0 = (n - 4) / 2;
+        final int k1 = (n - 4 - k0);
 
-        String header = String.format(
+        final String header = String.format(
             "%" + k0 + "sPath%" + k1 + "s%s", "", "",
             "    Size     Layout  Blk_sz     P_conf  Compress  "
             + "Predict  Data_Fmt   B/P B/S      Photo     ICC_Pro");
@@ -366,7 +366,7 @@ public class SurveyTiffFile {
      *
      * @param ps a valid instance
      */
-    void printLegend(PrintStream ps) {
+    void printLegend(final PrintStream ps) {
         ps.println("Legend:");
         ps.println("  Size      Size of image (width-by-height)");
         ps.println("  Layout    Organization of the image file (strips versus tiles)");
@@ -391,8 +391,8 @@ public class SurveyTiffFile {
      * @param s a valid string
      * @return a header suitable for a CSV file.
      */
-    private String reformatHeaderForCsv(String s) {
-        StringBuilder sb = new StringBuilder(s.length());
+    private String reformatHeaderForCsv(final String s) {
+        final StringBuilder sb = new StringBuilder(s.length());
         boolean enableComma = false;
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
@@ -418,13 +418,13 @@ public class SurveyTiffFile {
      * @param source the standard source file
      * @return the equivalent string with spaces removed.
      */
-    private String trimForCsv(StringBuilder source) {
+    private String trimForCsv(final StringBuilder source) {
         int n = source.length();
-        StringBuilder sb = new StringBuilder(n);
+        final StringBuilder sb = new StringBuilder(n);
         boolean spaceEnabled = false;
         boolean spacePending = false;
         for (int i = 0; i < n; i++) {
-            char c = source.charAt(i);
+            final char c = source.charAt(i);
             if (Character.isWhitespace(c)) {
                 if (spaceEnabled) {
                     spacePending = true;

@@ -28,7 +28,7 @@ public class PaletteEntryForValue implements PaletteEntry {
     private final float value;
     private final int iColor;
     private final Color color;
-    private boolean isNull;
+    private final boolean isNull;
 
     /**
      * Constructs a palette entry for a single value.
@@ -39,7 +39,7 @@ public class PaletteEntryForValue implements PaletteEntry {
      * Float&#46;NaN is allowed.
      * @param color the color assigned to value
      */
-    public PaletteEntryForValue(float value, Color color) {
+    public PaletteEntryForValue(final float value, final Color color) {
         if (color == null) {
             throw new IllegalArgumentException("Null colors not allowed");
         }
@@ -51,7 +51,7 @@ public class PaletteEntryForValue implements PaletteEntry {
     }
 
     @Override
-    public boolean isCovered(float f) {
+    public boolean isCovered(final float f) {
         if (isNull) {
             return Float.isNaN(f);
         }
@@ -59,7 +59,7 @@ public class PaletteEntryForValue implements PaletteEntry {
     }
 
     @Override
-    public int getARGB(float f) {
+    public int getARGB(final float f) {
         if (isNull && Float.isNaN(f)) {
             return iColor;
         } else if (f == value) {
@@ -69,7 +69,7 @@ public class PaletteEntryForValue implements PaletteEntry {
     }
 
     @Override
-    public Color getColor(float f) {
+    public Color getColor(final float f) {
         if (isNull && Float.isNaN(f)) {
             return color;
         } else if (f == value) {

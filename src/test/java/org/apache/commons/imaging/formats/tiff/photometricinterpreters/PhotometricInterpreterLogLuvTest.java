@@ -31,11 +31,11 @@ public class PhotometricInterpreterLogLuvTest {
 
     private PhotometricInterpreterLogLuv p;
 
-    private int samplesPerPixel = 8;
-    private int[] bitsPerSample = new int[] {1, 2, 3};
-    private int predictor = 1;
-    private int width = 800;
-    private int height = 600;
+    private final int samplesPerPixel = 8;
+    private final int[] bitsPerSample = new int[] {1, 2, 3};
+    private final int predictor = 1;
+    private final int width = 800;
+    private final int height = 600;
 
     @BeforeEach
     public void setUp() {
@@ -73,7 +73,7 @@ public class PhotometricInterpreterLogLuvTest {
     @Test
     public void testGetRgbValues() {
         // any value equals 0 will have its pow(N, 3) equal to 0
-        TristimulusValues triValues = new TristimulusValues();
+        final TristimulusValues triValues = new TristimulusValues();
         triValues.x = 0;
         triValues.y = 0;
         triValues.z = 0;
@@ -104,9 +104,9 @@ public class PhotometricInterpreterLogLuvTest {
 
     @Test
     public void testInterpretPixel() throws ImageReadException, IOException {
-        ImageBuilder imgBuilder = new ImageBuilder(600, 400, /*alpha*/ true);
-        int x = 10;
-        int y = 20;
+        final ImageBuilder imgBuilder = new ImageBuilder(600, 400, /*alpha*/ true);
+        final int x = 10;
+        final int y = 20;
         p.interpretPixel(imgBuilder, new int[] {100, (byte) 32, (byte) 2}, x, y);
         assertEquals(-7584166, imgBuilder.getRGB(x, y));
     }

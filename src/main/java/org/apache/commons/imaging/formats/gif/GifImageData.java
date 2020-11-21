@@ -20,7 +20,7 @@ class GifImageData {
     final ImageDescriptor descriptor;
     final GraphicControlExtension gce;
 
-    GifImageData(ImageDescriptor descriptor, GraphicControlExtension gce) {
+    GifImageData(final ImageDescriptor descriptor, final GraphicControlExtension gce) {
         this.descriptor = descriptor;
         this.gce = gce;
     }

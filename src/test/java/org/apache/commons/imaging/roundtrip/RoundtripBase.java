@@ -68,7 +68,7 @@ public class RoundtripBase {
         }
     }
 
-    public static Stream<Arguments> createRoundtripArguments(BufferedImage[] images) {
+    public static Stream<Arguments> createRoundtripArguments(final BufferedImage[] images) {
         return Arrays.stream(images).flatMap(i -> Arrays.stream(FormatInfo.READ_WRITE_FORMATS).map(f -> Arguments.of(i, f)));
     }
 }

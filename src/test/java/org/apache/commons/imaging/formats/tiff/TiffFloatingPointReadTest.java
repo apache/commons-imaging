@@ -54,9 +54,9 @@ public class TiffFloatingPointReadTest {
      * @param name a valid file name
      * @return a valid file reference.
      */
-    private File getTiffFile(String name) {
-        File tiffFolder = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, "tiff");
-        File fpFolder = new File(tiffFolder, "9");
+    private File getTiffFile(final String name) {
+        final File tiffFolder = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, "tiff");
+        final File fpFolder = new File(tiffFolder, "9");
         return new File(fpFolder, name);
     }
 
@@ -75,26 +75,26 @@ public class TiffFloatingPointReadTest {
      * @throws IOException in the event of an I/O error
      */
     private PhotometricInterpreterFloat readAndInterpretTIFF(
-        File target, float f0, float f1, float fNot) throws ImageReadException, IOException {
-        ByteSourceFile byteSource = new ByteSourceFile(target);
-        TiffReader tiffReader = new TiffReader(true);
-        TiffContents contents = tiffReader.readDirectories(
+        final File target, final float f0, final float f1, final float fNot) throws ImageReadException, IOException {
+        final ByteSourceFile byteSource = new ByteSourceFile(target);
+        final TiffReader tiffReader = new TiffReader(true);
+        final TiffContents contents = tiffReader.readDirectories(
             byteSource,
             true, // indicates that application should read image data, if present
             FormatCompliance.getDefault());
-        ByteOrder byteOrder = tiffReader.getByteOrder();
-        TiffDirectory directory = contents.directories.get(0);
+        final ByteOrder byteOrder = tiffReader.getByteOrder();
+        final TiffDirectory directory = contents.directories.get(0);
         if (!directory.hasTiffFloatingPointRasterData()) {
             fail("Internal error, sample file does not have floating-point data "
                 + target.getName());
         }
-        List<PaletteEntry> pList = new ArrayList<>();
+        final List<PaletteEntry> pList = new ArrayList<>();
         pList.add(new PaletteEntryForValue(fNot, Color.red));
         pList.add(new PaletteEntryForRange(f0, f1, Color.black, Color.white));
-        PhotometricInterpreterFloat pInterp = new PhotometricInterpreterFloat(pList);
-        HashMap<String, Object> params = new HashMap<>();
+        final PhotometricInterpreterFloat pInterp = new PhotometricInterpreterFloat(pList);
+        final HashMap<String, Object> params = new HashMap<>();
         params.put(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER, pInterp);
-        BufferedImage bImage = directory.getTiffImage(byteOrder, params);
+        final BufferedImage bImage = directory.getTiffImage(byteOrder, params);
         if (bImage == null) {
             return null;
         }
@@ -112,21 +112,21 @@ public class TiffFloatingPointReadTest {
      * @throws IOException in the event of an I/O error
      */
     private TiffRasterData readRasterFromTIFF(
-        File target, Map<String, Object> params)
+        final File target, final Map<String, Object> params)
         throws ImageReadException, IOException {
-        ByteSourceFile byteSource = new ByteSourceFile(target);
-        TiffReader tiffReader = new TiffReader(true);
-        TiffContents contents = tiffReader.readDirectories(
+        final ByteSourceFile byteSource = new ByteSourceFile(target);
+        final TiffReader tiffReader = new TiffReader(true);
+        final TiffContents contents = tiffReader.readDirectories(
             byteSource,
             true, // indicates that application should read image data, if present
             FormatCompliance.getDefault());
-        TiffDirectory directory = contents.directories.get(0);
+        final TiffDirectory directory = contents.directories.get(0);
         return directory.getFloatingPointRasterData(params);
     }
 
     @Test
     public void test() {
-        Map<String, Object> params = new HashMap<>();
+        final Map<String, Object> params = new HashMap<>();
         // These TIFF sample data includes files that contain known
         // floating-point values in various formats.  We know the range
         // of values from inspection using separate utilies. This
@@ -171,7 +171,7 @@ public class TiffFloatingPointReadTest {
             checkSubImage(target, fullRaster, width-1, 0, 1, height);  // right column
 
             // test along the main diagnonal and a parallel that reaches the top-right corner
-            int s = width-height;
+            final int s = width-height;
             for(int i=0; i<height-8; i++){
                 checkSubImage(target, fullRaster, i, i, 8, 8);
                 checkSubImage(target, fullRaster, i+1, i, 8, 8);
@@ -224,20 +224,20 @@ public class TiffFloatingPointReadTest {
     }
 
 
-    private void checkSubImage(File target, TiffRasterData fullRaster, int x0, int y0, int width, int height){
+    private void checkSubImage(final File target, final TiffRasterData fullRaster, final int x0, final int y0, final int width, final int height){
         try{
-            Map<String, Object> params = new HashMap<>();
+            final Map<String, Object> params = new HashMap<>();
             params.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, x0);
             params.put(TiffConstants.PARAM_KEY_SUBIMAGE_Y, y0);
             params.put(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, width);
             params.put(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, height);
-            TiffRasterData partRaster = readRasterFromTIFF(target, params);
+            final TiffRasterData partRaster = readRasterFromTIFF(target, params);
             assertEquals(width, partRaster.getWidth(), "Invalid width in partial for " + target.getName());
             assertEquals(height, partRaster.getHeight(), "Invalid height in partial for " + target.getName());
             for (int y = y0; y < y0+height; y++) {
                 for (int x = x0; x < x0+width; x++) {
-                    float vFull = fullRaster.getValue(x, y);
-                    float vPart = partRaster.getValue(x - x0, y - y0);
+                    final float vFull = fullRaster.getValue(x, y);
+                    final float vPart = partRaster.getValue(x - x0, y - y0);
                     assertEquals(vFull, vPart, "Invalid value match for partial at (" + x + "," + y + ") for "+target.getName());
                 }
             }

@@ -33,22 +33,22 @@ public class App2SegmentTest {
 
   @Test
   public void testEqualsReturningTrue()  throws IOException, ImageReadException {
-      App2Segment app2Segment = new App2Segment(0, 0, null);
+      final App2Segment app2Segment = new App2Segment(0, 0, null);
 
       assertTrue(app2Segment.equals(app2Segment));
   }
 
   @Test
   public void testEqualsReturningFalse()  throws IOException, ImageReadException {
-      byte[] byteArray = new byte[3];
-      App2Segment app2Segment = new App2Segment(65475, byteArray);
+      final byte[] byteArray = new byte[3];
+      final App2Segment app2Segment = new App2Segment(65475, byteArray);
 
       assertFalse(app2Segment.equals(byteArray));
   }
 
   @Test
   public void testCompareTo() throws IOException, ImageReadException {
-      App2Segment app2Segment = new App2Segment(0, 0, null);
+      final App2Segment app2Segment = new App2Segment(0, 0, null);
 
       assertEquals(0, app2Segment.compareTo(app2Segment));
   }

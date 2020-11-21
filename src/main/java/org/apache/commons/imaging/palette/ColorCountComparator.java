@@ -37,14 +37,14 @@ public class ColorCountComparator implements Comparator<ColorCount>, Serializabl
     /**
      * Color component used during the comparison.
      */
-    private ColorComponent colorComponent;
+    private final ColorComponent colorComponent;
 
     public ColorCountComparator(final ColorComponent colorComponent) {
         this.colorComponent = colorComponent;
     }
 
     @Override
-    public int compare(ColorCount c1, ColorCount c2) {
+    public int compare(final ColorCount c1, final ColorCount c2) {
         switch (colorComponent) {
         case ALPHA:
             return c1.alpha - c2.alpha;

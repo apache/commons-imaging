@@ -34,12 +34,12 @@ public class TiffRasterData {
      * @param width a value of 1 or greater
      * @param height a value of 1 or greater
      */
-    public TiffRasterData(int width, int height) {
+    public TiffRasterData(final int width, final int height) {
         if (width <= 0 || height <= 0) {
             throw new IllegalArgumentException(
                 "Raster dimensions less than or equal to zero are not supported");
         }
-        int nCells = width * height;
+        final int nCells = width * height;
         data = new float[nCells];
         this.width = width;
         this.height = height;
@@ -53,7 +53,7 @@ public class TiffRasterData {
      * @param height a value of 1 or greater
      * @param data the data to be stored in the raster.
      */
-    public TiffRasterData(int width, int height, float[] data) {
+    public TiffRasterData(final int width, final int height, final float[] data) {
         if (width <= 0 || height <= 0) {
             throw new IllegalArgumentException(
                 "Raster dimensions less than or equal to zero are not supported");
@@ -76,7 +76,7 @@ public class TiffRasterData {
      * @param value the value to be stored at the specified location;
      * potentially a Float&#46;NaN.
      */
-    public void setValue(int x, int y, float value) {
+    public void setValue(final int x, final int y, final float value) {
         if (x < 0 || x >= width || y < 0 || y >= height) {
             throw new IllegalArgumentException(
                 "Coordinates out of range (" + x + ", " + y + ")");
@@ -92,7 +92,7 @@ public class TiffRasterData {
      * @return the value stored at the specified location; potentially a
      * Float&#46;NaN.
      */
-    public float getValue(int x, int y) {
+    public float getValue(final int x, final int y) {
         if (x < 0 || x >= width || y < 0 || y >= height) {
             throw new IllegalArgumentException(
                 "Coordinates out of range (" + x + ", " + y + ")");
@@ -117,7 +117,7 @@ public class TiffRasterData {
      * @param valueToExclude exclude samples with this specified value.
      * @return a valid instance.
      */
-    public TiffRasterStatistics getSimpleStatistics(float valueToExclude) {
+    public TiffRasterStatistics getSimpleStatistics(final float valueToExclude) {
         return new TiffRasterStatistics(this, valueToExclude);
     }
 

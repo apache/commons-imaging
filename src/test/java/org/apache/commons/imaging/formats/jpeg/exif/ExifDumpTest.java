@@ -42,7 +42,7 @@ public class ExifDumpTest extends ExifBaseTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testDumpJFIF(File imageFile) throws Exception {
+    public void testDumpJFIF(final File imageFile) throws Exception {
         final ByteSource byteSource = new ByteSourceFile(imageFile);
         Debug.debug("Segments:");
         new JpegUtils().dumpJFIF(byteSource);
@@ -51,7 +51,7 @@ public class ExifDumpTest extends ExifBaseTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testMetadata(File imageFile) throws Exception {
+    public void testMetadata(final File imageFile) throws Exception {
         final Map<String, Object> params = new HashMap<>();
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
         params.put(ImagingConstants.PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));

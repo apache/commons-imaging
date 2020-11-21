@@ -59,17 +59,17 @@ public class TiffReadTest extends TiffBaseTest {
         // same as above, but test reading the TIFF directories
         final List<File> images = getTiffImages();
         for (final File imageFile : images) {
-            String name = imageFile.getName();
+            final String name = imageFile.getName();
             // the "bad offsets" file will cause an exception to be thrown.
             // It's not relevant to what this test is trying to discover.
             // So skip it.
             if(name.toLowerCase().contains("bad")){
                 continue;
             }
-            ByteSourceFile byteSource = new ByteSourceFile(imageFile);
-            HashMap<String, Object> params = new HashMap<>();
-            TiffReader tiffReader = new TiffReader(true);
-            TiffContents contents = tiffReader.readDirectories(
+            final ByteSourceFile byteSource = new ByteSourceFile(imageFile);
+            final HashMap<String, Object> params = new HashMap<>();
+            final TiffReader tiffReader = new TiffReader(true);
+            final TiffContents contents = tiffReader.readDirectories(
                 byteSource,
                 true,
                 FormatCompliance.getDefault());

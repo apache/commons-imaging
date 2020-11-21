@@ -54,7 +54,7 @@ public enum TiffPlanarConfiguration {
      * @param codeValue an integer code corresponding to the TIFF specification.
      * @return a valid enumeration.
      */
-    public static TiffPlanarConfiguration lenientValueOf(int codeValue) {
+    public static TiffPlanarConfiguration lenientValueOf(final int codeValue) {
         switch (codeValue) {
             case TiffTagConstants.PLANAR_CONFIGURATION_VALUE_CHUNKY:
                 return CHUNKY;

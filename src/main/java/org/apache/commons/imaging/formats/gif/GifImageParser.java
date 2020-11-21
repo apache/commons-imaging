@@ -510,7 +510,7 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
     }
 
     // Made internal for testability.
-    static DisposalMethod createDisposalMethodFromIntValue(int value) throws ImageReadException {
+    static DisposalMethod createDisposalMethodFromIntValue(final int value) throws ImageReadException {
         switch (value) {
             case 0:
                 return DisposalMethod.UNSPECIFIED;
@@ -548,9 +548,9 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
         }
 
         final List<GifImageData> imageData = findAllImageData(imageContents);
-        List<GifImageMetadataItem> metadataItems = new ArrayList<>(imageData.size());
-        for(GifImageData id : imageData) {
-            DisposalMethod disposalMethod = createDisposalMethodFromIntValue(id.gce.dispose);
+        final List<GifImageMetadataItem> metadataItems = new ArrayList<>(imageData.size());
+        for(final GifImageData id : imageData) {
+            final DisposalMethod disposalMethod = createDisposalMethodFromIntValue(id.gce.dispose);
             metadataItems.add(new GifImageMetadataItem(id.gce.delay, id.descriptor.imageLeftPosition, id.descriptor.imageTopPosition, disposalMethod));
         }
         return new GifImageMetadata(bhi.logicalScreenWidth, bhi.logicalScreenHeight, metadataItems);
@@ -692,7 +692,7 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
         return result;
     }
 
-    private List<GifImageData> findAllImageData(GifImageContents imageContents) throws ImageReadException {
+    private List<GifImageData> findAllImageData(final GifImageContents imageContents) throws ImageReadException {
         final List<ImageDescriptor> descriptors = findAllBlocks(imageContents.blocks, IMAGE_SEPARATOR);
 
         if (descriptors.isEmpty()) {
@@ -705,7 +705,7 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
             throw new ImageReadException("GIF: Invalid amount of Graphic Control Extensions");
         }
 
-        List<GifImageData> imageData = new ArrayList<>(descriptors.size());
+        final List<GifImageData> imageData = new ArrayList<>(descriptors.size());
         for(int i = 0; i < descriptors.size(); i++) {
             final ImageDescriptor descriptor = descriptors.get(i);
             if (descriptor == null) {
@@ -720,7 +720,7 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
         return imageData;
     }
 
-    private GifImageData findFirstImageData(GifImageContents imageContents) throws ImageReadException {
+    private GifImageData findFirstImageData(final GifImageContents imageContents) throws ImageReadException {
         final ImageDescriptor descriptor = (ImageDescriptor) findBlock(imageContents.blocks,
                 IMAGE_SEPARATOR);
 
@@ -734,7 +734,7 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
         return new GifImageData(descriptor, gce);
     }
 
-    private BufferedImage getBufferedImage(GifHeaderInfo headerInfo, GifImageData imageData, byte[] globalColorTable)
+    private BufferedImage getBufferedImage(final GifHeaderInfo headerInfo, final GifImageData imageData, final byte[] globalColorTable)
             throws ImageReadException {
         final ImageDescriptor id = imageData.descriptor;
         final GraphicControlExtension gce = imageData.gce;
@@ -827,8 +827,8 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
         }
 
         final List<GifImageData> imageData = findAllImageData(imageContents);
-        List<BufferedImage> result = new ArrayList<>(imageData.size());
-        for(GifImageData id : imageData) {
+        final List<BufferedImage> result = new ArrayList<>(imageData.size());
+        for(final GifImageData id : imageData) {
             result.add(getBufferedImage(ghi, id, imageContents.globalColorTable));
         }
         return result;

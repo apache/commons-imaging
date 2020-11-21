@@ -46,25 +46,25 @@ public class SurveyTiffFolder {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         if (args.length < 1) {
             System.err.println("Missing directory path");
             System.exit(-1);
         }
-        File topLevelDir = new File(args[0]);
+        final File topLevelDir = new File(args[0]);
         if (!topLevelDir.isDirectory() || !topLevelDir.canRead()) {
             System.err.println("Path specification is not an accessible directory " + args[0]);
             System.exit(-1);
         }
 
         // recursively survey file paths
-        String[] scratch = new String[256];
-        List<String[]> pathList = new ArrayList<>();
+        final String[] scratch = new String[256];
+        final List<String[]> pathList = new ArrayList<>();
         collectPaths(topLevelDir, pathList, scratch, 0);
         pathList.sort(new PathComparator());
 
         // find maximum lengths of each entry
-        int[] maxLen = findMaxLengths(pathList);
+        final int[] maxLen = findMaxLengths(pathList);
 
         // If args.length is 1, write report to System.out,
         // otherwise, write to a file.
@@ -74,19 +74,19 @@ public class SurveyTiffFolder {
 
             boolean csv = false;
 
-            int i = args[1].lastIndexOf('.');
+            final int i = args[1].lastIndexOf('.');
             if (i > 0) {
-                String ext = args[1].substring(i);
+                final String ext = args[1].substring(i);
                 if (".csv".equalsIgnoreCase(ext)) {
                     csv = true;
                 }
             }
-            File reportFile = new File(args[1]);
+            final File reportFile = new File(args[1]);
             try (FileOutputStream fos = new FileOutputStream(reportFile);
                 BufferedOutputStream bos = new BufferedOutputStream(fos);
                 PrintStream ps = new PrintStream(bos, true, "UTF-8")) {
                 surveyFiles(topLevelDir, pathList, maxLen, csv, ps);
-            } catch (IOException ioex) {
+            } catch (final IOException ioex) {
                 System.err.println("IOException writing report to " + args[1]);
                 System.err.println("" + ioex.getMessage());
             }
@@ -94,28 +94,28 @@ public class SurveyTiffFolder {
     }
 
     private static int collectPaths(
-        File parent,
-        List<String[]> pathList,
-        String[] scratch,
-        int depth) {
+        final File parent,
+        final List<String[]> pathList,
+        final String[] scratch,
+        final int depth) {
         if (depth == scratch.length) {
             // directory hierarchy is too deep
             return 0;
         }
 
-        File[] files = parent.listFiles();
-        for (File f : files) {
+        final File[] files = parent.listFiles();
+        for (final File f : files) {
             if (!f.isHidden()) {
-                String name = f.getName();
+                final String name = f.getName();
                 scratch[depth] = name;
                 if (f.isDirectory()) {
                     collectPaths(f, pathList, scratch, depth + 1);
                 } else {
-                    int i = name.lastIndexOf('.');
+                    final int i = name.lastIndexOf('.');
                     if (i > 0) {
-                        String ext = name.substring(i).toLowerCase();
+                        final String ext = name.substring(i).toLowerCase();
                         if (".tif".equals(ext) || ".tiff".equals(ext)) {
-                            String[] temp = new String[depth + 1];
+                            final String[] temp = new String[depth + 1];
                             System.arraycopy(scratch, 0, temp, 0, depth + 1);
                             pathList.add(temp);
                         }
@@ -129,12 +129,12 @@ public class SurveyTiffFolder {
     private static class PathComparator implements Comparator<String[]> {
 
         @Override
-        public int compare(String[] a, String[] b) {
+        public int compare(final String[] a, final String[] b) {
             for (int i = 0; i < a.length && i < b.length; i++) {
                 int test;
                 if (isNumeric(a[i]) && isNumeric(b[i])) {
-                    int iA = Integer.parseInt(a[i]);
-                    int iB = Integer.parseInt(b[i]);
+                    final int iA = Integer.parseInt(a[i]);
+                    final int iB = Integer.parseInt(b[i]);
                     test = iA - iB;
                 } else {
                     test = a[i].compareTo(b[i]);
@@ -152,7 +152,7 @@ public class SurveyTiffFolder {
             return 1;
         }
 
-        private boolean isNumeric(String a) {
+        private boolean isNumeric(final String a) {
             for (int i = 0; i < a.length(); i++) {
                 if (!Character.isDigit(a.charAt(i))) {
                     return false;
@@ -163,9 +163,9 @@ public class SurveyTiffFolder {
 
     }
 
-    private static int[] findMaxLengths(List<String[]> pathList) {
+    private static int[] findMaxLengths(final List<String[]> pathList) {
         int[] m = new int[1];
-        for (String[] s : pathList) {
+        for (final String[] s : pathList) {
             if (s.length > m.length) {
                 m = Arrays.copyOf(m, s.length);
             }
@@ -178,8 +178,8 @@ public class SurveyTiffFolder {
         return m;
     }
 
-    private static void surveyFiles(File topDir, List<String[]> pathList, int[] maxLen, boolean csv, PrintStream ps) {
-        SurveyTiffFile surveyor = new SurveyTiffFile();
+    private static void surveyFiles(final File topDir, final List<String[]> pathList, final int[] maxLen, final boolean csv, final PrintStream ps) {
+        final SurveyTiffFile surveyor = new SurveyTiffFile();
         int n = maxLen.length - 1;
         for (int i = 0; i < maxLen.length; i++) {
             n += maxLen[i];
@@ -188,14 +188,14 @@ public class SurveyTiffFolder {
             n = 10;
         }
 
-        String header = surveyor.formatHeader(n, csv);
+        final String header = surveyor.formatHeader(n, csv);
         ps.println(header);
 
-        List<String> badFiles = new ArrayList<>();
-        for (String[] path : pathList) {
-            StringBuilder sBuilder = new StringBuilder();
+        final List<String> badFiles = new ArrayList<>();
+        for (final String[] path : pathList) {
+            final StringBuilder sBuilder = new StringBuilder();
             File file = topDir;
-            for (String s : path) {
+            for (final String s : path) {
                 file = new File(file, s);
             }
             for (int i = 0; i < path.length; i++) {
@@ -224,7 +224,7 @@ public class SurveyTiffFolder {
         if (!csv && !badFiles.isEmpty()) {
             ps.println();
             ps.println("Bad Files:");
-            for (String s : badFiles) {
+            for (final String s : badFiles) {
                 ps.println(s);
             }
         }

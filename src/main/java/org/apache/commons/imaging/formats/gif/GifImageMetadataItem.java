@@ -25,7 +25,7 @@ public class GifImageMetadataItem implements ImageMetadata.ImageMetadataItem {
     private final int topPosition;
     private final DisposalMethod disposalMethod;
 
-    GifImageMetadataItem(int delay, int leftPosition, int topPosition, DisposalMethod disposalMethod) {
+    GifImageMetadataItem(final int delay, final int leftPosition, final int topPosition, final DisposalMethod disposalMethod) {
         this.delay = delay;
         this.leftPosition = leftPosition;
         this.topPosition = topPosition;

@@ -45,7 +45,7 @@ public class ImageBuilderTest {
     @Test
     public void testBoundsCheck() {
 
-        ImageBuilder imageBuilder = new ImageBuilder(100, 100, false );
+        final ImageBuilder imageBuilder = new ImageBuilder(100, 100, false );
 
         executeBadBounds(imageBuilder, -1,  0, 50, 50);
         executeBadBounds(imageBuilder,  0, -1, 50, 50);
@@ -60,27 +60,27 @@ public class ImageBuilderTest {
      */
     @Test
     public void testSubimageAccess() {
-        ImageBuilder imageBuilder = new ImageBuilder(100, 100, false );
+        final ImageBuilder imageBuilder = new ImageBuilder(100, 100, false );
         populate(imageBuilder);
-        BufferedImage bImage = imageBuilder.getSubimage(25, 25, 25, 25);
-        int w = bImage.getWidth();
-        int h = bImage.getHeight();
+        final BufferedImage bImage = imageBuilder.getSubimage(25, 25, 25, 25);
+        final int w = bImage.getWidth();
+        final int h = bImage.getHeight();
         assertEquals(w, 25, "Width of subimage does not match");
         assertEquals(h, 25, "Height of subimage does not match");
 
         for(int x=25; x<50; x++){
             for(int y=25; y<50; y++){
-                int k = bImage.getRGB(x-25, y-25);
-                int rgb = imageBuilder.getRGB(x, y);
+                final int k = bImage.getRGB(x-25, y-25);
+                final int rgb = imageBuilder.getRGB(x, y);
                 assertEquals(k, rgb, "Invalid buffered image subpixel at "+x+", "+y);
             }
         }
 
-        ImageBuilder testBuilder = imageBuilder.getSubset(25, 25, 25, 25);
+        final ImageBuilder testBuilder = imageBuilder.getSubset(25, 25, 25, 25);
         for(int x=25; x<50; x++){
             for(int y=25; y<50; y++){
-                int k = testBuilder.getRGB(x-25, y-25);
-                int rgb = imageBuilder.getRGB(x, y);
+                final int k = testBuilder.getRGB(x-25, y-25);
+                final int rgb = imageBuilder.getRGB(x, y);
                 assertEquals(k, rgb, "Invalid image builder subpixel at "+x+", "+y);
             }
         }
@@ -112,30 +112,30 @@ public class ImageBuilderTest {
         assertTrue(model.isAlphaPremultiplied(), "Output image does not have alpha pre-multiplied where specified");
     }
 
-    void executeBadBounds(ImageBuilder imageBuilder, int x, int y, int w, int h){
+    void executeBadBounds(final ImageBuilder imageBuilder, final int x, final int y, final int w, final int h){
         try{
-            ImageBuilder sub = imageBuilder.getSubset(x, y, w, h);
+            final ImageBuilder sub = imageBuilder.getSubset(x, y, w, h);
             fail("Failed to detect bad bounds "+x+", "+y+", "+w+", "+h);
-        }catch(RasterFormatException rfe){
+        }catch(final RasterFormatException rfe){
             // success, no action required
         }
     }
 
-    void executeBadConstructor(int w, int h){
+    void executeBadConstructor(final int w, final int h){
         try{
-            ImageBuilder iBuilder = new ImageBuilder(w, h, true);
+            final ImageBuilder iBuilder = new ImageBuilder(w, h, true);
             fail("Failed to detect bad constructor "+w+", "+h);
-        }catch(RasterFormatException rfe){
+        }catch(final RasterFormatException rfe){
             // success, no action required
         }
     }
 
 
-    void populate(ImageBuilder imageBuilder){
+    void populate(final ImageBuilder imageBuilder){
         for(int x=0; x<100; x++){
             for(int y=0; y<100; y++){
-                int k = y*100+x;
-                int rgb = 0xff000000|k;
+                final int k = y*100+x;
+                final int rgb = 0xff000000|k;
                 imageBuilder.setRGB(x, y, rgb);
             }
         }

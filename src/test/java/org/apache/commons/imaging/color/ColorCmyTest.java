@@ -58,8 +58,8 @@ public class ColorCmyTest {
 
     @Test
     public void testCreatesColorCmy() {
-        ColorCmy colorCmy = new ColorCmy(0.0, (-1668.733868772), (-1568.733868772));
-        ColorCmy colorCmyTwo = ColorCmy.YELLOW;
+        final ColorCmy colorCmy = new ColorCmy(0.0, (-1668.733868772), (-1568.733868772));
+        final ColorCmy colorCmyTwo = ColorCmy.YELLOW;
 
         assertFalse(colorCmy.equals(colorCmyTwo));
         assertEquals((-1568.733868772), colorCmy.Y, 0.01);

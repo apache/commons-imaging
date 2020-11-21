@@ -28,10 +28,10 @@ public class JpegInputStreamTest {
 
   @Test
   public void testNextBitThrowsImageReadExceptionOne() {
-    int[] byteArray = new int[6];
+    final int[] byteArray = new int[6];
     byteArray[0] = (byte) (-1);
     byteArray[1] = (byte) 74;
-    JpegInputStream jpegInputStream = new JpegInputStream(byteArray);
+    final JpegInputStream jpegInputStream = new JpegInputStream(byteArray);
 
     Assertions.assertThrows(ImageReadException.class, () -> {
         jpegInputStream.nextBit();
@@ -41,8 +41,8 @@ public class JpegInputStreamTest {
 
   @Test
   public void testNextBitThrowsImageReadExceptionTwo() {
-    int[] byteArray = new int[0];
-    JpegInputStream jpegInputStream = new JpegInputStream(byteArray);
+    final int[] byteArray = new int[0];
+    final JpegInputStream jpegInputStream = new JpegInputStream(byteArray);
 
     Assertions.assertThrows(IllegalStateException.class, () -> {
         jpegInputStream.nextBit();

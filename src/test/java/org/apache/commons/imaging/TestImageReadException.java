@@ -29,14 +29,14 @@ public class TestImageReadException {
 
 	@Test
 	public void testCreateExceptionWithMessage() {
-		ImageReadException exception = new ImageReadException("imaging");
+		final ImageReadException exception = new ImageReadException("imaging");
 		assertEquals("imaging", exception.getMessage());
 		assertNull(exception.getCause());
 	}
 
 	@Test
 	public void testCreateExceptionWithMessageAndCause() {
-		ImageReadException exception = new ImageReadException("imaging", new Exception("cause"));
+		final ImageReadException exception = new ImageReadException("imaging", new Exception("cause"));
 		assertEquals("imaging", exception.getMessage());
 		assertNotNull(exception.getCause());
 	}

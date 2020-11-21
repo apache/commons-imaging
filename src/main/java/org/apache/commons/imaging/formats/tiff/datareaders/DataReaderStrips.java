@@ -90,7 +90,7 @@ public final class DataReaderStrips extends ImageDataReader {
             x = 0;
             y += nRows;
             final int[] samples = new int[1];
-            int[] b = unpackFloatingPointSamples(
+            final int[] b = unpackFloatingPointSamples(
                 width, i1 - i0, width, bytes, predictor, bitsPerPixel, byteOrder);
 
             for (int i = i0; i < i1; i++) {
@@ -310,7 +310,7 @@ public final class DataReaderStrips extends ImageDataReader {
                   yLimit);
             }
         } else {
-            int nStripsInPlane = imageData.getImageDataLength() / 3;
+            final int nStripsInPlane = imageData.getImageDataLength() / 3;
             for (int strip = strip0; strip <= strip1; strip++) {
                 final long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
                 final long rowsRemaining = height - (strip * rowsPerStripLong);
@@ -319,9 +319,9 @@ public final class DataReaderStrips extends ImageDataReader {
                 final long bytesPerStrip = rowsInThisStrip * bytesPerRow;
                 final long pixelsPerStrip = rowsInThisStrip * width;
 
-                byte[] b = new byte[(int) bytesPerStrip];
+                final byte[] b = new byte[(int) bytesPerStrip];
                 for (int iPlane = 0; iPlane < 3; iPlane++) {
-                    int planeStrip = iPlane * nStripsInPlane + strip;
+                    final int planeStrip = iPlane * nStripsInPlane + strip;
                     final byte[] compressed = imageData.getImageData(planeStrip).getData();
                     final byte[] decompressed = decompress(compressed, compression,
                       (int) bytesPerStrip, width, (int) rowsInThisStrip);
@@ -352,7 +352,7 @@ public final class DataReaderStrips extends ImageDataReader {
     }
 
     @Override
-    public TiffRasterData readRasterData(Rectangle subImage)
+    public TiffRasterData readRasterData(final Rectangle subImage)
         throws ImageReadException, IOException {
 
         int xRaster;
@@ -370,7 +370,7 @@ public final class DataReaderStrips extends ImageDataReader {
             rasterWidth = width;
             rasterHeight = height;
         }
-        float[] rasterData = new float[rasterWidth * rasterHeight];
+        final float[] rasterData = new float[rasterWidth * rasterHeight];
 
         // the legacy code is optimized to the reading of whole
         // strips (except for the last strip in the image, which can
@@ -383,17 +383,17 @@ public final class DataReaderStrips extends ImageDataReader {
         final int strip1 = (yRaster + rasterHeight - 1) / rowsPerStrip;
 
         for (int strip = strip0; strip <= strip1; strip++) {
-            int yStrip = strip * rowsPerStrip;
-            int rowsRemaining = height - yStrip;
-            int rowsInThisStrip = Math.min(rowsRemaining, rowsPerStrip);
-            int bytesPerRow = (bitsPerPixel * width + 7) / 8;
-            int bytesPerStrip = rowsInThisStrip * bytesPerRow;
+            final int yStrip = strip * rowsPerStrip;
+            final int rowsRemaining = height - yStrip;
+            final int rowsInThisStrip = Math.min(rowsRemaining, rowsPerStrip);
+            final int bytesPerRow = (bitsPerPixel * width + 7) / 8;
+            final int bytesPerStrip = rowsInThisStrip * bytesPerRow;
 
             final byte[] compressed = imageData.getImageData(strip).getData();
             final byte[] decompressed = decompress(compressed, compression,
                 bytesPerStrip, width, rowsInThisStrip);
 
-            int[] blockData = unpackFloatingPointSamples(
+            final int[] blockData = unpackFloatingPointSamples(
                 width, (int) rowsInThisStrip, width,
                 decompressed,
                 predictor, bitsPerPixel, byteOrder);

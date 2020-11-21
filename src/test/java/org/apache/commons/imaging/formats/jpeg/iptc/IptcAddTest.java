@@ -50,7 +50,7 @@ public class IptcAddTest extends IptcBaseTest {
          */
     @ParameterizedTest
     @MethodSource("data")
-    public void testAddIptcData(File imageFile) throws Exception {
+    public void testAddIptcData(final File imageFile) throws Exception {
         final ByteSource byteSource = new ByteSourceFile(imageFile);
 
         final Map<String, Object> params = new HashMap<>();

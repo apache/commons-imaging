@@ -891,7 +891,7 @@ public class TiffDirectory extends TiffElement {
         final Map<String, Object> params)
         throws ImageReadException, IOException {
 
-        TiffImageParser parser = new TiffImageParser();
+        final TiffImageParser parser = new TiffImageParser();
         return parser.getFloatingPointRasterData(this, headerByteOrder, params);
     }
 
@@ -906,7 +906,7 @@ public class TiffDirectory extends TiffElement {
      */
     public boolean hasTiffFloatingPointRasterData() throws ImageReadException {
         if (this.hasTiffImageData()) {
-            short[] sSampleFmt = getFieldValue(
+            final short[] sSampleFmt = getFieldValue(
                 TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, false);
             return sSampleFmt != null && sSampleFmt.length > 0
                 && sSampleFmt[0] == TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT;
