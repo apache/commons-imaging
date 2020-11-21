@@ -804,9 +804,7 @@ public class JpegImageParser extends ImageParser implements XmpEmbeddable {
         final List<String> comments = new ArrayList<>(commentSegments.size());
         for (final Segment commentSegment : commentSegments) {
             final ComSegment comSegment = (ComSegment) commentSegment;
-            String comment = "";
-            comment = new String(comSegment.getComment(), StandardCharsets.UTF_8);
-            comments.add(comment);
+            comments.add(new String(comSegment.getComment(), StandardCharsets.UTF_8));
         }
 
         final int numberOfComponents = fSOFNSegment.numberOfComponents;

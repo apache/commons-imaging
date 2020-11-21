@@ -392,8 +392,7 @@ public class ExifRewriter extends BinaryFileParser {
         // Just use first APP1 segment for now.
         // Multiple APP1 segments are rare and poorly supported.
         if (!jfifPieces.exifPieces.isEmpty()) {
-            JFIFPieceSegment exifPiece = null;
-            exifPiece = (JFIFPieceSegment) jfifPieces.exifPieces.get(0);
+            final JFIFPieceSegment exifPiece = (JFIFPieceSegment) jfifPieces.exifPieces.get(0);
 
             byte[] exifBytes = exifPiece.segmentData;
             exifBytes = remainingBytes("trimmed exif bytes", exifBytes, 6);
