@@ -348,7 +348,7 @@ public class BasicCParser {
                                         + "hex constant invalid", nfe);
                     }
                     stringBuilder.append((char) constant);
-                } else
+                } else {
                     switch (c) {
                     case '0':
                     case '1':
@@ -400,6 +400,7 @@ public class BasicCParser {
                         throw new ImageReadException("Parsing XPM file failed, "
                                 + "invalid escape sequence");
                     }
+                }
                 hadBackSlash = false;
             } else {
                 if (c == '\\') {
