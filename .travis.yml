@@ -19,10 +19,9 @@ cache:
   directories:
     - $HOME/.m2
 jdk:
-  - oraclejdk11
   - openjdk8
   - openjdk11
-  - openjdk14
+  - openjdk15
   - openjdk-ea
 
 matrix:
