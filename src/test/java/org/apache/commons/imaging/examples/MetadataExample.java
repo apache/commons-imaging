@@ -140,8 +140,7 @@ public class MetadataExample {
             System.out.println();
 
             final List<ImageMetadataItem> items = jpegMetadata.getItems();
-            for (int i = 0; i < items.size(); i++) {
-                final ImageMetadataItem item = items.get(i);
+            for (final ImageMetadataItem item : items) {
                 System.out.println("    " + "item: " + item);
             }
 

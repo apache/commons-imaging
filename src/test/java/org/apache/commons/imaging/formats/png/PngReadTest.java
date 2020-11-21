@@ -38,9 +38,8 @@ public class PngReadTest extends PngBaseTest {
         Debug.debug("start");
 
         final List<File> images = getPngImages();
-        for (int i = 0; i < images.size(); i++) {
+        for (final File imageFile : images) {
 
-            final File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
             if (isInvalidPNGTestFile(imageFile)) {
                 assertThrows(

@@ -38,7 +38,9 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.formats.jpeg.JpegUtils;
 import org.apache.commons.imaging.formats.jpeg.segments.DhtSegment;
+import org.apache.commons.imaging.formats.jpeg.segments.DhtSegment.HuffmanTable;
 import org.apache.commons.imaging.formats.jpeg.segments.DqtSegment;
+import org.apache.commons.imaging.formats.jpeg.segments.DqtSegment.QuantizationTable;
 import org.apache.commons.imaging.formats.jpeg.segments.SofnSegment;
 import org.apache.commons.imaging.formats.jpeg.segments.SosSegment;
 
@@ -239,8 +241,8 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             sofnSegment = new SofnSegment(marker, segmentData);
         } else if (marker == JpegConstants.DQT_MARKER) {
             final DqtSegment dqtSegment = new DqtSegment(marker, segmentData);
-            for (int i = 0; i < dqtSegment.quantizationTables.size(); i++) {
-                final DqtSegment.QuantizationTable table = dqtSegment.quantizationTables.get(i);
+            for (final QuantizationTable element : dqtSegment.quantizationTables) {
+                final DqtSegment.QuantizationTable table = element;
                 if (0 > table.destinationIdentifier
                         || table.destinationIdentifier >= quantizationTables.length) {
                     throw new ImageReadException(
@@ -259,8 +261,8 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             }
         } else if (marker == JpegConstants.DHT_MARKER) {
             final DhtSegment dhtSegment = new DhtSegment(marker, segmentData);
-            for (int i = 0; i < dhtSegment.huffmanTables.size(); i++) {
-                final DhtSegment.HuffmanTable table = dhtSegment.huffmanTables.get(i);
+            for (final HuffmanTable element : dhtSegment.huffmanTables) {
+                final DhtSegment.HuffmanTable table = element;
                 DhtSegment.HuffmanTable[] tables;
                 if (table.tableClass == 0) {
                     tables = huffmanDCTables;

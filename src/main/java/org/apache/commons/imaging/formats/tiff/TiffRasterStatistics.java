@@ -44,8 +44,7 @@ public class TiffRasterStatistics {
         int nS = 0;
         int nN = 0;
         final float[] data = raster.getData();
-        for (int i = 0; i < data.length; i++) {
-            final float test = data[i];
+        for (final float test : data) {
             if (Float.isNaN(test)) {
                 nN++;
                 continue;

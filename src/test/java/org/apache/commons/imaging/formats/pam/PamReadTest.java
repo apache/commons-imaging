@@ -39,9 +39,8 @@ public class PamReadTest extends PamBaseTest {
         Debug.debug("start");
 
         final List<File> images = getPamImages();
-        for (int i = 0; i < images.size(); i++) {
+        for (final File imageFile : images) {
 
-            final File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
 
             final ImageMetadata metadata = Imaging.getMetadata(imageFile);

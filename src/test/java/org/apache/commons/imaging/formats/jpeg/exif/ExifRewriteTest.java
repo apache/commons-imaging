@@ -61,9 +61,8 @@ public class ExifRewriteTest extends ExifBaseTest {
     @Test
     public void testRemove() throws Exception {
         final List<File> images = getImagesWithExifData();
-        for (int i = 0; i < images.size(); i++) {
+        for (final File imageFile : images) {
 
-            final File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
 
             final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
@@ -99,9 +98,8 @@ public class ExifRewriteTest extends ExifBaseTest {
     @Test
     public void testInsert() throws Exception {
         final List<File> images = getImagesWithExifData();
-        for (int i = 0; i < images.size(); i++) {
+        for (final File imageFile : images) {
 
-            final File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
 
             final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
@@ -175,9 +173,7 @@ public class ExifRewriteTest extends ExifBaseTest {
     private void rewrite(final Rewriter rewriter, final String name) throws IOException,
             ImageReadException {
         final List<File> images = getImagesWithExifData();
-        for (int i = 0; i < images.size(); i++) {
-
-            final File imageFile = images.get(i);
+        for (final File imageFile : images) {
 
             try {
 
@@ -264,8 +260,8 @@ public class ExifRewriteTest extends ExifBaseTest {
 
     private Map<Integer,TiffImageMetadata.Directory> makeDirectoryMap(final List<? extends ImageMetadataItem> directories) {
         final Map<Integer,TiffImageMetadata.Directory> directoryMap = new HashMap<>();
-        for (int i = 0; i < directories.size(); i++) {
-            final TiffImageMetadata.Directory directory = (TiffImageMetadata.Directory) directories.get(i);
+        for (final ImageMetadataItem element : directories) {
+            final TiffImageMetadata.Directory directory = (TiffImageMetadata.Directory) element;
             directoryMap.put(directory.type, directory);
         }
         return directoryMap;
@@ -273,8 +269,8 @@ public class ExifRewriteTest extends ExifBaseTest {
 
     private Map<Integer,TiffField> makeFieldMap(final List<? extends ImageMetadataItem> items) {
         final Map<Integer,TiffField> fieldMap = new HashMap<>();
-        for (int i = 0; i < items.size(); i++) {
-            final TiffImageMetadata.TiffMetadataItem item = (TiffImageMetadata.TiffMetadataItem) items.get(i);
+        for (final ImageMetadataItem item2 : items) {
+            final TiffImageMetadata.TiffMetadataItem item = (TiffImageMetadata.TiffMetadataItem) item2;
             final TiffField field = item.getTiffField();
             if (!fieldMap.containsKey(field.getTag())) {
                 fieldMap.put(field.getTag(), field);
@@ -303,8 +299,8 @@ public class ExifRewriteTest extends ExifBaseTest {
         Collections.sort(newDirectoryTypes);
         assertEquals(oldDirectoryTypes, newDirectoryTypes);
 
-        for (int i = 0; i < oldDirectoryTypes.size(); i++) {
-            final Integer dirType = oldDirectoryTypes.get(i);
+        for (final Integer dirType : oldDirectoryTypes) {
+            
 
             // Debug.debug("dirType", dirType);
 
@@ -338,9 +334,7 @@ public class ExifRewriteTest extends ExifBaseTest {
             Collections.sort(newFieldTags);
             assertEquals(oldFieldTags, newFieldTags);
 
-            for (int j = 0; j < oldFieldTags.size(); j++) {
-                final Integer fieldTag = oldFieldTags.get(j);
-
+            for (final Integer fieldTag : oldFieldTags) {
                 final TiffField oldField = oldFieldMap.get(fieldTag);
                 final TiffField newField = newFieldMap.get(fieldTag);
 

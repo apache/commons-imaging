@@ -181,8 +181,8 @@ public class SurveyTiffFolder {
     private static void surveyFiles(final File topDir, final List<String[]> pathList, final int[] maxLen, final boolean csv, final PrintStream ps) {
         final SurveyTiffFile surveyor = new SurveyTiffFile();
         int n = maxLen.length - 1;
-        for (int i = 0; i < maxLen.length; i++) {
-            n += maxLen[i];
+        for (final int element : maxLen) {
+            n += element;
         }
         if (n < 10) {
             n = 10;

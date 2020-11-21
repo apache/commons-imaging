@@ -326,8 +326,8 @@ public final class DataReaderStrips extends ImageDataReader {
                     final byte[] decompressed = decompress(compressed, compression,
                       (int) bytesPerStrip, width, (int) rowsInThisStrip);
                     int index = iPlane;
-                    for (int i = 0; i < decompressed.length; i++) {
-                        b[index] = decompressed[i];
+                    for (final byte element : decompressed) {
+                        b[index] = element;
                         index += 3;
                     }
                 }

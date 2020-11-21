@@ -76,10 +76,10 @@ public class TiffReadAlphaTest {
                 g2d.fillRect(0, 50, 101, 51);
                 g2d.drawImage(overlay, 0, 0, null);
 
-                for (int i = 0; i < testSite.length; i++) {
-                    final int x = testSite[i][0];
-                    final int y = testSite[i][1];
-                    final int p = testSite[i][2];
+                for (final int[] element : testSite) {
+                    final int x = element[0];
+                    final int y = element[1];
+                    final int p = element[2];
                     final int t = composite.getRGB(x, y);
                     assertEquals(t, p, "Error for " + name + " at position " + x + ", " + y);
                 }
