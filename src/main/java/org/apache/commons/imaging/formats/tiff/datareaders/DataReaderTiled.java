@@ -180,6 +180,8 @@ public final class DataReaderTiled extends ImageDataReader {
 
         // End of May 2012 changes
 
+        final boolean isByteSampleFormatRequired =
+            photometricInterpreter.isByteSampleFormatRequired();
         try (BitInputStream bis = new BitInputStream(new ByteArrayInputStream(bytes), byteOrder)) {
 
             final int pixelsPerTile = tileWidth * tileLength;
@@ -194,10 +196,15 @@ public final class DataReaderTiled extends ImageDataReader {
                 final int x = tileX + startX;
                 final int y = tileY + startY;
 
-                getSamplesAsBytes(bis, samples);
+                if(isByteSampleFormatRequired){
+                    getSamplesAsBytes(bis, samples);
+                    samples = applyPredictor(samples);
+                }else{
+                    getSamplesWithFullPrecision(bis, samples);
+                    samples = applyPredictorToFullPrecision(samples);
+                }
 
                 if (x < xLimit && y < yLimit) {
-                    samples = applyPredictor(samples);
                     photometricInterpreter.interpretPixel(imageBuilder, samples, x, y);
                 }
 

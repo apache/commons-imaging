@@ -54,6 +54,17 @@ import java.util.Properties;
 /**
  * A utility class primary intended for storing data obtained by reading
  * image files.
+ * <p>
+ * <strong>A Note on Future Development:</strong> At this time, the getRGB() and
+ * getInteger() methods implement identical behavior.  In the future
+ * is is possible that the two methods may diverge. Not all of the
+ * data products accessed by this API use RGB (or ARGB) formats for
+ * their imagery. But because the name getRGB() implies that the return
+ * value is in an RGB format, it may expected that this class will transform
+ * non-RGB data to RGB format. If the getRGB() method evolves in this manner,
+ * the getInteger() method will remain as a way of fetching the original
+ * data values from an image.
+ *
  */
 public class ImageBuilder {
     private final int[] data;
@@ -153,6 +164,25 @@ public class ImageBuilder {
         final int rowOffset = y * width;
         data[rowOffset + x] = argb;
     }
+
+    /**
+     * Get the integer value for the raster data cell at the position (x,y).
+     * At the present time, the behavior of this method is identical
+     * to the getRGB() method.
+     * <p>
+     * For performance reasons no checks are applied to
+     * ensure that the specified x and y values are within the
+     * bounds of the raster field.
+     * @param x the X coordinate of the pixel to be read
+     * @param y the Y coordinate of the pixel to be read
+     * @return the integer value at the specified position.
+     */
+    public int getSample(final int x, final int y) {
+        final int rowOffset = y * width;
+        return data[rowOffset + x];
+    }
+
+
 
     /**
      * Create a BufferedImage using the data stored in the ImageBuilder.

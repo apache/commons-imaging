@@ -546,8 +546,16 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
     }
 
     protected BufferedImage getBufferedImage(final TiffDirectory directory,
-            final ByteOrder byteOrder, final Map<String, Object> params)
-            throws ImageReadException, IOException {
+        final ByteOrder byteOrder, final Map<String, Object> params)
+        throws ImageReadException, IOException {
+        return getImageBuilder(directory, byteOrder, params).getBufferedImage();
+    }
+
+
+    protected ImageBuilder getImageBuilder(final TiffDirectory directory,
+        final ByteOrder byteOrder, final Map<String, Object> params)
+        throws ImageReadException, IOException {
+
         final List<TiffField> entries = directory.entries;
 
         if (entries == null) {
@@ -564,7 +572,7 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
         final int width = directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH);
         final int height = directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH);
 
-        final Rectangle subImage = checkForSubImage(params);
+        Rectangle subImage = checkForSubImage(params);
         if (subImage != null) {
             // Check for valid subimage specification. The following checks
             // are consistent with BufferedImage.getSubimage()
@@ -590,14 +598,14 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
 
         int samplesPerPixel = 1;
         final TiffField samplesPerPixelField = directory.findField(
-                TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL);
+            TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL);
         if (samplesPerPixelField != null) {
             samplesPerPixel = samplesPerPixelField.getIntValue();
         }
-        int[] bitsPerSample = { 1 };
+        int[] bitsPerSample = {1};
         int bitsPerPixel = samplesPerPixel;
         final TiffField bitsPerSampleField = directory.findField(
-                TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE);
+            TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE);
         if (bitsPerSampleField != null) {
             bitsPerSample = bitsPerSampleField.getIntArrayValue();
             bitsPerPixel = bitsPerSampleField.getIntValueOrArraySum();
@@ -605,7 +613,6 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
 
         // int bitsPerPixel = getTagAsValueOrArraySum(entries,
         // TIFF_TAG_BITS_PER_SAMPLE);
-
         int predictor = -1;
         {
             // dumpOptionalNumberTag(entries, TIFF_TAG_FILL_ORDER);
@@ -614,7 +621,7 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
             // dumpOptionalNumberTag(entries, TIFF_TAG_ORIENTATION);
             // dumpOptionalNumberTag(entries, TIFF_TAG_PLANAR_CONFIGURATION);
             final TiffField predictorField = directory.findField(
-                    TiffTagConstants.TIFF_TAG_PREDICTOR);
+                TiffTagConstants.TIFF_TAG_PREDICTOR);
             if (null != predictorField) {
                 predictor = predictorField.getIntValueOrArraySum();
             }
@@ -622,30 +629,29 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
 
         if (samplesPerPixel != bitsPerSample.length) {
             throw new ImageReadException("Tiff: samplesPerPixel ("
-                    + samplesPerPixel + ")!=fBitsPerSample.length ("
-                    + bitsPerSample.length + ")");
+                + samplesPerPixel + ")!=fBitsPerSample.length ("
+                + bitsPerSample.length + ")");
         }
 
-
         final int photometricInterpretation = 0xffff & directory.getFieldValue(
-                TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION);
+            TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION);
 
-        final boolean hasAlpha =
-            photometricInterpretation == TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_RGB
-            && samplesPerPixel==4;
+        final boolean hasAlpha
+            = photometricInterpretation == TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_RGB
+            && samplesPerPixel == 4;
         boolean isAlphaPremultiplied = false;
-        if(hasAlpha){
-            final TiffField extraSamplesField =
-                directory.findField(TiffTagConstants.TIFF_TAG_EXTRA_SAMPLES);
+        if (hasAlpha) {
+            final TiffField extraSamplesField
+                = directory.findField(TiffTagConstants.TIFF_TAG_EXTRA_SAMPLES);
             if (extraSamplesField != null) {
-                final int extraSamplesValue = extraSamplesField.getIntValue();
-                isAlphaPremultiplied =
-                    (extraSamplesValue==TiffTagConstants.EXTRA_SAMPLE_ASSOCIATED_ALPHA);
+                int extraSamplesValue = extraSamplesField.getIntValue();
+                isAlphaPremultiplied
+                    = (extraSamplesValue == TiffTagConstants.EXTRA_SAMPLE_ASSOCIATED_ALPHA);
             }
         }
 
         PhotometricInterpreter photometricInterpreter;
-        final Object test = params == null
+        Object test = params == null
             ? null
             : params.get(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER);
         if (test instanceof PhotometricInterpreter) {
@@ -658,19 +664,19 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
 
         // Obtain the planar configuration
         final TiffField pcField = directory.findField(
-          TiffTagConstants.TIFF_TAG_PLANAR_CONFIGURATION);
+            TiffTagConstants.TIFF_TAG_PLANAR_CONFIGURATION);
         final TiffPlanarConfiguration planarConfiguration
-          = pcField == null
-            ? TiffPlanarConfiguration.CHUNKY
-            : TiffPlanarConfiguration.lenientValueOf(pcField.getIntValue());
+            = pcField == null
+                ? TiffPlanarConfiguration.CHUNKY
+                : TiffPlanarConfiguration.lenientValueOf(pcField.getIntValue());
 
         if (planarConfiguration == TiffPlanarConfiguration.PLANAR) {
             // currently, we support the non-interleaved (non-chunky)
             // option only in the case of a 24-bit RBG photometric interpreter
             // and for strips (not for tiles).
             if (photometricInterpretation
-              != TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_RGB
-              || bitsPerPixel != 24) {
+                != TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_RGB
+                || bitsPerPixel != 24) {
                 throw new ImageReadException("For planar configuration 2, only 24 bit RGB is currently supported");
             }
             if (null == directory.findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS)) {
@@ -681,14 +687,13 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
         final TiffImageData imageData = directory.getTiffImageData();
 
         final ImageDataReader dataReader = imageData.getDataReader(directory,
-                photometricInterpreter, bitsPerPixel, bitsPerSample, predictor,
-          samplesPerPixel, width, height, compression,
-          planarConfiguration, byteOrder);
+            photometricInterpreter, bitsPerPixel, bitsPerSample, predictor,
+            samplesPerPixel, width, height, compression,
+            planarConfiguration, byteOrder);
 
-        final ImageBuilder iBuilder = dataReader.readImageData(
-            subImage, hasAlpha, isAlphaPremultiplied);
-        return iBuilder.getBufferedImage();
+        return dataReader.readImageData(subImage, hasAlpha, isAlphaPremultiplied);
     }
+
 
     private PhotometricInterpreter getPhotometricInterpreter(
             final TiffDirectory directory, final int photometricInterpretation,
@@ -919,12 +924,11 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
         final TiffImageData imageData = directory.getTiffImageData();
 
         final ImageDataReader dataReader = imageData.getDataReader(directory,
-          photometricInterpreter, bitsPerPixel, bitsPerSample, predictor,
-          samplesPerPixel, width, height, compression,
-          TiffPlanarConfiguration.CHUNKY, byteOrder);
+            photometricInterpreter, bitsPerPixel, bitsPerSample, predictor,
+            samplesPerPixel, width, height, compression,
+            TiffPlanarConfiguration.CHUNKY, byteOrder);
 
         return dataReader.readRasterData(subImage);
     }
-
 
 }

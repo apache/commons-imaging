@@ -219,16 +219,21 @@ public final class DataReaderStrips extends ImageDataReader {
         // this logic will handle all cases not conforming to the
         // special case handled above
 
+        final boolean isByteSampleFormatRequired =
+            photometricInterpreter.isByteSampleFormatRequired();
         try (BitInputStream bis = new BitInputStream(new ByteArrayInputStream(bytes), byteOrder)) {
-
             int[] samples = new int[bitsPerSampleLength];
             resetPredictor();
             for (int i = 0; i < pixelsPerStrip; i++) {
-                getSamplesAsBytes(bis, samples);
+                if (isByteSampleFormatRequired) {
+                    getSamplesAsBytes(bis, samples);
+                    samples = applyPredictor(samples);
+                } else {
+                    getSamplesWithFullPrecision(bis, samples);
+                    samples = applyPredictorToFullPrecision(samples);
+                }
 
                 if (x < width) {
-                    samples = applyPredictor(samples);
-
                     photometricInterpreter.interpretPixel(imageBuilder, samples, x, y);
                 }
 

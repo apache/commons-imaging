@@ -26,6 +26,7 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ByteConversions;
+import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
@@ -914,4 +915,41 @@ public class TiffDirectory extends TiffElement {
         }
         return false;
     }
+
+    /**
+     * Reads the image content of the TIFF directory and uses the
+     * current photometric interpreter to store its information
+     * in an ImageBuilder instance. Note that not all TIFF directories
+     * include image content. If the current instance does not contain
+     * an image, this method will throw an exception.
+     * <p>
+     * If desired, sub-image data can be read from the file by using a Java Map
+     * instance to specify the subsection of the image that is required. The
+     * following code illustrates the approach:
+     * <pre>
+     *   int x; // coordinate (column) of corner of sub-image
+     *   int y; // coordinate (row) of corner of sub-image
+     *   int width; // width of sub-image
+     *   int height; // height of sub-image
+     *
+     *   Map&lt;String, Object&gt;params = new HashMap&lt;&gt;();
+     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, x);
+     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_Y, y);
+     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, width);
+     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, height);
+     *   ImageBuilder imageBuilder = directory.getImageBuilder(params);
+     * </pre>
+     *
+     * @param params an optional parameter map instance
+     * @return a valid instance
+     * @throws ImageReadException in the event of incompatible or malformed data
+     * @throws IOException in the event of an I/O error
+     */
+    public ImageBuilder getImageBuilder(
+        final Map<String, Object> params)
+        throws ImageReadException, IOException {
+        TiffImageParser parser = new TiffImageParser();
+        return parser.getImageBuilder(this, headerByteOrder, params);
+    }
+
 }

@@ -149,6 +149,7 @@ public abstract class ImageDataReader {
     private final int[] bitsPerSample;
     protected final int bitsPerSampleLength;
     private final int[] last;
+    private final int[] sampleMask;
 
     protected final int predictor;
     protected final int samplesPerPixel;
@@ -170,6 +171,13 @@ public abstract class ImageDataReader {
         this.width = width;
         this.height = height;
         last = new int[samplesPerPixel];
+
+        // If the reader performs differencing on a full-resolution samples
+        // it will be necessary to mask out any "overflow" bits
+        sampleMask = new int[bitsPerSample.length];
+        for (int i = 0; i < bitsPerSample.length; i++) {
+            sampleMask[i] = (1 << bitsPerSample[i]) - 1;
+        }
     }
 
 
@@ -209,7 +217,10 @@ public abstract class ImageDataReader {
     }
 
     /**
-     * Reads samples and returns them in an int array.
+     * Reads samples and returns them in an int array. If the size of the
+     * samples taken from the source file is not one byte, shift and
+     * sign-extension operations will be performed to coerce the results
+     * to be one byte each.
      *
      * @param bis
      *            the stream to read from
@@ -235,6 +246,21 @@ public abstract class ImageDataReader {
         }
     }
 
+    /**
+     * Reads samples and returns them in an int array.
+     *
+     * @param bis the stream to read from
+     * @param result the samples array to populate, must be the same length as
+     * bitsPerSample.length
+     * @throws IOException in the event of an unexpected I/O error.
+     */
+    void getSamplesWithFullPrecision(final BitInputStream bis,
+        final int[] result) throws IOException {
+        for (int i = 0; i < bitsPerSample.length; i++) {
+            result[i] = bis.readBits(bitsPerSample[i]);
+        }
+    }
+
     protected void resetPredictor() {
         Arrays.fill(last, 0);
     }
@@ -244,6 +270,18 @@ public abstract class ImageDataReader {
             // Horizontal differencing.
             for (int i = 0; i < samples.length; i++) {
                 samples[i] = 0xff & (samples[i] + last[i]);
+                last[i] = samples[i];
+            }
+        }
+
+        return samples;
+    }
+
+        protected int[] applyPredictorToFullPrecision(final int[] samples) {
+        if (predictor == 2) {
+            // Horizontal differencing.
+            for (int i = 0; i < samples.length; i++) {
+                samples[i] = (samples[i]+last[i])&sampleMask[i];
                 last[i] = samples[i];
             }
         }

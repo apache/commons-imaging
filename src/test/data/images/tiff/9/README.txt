@@ -3,9 +3,10 @@ This folder contains sample TIFF images that provide floating-point data formats
 Content ---------------------------------------------------------------
 USGS_13_n38w077_dir5.tiff  
    Samples Per Pixel:  1
-   Bits Per Pixel:    32 (IEEE-754 standard single-precision)
+   Bits Per Pixel:    32  (IEEE-754 standard single-precision)
    Predictor:          3  (floating-point specific)
    Data Reader:        Tiled
+   Sample Format:      3   (floating point)
    
 Sample64BitFloatingPointPix451x337.tiff
    Samples per Pixel: 1
@@ -14,6 +15,12 @@ Sample64BitFloatingPointPix451x337.tiff
    Data Reader:       Strips
 
 
+Sample16BitIntStrips.tiff
+	Samples Per Pixel:  1
+	Bits Per Pixel:    16 (2 byte short integer)
+	Predictor:          2  Differencing
+	Sample Format:      2  Short Integers
+	
 About USGS_13_n38w077_dir5.tiff -------------------------------------------
 The US Geologic Survey (USGS) provides terrestrial elevation data in the form of TIFF images with metadata tags
 suitable to Geographic Information System (GIS) applications.  TIFF files that provide these standard
@@ -40,3 +47,7 @@ The down-sampled image includes the following TIFF fields:
  325 (0x145: TileByteCounts): [9 entries]
  339 (0x153: SampleFormat): 3 (1 Short)
  42113 (0xa481: GDALNoData): '-999999' (8 ASCII)
+ 
+ About Sample16BitIntStrips.tiff -------------------------------------------
+ This file is meant to test the logic related to storing data in the
+ foorm of 
