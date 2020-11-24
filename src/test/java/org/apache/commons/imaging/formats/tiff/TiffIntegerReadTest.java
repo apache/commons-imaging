@@ -36,7 +36,7 @@ import org.apache.commons.imaging.ImagingTestConstants;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
-import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterTranscribeSample0;
+import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterTranscribeSample;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -85,25 +85,39 @@ public class TiffIntegerReadTest {
 
     @Test
     public void test() {
+        performValueTest("Sample16BitIntStrips.tiff");
+        performValueTest("Sample16BitIntTiles.tiff");
+    }
+
+    @Test
+    public void testBadConstructor(){
+        try{
+			int []bitsPerSample = new int[]{42};
+             final PhotometricInterpreterTranscribeSample pi =
+                new  PhotometricInterpreterTranscribeSample(1, bitsPerSample, 1, 1, 1);
+            fail("Failed to catch unsupported constructor argument: 42 bits epr sample");
+        }catch(IllegalArgumentException ex){
+            // test passed
+        }
+    }
+
+    private void performValueTest(String name)  {
         final Map<String, Object> params = new HashMap<>();
-        PhotometricInterpreterTranscribeSample0 pi =
-             new  PhotometricInterpreterTranscribeSample0(16);
-
-         params.put(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER, pi);
-
+        final PhotometricInterpreterTranscribeSample pi =
+            new  PhotometricInterpreterTranscribeSample(16);
+        params.put(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER, pi);
+                      
         try {
-            File target = getTiffFile("Sample16BitIntStrips.tiff");
-            ImageBuilder iBuilder = readImageBuilderFromTIFF(target, params);
-            int width = iBuilder.getWidth();
-            int height = iBuilder.getHeight();
+            final File target = getTiffFile(name);
+            final ImageBuilder iBuilder = readImageBuilderFromTIFF(target, params);
+            final int width = iBuilder.getWidth();
+            final int height = iBuilder.getHeight();
             for(int i=0; i<height; i++){
                 for(int j=0; j<height; j++){
                     int test = iBuilder.getSample(j, i);
-                    assertEquals(test, i-j, "Value mismatch at ("+j+", "+i+")");
+                    assertEquals(test, i-j, "Value mismatch at ("+j+", "+i+") in file "+target.getName());
                 }
             }
-
-
         } catch (ImageReadException | IOException ex) {
             fail("Exception during test " + ex.getMessage());
         }

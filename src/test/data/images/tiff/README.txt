@@ -35,6 +35,8 @@ limitations under the License.
 5/Oregon Scientific DS6639 - DSC_0307 - small - LZW - tiled.tif            300x225   Tiles    256x256   Chunky  LZW       Diff     Unknown    24  8.8.8    RGB        N      
 7/Oregon Scientific DS6639 - DSC_0307 - small - CMYK.tiff                  300x225   Strips   300x27    Chunky  LZW       None     Unknown    32  8.8.8.8  CMYK       N      
 8/no-compression-tag.tiff                                                  200x100   Strips   200x64    Chunky  None      None     Unknown    32  8.8.8.8  RGB Pre-A  N      
+9/Sample16BitIntStrips.tiff                                                 50x50    Strips    50x2     Chunky  Deflate   Diff     Sgn Int    16  16       BiLevel    N      
+9/Sample16BitIntTiles.tiff                                                  50x50    Tiles     25x25    Chunky  Deflate   None     Sgn Int    16  16       BiLevel    N      
 9/Sample64BitFloatingPointPix451x337.tiff                                  451x337   Strips   451x2     Chunky  None      None     Float      64  64       BiLevel    N      
 9/USGS_13_n38w077_dir5.tiff                                                338x338   Tiles    128x128   Chunky  LZW       FP Diff  Float      32  32       BiLevel    N      
 10/Imaging247.TIFF                                                        2388x1700  Strips  2388x27    Chunky  PACKBITS  None     Unknown     1  1        Palette    N      

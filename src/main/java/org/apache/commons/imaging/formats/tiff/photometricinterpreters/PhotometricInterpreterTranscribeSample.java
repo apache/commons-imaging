@@ -39,7 +39,7 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
  * <p>
  * The data stored by this class is treated as a signed integer value.
  */
-public class PhotometricInterpreterTranscribeSample0 extends PhotometricInterpreter {
+public class PhotometricInterpreterTranscribeSample extends PhotometricInterpreter {
 
     private final int signBit;
 
@@ -47,7 +47,7 @@ public class PhotometricInterpreterTranscribeSample0 extends PhotometricInterpre
      * A simple constructor for a one-sample transcription specification.
      * @param bitsPerSample the number of bits in the sample
      */
-    public PhotometricInterpreterTranscribeSample0(int bitsPerSample) {
+    public PhotometricInterpreterTranscribeSample(int bitsPerSample) {
         super(1, new int[]{bitsPerSample},
             TiffTagConstants.PREDICTOR_VALUE_NONE,
             1, 1);
@@ -66,7 +66,7 @@ public class PhotometricInterpreterTranscribeSample0 extends PhotometricInterpre
      * @param width the width of the raster (not currently used)
      * @param height the height of the raster (not currently used)
      */
-    public PhotometricInterpreterTranscribeSample0(
+    public PhotometricInterpreterTranscribeSample(
         final int samplesPerPixel,
         final int[] bitsPerSample,
         final int predictor,
@@ -75,6 +75,12 @@ public class PhotometricInterpreterTranscribeSample0 extends PhotometricInterpre
         super(samplesPerPixel, bitsPerSample, predictor, width, height);
         checkSignBit(bitsPerSample[0]);
         signBit = (1 << (bitsPerSample[0] - 1));
+        if(samplesPerPixel!=1){
+            throw new IllegalArgumentException(
+                "Unsupported samples-per-pixel value, "
+                +samplesPerPixel
+                +", required value is 1");
+        }
     }
 
     private void checkSignBit(int bitsInSample) {
