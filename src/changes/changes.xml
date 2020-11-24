@@ -45,6 +45,9 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
     <release version="1.0-alpha3" date="2020-??-??" description="Third 1.0 alpha release">
+      <action dev="kinow" type="update" due-to="Dependabot">
+        Bump maven-pmd-plugin from 3.13.0 to 3.14.0 #109.
+      </action>
       <action issue="IMAGING-216" dev="kinow" type="add" due-to="Gary Lucas">
         Imaging.getBufferedImage() drops alpha layer for TIFF images.
       </action>
