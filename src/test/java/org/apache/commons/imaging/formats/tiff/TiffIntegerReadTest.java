@@ -90,14 +90,25 @@ public class TiffIntegerReadTest {
     }
 
     @Test
-    public void testBadConstructor(){
+    public void testConstructor(){
+
+        // test a bad constructor
         try{
-			int []bitsPerSample = new int[]{42};
+            int []bitsPerSample = new int[]{42};
              final PhotometricInterpreterTranscribeSample pi =
                 new  PhotometricInterpreterTranscribeSample(1, bitsPerSample, 1, 1, 1);
-            fail("Failed to catch unsupported constructor argument: 42 bits epr sample");
+            fail("Failed to catch unsupported constructor argument: 42 bits per sample");
         }catch(IllegalArgumentException ex){
             // test passed
+        }
+
+        // now test a good constructor
+        try{
+            int []bitsPerSample = new int[]{16};
+             final PhotometricInterpreterTranscribeSample pi =
+                new  PhotometricInterpreterTranscribeSample(1, bitsPerSample, 1, 1, 1);
+        }catch(IllegalArgumentException ex){
+             fail("Rejected a valid constructor argument: 16 bits per sample");
         }
     }
 
@@ -106,7 +117,7 @@ public class TiffIntegerReadTest {
         final PhotometricInterpreterTranscribeSample pi =
             new  PhotometricInterpreterTranscribeSample(16);
         params.put(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER, pi);
-                      
+
         try {
             final File target = getTiffFile(name);
             final ImageBuilder iBuilder = readImageBuilderFromTIFF(target, params);
