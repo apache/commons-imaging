@@ -110,4 +110,8 @@
     <Class name="org.apache.commons.imaging.formats.pnm.PnmImageParser" />
     <Bug pattern="UC_USELESS_CONDITION" />
   </Match>
+  <!-- Reason: false positives with JVM >= 14 - https://github.com/spotbugs/spotbugs/issues/868 -->
+  <Match>
+    <Bug pattern="RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE" />
+  </Match>
 </FindBugsFilter>
