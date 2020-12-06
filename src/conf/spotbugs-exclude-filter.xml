@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+
+<!--
+  This file contains some false positive bugs detected by spotbugs. Their
+  false positive nature has been analyzed individually and they have been
+  put here to instruct findbugs it must ignore them.
+-->
+<FindBugsFilter>
+  <!-- Reason: Intentionally exposing an array -->
+  <Match>
+    <Class name="org.apache.commons.imaging.common.bytesource.ByteSourceArray" />
+    <Method name="getAll" />
+    <Bug pattern="EI_EXPOSE_REP" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.common.bytesource.ByteSourceArray" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.jpeg.iptc.IptcBlock" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.jpeg.segments.DqtSegment$QuantizationTable" />
+    <Method name="getElements" />
+    <Bug pattern="EI_EXPOSE_REP" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.jpeg.segments.DqtSegment$QuantizationTable" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.TiffElement$DataElement" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.TiffField" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.TiffImageData$Strips" />
+    <Method name="getImageData" />
+    <Bug pattern="EI_EXPOSE_REP" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.TiffImageData$Strips" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.TiffRasterData" />
+    <Method name="getData" />
+    <Bug pattern="EI_EXPOSE_REP" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.TiffRasterData" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.datareaders.ImageDataReader" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossless" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.write.TiffOutputField" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.icc.IccProfileInfo" />
+    <Method name="getTags" />
+    <Bug pattern="EI_EXPOSE_REP" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.icc.IccProfileInfo" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.icc.IccTag" />
+    <Method name="setData" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.palette.SimplePalette" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <!-- Reason: For code clarity, we could use a simple 'else', but instead keep a complete expression -->
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.pnm.PnmImageParser" />
+    <Bug pattern="UC_USELESS_CONDITION" />
+  </Match>
+  <!-- Reason: false positives with JVM >= 14 - https://github.com/spotbugs/spotbugs/issues/868 -->
+  <Match>
+    <Bug pattern="RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE" />
+  </Match>
+</FindBugsFilter>

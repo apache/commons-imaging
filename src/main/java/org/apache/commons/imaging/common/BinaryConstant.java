@@ -28,11 +28,6 @@ public class BinaryConstant {
     }
 
     @Override
-    public BinaryConstant clone() throws CloneNotSupportedException {
-        return (BinaryConstant) super.clone();
-    }
-
-    @Override
     public boolean equals(final Object obj) {
         if (obj == null) {
             return false;
