@@ -97,7 +97,7 @@ final class IcnsDecoder {
                     value = 0xff & imageData[position++];
                     bitsLeft = 8;
                 }
-                int argb;
+                final int argb;
                 if ((value & 0x80) != 0) {
                     argb = 0xff000000;
                 } else {
@@ -115,7 +115,7 @@ final class IcnsDecoder {
         boolean visited = false;
         for (int y = 0; y < imageType.getHeight(); y++) {
             for (int x = 0; x < imageType.getWidth(); x++) {
-                int index;
+                final int index;
                 if (!visited) {
                     index = 0xf & (imageData[i] >> 4);
                 } else {
@@ -168,7 +168,7 @@ final class IcnsDecoder {
                     value = 0xff & maskData[position++];
                     bitsLeft = 8;
                 }
-                int alpha;
+                final int alpha;
                 if ((value & 0x80) != 0) {
                     alpha = 0xff;
                 } else {
@@ -247,7 +247,7 @@ final class IcnsDecoder {
                                                  final IcnsElement[] icnsElements) throws ImageReadException {
         final int expectedSize = (imageType.getWidth() * imageType.getHeight()
                                   * imageType.getBitsPerPixel() + 7) / 8;
-        byte[] imageData;
+        final byte[] imageData;
         if (imageElement.data.length < expectedSize) {
             if (imageType.getBitsPerPixel() == 32) {
                 imageData = Rle24Compression.decompress(

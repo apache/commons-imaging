@@ -26,7 +26,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class GrayscaleRountripTest extends RoundtripBase {
 
-    public static BufferedImage[] images = new BufferedImage[]{
+    public static final BufferedImage[] images = new BufferedImage[]{
             TestImages.createArgbBitmapImage(1, 1), // minimal
             TestImages.createArgbGrayscaleImage(2, 2), //
             TestImages.createArgbGrayscaleImage(10, 10), // larger than 8

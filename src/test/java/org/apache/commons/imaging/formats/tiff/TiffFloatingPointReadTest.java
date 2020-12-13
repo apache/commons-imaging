@@ -218,7 +218,7 @@ public class TiffFloatingPointReadTest {
 
             // now read the entire image
             checkSubImage(target, fullRaster, 0, 0, width, height);
-        } catch (ImageReadException | IOException ex) {
+        } catch (final ImageReadException | IOException ex) {
             fail("Exception during test " + ex.getMessage());
         }
     }
@@ -241,7 +241,7 @@ public class TiffFloatingPointReadTest {
                     assertEquals(vFull, vPart, "Invalid value match for partial at (" + x + "," + y + ") for "+target.getName());
                 }
             }
-        }catch (ImageReadException | IOException ex) {
+        }catch (final ImageReadException | IOException ex) {
             fail("Exception during test " + ex.getMessage());
         }
     }

@@ -139,8 +139,8 @@ public final class T4AndT6Compression {
     public static byte[] decompressModifiedHuffman(final byte[] compressed,
             final int width, final int height) throws ImageReadException {
         try (ByteArrayInputStream baos = new ByteArrayInputStream(compressed);
-                BitInputStreamFlexible inputStream = new BitInputStreamFlexible(baos);
-                BitArrayOutputStream outputStream = new BitArrayOutputStream()) {
+             BitInputStreamFlexible inputStream = new BitInputStreamFlexible(baos);
+             BitArrayOutputStream outputStream = new BitArrayOutputStream()) {
             for (int y = 0; y < height; y++) {
                 int color = WHITE;
                 int rowLength;
@@ -246,7 +246,7 @@ public final class T4AndT6Compression {
     private static int compressT(final int a0, final int a1, final int b1, final BitArrayOutputStream outputStream,final  int codingA0Color, final int[] codingLine ){
           final int a1b1 = a1 - b1;
           if (-3 <= a1b1 && a1b1 <= 3) {
-              T4_T6_Tables.Entry entry;
+              final T4_T6_Tables.Entry entry;
               switch (a1b1) {
             case -3:
                 entry = T4_T6_Tables.VL3;
@@ -394,8 +394,8 @@ public final class T4AndT6Compression {
                         int b1 = nextChangingElement(referenceLine, referenceA0Color, 0);
                         int b2 = nextChangingElement(referenceLine, 1 - referenceA0Color, b1 + 1);
                         for (int a0 = 0; a0 < width;) {
-                            int a1;
-                            int a2;
+                            final int a1;
+                            final int a2;
                             entry = CONTROL_CODES.decode(inputStream);
                             if (entry == T4_T6_Tables.P) {
                                 fillRange(outputStream, referenceLine, a0, b2, codingA0Color);
@@ -409,7 +409,7 @@ public final class T4AndT6Compression {
                                 fillRange(outputStream, referenceLine, a1, a2, 1 - codingA0Color);
                                 a0 = a2;
                             } else {
-                                int a1b1;
+                                final int a1b1;
                                 if (entry == T4_T6_Tables.V0) {
                                     a1b1 = 0;
                                 } else if (entry == T4_T6_Tables.VL1) {
@@ -551,8 +551,8 @@ public final class T4AndT6Compression {
                 int b1 = nextChangingElement(referenceLine, referenceA0Color, 0);
                 int b2 = nextChangingElement(referenceLine, 1 - referenceA0Color, b1 + 1);
                 for (int a0 = 0; a0 < width;) {
-                    int a1;
-                    int a2;
+                    final int a1;
+                    final int a2;
                     final T4_T6_Tables.Entry  entry = CONTROL_CODES.decode(inputStream);
                     if (entry == T4_T6_Tables.P) {
                         fillRange(outputStream, referenceLine, a0, b2, codingA0Color);
@@ -566,7 +566,7 @@ public final class T4AndT6Compression {
                         fillRange(outputStream, referenceLine, a1, a2, 1 - codingA0Color);
                         a0 = a2;
                     } else {
-                        int a1b1;
+                        final int a1b1;
                         if (entry == T4_T6_Tables.V0) {
                             a1b1 = 0;
                         } else if (entry == T4_T6_Tables.VL1) {

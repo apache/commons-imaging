@@ -58,8 +58,8 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
  */
 public class PhotometricInterpreterFloat extends PhotometricInterpreter {
 
-    ArrayList<PaletteEntry> rangePaletteEntries = new ArrayList<>();
-    ArrayList<PaletteEntry> singleValuePaletteEntries = new ArrayList<>();
+    final ArrayList<PaletteEntry> rangePaletteEntries = new ArrayList<>();
+    final ArrayList<PaletteEntry> singleValuePaletteEntries = new ArrayList<>();
 
     float minFound = Float.POSITIVE_INFINITY;
     float maxFound = Float.NEGATIVE_INFINITY;

@@ -450,7 +450,7 @@ public abstract class ImageDataReader {
                     final long b5 = bytes[k++] & 0xffL;
                     final long b6 = bytes[k++] & 0xffL;
                     final long b7 = bytes[k++] & 0xffL;
-                    long sbits;
+                    final long sbits;
                     if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
                         sbits = (b7 << 56)
                             | (b6 << 48)
@@ -488,7 +488,7 @@ public abstract class ImageDataReader {
                     final int b1 = bytes[k++] & 0xff;
                     final int b2 = bytes[k++] & 0xff;
                     final int b3 = bytes[k++] & 0xff;
-                    int sbits;
+                    final int sbits;
                     if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
                         sbits
                             = (b3 << 24)

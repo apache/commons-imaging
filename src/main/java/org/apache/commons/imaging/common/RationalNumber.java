@@ -157,8 +157,8 @@ public class RationalNumber extends Number {
             value = Math.abs(value);
         }
 
-        RationalNumber l;
-        RationalNumber h;
+        final RationalNumber l;
+        final RationalNumber h;
 
         if (value == 0) {
             return new RationalNumber(0, 1);

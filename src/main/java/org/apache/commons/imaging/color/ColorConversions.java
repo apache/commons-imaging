@@ -294,7 +294,7 @@ public final class ColorConversions {
 
         final double var_Min = Math.min(var_R, Math.min(var_G, var_B)); // Min. value
                                                                   // of RGB
-        double var_Max;
+        final double var_Max;
         boolean maxIsR = false;
         boolean maxIsG = false;
         if (var_R >= var_G && var_R >= var_B) {
@@ -310,7 +310,8 @@ public final class ColorConversions {
 
         final double L = (var_Max + var_Min) / 2.0;
 
-        double H, S;
+        double H;
+        final double S;
         // Debug.debug("del_Max", del_Max);
         if (del_Max == 0) {
             // This is a gray, no chroma...
@@ -362,7 +363,9 @@ public final class ColorConversions {
     }
 
     public static int convertHSLtoRGB(final double H, final double S, final double L) {
-        double R, G, B;
+        final double R;
+        double G;
+        final double B;
 
         if (S == 0) {
             // HSL values = 0 ÷ 1
@@ -370,7 +373,7 @@ public final class ColorConversions {
             G = L * 255;
             B = L * 255;
         } else {
-            double var_2;
+            final double var_2;
 
             if (L < 0.5) {
                 var_2 = L * (1 + S);
@@ -420,7 +423,7 @@ public final class ColorConversions {
                                                                   // of RGB
         boolean maxIsR = false;
         boolean maxIsG = false;
-        double var_Max;
+        final double var_Max;
         if (var_R >= var_G && var_R >= var_B) {
             var_Max = var_R;
             maxIsR = true;
@@ -434,7 +437,8 @@ public final class ColorConversions {
 
         final double V = var_Max;
 
-        double H, S;
+        double H;
+        final double S;
         if (del_Max == 0) {
             // This is a gray, no chroma...
             H = 0; // HSV results = 0 ÷ 1
@@ -471,7 +475,9 @@ public final class ColorConversions {
     }
 
     public static int convertHSVtoRGB(final double H, final double S, final double V) {
-        double R, G, B;
+        final double R;
+        double G;
+        final double B;
 
         if (S == 0) {
             // HSV values = 0 ÷ 1
@@ -488,7 +494,9 @@ public final class ColorConversions {
             final double var_2 = V * (1 - S * (var_h - var_i));
             final double var_3 = V * (1 - S * (1 - (var_h - var_i)));
 
-            double var_r, var_g, var_b;
+            final double var_r;
+            double var_g;
+            final double var_b;
 
             if (var_i == 0) {
                 var_r = V;
@@ -542,7 +550,9 @@ public final class ColorConversions {
     }
 
     public static int convertCIELabtoARGBTest(final int cieL, final int cieA, final int cieB) {
-        double X, Y, Z;
+        final double X;
+        final double Y;
+        final double Z;
 
         {
 
@@ -582,7 +592,9 @@ public final class ColorConversions {
 
         }
 
-        double R, G, B;
+        final double R;
+        final double G;
+        final double B;
         {
             final double var_X = X / 100; // X = From 0 to REF_X
             final double var_Y = Y / 100; // Y = From 0 to REF_Y

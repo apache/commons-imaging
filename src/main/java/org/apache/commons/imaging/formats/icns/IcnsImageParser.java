@@ -173,7 +173,7 @@ public class IcnsImageParser extends ImageParser {
         public void dump(final PrintWriter pw) {
             pw.println("IcnsElement");
             final IcnsType icnsType = IcnsType.findAnyType(type);
-            String typeDescription;
+            final String typeDescription;
             if (icnsType == null) {
                 typeDescription = "";
             } else {
@@ -277,7 +277,7 @@ public class IcnsImageParser extends ImageParser {
             throw new ImageWriteException("Unknown parameter: " + firstKey);
         }
 
-        IcnsType imageType;
+        final IcnsType imageType;
         if (src.getWidth() == 16 && src.getHeight() == 16) {
             imageType = IcnsType.ICNS_16x16_32BIT_IMAGE;
         } else if (src.getWidth() == 32 && src.getHeight() == 32) {

@@ -58,12 +58,12 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
     @TempDir
     Path tempDir;
 
-    int width = 48;
-    int height = 23;
-    float f0 = 0.0F;
-    float f1 = 1.0F;
-    float[] f = new float[width * height];
-    int[] argb = new int[width * height];
+    final int width = 48;
+    final int height = 23;
+    final float f0 = 0.0F;
+    final float f1 = 1.0F;
+    final float[] f = new float[width * height];
+    final int[] argb = new int[width * height];
 
     public TiffFloatingPointRoundTripTest() {
         // populate the image data
@@ -91,7 +91,7 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
                 }
             }
 
-        } catch (ImageReadException | IOException ex) {
+        } catch (final ImageReadException | IOException ex) {
             fail("Exception initializing data " + ex.getMessage());
         }
 
@@ -165,9 +165,9 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
         final File outputFile = new File(tempDir.toFile(), name);
 
         final int bytesPerSample = bitsPerSample / 8;
-        int nRowsInBlock;
-        int nColsInBlock;
-        int nBytesInBlock;
+        final int nRowsInBlock;
+        final int nColsInBlock;
+        final int nBytesInBlock;
         if (useTiles) {
             // Define the tiles so that they will not evenly subdivide
             // the image.  This will allow the test to evaluate how the
@@ -183,7 +183,7 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
         }
         nBytesInBlock = nRowsInBlock * nColsInBlock * bytesPerSample;
 
-        byte[][] blocks;
+        final byte[][] blocks;
         if (bitsPerSample == 32) {
             blocks = this.getBytesForOutput32(
                 f, width, height, nRowsInBlock, nColsInBlock, byteOrder);
@@ -225,7 +225,7 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
             imageData[i] = new TiffImageData.Data(0, blocks[i].length, blocks[i]);
         }
 
-        TiffImageData tiffImageData;
+        final TiffImageData tiffImageData;
         if (useTiles) {
             tiffImageData
                 = new TiffImageData.Tiles(imageData, nColsInBlock, nRowsInBlock);

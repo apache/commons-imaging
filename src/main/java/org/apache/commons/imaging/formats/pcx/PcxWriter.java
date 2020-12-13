@@ -180,7 +180,7 @@ class PcxWriter {
 
         final byte[] palette16 = new byte[16 * 3];
         for (int i = 0; i < 16; i++) {
-            int rgb;
+            final int rgb;
             if (i < palette.length()) {
                 rgb = palette.getEntry(i);
             } else {
@@ -221,7 +221,7 @@ class PcxWriter {
             // 256 color palette
             bos.write(12);
             for (int i = 0; i < 256; i++) {
-                int rgb;
+                final int rgb;
                 if (i < palette.length()) {
                     rgb = palette.getEntry(i);
                 } else {
@@ -250,7 +250,7 @@ class PcxWriter {
             if (bitDepth == 1 && planes == 1) {
                 for (int x = 0; x < src.getWidth(); x++) {
                     final int rgb = 0xffffff & src.getRGB(x, y);
-                    int bit;
+                    final int bit;
                     if (rgb == 0x000000) {
                         bit = 0;
                     } else {

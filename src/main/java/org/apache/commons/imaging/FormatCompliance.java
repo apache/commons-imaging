@@ -102,12 +102,14 @@ public class FormatCompliance {
 
     public boolean compareBytes(final String name, final byte[] expected, final byte[] actual)
             throws ImageReadException {
-        if (expected.length != actual.length) {
+        final int expectedLength = expected.length;
+        final int actualLength = actual.length;
+        if (expectedLength != actualLength) {
             addComment(name + ": " + "Unexpected length: (expected: "
-                    + expected.length + ", actual: " + actual.length + ")");
+                    + expectedLength + ", actual: " + actualLength + ")");
             return false;
         }
-        for (int i = 0; i < expected.length; i++) {
+        for (int i = 0; i < expectedLength; i++) {
             // System.out.println("expected: "
             // + getValueDescription(expected[i]) + ", actual: "
             // + getValueDescription(actual[i]) + ")");
@@ -149,16 +151,17 @@ public class FormatCompliance {
         final StringBuilder result = new StringBuilder(43);
         result.append(name);
         result.append(": Unexpected value: (valid: ");
-        if (valid.length > 1) {
+        final int validLength = valid.length;
+        if (validLength > 1) {
             result.append('{');
         }
-        for (int i = 0; i < valid.length; i++) {
+        for (int i = 0; i < validLength; i++) {
             if (i > 0) {
                 result.append(", ");
             }
             result.append(getValueDescription(valid[i]));
         }
-        if (valid.length > 1) {
+        if (validLength > 1) {
             result.append('}');
         }
         result.append(", actual: ").append(getValueDescription(actual)).append(")");

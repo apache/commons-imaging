@@ -73,13 +73,14 @@ public class PackBits {
 
     private int findNextDuplicate(final byte[] bytes, final int start) {
         // int last = -1;
-        if (start >= bytes.length) {
+        final int bytesLength = bytes.length;
+        if (start >= bytesLength) {
             return -1;
         }
 
         byte prev = bytes[start];
 
-        for (int i = start + 1; i < bytes.length; i++) {
+        for (int i = start + 1; i < bytesLength; i++) {
             final byte b = bytes[i];
 
             if (b == prev) {
@@ -106,9 +107,10 @@ public class PackBits {
 
     public byte[] compress(final byte[] bytes) throws IOException {
         // max length 1 extra byte for every 128
-        try (FastByteArrayOutputStream baos = new FastByteArrayOutputStream(bytes.length * 2)) {
+        final int bytesLength = bytes.length;
+        try (FastByteArrayOutputStream baos = new FastByteArrayOutputStream(bytesLength * 2)) {
             int ptr = 0;
-            while (ptr < bytes.length) {
+            while (ptr < bytesLength) {
                 int dup = findNextDuplicate(bytes, ptr);
 
                 if (dup == ptr) {
@@ -137,7 +139,7 @@ public class PackBits {
                     }
 
                     if (dup < 0) {
-                        len = bytes.length - ptr;
+                        len = bytesLength - ptr;
                     }
                     final int actualLen = Math.min(len, 128);
 

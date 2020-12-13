@@ -458,7 +458,7 @@ public class PngImageParser extends ImageParser  implements XmpEmbeddable {
             usesPalette = true;
         }
 
-        ImageInfo.ColorType colorType;
+        final ImageInfo.ColorType colorType;
         switch (pngChunkIHDR.pngColorType) {
             case GREYSCALE:
             case GREYSCALE_WITH_ALPHA:
@@ -627,7 +627,7 @@ public class PngImageParser extends ImageParser  implements XmpEmbeddable {
             final ByteArrayInputStream bais = new ByteArrayInputStream(compressed);
             final InflaterInputStream iis = new InflaterInputStream(bais);
 
-            ScanExpediter scanExpediter;
+            final ScanExpediter scanExpediter;
 
             switch (pngChunkIHDR.interlaceMethod) {
                 case NONE:

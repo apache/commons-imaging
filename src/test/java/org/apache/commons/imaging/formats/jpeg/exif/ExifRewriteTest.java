@@ -117,7 +117,7 @@ public class ExifRewriteTest extends ExifBaseTest {
             final TiffImageMetadata oldExifMetadata = originalMetadata.getExif();
             assertNotNull(oldExifMetadata);
 
-            ByteSource stripped;
+            final ByteSource stripped;
             {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 new ExifRewriter().removeExifMetadata(byteSource, baos);

@@ -659,11 +659,12 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
     }
 
     private int[] getColorTable(final byte[] bytes) throws ImageReadException {
-        if ((bytes.length % 3) != 0) {
+        final int bytesLength = bytes.length;
+        if ((bytesLength % 3) != 0) {
             throw new ImageReadException("Bad Color Table Length: "
-                    + bytes.length);
+                    + bytesLength);
         }
-        final int length = bytes.length / 3;
+        final int length = bytesLength / 3;
 
         final int[] result = new int[length];
 
@@ -749,7 +750,7 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
 
         final ImageBuilder imageBuilder = new ImageBuilder(width, height, hasAlpha);
 
-        int[] colorTable;
+        final int[] colorTable;
         if (id.localColorTable != null) {
             colorTable = getColorTable(id.localColorTable);
         } else if (globalColorTable != null) {
@@ -771,7 +772,7 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
         final int rowsInPass4 = (height) / 2;
 
         for (int row = 0; row < height; row++) {
-            int y;
+            final int y;
             if (id.interlaceFlag) {
                 int theRow = row;
                 if (theRow < rowsInPass1) {
@@ -1067,7 +1068,7 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
                 for (int x = 0; x < width; x++) {
                     final int argb = src.getRGB(x, y);
                     final int rgb = 0xffffff & argb;
-                    int index;
+                    final int index;
 
                     if (hasAlpha) {
                         final int alpha = 0xff & (argb >> 24);
@@ -1130,7 +1131,8 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
                 final GenericGifBlock genericBlock = (GenericGifBlock) block;
 
                 final byte[] blockBytes = genericBlock.appendSubBlocks(true);
-                if (blockBytes.length < XMP_APPLICATION_ID_AND_AUTH_CODE.length) {
+                final int blockBytesLength = blockBytes.length;
+                if (blockBytesLength < XMP_APPLICATION_ID_AND_AUTH_CODE.length) {
                     continue;
                 }
 
@@ -1145,11 +1147,11 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
                     GIF_MAGIC_TRAILER[magic] = (byte) (0xff - magic);
                 }
 
-                if (blockBytes.length < XMP_APPLICATION_ID_AND_AUTH_CODE.length
+                if (blockBytesLength < XMP_APPLICATION_ID_AND_AUTH_CODE.length
                         + GIF_MAGIC_TRAILER.length) {
                     continue;
                 }
-                if (!compareBytes(blockBytes, blockBytes.length
+                if (!compareBytes(blockBytes, blockBytesLength
                         - GIF_MAGIC_TRAILER.length, GIF_MAGIC_TRAILER, 0,
                         GIF_MAGIC_TRAILER.length)) {
                     throw new ImageReadException(
@@ -1160,7 +1162,7 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
                 final String xml = new String(
                         blockBytes,
                         XMP_APPLICATION_ID_AND_AUTH_CODE.length,
-                        blockBytes.length
+                        blockBytesLength
                                 - (XMP_APPLICATION_ID_AND_AUTH_CODE.length + GIF_MAGIC_TRAILER.length),
                                 StandardCharsets.UTF_8);
                 result.add(xml);

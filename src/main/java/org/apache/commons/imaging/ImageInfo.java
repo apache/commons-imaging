@@ -39,7 +39,7 @@ public class ImageInfo {
         OTHER("Other"),
         UNKNOWN("Unknown");
 
-        private String description;
+        private final String description;
 
         ColorType(final String description) {
             this.description = description;
@@ -65,7 +65,7 @@ public class ImageInfo {
         CCITT_GROUP_4("CCITT Group 4"),
         CCITT_1D("CCITT 1D");
 
-        private String description;
+        private final String description;
 
         CompressionAlgorithm(final String description) {
             this.description = description;

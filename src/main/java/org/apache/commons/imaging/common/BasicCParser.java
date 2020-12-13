@@ -211,14 +211,15 @@ public class BasicCParser {
                 if (c == '\r' || c == '\n') {
                     inDirective = false;
                     final String[] tokens = tokenizeRow(directiveBuffer.toString());
-                    if (tokens.length < 2 || tokens.length > 3) {
+                    final int tokensLength = tokens.length;
+                    if (tokensLength < 2 || tokensLength > 3) {
                         throw new ImageReadException("Bad preprocessor directive");
                     }
                     if (!tokens[0].equals("define")) {
                         throw new ImageReadException("Invalid/unsupported "
                                 + "preprocessor directive '" + tokens[0] + "'");
                     }
-                    defines.put(tokens[1], (tokens.length == 3) ? tokens[2]
+                    defines.put(tokens[1], (tokensLength == 3) ? tokens[2]
                             : null);
                     directiveBuffer.setLength(0);
                 } else {
@@ -339,7 +340,7 @@ public class BasicCParser {
                     final char hex1 = string.charAt(i + 1);
                     final char hex2 = string.charAt(i + 2);
                     i += 2;
-                    int constant;
+                    final int constant;
                     try {
                         constant = Integer.parseInt(hex1 + Character.toString(hex2), 16);
                     } catch (final NumberFormatException nfe) {

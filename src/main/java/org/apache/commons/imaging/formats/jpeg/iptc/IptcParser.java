@@ -59,8 +59,8 @@ public class IptcParser extends BinaryFileParser {
      * Block types (or Image Resource IDs) that are not recommended to be
      * interpreted when libraries process Photoshop IPTC metadata.
      *
-     * @see https://www.adobe.com/devnet-apps/photoshop/fileformatashtml/
-     * @see https://issues.apache.org/jira/browse/IMAGING-246
+     * @see <a href="https://www.adobe.com/devnet-apps/photoshop/fileformatashtml/"> Adobe Photoshop File Formats Specification</a>
+     * @see <a href="https://issues.apache.org/jira/browse/IMAGING-246>IMAGING-246</a>
      * @since 1.0-alpha2
      */
     private static final List<Integer> PHOTOSHOP_IGNORED_BLOCK_TYPE = Arrays.asList(1084, 1085, 1086, 1087);
@@ -308,7 +308,7 @@ public class IptcParser extends BinaryFileParser {
                     Debug.debug("blockNameLength: " + blockNameLength + " (0x"
                             + Integer.toHexString(blockNameLength) + ")");
                 }
-                byte[] blockNameBytes;
+                final byte[] blockNameBytes;
                 if (blockNameLength == 0) {
                     readByte("Block name bytes", bis, "Image Resource Block has invalid name");
                     blockNameBytes = new byte[0];
@@ -405,7 +405,7 @@ public class IptcParser extends BinaryFileParser {
 
     public byte[] writeIPTCBlock(List<IptcRecord> elements)
             throws ImageWriteException, IOException {
-        byte[] blockData;
+        final byte[] blockData;
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (BinaryOutputStream bos = new BinaryOutputStream(baos, getByteOrder())) {
 

@@ -125,7 +125,7 @@ public class ExampleReadFloatingPointData {
         // the value 9999 as a special "No Data" indicator.  In that case,
         // we do not want to include 9999 in the simple-statistics survey.
         final float excludedValue = Float.NaN;
-        TiffRasterStatistics simpleStats;
+        final TiffRasterStatistics simpleStats;
         if ("Sample64BitFloatingPointPix451x337.tiff".equals(target.getName())) {
             simpleStats = rasterData.getSimpleStatistics(9999);
         } else {

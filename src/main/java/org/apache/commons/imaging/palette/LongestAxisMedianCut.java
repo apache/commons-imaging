@@ -100,7 +100,7 @@ public class LongestAxisMedianCut implements MedianCut {
         colorGroups.add(more);
 
         final ColorCount medianValue = colorCounts.get(medianIndex);
-        int limit;
+        final int limit;
         switch (mode) {
             case ALPHA:
                 limit = medianValue.alpha;

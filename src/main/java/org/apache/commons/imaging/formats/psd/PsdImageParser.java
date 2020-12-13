@@ -490,7 +490,7 @@ public class PsdImageParser extends ImageParser implements XmpEmbeddable {
         final boolean usesPalette = header.mode == COLOR_MODE_INDEXED;
         final ImageInfo.ColorType colorType = ImageInfo.ColorType.UNKNOWN;
 
-        ImageInfo.CompressionAlgorithm compressionAlgorithm;
+        final ImageInfo.CompressionAlgorithm compressionAlgorithm;
         switch (imageContents.Compression) {
         case 0:
             compressionAlgorithm = ImageInfo.CompressionAlgorithm.NONE;
@@ -592,7 +592,7 @@ public class PsdImageParser extends ImageParser implements XmpEmbeddable {
         final BufferedImage result = getBufferedImageFactory(params).getColorBufferedImage(
                 width, height, hasAlpha);
 
-        DataParser dataParser;
+        final DataParser dataParser;
         switch (imageContents.header.mode) {
         case 0: // bitmap
             dataParser = new DataParserBitmap();
@@ -634,7 +634,7 @@ public class PsdImageParser extends ImageParser implements XmpEmbeddable {
             throw new ImageReadException("Unknown Mode: "
                     + imageContents.header.mode);
         }
-        DataReader fDataReader;
+        final DataReader fDataReader;
         switch (imageContents.Compression) {
         case 0:
             fDataReader = new UncompressedDataReader(dataParser);

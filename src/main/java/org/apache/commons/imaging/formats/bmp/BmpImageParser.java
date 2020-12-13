@@ -324,7 +324,7 @@ public class BmpImageParser extends ImageParser {
         // A palette is always valid, even for images that don't need it
         // (like 32 bpp), it specifies the "optimal color palette" for
         // when the image is displayed on a <= 256 color graphics card.
-        int paletteLength;
+        final int paletteLength;
         int rleSamplesPerByte = 0;
         boolean rle = false;
 
@@ -444,7 +444,7 @@ public class BmpImageParser extends ImageParser {
             debugNumber("imageDataSize", imageDataSize, 4);
         }
 
-        byte[] imageData;
+        final byte[] imageData;
         if (rle) {
             imageData = getRLEBytes(is, rleSamplesPerByte);
         } else {
@@ -456,7 +456,7 @@ public class BmpImageParser extends ImageParser {
             debugNumber("ImageData.length", imageData.length, 4);
         }
 
-        PixelParser pixelParser;
+        final PixelParser pixelParser;
 
         switch (bhi.compression) {
         case BI_RLE4:

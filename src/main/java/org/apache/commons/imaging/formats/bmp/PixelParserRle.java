@@ -43,7 +43,7 @@ class PixelParserRle extends PixelParser {
     }
 
     private int[] convertDataToSamples(final int data) throws ImageReadException {
-        int[] rgbs;
+        final int[] rgbs;
         if (bhi.bitsPerPixel == 8) {
             rgbs = new int[1];
             rgbs[0] = getColorTableRGB(data);

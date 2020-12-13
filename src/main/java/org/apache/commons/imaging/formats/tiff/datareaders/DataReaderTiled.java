@@ -290,10 +290,10 @@ public final class DataReaderTiled extends ImageDataReader {
         final int bitsPerRow = tileWidth * bitsPerPixel;
         final int bytesPerRow = (bitsPerRow + 7) / 8;
         final int bytesPerTile = bytesPerRow * tileLength;
-        int xRaster;
-        int yRaster;
-        int rasterWidth;
-        int rasterHeight;
+        final int xRaster;
+        final int yRaster;
+        final int rasterWidth;
+        final int rasterHeight;
         if (subImage != null) {
             xRaster = subImage.x;
             yRaster = subImage.y;

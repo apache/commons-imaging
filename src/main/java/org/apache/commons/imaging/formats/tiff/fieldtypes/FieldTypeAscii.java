@@ -33,7 +33,8 @@ public class FieldTypeAscii extends FieldType {
         // "2 = ASCII An 8-bit byte containing one 7-bit ASCII code. The final byte is terminated with NULL."
         final byte[] bytes = entry.getByteArrayValue();
         int nullCount = 1;
-        for (int i = 0; i < bytes.length - 1; i++) {
+        final int bytesLength = bytes.length;
+        for (int i = 0; i < bytesLength - 1; i++) {
             if (bytes[i] == 0) {
                 nullCount++;
             }
@@ -45,7 +46,7 @@ public class FieldTypeAscii extends FieldType {
         // According to the Exiftool FAQ, http://www.metadataworkinggroup.org
         // specifies that the TIFF ASCII fields are actually UTF-8.
         // Exiftool however allows you to configure the charset used.
-        for (int i = 0; i < bytes.length; i++) {
+        for (int i = 0; i < bytesLength; i++) {
             if (bytes[i] == 0) {
                 final String string = new String(bytes, nextStringPos, i
                         - nextStringPos, StandardCharsets.UTF_8);
@@ -53,9 +54,9 @@ public class FieldTypeAscii extends FieldType {
                 nextStringPos = i + 1;
             }
         }
-        if (nextStringPos < bytes.length) {
+        if (nextStringPos < bytesLength) {
             // Buggy file, string wasn't null terminated
-            final String string = new String(bytes, nextStringPos, bytes.length
+            final String string = new String(bytes, nextStringPos, bytesLength
                     - nextStringPos, StandardCharsets.UTF_8);
             strings[stringsAdded++] = string;
         }

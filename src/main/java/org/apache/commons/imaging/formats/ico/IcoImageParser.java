@@ -495,7 +495,7 @@ public class IcoImageParser extends ImageParser {
                 }
             }
         }
-        BufferedImage resultImage;
+        final BufferedImage resultImage;
         if (allAlphasZero) {
             resultImage = new BufferedImage(bmpImage.getWidth(),
                     bmpImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
@@ -644,6 +644,7 @@ public class IcoImageParser extends ImageParser {
 
         final PaletteFactory paletteFactory = new PaletteFactory();
         final SimplePalette palette = paletteFactory.makeExactRgbPaletteSimple(src, 256);
+        final int paletteLength = palette.length();
         final int bitCount;
         // If we can't obtain an exact rgb palette, we set the bit count to either 24 or 32
         // so there is a relation between having a palette and the bit count.
@@ -654,9 +655,9 @@ public class IcoImageParser extends ImageParser {
             } else {
                 bitCount = 24;
             }
-        } else if (palette.length() <= 2) {
+        } else if (paletteLength <= 2) {
             bitCount = 1;
-        } else if (palette.length() <= 16) {
+        } else if (paletteLength <= 16) {
             bitCount = 4;
         } else {
             bitCount = 8;
@@ -714,7 +715,7 @@ public class IcoImageParser extends ImageParser {
 
         if (palette != null) {
             for (int i = 0; i < (1 << bitCount); i++) {
-                if (i < palette.length()) {
+                if (i < paletteLength) {
                     final int argb = palette.getEntry(i);
                     bos.write3Bytes(argb);
                     bos.write(0);

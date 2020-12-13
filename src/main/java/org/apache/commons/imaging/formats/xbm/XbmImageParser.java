@@ -104,8 +104,8 @@ public class XbmImageParser extends ImageParser {
     }
 
     private static class XbmHeader {
-        int width;
-        int height;
+        final int width;
+        final int height;
         int xHot = -1;
         int yHot = -1;
 

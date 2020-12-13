@@ -378,7 +378,7 @@ public class PcxImageParser extends ImageParser {
             } else {
                 palette = pcxHeader.colormap;
             }
-            WritableRaster raster;
+            final WritableRaster raster;
             if (pcxHeader.bitsPerPixel == 8) {
                 raster = Raster.createInterleavedRaster(dataBuffer,
                         xSize, ySize, bytesPerImageRow, 1, new int[] { 0 },

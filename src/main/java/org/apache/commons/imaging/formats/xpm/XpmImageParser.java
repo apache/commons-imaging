@@ -171,15 +171,15 @@ public class XpmImageParser extends ImageParser {
     }
 
     private static class XpmHeader {
-        int width;
-        int height;
-        int numColors;
-        int numCharsPerPixel;
+        final int width;
+        final int height;
+        final int numColors;
+        final int numCharsPerPixel;
         int xHotSpot = -1;
         int yHotSpot = -1;
-        boolean xpmExt;
+        final boolean xpmExt;
 
-        Map<Object, PaletteEntry> palette = new HashMap<>();
+        final Map<Object, PaletteEntry> palette = new HashMap<>();
 
         XpmHeader(final int width, final int height, final int numColors,
                 final int numCharsPerPixel, final int xHotSpot, final int yHotSpot, final boolean xpmExt) {
@@ -436,7 +436,7 @@ public class XpmImageParser extends ImageParser {
 
     private XpmHeader parseXpmHeader(final BasicCParser cParser)
             throws ImageReadException, IOException {
-        String name;
+        final String name;
         String token;
         token = cParser.nextToken();
         if (!"static".equals(token)) {
@@ -505,9 +505,9 @@ public class XpmImageParser extends ImageParser {
 
     private BufferedImage readXpmImage(final XpmHeader xpmHeader, final BasicCParser cParser)
             throws ImageReadException, IOException {
-        ColorModel colorModel;
-        WritableRaster raster;
-        int bpp;
+        final ColorModel colorModel;
+        final WritableRaster raster;
+        final int bpp;
         if (xpmHeader.palette.size() <= (1 << 8)) {
             final int[] palette = new int[xpmHeader.palette.size()];
             for (final Entry<Object, PaletteEntry> entry : xpmHeader.palette.entrySet()) {
@@ -696,7 +696,7 @@ public class XpmImageParser extends ImageParser {
         os.write(line.getBytes(StandardCharsets.US_ASCII));
 
         for (int i = 0; i < colors; i++) {
-            String color;
+            final String color;
             if (i < palette.length()) {
                 color = toColor(palette.getEntry(i));
             } else {

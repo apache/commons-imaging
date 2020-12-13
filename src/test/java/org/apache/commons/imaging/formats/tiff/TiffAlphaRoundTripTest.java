@@ -54,7 +54,7 @@ public class TiffAlphaRoundTripTest {
             // and one giving 50 percent opaque red.
             final int width = 400;
             final int height = 400;
-            BufferedImage image0;
+            final BufferedImage image0;
             if (i == 0) {
                 image0 = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
             } else {

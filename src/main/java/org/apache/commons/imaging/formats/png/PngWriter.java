@@ -384,7 +384,7 @@ class PngWriter {
         boolean isGrayscale = new PaletteFactory().isGrayscale(src);
         Debug.debug("isGrayscale: " + isGrayscale);
 
-        PngColorType pngColorType;
+        final PngColorType pngColorType;
         {
             final boolean forceIndexedColor =  Boolean.TRUE.equals(params.get(PngConstants.PARAM_KEY_PNG_FORCE_INDEXED_COLOR));
             final boolean forceTrueColor = Boolean.TRUE.equals(params.get(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR));
@@ -406,7 +406,7 @@ class PngWriter {
         final byte bitDepth = getBitDepth(pngColorType, params);
         Debug.debug("bitDepth: " + bitDepth);
 
-        int sampleDepth;
+        final int sampleDepth;
         if (pngColorType == PngColorType.INDEXED_COLOR) {
             sampleDepth = 8;
         } else {
@@ -503,7 +503,7 @@ class PngWriter {
 
             // IDAT Yes Multiple IDAT chunks shall be consecutive
 
-            byte[] uncompressed;
+            final byte[] uncompressed;
             {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 

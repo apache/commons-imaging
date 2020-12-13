@@ -24,7 +24,7 @@ import org.apache.commons.imaging.common.BinaryFileParser;
  * A PNG image is composed of several chunks. This is the base class for the chunks,
  * used by the parser.
  *
- * @see https://en.wikipedia.org/wiki/Portable_Network_Graphics#%22Chunks%22_within_the_file
+ * @see <a href="https://en.wikipedia.org/wiki/Portable_Network_Graphics#%22Chunks%22_within_the_file>Portable Network Graphics</a>
  */
 public class PngChunk extends BinaryFileParser {
     public final int length;

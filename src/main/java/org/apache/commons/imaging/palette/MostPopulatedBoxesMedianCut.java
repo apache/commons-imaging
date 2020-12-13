@@ -112,7 +112,7 @@ public class MostPopulatedBoxesMedianCut implements MedianCut {
         colorGroups.add(upperGroup);
 
         final ColorCount medianValue = colorCounts.get(bestMedianIndex);
-        int limit;
+        final int limit;
         switch (bestColorComponent) {
             case ALPHA:
                 limit = medianValue.alpha;

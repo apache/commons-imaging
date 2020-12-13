@@ -391,9 +391,9 @@ public abstract class TiffImageWriterBase {
             throw new ImageWriteException("Unknown parameter: " + firstKey);
         }
 
-        int samplesPerPixel;
-        int bitsPerSample;
-        int photometricInterpretation;
+        final int samplesPerPixel;
+        final int bitsPerSample;
+        final int photometricInterpretation;
         if (compression == TIFF_COMPRESSION_CCITT_1D
                 || compression == TIFF_COMPRESSION_CCITT_GROUP_3
                 || compression == TIFF_COMPRESSION_CCITT_GROUP_4) {
@@ -626,7 +626,7 @@ public abstract class TiffImageWriterBase {
 
         final int stripCount = (height + rowsPerStrip - 1) / rowsPerStrip;
 
-        byte[][] result;
+        final byte[][] result;
         { // Write Strips
             result = new byte[stripCount][];
 

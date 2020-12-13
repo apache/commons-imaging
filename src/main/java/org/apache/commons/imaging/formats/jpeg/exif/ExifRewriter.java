@@ -388,7 +388,7 @@ public class ExifRewriter extends BinaryFileParser {
         final JFIFPieces jfifPieces = analyzeJFIF(byteSource);
         final List<JFIFPiece> pieces = jfifPieces.pieces;
 
-        TiffImageWriterBase writer;
+        final TiffImageWriterBase writer;
         // Just use first APP1 segment for now.
         // Multiple APP1 segments are rare and poorly supported.
         if (!jfifPieces.exifPieces.isEmpty()) {
@@ -534,8 +534,9 @@ public class ExifRewriter extends BinaryFileParser {
             }
 
             if (!hasExif && newBytes != null) {
+                final int newBytesLength = newBytes.length;
                 final byte[] markerBytes = ByteConversions.toBytes((short) JpegConstants.JPEG_APP1_MARKER, getByteOrder());
-                if (newBytes.length > 0xffff) {
+                if (newBytesLength > 0xffff) {
                     throw new ExifOverflowException(
                             "APP1 Segment is too long: " + newBytes.length);
                 }

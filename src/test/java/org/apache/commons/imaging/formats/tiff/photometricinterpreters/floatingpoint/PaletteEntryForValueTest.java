@@ -95,7 +95,7 @@ public class PaletteEntryForValueTest {
     public void testFaultyConstructors() {
         final Color c0 = new Color(0xff0000ff);
         final Color c1 = new Color(0xff00ff00);
-        PaletteEntryForValue pTest;
+        final PaletteEntryForValue pTest;
 
 
         try {

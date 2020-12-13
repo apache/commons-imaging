@@ -270,7 +270,7 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
             compressionFieldValue = TIFF_COMPRESSION_UNCOMPRESSED_1;
         }
         final int compression = 0xffff & compressionFieldValue;
-        ImageInfo.CompressionAlgorithm compressionAlgorithm;
+        final ImageInfo.CompressionAlgorithm compressionAlgorithm;
 
         switch (compression) {
         case TIFF_COMPRESSION_UNCOMPRESSED_1:
@@ -644,7 +644,7 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
             }
         }
 
-        PhotometricInterpreter photometricInterpreter;
+        final PhotometricInterpreter photometricInterpreter;
         final Object test = params == null
             ? null
             : params.get(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER);

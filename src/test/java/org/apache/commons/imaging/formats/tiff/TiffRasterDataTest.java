@@ -27,11 +27,11 @@ import org.junit.jupiter.api.Test;
  */
 public class TiffRasterDataTest {
 
-    int width = 11;
-    int height = 10;
-    float[] data;
-    TiffRasterData raster;
-    float meanValue;
+    final int width = 11;
+    final int height = 10;
+    final float[] data;
+    final TiffRasterData raster;
+    final float meanValue;
 
     public TiffRasterDataTest() {
         double sum = 0;

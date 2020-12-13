@@ -355,10 +355,10 @@ public final class DataReaderStrips extends ImageDataReader {
     public TiffRasterData readRasterData(final Rectangle subImage)
         throws ImageReadException, IOException {
 
-        int xRaster;
-        int yRaster;
-        int rasterWidth;
-        int rasterHeight;
+        final int xRaster;
+        final int yRaster;
+        final int rasterWidth;
+        final int rasterHeight;
         if (subImage != null) {
             xRaster = subImage.x;
             yRaster = subImage.y;
