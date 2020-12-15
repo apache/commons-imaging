@@ -32,7 +32,8 @@ import org.apache.commons.imaging.ImageReadException;
  * The PNG iCCP chunk. If "present, the image samples conform to the color space represented by the embedded ICC
  * profile as defined by the International Color Consortium".
  *
- * @see http://www.libpng.org/pub/png/spec/1.2/PNG-Chunks.html
+ * @see <a href="http://www.libpng.org/pub/png/spec/1.2/PNG-Chunks.html">PNG Specification</a>
+ *
  */
 public class PngChunkIccp extends PngChunk {
 
