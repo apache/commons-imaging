@@ -53,7 +53,7 @@ public class IptcParserTest {
      *
      * @throws IOException when reading input
      * @throws ImageReadException when parsing file
-     * @see https://www.adobe.com/devnet-apps/photoshop/fileformatashtml/
+     * @see <a href="https://www.adobe.com/devnet-apps/photoshop/fileformatashtml/">Adobe Photoshop File Formats Specification</a>
      */
     @Test
     public void testSkipBlockTypes() throws ImageReadException, IOException {
