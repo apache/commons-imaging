@@ -19,10 +19,14 @@ package org.apache.commons.imaging.color;
 /**
  * Represents a color in the CIELCH color space.
  *
- * <p>Contains the constant values for black, white, red,
- * green, and blue.</p>
- *
- * @see <a href="https://en.wikipedia.org/wiki/CIELUV#Cylindrical_representation_(CIELCH)">https://en.wikipedia.org/wiki/CIELUV#Cylindrical_representation_(CIELCH)</a>
+ * <p>
+ * Contains the constant values for black, white, red,
+ * green, and blue.
+ * </p>
+ * Changes: H renamed to h.
+ * 
+ * @see <a href=
+ *      "https://en.wikipedia.org/wiki/CIELUV#Cylindrical_representation_(CIELCH)">https://en.wikipedia.org/wiki/CIELUV#Cylindrical_representation_(CIELCH)</a>
  * @since 1.0-alpha1
  */
 public final class ColorCieLch {
@@ -79,17 +83,17 @@ public final class ColorCieLch {
 
     public final double L;
     public final double C;
-    public final double H;
+    public final double h;
 
-    public ColorCieLch(final double L, final double C, final double H) {
+    public ColorCieLch(final double L, final double C, final double h) {
         this.L = L;
         this.C = C;
-        this.H = H;
+        this.h = h;
     }
 
     @Override
     public String toString() {
-        return "{L: " + L + ", C: " + C + ", H: " + H + "}";
+		return "{L: " + L + ", C: " + C + ", h: " + h + "}";
     }
 
     @Override
@@ -105,7 +109,7 @@ public final class ColorCieLch {
         if (Double.compare(that.C, C) != 0) {
             return false;
         }
-        if (Double.compare(that.H, H) != 0) {
+        if (Double.compare(that.h, h) != 0) {
             return false;
         }
         if (Double.compare(that.L, L) != 0) {
@@ -120,11 +124,11 @@ public final class ColorCieLch {
         int result;
         long temp;
         temp = Double.doubleToLongBits(L);
-        result = (int) (temp ^ (temp >>> 32));
+        result = (int) (temp ^ temp >>> 32);
         temp = Double.doubleToLongBits(C);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(H);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) (temp ^ temp >>> 32);
+        temp = Double.doubleToLongBits(h);
+        result = 31 * result + (int) (temp ^ temp >>> 32);
         return result;
     }
 }
