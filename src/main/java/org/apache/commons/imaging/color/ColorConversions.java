@@ -568,9 +568,9 @@ public final class ColorConversions {
             var_G = pivotRGB(var_G);
             var_B = pivotRGB(var_B);
 
-            R = var_R * 255;
-            G = var_G * 255;
-            B = var_B * 255;
+            R = (var_R * 255);
+            G = (var_G * 255);
+            B = (var_B * 255);
         }
 
         return convertRGBtoRGB(R, G, B);
@@ -586,7 +586,7 @@ public final class ColorConversions {
         blue = Math.min(255, Math.max(0, blue));
 
         final int alpha = 0xff;
-        final int rgb = alpha << 24 | red << 16 | green << 8 | blue << 0;
+        final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
 
         return rgb;
     }
@@ -597,7 +597,7 @@ public final class ColorConversions {
         blue = Math.min(255, Math.max(0, blue));
 
         final int alpha = 0xff;
-        final int rgb = alpha << 24 | red << 16 | green << 8 | blue << 0;
+        final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
 
         return rgb;
     }
@@ -653,8 +653,8 @@ public final class ColorConversions {
     public static ColorCieLuv convertXYZtoCIELuv(final double X, final double Y, final double Z) {
         // problems here with div by zero
 
-        final double var_U = 4 * X / (X + 15 * Y + 3 * Z);
-        final double var_V = 9 * Y / (X + 15 * Y + 3 * Z);
+        final double var_U = (4 * X) / (X + (15 * Y) + (3 * Z));
+        final double var_V = (9 * Y) / (X + (15 * Y) + (3 * Z));
 
         // Debug.debug("var_U", var_U);
         // Debug.debug("var_V", var_V);
@@ -666,13 +666,13 @@ public final class ColorConversions {
 
         // Debug.debug("var_Y", var_Y);
 
-        final double ref_U = 4 * REF_X / (REF_X + 15 * REF_Y + 3 * REF_Z);
-        final double ref_V = 9 * REF_Y / (REF_X + 15 * REF_Y + 3 * REF_Z);
+        final double ref_U = (4 * REF_X) / (REF_X + (15 * REF_Y) + (3 * REF_Z));
+        final double ref_V = (9 * REF_Y) / (REF_X + (15 * REF_Y) + (3 * REF_Z));
 
         // Debug.debug("ref_U", ref_U);
         // Debug.debug("ref_V", ref_V);
 
-        final double L = 116 * var_Y - 16;
+        final double L = (116 * var_Y) - 16;
         final double u = 13 * L * (var_U - ref_U);
         final double v = 13 * L * (var_V - ref_V);
 
@@ -689,14 +689,14 @@ public final class ColorConversions {
         double var_Y = (L + 16) / 116.0;
         var_Y = unPivotXYZ(var_Y);
 
-        final double ref_U = 4 * REF_X / (REF_X + 15 * REF_Y + 3 * REF_Z);
-        final double ref_V = 9 * REF_Y / (REF_X + 15 * REF_Y + 3 * REF_Z);
+        final double ref_U = (4 * REF_X) / (REF_X + (15 * REF_Y) + (3 * REF_Z));
+        final double ref_V = (9 * REF_Y) / (REF_X + (15 * REF_Y) + (3 * REF_Z));
         final double var_U = u / (13 * L) + ref_U;
         final double var_V = v / (13 * L) + ref_V;
 
         final double Y = var_Y * 100;
         final double X = -(9 * Y * var_U) / ((var_U - 4) * var_V - var_U * var_V);
-        final double Z = (9 * Y - 15 * var_V * Y - var_V * X) / (3 * var_V);
+        final double Z = (9 * Y - (15 * var_V * Y) - (var_V * X)) / (3 * var_V);
 
         return new ColorXyz(X, Y, Z);
     }
