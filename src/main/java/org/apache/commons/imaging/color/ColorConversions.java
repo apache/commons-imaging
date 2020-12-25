@@ -18,9 +18,6 @@ package org.apache.commons.imaging.color;
 
 import java.awt.Color;
 
-/**
- * A copy of org.apache.commons.imaging.color.ColorConversions moved to another package.
- */
 public final class ColorConversions {
 
 	// White reference
