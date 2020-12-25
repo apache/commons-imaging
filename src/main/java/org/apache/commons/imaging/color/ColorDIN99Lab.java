@@ -23,7 +23,7 @@ package org.apache.commons.imaging.color;
  *      color spaces</a>
  * @see <a href="https://www.researchgate.net/publication/229891006_Uniform_colour_spaces_based_on_the_DIN99_colour-difference_formula">DIN99b P.284:
  *      Uniform_colour_spaces_based_on_the_DIN99_colour-difference_formula</a>
- * @since 1.0-alpha1
+ * @since 1.0-alpha3
  */
 public final class ColorDIN99Lab {
 
