@@ -18,11 +18,9 @@ package org.apache.commons.imaging.color;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 public class ColorCieLchTest {
 
@@ -47,12 +45,12 @@ public class ColorCieLchTest {
 
     @Test
     public void testHAssignment() {
-        assertEquals(3.0, color.H, 0.0);
+        assertEquals(3.0, color.h, 0.0);
     }
 
     @Test
     public void testToString() {
-        assertEquals("{L: 1.0, C: 2.0, H: 3.0}", color.toString());
+        assertEquals("{L: 1.0, C: 2.0, h: 3.0}", color.toString());
     }
 
     @Test

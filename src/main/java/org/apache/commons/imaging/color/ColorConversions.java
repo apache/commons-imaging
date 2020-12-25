@@ -18,9 +18,22 @@ package org.apache.commons.imaging.color;
 
 
 public final class ColorConversions {
-    private static final double REF_X = 95.047;  // Observer= 2°, Illuminant= D65
+
+    // White reference
+    /** see: https://en.wikipedia.org/wiki/CIELAB_color_space#From_CIEXYZ_to_CIELAB[10] */
+    private static final double REF_X = 95.047; // Observer= 2°, Illuminant= D65
+
+    /** see: https://en.wikipedia.org/wiki/CIELAB_color_space#From_CIEXYZ_to_CIELAB[10] */
     private static final double REF_Y = 100.000;
+
+    /** see: https://en.wikipedia.org/wiki/CIELAB_color_space#From_CIEXYZ_to_CIELAB[10] */
     private static final double REF_Z = 108.883;
+
+    /** see: https://en.wikipedia.org/wiki/CIELAB_color_space#From_CIEXYZ_to_CIELAB[10] */
+    private static final double XYZ_m = 7.787037; // match in slope. Note commonly seen 7.787 gives worse results
+
+    /** see: https://en.wikipedia.org/wiki/CIELAB_color_space#From_CIEXYZ_to_CIELAB[10] */
+    private static final double XYZ_t0 = 0.008856;
 
     private ColorConversions() {
     }
@@ -29,31 +42,19 @@ public final class ColorConversions {
         return convertXYZtoCIELab(xyz.X, xyz.Y, xyz.Z);
     }
 
-    public static ColorCieLab convertXYZtoCIELab(final double X, final double Y,
-            final double Z) {
+    public static ColorCieLab convertXYZtoCIELab(final double X, final double Y, final double Z) {
 
-        double var_X = X / REF_X; // REF_X = 95.047 Observer= 2°, Illuminant=
-                                  // D65
+        double var_X = X / REF_X; // REF_X = 95.047 Observer= 2°, Illuminant= D65
         double var_Y = Y / REF_Y; // REF_Y = 100.000
         double var_Z = Z / REF_Z; // REF_Z = 108.883
 
-        if (var_X > 0.008856) {
-            var_X = Math.pow(var_X, (1 / 3.0));
-        } else {
-            var_X = (7.787 * var_X) + (16 / 116.0);
-        }
-        if (var_Y > 0.008856) {
-            var_Y = Math.pow(var_Y, 1 / 3.0);
-        } else {
-            var_Y = (7.787 * var_Y) + (16 / 116.0);
-        }
-        if (var_Z > 0.008856) {
-            var_Z = Math.pow(var_Z, 1 / 3.0);
-        } else {
-            var_Z = (7.787 * var_Z) + (16 / 116.0);
-        }
+        // Pivot XÝZ:
+        var_X = pivotXYZ(var_X);
+        var_Y = pivotXYZ(var_Y);
+        var_Z = pivotXYZ(var_Z);
 
-        final double L = (116 * var_Y) - 16;
+        // Math.max added from https://github.com/muak/ColorMinePortable/blob/master/ColorMinePortable/ColorSpaces/Conversions/LabConverter.cs
+        final double L = Math.max(0, 116 * var_Y - 16);
         final double a = 500 * (var_X - var_Y);
         final double b = 200 * (var_Y - var_Z);
         return new ColorCieLab(L, a, b);
@@ -68,24 +69,12 @@ public final class ColorConversions {
         double var_X = a / 500 + var_Y;
         double var_Z = var_Y - b / 200.0;
 
-        if (Math.pow(var_Y, 3) > 0.008856) {
-            var_Y = Math.pow(var_Y, 3);
-        } else {
-            var_Y = (var_Y - 16 / 116.0) / 7.787;
-        }
-        if (Math.pow(var_X, 3) > 0.008856) {
-            var_X = Math.pow(var_X, 3);
-        } else {
-            var_X = (var_X - 16 / 116.0) / 7.787;
-        }
-        if (Math.pow(var_Z, 3) > 0.008856) {
-            var_Z = Math.pow(var_Z, 3);
-        } else {
-            var_Z = (var_Z - 16 / 116.0) / 7.787;
-        }
+        var_Y = unPivotXYZ(var_Y);
+        var_X = unPivotXYZ(var_X);
+        var_Z = unPivotXYZ(var_Z);
 
         final double X = REF_X * var_X; // REF_X = 95.047 Observer= 2°, Illuminant=
-                                  // D65
+        // D65
         final double Y = REF_Y * var_Y; // REF_Y = 100.000
         final double Z = REF_Z * var_Z; // REF_Z = 108.883
 
@@ -99,8 +88,8 @@ public final class ColorConversions {
     public static ColorHunterLab convertXYZtoHunterLab(final double X,
             final double Y, final double Z) {
         final double L = 10 * Math.sqrt(Y);
-        final double a = 17.5 * (((1.02 * X) - Y) / Math.sqrt(Y));
-        final double b = 7 * ((Y - (0.847 * Z)) / Math.sqrt(Y));
+        final double a = Y == 0.0 ? 0.0 : 17.5 * (((1.02 * X) - Y) / Math.sqrt(Y));
+        final double b = Y == 0.0 ? 0.0 : 7 * ((Y - (0.847 * Z)) / Math.sqrt(Y));
 
         return new ColorHunterLab(L, a, b);
     }
@@ -122,6 +111,7 @@ public final class ColorConversions {
         return new ColorXyz(X, Y, Z);
     }
 
+
     public static int convertXYZtoRGB(final ColorXyz xyz) {
         return convertXYZtoRGB(xyz.X, xyz.Y, xyz.Z);
     }
@@ -132,33 +122,28 @@ public final class ColorConversions {
         final double var_Y = Y / 100.0; // Where Y = 0 ÷ 100.000
         final double var_Z = Z / 100.0; // Where Z = 0 ÷ 108.883
 
-        double var_R = var_X * 3.2406 + var_Y * -1.5372 + var_Z * -0.4986;
-        double var_G = var_X * -0.9689 + var_Y * 1.8758 + var_Z * 0.0415;
-        double var_B = var_X * 0.0557 + var_Y * -0.2040 + var_Z * 1.0570;
+        // see: https://github.com/StanfordHCI/c3/blob/master/java/src/edu/stanford/vis/color/LAB.java
+        double var_R = var_X * 3.2404542 + var_Y * -1.5371385 + var_Z * -0.4985314;
+        double var_G = var_X * -0.9692660 + var_Y * 1.8760108 + var_Z * 0.0415560;
+        double var_B = var_X * 0.0556434 + var_Y * -0.2040259 + var_Z * 1.0572252;
 
-        if (var_R > 0.0031308) {
-            var_R = 1.055 * Math.pow(var_R, (1 / 2.4)) - 0.055;
-        } else {
-            var_R = 12.92 * var_R;
-        }
-        if (var_G > 0.0031308) {
-            var_G = 1.055 * Math.pow(var_G, (1 / 2.4)) - 0.055;
-        } else {
-            var_G = 12.92 * var_G;
-        }
-        if (var_B > 0.0031308) {
-            var_B = 1.055 * Math.pow(var_B, (1 / 2.4)) - 0.055;
-        } else {
-            var_B = 12.92 * var_B;
-        }
+        // Attention: A lot of sources do list these values with less precision. But it makes a visual difference:
+        // double var_R = var_X * 3.2406 + var_Y * -1.5372 + var_Z * -0.4986;
+        // double var_G = var_X * -0.9689 + var_Y * 1.8758 + var_Z * 0.0415;
+        // double var_B = var_X * 0.0557 + var_Y * -0.2040 + var_Z * 1.0570;
+
+        var_R = pivotRGB(var_R);
+        var_G = pivotRGB(var_G);
+        var_B = pivotRGB(var_B);
 
         final double R = (var_R * 255);
         final double G = (var_G * 255);
         final double B = (var_B * 255);
-
         return convertRGBtoRGB(R, G, B);
     }
 
+    // See also c# implementation:
+    // https://github.com/muak/ColorMinePortable/blob/master/ColorMinePortable/ColorSpaces/Conversions/XyzConverter.cs
     public static ColorXyz convertRGBtoXYZ(final int rgb) {
         final int r = 0xff & (rgb >> 16);
         final int g = 0xff & (rgb >> 8);
@@ -168,30 +153,25 @@ public final class ColorConversions {
         double var_G = g / 255.0; // Where G = 0 ÷ 255
         double var_B = b / 255.0; // Where B = 0 ÷ 255
 
-        if (var_R > 0.04045) {
-            var_R = Math.pow((var_R + 0.055) / 1.055, 2.4);
-        } else {
-            var_R = var_R / 12.92;
-        }
-        if (var_G > 0.04045) {
-            var_G = Math.pow((var_G + 0.055) / 1.055, 2.4);
-        } else {
-            var_G = var_G / 12.92;
-        }
-        if (var_B > 0.04045) {
-            var_B = Math.pow((var_B + 0.055) / 1.055, 2.4);
-        } else {
-            var_B = var_B / 12.92;
-        }
+        // Pivot RGB:
+        var_R = unPivotRGB(var_R);
+        var_G = unPivotRGB(var_G);
+        var_B = unPivotRGB(var_B);
 
-        var_R = var_R * 100;
-        var_G = var_G * 100;
-        var_B = var_B * 100;
+        var_R *= 100;
+        var_G *= 100;
+        var_B *= 100;
 
         // Observer. = 2°, Illuminant = D65
-        final double X = var_R * 0.4124 + var_G * 0.3576 + var_B * 0.1805;
-        final double Y = var_R * 0.2126 + var_G * 0.7152 + var_B * 0.0722;
-        final double Z = var_R * 0.0193 + var_G * 0.1192 + var_B * 0.9505;
+        // see: https://github.com/StanfordHCI/c3/blob/master/java/src/edu/stanford/vis/color/LAB.java
+        final double X = var_R * 0.4124564 + var_G * 0.3575761 + var_B * 0.1804375;
+        final double Y = var_R * 0.2126729 + var_G * 0.7151522 + var_B * 0.0721750;
+        final double Z = var_R * 0.0193339 + var_G * 0.1191920 + var_B * 0.9503041;
+
+        // Attention: A lot of sources do list these values with less precision. But it makes a visual difference:
+        // final double X = var_R * 0.4124 + var_G * 0.3576 + var_B * 0.1805;
+        // final double Y = var_R * 0.2126 + var_G * 0.7152 + var_B * 0.0722;
+        // final double Z = var_R * 0.0193 + var_G * 0.1192 + var_B * 0.9505;
 
         return new ColorXyz(X, Y, Z);
     }
@@ -543,38 +523,15 @@ public final class ColorConversions {
 
     public static int convertCIELabtoARGBTest(final int cieL, final int cieA, final int cieB) {
         double X, Y, Z;
-
         {
 
             double var_Y = ((cieL * 100.0 / 255.0) + 16.0) / 116.0;
             double var_X = cieA / 500.0 + var_Y;
             double var_Z = var_Y - cieB / 200.0;
 
-            final double var_x_cube = cube(var_X);
-            final double var_y_cube = cube(var_Y);
-            final double var_z_cube = cube(var_Z);
-
-            if (var_y_cube > 0.008856) {
-                var_Y = var_y_cube;
-            } else {
-                var_Y = (var_Y - 16 / 116.0) / 7.787;
-            }
-
-            if (var_x_cube > 0.008856) {
-                var_X = var_x_cube;
-            } else {
-                var_X = (var_X - 16 / 116.0) / 7.787;
-            }
-
-            if (var_z_cube > 0.008856) {
-                var_Z = var_z_cube;
-            } else {
-                var_Z = (var_Z - 16 / 116.0) / 7.787;
-            }
-
-            // double REF_X = 95.047;
-            // double REF_Y = 100.000;
-            // double REF_Z = 108.883;
+            var_X = unPivotXYZ(var_X);
+            var_Y = unPivotXYZ(var_Y);
+            var_Z = unPivotXYZ(var_Z);
 
             X = REF_X * var_X; // REF_X = 95.047 Observer= 2°, Illuminant= D65
             Y = REF_Y * var_Y; // REF_Y = 100.000
@@ -592,22 +549,9 @@ public final class ColorConversions {
             double var_G = var_X * -0.9689 + var_Y * 1.8758 + var_Z * 0.0415;
             double var_B = var_X * 0.0557 + var_Y * -0.2040 + var_Z * 1.0570;
 
-            if (var_R > 0.0031308) {
-                var_R = 1.055 * Math.pow(var_R, (1 / 2.4)) - 0.055;
-            } else {
-                var_R = 12.92 * var_R;
-            }
-            if (var_G > 0.0031308) {
-                var_G = 1.055 * Math.pow(var_G, (1 / 2.4)) - 0.055;
-            } else {
-                var_G = 12.92 * var_G;
-            }
-
-            if (var_B > 0.0031308) {
-                var_B = 1.055 * Math.pow(var_B, (1 / 2.4)) - 0.055;
-            } else {
-                var_B = 12.92 * var_B;
-            }
+            var_R = pivotRGB(var_R);
+            var_G = pivotRGB(var_G);
+            var_B = pivotRGB(var_B);
 
             R = (var_R * 255);
             G = (var_G * 255);
@@ -648,23 +592,21 @@ public final class ColorConversions {
     }
 
     public static ColorCieLch convertCIELabtoCIELCH(final double L, final double a, final double b) {
-        double var_H = Math.atan2(b, a); // Quadrant by signs
+        // atan2(y,x) returns atan(y/x)
+        final double atanba = Math.atan2(b, a); // Quadrant by signs
 
-        if (var_H > 0) {
-            var_H = (var_H / Math.PI) * 180.0;
-        } else {
-            var_H = 360 - radian_2_degree(Math.abs(var_H));
-        }
+        final double h = atanba > 0 //
+                ? Math.toDegrees(atanba) //
+                : Math.toDegrees(atanba) + 360;
 
         // L = L;
         final double C = Math.sqrt(square(a) + square(b));
-        final double H = var_H;
 
-        return new ColorCieLch(L, C, H);
+        return new ColorCieLch(L, C, h);
     }
 
     public static ColorCieLab convertCIELCHtoCIELab(final ColorCieLch cielch) {
-        return convertCIELCHtoCIELab(cielch.L, cielch.C, cielch.H);
+        return convertCIELCHtoCIELab(cielch.L, cielch.C, cielch.h);
     }
 
     public static ColorCieLab convertCIELCHtoCIELab(final double L, final double C, final double H) {
@@ -701,11 +643,7 @@ public final class ColorConversions {
         double var_Y = Y / 100.0;
         // Debug.debug("var_Y", var_Y);
 
-        if (var_Y > 0.008856) {
-            var_Y = Math.pow(var_Y, (1 / 3.0));
-        } else {
-            var_Y = (7.787 * var_Y) + (16 / 116.0);
-        }
+        var_Y = pivotXYZ(var_Y);
 
         // Debug.debug("var_Y", var_Y);
 
@@ -729,12 +667,8 @@ public final class ColorConversions {
     public static ColorXyz convertCIELuvtoXYZ(final double L, final double u, final double v) {
         // problems here with div by zero
 
-        double var_Y = (L + 16) / 116;
-        if (Math.pow(var_Y, 3) > 0.008856) {
-            var_Y = Math.pow(var_Y, 3);
-        } else {
-            var_Y = (var_Y - 16 / 116) / 7.787;
-        }
+        double var_Y = (L + 16) / 116.0;
+        var_Y = unPivotXYZ(var_Y);
 
         final double ref_U = (4 * REF_X) / (REF_X + (15 * REF_Y) + (3 * REF_Z));
         final double ref_V = (9 * REF_Y) / (REF_X + (15 * REF_Y) + (3 * REF_Z));
@@ -747,4 +681,147 @@ public final class ColorConversions {
 
         return new ColorXyz(X, Y, Z);
     }
+
+    public static ColorDIN99Lab convertCIELabToDIN99bLab(final ColorCieLab cie) {
+        return convertCIELabToDIN99bLab(cie.L, cie.a, cie.b);
+    }
+
+    public static ColorDIN99Lab convertCIELabToDIN99bLab(final double L, final double a, final double b) {
+        final double FAC_1 = 100.0 / Math.log(129.0 / 50.0); // = 105.51
+        final double kE = 1.0; // brightness factor, 1.0 for CIE reference conditions
+        final double kCH = 1.0; // chroma and hue factor, 1.0 for CIE reference conditions
+        final double ang = Math.toRadians(16.0);
+
+        final double L99 = kE * FAC_1 * Math.log(1. + 0.0158 * L);
+        double a99 = 0.0;
+        double b99 = 0.0;
+        if (a != 0.0 || b != 0.0) {
+            final double e = a * Math.cos(ang) + b * Math.sin(ang);
+            final double f = 0.7 * (b * Math.cos(ang) - a * Math.sin(ang));
+            final double G = Math.sqrt(e * e + f * f);
+            if (G != 0.) {
+                final double k = Math.log(1. + 0.045 * G) / (0.045 * kCH * kE * G);
+                a99 = k * e;
+                b99 = k * f;
+            }
+        }
+        return new ColorDIN99Lab(L99, a99, b99);
+    }
+
+    public static ColorCieLab convertDIN99bLabToCIELab(final ColorDIN99Lab dinb) {
+        return convertDIN99bLabToCIELab(dinb.L99, dinb.a99, dinb.b99);
+    }
+
+    public static ColorCieLab convertDIN99bLabToCIELab(final double L99b, final double a99b, final double b99b) {
+        final double kE = 1.0; // brightness factor, 1.0 for CIE reference conditions
+        final double kCH = 1.0; // chroma and hue factor, 1.0 for CIE reference conditions
+        final double FAC_1 = 100.0 / Math.log(129.0 / 50.0); // L99 scaling factor = 105.50867113783109
+        final double ang = Math.toRadians(16.0);
+
+        final double hef = Math.atan2(b99b, a99b);
+        final double C = Math.sqrt(a99b * a99b + b99b * b99b);
+        final double G = (Math.exp(0.045 * C * kCH * kE) - 1.0) / 0.045;
+        final double e = G * Math.cos(hef);
+        final double f = G * Math.sin(hef) / 0.7;
+
+        final double L = (Math.exp(L99b * kE / FAC_1) - 1.) / 0.0158;
+        final double a = e * Math.cos(ang) - f * Math.sin(ang);
+        final double b = e * Math.sin(ang) + f * Math.cos(ang);
+        return new ColorCieLab(L, a, b);
+    }
+
+    /** DIN99o, see: https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum */
+    public static ColorDIN99Lab convertCIELabToDIN99oLab(final ColorCieLab cie) {
+        return convertCIELabToDIN99oLab(cie.L, cie.a, cie.b);
+    }
+
+    /** DIN99o, see: https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum */
+    public static ColorDIN99Lab convertCIELabToDIN99oLab(final double L, final double a, final double b) {
+        final double kE = 1.0; // brightness factor, 1.0 for CIE reference conditions
+        final double kCH = 1.0; // chroma and hue factor, 1.0 for CIE reference conditions
+        final double FAC_1 = 100.0 / Math.log(139.0 / 100.0); // L99 scaling factor = 303.67100547050995
+        final double ang = Math.toRadians(26.0);
+
+        final double L99o = FAC_1 / kE * Math.log(1 + 0.0039 * L); // Lightness correction kE
+        double a99o = 0.0;
+        double b99o = 0.0;
+        if (a != 0.0 || b != 0.0) {
+            final double eo = a * Math.cos(ang) + b * Math.sin(ang); // a stretching
+            final double fo = 0.83 * (b * Math.cos(ang) - a * Math.sin(ang)); // b rotation/stretching
+            final double Go = Math.sqrt(eo * eo + fo * fo); // chroma
+            final double C99o = Math.log(1.0 + 0.075 * Go) / (0.0435 * kCH * kE); // factor for chroma compression and viewing conditions
+            final double heofo = Math.atan2(fo, eo); // arctan in four quadrants
+            final double h99o = heofo + ang; // hue rotation
+            a99o = C99o * Math.cos(h99o);
+            b99o = C99o * Math.sin(h99o);
+        }
+        return new ColorDIN99Lab(L99o, a99o, b99o);
+    }
+
+    /** DIN99o, see: https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum */
+    public static ColorCieLab convertDIN99oLabToCIELab(final ColorDIN99Lab dino) {
+        return convertDIN99oLabToCIELab(dino.L99, dino.a99, dino.b99);
+    }
+
+    /** DIN99o, see: https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum */
+    public static ColorCieLab convertDIN99oLabToCIELab(final double L99o, final double a99o, final double b99o) {
+        final double kE = 1.0; // brightness factor, 1.0 for CIE reference conditions
+        final double kCH = 1.0; // chroma and hue factor, 1.0 for CIE reference conditions
+        final double FAC_1 = 100.0 / Math.log(139.0 / 100.0); // L99 scaling factor = 303.67100547050995
+        final double ang = Math.toRadians(26.0);
+
+        final double L = (Math.exp(L99o * kE / FAC_1) - 1.0) / 0.0039;
+
+        final double h99ef = Math.atan2(b99o, a99o); // arctan in four quadrants
+
+        final double heofo = h99ef - ang; // backwards hue rotation
+
+        final double C99 = Math.sqrt(a99o * a99o + b99o * b99o); // DIN99 chroma
+        final double G = (Math.exp(0.0435 * kE * kCH * C99) - 1.0) / 0.075; // factor for chroma decompression and viewing conditions
+        final double e = G * Math.cos(heofo);
+        final double f = G * Math.sin(heofo);
+
+        final double a = e * Math.cos(ang) - f / 0.83 * Math.sin(ang); // rotation by 26 degrees
+        final double b = e * Math.sin(ang) + f / 0.83 * Math.cos(ang); // rotation by 26 degrees
+
+        return new ColorCieLab(L, a, b);
+    }
+
+    private static double pivotRGB(double n) {
+        if (n > 0.0031308) {
+            n = 1.055 * Math.pow(n, 1 / 2.4) - 0.055;
+        } else {
+            n = 12.92 * n;
+        }
+        return n;
+    }
+
+    private static double unPivotRGB(double n) {
+        if (n > 0.04045) {
+            n = Math.pow((n + 0.055) / 1.055, 2.4);
+        } else {
+            n = n / 12.92;
+        }
+        return n;
+    }
+
+    private static double pivotXYZ(double n) {
+        if (n > XYZ_t0) {
+            n = Math.pow(n, 1 / 3.0);
+        } else {
+            n = XYZ_m * n + 16 / 116.0;
+        }
+        return n;
+    }
+
+    private static double unPivotXYZ(double n) {
+        final double nCube = Math.pow(n, 3);
+        if (nCube > XYZ_t0) {
+            n = nCube;
+        } else {
+            n = (n - 16 / 116.0) / XYZ_m;
+        }
+        return n;
+    }
+
 }
