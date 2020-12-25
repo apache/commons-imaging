@@ -27,46 +27,56 @@ package org.apache.commons.imaging.color;
  */
 public final class ColorDIN99Lab {
 
-	public final double L99;
+    public final double L99;
 
-	public final double a99;
+    public final double a99;
 
-	public final double b99;
+    public final double b99;
 
-	public ColorDIN99Lab(final double L99, final double a99, final double b99) {
-		this.L99 = L99;
-		this.a99 = a99;
-		this.b99 = b99;
-	}
+    public ColorDIN99Lab(final double L99, final double a99, final double b99) {
+        this.L99 = L99;
+        this.a99 = a99;
+        this.b99 = b99;
+    }
 
-	@Override
-	public String toString() {
-		return "{L: " + L99 + ", a: " + a99 + ", b: " + b99 + "}";
-	}
+    @Override
+    public String toString() {
+        return "{L: " + L99 + ", a: " + a99 + ", b: " + b99 + "}";
+    }
 
-	@Override
-	public boolean equals(final Object o) {
-		if (this == o) { return true; }
-		if (o == null || getClass() != o.getClass()) { return false; }
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
-		final ColorDIN99Lab that = (ColorDIN99Lab) o;
-		if (Double.compare(that.L99, L99) != 0) { return false; }
-		if (Double.compare(that.a99, a99) != 0) { return false; }
-		if (Double.compare(that.b99, b99) != 0) { return false; }
+        final ColorDIN99Lab that = (ColorDIN99Lab) o;
+        if (Double.compare(that.L99, L99) != 0) {
+            return false;
+        }
+        if (Double.compare(that.a99, a99) != 0) {
+            return false;
+        }
+        if (Double.compare(that.b99, b99) != 0) {
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	@Override
-	public int hashCode() {
-		int result;
-		long temp;
-		temp = Double.doubleToLongBits(L99);
-		result = (int) (temp ^ temp >>> 32);
-		temp = Double.doubleToLongBits(a99);
-		result = 31 * result + (int) (temp ^ temp >>> 32);
-		temp = Double.doubleToLongBits(b99);
-		result = 31 * result + (int) (temp ^ temp >>> 32);
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(L99);
+        result = (int) (temp ^ temp >>> 32);
+        temp = Double.doubleToLongBits(a99);
+        result = 31 * result + (int) (temp ^ temp >>> 32);
+        temp = Double.doubleToLongBits(b99);
+        result = 31 * result + (int) (temp ^ temp >>> 32);
+        return result;
+    }
 }
