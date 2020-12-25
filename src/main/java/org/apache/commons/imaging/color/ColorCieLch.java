@@ -93,7 +93,7 @@ public final class ColorCieLch {
 
     @Override
     public String toString() {
-		return "{L: " + L + ", C: " + C + ", h: " + h + "}";
+        return "{L: " + L + ", C: " + C + ", h: " + h + "}";
     }
 
     @Override
@@ -124,11 +124,11 @@ public final class ColorCieLch {
         int result;
         long temp;
         temp = Double.doubleToLongBits(L);
-        result = (int) (temp ^ temp >>> 32);
+        result = (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(C);
-        result = 31 * result + (int) (temp ^ temp >>> 32);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(h);
-        result = 31 * result + (int) (temp ^ temp >>> 32);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
 }
