@@ -24,7 +24,7 @@ package org.apache.commons.imaging.color;
  * green, and blue.
  * </p>
  * Changes: H renamed to h.
- * 
+ *
  * @see <a href=
  *      "https://en.wikipedia.org/wiki/CIELUV#Cylindrical_representation_(CIELCH)">https://en.wikipedia.org/wiki/CIELUV#Cylindrical_representation_(CIELCH)</a>
  * @since 1.0-alpha1
