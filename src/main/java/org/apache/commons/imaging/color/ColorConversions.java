@@ -89,8 +89,8 @@ public final class ColorConversions {
     public static ColorHunterLab convertXYZtoHunterLab(final double X,
             final double Y, final double Z) {
         final double L = 10 * Math.sqrt(Y);
-        final double a = 17.5 * (((1.02 * X) - Y) / Math.sqrt(Y));
-        final double b = 7 * ((Y - (0.847 * Z)) / Math.sqrt(Y));
+        final double a = Y == 0.0 ? 0.0 : 17.5 * (((1.02 * X) - Y) / Math.sqrt(Y));
+        final double b = Y == 0.0 ? 0.0 : 7 * ((Y - (0.847 * Z)) / Math.sqrt(Y));
 
         return new ColorHunterLab(L, a, b);
     }
