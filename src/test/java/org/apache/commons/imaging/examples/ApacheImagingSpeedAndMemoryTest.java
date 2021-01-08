@@ -243,10 +243,7 @@ public class ApacheImagingSpeedAndMemoryTest {
                 byteSource = null;
                 params = null;
                 tiffImageParser = null;
-            } catch (final ImageReadException ire) {
-                ire.printStackTrace();
-                System.exit(-1);
-            } catch (final IOException ioex) {
+            } catch (final ImageReadException | IOException ioex) {
                 ioex.printStackTrace();
                 System.exit(-1);
             }

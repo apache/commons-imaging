@@ -226,11 +226,7 @@ public class ExifRewriteTest extends ExifBaseTest {
                 // newMetadata.dump();
 
                 compare(imageFile, oldExifMetadata, newExifMetadata);
-            } catch (final IOException e) {
-                Debug.debug("imageFile", imageFile.getAbsoluteFile());
-                Debug.debug(e);
-                throw e;
-            } catch (final ImageReadException e) {
+            } catch (final IOException | ImageReadException e) {
                 Debug.debug("imageFile", imageFile.getAbsoluteFile());
                 Debug.debug(e);
                 throw e;

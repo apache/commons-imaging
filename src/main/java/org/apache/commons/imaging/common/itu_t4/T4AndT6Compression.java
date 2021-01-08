@@ -455,9 +455,7 @@ public final class T4AndT6Compression {
                             rowLength += runLength;
                         }
                     }
-                } catch (final IOException ioException) {
-                    throw new ImageReadException("Decompression error", ioException);
-                } catch (final HuffmanTreeException huffmanException) {
+                } catch (final IOException | HuffmanTreeException huffmanException) {
                     throw new ImageReadException("Decompression error", huffmanException);
                 }
 

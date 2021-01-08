@@ -146,8 +146,7 @@ public class JpegImageMetadata implements ImageMetadata {
                 try {
                     image = Imaging.getBufferedImage(jpegImageData.getData());
                     imageSucceeded = true;
-                } catch (final ImagingException imagingException) { // NOPMD
-                } catch (final IOException ioException) { // NOPMD
+                } catch (final ImagingException | IOException ioException) { // NOPMD
                 } finally {
                     // our JPEG reading is still a bit buggy -
                     // fall back to ImageIO on error
