@@ -311,7 +311,7 @@ public class IptcParser extends BinaryFileParser {
                 byte[] blockNameBytes;
                 if (blockNameLength == 0) {
                     readByte("Block name bytes", bis, "Image Resource Block has invalid name");
-                    blockNameBytes = new byte[0];
+                    blockNameBytes = ImagingConstants.EMPTY_BYTE_ARRAY;
                 } else {
                     try {
                         blockNameBytes = readBytes("", bis, blockNameLength,

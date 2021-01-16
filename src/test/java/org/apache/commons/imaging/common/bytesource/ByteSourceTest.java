@@ -25,6 +25,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.ImagingTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -46,8 +47,6 @@ public abstract class ByteSourceTest extends ImagingTest {
     }
 
     protected static byte[][] getTestByteArrays() {
-        final byte emptyArray[] = (new byte[0]);
-
         final byte single[] = new byte[1];
         for (int i = 0; i < single.length; i++) {
             single[i] = (byte) i;
@@ -67,7 +66,7 @@ public abstract class ByteSourceTest extends ImagingTest {
         }
         final byte longArray[] = (baos.toByteArray());
 
-        return new byte[][]{emptyArray, single, simple, zeroes, longArray,};
+        return new byte[][]{ImagingConstants.EMPTY_BYTE_ARRAY, single, simple, zeroes, longArray,};
     }
 
     @Test

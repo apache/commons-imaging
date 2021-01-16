@@ -28,6 +28,7 @@ import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingConstants;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -40,7 +41,7 @@ public class PngChunkIccpTest {
 
     @Test
     public void testErrorOnNoProfileName() {
-        final byte[] data = new byte[0];
+        final byte[] data = ImagingConstants.EMPTY_BYTE_ARRAY;
         Assertions.assertThrows(ImageReadException.class, () -> {
             new PngChunkIccp(0, chunkType, 0, data);
         });

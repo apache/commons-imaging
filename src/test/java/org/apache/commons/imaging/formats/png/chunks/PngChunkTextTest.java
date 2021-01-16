@@ -19,13 +19,14 @@ package org.apache.commons.imaging.formats.png.chunks;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import org.apache.commons.imaging.ImagingConstants;
 import org.junit.jupiter.api.Test;
 
 public class PngChunkTextTest{
 
     @Test
     public void testCreatesPngChunkText() {
-        final byte[] byteArray = new byte[0];
+        final byte[] byteArray = ImagingConstants.EMPTY_BYTE_ARRAY;
         try {
             new PngChunkText(1214, 1214, 0, byteArray);
             fail("Expecting exception: Exception");

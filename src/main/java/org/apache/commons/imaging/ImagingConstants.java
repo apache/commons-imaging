@@ -117,6 +117,11 @@ public final class ImagingConstants {
      */
     public static final String PARAM_KEY_PIXEL_DENSITY = "PIXEL_DENSITY";
 
+    /**
+     * Empty byte array.
+     */
+    public static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
+
     private ImagingConstants() {
     }
 }

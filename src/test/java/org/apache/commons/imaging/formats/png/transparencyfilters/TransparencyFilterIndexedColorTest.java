@@ -19,13 +19,14 @@ package org.apache.commons.imaging.formats.png.transparencyfilters;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import org.apache.commons.imaging.ImagingConstants;
 import org.junit.jupiter.api.Test;
 
 public class TransparencyFilterIndexedColorTest{
 
     @Test
     public void testFilterWithNegativeAndNegative() {
-        final byte[] byteArray = new byte[0];
+        final byte[] byteArray = ImagingConstants.EMPTY_BYTE_ARRAY;
         final TransparencyFilterIndexedColor transparencyFilterIndexedColor = new TransparencyFilterIndexedColor(byteArray);
 
         try {

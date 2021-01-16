@@ -28,6 +28,7 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
@@ -354,7 +355,7 @@ public class JpegIptcRewriter extends JpegRewriter {
             final byte[] newBlockBytes = new IptcParser().writeIPTCBlock(newData.getRecords());
 
             final int blockType = IptcConstants.IMAGE_RESOURCE_BLOCK_IPTC_DATA;
-            final byte[] blockNameBytes = new byte[0];
+            final byte[] blockNameBytes = ImagingConstants.EMPTY_BYTE_ARRAY;
             final IptcBlock newBlock = new IptcBlock(blockType, blockNameBytes, newBlockBytes);
             newBlocks.add(newBlock);
 

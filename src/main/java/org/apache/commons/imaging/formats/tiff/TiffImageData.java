@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
@@ -165,7 +166,7 @@ public abstract class TiffImageData {
         ByteSourceFile byteSourceFile;
 
         public ByteSourceData(final long offset, final int length, final ByteSourceFile byteSource) {
-            super(offset, length, new byte[0]);
+            super(offset, length, ImagingConstants.EMPTY_BYTE_ARRAY);
             byteSourceFile = byteSource;
         }
 
@@ -179,7 +180,7 @@ public abstract class TiffImageData {
             try {
                 return byteSourceFile.getBlock(offset, length);
             } catch (final IOException ioex) {
-                return new byte[0];
+                return ImagingConstants.EMPTY_BYTE_ARRAY;
             }
         }
     }
