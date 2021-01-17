@@ -18,6 +18,7 @@
 package org.apache.commons.imaging;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,7 +52,7 @@ public abstract class ImagingTest {
             ImageReadException {
         final List<File> images = getTestImages(filter, 1);
 
-        assertTrue(images.size() > 0);
+        assertFalse(images.isEmpty());
 
         return images.get(0);
     }
@@ -109,7 +110,7 @@ public abstract class ImagingTest {
             }
         }
 
-        assertTrue(images.size() > 0);
+        assertFalse(images.isEmpty());
 
         return images;
     }
