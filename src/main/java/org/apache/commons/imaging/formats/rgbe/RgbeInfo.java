@@ -98,7 +98,7 @@ class RgbeInfo implements Closeable {
 
         final InfoHeaderReader reader = new InfoHeaderReader(in);
 
-        if (reader.readNextLine().length() != 0) {
+        if (!reader.readNextLine().isEmpty()) {
             throw new ImageReadException("Not a valid HDR: Incorrect Header");
         }
 
@@ -106,7 +106,7 @@ class RgbeInfo implements Closeable {
 
         String info = reader.readNextLine();
 
-        while (info.length() != 0) {
+        while (!info.isEmpty()) {
             final int equals = info.indexOf('=');
 
             if (equals > 0) {
