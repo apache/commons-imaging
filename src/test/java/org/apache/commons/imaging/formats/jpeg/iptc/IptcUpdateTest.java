@@ -70,7 +70,7 @@ public class IptcUpdateTest extends IptcBaseTest {
 
         // FIXME should either be null or empty
         assertTrue(outMetadata == null
-                || outMetadata.getItems().size() == 0);
+                || outMetadata.getItems().isEmpty());
     }
 
     public File removeIptc(final ByteSource byteSource, final File imageFile) throws Exception {

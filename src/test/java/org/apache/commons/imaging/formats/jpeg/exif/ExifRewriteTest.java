@@ -317,8 +317,8 @@ public class ExifRewriteTest extends ExifBaseTest {
             final Set<Integer> missingInOld = new HashSet<>(newFieldMap.keySet());
             missingInOld.removeAll(oldFieldMap.keySet());
 
-            assertTrue(missingInNew.size() == 0);
-            assertTrue(missingInOld.size() == 0);
+            assertTrue(missingInNew.isEmpty());
+            assertTrue(missingInOld.isEmpty());
 
             assertEquals(oldItems.size(), oldFieldMap.size());
             assertEquals(oldFieldMap.keySet(), newFieldMap.keySet());
