@@ -295,14 +295,14 @@ public class BasicCParser {
         final String[] tokens = row.split("[ \t]");
         int numLiveTokens = 0;
         for (final String token : tokens) {
-            if (token != null && token.length() > 0) {
+            if (token != null && !token.isEmpty()) {
                 ++numLiveTokens;
             }
         }
         final String[] liveTokens = new String[numLiveTokens];
         int next = 0;
         for (final String token : tokens) {
-            if (token != null && token.length() > 0) {
+            if (token != null && !token.isEmpty()) {
                 liveTokens[next++] = token;
             }
         }
