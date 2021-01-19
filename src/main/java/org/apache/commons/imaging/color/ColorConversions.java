@@ -16,7 +16,6 @@
  */
 package org.apache.commons.imaging.color;
 
-import java.awt.Color;
 
 public final class ColorConversions {
 
@@ -142,10 +141,6 @@ public final class ColorConversions {
         return convertRGBtoRGB(R, G, B);
     }
 
-    public static ColorXyz convertRGBtoXYZ(final Color color) {
-        return convertRGBtoXYZ(convertRGBtoRGB(color)); // remove alpha channel
-    }
-
     // See also c# implementation:
     // https://github.com/muak/ColorMinePortable/blob/master/ColorMinePortable/ColorSpaces/Conversions/XyzConverter.cs
     public static ColorXyz convertRGBtoXYZ(final int rgb) {
@@ -177,10 +172,6 @@ public final class ColorConversions {
         // final double Z = var_R * 0.0193 + var_G * 0.1192 + var_B * 0.9505;
 
         return new ColorXyz(X, Y, Z);
-    }
-
-    public static ColorCmy convertRGBtoCMY(final Color color) {
-        return convertRGBtoCMY(convertRGBtoRGB(color));
     }
 
     public static ColorCmy convertRGBtoCMY(final int rgb) {
@@ -267,10 +258,6 @@ public final class ColorConversions {
         final double K = k / 255.0;
 
         return convertCMYtoRGB(convertCMYKtoCMY(C, M, Y, K));
-    }
-
-    public static ColorHsl convertRGBtoHSL(final Color color) {
-        return convertRGBtoHSL(convertRGBtoRGB(color));
     }
 
     public static ColorHsl convertRGBtoHSL(final int rgb) {
@@ -396,10 +383,6 @@ public final class ColorConversions {
             return (v1 + (v2 - v1) * ((2 / 3.0) - vH) * 6);
         }
         return (v1);
-    }
-
-    public static ColorHsv convertRGBtoHSV(final Color color) {
-        return convertRGBtoHSV(convertRGBtoRGB(color));
     }
 
     public static ColorHsv convertRGBtoHSV(final int rgb) {
@@ -600,10 +583,6 @@ public final class ColorConversions {
         final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
 
         return rgb;
-    }
-
-    private static int convertRGBtoRGB(final Color color) {
-        return color.getRGB() | 0xff << 24; // alpha channel always opaque
     }
 
     public static ColorCieLch convertCIELabtoCIELCH(final ColorCieLab cielab) {
