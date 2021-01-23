@@ -26,29 +26,6 @@ package org.apache.commons.imaging;
 public final class ImagingConstants {
 
     /**
-     * <p>Parameter key. Used to hint the file name when reading from a byte array
-     * or InputStream. The file name hint can help disambiguate what file the
-     * image format.</p>
-     *
-     * <p>Applies to read operations.</p>
-     *
-     * <p>Valid values: file name as string</p>
-     *
-     * @see java.io.InputStream
-     */
-    public static final String PARAM_KEY_FILENAME = "FILENAME";
-
-    /**
-     * <p>Parameter key. Used in write operations to indicate desired image format.</p>
-     *
-     * <p>Valid values: Any format defined in ImageFormat, such as
-     * ImageFormat.IMAGE_FORMAT_PNG.</p>
-     *
-     * @see org.apache.commons.imaging.ImageFormats
-     */
-    public static final String PARAM_KEY_FORMAT = "FORMAT";
-
-    /**
      * <p>Parameter key. Used in write operations to indicate desired compression
      * algorithm.</p>
      *
@@ -62,8 +39,6 @@ public final class ImagingConstants {
      * @see org.apache.commons.imaging.formats.tiff.constants.TiffConstants
      */
     public static final String PARAM_KEY_COMPRESSION = "COMPRESSION";
-
-    public static final String BUFFERED_IMAGE_FACTORY = "BUFFERED_IMAGE_FACTORY";
 
     /**
      * <p>Parameter key. Indicates whether to read embedded thumbnails.</p>

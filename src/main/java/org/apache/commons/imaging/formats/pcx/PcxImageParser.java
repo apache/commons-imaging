@@ -49,6 +49,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.BaseParameters;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 
@@ -474,22 +475,15 @@ public class PcxImageParser extends ImageParser {
 
     @Override
     public final BufferedImage getBufferedImage(final ByteSource byteSource,
-            Map<String, Object> params) throws ImageReadException, IOException {
-        params = (params == null) ? new HashMap<>() : new HashMap<>(params);
-        boolean isStrict = false;
-        final Object strictness = params.get(PARAM_KEY_STRICT);
-        if (strictness != null) {
-            isStrict = ((Boolean) strictness).booleanValue();
-        }
-
+            BaseParameters params) throws ImageReadException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
-            final PcxHeader pcxHeader = readPcxHeader(is, isStrict);
+            final PcxHeader pcxHeader = readPcxHeader(is, params.isStrict());
             return readImage(pcxHeader, is, byteSource);
         }
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, final Map<String, Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, final BaseParameters params)
             throws ImageWriteException, IOException {
         new PcxWriter(params).writeImage(src, os);
     }
