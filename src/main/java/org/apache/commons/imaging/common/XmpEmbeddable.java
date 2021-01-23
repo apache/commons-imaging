@@ -17,7 +17,6 @@
 package org.apache.commons.imaging.common;
 
 import java.io.IOException;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -48,7 +47,7 @@ public interface XmpEmbeddable {
      *                            parser implementation.
      * @throws IOException        In the event of unsuccessful read or access operation.
      */
-    String getXmpXml(ByteSource byteSource, Map<String, Object> params)
+    String getXmpXml(ByteSource byteSource, BaseParameters params)
             throws ImageReadException, IOException;
 
 }

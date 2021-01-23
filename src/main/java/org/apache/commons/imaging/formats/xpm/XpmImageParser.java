@@ -13,8 +13,6 @@
  */
 package org.apache.commons.imaging.formats.xpm;
 
-import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_FORMAT;
-
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
@@ -47,6 +45,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.BaseParameters;
 import org.apache.commons.imaging.common.BasicCParser;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -127,13 +126,13 @@ public class XpmImageParser extends ImageParser {
     }
 
     @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageMetadata getMetadata(final ByteSource byteSource, final BaseParameters params)
             throws ImageReadException, IOException {
         return null;
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, final BaseParameters params)
             throws ImageReadException, IOException {
         final XpmHeader xpmHeader = readXpmHeader(byteSource);
         boolean transparent = false;
@@ -158,14 +157,14 @@ public class XpmImageParser extends ImageParser {
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
+    public Dimension getImageSize(final ByteSource byteSource, final BaseParameters params)
             throws ImageReadException, IOException {
         final XpmHeader xpmHeader = readXpmHeader(byteSource);
         return new Dimension(xpmHeader.width, xpmHeader.height);
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final BaseParameters params)
             throws ImageReadException, IOException {
         return null;
     }
@@ -598,7 +597,7 @@ public class XpmImageParser extends ImageParser {
 
     @Override
     public final BufferedImage getBufferedImage(final ByteSource byteSource,
-            final Map<String, Object> params) throws ImageReadException, IOException {
+            final BaseParameters params) throws ImageReadException, IOException {
         final XpmParseResult result = parseXpmHeader(byteSource);
         return readXpmImage(result.xpmHeader, result.cParser);
     }
@@ -644,21 +643,8 @@ public class XpmImageParser extends ImageParser {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, BaseParameters params)
             throws ImageWriteException, IOException {
-        // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<>() : new HashMap<>(params);
-
-        // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT)) {
-            params.remove(PARAM_KEY_FORMAT);
-        }
-
-        if (!params.isEmpty()) {
-            final Object firstKey = params.keySet().iterator().next();
-            throw new ImageWriteException("Unknown parameter: " + firstKey);
-        }
-
         final PaletteFactory paletteFactory = new PaletteFactory();
         final boolean hasTransparency = paletteFactory.hasTransparency(src, 1);
         SimplePalette palette = null;

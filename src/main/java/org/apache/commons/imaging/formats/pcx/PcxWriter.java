@@ -21,11 +21,11 @@ import java.io.OutputStream;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.PixelDensity;
+import org.apache.commons.imaging.common.BaseParameters;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
@@ -37,15 +37,7 @@ class PcxWriter {
     private PixelDensity pixelDensity;
     private final RleWriter rleWriter;
 
-    PcxWriter(Map<String, Object> params) throws ImageWriteException {
-        // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<>() : new HashMap<>(params);
-
-        // clear format key.
-        if (params.containsKey(ImagingConstants.PARAM_KEY_FORMAT)) {
-            params.remove(ImagingConstants.PARAM_KEY_FORMAT);
-        }
-
+    PcxWriter(BaseParameters params) throws ImageWriteException {
         // uncompressed PCX files are not even documented in ZSoft's spec,
         // let alone supported by most image viewers
         encoding = PcxImageParser.PcxHeader.ENCODING_RLE;
