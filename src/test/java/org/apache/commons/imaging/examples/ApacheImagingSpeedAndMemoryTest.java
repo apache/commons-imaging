@@ -205,12 +205,12 @@ public class ApacheImagingSpeedAndMemoryTest {
                 HashMap<String, Object> params = new HashMap<>();
                 TiffImageParser tiffImageParser = new TiffImageParser();
                 // load the file and record time needed to do so
-                final long time0 = System.nanoTime();
+                final long time0Nanos = System.nanoTime();
                 BufferedImage bImage = tiffImageParser.getBufferedImage(
                         byteSource, params);
-                final long time1 = System.nanoTime();
+                final long time1Nanos = System.nanoTime();
                 // tabulate results
-                final double testTime = (time1 - time0) / 1000000.0;
+                final double testTime = (time1Nanos - time0Nanos) / 1000000.0;
                 if (i > 1) {
                     n = i - 1;
                     sumTime += testTime;

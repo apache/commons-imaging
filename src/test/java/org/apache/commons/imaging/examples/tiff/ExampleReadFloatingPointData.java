@@ -114,12 +114,12 @@ public class ExampleReadFloatingPointData {
         // If only a sub-image is desired, the params Mao can be used
         // to specify what section of the data is to be extracted.
         // See the Javadoc for readFloatingPointRasterData for more details.
-        final long time0 = System.nanoTime();
+        final long time0Nanos = System.nanoTime();
         final HashMap<String, Object> params = new HashMap<>();
         final TiffRasterData rasterData
             = directory.getFloatingPointRasterData(params);
-        final long time1 = System.nanoTime();
-        System.out.println("Data read in " + ((time1 - time0) / 1.0e+6) + " ms");
+        final long time1Nanos = System.nanoTime();
+        System.out.println("Data read in " + ((time1Nanos - time0Nanos) / 1.0e+6) + " ms");
 
         // One of the test files in the Commons Imaging distribution uses
         // the value 9999 as a special "No Data" indicator.  In that case,
