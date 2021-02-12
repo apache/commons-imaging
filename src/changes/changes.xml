@@ -46,6 +46,9 @@ The <action> type attribute can be add,update,fix,remove.
   <body>
     <release version="1.0-alpha3" date="2020-??-??" description="Third 1.0 alpha release">
       <action dev="kinow" type="update" due-to="Dependabot">
+        Bump animal-sniffer-maven-plugin from 1.19 to 1.20 #120.
+      </action>
+      <action dev="kinow" type="update" due-to="Dependabot">
         Bump maven-checkstyle-plugin from 3.1.1 to 3.1.2 #117.
       </action>
       <action dev="kinow" type="update" due-to="Dependabot">
