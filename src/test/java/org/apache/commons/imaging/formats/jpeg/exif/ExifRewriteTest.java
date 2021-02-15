@@ -296,7 +296,7 @@ public class ExifRewriteTest extends ExifBaseTest {
         assertEquals(oldDirectoryTypes, newDirectoryTypes);
 
         for (final Integer dirType : oldDirectoryTypes) {
-            
+
 
             // Debug.debug("dirType", dirType);
 
