@@ -74,25 +74,6 @@ public final class ImagingConstants {
     public static final String PARAM_KEY_EXIF = "EXIF";
 
     /**
-     * <p>Parameter key.</p>
-     *
-     * <p>Only used when writing images.</p>
-     *
-     * <p>Valid values: String of XMP XML.</p>
-     */
-    public static final String PARAM_KEY_XMP_XML = "XMP_XML";
-
-    /**
-     * <p>Parameter key. Used in write operations to indicate the desired pixel
-     * density (DPI), and/or aspect ratio.</p>
-     *
-     * <p>Valid values: PixelDensity</p>
-     *
-     * @see org.apache.commons.imaging.PixelDensity
-     */
-    public static final String PARAM_KEY_PIXEL_DENSITY = "PIXEL_DENSITY";
-
-    /**
      * Empty byte array.
      */
     public static final byte[] EMPTY_BYTE_ARRAY = new byte[0];

@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import org.apache.commons.imaging.common.BaseParameters;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.XmpEmbeddable;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -89,7 +88,7 @@ import org.apache.commons.imaging.icc.IccProfileParser;
  * the image data.
  * </p>
  *
- * <p>Optional parameters are specified using a {@code BaseParameters} object.</p>
+ * <p>Optional parameters are specified using a {@code ImagingParameters} object.</p>
  *
  * <h3>Example code</h3>
  *
@@ -161,7 +160,7 @@ public final class Imaging {
 
         final String normalizedFilename = fileName.toLowerCase(Locale.ENGLISH);
 
-        for (final ImageParser imageParser : ImageParser.getAllImageParsers()) {
+        for (final ImageParser<?> imageParser : ImageParser.getAllImageParsers()) {
             for (final String extension : imageParser.getAcceptedExtensions()) {
                 if (normalizedFilename.endsWith(extension.toLowerCase(Locale.ENGLISH))) {
                     return true;
@@ -362,7 +361,7 @@ public final class Imaging {
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static ICC_Profile getICCProfile(final byte[] bytes, final BaseParameters params)
+    public static ICC_Profile getICCProfile(final byte[] bytes, final ImagingParameters params)
             throws ImageReadException, IOException {
         return getICCProfile(new ByteSourceArray(bytes), params);
     }
@@ -400,7 +399,7 @@ public final class Imaging {
      * @throws IOException if it fails to read the image data
      */
     public static ICC_Profile getICCProfile(final InputStream is, final String fileName,
-            final BaseParameters params) throws ImageReadException, IOException {
+            final ImagingParameters params) throws ImageReadException, IOException {
         return getICCProfile(new ByteSourceInputStream(is, fileName), params);
     }
 
@@ -432,12 +431,12 @@ public final class Imaging {
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static ICC_Profile getICCProfile(final File file, final BaseParameters params)
+    public static ICC_Profile getICCProfile(final File file, final ImagingParameters params)
             throws ImageReadException, IOException {
         return getICCProfile(new ByteSourceFile(file), params);
     }
 
-    protected static ICC_Profile getICCProfile(final ByteSource byteSource, final BaseParameters params)
+    protected static ICC_Profile getICCProfile(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
         final byte[] bytes = getICCProfileBytes(byteSource, params);
         if (bytes == null) {
@@ -492,7 +491,7 @@ public final class Imaging {
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static byte[] getICCProfileBytes(final byte[] bytes, final BaseParameters params)
+    public static byte[] getICCProfileBytes(final byte[] bytes, final ImagingParameters params)
             throws ImageReadException, IOException {
         return getICCProfileBytes(new ByteSourceArray(bytes), params);
     }
@@ -533,14 +532,16 @@ public final class Imaging {
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static byte[] getICCProfileBytes(final File file, final BaseParameters params)
+    public static byte[] getICCProfileBytes(final File file, final ImagingParameters params)
             throws ImageReadException, IOException {
         return getICCProfileBytes(new ByteSourceFile(file), params);
     }
 
-    private static byte[] getICCProfileBytes(final ByteSource byteSource, final BaseParameters params)
+    private static <T extends ImagingParameters> byte[] getICCProfileBytes(final ByteSource byteSource, final T params)
             throws ImageReadException, IOException {
-        final ImageParser imageParser = getImageParser(byteSource);
+        // TODO: better generics or redesign API
+        @SuppressWarnings("unchecked")
+        final ImageParser<T> imageParser = (ImageParser<T>) getImageParser(byteSource);
 
         return imageParser.getICCProfileBytes(byteSource, params);
     }
@@ -564,7 +565,7 @@ public final class Imaging {
      * @throws IOException if it fails to read the image data
      */
     public static ImageInfo getImageInfo(final String fileName, final byte[] bytes,
-            final BaseParameters params) throws ImageReadException, IOException {
+            final ImagingParameters params) throws ImageReadException, IOException {
         return getImageInfo(new ByteSourceArray(fileName, bytes), params);
     }
 
@@ -631,7 +632,7 @@ public final class Imaging {
      * @throws IOException if it fails to read the image data
      */
     public static ImageInfo getImageInfo(final InputStream is, final String fileName,
-            final BaseParameters params) throws ImageReadException, IOException {
+            final ImagingParameters params) throws ImageReadException, IOException {
         return getImageInfo(new ByteSourceInputStream(is, fileName), params);
     }
 
@@ -671,7 +672,7 @@ public final class Imaging {
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static ImageInfo getImageInfo(final byte[] bytes, final BaseParameters params)
+    public static ImageInfo getImageInfo(final byte[] bytes, final ImagingParameters params)
             throws ImageReadException, IOException {
         return getImageInfo(new ByteSourceArray(bytes), params);
     }
@@ -692,7 +693,7 @@ public final class Imaging {
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static ImageInfo getImageInfo(final File file, final BaseParameters params)
+    public static ImageInfo getImageInfo(final File file, final ImagingParameters params)
             throws ImageReadException, IOException {
         return getImageInfo(new ByteSourceFile(file), params);
     }
@@ -717,32 +718,32 @@ public final class Imaging {
         return getImageInfo(file, null);
     }
 
-    private static ImageInfo getImageInfo(final ByteSource byteSource, final BaseParameters params)
+    private static ImageInfo getImageInfo(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
         return getImageParser(byteSource).getImageInfo(byteSource, params);
     }
 
-    private static ImageParser getImageParser(final ByteSource byteSource)
+    private static ImageParser<?> getImageParser(final ByteSource byteSource)
             throws ImageReadException, IOException {
         final ImageFormat format = guessFormat(byteSource);
         if (!format.equals(ImageFormats.UNKNOWN)) {
 
-            final ImageParser[] imageParsers = ImageParser.getAllImageParsers();
+            final ImageParser<?>[] imageParsers = ImageParser.getAllImageParsers();
 
-            for (final ImageParser imageParser : imageParsers) {
+            for (final ImageParser<?> imageParser : imageParsers) {
                 if (imageParser.canAcceptType(format)) {
-                    return imageParser;
+                    return (ImageParser<?>) imageParser;
                 }
             }
         }
 
         final String fileName = byteSource.getFileName();
         if (fileName != null) {
-            final ImageParser[] imageParsers = ImageParser.getAllImageParsers();
+            final ImageParser<?>[] imageParsers = ImageParser.getAllImageParsers();
 
-            for (final ImageParser imageParser : imageParsers) {
+            for (final ImageParser<?> imageParser : imageParsers) {
                 if (imageParser.canAcceptExtension(fileName)) {
-                    return imageParser;
+                    return (ImageParser<?>) imageParser;
                 }
             }
         }
@@ -781,7 +782,7 @@ public final class Imaging {
      * @throws IOException if it fails to read the image data
      */
     public static Dimension getImageSize(final InputStream is, final String fileName,
-            final BaseParameters params) throws ImageReadException, IOException {
+            final ImagingParameters params) throws ImageReadException, IOException {
         return getImageSize(new ByteSourceInputStream(is, fileName), params);
     }
 
@@ -811,7 +812,7 @@ public final class Imaging {
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static Dimension getImageSize(final byte[] bytes, final BaseParameters params)
+    public static Dimension getImageSize(final byte[] bytes, final ImagingParameters params)
             throws ImageReadException, IOException {
         return getImageSize(new ByteSourceArray(bytes), params);
     }
@@ -842,14 +843,16 @@ public final class Imaging {
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static Dimension getImageSize(final File file, final BaseParameters params)
+    public static Dimension getImageSize(final File file, final ImagingParameters params)
             throws ImageReadException, IOException {
         return getImageSize(new ByteSourceFile(file), params);
     }
 
-    public static Dimension getImageSize(final ByteSource byteSource, final BaseParameters params)
+    public static <T extends ImagingParameters> Dimension getImageSize(final ByteSource byteSource, final T params)
             throws ImageReadException, IOException {
-        final ImageParser imageParser = getImageParser(byteSource);
+        // TODO: better generics or redesign API
+        @SuppressWarnings("unchecked")
+        final ImageParser<T> imageParser = (ImageParser<T>) getImageParser(byteSource);
 
         return imageParser.getImageSize(byteSource, params);
     }
@@ -884,7 +887,7 @@ public final class Imaging {
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static String getXmpXml(final InputStream is, final String fileName, final BaseParameters params)
+    public static String getXmpXml(final InputStream is, final String fileName, final ImagingParameters params)
             throws ImageReadException, IOException {
         return getXmpXml(new ByteSourceInputStream(is, fileName), params);
     }
@@ -915,7 +918,7 @@ public final class Imaging {
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static String getXmpXml(final byte[] bytes, final BaseParameters params)
+    public static String getXmpXml(final byte[] bytes, final ImagingParameters params)
             throws ImageReadException, IOException {
         return getXmpXml(new ByteSourceArray(bytes), params);
     }
@@ -946,7 +949,7 @@ public final class Imaging {
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static String getXmpXml(final File file, final BaseParameters params)
+    public static String getXmpXml(final File file, final ImagingParameters params)
             throws ImageReadException, IOException {
         return getXmpXml(new ByteSourceFile(file), params);
     }
@@ -962,9 +965,9 @@ public final class Imaging {
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static String getXmpXml(final ByteSource byteSource, final BaseParameters params)
+    public static String getXmpXml(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
-        final ImageParser imageParser = getImageParser(byteSource);
+        final ImageParser<?> imageParser = getImageParser(byteSource);
         if (imageParser instanceof XmpEmbeddable) {
             return ((XmpEmbeddable) imageParser).getXmpXml(byteSource, params);
         }
@@ -1017,7 +1020,7 @@ public final class Imaging {
      * @throws ImageReadException if it fails to read the image metadata
      * @throws IOException if it fails to read the image data
      */
-    public static ImageMetadata getMetadata(final byte[] bytes, final BaseParameters params)
+    public static ImageMetadata getMetadata(final byte[] bytes, final ImagingParameters params)
             throws ImageReadException, IOException {
         return getMetadata(new ByteSourceArray(bytes), params);
     }
@@ -1073,7 +1076,7 @@ public final class Imaging {
      * @throws IOException if it fails to read the image data
      */
     public static ImageMetadata getMetadata(final InputStream is, final String fileName,
-            final BaseParameters params) throws ImageReadException, IOException {
+            final ImagingParameters params) throws ImageReadException, IOException {
         return getMetadata(new ByteSourceInputStream(is, fileName), params);
     }
 
@@ -1123,14 +1126,16 @@ public final class Imaging {
      * @throws ImageReadException if it fails to read the image metadata
      * @throws IOException if it fails to read the image data
      */
-    public static ImageMetadata getMetadata(final File file, final BaseParameters params)
+    public static ImageMetadata getMetadata(final File file, final ImagingParameters params)
             throws ImageReadException, IOException {
         return getMetadata(new ByteSourceFile(file), params);
     }
 
-    private static ImageMetadata getMetadata(final ByteSource byteSource, final BaseParameters params)
+    private static <T extends ImagingParameters> ImageMetadata getMetadata(final ByteSource byteSource, final T params)
             throws ImageReadException, IOException {
-        final ImageParser imageParser = getImageParser(byteSource);
+        // TODO: better generics or redesign API
+        @SuppressWarnings("unchecked")
+        final ImageParser<T> imageParser = (ImageParser<T>) getImageParser(byteSource);
 
         return imageParser.getMetadata(byteSource, params);
     }
@@ -1169,7 +1174,7 @@ public final class Imaging {
 
     private static String dumpImageFile(final ByteSource byteSource)
             throws ImageReadException, IOException {
-        final ImageParser imageParser = getImageParser(byteSource);
+        final ImageParser<?> imageParser = getImageParser(byteSource);
 
         return imageParser.dumpImageFile(byteSource);
     }
@@ -1206,7 +1211,7 @@ public final class Imaging {
 
     private static FormatCompliance getFormatCompliance(final ByteSource byteSource)
             throws ImageReadException, IOException {
-        final ImageParser imageParser = getImageParser(byteSource);
+        final ImageParser<?> imageParser = getImageParser(byteSource);
 
         return imageParser.getFormatCompliance(byteSource);
     }
@@ -1263,7 +1268,7 @@ public final class Imaging {
 
     private static List<BufferedImage> getAllBufferedImages(
             final ByteSource byteSource) throws ImageReadException, IOException {
-        final ImageParser imageParser = getImageParser(byteSource);
+        final ImageParser<?> imageParser = getImageParser(byteSource);
 
         return imageParser.getAllBufferedImages(byteSource);
     }
@@ -1312,7 +1317,7 @@ public final class Imaging {
      * while reading an image (i.e. a format violation, etc.).
      * @throws IOException  in the event of an unrecoverable I/O exception.
      */
-    public static BufferedImage getBufferedImage(final InputStream is, final BaseParameters params)
+    public static BufferedImage getBufferedImage(final InputStream is, final ImagingParameters params)
             throws ImageReadException, IOException {
         String fileName = params != null ? "" : null;
         return getBufferedImage(new ByteSourceInputStream(is, fileName), params);
@@ -1341,10 +1346,8 @@ public final class Imaging {
 
     /**
      * Reads the first image from a byte array
-     * using data-processing options specified through a parameters
-     * {@code BaseParameters}. Options may be configured using the ImagingConstants
-     * interface or the various format-specific implementations provided
-     * by this package.
+     * using data-processing options specified through the parameters
+     * {@code ImagingParameters} object.
      *
      * <p>For the most recent information on support for specific formats, refer to
      * <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a>
@@ -1360,7 +1363,7 @@ public final class Imaging {
      * while reading an image (i.e. a format violation, etc.).
      * @throws IOException  in the event of an unrecoverable I/O exception.
      */
-    public static BufferedImage getBufferedImage(final byte[] bytes, final BaseParameters params)
+    public static BufferedImage getBufferedImage(final byte[] bytes, final ImagingParameters params)
             throws ImageReadException, IOException {
         return getBufferedImage(new ByteSourceArray(bytes), params);
     }
@@ -1406,16 +1409,18 @@ public final class Imaging {
      * while reading an image (i.e. a format violation, etc.).
      * @throws IOException  in the event of an unrecoverable I/O exception.
      */
-    public static BufferedImage getBufferedImage(final File file, BaseParameters params)
+    public static BufferedImage getBufferedImage(final File file, ImagingParameters params)
             throws ImageReadException, IOException {
         return getBufferedImage(new ByteSourceFile(file), params);
     }
 
 
 
-    private static BufferedImage getBufferedImage(final ByteSource byteSource,
-            BaseParameters params) throws ImageReadException, IOException {
-        final ImageParser imageParser = getImageParser(byteSource);
+    private static <T extends ImagingParameters> BufferedImage getBufferedImage(final ByteSource byteSource,
+            T params) throws ImageReadException, IOException {
+        // TODO: better generics or redesign API
+        @SuppressWarnings("unchecked")
+        final ImageParser<T> imageParser = (ImageParser<T>) getImageParser(byteSource);
         return imageParser.getBufferedImage(byteSource, params);
     }
 
@@ -1442,7 +1447,7 @@ public final class Imaging {
      * @see ImagingConstants
      */
     public static void writeImage(final BufferedImage src, final File file,
-            final BaseParameters params) throws ImageWriteException,
+            final ImagingParameters params) throws ImageWriteException,
             IOException {
         try (FileOutputStream fos = new FileOutputStream(file);
                 BufferedOutputStream os = new BufferedOutputStream(fos)) {
@@ -1474,7 +1479,7 @@ public final class Imaging {
      * @see ImagingConstants
      */
     public static byte[] writeImageToBytes(final BufferedImage src,
-            final BaseParameters params) throws ImageWriteException,
+            final ImagingParameters params) throws ImageWriteException,
             IOException {
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
 
@@ -1505,14 +1510,14 @@ public final class Imaging {
      * @throws IOException in the event of an unrecoverable I/O exception.
      * @see ImagingConstants
      */
-    public static void writeImage(final BufferedImage src, final OutputStream os,
-            BaseParameters params) throws ImageWriteException,
+    public static <T extends ImagingParameters> void writeImage(final BufferedImage src, final OutputStream os,
+            ImagingParameters params) throws ImageWriteException,
             IOException {
         Objects.requireNonNull(params, "You must provide a valid imaging parameters object.");
-        final ImageParser[] imageParsers = ImageParser.getAllImageParsers();
+        final ImageParser<?>[] imageParsers = ImageParser.getAllImageParsers();
 
-        ImageParser imageParser = null;
-        for (final ImageParser imageParser2 : imageParsers) {
+        ImageParser<?> imageParser = null;
+        for (final ImageParser<?> imageParser2 : imageParsers) {
             if (imageParser2.canAcceptType(params.getImageFormat())) {
                 imageParser = imageParser2;
                 break;

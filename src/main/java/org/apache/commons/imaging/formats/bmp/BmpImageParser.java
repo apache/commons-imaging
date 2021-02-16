@@ -16,9 +16,6 @@
  */
 package org.apache.commons.imaging.formats.bmp;
 
-import static org.apache.commons.imaging.ImagingConstants.BUFFERED_IMAGE_FACTORY;
-import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_FORMAT;
-import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_PIXEL_DENSITY;
 import static org.apache.commons.imaging.common.BinaryFunctions.read2Bytes;
 import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
 import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
@@ -33,9 +30,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,7 +49,7 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 
-public class BmpImageParser extends ImageParser {
+public class BmpImageParser extends ImageParser<BmpImagingParameters> {
 
     private static final Logger LOGGER = Logger.getLogger(BmpImageParser.class.getName());
 
@@ -485,22 +480,14 @@ public class BmpImageParser extends ImageParser {
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final BmpImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, Map<String, Object> params)
+    public Dimension getImageSize(final ByteSource byteSource, final BmpImagingParameters params)
             throws ImageReadException, IOException {
-        // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<>() : new HashMap<>(params);
-
-        if (!params.isEmpty()) {
-            final Object firstKey = params.keySet().iterator().next();
-            throw new ImageReadException("Unknown parameter: " + firstKey);
-        }
-
         final BmpHeaderInfo bhi = readBmpHeaderInfo(byteSource);
 
         return new Dimension(bhi.width, bhi.height);
@@ -508,7 +495,7 @@ public class BmpImageParser extends ImageParser {
     }
 
     @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageMetadata getMetadata(final ByteSource byteSource, final BmpImagingParameters params)
             throws ImageReadException, IOException {
         // TODO this should throw UnsupportedOperationException, but RoundtripTest has to be refactored completely before this can be changed
         return null;
@@ -538,16 +525,8 @@ public class BmpImageParser extends ImageParser {
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, Map<String, Object> params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, final BmpImagingParameters params)
             throws ImageReadException, IOException {
-        // make copy of params; we'll clear keys as we consume them.
-        params = params == null ? new HashMap<>() : new HashMap<>(params);
-
-        if (!params.isEmpty()) {
-            final Object firstKey = params.keySet().iterator().next();
-            throw new ImageReadException("Unknown parameter: " + firstKey);
-        }
-
         BmpImageContents ic = null;
         try (InputStream is = byteSource.getInputStream()) {
             ic = readImageContents(is, FormatCompliance.getDefault());
@@ -628,27 +607,15 @@ public class BmpImageParser extends ImageParser {
     }
 
     @Override
-    public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String, Object> params)
+    public BufferedImage getBufferedImage(final ByteSource byteSource, final BmpImagingParameters params)
             throws ImageReadException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             return getBufferedImage(is, params);
         }
     }
 
-    public BufferedImage getBufferedImage(final InputStream inputStream, Map<String, Object> params)
+    public BufferedImage getBufferedImage(final InputStream inputStream, final BmpImagingParameters params)
             throws ImageReadException, IOException {
-        // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<>() : new HashMap<>(params);
-
-        if (params.containsKey(BUFFERED_IMAGE_FACTORY)) {
-            params.remove(BUFFERED_IMAGE_FACTORY);
-        }
-
-        if (!params.isEmpty()) {
-            final Object firstKey = params.keySet().iterator().next();
-            throw new ImageReadException("Unknown parameter: " + firstKey);
-        }
-
         final BmpImageContents ic = readImageContents(inputStream, FormatCompliance.getDefault());
 
         final BmpHeaderInfo bhi = ic.bhi;
@@ -674,24 +641,9 @@ public class BmpImageParser extends ImageParser {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, final BmpImagingParameters params)
             throws ImageWriteException, IOException {
-        // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<>() : new HashMap<>(params);
-
-        PixelDensity pixelDensity = null;
-
-        // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT)) {
-            params.remove(PARAM_KEY_FORMAT);
-        }
-        if (params.containsKey(PARAM_KEY_PIXEL_DENSITY)) {
-            pixelDensity = (PixelDensity) params.remove(PARAM_KEY_PIXEL_DENSITY);
-        }
-        if (!params.isEmpty()) {
-            final Object firstKey = params.keySet().iterator().next();
-            throw new ImageWriteException("Unknown parameter: " + firstKey);
-        }
+        PixelDensity pixelDensity = params.getPixelDensity();
 
         final SimplePalette palette = new PaletteFactory().makeExactRgbPaletteSimple(
                 src, 256);
