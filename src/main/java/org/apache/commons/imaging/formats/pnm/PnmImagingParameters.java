@@ -16,15 +16,34 @@
  */
 package org.apache.commons.imaging.formats.pnm;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.OutputStream;
+import org.apache.commons.imaging.ImageFormats;
+import org.apache.commons.imaging.ImagingParameters;
 
-import org.apache.commons.imaging.ImageWriteException;
+/**
+ * Pnm format parameters.
+ * @since 1.0-alpha3
+ */
+public class PnmImagingParameters extends ImagingParameters {
 
-interface PnmWriter {
+    private boolean rawBits = true;
+    /**
+     * Pnm format subtype (e.g. pam, pbm, etc).
+     */
+    private ImageFormats subtype = null;
 
-    void writeImage(BufferedImage src, OutputStream os,
-            PnmImagingParameters params) throws ImageWriteException, IOException;
+    public boolean isRawBits() {
+        return rawBits;
+    }
 
+    public void setRawBits(boolean rawBits) {
+        this.rawBits = rawBits;
+    }
+
+    public ImageFormats getSubtype() {
+        return subtype;
+    }
+
+    public void setSubtype(ImageFormats subtype) {
+        this.subtype = subtype;
+    }
 }

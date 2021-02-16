@@ -16,8 +16,6 @@
  */
 package org.apache.commons.imaging.formats.gif;
 
-import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_FORMAT;
-import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_XMP_XML;
 import static org.apache.commons.imaging.common.BinaryFunctions.compareBytes;
 import static org.apache.commons.imaging.common.BinaryFunctions.printByteBits;
 import static org.apache.commons.imaging.common.BinaryFunctions.printCharQuad;
@@ -35,9 +33,7 @@ import java.io.PrintWriter;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -58,7 +54,7 @@ import org.apache.commons.imaging.common.mylzw.MyLzwDecompressor;
 import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
 
-public class GifImageParser extends ImageParser implements XmpEmbeddable {
+public class GifImageParser extends ImageParser<GifImagingParameters> implements XmpEmbeddable<GifImagingParameters> {
 
     private static final Logger LOGGER = Logger.getLogger(GifImageParser.class.getName());
 
@@ -476,13 +472,13 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final GifImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
+    public Dimension getImageSize(final ByteSource byteSource, final GifImagingParameters params)
             throws ImageReadException, IOException {
         final GifImageContents blocks = readFile(byteSource, false);
 
@@ -524,7 +520,7 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
     }
 
     @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageMetadata getMetadata(final ByteSource byteSource, final GifImagingParameters params)
             throws ImageReadException, IOException {
         final GifImageContents imageContents = readFile(byteSource, false);
 
@@ -557,7 +553,7 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, final GifImagingParameters params)
             throws ImageReadException, IOException {
         final GifImageContents blocks = readFile(byteSource, false);
 
@@ -818,7 +814,7 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
     }
 
     @Override
-    public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String, Object> params)
+    public BufferedImage getBufferedImage(final ByteSource byteSource, final GifImagingParameters params)
             throws ImageReadException, IOException {
         final GifImageContents imageContents = readFile(byteSource, false);
 
@@ -845,26 +841,10 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, GifImagingParameters params)
             throws ImageWriteException, IOException {
-        // make copy of params; we'll clear keys as we consume them.
-        params = new HashMap<>(params);
 
-        // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT)) {
-            params.remove(PARAM_KEY_FORMAT);
-        }
-
-        String xmpXml = null;
-        if (params.containsKey(PARAM_KEY_XMP_XML)) {
-            xmpXml = (String) params.get(PARAM_KEY_XMP_XML);
-            params.remove(PARAM_KEY_XMP_XML);
-        }
-
-        if (!params.isEmpty()) {
-            final Object firstKey = params.keySet().iterator().next();
-            throw new ImageWriteException("Unknown parameter: " + firstKey);
-        }
+        String xmpXml = params.getXmpXml();
 
         final int width = src.getWidth();
         final int height = src.getHeight();
@@ -1088,7 +1068,7 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     @Override
-    public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
+    public String getXmpXml(final ByteSource byteSource, final GifImagingParameters params)
             throws ImageReadException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             final GifHeaderInfo ghi = readHeader(is, null);

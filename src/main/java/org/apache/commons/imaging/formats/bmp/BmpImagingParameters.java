@@ -14,17 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.formats.pnm;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.OutputStream;
+package org.apache.commons.imaging.formats.bmp;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingParameters;
 
-interface PnmWriter {
-
-    void writeImage(BufferedImage src, OutputStream os,
-            PnmImagingParameters params) throws ImageWriteException, IOException;
-
-}
+/**
+ * Bmp format parameters.
+ * @since 1.0-alpha3
+ */
+public class BmpImagingParameters extends ImagingParameters {}

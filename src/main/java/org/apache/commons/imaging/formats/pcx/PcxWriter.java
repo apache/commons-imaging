@@ -20,12 +20,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteOrder;
 import java.util.Arrays;
-import java.util.HashMap;
 
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.PixelDensity;
-import org.apache.commons.imaging.common.BaseParameters;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
@@ -37,22 +34,13 @@ class PcxWriter {
     private PixelDensity pixelDensity;
     private final RleWriter rleWriter;
 
-    PcxWriter(BaseParameters params) throws ImageWriteException {
+    PcxWriter(PcxImagingParameters params) throws ImageWriteException {
         // uncompressed PCX files are not even documented in ZSoft's spec,
         // let alone supported by most image viewers
         encoding = PcxImageParser.PcxHeader.ENCODING_RLE;
-        if (params.containsKey(PcxConstants.PARAM_KEY_PCX_COMPRESSION)) {
-            final Object value = params.remove(PcxConstants.PARAM_KEY_PCX_COMPRESSION);
-            if (value != null) {
-                if (!(value instanceof Number)) {
-                    throw new ImageWriteException(
-                            "Invalid compression parameter: " + value);
-                }
-                final int compression = ((Number) value).intValue();
-                if (compression == PcxConstants.PCX_COMPRESSION_UNCOMPRESSED) {
-                    encoding = PcxImageParser.PcxHeader.ENCODING_UNCOMPRESSED;
-                }
-            }
+        final int compression = params.getCompression();
+        if (compression == PcxConstants.PCX_COMPRESSION_UNCOMPRESSED) {
+            encoding = PcxImageParser.PcxHeader.ENCODING_UNCOMPRESSED;
         }
         if (encoding == PcxImageParser.PcxHeader.ENCODING_UNCOMPRESSED) {
             rleWriter = new RleWriter(false);
@@ -60,46 +48,12 @@ class PcxWriter {
             rleWriter = new RleWriter(true);
         }
 
-        if (params.containsKey(PcxConstants.PARAM_KEY_PCX_BIT_DEPTH)) {
-            final Object value = params.remove(PcxConstants.PARAM_KEY_PCX_BIT_DEPTH);
-            if (value != null) {
-                if (!(value instanceof Number)) {
-                    throw new ImageWriteException(
-                            "Invalid bit depth parameter: " + value);
-                }
-                bitDepthWanted = ((Number) value).intValue();
-            }
-        }
-
-        if (params.containsKey(PcxConstants.PARAM_KEY_PCX_PLANES)) {
-            final Object value = params.remove(PcxConstants.PARAM_KEY_PCX_PLANES);
-            if (value != null) {
-                if (!(value instanceof Number)) {
-                    throw new ImageWriteException(
-                            "Invalid planes parameter: " + value);
-                }
-                planesWanted = ((Number) value).intValue();
-            }
-        }
-
-        if (params.containsKey(ImagingConstants.PARAM_KEY_PIXEL_DENSITY)) {
-            final Object value = params.remove(ImagingConstants.PARAM_KEY_PIXEL_DENSITY);
-            if (value != null) {
-                if (!(value instanceof PixelDensity)) {
-                    throw new ImageWriteException(
-                            "Invalid pixel density parameter");
-                }
-                pixelDensity = (PixelDensity) value;
-            }
-        }
+        bitDepthWanted = params.getBitDepth();
+        planesWanted = params.getPlanes();
+        pixelDensity = params.getPixelDensity();
         if (pixelDensity == null) {
             // DPI is mandatory, so we have to invent something
             pixelDensity = PixelDensity.createFromPixelsPerInch(72, 72);
-        }
-
-        if (!params.isEmpty()) {
-            final Object firstKey = params.keySet().iterator().next();
-            throw new ImageWriteException("Unknown parameter: " + firstKey);
         }
     }
 

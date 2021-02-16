@@ -43,7 +43,7 @@ import java.util.logging.Logger;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.ImagingConstants;
-import org.apache.commons.imaging.common.BaseParameters;
+import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.BinaryOutputStream;
@@ -123,7 +123,7 @@ public class IptcParser extends BinaryFileParser {
      * Some IPTC blocks are missing this first "record version" record, so we
      * don't require it.
      */
-    public PhotoshopApp13Data parsePhotoshopSegment(final byte[] bytes, final BaseParameters params)
+    public PhotoshopApp13Data parsePhotoshopSegment(final byte[] bytes, final ImagingParameters params)
             throws ImageReadException, IOException {
         final boolean strict =  params != null && params.isStrict();
 

@@ -16,9 +16,93 @@
  */
 package org.apache.commons.imaging;
 
+import org.apache.commons.imaging.common.BufferedImageFactory;
+
 /**
  * Imaging parameters.
  *
+ * <p>Contains parameters that are common to all formats. Implementations must include
+ * the specific parameters for each image format.</p>
+ *
  * @since 1.0-alpha3
  */
-public interface ImagingParameters {}
+public class ImagingParameters {
+
+    /**
+     * Whether to throw an exception when any issue occurs during reading
+     * or writing a file format. Default is {@code false}.
+     */
+    private boolean strict = false;
+
+    /**
+     * An optional file name, used for the description of input streams
+     * where a file name would be hard (or not possible) to be identified.
+     * Default is {@code null}.
+     */
+    private String fileName = null;
+
+    /**
+     * Factory to create {@code BufferedImage}s. Default is {@code null}.
+     */
+    private BufferedImageFactory bufferedImageFactory = null;
+
+    /**
+     * Image format used in write operations to indicate desired image format.
+     * Default is {@code null}.
+     *
+     * <p>Valid values: Any format defined in ImageFormat, such as
+     * ImageFormat.IMAGE_FORMAT_PNG.</p>
+     *
+     * @see org.apache.commons.imaging.ImageFormats
+     */
+    private ImageFormat imageFormat;
+
+    /**
+     * <p>Parameter key. Used in write operations to indicate the desired pixel
+     * density (DPI), and/or aspect ratio.</p>
+     */
+    private PixelDensity pixelDensity;
+
+    // getters and setters
+
+    public boolean isStrict() {
+        return strict;
+    }
+
+    public void setStrict(boolean strict) {
+        this.strict = strict;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public BufferedImageFactory getBufferedImageFactory() {
+        return bufferedImageFactory;
+    }
+
+    public void setBufferedImageFactory(BufferedImageFactory bufferedImageFactory) {
+        this.bufferedImageFactory = bufferedImageFactory;
+    }
+
+    public ImageFormat getImageFormat() {
+        return imageFormat;
+    }
+
+    public void setImageFormat(ImageFormat imageFormat) {
+        this.imageFormat = imageFormat;
+    }
+
+    public PixelDensity getPixelDensity() {
+        return pixelDensity;
+    }
+
+    public void setPixelDensity(PixelDensity pixelDensity) {
+        this.pixelDensity = pixelDensity;
+    }
+
+}

@@ -21,7 +21,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
 
@@ -29,7 +28,7 @@ class PamWriter implements PnmWriter {
 
     @Override
     public void writeImage(final BufferedImage src, final OutputStream os,
-            final Map<String, Object> params) throws ImageWriteException, IOException {
+            final PnmImagingParameters params) throws ImageWriteException, IOException {
 
         os.write(PnmConstants.PNM_PREFIX_BYTE);
         os.write(PnmConstants.PAM_RAW_CODE);
