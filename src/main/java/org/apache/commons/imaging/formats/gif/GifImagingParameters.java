@@ -14,17 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.formats.pnm;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.OutputStream;
+package org.apache.commons.imaging.formats.gif;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.XmpImagingParameters;
 
-interface PnmWriter {
-
-    void writeImage(BufferedImage src, OutputStream os,
-            PnmImagingParameters params) throws ImageWriteException, IOException;
+/**
+ * Gif format parameters.
+ * @since 1.0-alpha3
+ */
+public class GifImagingParameters extends XmpImagingParameters {
 
 }

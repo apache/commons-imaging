@@ -16,8 +16,6 @@
  */
 package org.apache.commons.imaging.formats.dcx;
 
-import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_FORMAT;
-import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_PIXEL_DENSITY;
 import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
 
 import java.awt.Dimension;
@@ -28,9 +26,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
@@ -38,15 +34,14 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceInputStream;
-import org.apache.commons.imaging.formats.pcx.PcxConstants;
 import org.apache.commons.imaging.formats.pcx.PcxImageParser;
+import org.apache.commons.imaging.formats.pcx.PcxImagingParameters;
 
-public class DcxImageParser extends ImageParser {
+public class DcxImageParser extends ImageParser<PcxImagingParameters> {
     // See http://www.fileformat.fine/format/pcx/egff.htm for documentation
     private static final String DEFAULT_EXTENSION = ".dcx";
     private static final String[] ACCEPTED_EXTENSIONS = { ".dcx", };
@@ -79,28 +74,28 @@ public class DcxImageParser extends ImageParser {
 
     // FIXME should throw UOE
     @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageMetadata getMetadata(final ByteSource byteSource, final PcxImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
 
     // FIXME should throw UOE
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, final PcxImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
 
     // FIXME should throw UOE
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
+    public Dimension getImageSize(final ByteSource byteSource, final PcxImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
 
     // FIXME should throw UOE
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final PcxImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
@@ -166,7 +161,7 @@ public class DcxImageParser extends ImageParser {
 
     @Override
     public final BufferedImage getBufferedImage(final ByteSource byteSource,
-            final Map<String, Object> params) throws ImageReadException, IOException {
+            final PcxImagingParameters params) throws ImageReadException, IOException {
         final List<BufferedImage> list = getAllBufferedImages(byteSource);
         if (list.isEmpty()) {
             return null;
@@ -185,7 +180,7 @@ public class DcxImageParser extends ImageParser {
                 final ByteSourceInputStream pcxSource = new ByteSourceInputStream(
                         stream, null);
                 final BufferedImage image = pcxImageParser.getBufferedImage(
-                        pcxSource, new HashMap<String, Object>());
+                        pcxSource, new PcxImagingParameters());
                 images.add(image);
             }
         }
@@ -193,40 +188,8 @@ public class DcxImageParser extends ImageParser {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, final PcxImagingParameters params)
             throws ImageWriteException, IOException {
-        // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<>() : new HashMap<>(params);
-
-        final HashMap<String, Object> pcxParams = new HashMap<>();
-
-        // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT)) {
-            params.remove(PARAM_KEY_FORMAT);
-        }
-
-        if (params.containsKey(PcxConstants.PARAM_KEY_PCX_COMPRESSION)) {
-            final Object value = params.remove(PcxConstants.PARAM_KEY_PCX_COMPRESSION);
-            pcxParams.put(PcxConstants.PARAM_KEY_PCX_COMPRESSION, value);
-        }
-
-        if (params.containsKey(PARAM_KEY_PIXEL_DENSITY)) {
-            final Object value = params.remove(PARAM_KEY_PIXEL_DENSITY);
-            if (value != null) {
-                if (!(value instanceof PixelDensity)) {
-                    throw new ImageWriteException(
-                            "Invalid pixel density parameter");
-                }
-                pcxParams.put(PARAM_KEY_PIXEL_DENSITY, value);
-            }
-        }
-
-
-        if (!params.isEmpty()) {
-            final Object firstKey = params.keySet().iterator().next();
-            throw new ImageWriteException("Unknown parameter: " + firstKey);
-        }
-
         final int headerSize = 4 + 1024 * 4;
 
         final BinaryOutputStream bos = new BinaryOutputStream(os,
@@ -238,6 +201,6 @@ public class DcxImageParser extends ImageParser {
             bos.write4Bytes(0);
         }
         final PcxImageParser pcxImageParser = new PcxImageParser();
-        pcxImageParser.writeImage(src, bos, pcxParams);
+        pcxImageParser.writeImage(src, bos, params);
     }
 }

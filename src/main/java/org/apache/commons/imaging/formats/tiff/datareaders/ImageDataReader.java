@@ -142,7 +142,6 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
  * is implemented, it should get their own block of code so as not to interfere
  * with the processing of the more common non-interleaved variations.
  */
-@SuppressWarnings("PMD.TooManyStaticImports")
 public abstract class ImageDataReader {
     protected final TiffDirectory directory;
     protected final PhotometricInterpreter photometricInterpreter;
