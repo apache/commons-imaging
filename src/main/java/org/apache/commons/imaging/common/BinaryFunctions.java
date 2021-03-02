@@ -88,6 +88,9 @@ public final class BinaryFunctions {
 
     public static byte[] readBytes(final String name, final InputStream is, final int length,
             final String exception) throws IOException {
+        if (length < 0) {
+            throw new IOException(String.format("%s, invalid length: %d", exception, length));
+        }
         final byte[] result = new byte[length];
         int read = 0;
         while (read < length) {
@@ -327,6 +330,9 @@ public final class BinaryFunctions {
 
     public static byte[] getRAFBytes(final RandomAccessFile raf, final long pos,
             final int length, final String exception) throws IOException {
+        if (length < 0) {
+            throw new IOException(String.format("%s, invalid length: %d", exception, length));
+        }
         final byte[] result = new byte[length];
 
         raf.seek(pos);
