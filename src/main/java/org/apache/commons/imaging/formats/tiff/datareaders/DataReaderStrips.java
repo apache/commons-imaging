@@ -167,7 +167,8 @@ public final class DataReaderStrips extends ImageDataReader {
                 }
             }
             return;
-        } else if ((bitsPerPixel == 24  || bitsPerPixel==32) && allSamplesAreOneByte
+        }
+        if ((bitsPerPixel == 24  || bitsPerPixel==32) && allSamplesAreOneByte
             && photometricInterpreter instanceof PhotometricInterpreterRgb) {
             int k = 0;
             int nRows = pixelsPerStrip / width;

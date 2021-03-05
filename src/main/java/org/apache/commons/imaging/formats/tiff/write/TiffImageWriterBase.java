@@ -207,7 +207,8 @@ public abstract class TiffImageWriterBase {
             // perhaps we should just discard field?
             throw new ImageWriteException(
                     "Output set has Interoperability Directory Offset field, but no Interoperability Directory");
-        } else if (interoperabilityDirectory != null) {
+        }
+        if (interoperabilityDirectory != null) {
             if (exifDirectory == null) {
                 exifDirectory = outputSet.addExifDirectory();
             }
@@ -229,7 +230,8 @@ public abstract class TiffImageWriterBase {
             // perhaps we should just discard field?
             throw new ImageWriteException(
                     "Output set has Exif Directory Offset field, but no Exif Directory");
-        } else if (exifDirectory != null) {
+        }
+        if (exifDirectory != null) {
             if (exifDirectoryOffsetField == null) {
                 exifDirectoryOffsetField = TiffOutputField.createOffsetField(
                         ExifTagConstants.EXIF_TAG_EXIF_OFFSET, byteOrder);
@@ -243,7 +245,8 @@ public abstract class TiffImageWriterBase {
             // perhaps we should just discard field?
             throw new ImageWriteException(
                     "Output set has GPS Directory Offset field, but no GPS Directory");
-        } else if (gpsDirectory != null) {
+        }
+        if (gpsDirectory != null) {
             if (gpsDirectoryOffsetField == null) {
                 gpsDirectoryOffsetField = TiffOutputField.createOffsetField(
                         ExifTagConstants.EXIF_TAG_GPSINFO, byteOrder);

@@ -118,7 +118,8 @@ public class TiffImageMetadata extends GenericImageMetadata {
                     if (null != dstDir.findField(srcField.getTag())) {
                         // ignore duplicate tags in a directory.
                         continue;
-                    } else if (srcField.getTagInfo().isOffset()) {
+                    }
+                    if (srcField.getTagInfo().isOffset()) {
                         // ignore offset fields.
                         continue;
                     }
@@ -546,12 +547,12 @@ public class TiffImageMetadata extends GenericImageMetadata {
 
             if (longitudeRef.trim().equalsIgnoreCase("e")) {
                 return result;
-            } else if (longitudeRef.trim().equalsIgnoreCase("w")) {
-                return -result;
-            } else {
-                throw new ImageReadException("Unknown longitude ref: \""
-                        + longitudeRef + "\"");
             }
+            if (longitudeRef.trim().equalsIgnoreCase("w")) {
+                return -result;
+            }
+            throw new ImageReadException("Unknown longitude ref: \""
+                    + longitudeRef + "\"");
         }
 
         public double getLatitudeAsDegreesNorth() throws ImageReadException {
@@ -561,12 +562,12 @@ public class TiffImageMetadata extends GenericImageMetadata {
 
             if (latitudeRef.trim().equalsIgnoreCase("n")) {
                 return result;
-            } else if (latitudeRef.trim().equalsIgnoreCase("s")) {
-                return -result;
-            } else {
-                throw new ImageReadException("Unknown latitude ref: \""
-                        + latitudeRef + "\"");
             }
+            if (latitudeRef.trim().equalsIgnoreCase("s")) {
+                return -result;
+            }
+            throw new ImageReadException("Unknown latitude ref: \""
+                    + latitudeRef + "\"");
         }
 
     }

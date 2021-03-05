@@ -258,12 +258,11 @@ public class TiffCcittTest extends TiffBaseTest {
     private static boolean nextCombination(final int[] sequence, final int max) {
         int i;
         for (i = 0; i < sequence.length; i++) {
-            if (sequence[i] == max) {
-                sequence[i] = 0;
-            } else {
+            if (sequence[i] != max) {
                 sequence[i]++;
                 break;
             }
+            sequence[i] = 0;
         }
         return i < sequence.length;
     }

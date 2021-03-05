@@ -374,7 +374,8 @@ public class PngImageParser extends ImageParser  implements XmpEmbeddable {
         if (pHYss.size() > 1) {
             throw new ImageReadException("PNG contains more than one pHYs: "
                     + pHYss.size());
-        } else if (pHYss.size() == 1) {
+        }
+        if (pHYss.size() == 1) {
             pngChunkpHYs = (PngChunkPhys) pHYss.get(0);
         }
 
@@ -384,7 +385,8 @@ public class PngImageParser extends ImageParser  implements XmpEmbeddable {
         if (sCALs.size() > 1) {
             throw new ImageReadException("PNG contains more than one sCAL:"
                     + sCALs.size());
-        } else if (sCALs.size() == 1) {
+        }
+        if (sCALs.size() == 1) {
             final PngChunkScal pngChunkScal = (PngChunkScal) sCALs.get(0);
             if (pngChunkScal.unitSpecifier == 1) {
                 physicalScale = PhysicalScale.createFromMeters(pngChunkScal.unitsPerPixelXAxis,

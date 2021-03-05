@@ -55,7 +55,8 @@ class PixelParserRgb extends PixelParserSimple {
             cachedBitCount -= bhi.bitsPerPixel;
 
             return getColorTableRGB(sample);
-        } else if (bhi.bitsPerPixel == 8) { // always grayscale?
+        }
+        if (bhi.bitsPerPixel == 8) { // always grayscale?
             final int sample = 0xff & imageData[bytecount + 0];
 
             final int rgb = getColorTableRGB(sample);
@@ -63,7 +64,8 @@ class PixelParserRgb extends PixelParserSimple {
             bytecount += 1;
 
             return rgb;
-        } else if (bhi.bitsPerPixel == 16) {
+        }
+        if (bhi.bitsPerPixel == 16) {
             final int data = read2Bytes("Pixel", is, "BMP Image Data", ByteOrder.LITTLE_ENDIAN);
 
             final int blue = (0x1f & (data >> 0)) << 3;
@@ -76,7 +78,8 @@ class PixelParserRgb extends PixelParserSimple {
             bytecount += 2;
 
             return rgb;
-        } else if (bhi.bitsPerPixel == 24) {
+        }
+        if (bhi.bitsPerPixel == 24) {
             final int blue = 0xff & imageData[bytecount + 0];
             final int green = 0xff & imageData[bytecount + 1];
             final int red = 0xff & imageData[bytecount + 2];
@@ -87,7 +90,8 @@ class PixelParserRgb extends PixelParserSimple {
             bytecount += 3;
 
             return rgb;
-        } else if (bhi.bitsPerPixel == 32) {
+        }
+        if (bhi.bitsPerPixel == 32) {
             final int blue = 0xff & imageData[bytecount + 0];
             final int green = 0xff & imageData[bytecount + 1];
             final int red = 0xff & imageData[bytecount + 2];

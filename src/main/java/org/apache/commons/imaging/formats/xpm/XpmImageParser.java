@@ -220,15 +220,17 @@ public class XpmImageParser extends ImageParser {
         int getBestARGB() {
             if (haveColor) {
                 return colorArgb;
-            } else if (haveGray) {
-                return grayArgb;
-            } else if (haveGray4Level) {
-                return gray4LevelArgb;
-            } else if (haveMono) {
-                return monoArgb;
-            } else {
-                return 0x00000000;
             }
+            if (haveGray) {
+                return grayArgb;
+            }
+            if (haveGray4Level) {
+                return gray4LevelArgb;
+            }
+            if (haveMono) {
+                return monoArgb;
+            }
+            return 0x00000000;
         }
     }
 
@@ -275,12 +277,12 @@ public class XpmImageParser extends ImageParser {
         }
         if (",".equals(token)) {
             return true;
-        } else if ("}".equals(token)) {
-            return false;
-        } else {
-            throw new ImageReadException("Parsing XPM file failed, "
-                    + "no ',' or '}' found where expected");
         }
+        if ("}".equals(token)) {
+            return false;
+        }
+        throw new ImageReadException("Parsing XPM file failed, "
+                + "no ',' or '}' found where expected");
     }
 
     private XpmHeader parseXpmValuesSection(final String row)
@@ -303,12 +305,11 @@ public class XpmImageParser extends ImageParser {
                 yHotSpot = Integer.parseInt(tokens[5]);
             }
             if (tokens.length == 5 || tokens.length == 7) {
-                if ("XPMEXT".equals(tokens[tokens.length - 1])) {
-                    xpmExt = true;
-                } else {
+                if (!"XPMEXT".equals(tokens[tokens.length - 1])) {
                     throw new ImageReadException("Parsing XPM file failed, "
                             + "can't parse <Values> section XPMEXT");
                 }
+                xpmExt = true;
             }
             return new XpmHeader(width, height, numColors, numCharsPerPixel,
                     xHotSpot, yHotSpot, xpmExt);
@@ -326,39 +327,43 @@ public class XpmImageParser extends ImageParser {
                 final int green = Integer.parseInt(color.substring(1, 2), 16);
                 final int blue = Integer.parseInt(color.substring(2, 3), 16);
                 return 0xff000000 | (red << 20) | (green << 12) | (blue << 4);
-            } else if (color.length() == 6) {
+            }
+            if (color.length() == 6) {
                 return 0xff000000 | Integer.parseInt(color, 16);
-            } else if (color.length() == 9) {
+            }
+            if (color.length() == 9) {
                 final int red = Integer.parseInt(color.substring(0, 1), 16);
                 final int green = Integer.parseInt(color.substring(3, 4), 16);
                 final int blue = Integer.parseInt(color.substring(6, 7), 16);
                 return 0xff000000 | (red << 16) | (green << 8) | blue;
-            } else if (color.length() == 12) {
+            }
+            if (color.length() == 12) {
                 final int red = Integer.parseInt(color.substring(0, 1), 16);
                 final int green = Integer.parseInt(color.substring(4, 5), 16);
                 final int blue = Integer.parseInt(color.substring(8, 9), 16);
                 return 0xff000000 | (red << 16) | (green << 8) | blue;
-            } else if (color.length() == 24) {
+            }
+            if (color.length() == 24) {
                 final int red = Integer.parseInt(color.substring(0, 1), 16);
                 final int green = Integer.parseInt(color.substring(8, 9), 16);
                 final int blue = Integer.parseInt(color.substring(16, 17), 16);
                 return 0xff000000 | (red << 16) | (green << 8) | blue;
-            } else {
-                return 0x00000000;
-            }
-        } else if (color.charAt(0) == '%') {
-            throw new ImageReadException("HSV colors are not implemented "
-                    + "even in the XPM specification!");
-        } else if ("None".equals(color)) {
-            return 0x00000000;
-        } else {
-            loadColorNames();
-            final String colorLowercase = color.toLowerCase(Locale.ENGLISH);
-            if (colorNames.containsKey(colorLowercase)) {
-                return colorNames.get(colorLowercase);
             }
             return 0x00000000;
         }
+        if (color.charAt(0) == '%') {
+            throw new ImageReadException("HSV colors are not implemented "
+                    + "even in the XPM specification!");
+        }
+        if ("None".equals(color)) {
+            return 0x00000000;
+        }
+        loadColorNames();
+        final String colorLowercase = color.toLowerCase(Locale.ENGLISH);
+        if (colorNames.containsKey(colorLowercase)) {
+            return colorNames.get(colorLowercase);
+        }
+        return 0x00000000;
     }
 
     private void populatePaletteEntry(final PaletteEntry paletteEntry, final String key, final String color) throws ImageReadException {

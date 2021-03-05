@@ -68,11 +68,11 @@ public class MicrosoftTagTest extends ExifBaseTest {
     private TiffImageMetadata toTiffMetadata(final ImageMetadata metadata) throws Exception {
         if (metadata instanceof JpegImageMetadata) {
             return ((JpegImageMetadata)metadata).getExif();
-        } else if (metadata instanceof TiffImageMetadata) {
-            return ((TiffImageMetadata)metadata);
-        } else {
-            throw new Exception("bad metadata format");
         }
+        if (metadata instanceof TiffImageMetadata) {
+            return ((TiffImageMetadata)metadata);
+        }
+        throw new Exception("bad metadata format");
     }
 
     private byte[] cleanImage(final File imageWithExif) throws ImageReadException, ImageWriteException, IOException {

@@ -34,12 +34,12 @@ class PixelParserRle extends PixelParser {
     private int getSamplesPerByte() throws ImageReadException {
         if (bhi.bitsPerPixel == 8) {
             return 1;
-        } else if (bhi.bitsPerPixel == 4) {
-            return 2;
-        } else {
-            throw new ImageReadException("BMP RLE: bad BitsPerPixel: "
-                    + bhi.bitsPerPixel);
         }
+        if (bhi.bitsPerPixel == 4) {
+            return 2;
+        }
+        throw new ImageReadException("BMP RLE: bad BitsPerPixel: "
+                + bhi.bitsPerPixel);
     }
 
     private int[] convertDataToSamples(final int data) throws ImageReadException {

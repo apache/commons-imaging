@@ -41,19 +41,20 @@ public class FieldTypeFloat extends FieldType {
     public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException {
         if (o instanceof Float) {
             return ByteConversions.toBytes(((Float) o).floatValue(), byteOrder);
-        } else if (o instanceof float[]) {
+        }
+        if (o instanceof float[]) {
             final float[] numbers = (float[]) o;
             return ByteConversions.toBytes(numbers, byteOrder);
-        } else if (o instanceof Float[]) {
-            final Float[] numbers = (Float[]) o;
-            final float[] values = new float[numbers.length];
-            for (int i = 0; i < values.length; i++) {
-                values[i] = numbers[i].floatValue();
-            }
-            return ByteConversions.toBytes(values, byteOrder);
-        } else {
+        }
+        if (!(o instanceof Float[])) {
             throw new ImageWriteException("Invalid data", o);
         }
+        final Float[] numbers = (Float[]) o;
+        final float[] values = new float[numbers.length];
+        for (int i = 0; i < values.length; i++) {
+            values[i] = numbers[i].floatValue();
+        }
+        return ByteConversions.toBytes(values, byteOrder);
     }
 
 }

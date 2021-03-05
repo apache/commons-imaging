@@ -77,11 +77,11 @@ public final class TiffOutputDirectory extends TiffOutputItem {
     public static final Comparator<TiffOutputDirectory> COMPARATOR = (o1, o2) -> {
         if (o1.type < o2.type) {
             return -1;
-        } else if (o1.type > o2.type) {
-            return 1;
-        } else {
-            return 0;
         }
+        if (o1.type > o2.type) {
+            return 1;
+        }
+        return 0;
     };
     private JpegImageData jpegImageData;
     private TiffImageData tiffImageData;

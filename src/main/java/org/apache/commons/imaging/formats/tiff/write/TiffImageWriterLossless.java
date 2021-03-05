@@ -145,7 +145,8 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         final int oldLength = exifBytes.length;
         if (analysis.isEmpty()) {
             throw new ImageWriteException("Couldn't analyze old tiff data.");
-        } else if (analysis.size() == 1) {
+        }
+        if (analysis.size() == 1) {
             final TiffElement onlyElement = analysis.get(0);
             if (onlyElement.offset == TIFF_HEADER_SIZE
                     && onlyElement.offset + onlyElement.length
@@ -197,13 +198,12 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         while (!unusedElements.isEmpty()) {
             final TiffElement element = unusedElements.get(0);
             final long elementEnd = element.offset + element.length;
-            if (elementEnd == overflowIndex) {
-                // discarding a tail element. should only happen once.
-                overflowIndex -= element.length;
-                unusedElements.remove(0);
-            } else {
+            if (elementEnd != overflowIndex) {
                 break;
             }
+            // discarding a tail element. should only happen once.
+            overflowIndex -= element.length;
+            unusedElements.remove(0);
         }
 
         Collections.sort(unusedElements, ELEMENT_SIZE_COMPARATOR);
@@ -223,11 +223,10 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
             // item.
             TiffElement bestFit = null;
             for (final TiffElement element : unusedElements) {
-                if (element.length >= outputItemLength) {
-                    bestFit = element;
-                } else {
+                if (element.length < outputItemLength) {
                     break;
                 }
+                bestFit = element;
             }
             if (null == bestFit) {
                 // we couldn't place this item. overflow.

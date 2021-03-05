@@ -42,19 +42,20 @@ public class FieldTypeDouble extends FieldType {
         if (o instanceof Double) {
             return ByteConversions.toBytes(((Double) o).doubleValue(),
                     byteOrder);
-        } else if (o instanceof double[]) {
+        }
+        if (o instanceof double[]) {
             final double[] numbers = (double[]) o;
             return ByteConversions.toBytes(numbers, byteOrder);
-        } else if (o instanceof Double[]) {
-            final Double[] numbers = (Double[]) o;
-            final double[] values = new double[numbers.length];
-            for (int i = 0; i < values.length; i++) {
-                values[i] = numbers[i].doubleValue();
-            }
-            return ByteConversions.toBytes(values, byteOrder);
-        } else {
+        }
+        if (!(o instanceof Double[])) {
             throw new ImageWriteException("Invalid data", o);
         }
+        final Double[] numbers = (Double[]) o;
+        final double[] values = new double[numbers.length];
+        for (int i = 0; i < values.length; i++) {
+            values[i] = numbers[i].doubleValue();
+        }
+        return ByteConversions.toBytes(values, byteOrder);
     }
 
 }

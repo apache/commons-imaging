@@ -115,18 +115,23 @@ public class PnmImageParser extends ImageParser {
 
             if (identifier2 == PnmConstants.PBM_TEXT_CODE) {
                 return new PbmFileInfo(width, height, false);
-            } else if (identifier2 == PnmConstants.PBM_RAW_CODE) {
+            }
+            if (identifier2 == PnmConstants.PBM_RAW_CODE) {
                 return new PbmFileInfo(width, height, true);
-            } else if (identifier2 == PnmConstants.PGM_TEXT_CODE) {
+            }
+            if (identifier2 == PnmConstants.PGM_TEXT_CODE) {
                 final int maxgray = Integer.parseInt(wsr.readtoWhiteSpace());
                 return new PgmFileInfo(width, height, false, maxgray);
-            } else if (identifier2 == PnmConstants.PGM_RAW_CODE) {
+            }
+            if (identifier2 == PnmConstants.PGM_RAW_CODE) {
                 final int maxgray = Integer.parseInt(wsr.readtoWhiteSpace());
                 return new PgmFileInfo(width, height, true, maxgray);
-            } else if (identifier2 == PnmConstants.PPM_TEXT_CODE) {
+            }
+            if (identifier2 == PnmConstants.PPM_TEXT_CODE) {
                 final int max = Integer.parseInt(wsr.readtoWhiteSpace());
                 return new PpmFileInfo(width, height, false, max);
-            } else if (identifier2 == PnmConstants.PPM_RAW_CODE) {
+            }
+            if (identifier2 == PnmConstants.PPM_RAW_CODE) {
                 final int max = Integer.parseInt(wsr.readtoWhiteSpace());
                 return new PpmFileInfo(width, height, true, max);
             }
@@ -191,13 +196,17 @@ public class PnmImageParser extends ImageParser {
 
             if (!seenWidth) {
                 throw new ImageReadException("PAM header has no WIDTH");
-            } else if (!seenHeight) {
+            }
+            if (!seenHeight) {
                 throw new ImageReadException("PAM header has no HEIGHT");
-            } else if (!seenDepth) {
+            }
+            if (!seenDepth) {
                 throw new ImageReadException("PAM header has no DEPTH");
-            } else if (!seenMaxVal) {
+            }
+            if (!seenMaxVal) {
                 throw new ImageReadException("PAM header has no MAXVAL");
-            } else if (!seenTupleType) {
+            }
+            if (!seenTupleType) {
                 throw new ImageReadException("PAM header has no TUPLTYPE");
             }
 

@@ -81,48 +81,42 @@ public final class PixelDensity {
     public double horizontalDensityInches() {
         if (isInInches()) {
             return horizontalDensity;
-        } else {
-            return horizontalDensity * PIXEL_PER_INCH / unitLength;
         }
+        return horizontalDensity * PIXEL_PER_INCH / unitLength;
     }
 
     public double verticalDensityInches() {
         if (isInInches()) {
             return verticalDensity;
-        } else {
-            return verticalDensity * PIXEL_PER_INCH / unitLength;
         }
+        return verticalDensity * PIXEL_PER_INCH / unitLength;
     }
 
     public double horizontalDensityMetres() {
         if (isInMetres()) {
             return horizontalDensity;
-        } else {
-            return horizontalDensity * PIXEL_PER_METRE / unitLength;
         }
+        return horizontalDensity * PIXEL_PER_METRE / unitLength;
     }
 
     public double verticalDensityMetres() {
         if (isInMetres()) {
             return verticalDensity;
-        } else {
-            return verticalDensity * PIXEL_PER_METRE / unitLength;
         }
+        return verticalDensity * PIXEL_PER_METRE / unitLength;
     }
 
     public double horizontalDensityCentimetres() {
         if (isInCentimetres()) {
             return horizontalDensity;
-        } else {
-            return horizontalDensity * PIXEL_PER_CENTIMETRE / unitLength;
         }
+        return horizontalDensity * PIXEL_PER_CENTIMETRE / unitLength;
     }
 
     public double verticalDensityCentimetres() {
         if (isInCentimetres()) {
             return verticalDensity;
-        } else {
-            return verticalDensity * PIXEL_PER_CENTIMETRE / unitLength;
         }
+        return verticalDensity * PIXEL_PER_CENTIMETRE / unitLength;
     }
 }

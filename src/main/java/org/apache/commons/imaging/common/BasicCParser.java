@@ -70,12 +70,11 @@ public class BasicCParser {
                     break;
                 }
             } else if (inIdentifier) {
-                if (Character.isLetterOrDigit(c) || c == '_') {
-                    token.append((char) c);
-                } else {
+                if (!Character.isLetterOrDigit(c) && (c != '_')) {
                     is.unread(c);
                     return token.toString();
                 }
+                token.append((char) c);
             } else {
                 if (c == '"') {
                     token.append('"');

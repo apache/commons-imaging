@@ -136,7 +136,8 @@ final class TiffTags {
             if (tagInfo.directoryType == TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN) {
                 // pass
                 continue;
-            } else if (directoryType == tagInfo.directoryType.directoryType) {
+            }
+            if (directoryType == tagInfo.directoryType.directoryType) {
                 return tagInfo;
             }
         }
@@ -146,10 +147,12 @@ final class TiffTags {
             if (tagInfo.directoryType == TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN) {
                 // pass
                 continue;
-            } else if (directoryType >= 0
+            }
+            if (directoryType >= 0
                     && tagInfo.directoryType.isImageDirectory()) {
                 return tagInfo;
-            } else if (directoryType < 0
+            }
+            if (directoryType < 0
                     && !tagInfo.directoryType.isImageDirectory()) {
                 return tagInfo;
             }

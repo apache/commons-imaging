@@ -41,19 +41,20 @@ public class FieldTypeLong extends FieldType {
     public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException {
         if (o instanceof Integer) {
             return ByteConversions.toBytes((Integer) o, byteOrder);
-        } else if (o instanceof int[]) {
+        }
+        if (o instanceof int[]) {
             final int[] numbers = (int[]) o;
             return ByteConversions.toBytes(numbers, byteOrder);
-        } else if (o instanceof Integer[]) {
-            final Integer[] numbers = (Integer[]) o;
-            final int[] values = new int[numbers.length];
-            for (int i = 0; i < values.length; i++) {
-                values[i] = numbers[i];
-            }
-            return ByteConversions.toBytes(values, byteOrder);
-        } else {
+        }
+        if (!(o instanceof Integer[])) {
             throw new ImageWriteException("Invalid data", o);
         }
+        final Integer[] numbers = (Integer[]) o;
+        final int[] values = new int[numbers.length];
+        for (int i = 0; i < values.length; i++) {
+            values[i] = numbers[i];
+        }
+        return ByteConversions.toBytes(values, byteOrder);
     }
 
 }

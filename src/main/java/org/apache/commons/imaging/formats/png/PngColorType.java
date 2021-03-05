@@ -79,10 +79,10 @@ public enum PngColorType {
                 return PngColorType.GREYSCALE_WITH_ALPHA;
             }
             return PngColorType.GREYSCALE;
-        } else if (alpha) {
-            return PngColorType.TRUE_COLOR_WITH_ALPHA;
-        } else {
-            return PngColorType.TRUE_COLOR;
         }
+        if (alpha) {
+            return PngColorType.TRUE_COLOR_WITH_ALPHA;
+        }
+        return PngColorType.TRUE_COLOR;
     }
 }

@@ -786,11 +786,10 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
                             y = 2 + (theRow * 4);
                         } else {
                             theRow -= rowsInPass3;
-                            if (theRow < (rowsInPass4)) {
-                                y = 1 + (theRow * 2);
-                            } else {
+                            if (theRow >= (rowsInPass4)) {
                                 throw new ImageReadException("Gif: Strange Row");
                             }
+                            y = 1 + (theRow * 2);
                         }
                     }
                 }

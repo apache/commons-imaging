@@ -147,7 +147,8 @@ public class RationalNumber extends Number {
     public static RationalNumber valueOf(double value) {
         if (value >= Integer.MAX_VALUE) {
             return new RationalNumber(Integer.MAX_VALUE, 1);
-        } else if (value <= -Integer.MAX_VALUE) {
+        }
+        if (value <= -Integer.MAX_VALUE) {
             return new RationalNumber(-Integer.MAX_VALUE, 1);
         }
 
@@ -162,7 +163,8 @@ public class RationalNumber extends Number {
 
         if (value == 0) {
             return new RationalNumber(0, 1);
-        } else if (value >= 1) {
+        }
+        if (value >= 1) {
             final int approx = (int) value;
             if (approx < value) {
                 l = new RationalNumber(approx, 1);

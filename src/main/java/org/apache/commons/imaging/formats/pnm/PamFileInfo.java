@@ -40,7 +40,8 @@ class PamFileInfo extends FileInfo {
         if (maxval <= 0) {
             throw new ImageReadException("PAM maxVal " + maxval
                     + " is out of range [1;65535]");
-        } else if (maxval <= 255) {
+        }
+        if (maxval <= 255) {
             scale = 255f;
             bytesPerSample = 1;
         } else if (maxval <= 65535) {

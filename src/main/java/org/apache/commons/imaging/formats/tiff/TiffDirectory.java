@@ -802,11 +802,11 @@ public class TiffDirectory extends TiffElement {
 
         if ((tileOffsets != null) && (tileByteCounts != null)) {
             return getRawImageDataElements(tileOffsets, tileByteCounts);
-        } else if ((stripOffsets != null) && (stripByteCounts != null)) {
-            return getRawImageDataElements(stripOffsets, stripByteCounts);
-        } else {
-            throw new ImageReadException("Couldn't find image data.");
         }
+        if ((stripOffsets != null) && (stripByteCounts != null)) {
+            return getRawImageDataElements(stripOffsets, stripByteCounts);
+        }
+        throw new ImageReadException("Couldn't find image data.");
     }
 
     public boolean imageDataInStrips() throws ImageReadException {
@@ -817,11 +817,11 @@ public class TiffDirectory extends TiffElement {
 
         if ((tileOffsets != null) && (tileByteCounts != null)) {
             return false;
-        } else if ((stripOffsets != null) && (stripByteCounts != null)) {
-            return true;
-        } else {
-            throw new ImageReadException("Couldn't find image data.");
         }
+        if ((stripOffsets != null) && (stripByteCounts != null)) {
+            return true;
+        }
+        throw new ImageReadException("Couldn't find image data.");
     }
 
     public ImageDataElement getJpegRawImageDataElement() throws ImageReadException {

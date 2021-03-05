@@ -392,7 +392,8 @@ class PngWriter {
             if (forceIndexedColor && forceTrueColor) {
                 throw new ImageWriteException(
                         "Params: Cannot force both indexed and true color modes");
-            } else if (forceIndexedColor) {
+            }
+            if (forceIndexedColor) {
                 pngColorType = PngColorType.INDEXED_COLOR;
             } else if (forceTrueColor) {
                 pngColorType = (hasAlpha ? PngColorType.TRUE_COLOR_WITH_ALPHA : PngColorType.TRUE_COLOR);

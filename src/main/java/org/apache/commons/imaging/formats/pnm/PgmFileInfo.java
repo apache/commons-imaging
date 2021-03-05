@@ -34,7 +34,8 @@ class PgmFileInfo extends FileInfo {
         if (max <= 0) {
             throw new ImageReadException("PGM maxVal " + max
                     + " is out of range [1;65535]");
-        } else if (max <= 255) {
+        }
+        if (max <= 255) {
             scale = 255f;
             bytesPerSample = 1;
         } else if (max <= 65535) {

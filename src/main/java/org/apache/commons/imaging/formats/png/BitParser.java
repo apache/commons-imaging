@@ -37,14 +37,16 @@ class BitParser {
 
         if (bitDepth == 8) {
             return 0xff & bytes[sampleIndexBytes];
-        } else if (bitDepth < 8) {
+        }
+        if (bitDepth < 8) {
             int b = 0xff & bytes[sampleIndexBytes];
             final int bitsToShift = 8 - ((pixelIndexBits & 7) + bitDepth);
             b >>= bitsToShift;
 
             final int bitmask = (1 << bitDepth) - 1;
             return b & bitmask;
-        } else if (bitDepth == 16) {
+        }
+        if (bitDepth == 16) {
             return (((0xff & bytes[sampleIndexBytes]) << 8) | (0xff & bytes[sampleIndexBytes + 1]));
         }
 

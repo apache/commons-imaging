@@ -37,11 +37,11 @@ public class ScanlineFilterPaeth implements ScanlineFilter {
         // ; breaking ties in order a,b,c.
         if ((pa <= pb) && (pa <= pc)) {
             return a;
-        } else if (pb <= pc) {
-            return b;
-        } else {
-            return c;
         }
+        if (pb <= pc) {
+            return b;
+        }
+        return c;
     }
 
     @Override

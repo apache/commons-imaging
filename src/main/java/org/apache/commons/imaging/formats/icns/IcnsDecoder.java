@@ -156,11 +156,10 @@ final class IcnsDecoder {
         // 1 bit icon types have image data followed by mask data in the same
         // entry
         final int totalBytes = (image.getWidth() * image.getHeight() + 7) / 8;
-        if (maskData.length >= 2 * totalBytes) {
-            position = totalBytes;
-        } else {
+        if (maskData.length < 2 * totalBytes) {
             throw new ImageReadException("1 BPP mask underrun parsing ICNS file");
         }
+        position = totalBytes;
 
         for (int y = 0; y < image.getHeight(); y++) {
             for (int x = 0; x < image.getWidth(); x++) {
@@ -249,13 +248,12 @@ final class IcnsDecoder {
                                   * imageType.getBitsPerPixel() + 7) / 8;
         byte[] imageData;
         if (imageElement.data.length < expectedSize) {
-            if (imageType.getBitsPerPixel() == 32) {
-                imageData = Rle24Compression.decompress(
-                  imageType.getWidth(), imageType.getHeight(),
-                  imageElement.data);
-            } else {
+            if (imageType.getBitsPerPixel() != 32) {
                 throw new ImageReadException("Short image data but not a 32 bit compressed type");
             }
+            imageData = Rle24Compression.decompress(
+              imageType.getWidth(), imageType.getHeight(),
+              imageElement.data);
         } else {
             imageData = imageElement.data;
         }

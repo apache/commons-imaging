@@ -63,11 +63,11 @@ public class TiffReader extends BinaryFileParser {
     private ByteOrder getTiffByteOrder(final int byteOrderByte) throws ImageReadException {
         if (byteOrderByte == 'I') {
             return ByteOrder.LITTLE_ENDIAN; // Intel
-        } else if (byteOrderByte == 'M') {
-            return ByteOrder.BIG_ENDIAN; // Motorola
-        } else {
-            throw new ImageReadException("Invalid TIFF byte order " + (0xff & byteOrderByte));
         }
+        if (byteOrderByte == 'M') {
+            return ByteOrder.BIG_ENDIAN; // Motorola
+        }
+        throw new ImageReadException("Invalid TIFF byte order " + (0xff & byteOrderByte));
     }
 
     private TiffHeader readTiffHeader(final InputStream is) throws ImageReadException, IOException {

@@ -179,12 +179,15 @@ public class TiffField {
 
         if (o instanceof Number) {
             return o.toString();
-        } else if (o instanceof String) {
+        }
+        if (o instanceof String) {
             return "'" + o.toString().trim() + "'";
-        } else if (o instanceof Date) {
+        }
+        if (o instanceof Date) {
             final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.ENGLISH);
             return df.format((Date) o);
-        } else if (o instanceof Object[]) {
+        }
+        if (o instanceof Object[]) {
             final Object[] objects = (Object[]) o;
             final StringBuilder result = new StringBuilder();
 
@@ -216,7 +219,8 @@ public class TiffField {
         // }
         // return result.toString();
         // }
-        } else if (o instanceof short[]) {
+        }
+        if (o instanceof short[]) {
             final short[] values = (short[]) o;
             final StringBuilder result = new StringBuilder();
 
@@ -233,7 +237,8 @@ public class TiffField {
                 result.append(sval);
             }
             return result.toString();
-        } else if (o instanceof int[]) {
+        }
+        if (o instanceof int[]) {
             final int[] values = (int[]) o;
             final StringBuilder result = new StringBuilder();
 
@@ -250,7 +255,8 @@ public class TiffField {
                 result.append(iVal);
             }
             return result.toString();
-        } else if (o instanceof long[]) {
+        }
+        if (o instanceof long[]) {
             final long[] values = (long[]) o;
             final StringBuilder result = new StringBuilder();
 
@@ -267,7 +273,8 @@ public class TiffField {
                 result.append(lVal);
             }
             return result.toString();
-        } else if (o instanceof double[]) {
+        }
+        if (o instanceof double[]) {
             final double[] values = (double[]) o;
             final StringBuilder result = new StringBuilder();
 
@@ -284,7 +291,8 @@ public class TiffField {
                 result.append(dVal);
             }
             return result.toString();
-        } else if (o instanceof byte[]) {
+        }
+        if (o instanceof byte[]) {
             final byte[] values = (byte[]) o;
             final StringBuilder result = new StringBuilder();
 
@@ -301,7 +309,8 @@ public class TiffField {
                 result.append(bVal);
             }
             return result.toString();
-        } else if (o instanceof char[]) {
+        }
+        if (o instanceof char[]) {
             final char[] values = (char[]) o;
             final StringBuilder result = new StringBuilder();
 
@@ -318,7 +327,8 @@ public class TiffField {
                 result.append(cVal);
             }
             return result.toString();
-        } else if (o instanceof float[]) {
+        }
+        if (o instanceof float[]) {
             final float[] values = (float[]) o;
             final StringBuilder result = new StringBuilder();
 
@@ -435,21 +445,24 @@ public class TiffField {
 
         if (o instanceof Number) {
             return new int[] { ((Number) o).intValue() };
-        } else if (o instanceof Number[]) {
+        }
+        if (o instanceof Number[]) {
             final Number[] numbers = (Number[]) o;
             final int[] result = new int[numbers.length];
             for (int i = 0; i < numbers.length; i++) {
                 result[i] = numbers[i].intValue();
             }
             return result;
-        } else if (o instanceof short[]) {
+        }
+        if (o instanceof short[]) {
             final short[] numbers = (short[]) o;
             final int[] result = new int[numbers.length];
             for (int i = 0; i < numbers.length; i++) {
                 result[i] = 0xffff & numbers[i];
             }
             return result;
-        } else if (o instanceof int[]) {
+        }
+        if (o instanceof int[]) {
             final int[] numbers = (int[]) o;
             final int[] result = new int[numbers.length];
             System.arraycopy(numbers, 0, result, 0, numbers.length);
@@ -468,35 +481,40 @@ public class TiffField {
 
         if (o instanceof Number) {
             return new double[] { ((Number) o).doubleValue() };
-        } else if (o instanceof Number[]) {
+        }
+        if (o instanceof Number[]) {
             final Number[] numbers = (Number[]) o;
             final double[] result = new double[numbers.length];
             for (int i = 0; i < numbers.length; i++) {
                 result[i] = numbers[i].doubleValue();
             }
             return result;
-        } else if (o instanceof short[]) {
+        }
+        if (o instanceof short[]) {
             final short[] numbers = (short[]) o;
             final double[] result = new double[numbers.length];
             for (int i = 0; i < numbers.length; i++) {
                 result[i] = numbers[i];
             }
             return result;
-        } else if (o instanceof int[]) {
+        }
+        if (o instanceof int[]) {
             final int[] numbers = (int[]) o;
             final double[] result = new double[numbers.length];
             for (int i = 0; i < numbers.length; i++) {
                 result[i] = numbers[i];
             }
             return result;
-        } else if (o instanceof float[]) {
+        }
+        if (o instanceof float[]) {
             final float[] numbers = (float[]) o;
             final double[] result = new double[numbers.length];
             for (int i = 0; i < numbers.length; i++) {
                 result[i] = numbers[i];
             }
             return result;
-        } else if (o instanceof double[]) {
+        }
+        if (o instanceof double[]) {
             final double[] numbers = (double[]) o;
             final double[] result = new double[numbers.length];
             System.arraycopy(numbers, 0, result, 0, numbers.length);
@@ -515,21 +533,24 @@ public class TiffField {
 
         if (o instanceof Number) {
             return ((Number) o).intValue();
-        } else if (o instanceof Number[]) {
+        }
+        if (o instanceof Number[]) {
             final Number[] numbers = (Number[]) o;
             int sum = 0;
             for (final Number number : numbers) {
                 sum += number.intValue();
             }
             return sum;
-        } else if (o instanceof short[]) {
+        }
+        if (o instanceof short[]) {
             final short[] numbers = (short[]) o;
             int sum = 0;
             for (final short number : numbers) {
                 sum += number;
             }
             return sum;
-        } else if (o instanceof int[]) {
+        }
+        if (o instanceof int[]) {
             final int[] numbers = (int[]) o;
             int sum = 0;
             for (final int number : numbers) {

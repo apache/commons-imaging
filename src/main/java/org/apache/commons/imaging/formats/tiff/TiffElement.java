@@ -24,11 +24,11 @@ public abstract class TiffElement {
     public static final Comparator<TiffElement> COMPARATOR = (e1, e2) -> {
         if (e1.offset < e2.offset) {
             return -1;
-        } else if (e1.offset > e2.offset) {
-            return 1;
-        } else {
-            return 0;
         }
+        if (e1.offset > e2.offset) {
+            return 1;
+        }
+        return 0;
     };
 
     public TiffElement(final long offset, final int length) {

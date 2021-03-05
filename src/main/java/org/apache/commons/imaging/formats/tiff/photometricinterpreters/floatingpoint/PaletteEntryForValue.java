@@ -62,7 +62,8 @@ public class PaletteEntryForValue implements PaletteEntry {
     public int getARGB(final float f) {
         if (isNull && Float.isNaN(f)) {
             return iColor;
-        } else if (f == value) {
+        }
+        if (f == value) {
             return iColor;
         }
         return 0;
@@ -72,7 +73,8 @@ public class PaletteEntryForValue implements PaletteEntry {
     public Color getColor(final float f) {
         if (isNull && Float.isNaN(f)) {
             return color;
-        } else if (f == value) {
+        }
+        if (f == value) {
             return color;
         }
         return null;

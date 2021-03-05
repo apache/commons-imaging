@@ -73,30 +73,31 @@ public class FieldTypeAscii extends FieldType {
             System.arraycopy(bytes, 0, result, 0, bytes.length);
             result[result.length - 1] = 0;
             return result;
-        } else if (o instanceof String) {
+        }
+        if (o instanceof String) {
             final byte[] bytes = ((String) o).getBytes(StandardCharsets.UTF_8);
             final byte[] result = new byte[bytes.length + 1];
             System.arraycopy(bytes, 0, result, 0, bytes.length);
             result[result.length - 1] = 0;
             return result;
-        } else if (o instanceof String[]) {
-            final String[] strings = (String[]) o;
-            int totalLength = 0;
-            for (final String string : strings) {
-                final byte[] bytes = string.getBytes(StandardCharsets.UTF_8);
-                totalLength += (bytes.length + 1);
-            }
-            final byte[] result = new byte[totalLength];
-            int position = 0;
-            for (final String string : strings) {
-                final byte[] bytes = string.getBytes(StandardCharsets.UTF_8);
-                System.arraycopy(bytes, 0, result, position, bytes.length);
-                position += (bytes.length + 1);
-            }
-            return result;
-        } else {
+        }
+        if (!(o instanceof String[])) {
             throw new ImageWriteException("Unknown data type: " + o);
         }
+        final String[] strings = (String[]) o;
+        int totalLength = 0;
+        for (final String string : strings) {
+            final byte[] bytes = string.getBytes(StandardCharsets.UTF_8);
+            totalLength += (bytes.length + 1);
+        }
+        final byte[] result = new byte[totalLength];
+        int position = 0;
+        for (final String string : strings) {
+            final byte[] bytes = string.getBytes(StandardCharsets.UTF_8);
+            System.arraycopy(bytes, 0, result, position, bytes.length);
+            position += (bytes.length + 1);
+        }
+        return result;
     }
 
 }

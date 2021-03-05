@@ -392,7 +392,8 @@ public class PcxImageParser extends ImageParser {
                     palette, 0, false, -1, DataBuffer.TYPE_BYTE);
             return new BufferedImage(colorModel, raster,
                     colorModel.isAlphaPremultiplied(), new Properties());
-        } else if (pcxHeader.bitsPerPixel == 1 && 2 <= pcxHeader.nPlanes
+        }
+        if (pcxHeader.bitsPerPixel == 1 && 2 <= pcxHeader.nPlanes
                 && pcxHeader.nPlanes <= 4) {
             final IndexColorModel colorModel = new IndexColorModel(pcxHeader.nPlanes,
                     1 << pcxHeader.nPlanes, pcxHeader.colormap, 0, false, -1,
@@ -415,7 +416,8 @@ public class PcxImageParser extends ImageParser {
                 image.getRaster().setDataElements(0, y, xSize, 1, unpacked);
             }
             return image;
-        } else if (pcxHeader.bitsPerPixel == 8 && pcxHeader.nPlanes == 3) {
+        }
+        if (pcxHeader.bitsPerPixel == 8 && pcxHeader.nPlanes == 3) {
             final byte[][] image = new byte[3][];
             image[0] = new byte[xSize * ySize];
             image[1] = new byte[xSize * ySize];
@@ -438,38 +440,37 @@ public class PcxImageParser extends ImageParser {
                     Transparency.OPAQUE, DataBuffer.TYPE_BYTE);
             return new BufferedImage(colorModel, raster,
                     colorModel.isAlphaPremultiplied(), new Properties());
-        } else if ((pcxHeader.bitsPerPixel == 24 && pcxHeader.nPlanes == 1)
-                || (pcxHeader.bitsPerPixel == 32 && pcxHeader.nPlanes == 1)) {
-            final int rowLength = 3 * xSize;
-            final byte[] image = new byte[rowLength * ySize];
-            for (int y = 0; y < ySize; y++) {
-                rleReader.read(is, scanline);
-                if (pcxHeader.bitsPerPixel == 24) {
-                    System.arraycopy(scanline, 0, image, y * rowLength,
-                            rowLength);
-                } else {
-                    for (int x = 0; x < xSize; x++) {
-                        image[y * rowLength + 3 * x] = scanline[4 * x];
-                        image[y * rowLength + 3 * x + 1] = scanline[4 * x + 1];
-                        image[y * rowLength + 3 * x + 2] = scanline[4 * x + 2];
-                    }
-                }
-            }
-            final DataBufferByte dataBuffer = new DataBufferByte(image, image.length);
-            final WritableRaster raster = Raster.createInterleavedRaster(
-                    dataBuffer, xSize, ySize, rowLength, 3,
-                    new int[] { 2, 1, 0 }, null);
-            final ColorModel colorModel = new ComponentColorModel(
-                    ColorSpace.getInstance(ColorSpace.CS_sRGB), false, false,
-                    Transparency.OPAQUE, DataBuffer.TYPE_BYTE);
-            return new BufferedImage(colorModel, raster,
-                    colorModel.isAlphaPremultiplied(), new Properties());
-        } else {
+        }
+        if (((pcxHeader.bitsPerPixel != 24) || (pcxHeader.nPlanes != 1)) && ((pcxHeader.bitsPerPixel != 32) || (pcxHeader.nPlanes != 1))) {
             throw new ImageReadException(
                     "Invalid/unsupported image with bitsPerPixel "
                             + pcxHeader.bitsPerPixel + " and planes "
                             + pcxHeader.nPlanes);
         }
+        final int rowLength = 3 * xSize;
+        final byte[] image = new byte[rowLength * ySize];
+        for (int y = 0; y < ySize; y++) {
+            rleReader.read(is, scanline);
+            if (pcxHeader.bitsPerPixel == 24) {
+                System.arraycopy(scanline, 0, image, y * rowLength,
+                        rowLength);
+            } else {
+                for (int x = 0; x < xSize; x++) {
+                    image[y * rowLength + 3 * x] = scanline[4 * x];
+                    image[y * rowLength + 3 * x + 1] = scanline[4 * x + 1];
+                    image[y * rowLength + 3 * x + 2] = scanline[4 * x + 2];
+                }
+            }
+        }
+        final DataBufferByte dataBuffer = new DataBufferByte(image, image.length);
+        final WritableRaster raster = Raster.createInterleavedRaster(
+                dataBuffer, xSize, ySize, rowLength, 3,
+                new int[] { 2, 1, 0 }, null);
+        final ColorModel colorModel = new ComponentColorModel(
+                ColorSpace.getInstance(ColorSpace.CS_sRGB), false, false,
+                Transparency.OPAQUE, DataBuffer.TYPE_BYTE);
+        return new BufferedImage(colorModel, raster,
+                colorModel.isAlphaPremultiplied(), new Properties());
     }
 
     @Override

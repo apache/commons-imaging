@@ -109,7 +109,8 @@ public class ColorTools {
             return new ComponentColorModel(cs, ccm.hasAlpha(),
                     ccm.isAlphaPremultiplied(), ccm.getTransparency(),
                     ccm.getTransferType());
-        } else if (colorModel instanceof DirectColorModel) {
+        }
+        if (colorModel instanceof DirectColorModel) {
             final DirectColorModel dcm = (DirectColorModel) colorModel;
 
             final int oldMask = dcm.getRedMask() | dcm.getGreenMask()

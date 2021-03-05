@@ -380,11 +380,10 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                         final int r = rrrr;
 
                         if (ssss == 0) {
-                            if (r == 15) {
-                                k += 16;
-                            } else {
+                            if (r != 15) {
                                 break;
                             }
+                            k += 16;
                         } else {
                             k += r;
 

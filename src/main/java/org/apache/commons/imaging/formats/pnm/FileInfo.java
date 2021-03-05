@@ -73,7 +73,8 @@ abstract class FileInfo {
         if (sample < 0) {
             // Even netpbm tools break for files like this
             throw new IOException("Negative pixel values are invalid in PNM files");
-        } else if (sample > max) {
+        }
+        if (sample > max) {
             // invalid values -> black
             sample = 0;
         }

@@ -278,33 +278,47 @@ public final class Imaging {
             // } else if (b1 == 0x00 && b2 == 0x00) // too similar to TGA
             // {
             // return ImageFormat.IMAGE_FORMAT_ICO;
-            } else if (compareBytePair(MAGIC_NUMBERS_PNG, bytePair)) {
+            }
+            if (compareBytePair(MAGIC_NUMBERS_PNG, bytePair)) {
                 return ImageFormats.PNG;
-            } else if (compareBytePair(MAGIC_NUMBERS_JPEG, bytePair)) {
+            }
+            if (compareBytePair(MAGIC_NUMBERS_JPEG, bytePair)) {
                 return ImageFormats.JPEG;
-            } else if (compareBytePair(MAGIC_NUMBERS_BMP, bytePair)) {
+            }
+            if (compareBytePair(MAGIC_NUMBERS_BMP, bytePair)) {
                 return ImageFormats.BMP;
-            } else if (compareBytePair(MAGIC_NUMBERS_TIFF_MOTOROLA, bytePair)) {
+            }
+            if (compareBytePair(MAGIC_NUMBERS_TIFF_MOTOROLA, bytePair)) {
                 return ImageFormats.TIFF;
-            } else if (compareBytePair(MAGIC_NUMBERS_TIFF_INTEL, bytePair)) {
+            }
+            if (compareBytePair(MAGIC_NUMBERS_TIFF_INTEL, bytePair)) {
                 return ImageFormats.TIFF;
-            } else if (compareBytePair(MAGIC_NUMBERS_PSD, bytePair)) {
+            }
+            if (compareBytePair(MAGIC_NUMBERS_PSD, bytePair)) {
                 return ImageFormats.PSD;
-            } else if (compareBytePair(MAGIC_NUMBERS_PAM, bytePair)) {
+            }
+            if (compareBytePair(MAGIC_NUMBERS_PAM, bytePair)) {
                 return ImageFormats.PAM;
-            } else if (compareBytePair(MAGIC_NUMBERS_PBM_A, bytePair)) {
+            }
+            if (compareBytePair(MAGIC_NUMBERS_PBM_A, bytePair)) {
                 return ImageFormats.PBM;
-            } else if (compareBytePair(MAGIC_NUMBERS_PBM_B, bytePair)) {
+            }
+            if (compareBytePair(MAGIC_NUMBERS_PBM_B, bytePair)) {
                 return ImageFormats.PBM;
-            } else if (compareBytePair(MAGIC_NUMBERS_PGM_A, bytePair)) {
+            }
+            if (compareBytePair(MAGIC_NUMBERS_PGM_A, bytePair)) {
                 return ImageFormats.PGM;
-            } else if (compareBytePair(MAGIC_NUMBERS_PGM_B, bytePair)) {
+            }
+            if (compareBytePair(MAGIC_NUMBERS_PGM_B, bytePair)) {
                 return ImageFormats.PGM;
-            } else if (compareBytePair(MAGIC_NUMBERS_PPM_A, bytePair)) {
+            }
+            if (compareBytePair(MAGIC_NUMBERS_PPM_A, bytePair)) {
                 return ImageFormats.PPM;
-            } else if (compareBytePair(MAGIC_NUMBERS_PPM_B, bytePair)) {
+            }
+            if (compareBytePair(MAGIC_NUMBERS_PPM_B, bytePair)) {
                 return ImageFormats.PPM;
-            } else if (compareBytePair(MAGIC_NUMBERS_JBIG2_1, bytePair)) {
+            }
+            if (compareBytePair(MAGIC_NUMBERS_JBIG2_1, bytePair)) {
                 final int i3 = is.read();
                 final int i4 = is.read();
                 if ((i3 < 0) || (i4 < 0)) {
@@ -1551,11 +1565,10 @@ public final class Imaging {
                 break;
             }
         }
-        if (imageParser != null) {
-            imageParser.writeImage(src, os, params);
-        } else {
+        if (imageParser == null) {
             throw new ImageWriteException("Unknown Format: " + format);
         }
+        imageParser.writeImage(src, os, params);
     }
 
 }

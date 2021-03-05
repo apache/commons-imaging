@@ -68,17 +68,17 @@ public class ByteSourceInputStream extends ByteSource {
         final int read = is.read(readBuffer);
         if (read < 1) {
             return null;
-        } else if (read < BLOCK_SIZE) {
+        }
+        if (read < BLOCK_SIZE) {
             // return a copy.
             final byte[] result = new byte[read];
             System.arraycopy(readBuffer, 0, result, 0, read);
             return new CacheBlock(result);
-        } else {
-            // return current buffer.
-            final byte[] result = readBuffer;
-            readBuffer = null;
-            return new CacheBlock(result);
         }
+        // return current buffer.
+        final byte[] result = readBuffer;
+        readBuffer = null;
+        return new CacheBlock(result);
     }
 
     private CacheBlock getFirstBlock() throws IOException {
@@ -126,7 +126,8 @@ public class ByteSourceInputStream extends ByteSource {
             if ((off < 0) || (off > array.length) || (len < 0)
                     || ((off + len) > array.length) || ((off + len) < 0)) {
                 throw new IndexOutOfBoundsException();
-            } else if (len == 0) {
+            }
+            if (len == 0) {
                 return 0;
             }
 

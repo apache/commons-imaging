@@ -124,17 +124,18 @@ public final class TagInfoGpsText extends TagInfo {
             final Object object = FieldType.ASCII.getValue(entry);
             if (object instanceof String) {
                 return (String) object;
-            } else if (object instanceof String[]) {
+            }
+            if (object instanceof String[]) {
                 // Use of arrays with the ASCII type
                 // should be extremely rare, and use of
                 // ASCII type in GPS fields should be
                 // forbidden. So assume the 2 never happen
                 // together and return incomplete strings if they do.
                 return ((String[]) object)[0];
-            } else {
-                throw new ImageReadException("Unexpected ASCII type decoded");
             }
-        } else if (entry.getFieldType() == FieldType.UNDEFINED) {
+            throw new ImageReadException("Unexpected ASCII type decoded");
+        }
+        if (entry.getFieldType() == FieldType.UNDEFINED) {
             /* later */
         } else if (entry.getFieldType() == FieldType.BYTE) {
             /* later */

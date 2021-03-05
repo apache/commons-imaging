@@ -40,19 +40,20 @@ public class FieldTypeShort extends FieldType {
     public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException {
         if (o instanceof Short) {
             return ByteConversions.toBytes(((Short) o).shortValue(), byteOrder);
-        } else if (o instanceof short[]) {
+        }
+        if (o instanceof short[]) {
             final short[] numbers = (short[]) o;
             return ByteConversions.toBytes(numbers, byteOrder);
-        } else if (o instanceof Short[]) {
-            final Short[] numbers = (Short[]) o;
-            final short[] values = new short[numbers.length];
-            for (int i = 0; i < values.length; i++) {
-                values[i] = numbers[i].shortValue();
-            }
-            return ByteConversions.toBytes(values, byteOrder);
-        } else {
+        }
+        if (!(o instanceof Short[])) {
             throw new ImageWriteException("Invalid data", o);
         }
+        final Short[] numbers = (Short[]) o;
+        final short[] values = new short[numbers.length];
+        for (int i = 0; i < values.length; i++) {
+            values[i] = numbers[i].shortValue();
+        }
+        return ByteConversions.toBytes(values, byteOrder);
     }
 
 }

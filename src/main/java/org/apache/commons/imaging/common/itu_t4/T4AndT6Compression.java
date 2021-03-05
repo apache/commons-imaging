@@ -660,7 +660,8 @@ public final class T4AndT6Compression {
             if (entries[middle].value <= value
                     && ((middle + 1) >= entries.length || value < entries[middle + 1].value)) {
                 return entries[middle];
-            } else if (entries[middle].value > value) {
+            }
+            if (entries[middle].value > value) {
                 last = middle - 1;
             } else {
                 first = middle + 1;

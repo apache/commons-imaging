@@ -39,11 +39,11 @@ public class FieldTypeByte extends FieldType {
     public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException {
         if (o instanceof Byte) {
             return new byte[] { ((Byte) o).byteValue(), };
-        } else if (o instanceof byte[]) {
-            return (byte[]) o;
-        } else {
-            throw new ImageWriteException("Invalid data", o);
         }
+        if (o instanceof byte[]) {
+            return (byte[]) o;
+        }
+        throw new ImageWriteException("Invalid data", o);
     }
 
 }
