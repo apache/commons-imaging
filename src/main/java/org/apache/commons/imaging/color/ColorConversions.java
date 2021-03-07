@@ -168,6 +168,7 @@ public final class ColorConversions {
         final double Y = var_R * 0.2126729 + var_G * 0.7151522 + var_B * 0.0721750;
         final double Z = var_R * 0.0193339 + var_G * 0.1191920 + var_B * 0.9503041;
 
+        // Attention: A lot of sources do list these values with less precision. But it makes a visual difference:
         // final double X = var_R * 0.4124 + var_G * 0.3576 + var_B * 0.1805;
         // final double Y = var_R * 0.2126 + var_G * 0.7152 + var_B * 0.0722;
         // final double Z = var_R * 0.0193 + var_G * 0.1192 + var_B * 0.9505;
