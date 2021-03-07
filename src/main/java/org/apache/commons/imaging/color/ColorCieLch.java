@@ -23,7 +23,6 @@ package org.apache.commons.imaging.color;
  * Contains the constant values for black, white, red,
  * green, and blue.
  * </p>
- * Changes: H renamed to h.
  *
  * @see <a href=
  *      "https://en.wikipedia.org/wiki/CIELUV#Cylindrical_representation_(CIELCH)">https://en.wikipedia.org/wiki/CIELUV#Cylindrical_representation_(CIELCH)</a>
