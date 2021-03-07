@@ -47,12 +47,12 @@ public class ColorCieLchTest {
 
     @Test
     public void testHAssignment() {
-        assertEquals(3.0, color.H, 0.0);
+        assertEquals(3.0, color.h, 0.0);
     }
 
     @Test
     public void testToString() {
-        assertEquals("{L: 1.0, C: 2.0, H: 3.0}", color.toString());
+        assertEquals("{L: 1.0, C: 2.0, h: 3.0}", color.toString());
     }
 
     @Test
