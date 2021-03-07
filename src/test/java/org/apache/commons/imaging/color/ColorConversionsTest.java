@@ -124,7 +124,7 @@ public class ColorConversionsTest {
 
             final ColorXyz xyz = ColorConversions.convertRGBtoXYZ(rgb);
             final ColorCieLab cielab = ColorConversions.convertXYZtoCIELab(xyz);
-            final ColorDIN99Lab din99b = ColorConversions.convertCIELabToDIN99bLab(cielab);
+            final ColorDin99Lab din99b = ColorConversions.convertCIELabToDIN99bLab(cielab);
 
             final ColorCieLab din99_cielab = ColorConversions.convertDIN99bLabToCIELab(din99b);
             final ColorXyz din99_cielab_xyz = ColorConversions.convertCIELabtoXYZ(din99_cielab);
@@ -140,7 +140,7 @@ public class ColorConversionsTest {
 
             final ColorXyz xyz = ColorConversions.convertRGBtoXYZ(rgb);
             final ColorCieLab cielab = ColorConversions.convertXYZtoCIELab(xyz);
-            final ColorDIN99Lab din99o = ColorConversions.convertCIELabToDIN99oLab(cielab);
+            final ColorDin99Lab din99o = ColorConversions.convertCIELabToDIN99oLab(cielab);
 
             final ColorCieLab din99_cielab = ColorConversions.convertDIN99oLabToCIELab(din99o);
             final ColorXyz din99_cielab_xyz = ColorConversions.convertCIELabtoXYZ(din99_cielab);

@@ -25,7 +25,7 @@ package org.apache.commons.imaging.color;
  *      Uniform_colour_spaces_based_on_the_DIN99_colour-difference_formula</a>
  * @since 1.0-alpha3
  */
-public final class ColorDIN99Lab {
+public final class ColorDin99Lab {
 
     public final double L99;
 
@@ -33,7 +33,7 @@ public final class ColorDIN99Lab {
 
     public final double b99;
 
-    public ColorDIN99Lab(final double L99, final double a99, final double b99) {
+    public ColorDin99Lab(final double L99, final double a99, final double b99) {
         this.L99 = L99;
         this.a99 = a99;
         this.b99 = b99;
@@ -53,7 +53,7 @@ public final class ColorDIN99Lab {
             return false;
         }
 
-        final ColorDIN99Lab that = (ColorDIN99Lab) o;
+        final ColorDin99Lab that = (ColorDin99Lab) o;
         if (Double.compare(that.L99, L99) != 0) {
             return false;
         }

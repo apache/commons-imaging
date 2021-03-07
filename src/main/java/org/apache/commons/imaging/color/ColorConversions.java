@@ -682,11 +682,11 @@ public final class ColorConversions {
         return new ColorXyz(X, Y, Z);
     }
 
-    public static ColorDIN99Lab convertCIELabToDIN99bLab(final ColorCieLab cie) {
+    public static ColorDin99Lab convertCIELabToDIN99bLab(final ColorCieLab cie) {
         return convertCIELabToDIN99bLab(cie.L, cie.a, cie.b);
     }
 
-    public static ColorDIN99Lab convertCIELabToDIN99bLab(final double L, final double a, final double b) {
+    public static ColorDin99Lab convertCIELabToDIN99bLab(final double L, final double a, final double b) {
         final double FAC_1 = 100.0 / Math.log(129.0 / 50.0); // = 105.51
         final double kE = 1.0; // brightness factor, 1.0 for CIE reference conditions
         final double kCH = 1.0; // chroma and hue factor, 1.0 for CIE reference conditions
@@ -705,10 +705,10 @@ public final class ColorConversions {
                 b99 = k * f;
             }
         }
-        return new ColorDIN99Lab(L99, a99, b99);
+        return new ColorDin99Lab(L99, a99, b99);
     }
 
-    public static ColorCieLab convertDIN99bLabToCIELab(final ColorDIN99Lab dinb) {
+    public static ColorCieLab convertDIN99bLabToCIELab(final ColorDin99Lab dinb) {
         return convertDIN99bLabToCIELab(dinb.L99, dinb.a99, dinb.b99);
     }
 
@@ -731,12 +731,12 @@ public final class ColorConversions {
     }
 
     /** DIN99o, see: https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum */
-    public static ColorDIN99Lab convertCIELabToDIN99oLab(final ColorCieLab cie) {
+    public static ColorDin99Lab convertCIELabToDIN99oLab(final ColorCieLab cie) {
         return convertCIELabToDIN99oLab(cie.L, cie.a, cie.b);
     }
 
     /** DIN99o, see: https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum */
-    public static ColorDIN99Lab convertCIELabToDIN99oLab(final double L, final double a, final double b) {
+    public static ColorDin99Lab convertCIELabToDIN99oLab(final double L, final double a, final double b) {
         final double kE = 1.0; // brightness factor, 1.0 for CIE reference conditions
         final double kCH = 1.0; // chroma and hue factor, 1.0 for CIE reference conditions
         final double FAC_1 = 100.0 / Math.log(139.0 / 100.0); // L99 scaling factor = 303.67100547050995
@@ -755,11 +755,11 @@ public final class ColorConversions {
             a99o = C99o * Math.cos(h99o);
             b99o = C99o * Math.sin(h99o);
         }
-        return new ColorDIN99Lab(L99o, a99o, b99o);
+        return new ColorDin99Lab(L99o, a99o, b99o);
     }
 
     /** DIN99o, see: https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum */
-    public static ColorCieLab convertDIN99oLabToCIELab(final ColorDIN99Lab dino) {
+    public static ColorCieLab convertDIN99oLabToCIELab(final ColorDin99Lab dino) {
         return convertDIN99oLabToCIELab(dino.L99, dino.a99, dino.b99);
     }
 
