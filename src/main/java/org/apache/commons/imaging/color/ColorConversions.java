@@ -127,6 +127,7 @@ public final class ColorConversions {
         double var_G = var_X * -0.9692660 + var_Y * 1.8760108 + var_Z * 0.0415560;
         double var_B = var_X * 0.0556434 + var_Y * -0.2040259 + var_Z * 1.0572252;
 
+        // Attention: A lot of sources do list these values with less precision. But it makes a visual difference:
         // double var_R = var_X * 3.2406 + var_Y * -1.5372 + var_Z * -0.4986;
         // double var_G = var_X * -0.9689 + var_Y * 1.8758 + var_Z * 0.0415;
         // double var_B = var_X * 0.0557 + var_Y * -0.2040 + var_Z * 1.0570;
