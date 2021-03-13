@@ -29,6 +29,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteOrder;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,6 +37,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -64,6 +66,10 @@ public class IptcParser extends BinaryFileParser {
      * @since 1.0-alpha2
      */
     private static final List<Integer> PHOTOSHOP_IGNORED_BLOCK_TYPE = Arrays.asList(1084, 1085, 1086, 1087);
+    
+    private static final Charset DEFAULT_CHARSET = StandardCharsets.ISO_8859_1;
+    private static final int ENV_TAG_CODED_CHARACTER_SET = 90;
+    private static final byte[] CHARACTER_ESCAPE_SEQUENCE = {'\u001B', '%', 'G'};
 
     public IptcParser() {
         setByteOrder(ByteOrder.BIG_ENDIAN);
@@ -143,6 +149,7 @@ public class IptcParser extends BinaryFileParser {
     }
 
     protected List<IptcRecord> parseIPTCBlock(final byte[] bytes) {
+        Charset charset = DEFAULT_CHARSET;
         final List<IptcRecord> elements = new ArrayList<>();
 
         int index = 0;
@@ -202,6 +209,11 @@ public class IptcParser extends BinaryFileParser {
             // Debug.debug("recordSize", recordSize + " (0x"
             // + Integer.toHexString(recordSize) + ")");
 
+            if( recordNumber==IptcConstants.IPTC_ENVELOPE_RECORD_NUMBER && recordType==ENV_TAG_CODED_CHARACTER_SET ) {
+                charset = findCharset(recordData);
+                continue;
+            }
+
             if (recordNumber != IptcConstants.IPTC_APPLICATION_2_RECORD_NUMBER) {
                 continue;
             }
@@ -237,7 +249,7 @@ public class IptcParser extends BinaryFileParser {
             // continue;
             // }
 
-            final String value = new String(recordData, StandardCharsets.ISO_8859_1);
+            final String value = new String(recordData, charset);
 
             final IptcType iptcType = IptcTypeLookup.getIptcType(recordType);
 
@@ -405,9 +417,25 @@ public class IptcParser extends BinaryFileParser {
 
     public byte[] writeIPTCBlock(List<IptcRecord> elements)
             throws ImageWriteException, IOException {
+        Charset charset = DEFAULT_CHARSET;
+        for (final IptcRecord element : elements) {
+            final byte[] recordData = element.getValue().getBytes(charset);
+            if (!new String(recordData, charset).equals(element.getValue())) {
+                charset = StandardCharsets.UTF_8;
+                break;
+            }
+        }
         byte[] blockData;
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (BinaryOutputStream bos = new BinaryOutputStream(baos, getByteOrder())) {
+            if( charset!=null && !charset.equals(DEFAULT_CHARSET) ) {
+                bos.write(IptcConstants.IPTC_RECORD_TAG_MARKER);
+                bos.write(IptcConstants.IPTC_ENVELOPE_RECORD_NUMBER);
+                bos.write(ENV_TAG_CODED_CHARACTER_SET);
+                byte[] codedCharset = charset.equals(StandardCharsets.UTF_8) ? CHARACTER_ESCAPE_SEQUENCE: charset.name().getBytes(StandardCharsets.ISO_8859_1);
+                bos.write2Bytes(codedCharset.length);
+                bos.write(codedCharset);
+            }
 
             // first, right record version record
             bos.write(IptcConstants.IPTC_RECORD_TAG_MARKER);
@@ -440,11 +468,13 @@ public class IptcParser extends BinaryFileParser {
                 }
                 bos.write(element.iptcType.getType());
 
-                final byte[] recordData = element.getValue().getBytes(StandardCharsets.ISO_8859_1);
-                if (!new String(recordData, StandardCharsets.ISO_8859_1).equals(element.getValue())) {
+                final byte[] recordData = element.getValue().getBytes(charset);
+                /*
+                if (!new String(recordData, charset).equals(element.getValue())) {
                     throw new ImageWriteException(
-                            "Invalid record value, not ISO-8859-1");
+                            "Invalid record value, not " + charset.name());
                 }
+                */
 
                 bos.write2Bytes(recordData.length);
                 bos.write(recordData);
@@ -454,6 +484,28 @@ public class IptcParser extends BinaryFileParser {
         blockData = baos.toByteArray();
 
         return blockData;
+    }
+
+    private Charset findCharset(byte[] codedCharset) {
+        String codedCharsetString = new String(codedCharset);
+        try {
+            if (Charset.isSupported(codedCharsetString)) {
+                return Charset.forName(codedCharsetString);
+            }
+        } catch (IllegalArgumentException e) { }
+        // check if encoding is a escape sequence
+        // normalize encoding byte sequence
+        byte[] codedCharsetNormalized = new byte[codedCharset.length];
+        int j = 0;
+        for (int i = 0; i < codedCharset.length; i++) {
+            if (codedCharset[i] != ' ') {
+                codedCharsetNormalized[j++] = codedCharset[i];
+            }
+        }
+
+        if( Objects.deepEquals(codedCharsetNormalized, CHARACTER_ESCAPE_SEQUENCE) )
+            return StandardCharsets.UTF_8;
+        return DEFAULT_CHARSET;
     }
 
 }
