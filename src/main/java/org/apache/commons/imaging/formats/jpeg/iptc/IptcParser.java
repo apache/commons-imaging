@@ -487,7 +487,7 @@ public class IptcParser extends BinaryFileParser {
     }
 
     private Charset findCharset(byte[] codedCharset) {
-        String codedCharsetString = new String(codedCharset);
+        String codedCharsetString = new String(codedCharset, StandardCharsets.ISO_8859_1);
         try {
             if (Charset.isSupported(codedCharsetString)) {
                 return Charset.forName(codedCharsetString);
