@@ -66,7 +66,7 @@ public class IptcParser extends BinaryFileParser {
      * @since 1.0-alpha2
      */
     private static final List<Integer> PHOTOSHOP_IGNORED_BLOCK_TYPE = Arrays.asList(1084, 1085, 1086, 1087);
-    
+
     private static final Charset DEFAULT_CHARSET = StandardCharsets.ISO_8859_1;
     private static final int ENV_TAG_CODED_CHARACTER_SET = 90;
     private static final byte[] CHARACTER_ESCAPE_SEQUENCE = {'\u001B', '%', 'G'};
@@ -503,8 +503,9 @@ public class IptcParser extends BinaryFileParser {
             }
         }
 
-        if( Objects.deepEquals(codedCharsetNormalized, CHARACTER_ESCAPE_SEQUENCE) )
+        if( Objects.deepEquals(codedCharsetNormalized, CHARACTER_ESCAPE_SEQUENCE) ) {
             return StandardCharsets.UTF_8;
+        }
         return DEFAULT_CHARSET;
     }
 
