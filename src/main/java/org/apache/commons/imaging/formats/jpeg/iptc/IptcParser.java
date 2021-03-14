@@ -209,7 +209,7 @@ public class IptcParser extends BinaryFileParser {
             // Debug.debug("recordSize", recordSize + " (0x"
             // + Integer.toHexString(recordSize) + ")");
 
-            if( recordNumber==IptcConstants.IPTC_ENVELOPE_RECORD_NUMBER && recordType==ENV_TAG_CODED_CHARACTER_SET ) {
+            if (recordNumber == IptcConstants.IPTC_ENVELOPE_RECORD_NUMBER && recordType == ENV_TAG_CODED_CHARACTER_SET) {
                 charset = findCharset(recordData);
                 continue;
             }
@@ -428,7 +428,7 @@ public class IptcParser extends BinaryFileParser {
         byte[] blockData;
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (BinaryOutputStream bos = new BinaryOutputStream(baos, getByteOrder())) {
-            if( charset!=null && !charset.equals(DEFAULT_CHARSET) ) {
+            if (charset != null && !charset.equals(DEFAULT_CHARSET)) {
                 bos.write(IptcConstants.IPTC_RECORD_TAG_MARKER);
                 bos.write(IptcConstants.IPTC_ENVELOPE_RECORD_NUMBER);
                 bos.write(ENV_TAG_CODED_CHARACTER_SET);
@@ -503,7 +503,7 @@ public class IptcParser extends BinaryFileParser {
             }
         }
 
-        if( Objects.deepEquals(codedCharsetNormalized, CHARACTER_ESCAPE_SEQUENCE) ) {
+        if (Objects.deepEquals(codedCharsetNormalized, CHARACTER_ESCAPE_SEQUENCE)) {
             return StandardCharsets.UTF_8;
         }
         return DEFAULT_CHARSET;
