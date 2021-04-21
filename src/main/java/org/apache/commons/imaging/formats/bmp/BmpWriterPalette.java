@@ -76,7 +76,7 @@ class BmpWriterPalette implements BmpWriter {
         int bitCache = 0;
         int bitsInCache = 0;
 
-        int bytecount = 0;
+        int byteCount = 0;
         for (int y = height - 1; y >= 0; y--) {
             for (int x = 0; x < width; x++) {
                 final int argb = src.getRGB(x, y);
@@ -86,14 +86,14 @@ class BmpWriterPalette implements BmpWriter {
 
                 if (bitsPerSample == 8) {
                     baos.write(0xff & index);
-                    bytecount++;
+                    byteCount++;
                 } else {
                     // 4 or 1
                     bitCache = (bitCache << bitsPerSample) | index;
                     bitsInCache += bitsPerSample;
                     if (bitsInCache >= 8) {
                         baos.write(0xff & bitCache);
-                        bytecount++;
+                        byteCount++;
                         bitCache = 0;
                         bitsInCache = 0;
                     }
@@ -104,14 +104,14 @@ class BmpWriterPalette implements BmpWriter {
                 bitCache = (bitCache << (8 - bitsInCache));
 
                 baos.write(0xff & bitCache);
-                bytecount++;
+                byteCount++;
                 bitCache = 0;
                 bitsInCache = 0;
             }
 
-            while ((bytecount % 4) != 0) {
+            while ((byteCount % 4) != 0) {
                 baos.write(0);
-                bytecount++;
+                byteCount++;
             }
         }
 

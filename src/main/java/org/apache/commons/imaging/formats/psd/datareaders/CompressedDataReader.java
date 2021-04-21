@@ -50,9 +50,9 @@ public class CompressedDataReader implements DataReader {
 
         // this.setDebug(true);
         final int scanlineCount = height * header.channels;
-        final int[] scanlineBytecounts = new int[scanlineCount];
+        final int[] scanlineByteCounts = new int[scanlineCount];
         for (int i = 0; i < scanlineCount; i++) {
-            scanlineBytecounts[i] = BinaryFunctions.read2Bytes("scanline_bytecount[" + i
+            scanlineByteCounts[i] = BinaryFunctions.read2Bytes("scanline_bytecount[" + i
                     + "]", is, "PSD: bad Image Data", bfp.getByteOrder());
         }
         // System.out.println("fImageContents.Compression: "
@@ -67,7 +67,7 @@ public class CompressedDataReader implements DataReader {
             for (int y = 0; y < height; y++) {
                 final int index = channel * height + y;
                 final byte[] packed = BinaryFunctions.readBytes("scanline",
-                        is, scanlineBytecounts[index],
+                        is, scanlineByteCounts[index],
                         "PSD: Missing Image Data");
 
                 final byte[] unpacked = new PackBits().decompress(packed, width);

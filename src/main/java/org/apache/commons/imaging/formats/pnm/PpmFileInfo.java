@@ -29,8 +29,8 @@ class PpmFileInfo extends FileInfo {
     private final float scale;
     private final int bytesPerSample;
 
-    PpmFileInfo(final int width, final int height, final boolean rawbits, final int max) throws ImageReadException {
-        super(width, height, rawbits);
+    PpmFileInfo(final int width, final int height, final boolean rawBits, final int max) throws ImageReadException {
+        super(width, height, rawBits);
         if (max <= 0) {
             throw new ImageReadException("PPM maxVal " + max + " is out of range [1;65535]");
         }

@@ -19,7 +19,7 @@ final class Dct {
     /*
      * The book "JPEG still image data compression standard", by Pennebaker and
      * Mitchell, Chapter 4, discusses a number of approaches to the fast DCT.
-     * Here's the cost, exluding modified (de)quantization, for transforming an
+     * Here's the cost, excluding modified (de)quantization, for transforming an
      * 8x8 block:
      *
      * Algorithm                     Adds Multiplies RightShifts Total

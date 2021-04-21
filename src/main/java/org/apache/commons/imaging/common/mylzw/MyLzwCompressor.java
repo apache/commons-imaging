@@ -60,10 +60,10 @@ public class MyLzwCompressor {
     private void initializeStringTable() {
         codeSize = initialCodeSize;
 
-        final int intialEntriesCount = (1 << codeSize) + 2;
+        final int initialEntriesCount = (1 << codeSize) + 2;
 
         map.clear();
-        for (codes = 0; codes < intialEntriesCount; codes++) {
+        for (codes = 0; codes < initialEntriesCount; codes++) {
             if ((codes != clearCode) && (codes != eoiCode)) {
                 final ByteArray key = arrayToKey((byte) codes);
 

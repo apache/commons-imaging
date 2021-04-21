@@ -97,7 +97,7 @@ import org.apache.commons.imaging.icc.IccProfileParser;
  * a Java HashMap) to specify a set of keys and values for input.
  * The specification for support keys is provided by the ImagingConstants
  * interface as well as by format-specific interfaces such as
- * JpegContants or TiffConstants.
+ * JpegConstants or TiffConstants.
  * </p>
  *
  * <h3>Example code</h3>
@@ -1323,7 +1323,7 @@ public final class Imaging {
     /**
      * Reads the first image from an InputStream
      * using data-processing options specified through a parameters
-     * map.  Options may be configured using the ImagingContants
+     * map.  Options may be configured using the ImagingConstants
      * interface or the various format-specific implementations provided
      * by this package.
      * <p>
@@ -1373,7 +1373,7 @@ public final class Imaging {
     /**
      * Reads the first image from a byte array
      * using data-processing options specified through a parameters
-     * map.  Options may be configured using the ImagingContants
+     * map.  Options may be configured using the ImagingConstants
      * interface or the various format-specific implementations provided
      * by this package.
      * <p>
@@ -1422,7 +1422,7 @@ public final class Imaging {
     /**
      * Reads the first image from a file
      * using data-processing options specified through a parameters
-     * map.  Options may be configured using the ImagingContants
+     * map.  Options may be configured using the ImagingConstants
      * interface or the various format-specific implementations provided
      * by this package.
      * <p>

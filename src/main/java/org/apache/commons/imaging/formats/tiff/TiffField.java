@@ -225,7 +225,7 @@ public class TiffField {
             final StringBuilder result = new StringBuilder();
 
             for (int i = 0; i < values.length; i++) {
-                final short sval = values[i];
+                final short sVal = values[i];
 
                 if (i > 50) {
                     result.append("... (").append(values.length).append(")");
@@ -234,7 +234,7 @@ public class TiffField {
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append(sval);
+                result.append(sVal);
             }
             return result.toString();
         }

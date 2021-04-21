@@ -26,10 +26,10 @@ import org.apache.commons.imaging.ImageWriteException;
 
 class PgmWriter implements PnmWriter {
 
-    private final boolean rawbits;
+    private final boolean rawBits;
 
-    PgmWriter(final boolean rawbits) {
-        this.rawbits = rawbits;
+    PgmWriter(final boolean rawBits) {
+        this.rawBits = rawBits;
     }
 
     @Override
@@ -38,7 +38,7 @@ class PgmWriter implements PnmWriter {
         // System.out.println
         // (b1 == 0x50 && b2 == 0x36)
         os.write(0x50);
-        os.write(rawbits ? 0x35 : 0x32);
+        os.write(rawBits ? 0x35 : 0x32);
         os.write(PnmConstants.PNM_SEPARATOR);
 
         final int width = src.getWidth();
@@ -61,7 +61,7 @@ class PgmWriter implements PnmWriter {
                 final int blue = 0xff & (argb >> 0);
                 final int sample = (red + green + blue) / 3;
 
-                if (rawbits) {
+                if (rawBits) {
                     os.write((byte) sample);
                 } else {
                     os.write(Integer.toString(sample).getBytes(StandardCharsets.US_ASCII)); // max component value
