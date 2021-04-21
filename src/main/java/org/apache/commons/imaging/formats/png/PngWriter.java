@@ -21,14 +21,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.imaging.palette.Palette;
@@ -45,7 +42,7 @@ class PngWriter {
      The remaining 14 chunk types are termed ancillary chunk types, which encoders may generate and decoders may interpret.
 
      1. Transparency information: tRNS (see 11.3.2: Transparency information).
-     2. Colour space information: cHRM, gAMA, iCCP, sBIT, sRGB (see 11.3.3: Colour space information).
+     2. Color space information: cHRM, gAMA, iCCP, sBIT, sRGB (see 11.3.3: Color space information).
      3. Textual information: iTXt, tEXt, zTXt (see 11.3.4: Textual information).
      4. Miscellaneous information: bKGD, hIST, pHYs, sPLT (see 11.3.5: Miscellaneous information).
      5. Time information: tIME (see 11.3.6: Time stamp information).
@@ -295,15 +292,10 @@ class PngWriter {
         writeChunk(os, ChunkType.sCAL, baos.toByteArray());
     }
 
-    private byte getBitDepth(final PngColorType pngColorType, final Map<String, Object> params) {
-        byte depth = 8;
+    private byte getBitDepth(final PngColorType pngColorType, final PngImagingParameters params) {
+        byte depth = params.getBitDepth();
 
-        final Object o = params.get(PngConstants.PARAM_KEY_PNG_BIT_DEPTH);
-        if (o instanceof Number) {
-            depth = ((Number) o).byteValue();
-        }
-
-        return pngColorType.isBitDepthAllowed(depth) ? depth : 8;
+        return pngColorType.isBitDepthAllowed(depth) ? depth : PngImagingParameters.DEFAULT_BIT_DEPTH;
     }
 
     /*
@@ -335,44 +327,9 @@ class PngWriter {
      tEXt   Yes None
      zTXt   Yes None
      */
-    public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, PngImagingParameters params)
             throws ImageWriteException, IOException {
-        // make copy of params; we'll clear keys as we consume them.
-        params = new HashMap<>(params);
-
-        // clear format key.
-        if (params.containsKey(ImagingConstants.PARAM_KEY_FORMAT)) {
-            params.remove(ImagingConstants.PARAM_KEY_FORMAT);
-        }
-
         int compressionLevel = Deflater.DEFAULT_COMPRESSION;
-        final Map<String, Object> rawParams = new HashMap<>(params);
-        if (params.containsKey(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR)) {
-            params.remove(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR);
-        }
-        if (params.containsKey(PngConstants.PARAM_KEY_PNG_FORCE_INDEXED_COLOR)) {
-            params.remove(PngConstants.PARAM_KEY_PNG_FORCE_INDEXED_COLOR);
-        }
-        if (params.containsKey(PngConstants.PARAM_KEY_PNG_BIT_DEPTH)) {
-            params.remove(PngConstants.PARAM_KEY_PNG_BIT_DEPTH);
-        }
-        if (params.containsKey(ImagingConstants.PARAM_KEY_XMP_XML)) {
-            params.remove(ImagingConstants.PARAM_KEY_XMP_XML);
-        }
-        if (params.containsKey(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS)) {
-            params.remove(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS);
-        }
-        if (params.containsKey(PngConstants.PARAM_KEY_PNG_COMPRESSION_LEVEL)) {
-            compressionLevel = (int) params.remove(PngConstants.PARAM_KEY_PNG_COMPRESSION_LEVEL);
-        }
-        params.remove(ImagingConstants.PARAM_KEY_PIXEL_DENSITY);
-        params.remove(PngConstants.PARAM_KEY_PHYSICAL_SCALE);
-        params.remove(PngConstants.PARAM_KEY_PNG_COMPRESSION_LEVEL);
-        if (!params.isEmpty()) {
-            final Object firstKey = params.keySet().iterator().next();
-            throw new ImageWriteException("Unknown parameter: " + firstKey);
-        }
-        params = rawParams;
 
         final int width = src.getWidth();
         final int height = src.getHeight();
@@ -386,8 +343,8 @@ class PngWriter {
 
         PngColorType pngColorType;
         {
-            final boolean forceIndexedColor =  Boolean.TRUE.equals(params.get(PngConstants.PARAM_KEY_PNG_FORCE_INDEXED_COLOR));
-            final boolean forceTrueColor = Boolean.TRUE.equals(params.get(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR));
+            final boolean forceIndexedColor =  params.isForceIndexedColor();
+            final boolean forceTrueColor = params.isForceTrueColor();
 
             if (forceIndexedColor && forceTrueColor) {
                 throw new ImageWriteException(
@@ -456,7 +413,7 @@ class PngWriter {
             }
         }
 
-        final Object pixelDensityObj = params.get(ImagingConstants.PARAM_KEY_PIXEL_DENSITY);
+        final Object pixelDensityObj = params.getPixelDensity();
         if (pixelDensityObj instanceof PixelDensity) {
             final PixelDensity pixelDensity = (PixelDensity) pixelDensityObj;
             if (pixelDensity.isUnitless()) {
@@ -470,22 +427,23 @@ class PngWriter {
             }
         }
 
-        final Object physcialScaleObj = params.get(PngConstants.PARAM_KEY_PHYSICAL_SCALE);
-        if (physcialScaleObj instanceof PhysicalScale) {
-            final PhysicalScale physicalScale = (PhysicalScale)physcialScaleObj;
-            writeChunkSCAL(os, physicalScale.getHorizontalUnitsPerPixel(), physicalScale.getVerticalUnitsPerPixel(),
-                  physicalScale.isInMeters() ? (byte) 1 : (byte) 2);
+        final PhysicalScale physicalScale = params.getPhysicalScale();
+        if (physicalScale != null) {
+            writeChunkSCAL(
+            		os,
+            		physicalScale.getHorizontalUnitsPerPixel(),
+            		physicalScale.getVerticalUnitsPerPixel(),
+                    physicalScale.isInMeters() ? (byte) 1 : (byte) 2);
         }
 
-        if (params.containsKey(ImagingConstants.PARAM_KEY_XMP_XML)) {
-            final String xmpXml = (String) params.get(ImagingConstants.PARAM_KEY_XMP_XML);
+        final String xmpXml = params.getXmpXml();
+        if (xmpXml != null) {
             writeChunkXmpiTXt(os, xmpXml);
         }
 
-        if (params.containsKey(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS)) {
-            final List<?> outputTexts = (List<?>) params.get(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS);
-            for (final Object outputText : outputTexts) {
-                final PngText text = (PngText) outputText;
+        final List<PngText> outputTexts = params.getTextChunks();
+        if (outputTexts != null) {
+            for (final PngText text : outputTexts) {
                 if (text instanceof PngText.Text) {
                     writeChunktEXt(os, (PngText.Text) text);
                 } else if (text instanceof PngText.Ztxt) {
@@ -493,8 +451,7 @@ class PngWriter {
                 } else if (text instanceof PngText.Itxt) {
                     writeChunkiTXt(os, (PngText.Itxt) text);
                 } else {
-                    throw new ImageWriteException(
-                            "Unknown text to embed in PNG: " + text);
+                    throw new ImageWriteException("Unknown text to embed in PNG: " + text);
                 }
             }
         }

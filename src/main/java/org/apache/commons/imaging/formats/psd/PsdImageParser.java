@@ -33,7 +33,6 @@ import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
@@ -54,7 +53,7 @@ import org.apache.commons.imaging.formats.psd.datareaders.CompressedDataReader;
 import org.apache.commons.imaging.formats.psd.datareaders.DataReader;
 import org.apache.commons.imaging.formats.psd.datareaders.UncompressedDataReader;
 
-public class PsdImageParser extends ImageParser implements XmpEmbeddable {
+public class PsdImageParser extends ImageParser<PsdImagingParameters> implements XmpEmbeddable<PsdImagingParameters> {
     private static final String DEFAULT_EXTENSION = ".psd";
     private static final String[] ACCEPTED_EXTENSIONS = { DEFAULT_EXTENSION, };
     private static final int PSD_SECTION_HEADER = 0;
@@ -381,7 +380,7 @@ public class PsdImageParser extends ImageParser implements XmpEmbeddable {
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final PsdImagingParameters params)
             throws ImageReadException, IOException {
         final List<ImageResourceBlock> blocks = readImageResourceBlocks(byteSource,
                 new int[] { IMAGE_RESOURCE_ID_ICC_PROFILE, }, 1);
@@ -399,7 +398,7 @@ public class PsdImageParser extends ImageParser implements XmpEmbeddable {
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
+    public Dimension getImageSize(final ByteSource byteSource, final PsdImagingParameters params)
             throws ImageReadException, IOException {
         final PsdHeaderInfo bhi = readHeader(byteSource);
 
@@ -408,7 +407,7 @@ public class PsdImageParser extends ImageParser implements XmpEmbeddable {
     }
 
     @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageMetadata getMetadata(final ByteSource byteSource, final PsdImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
@@ -438,7 +437,7 @@ public class PsdImageParser extends ImageParser implements XmpEmbeddable {
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, final PsdImagingParameters params)
             throws ImageReadException, IOException {
         final PsdImageContents imageContents = readImageContents(byteSource);
         // ImageContents imageContents = readImage(byteSource, false);
@@ -545,7 +544,7 @@ public class PsdImageParser extends ImageParser implements XmpEmbeddable {
     }
 
     @Override
-    public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String, Object> params)
+    public BufferedImage getBufferedImage(final ByteSource byteSource, final PsdImagingParameters params)
             throws ImageReadException, IOException {
         final PsdImageContents imageContents = readImageContents(byteSource);
         // ImageContents imageContents = readImage(byteSource, false);
@@ -657,7 +656,7 @@ public class PsdImageParser extends ImageParser implements XmpEmbeddable {
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     @Override
-    public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
+    public String getXmpXml(final ByteSource byteSource, final PsdImagingParameters params)
             throws ImageReadException, IOException {
 
         final PsdImageContents imageContents = readImageContents(byteSource);

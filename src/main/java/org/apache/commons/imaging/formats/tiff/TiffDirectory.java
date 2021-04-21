@@ -22,7 +22,6 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ByteConversions;
@@ -189,18 +188,18 @@ public class TiffDirectory extends TiffElement {
      * Gets the image associated with the directory, if any. Note that not all
      * directories contain images.
      * <p>
-     * The optional parameters map can be used to specify image access or
+     * The optional parameters object can be used to specify image access or
      * rendering options such as reading only a part of the overall image (i.e.
      * reading a sub-image) or applying a custom photometric interpreter.
      *
-     * @param params a map containing optional parameters to be applied to the
+     * @param params an object containing optional parameters to be applied to the
      * read operation.
      * @return if successful, a valid BufferedImage instance.
      * @throws ImageReadException in the event of an invalid or incompatible
      * data format.
      * @throws IOException in the event of an I/O error.
      */
-    public BufferedImage getTiffImage(final Map<String, Object> params)
+    public BufferedImage getTiffImage(final TiffImagingParameters params)
         throws ImageReadException, IOException {
         if (null == tiffImageData) {
             return null;
@@ -226,7 +225,7 @@ public class TiffDirectory extends TiffElement {
      */
     public BufferedImage getTiffImage(final ByteOrder byteOrder) throws ImageReadException,
             IOException {
-        return getTiffImage(byteOrder, null);
+        return getTiffImage(byteOrder, new TiffImagingParameters());
     }
 
     /**
@@ -239,14 +238,14 @@ public class TiffDirectory extends TiffElement {
      * argument.
      *
      * @param byteOrder byte-order obtained from the containing TIFF file
-     * @param params a map containing optional parameters to be applied to the
+     * @param params an object containing optional parameters to be applied to the
      * read operation.
      * @return if successful, a valid BufferedImage instance.
      * @throws ImageReadException in the event of an invalid or incompatible
      * data format.
      * @throws IOException in the event of an I/O error.
      */
-    public BufferedImage getTiffImage(final ByteOrder byteOrder, final Map<String, Object> params)
+    public BufferedImage getTiffImage(final ByteOrder byteOrder, final TiffImagingParameters params)
             throws ImageReadException, IOException {
         if (null == tiffImageData) {
             return null;
@@ -889,7 +888,7 @@ public class TiffDirectory extends TiffElement {
      * @throws IOException in the event of an I/O error
      */
     public TiffRasterData getRasterData(
-            final Map<String, Object> params)
+            final TiffImagingParameters params)
             throws ImageReadException, IOException {
 
         final TiffImageParser parser = new TiffImageParser();

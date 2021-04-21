@@ -14,8 +14,6 @@
  */
 package org.apache.commons.imaging.formats.xbm;
 
-import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_FORMAT;
-
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
@@ -48,7 +46,7 @@ import org.apache.commons.imaging.common.BasicCParser;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 
-public class XbmImageParser extends ImageParser {
+public class XbmImageParser extends ImageParser<XbmImagingParameters> {
     private static final String DEFAULT_EXTENSION = ".xbm";
     private static final String[] ACCEPTED_EXTENSIONS = { ".xbm", };
 
@@ -74,13 +72,13 @@ public class XbmImageParser extends ImageParser {
     }
 
     @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageMetadata getMetadata(final ByteSource byteSource, final XbmImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, final XbmImagingParameters params)
             throws ImageReadException, IOException {
         final XbmHeader xbmHeader = readXbmHeader(byteSource);
         return new ImageInfo("XBM", 1, new ArrayList<String>(),
@@ -91,14 +89,14 @@ public class XbmImageParser extends ImageParser {
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
+    public Dimension getImageSize(final ByteSource byteSource, final XbmImagingParameters params)
             throws ImageReadException, IOException {
         final XbmHeader xbmHeader = readXbmHeader(byteSource);
         return new Dimension(xbmHeader.width, xbmHeader.height);
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final XbmImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
@@ -310,7 +308,7 @@ public class XbmImageParser extends ImageParser {
 
     @Override
     public final BufferedImage getBufferedImage(final ByteSource byteSource,
-            final Map<String, Object> params) throws ImageReadException, IOException {
+            final XbmImagingParameters params) throws ImageReadException, IOException {
         final XbmParseResult result = parseXbmHeader(byteSource);
         return readXbmImage(result.xbmHeader, result.cParser);
     }
@@ -339,21 +337,8 @@ public class XbmImageParser extends ImageParser {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, XbmImagingParameters params)
             throws ImageWriteException, IOException {
-        // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<>() : new HashMap<>(params);
-
-        // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT)) {
-            params.remove(PARAM_KEY_FORMAT);
-        }
-
-        if (!params.isEmpty()) {
-            final Object firstKey = params.keySet().iterator().next();
-            throw new ImageWriteException("Unknown parameter: " + firstKey);
-        }
-
         final String name = randomName();
 
         os.write(("#define " + name + "_width " + src.getWidth() + "\n").getBytes(StandardCharsets.US_ASCII));

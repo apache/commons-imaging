@@ -17,9 +17,6 @@
 package org.apache.commons.imaging.formats.tiff.write;
 
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.DEFAULT_TIFF_BYTE_ORDER;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.PARAM_KEY_LZW_COMPRESSION_BLOCK_SIZE;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.PARAM_KEY_T4_OPTIONS;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.PARAM_KEY_T6_OPTIONS;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_1D;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_4;
@@ -44,7 +41,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.PackBits;
@@ -54,6 +50,7 @@ import org.apache.commons.imaging.common.mylzw.MyLzwCompressor;
 import org.apache.commons.imaging.common.ZlibDeflate;
 import org.apache.commons.imaging.formats.tiff.TiffElement;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
+import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
@@ -303,29 +300,13 @@ public abstract class TiffImageWriterBase {
         }
     }
 
-    public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, TiffImagingParameters params)
             throws ImageWriteException, IOException {
-        // make copy of params; we'll clear keys as we consume them.
-        params = new HashMap<>(params);
+        TiffOutputSet userExif = params.getExif();
 
-        // clear format key.
-        if (params.containsKey(ImagingConstants.PARAM_KEY_FORMAT)) {
-            params.remove(ImagingConstants.PARAM_KEY_FORMAT);
-        }
+        String xmpXml = params.getXmpXml();
 
-        TiffOutputSet userExif = null;
-        if (params.containsKey(ImagingConstants.PARAM_KEY_EXIF)) {
-            userExif = (TiffOutputSet) params.remove(ImagingConstants.PARAM_KEY_EXIF);
-        }
-
-        String xmpXml = null;
-        if (params.containsKey(ImagingConstants.PARAM_KEY_XMP_XML)) {
-            xmpXml = (String) params.get(ImagingConstants.PARAM_KEY_XMP_XML);
-            params.remove(ImagingConstants.PARAM_KEY_XMP_XML);
-        }
-
-        PixelDensity pixelDensity = (PixelDensity) params.remove(
-                ImagingConstants.PARAM_KEY_PIXEL_DENSITY);
+        PixelDensity pixelDensity = params.getPixelDensity();
         if (pixelDensity == null) {
             pixelDensity = PixelDensity.createFromPixelsPerInch(72, 72);
         }
@@ -358,40 +339,18 @@ public abstract class TiffImageWriterBase {
         short predictor = TiffTagConstants.PREDICTOR_VALUE_NONE;
 
         int stripSizeInBits = 64000; // the default from legacy implementation
-        if (params.containsKey(ImagingConstants.PARAM_KEY_COMPRESSION)) {
-            final Object value = params.get(ImagingConstants.PARAM_KEY_COMPRESSION);
-            if (value != null) {
-                if (!(value instanceof Number)) {
-                    throw new ImageWriteException(
-                            "Invalid compression parameter, must be numeric: "
-                                    + value);
-                }
-                compression = ((Number) value).intValue();
-            }
-            params.remove(ImagingConstants.PARAM_KEY_COMPRESSION);
-            if (params.containsKey(PARAM_KEY_LZW_COMPRESSION_BLOCK_SIZE)) {
-                final Object bValue =
-                    params.get(PARAM_KEY_LZW_COMPRESSION_BLOCK_SIZE);
-                if (!(bValue instanceof Number)) {
-                    throw new ImageWriteException(
-                            "Invalid compression block-size parameter: " + value);
-                }
-                final int stripSizeInBytes = ((Number) bValue).intValue();
+        Integer compressionParameter = params.getCompression();
+        if (compressionParameter != null) {
+        	compression = compressionParameter.intValue();
+        	final Integer stripSizeInBytes = params.getLzwCompressionBlockSize();
+            if (stripSizeInBytes != null) {
                 if (stripSizeInBytes < 8000) {
                     throw new ImageWriteException(
                             "Block size parameter " + stripSizeInBytes
                             + " is less than 8000 minimum");
                 }
-                stripSizeInBits = stripSizeInBytes*8;
-                params.remove(PARAM_KEY_LZW_COMPRESSION_BLOCK_SIZE);
+                stripSizeInBits = stripSizeInBytes * 8;
             }
-        }
-        final HashMap<String, Object> rawParams = new HashMap<>(params);
-        params.remove(PARAM_KEY_T4_OPTIONS);
-        params.remove(PARAM_KEY_T6_OPTIONS);
-        if (!params.isEmpty()) {
-            final Object firstKey = params.keySet().iterator().next();
-            throw new ImageWriteException("Unknown parameter: " + firstKey);
         }
 
         int samplesPerPixel;
@@ -428,7 +387,7 @@ public abstract class TiffImageWriterBase {
                         strips[i], width, strips[i].length / ((width + 7) / 8));
             }
         } else if (compression == TIFF_COMPRESSION_CCITT_GROUP_3) {
-            final Integer t4Parameter = (Integer) rawParams.get(PARAM_KEY_T4_OPTIONS);
+            final Integer t4Parameter = params.getT4Options();
             if (t4Parameter != null) {
                 t4Options = t4Parameter.intValue();
             }
@@ -452,7 +411,7 @@ public abstract class TiffImageWriterBase {
                 }
             }
         } else if (compression == TIFF_COMPRESSION_CCITT_GROUP_4) {
-            final Integer t6Parameter = (Integer) rawParams.get(PARAM_KEY_T6_OPTIONS);
+            final Integer t6Parameter = params.getT6Options();
             if (t6Parameter != null) {
                 t6Options = t6Parameter.intValue();
             }

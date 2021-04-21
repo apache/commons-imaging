@@ -16,7 +16,6 @@
  */
 package org.apache.commons.imaging.formats.icns;
 
-import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_FORMAT;
 import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
 import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
 
@@ -28,9 +27,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
@@ -42,7 +39,7 @@ import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 
-public class IcnsImageParser extends ImageParser {
+public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
     static final int ICNS_MAGIC = IcnsType.typeAsInt("icns");
     private static final String DEFAULT_EXTENSION = ".icns";
     private static final String[] ACCEPTED_EXTENSIONS = { ".icns", };
@@ -73,22 +70,14 @@ public class IcnsImageParser extends ImageParser {
 
     // FIXME should throw UOE
     @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageMetadata getMetadata(final ByteSource byteSource, final IcnsImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, Map<String, Object> params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, IcnsImagingParameters params)
             throws ImageReadException, IOException {
-        // make copy of params; we'll clear keys as we consume them.
-        params = params == null ? new HashMap<>() : new HashMap<>(params);
-
-        if (!params.isEmpty()) {
-            final Object firstKey = params.keySet().iterator().next();
-            throw new ImageReadException("Unknown parameter: " + firstKey);
-        }
-
         final IcnsContents contents = readImage(byteSource);
         final List<BufferedImage> images = IcnsDecoder.decodeAllImages(contents.icnsElements);
         if (images.isEmpty()) {
@@ -104,16 +93,8 @@ public class IcnsImageParser extends ImageParser {
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, Map<String, Object> params)
+    public Dimension getImageSize(final ByteSource byteSource, IcnsImagingParameters params)
             throws ImageReadException, IOException {
-        // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<>() : new HashMap<>(params);
-
-        if (!params.isEmpty()) {
-            final Object firstKey = params.keySet().iterator().next();
-            throw new ImageReadException("Unknown parameter: " + firstKey);
-        }
-
         final IcnsContents contents = readImage(byteSource);
         final List<BufferedImage> images = IcnsDecoder.decodeAllImages(contents.icnsElements);
         if (images.isEmpty()) {
@@ -124,7 +105,7 @@ public class IcnsImageParser extends ImageParser {
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final IcnsImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
@@ -244,7 +225,7 @@ public class IcnsImageParser extends ImageParser {
 
     @Override
     public final BufferedImage getBufferedImage(final ByteSource byteSource,
-            final Map<String, Object> params) throws ImageReadException, IOException {
+            final IcnsImagingParameters params) throws ImageReadException, IOException {
         final IcnsContents icnsContents = readImage(byteSource);
         final List<BufferedImage> result = IcnsDecoder.decodeAllImages(icnsContents.icnsElements);
         if (!result.isEmpty()) {
@@ -261,21 +242,8 @@ public class IcnsImageParser extends ImageParser {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, IcnsImagingParameters params)
             throws ImageWriteException, IOException {
-        // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<>() : new HashMap<>(params);
-
-        // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT)) {
-            params.remove(PARAM_KEY_FORMAT);
-        }
-
-        if (!params.isEmpty()) {
-            final Object firstKey = params.keySet().iterator().next();
-            throw new ImageWriteException("Unknown parameter: " + firstKey);
-        }
-
         IcnsType imageType;
         if (src.getWidth() == 16 && src.getHeight() == 16) {
             imageType = IcnsType.ICNS_16x16_32BIT_IMAGE;
