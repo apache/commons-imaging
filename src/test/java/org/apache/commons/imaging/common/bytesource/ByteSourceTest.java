@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.common.bytesource;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -41,7 +41,7 @@ public abstract class ByteSourceTest extends ImagingTest {
         }
 
         // test that all bytes written to file.
-        assertTrue(src.length == file.length());
+        assertEquals(src.length, file.length());
 
         return file;
     }

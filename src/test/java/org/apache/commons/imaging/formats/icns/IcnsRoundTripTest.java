@@ -17,6 +17,7 @@
 
 package org.apache.commons.imaging.formats.icns;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -412,18 +413,18 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         final BufferedImage dstImage = Imaging.getBufferedImage(exportFile);
 
         assertNotNull(dstImage);
-        assertTrue(dstImage.getWidth() == IMAGE[0].length);
-        assertTrue(dstImage.getHeight() == IMAGE.length);
+        assertEquals(dstImage.getWidth(), IMAGE[0].length);
+        assertEquals(dstImage.getHeight(), IMAGE.length);
 
         verify(dstImage, foreground, background);
     }
 
     private void verify(final BufferedImage data, final int foreground, final int background) {
         assertNotNull(data);
-        assertTrue(data.getHeight() == IMAGE.length);
+        assertEquals(data.getHeight(), IMAGE.length);
 
         for (int y = 0; y < data.getHeight(); y++) {
-            assertTrue(data.getWidth() == IMAGE[y].length);
+            assertEquals(data.getWidth(), IMAGE[y].length);
             for (int x = 0; x < data.getWidth(); x++) {
                 final int imageARGB = (IMAGE[y][x] == 1) ? foreground : background;
                 final int dataARGB = data.getRGB(x, y);
@@ -435,7 +436,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                             + dataARGB + " (0x" + Integer.toHexString(dataARGB)
                             + ")");
                 }
-                assertTrue(imageARGB == dataARGB);
+                assertEquals(imageARGB, dataARGB);
             }
         }
     }

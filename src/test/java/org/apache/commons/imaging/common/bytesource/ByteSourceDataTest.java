@@ -18,6 +18,7 @@
 package org.apache.commons.imaging.common.bytesource;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayInputStream;
@@ -48,7 +49,7 @@ public class ByteSourceDataTest extends ByteSourceTest {
             final File file = createTempFile(src);
 
             // test that all bytes written to file.
-            assertTrue(src.length == file.length());
+            assertEquals(src.length, file.length());
 
             return new ByteSourceFile(file);
         }
@@ -88,7 +89,7 @@ public class ByteSourceDataTest extends ByteSourceTest {
 
                 assertTrue(read <= src.length);
                 for (int i = 0; i < read; i++) {
-                    assertTrue(src[i] == prefix[i]);
+                    assertEquals(src[i], prefix[i]);
                 }
             }
         }
@@ -116,9 +117,9 @@ public class ByteSourceDataTest extends ByteSourceTest {
             try (InputStream is = byteSource.getInputStream(start)) {
                 final byte dst[] = IOUtils.toByteArray(is);
 
-                assertTrue(src.length == dst.length + start);
+                assertEquals(src.length, dst.length + start);
                 for (int i = 0; i < dst.length; i++) {
-                    assertTrue(dst[i] == src[i + start]);
+                    assertEquals(dst[i], src[i + start]);
                 }
             }
         }

@@ -18,7 +18,7 @@
 package org.apache.commons.imaging.formats.tiff;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -63,7 +63,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 }
             } catch (final ImageWriteException | ImageReadException ex) {
                 Debug.debug(ex);
-                assertFalse(true);
+                fail();
             }
 
             try {
@@ -77,7 +77,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 }
             } catch (final ImageWriteException | ImageReadException ex) {
                 Debug.debug(ex);
-                assertFalse(true);
+                fail();
             }
 
             try {
@@ -91,7 +91,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 }
             } catch (final ImageWriteException | ImageReadException ex) {
                 Debug.debug(ex);
-                assertFalse(true);
+                fail();
             }
 
             try {
@@ -105,7 +105,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 }
             } catch (final ImageWriteException | ImageReadException ex) {
                 Debug.debug(ex);
-                assertFalse(true);
+                fail();
             }
 
             try {
@@ -119,7 +119,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 }
             } catch (final ImageWriteException | ImageReadException ex) {
                 Debug.debug(ex);
-                assertFalse(true);
+                fail();
             }
 
             try {
@@ -133,7 +133,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 }
             } catch (final ImageWriteException | ImageReadException ex) {
                 Debug.debug(ex);
-                assertFalse(true);
+                fail();
             }
         } while (nextCombination(combinations, 1));
     }
@@ -169,7 +169,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 compareImages(image, result);
             } catch (final ImageWriteException | ImageReadException | IOException ex) {
                 Debug.debug(ex);
-                assertFalse(true);
+                fail();
             }
 
             try {
@@ -183,7 +183,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 compareImages(image, result);
             } catch (final ImageWriteException | ImageReadException | IOException ex) {
                 Debug.debug(ex);
-                assertFalse(true);
+                fail();
             }
 
             try {
@@ -197,7 +197,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 compareImages(image, result);
             } catch (final ImageWriteException | ImageReadException | IOException ex) {
                 Debug.debug(ex);
-                assertFalse(true);
+                fail();
             }
 
             try {
@@ -211,7 +211,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 compareImages(image, result);
             } catch (final ImageWriteException | ImageReadException | IOException ex) {
                 Debug.debug(ex);
-                assertFalse(true);
+                fail();
             }
 
             try {
@@ -225,7 +225,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 compareImages(image, result);
             } catch (final ImageWriteException | ImageReadException | IOException ex) {
                 Debug.debug(ex);
-                assertFalse(true);
+                fail();
             }
 
             try {
@@ -238,7 +238,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 compareImages(image, result);
             } catch (final ImageWriteException | ImageReadException | IOException ex) {
                 Debug.debug(ex);
-                assertFalse(true);
+                fail();
             }
         } while (nextCombination(combinations, 1));
     }
