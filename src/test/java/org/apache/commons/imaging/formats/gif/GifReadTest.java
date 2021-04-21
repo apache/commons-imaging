@@ -53,9 +53,7 @@ public class GifReadTest extends GifBaseTest {
     @ParameterizedTest
     @MethodSource("data")
     public void testMetadata(final File imageFile) {
-        Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-            Imaging.getMetadata(imageFile);
-        });
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> Imaging.getMetadata(imageFile));
     }
 
     @ParameterizedTest
