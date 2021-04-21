@@ -41,17 +41,6 @@ public final class ImagingConstants {
     public static final String PARAM_KEY_COMPRESSION = "COMPRESSION";
 
     /**
-     * <p>Parameter key. Indicates whether to read embedded thumbnails.</p>
-     *
-     * <p>Only applies to read EXIF metadata from JPEG/JFIF files.</p>
-     *
-     * <p>Valid values: {@code Boolean.TRUE} and {@code Boolean.FALSE}.</p>
-     *
-     * @see org.apache.commons.imaging.formats.tiff.constants.TiffConstants
-     */
-    public static final String PARAM_KEY_READ_THUMBNAILS = "READ_THUMBNAILS";
-
-    /**
      * <p>Parameter key. Indicates whether to throw exceptions when parsing invalid
      * files, or whether to tolerate small problems.</p>
      *
@@ -61,17 +50,6 @@ public final class ImagingConstants {
      * @see org.apache.commons.imaging.formats.tiff.constants.TiffConstants
      */
     public static final String PARAM_KEY_STRICT = "STRICT";
-
-    /**
-     * <p>Parameter key.</p>
-     *
-     * <p>Only used when writing images.</p>
-     *
-     * <p>Valid values: TiffOutputSet to write into the image's EXIF metadata.</p>
-     *
-     * @see org.apache.commons.imaging.formats.tiff.write.TiffOutputSet
-     */
-    public static final String PARAM_KEY_EXIF = "EXIF";
 
     /**
      * Empty byte array.

@@ -16,7 +16,6 @@
  */
 package org.apache.commons.imaging.formats.jpeg;
 
-import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_READ_THUMBNAILS;
 import static org.apache.commons.imaging.common.BinaryFunctions.remainingBytes;
 import static org.apache.commons.imaging.common.BinaryFunctions.startsWith;
 
@@ -30,9 +29,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -64,7 +61,7 @@ import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.internal.Debug;
 
-public class JpegImageParser extends ImageParser implements XmpEmbeddable {
+public class JpegImageParser extends ImageParser<JpegImagingParameters> implements XmpEmbeddable<JpegImagingParameters> {
 
     private static final Logger LOGGER = Logger.getLogger(JpegImageParser.class.getName());
 
@@ -99,7 +96,7 @@ public class JpegImageParser extends ImageParser implements XmpEmbeddable {
 
     @Override
     public final BufferedImage getBufferedImage(final ByteSource byteSource,
-            final Map<String, Object> params) throws ImageReadException, IOException {
+            final JpegImagingParameters params) throws ImageReadException, IOException {
         final JpegDecoder jpegDecoder = new JpegDecoder();
         return jpegDecoder.decode(byteSource);
     }
@@ -290,7 +287,7 @@ public class JpegImageParser extends ImageParser implements XmpEmbeddable {
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final JpegImagingParameters params)
             throws ImageReadException, IOException {
         final List<Segment> segments = readSegments(byteSource,
                 new int[] { JpegConstants.JPEG_APP2_MARKER, }, false);
@@ -320,7 +317,7 @@ public class JpegImageParser extends ImageParser implements XmpEmbeddable {
     }
 
     @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageMetadata getMetadata(final ByteSource byteSource, final JpegImagingParameters params)
             throws ImageReadException, IOException {
         final TiffImageMetadata exif = getExifMetadata(byteSource, params);
 
@@ -351,19 +348,14 @@ public class JpegImageParser extends ImageParser implements XmpEmbeddable {
         return result;
     }
 
-    public TiffImageMetadata getExifMetadata(final ByteSource byteSource, Map<String, Object> params)
+    public TiffImageMetadata getExifMetadata(final ByteSource byteSource, JpegImagingParameters params)
             throws ImageReadException, IOException {
         final byte[] bytes = getExifRawData(byteSource);
         if (null == bytes) {
             return null;
         }
 
-        if (params == null) {
-            params = new HashMap<>();
-        }
-        if (!params.containsKey(PARAM_KEY_READ_THUMBNAILS)) {
-            params.put(PARAM_KEY_READ_THUMBNAILS, Boolean.TRUE);
-        }
+        params.setReadThumbnails(Boolean.TRUE);
 
         return (TiffImageMetadata) new TiffImageParser().getMetadata(bytes,
                 params);
@@ -542,7 +534,7 @@ public class JpegImageParser extends ImageParser implements XmpEmbeddable {
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     @Override
-    public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
+    public String getXmpXml(final ByteSource byteSource, final JpegImagingParameters params)
             throws ImageReadException, IOException {
 
         final List<String> result = new ArrayList<>();
@@ -592,7 +584,7 @@ public class JpegImageParser extends ImageParser implements XmpEmbeddable {
     }
 
     public JpegPhotoshopMetadata getPhotoshopMetadata(final ByteSource byteSource,
-            final Map<String, Object> params) throws ImageReadException, IOException {
+            final JpegImagingParameters params) throws ImageReadException, IOException {
         final List<Segment> segments = readSegments(byteSource,
                 new int[] { JpegConstants.JPEG_APP13_MARKER, }, false);
 
@@ -621,7 +613,7 @@ public class JpegImageParser extends ImageParser implements XmpEmbeddable {
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
+    public Dimension getImageSize(final ByteSource byteSource, final JpegImagingParameters params)
             throws ImageReadException, IOException {
         final List<Segment> segments = readSegments(byteSource, new int[] {
                 // kJFIFMarker,
@@ -655,7 +647,7 @@ public class JpegImageParser extends ImageParser implements XmpEmbeddable {
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, final JpegImagingParameters params)
             throws ImageReadException, IOException {
         // List allSegments = readSegments(byteSource, null, false);
 

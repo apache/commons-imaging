@@ -16,8 +16,6 @@
  */
 package org.apache.commons.imaging.formats.ico;
 
-import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_FORMAT;
-import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_PIXEL_DENSITY;
 import static org.apache.commons.imaging.common.BinaryFunctions.read2Bytes;
 import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
 import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
@@ -33,9 +31,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
@@ -52,7 +48,7 @@ import org.apache.commons.imaging.formats.bmp.BmpImageParser;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 
-public class IcoImageParser extends ImageParser {
+public class IcoImageParser extends ImageParser<IcoImagingParameters> {
     private static final String DEFAULT_EXTENSION = ".ico";
     private static final String[] ACCEPTED_EXTENSIONS = { ".ico", ".cur", };
 
@@ -83,28 +79,28 @@ public class IcoImageParser extends ImageParser {
 
     // TODO should throw UOE
     @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageMetadata getMetadata(final ByteSource byteSource, final IcoImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
 
     // TODO should throw UOE
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, final IcoImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
 
     // TODO should throw UOE
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
+    public Dimension getImageSize(final ByteSource byteSource, final IcoImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
 
     // TODO should throw UOE
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final IcoImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
@@ -572,7 +568,7 @@ public class IcoImageParser extends ImageParser {
 
     @Override
     public final BufferedImage getBufferedImage(final ByteSource byteSource,
-            final Map<String, Object> params) throws ImageReadException, IOException {
+            final IcoImagingParameters params) throws ImageReadException, IOException {
         final ImageContents contents = readImage(byteSource);
         final FileHeader fileHeader = contents.fileHeader;
         if (fileHeader.iconCount > 0) {
@@ -624,22 +620,9 @@ public class IcoImageParser extends ImageParser {
     // }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, IcoImagingParameters params)
             throws ImageWriteException, IOException {
-        // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<>() : new HashMap<>(params);
-
-        // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT)) {
-            params.remove(PARAM_KEY_FORMAT);
-        }
-
-        final PixelDensity pixelDensity = (PixelDensity) params.remove(PARAM_KEY_PIXEL_DENSITY);
-
-        if (!params.isEmpty()) {
-            final Object firstKey = params.keySet().iterator().next();
-            throw new ImageWriteException("Unknown parameter: " + firstKey);
-        }
+        final PixelDensity pixelDensity = params.getPixelDensity();
 
         final PaletteFactory paletteFactory = new PaletteFactory();
         final SimplePalette palette = paletteFactory.makeExactRgbPaletteSimple(src, 256);
