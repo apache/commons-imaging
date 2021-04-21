@@ -17,8 +17,7 @@
 package org.apache.commons.imaging.formats.jpeg.segments;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.io.IOException;
 
@@ -35,7 +34,7 @@ public class App2SegmentTest {
   public void testEqualsReturningTrue()  throws IOException, ImageReadException {
       final App2Segment app2Segment = new App2Segment(0, 0, null);
 
-      assertTrue(app2Segment.equals(app2Segment));
+      assertEquals(app2Segment, app2Segment);
   }
 
   @Test
@@ -43,7 +42,7 @@ public class App2SegmentTest {
       final byte[] byteArray = new byte[3];
       final App2Segment app2Segment = new App2Segment(65475, byteArray);
 
-      assertFalse(app2Segment.equals(byteArray));
+      assertNotEquals(app2Segment, byteArray);
   }
 
   @Test

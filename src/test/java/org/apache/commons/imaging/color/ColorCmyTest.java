@@ -19,7 +19,7 @@ package org.apache.commons.imaging.color;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -61,7 +61,7 @@ public class ColorCmyTest {
         final ColorCmy colorCmy = new ColorCmy(0.0, (-1668.733868772), (-1568.733868772));
         final ColorCmy colorCmyTwo = ColorCmy.YELLOW;
 
-        assertFalse(colorCmy.equals(colorCmyTwo));
+        assertNotEquals(colorCmy, colorCmyTwo);
         assertEquals((-1568.733868772), colorCmy.Y, 0.01);
         assertEquals((-1668.733868772), colorCmy.M, 0.01);
     }
