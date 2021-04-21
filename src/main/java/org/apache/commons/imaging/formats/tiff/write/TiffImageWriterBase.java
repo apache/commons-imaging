@@ -701,9 +701,7 @@ public abstract class TiffImageWriterBase {
 
     protected void writeImageFileHeader(final BinaryOutputStream bos)
             throws IOException {
-        final int offsetToFirstIFD = TIFF_HEADER_SIZE;
-
-        writeImageFileHeader(bos, offsetToFirstIFD);
+        writeImageFileHeader(bos, TIFF_HEADER_SIZE);
     }
 
     protected void writeImageFileHeader(final BinaryOutputStream bos,

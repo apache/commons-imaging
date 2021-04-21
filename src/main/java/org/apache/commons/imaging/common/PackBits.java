@@ -148,8 +148,7 @@ public class PackBits {
                     }
                 }
             }
-            final byte[] result = baos.toByteArray();
-            return result;
+            return baos.toByteArray();
         }
     }
 }

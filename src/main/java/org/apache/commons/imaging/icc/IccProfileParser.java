@@ -324,8 +324,7 @@ public class IccProfileParser extends BinaryFileParser {
                 printCharQuad("DeviceModel", deviceModel);
             }
 
-            final boolean result = deviceManufacturer == IccConstants.IEC && deviceModel == IccConstants.sRGB;
-            return result;
+            return deviceManufacturer == IccConstants.IEC && deviceModel == IccConstants.sRGB;
         }
     }
 

@@ -74,8 +74,7 @@ public class RgbeImageParser extends ImageParser {
     public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         try (RgbeInfo info = new RgbeInfo(byteSource)) {
-            final ImageMetadata ret = info.getMetadata();
-            return ret;
+            return info.getMetadata();
         }
     }
 
@@ -119,8 +118,7 @@ public class RgbeImageParser extends ImageParser {
     public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         try (RgbeInfo info = new RgbeInfo(byteSource)) {
-            final Dimension ret = new Dimension(info.getWidth(), info.getHeight());
-            return ret;
+            return new Dimension(info.getWidth(), info.getHeight());
         }
     }
 

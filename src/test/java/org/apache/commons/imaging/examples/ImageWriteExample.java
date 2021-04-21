@@ -43,9 +43,7 @@ public class ImageWriteExample {
         params.put(ImagingConstants.PARAM_KEY_COMPRESSION, Integer.valueOf(
                 TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED));
 
-        final byte[] bytes = Imaging.writeImageToBytes(image, format, params);
-
-        return bytes;
+        return Imaging.writeImageToBytes(image, format, params);
     }
 
 }

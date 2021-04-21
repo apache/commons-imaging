@@ -555,8 +555,7 @@ public class IcoImageParser extends ImageParser {
                 fIconDatas[i] = readIconData(iconData, fIconInfos[i]);
             }
 
-            final ImageContents ret = new ImageContents(fileHeader, fIconDatas);
-            return ret;
+            return new ImageContents(fileHeader, fIconDatas);
         }
     }
 
