@@ -160,8 +160,7 @@ public final class T4AndT6Compression {
                     throw new ImageReadException("Unrecoverable row length error in image row " + y);
                 }
             }
-            final byte[] ret = outputStream.toByteArray();
-            return ret;
+            return outputStream.toByteArray();
         } catch (final IOException ioException) {
             throw new ImageReadException("Error reading image to decompress", ioException);
         }
@@ -238,8 +237,7 @@ public final class T4AndT6Compression {
                     throw new ImageReadException("Unrecoverable row length error in image row " + y);
                 }
             }
-            final byte[] ret = outputStream.toByteArray();
-            return ret;
+            return outputStream.toByteArray();
         }
     }
 
@@ -518,8 +516,7 @@ public final class T4AndT6Compression {
             // EOFB
             T4_T6_Tables.EOL.writeBits(outputStream);
             T4_T6_Tables.EOL.writeBits(outputStream);
-            final byte[] ret = outputStream.toByteArray();
-            return ret;
+            return outputStream.toByteArray();
         } catch (final IOException ioException) {
             throw new ImageWriteException("I/O error", ioException);
         }

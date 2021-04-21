@@ -97,8 +97,7 @@ public class PsdImageParser extends ImageParser implements XmpEmbeddable {
     private PsdHeaderInfo readHeader(final ByteSource byteSource)
             throws ImageReadException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
-            final PsdHeaderInfo ret = readHeader(is);
-            return ret;
+            return readHeader(is);
         }
     }
 
@@ -247,9 +246,8 @@ public class PsdImageParser extends ImageParser implements XmpEmbeddable {
                     resourceStream, imageContents.ImageResourcesLength,
                     "Not a Valid PSD File");
 
-            final List<ImageResourceBlock> ret = readImageResourceBlocks(ImageResources, imageResourceIDs,
+            return readImageResourceBlocks(ImageResources, imageResourceIDs,
                     maxBlocksToRead);
-            return ret;
         }
     }
 

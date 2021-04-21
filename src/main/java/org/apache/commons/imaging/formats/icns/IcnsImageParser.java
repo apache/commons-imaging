@@ -227,8 +227,7 @@ public class IcnsImageParser extends ImageParser {
                 icnsElements[i] = icnsElementList.get(i);
             }
 
-            final IcnsContents ret = new IcnsContents(icnsHeader, icnsElements);
-            return ret;
+            return new IcnsContents(icnsHeader, icnsElements);
         }
     }
 

@@ -211,8 +211,7 @@ public class WbmpImageParser extends ImageParser {
             final Map<String, Object> params) throws ImageReadException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             final WbmpHeader wbmpHeader = readWbmpHeader(is);
-            final BufferedImage ret = readImage(wbmpHeader, is);
-            return ret;
+            return readImage(wbmpHeader, is);
         }
     }
 

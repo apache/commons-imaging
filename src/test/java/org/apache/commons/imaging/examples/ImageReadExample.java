@@ -42,10 +42,8 @@ public class ImageReadExample {
 
         // params.put(ImagingConstants.PARAM_KEY_VERBOSE, Boolean.TRUE);
 
-        // read image
-        final BufferedImage image = Imaging.getBufferedImage(file, params);
-
-        return image;
+        // read and return the image
+        return Imaging.getBufferedImage(file, params);
     }
 
     public static class ManagedImageBufferedImageFactory implements

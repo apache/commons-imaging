@@ -318,8 +318,7 @@ public class PcxImageParser extends ImageParser {
         try (InputStream stream = byteSource.getInputStream()) {
             final long toSkip = byteSource.getLength() - 769;
             skipBytes(stream, (int) toSkip);
-            final int[] ret = read256ColorPalette(stream);
-            return ret;
+            return read256ColorPalette(stream);
         }
     }
 
@@ -485,8 +484,7 @@ public class PcxImageParser extends ImageParser {
 
         try (InputStream is = byteSource.getInputStream()) {
             final PcxHeader pcxHeader = readPcxHeader(is, isStrict);
-            final BufferedImage ret = readImage(pcxHeader, is, byteSource);
-            return ret;
+            return readImage(pcxHeader, is, byteSource);
         }
     }
 
