@@ -29,16 +29,12 @@ public class PpmFileInfoTest {
 
   @Test
   public void testCreatesPpmFileInfoOne() {
-      Assertions.assertThrows(ImageReadException.class, () -> {
-          new PpmFileInfo(0, 0, false, 16711680);
-      });
+      Assertions.assertThrows(ImageReadException.class, () -> new PpmFileInfo(0, 0, false, 16711680));
   }
 
   @Test
   public void testCreatesPpmFileInfoThree() {
-      Assertions.assertThrows(ImageReadException.class, () -> {
-          new PpmFileInfo(0, 0, true, 0);
-      });
+      Assertions.assertThrows(ImageReadException.class, () -> new PpmFileInfo(0, 0, true, 0));
   }
 
 }

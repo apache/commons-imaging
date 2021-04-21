@@ -48,36 +48,26 @@ public class PngChunkScalTest {
 
    @Test
    public void testConstruct_InvalidUnitSpecifier() {
-       Assertions.assertThrows(ImageReadException.class,() -> {
-           new PngChunkScal(10, chunkType, 0, new byte[]{3, 48, 46, 48, 49, 0, 48, 46, 48, 50});
-       });
+       Assertions.assertThrows(ImageReadException.class,() -> new PngChunkScal(10, chunkType, 0, new byte[]{3, 48, 46, 48, 49, 0, 48, 46, 48, 50}));
    }
 
    @Test
    public void testConstruct_MissingSeparator() {
-      Assertions.assertThrows(ImageReadException.class,() -> {
-          new PngChunkScal(9, chunkType, 0, new byte[]{1, 48, 46, 48, 49, 48, 46, 48, 50});
-      });
+      Assertions.assertThrows(ImageReadException.class,() -> new PngChunkScal(9, chunkType, 0, new byte[]{1, 48, 46, 48, 49, 48, 46, 48, 50}));
    }
 
    @Test
    public void testConstruct_InvalidDblValue() {
-       Assertions.assertThrows(ImageReadException.class,() -> {
-           new PngChunkScal(10, chunkType, 0, new byte[]{2, 65, 46, 48, 49, 0, 48, 46, 48, 50});
-       });
+       Assertions.assertThrows(ImageReadException.class,() -> new PngChunkScal(10, chunkType, 0, new byte[]{2, 65, 46, 48, 49, 0, 48, 46, 48, 50}));
    }
 
    @Test
    public void testConstruct_MissingXValue() {
-      Assertions.assertThrows(ImageReadException.class,() -> {
-          new PngChunkScal(2, chunkType, 0, new byte[]{2, 0});
-      });
+      Assertions.assertThrows(ImageReadException.class,() -> new PngChunkScal(2, chunkType, 0, new byte[]{2, 0}));
    }
 
    @Test
    public void testConstruct_MissingYValue() {
-       Assertions.assertThrows(ImageReadException.class,() -> {
-           new PngChunkScal(6, chunkType, 0, new byte[]{2, 48, 46, 48, 49, 0});
-       });
+       Assertions.assertThrows(ImageReadException.class,() -> new PngChunkScal(6, chunkType, 0, new byte[]{2, 48, 46, 48, 49, 0}));
    }
 }

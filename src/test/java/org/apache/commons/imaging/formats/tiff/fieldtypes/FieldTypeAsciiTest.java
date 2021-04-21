@@ -39,9 +39,7 @@ public class FieldTypeAsciiTest {
       final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
       final TiffField tiffField = new TiffField(0, 0, fieldTypeAscii, 0L, 0, byteArray, byteOrder, 1);
 
-      Assertions.assertThrows(ImageWriteException.class, () -> {
-          fieldTypeAscii.writeData(tiffField, byteOrder);
-      });
+      Assertions.assertThrows(ImageWriteException.class, () -> fieldTypeAscii.writeData(tiffField, byteOrder));
   }
 
   @Test

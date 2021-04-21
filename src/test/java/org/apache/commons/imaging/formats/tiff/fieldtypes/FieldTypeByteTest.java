@@ -29,9 +29,7 @@ public class FieldTypeByteTest{
       final FieldTypeByte fieldTypeByte = FieldType.UNDEFINED;
       final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
 
-      Assertions.assertThrows(ImageWriteException.class, () -> {
-          fieldTypeByte.writeData( null, byteOrder);
-      });
+      Assertions.assertThrows(ImageWriteException.class, () -> fieldTypeByte.writeData( null, byteOrder));
   }
 
 }

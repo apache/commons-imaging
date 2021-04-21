@@ -40,9 +40,7 @@ public class DcxReadTest extends DcxBaseTest {
     @ParameterizedTest
     @MethodSource("data")
     public void testImageMetadata(final File imageFile) {
-        Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-            Imaging.getMetadata(imageFile);
-        });
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> Imaging.getMetadata(imageFile));
     }
 
     @Disabled(value = "RoundtripTest has to be fixed before implementation can throw UnsupportedOperationException")
