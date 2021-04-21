@@ -24,7 +24,7 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 
 class PbmFileInfo extends FileInfo {
-    private int bitcache;
+    private int bitCache;
     private int bitsInCache;
 
     PbmFileInfo(final int width, final int height, final boolean rawbits) {
@@ -68,7 +68,7 @@ class PbmFileInfo extends FileInfo {
 
     @Override
     protected void newline() {
-        bitcache = 0;
+        bitCache = 0;
         bitsInCache = 0;
     }
 
@@ -79,12 +79,12 @@ class PbmFileInfo extends FileInfo {
             if (bits < 0) {
                 throw new IOException("PBM: Unexpected EOF");
             }
-            bitcache = 0xff & bits;
+            bitCache = 0xff & bits;
             bitsInCache += 8;
         }
 
-        final int bit = 0x1 & (bitcache >> 7);
-        bitcache <<= 1;
+        final int bit = 0x1 & (bitCache >> 7);
+        bitCache <<= 1;
         bitsInCache--;
 
         if (bit == 0) {

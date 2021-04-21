@@ -26,12 +26,12 @@ import org.apache.commons.imaging.common.ImageBuilder;
 abstract class FileInfo {
     final int width;
     final int height;
-    final boolean rawbits;
+    final boolean rawBits;
 
-    FileInfo(final int width, final int height, final boolean rawbits) {
+    FileInfo(final int width, final int height, final boolean rawBits) {
         this.width = width;
         this.height = height;
-        this.rawbits = rawbits;
+        this.rawBits = rawBits;
     }
 
     abstract boolean hasAlpha();
@@ -89,7 +89,7 @@ abstract class FileInfo {
         // try
         // {
 
-        if (!rawbits) {
+        if (!rawBits) {
             final WhiteSpaceReader wsr = new WhiteSpaceReader(is);
 
             for (int y = 0; y < height; y++) {

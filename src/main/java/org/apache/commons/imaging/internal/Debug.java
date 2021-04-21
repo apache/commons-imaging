@@ -144,11 +144,11 @@ public final class Debug {
         return result.toString();
     }
 
-    private static String byteQuadToString(final int bytequad) {
-        final byte b1 = (byte) ((bytequad >> 24) & 0xff);
-        final byte b2 = (byte) ((bytequad >> 16) & 0xff);
-        final byte b3 = (byte) ((bytequad >> 8) & 0xff);
-        final byte b4 = (byte) ((bytequad >> 0) & 0xff);
+    private static String byteQuadToString(final int byteQuad) {
+        final byte b1 = (byte) ((byteQuad >> 24) & 0xff);
+        final byte b2 = (byte) ((byteQuad >> 16) & 0xff);
+        final byte b3 = (byte) ((byteQuad >> 8) & 0xff);
+        final byte b4 = (byte) ((byteQuad >> 0) & 0xff);
 
         final char c1 = (char) b1;
         final char c2 = (char) b2;
@@ -157,8 +157,8 @@ public final class Debug {
         // return new String(new char[] { c1, c2, c3, c4 });
         final StringBuilder buffer = new StringBuilder(31);
         buffer.append(new String(new char[]{c1, c2, c3, c4}));
-        buffer.append(" bytequad: ");
-        buffer.append(bytequad);
+        buffer.append(" byteQuad: ");
+        buffer.append(byteQuad);
         buffer.append(" b1: ");
         buffer.append(b1);
         buffer.append(" b2: ");

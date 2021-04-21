@@ -71,14 +71,14 @@ public class SosSegment extends Segment {
             final int scanComponentSelector = readByte("scanComponentSelector", is, "Not a Valid JPEG File");
             // Debug.debug("scanComponentSelector", scanComponentSelector);
 
-            final int acDcEntropoyCodingTableSelector = readByte(
-                    "acDcEntropoyCodingTableSelector", is,
+            final int acDcEntropyCodingTableSelector = readByte(
+                    "acDcEntropyCodingTableSelector", is,
                     "Not a Valid JPEG File");
             // Debug.debug("ac_dc_entrooy_coding_table_selector",
-            // acDcEntropoyCodingTableSelector);
+            // acDcEntropyCodingTableSelector);
 
-            final int dcCodingTableSelector = (acDcEntropoyCodingTableSelector >> 4) & 0xf;
-            final int acCodingTableSelector = acDcEntropoyCodingTableSelector & 0xf;
+            final int dcCodingTableSelector = (acDcEntropyCodingTableSelector >> 4) & 0xf;
+            final int acCodingTableSelector = acDcEntropyCodingTableSelector & 0xf;
             components[i] = new Component(scanComponentSelector,
                     dcCodingTableSelector, acCodingTableSelector);
         }

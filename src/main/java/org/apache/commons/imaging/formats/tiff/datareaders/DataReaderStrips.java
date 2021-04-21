@@ -251,7 +251,7 @@ public final class DataReaderStrips extends ImageDataReader {
     @Override
     public ImageBuilder readImageData(final Rectangle subImageSpecification,
         final boolean hasAlpha,
-        final boolean isAlphaPremultiplied)
+        final boolean isAlphaPreMultiplied)
             throws ImageReadException, IOException {
 
         final Rectangle subImage;
@@ -289,7 +289,7 @@ public final class DataReaderStrips extends ImageDataReader {
         //        or working
         final ImageBuilder workingBuilder =
                 new ImageBuilder(width, workingHeight,
-                    hasAlpha, isAlphaPremultiplied);
+                    hasAlpha, isAlphaPreMultiplied);
         if (planarConfiguration != TiffPlanarConfiguration.PLANAR) {
             for (int strip = strip0; strip <= strip1; strip++) {
                 final long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;

@@ -21,7 +21,7 @@ import java.awt.image.BufferedImage;
 import org.apache.commons.imaging.ImageWriteException;
 
 /**
- * Dithering algorithms to use when quantizing an image to paletted form.
+ * Dithering algorithms to use when quantizing an image to palette form.
  */
 public final class Dithering {
     private Dithering() {

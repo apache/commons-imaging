@@ -86,7 +86,7 @@ public class IptcParserTest {
     }
 
     /**
-     * Tests for IptcParser encoding support. See IMAGING-168 and pullr equest #124 for more.
+     * Tests for IptcParser encoding support. See IMAGING-168 and pull request #124 for more.
      * @throws IOException when reading input
      * @throws ImageReadException when parsing file
      */

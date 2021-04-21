@@ -152,17 +152,17 @@ public final class MicrosoftHdPhotoTagConstants {
     public static final BinaryConstant PIXEL_FORMAT_VALUE_32_BIT_GRAY_FIXED_POINT =
             createMicrosoftHdPhotoGuidEndingWith((byte) 0x3f);
 
-    public static final TagInfoLong EXIF_TAG_TRANSFOMATION = new TagInfoLong(
-            "Transfomation", 0xbc02,
+    public static final TagInfoLong EXIF_TAG_TRANSFORMATION = new TagInfoLong(
+            "Transformation", 0xbc02,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final int TRANSFOMATION_VALUE_HORIZONTAL_NORMAL = 0;
-    public static final int TRANSFOMATION_VALUE_MIRROR_VERTICAL = 1;
-    public static final int TRANSFOMATION_VALUE_MIRROR_HORIZONTAL = 2;
-    public static final int TRANSFOMATION_VALUE_ROTATE_180 = 3;
-    public static final int TRANSFOMATION_VALUE_ROTATE_90_CW = 4;
-    public static final int TRANSFOMATION_VALUE_MIRROR_HORIZONTAL_AND_ROTATE_90_CW = 5;
-    public static final int TRANSFOMATION_VALUE_MIRROR_HORIZONTAL_AND_ROTATE_270_CW = 6;
-    public static final int TRANSFOMATION_VALUE_ROTATE_270_CW = 7;
+    public static final int TRANSFORMATION_VALUE_HORIZONTAL_NORMAL = 0;
+    public static final int TRANSFORMATION_VALUE_MIRROR_VERTICAL = 1;
+    public static final int TRANSFORMATION_VALUE_MIRROR_HORIZONTAL = 2;
+    public static final int TRANSFORMATION_VALUE_ROTATE_180 = 3;
+    public static final int TRANSFORMATION_VALUE_ROTATE_90_CW = 4;
+    public static final int TRANSFORMATION_VALUE_MIRROR_HORIZONTAL_AND_ROTATE_90_CW = 5;
+    public static final int TRANSFORMATION_VALUE_MIRROR_HORIZONTAL_AND_ROTATE_270_CW = 6;
+    public static final int TRANSFORMATION_VALUE_ROTATE_270_CW = 7;
 
     public static final TagInfoLong EXIF_TAG_UNCOMPRESSED = new TagInfoLong(
             "Uncompressed", 0xbc03,
@@ -231,7 +231,7 @@ public final class MicrosoftHdPhotoTagConstants {
     public static final List<TagInfo> ALL_MICROSOFT_HD_PHOTO_TAGS =
             Collections.unmodifiableList(Arrays.asList(
                     EXIF_TAG_PIXEL_FORMAT,
-                    EXIF_TAG_TRANSFOMATION,
+                    EXIF_TAG_TRANSFORMATION,
                     EXIF_TAG_UNCOMPRESSED,
                     EXIF_TAG_IMAGE_TYPE,
                     EXIF_TAG_IMAGE_WIDTH,

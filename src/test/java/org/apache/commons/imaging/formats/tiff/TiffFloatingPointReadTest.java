@@ -170,7 +170,7 @@ public class TiffFloatingPointReadTest {
             checkSubImage(target, fullRaster, 0, height-1, width, 1);  // top row
             checkSubImage(target, fullRaster, width-1, 0, 1, height);  // right column
 
-            // test along the main diagnonal and a parallel that reaches the top-right corner
+            // test along the main diagonal and a parallel that reaches the top-right corner
             final int s = width-height;
             for(int i=0; i<height-8; i++){
                 checkSubImage(target, fullRaster, i, i, 8, 8);

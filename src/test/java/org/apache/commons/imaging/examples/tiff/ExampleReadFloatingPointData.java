@@ -162,7 +162,7 @@ public class ExampleReadFloatingPointData {
             paletteList.add(
                 new PaletteEntryForRange(minValue, maxValue, Color.black, Color.white));
             // palette entries are defined for ranges   minValue <= value < maxValue.
-            // Thus raster cells containing the maximumg value would not be
+            // Thus raster cells containing the maximum value would not be
             // color-coded unless we add an additional palette entry to
             // handle the single-value for the maximum.
             paletteList.add(new PaletteEntryForValue(maxValue, Color.white));

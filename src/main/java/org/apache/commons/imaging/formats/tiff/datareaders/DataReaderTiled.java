@@ -220,7 +220,7 @@ public final class DataReaderTiled extends ImageDataReader {
     @Override
     public ImageBuilder readImageData(final Rectangle subImageSpecification,
         final boolean hasAlpha,
-        final boolean isAlphaPremultiplied)
+        final boolean isAlphaPreMultiplied)
             throws ImageReadException, IOException {
 
         final Rectangle subImage;
@@ -256,7 +256,7 @@ public final class DataReaderTiled extends ImageDataReader {
 
         final ImageBuilder workingBuilder =
                 new ImageBuilder(workingWidth, workingHeight,
-                hasAlpha, isAlphaPremultiplied);
+                hasAlpha, isAlphaPreMultiplied);
 
         for (int iRow = row0; iRow <= row1; iRow++) {
             for (int iCol = col0; iCol <= col1; iCol++) {
