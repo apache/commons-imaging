@@ -44,55 +44,10 @@ public final class TiffConstants {
     public static final int TIFF_COMPRESSION_DEFLATE_PKZIP = 32946;
     public static final int TIFF_COMPRESSION_DEFLATE_ADOBE = 8;
 
-    /**
-     * Parameter key. Used in write operations to indicate the desired
-     * T.4 options to use when using TIFF_COMPRESSION_CCITT_GROUP_3.
-     * <p>
-     * Valid values: any Integer containing a mixture of the
-     * TIFF_FLAG_T4_OPTIONS_2D, TIFF_FLAG_T4_OPTIONS_UNCOMPRESSED_MODE,
-     * and TIFF_FLAG_T4_OPTIONS_FILL flags.
-     */
-    public static final String PARAM_KEY_T4_OPTIONS = "T4_OPTIONS";
-
-    /**
-     * Parameter key. Used in write operations to indicate the desired
-     * T.6 options to use when using TIFF_COMPRESSION_CCITT_GROUP_4.
-     * <p>
-     * Valid values: any Integer containing either zero or
-     * TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE.
-     */
-    public static final String PARAM_KEY_T6_OPTIONS = "T6_OPTIONS";
-
     public static final int TIFF_FLAG_T4_OPTIONS_2D = 1;
     public static final int TIFF_FLAG_T4_OPTIONS_UNCOMPRESSED_MODE = 2;
     public static final int TIFF_FLAG_T4_OPTIONS_FILL = 4;
     public static final int TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE = 2;
-
-
-    public static final String PARAM_KEY_SUBIMAGE_X = "SUBIMAGE_X";
-    public static final String PARAM_KEY_SUBIMAGE_Y = "SUBIMAGE_Y";
-    public static final String PARAM_KEY_SUBIMAGE_WIDTH = "SUBIMAGE_WIDTH";
-    public static final String PARAM_KEY_SUBIMAGE_HEIGHT = "SUBIMAGE_HEIGHT";
-
-
-    /**
-     * Specifies that an application-specified photometric interpreter
-     * is to be used when reading TIFF files to convert raster data samples
-     * to RGB values for the output image.
-     * <p>
-     * The value supplied with this key should be a valid instance of
-     * a class that implements PhotometricInterpreter.
-     */
-    public static final String PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER
-        = "CUSTOM_PHOTOMETRIC_INTERPRETER";
-
-    /**
-     * Specifies the amount of memory in bytes to be used for a strip
-     * or tile size when employing LZW compression.  The default is
-     * 8000 (roughly 8K). Minimum value is 8000.
-     */
-    public static final String PARAM_KEY_LZW_COMPRESSION_BLOCK_SIZE =
-            "PARAM_KEY_LZW_COMPRESSION_BLOCK_SIZE";
 
     /**
      * Specifies a larger strip-size to be used for compression. This setting
