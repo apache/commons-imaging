@@ -18,13 +18,11 @@
 package org.apache.commons.imaging.formats.jpeg.exif;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
+import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -43,9 +41,9 @@ public class GpsTest extends ExifBaseTest {
             return;
         }
 
-        final Map<String, Object> params = new HashMap<>();
+        final JpegImagingParameters params = new JpegImagingParameters();
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        params.put(ImagingConstants.PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));
+        params.setReadThumbnails(!ignoreImageData);
 
         final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(imageFile, params);
         if (null == metadata) {

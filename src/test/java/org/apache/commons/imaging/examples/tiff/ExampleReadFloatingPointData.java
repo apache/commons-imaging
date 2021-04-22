@@ -21,7 +21,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -30,6 +29,7 @@ import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.formats.tiff.TiffContents;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffRasterData;
@@ -115,7 +115,7 @@ public class ExampleReadFloatingPointData {
         // to specify what section of the data is to be extracted.
         // See the Javadoc for readFloatingPointRasterData for more details.
         final long time0Nanos = System.nanoTime();
-        final HashMap<String, Object> params = new HashMap<>();
+        final JpegImagingParameters params = new JpegImagingParameters();
         final TiffRasterData rasterData
             = directory.getRasterData(params);
         final long time1Nanos = System.nanoTime();

@@ -18,9 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
@@ -43,7 +41,7 @@ public class XpmReadTest extends XpmBaseTest {
             final ImageMetadata metadata = Imaging.getMetadata(imageFile);
             Assertions.assertFalse(metadata instanceof File); // Dummy check to avoid unused warning (it may be null)
 
-            final Map<String, Object> params = new HashMap<>();
+            final XpmImagingParameters params = new XpmImagingParameters();
             final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
             assertNotNull(imageInfo);
 

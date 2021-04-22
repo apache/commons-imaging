@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.Collections;
 import java.util.stream.Stream;
 
 import org.apache.commons.imaging.Imaging;
@@ -47,7 +46,7 @@ public class IcoReadTest extends IcoBaseTest {
     @ParameterizedTest
     @MethodSource("data")
     public void testImageInfo(final File imageFile) {
-        Assertions.assertThrows(UnsupportedOperationException.class, () -> Imaging.getImageInfo(imageFile, Collections.emptyMap()));
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> Imaging.getImageInfo(imageFile, new IcoImagingParameters()));
     }
 
     @ParameterizedTest

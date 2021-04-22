@@ -27,14 +27,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteOrder;
 import java.nio.file.Path;
-import java.util.HashMap;
 
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
-import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PhotometricInterpreterFloat;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
@@ -134,8 +132,8 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
                 FormatCompliance.getDefault());
             final TiffDirectory directory = contents.directories.get(0);
             final PhotometricInterpreterFloat pi = getPhotometricInterpreter();
-            final HashMap<String, Object> params = new HashMap<>();
-            params.put(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER, pi);
+            final TiffImagingParameters params = new TiffImagingParameters();
+            params.setCustomPhotometricInterpreter(pi);
             final ByteOrder byteOrder = tiffReader.getByteOrder();
             final BufferedImage bImage = directory.getTiffImage(byteOrder, params);
             assertNotNull(bImage, "Failed to get image from " + name);

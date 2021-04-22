@@ -21,13 +21,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.ImageMetadata;
+import org.apache.commons.imaging.formats.pnm.PnmImagingParameters;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -46,7 +45,7 @@ public class PamReadTest extends PamBaseTest {
             final ImageMetadata metadata = Imaging.getMetadata(imageFile);
             Assertions.assertFalse(metadata instanceof File); // Dummy check to avoid unused warning (it may be null)
 
-            final Map<String, Object> params = new HashMap<>();
+            final PnmImagingParameters params = new PnmImagingParameters();
             final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
             assertNotNull(imageInfo);
 

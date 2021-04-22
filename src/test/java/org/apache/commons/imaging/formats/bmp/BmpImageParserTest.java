@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
@@ -43,7 +42,7 @@ public class BmpImageParserTest {
         final String file = "/images/bmp/IMAGING-264/test-72_6-dpi.bmp";
         final File bmp = new File(BmpImageParser.class.getResource(file).getFile());
         final BmpImageParser parser = new BmpImageParser();
-        final ImageInfo imageInfo = parser.getImageInfo(bmp, Collections.emptyMap());
+        final ImageInfo imageInfo = parser.getImageInfo(bmp, new BmpImagingParameters());
         assertEquals(73, imageInfo.getPhysicalWidthDpi(), "Expected 72.6 resolution to be rounded to 73");
     }
 
@@ -57,6 +56,6 @@ public class BmpImageParserTest {
         final String file = "/images/bmp/IMAGING-279/negative_array_size_exception.bmp";
         final File bmp = new File(BmpImageParser.class.getResource(file).getFile());
         final BmpImageParser parser = new BmpImageParser();
-        assertThrows(IOException.class, () -> parser.getImageInfo(bmp, Collections.emptyMap()));
+        assertThrows(IOException.class, () -> parser.getImageInfo(bmp, new BmpImagingParameters()));
     }
 }

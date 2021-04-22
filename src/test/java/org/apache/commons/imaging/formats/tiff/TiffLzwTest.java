@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageReadException;
@@ -67,8 +66,7 @@ public class TiffLzwTest extends TiffBaseTest {
             Debug.debug("imageFile", image);
 
             final ByteSource byteSource = new ByteSourceFile(image);
-            final List<byte[]> data = new TiffImageParser().collectRawImageData(byteSource,
-                    Collections.emptyMap());
+            final List<byte[]> data = new TiffImageParser().collectRawImageData(byteSource, new TiffImagingParameters());
 
             for (final byte[] bytes : data) {
                 decompressRoundtripAndValidate(bytes);

@@ -24,7 +24,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -70,7 +69,7 @@ public class IcnsReadTest extends IcnsBaseTest {
     @ParameterizedTest
     @MethodSource("data")
     public void testImageInfo(final File imageFile) throws Exception {
-        final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, Collections.emptyMap());
+        final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, new IcnsImagingParameters());
         assertNotNull(imageInfo);
     }
 

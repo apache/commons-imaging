@@ -18,12 +18,9 @@
 package org.apache.commons.imaging.formats.png;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.examples.ImageReadExample.ManagedImageBufferedImageFactory;
 import org.apache.commons.imaging.formats.jpeg.JpegWithInvalidDhtSegmentTest;
 import org.junit.jupiter.api.Assertions;
@@ -42,8 +39,8 @@ public class PngWithInvalidPngChunkSizeTest {
 	public void testPngWithInvalidPngChunkSize() {
 		final File imageFile = new File(
 				JpegWithInvalidDhtSegmentTest.class.getResource("/IMAGING-211/testfile_2.png").getFile());
-		final Map<String, Object> params = new HashMap<>();
-		params.put(ImagingConstants.BUFFERED_IMAGE_FACTORY, new ManagedImageBufferedImageFactory());
+		final PngImagingParameters params = new PngImagingParameters();
+        params.setBufferedImageFactory(new ManagedImageBufferedImageFactory());
 		Assertions.assertThrows(ImageReadException.class, () -> Imaging.getBufferedImage(imageFile, params));
 	}
 
@@ -55,8 +52,8 @@ public class PngWithInvalidPngChunkSizeTest {
     public void testPngWithInvalidNegativePngChunkSize() {
         final File imageFile = new File(
                 JpegWithInvalidDhtSegmentTest.class.getResource("/IMAGING-210/testfile.png").getFile());
-        final Map<String, Object> params = new HashMap<>();
-        params.put(ImagingConstants.BUFFERED_IMAGE_FACTORY, new ManagedImageBufferedImageFactory());
+        final PngImagingParameters params = new PngImagingParameters();
+        params.setBufferedImageFactory(new ManagedImageBufferedImageFactory());
         Assertions.assertThrows(ImageReadException.class, () -> Imaging.getBufferedImage(imageFile, params));
     }
 }

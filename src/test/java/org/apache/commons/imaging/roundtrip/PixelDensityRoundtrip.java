@@ -21,13 +21,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingConstants;
+import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.PixelDensity;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -46,10 +44,11 @@ public class PixelDensityRoundtrip extends RoundtripBase {
         final File temp1 = File.createTempFile("pixeldensity.", "."
                 + formatInfo.format.getExtension());
 
-        final Map<String, Object> params = new HashMap<>();
+        final ImagingParameters params = new ImagingParameters();
+        params.setImageFormat(formatInfo.format);
         final PixelDensity pixelDensity = PixelDensity.createFromPixelsPerInch(75, 150);
-        params.put(ImagingConstants.PARAM_KEY_PIXEL_DENSITY, pixelDensity);
-        Imaging.writeImage(testImage, temp1, formatInfo.format, params);
+        params.setPixelDensity(pixelDensity);
+        Imaging.writeImage(testImage, temp1, params);
 
         final ImageInfo imageInfo = Imaging.getImageInfo(temp1);
         if (imageInfo != null) {

@@ -22,12 +22,12 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceInputStream;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
+import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.formats.jpeg.JpegUtils;
 import org.junit.jupiter.api.Test;
 
@@ -49,7 +49,7 @@ public class NegSizeSegmentTest {
             final InputStream inputStream = new ByteArrayInputStream(bytes);
             final ByteSource bs = new ByteSourceInputStream(inputStream, "NegSizeSegment");
             final JpegImageParser p = new JpegImageParser();
-            p.getBufferedImage(bs, new HashMap<String, Object>());
+            p.getBufferedImage(bs, new JpegImagingParameters());
             fail("Expecting exception: ImageReadException");
         } catch (final ImageReadException e) {
             assertEquals("Invalid segment size", e.getMessage());

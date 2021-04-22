@@ -21,11 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
@@ -49,21 +46,17 @@ public class PngWriteForceTrueColorText extends PngBaseTest {
                 // params.put(ImagingConstants.PARAM_KEY_VERBOSE,
                 // Boolean.TRUE);
 
-                final BufferedImage image = Imaging.getBufferedImage(imageFile,
-                        new HashMap<String, Object>());
+                final BufferedImage image = Imaging.getBufferedImage(imageFile, new PngImagingParameters());
                 assertNotNull(image);
 
                 final File outFile = File.createTempFile(imageFile.getName() + ".", ".gif");
                 // Debug.debug("outFile", outFile);
 
-                final Map<String, Object> params = new HashMap<>();
-                params.put(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR,
-                        Boolean.TRUE);
-                Imaging.writeImage(image, outFile,
-                        ImageFormats.PNG, params);
+                final PngImagingParameters params = new PngImagingParameters();
+                params.setForceTrueColor(Boolean.TRUE);
+                Imaging.writeImage(image, outFile, params);
 
-                final BufferedImage image2 = Imaging.getBufferedImage(outFile,
-                        new HashMap<String, Object>());
+                final BufferedImage image2 = Imaging.getBufferedImage(outFile, new PngImagingParameters());
                 assertNotNull(image2);
             } catch (final Exception e) {
                 Debug.debug("imageFile", imageFile);
