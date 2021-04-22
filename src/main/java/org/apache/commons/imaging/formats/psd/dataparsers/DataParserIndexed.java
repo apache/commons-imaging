@@ -24,8 +24,8 @@ public class DataParserIndexed extends DataParser {
     public DataParserIndexed(final byte[] colorModeData) {
         colorTable = new int[256];
         for (int i = 0; i < 256; i++) {
-            final int red = 0xff & colorModeData[0 * 256 + i];
-            final int green = 0xff & colorModeData[1 * 256 + i];
+            final int red = 0xff & colorModeData[i];
+            final int green = 0xff & colorModeData[256 + i];
             final int blue = 0xff & colorModeData[2 * 256 + i];
             final int alpha = 0xff;
 

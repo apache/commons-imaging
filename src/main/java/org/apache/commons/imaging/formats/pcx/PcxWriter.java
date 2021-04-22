@@ -186,7 +186,7 @@ class PcxWriter {
             } else {
                 rgb = 0;
             }
-            palette16[3 * i + 0] = (byte) (0xff & (rgb >> 16));
+            palette16[3 * i] = (byte) (0xff & (rgb >> 16));
             palette16[3 * i + 1] = (byte) (0xff & (rgb >> 8));
             palette16[3 * i + 2] = (byte) (0xff & rgb);
         }
@@ -324,7 +324,7 @@ class PcxWriter {
         for (int y = 0; y < src.getHeight(); y++) {
             src.getRGB(0, y, src.getWidth(), 1, rgbs, 0, src.getWidth());
             for (int x = 0; x < rgbs.length; x++) {
-                plane[4 * x + 0] = (byte) rgbs[x];
+                plane[4 * x] = (byte) rgbs[x];
                 plane[4 * x + 1] = (byte) (rgbs[x] >> 8);
                 plane[4 * x + 2] = (byte) (rgbs[x] >> 16);
                 plane[4 * x + 3] = 0;

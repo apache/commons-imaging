@@ -43,7 +43,7 @@ abstract class PixelParser {
 
     int getColorTableRGB(int index) {
         index *= 4;
-        final int blue = 0xff & colorTable[index + 0];
+        final int blue = 0xff & colorTable[index];
         final int green = 0xff & colorTable[index + 1];
         final int red = 0xff & colorTable[index + 2];
         final int alpha = 0xff;

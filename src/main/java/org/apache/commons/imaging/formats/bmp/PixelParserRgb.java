@@ -57,7 +57,7 @@ class PixelParserRgb extends PixelParserSimple {
             return getColorTableRGB(sample);
         }
         if (bhi.bitsPerPixel == 8) { // always grayscale?
-            final int sample = 0xff & imageData[bytecount + 0];
+            final int sample = 0xff & imageData[bytecount];
 
             final int rgb = getColorTableRGB(sample);
 
@@ -80,7 +80,7 @@ class PixelParserRgb extends PixelParserSimple {
             return rgb;
         }
         if (bhi.bitsPerPixel == 24) {
-            final int blue = 0xff & imageData[bytecount + 0];
+            final int blue = 0xff & imageData[bytecount];
             final int green = 0xff & imageData[bytecount + 1];
             final int red = 0xff & imageData[bytecount + 2];
             final int alpha = 0xff;
@@ -92,7 +92,7 @@ class PixelParserRgb extends PixelParserSimple {
             return rgb;
         }
         if (bhi.bitsPerPixel == 32) {
-            final int blue = 0xff & imageData[bytecount + 0];
+            final int blue = 0xff & imageData[bytecount];
             final int green = 0xff & imageData[bytecount + 1];
             final int red = 0xff & imageData[bytecount + 2];
             final int alpha = 0xff;

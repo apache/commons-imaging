@@ -82,7 +82,7 @@ class PixelParserBitFields extends PixelParserSimple {
 
         switch (bhi.bitsPerPixel) {
         case 8:
-            data = 0xff & imageData[bytecount + 0];
+            data = 0xff & imageData[bytecount];
             bytecount += 1;
             break;
         case 24:
