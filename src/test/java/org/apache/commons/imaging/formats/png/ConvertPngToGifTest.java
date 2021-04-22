@@ -21,12 +21,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.formats.gif.GifImagingParameters;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 
@@ -41,21 +39,17 @@ public class ConvertPngToGifTest extends PngBaseTest {
             if (isInvalidPNGTestFile(imageFile))
              {
                 continue;
-            // Debug.debug("imageFile", imageFile);
-            // Debug.debug();
             }
 
-            final Map<String, Object> params = new HashMap<>();
-            // params.put(ImagingConstants.PARAM_KEY_VERBOSE, Boolean.TRUE);
+            final PngImagingParameters pngParams = new PngImagingParameters();
 
-            final BufferedImage image = Imaging.getBufferedImage(imageFile, params);
+            final BufferedImage image = Imaging.getBufferedImage(imageFile, pngParams);
             assertNotNull(image);
 
             final File outFile = File.createTempFile(imageFile.getName() + ".", ".gif");
-            // Debug.debug("outFile", outFile);
 
-            Imaging.writeImage(image, outFile, ImageFormats.GIF,
-                    params);
+            final GifImagingParameters gifParams = new GifImagingParameters();
+            Imaging.writeImage(image, outFile, gifParams);
         }
         Debug.debug("complete.");
     }

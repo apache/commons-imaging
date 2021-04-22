@@ -22,8 +22,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
@@ -45,7 +43,7 @@ public class BmpReadTest extends BmpBaseTest {
     @ParameterizedTest
     @MethodSource("data")
     public void testImageInfo(final File imageFile) throws ImageReadException, IOException {
-        final Map<String, Object> params = Collections.emptyMap();
+        final BmpImagingParameters params = new BmpImagingParameters();
         final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
         assertNotNull(imageInfo);
         // TODO assert more

@@ -22,16 +22,11 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
-import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.junit.jupiter.api.Test;
 
 public class TiffSubImageTest extends TiffBaseTest {
@@ -44,13 +39,12 @@ public class TiffSubImageTest extends TiffBaseTest {
     @Test
     public void testSubImage() throws ImageReadException, ImageWriteException, IOException {
         final BufferedImage src = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
-        final byte[] imageBytes = Imaging.writeImageToBytes(src, ImageFormats.TIFF, null);
-
-        final Map<String, Object> params = new TreeMap<>();
-        params.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, 0);
-        params.put(TiffConstants.PARAM_KEY_SUBIMAGE_Y, 0);
-        params.put(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, 2);
-        params.put(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, 3);
+        final TiffImagingParameters params = new TiffImagingParameters();
+        final byte[] imageBytes = Imaging.writeImageToBytes(src, params);
+        params.setSubImageX(0);
+        params.setSubImageY(0);
+        params.setSubImageWidth(2);
+        params.setSubImageHeight(3);
         final BufferedImage image = Imaging.getBufferedImage(imageBytes, params);
         assertEquals(image.getWidth(), 2);
         assertEquals(image.getHeight(), 3);
@@ -63,11 +57,11 @@ public class TiffSubImageTest extends TiffBaseTest {
         final int width = referenceImage.getWidth();
         final int height = referenceImage.getHeight();
 
-        final Map<String, Object> params = new HashMap<>();
-        params.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, 0);
-        params.put(TiffConstants.PARAM_KEY_SUBIMAGE_Y, 0);
-        params.put(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, width);
-        params.put(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, height);
+        final TiffImagingParameters params = new TiffImagingParameters();
+        params.setSubImageX(0);
+        params.setSubImageY(0);
+        params.setSubImageWidth(width);
+        params.setSubImageHeight(height);
 
         final BufferedImage image = Imaging.getBufferedImage(target, params);
         assertEquals(image.getWidth(), width, "Improper width when sub-imaging entire image");
@@ -83,11 +77,11 @@ public class TiffSubImageTest extends TiffBaseTest {
 
     private void processBadParams(final File target, final int x, final int y, final int width, final int height, final String comment) throws IOException{
         try{
-            final Map<String, Object> params = new HashMap<>();
-            params.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, x);
-            params.put(TiffConstants.PARAM_KEY_SUBIMAGE_Y, y);
-            params.put(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, width);
-            params.put(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, height);
+            final TiffImagingParameters params = new TiffImagingParameters();
+            params.setSubImageX(x);
+            params.setSubImageY(y);
+            params.setSubImageWidth(width);
+            params.setSubImageHeight(height);
             final BufferedImage image = Imaging.getBufferedImage(target, params);
             fail("Reading TIFF sub-image failed to detect bad parameter: "+comment);
         }catch(final ImageReadException ire){
@@ -106,11 +100,11 @@ public class TiffSubImageTest extends TiffBaseTest {
             }
             final int []rArgb = new int[rW*rH];
             referenceImage.getRGB(0, 0, rW, rH, rArgb, 0, rW);
-            final Map<String, Object> params = new HashMap<>();
-            params.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, 1);
-            params.put(TiffConstants.PARAM_KEY_SUBIMAGE_Y, 1);
-            params.put(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, rW-2);
-            params.put(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, rH-2);
+            final TiffImagingParameters params = new TiffImagingParameters();
+            params.setSubImageX(1);
+            params.setSubImageY(1);
+            params.setSubImageWidth(rW - 2);
+            params.setSubImageHeight(rH - 2);
             final BufferedImage image = Imaging.getBufferedImage(target, params);
             final int iW = image.getWidth();
             final int iH = image.getHeight();

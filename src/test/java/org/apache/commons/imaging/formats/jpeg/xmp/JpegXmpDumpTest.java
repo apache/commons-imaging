@@ -20,13 +20,12 @@ package org.apache.commons.imaging.formats.jpeg.xmp;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
+import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -40,7 +39,7 @@ public class JpegXmpDumpTest extends JpegXmpBaseTest {
     @MethodSource("data")
     public void test(final File imageFile) throws Exception {
         final ByteSource byteSource = new ByteSourceFile(imageFile);
-        final Map<String, Object> params = new HashMap<>();
+        final JpegImagingParameters params = new JpegImagingParameters();
         final String xmpXml = new JpegImageParser().getXmpXml(byteSource, params);
 
         // TODO assert more

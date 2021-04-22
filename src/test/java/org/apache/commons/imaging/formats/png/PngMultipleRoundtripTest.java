@@ -22,10 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
-import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.io.FilenameUtils;
@@ -55,20 +52,17 @@ public class PngMultipleRoundtripTest extends PngBaseTest {
 
             File lastFile = imageFile;
             for (int j = 0; j < 10; j++) {
-                final Map<String, Object> readParams = new HashMap<>();
+                final PngImagingParameters readParams = new PngImagingParameters();
                 // readParams.put(ImagingConstants.BUFFERED_IMAGE_FACTORY,
                 // new RgbBufferedImageFactory());
-                final BufferedImage image = Imaging.getBufferedImage(lastFile,
-                        readParams);
+                final BufferedImage image = Imaging.getBufferedImage(lastFile, readParams);
                 assertNotNull(image);
 
-                final File tempFile = File.createTempFile(imageFile.getName() + "." + j
-                        + ".", ".png");
+                final File tempFile = File.createTempFile(imageFile.getName() + "." + j + ".", ".png");
                 Debug.debug("tempFile", tempFile);
 
-                final Map<String, Object> writeParams = new HashMap<>();
-                Imaging.writeImage(image, tempFile,
-                        ImageFormats.PNG, writeParams);
+                final PngImagingParameters writeParams = new PngImagingParameters();
+                Imaging.writeImage(image, tempFile, writeParams);
 
                 lastFile = tempFile;
             }

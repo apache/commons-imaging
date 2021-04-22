@@ -21,15 +21,16 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.common.XmpImagingParameters;
+import org.apache.commons.imaging.formats.gif.GifImagingParameters;
+import org.apache.commons.imaging.formats.png.PngImagingParameters;
+import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 
@@ -49,31 +50,23 @@ public class XmpUpdateTest extends ImagingTest {
             Debug.debug();
 
             final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
+            XmpImagingParameters params = null;
+            if (imageFormat.equals(ImageFormats.PNG)) {
+                params = new PngImagingParameters();
+            } else if (imageFormat.equals(ImageFormats.TIFF)) {
+                params = new TiffImagingParameters();
+            } else if (imageFormat.equals(ImageFormats.GIF)) {
+                params = new GifImagingParameters();
+            } else {
+                continue;
+            }
 
-            String xmpXml = Imaging.getXmpXml(imageFile);
+            String xmpXml = Imaging.getXmpXml(imageFile, params);
             if (null == xmpXml
                     && imageFormat.equals(ImageFormats.GIF)) {
                 xmpXml = "temporary test until I can locate a GIF with XMP in the wild.";
             }
             if (null == xmpXml) {
-                continue;
-            }
-
-            assertNotNull(xmpXml);
-
-            if (imageFormat.equals(ImageFormats.PNG)) { /*
-                                                                     * do
-                                                                     * nothing
-                                                                     */
-            } else if (imageFormat.equals(ImageFormats.TIFF)) { /*
-                                                                             * do
-                                                                             * nothing
-                                                                             */
-            } else if (imageFormat.equals(ImageFormats.GIF)) { /*
-                                                                            * do
-                                                                            * nothing
-                                                                            */
-            } else {
                 continue;
             }
 
@@ -83,19 +76,13 @@ public class XmpUpdateTest extends ImagingTest {
 
             // ----
 
-            final Map<String, Object> params = new HashMap<>();
-            params.put(ImagingConstants.PARAM_KEY_XMP_XML, xmpXml);
-            Imaging.writeImage(image, tempFile, imageFormat, params);
+            params.setXmpXml(xmpXml);
+            Imaging.writeImage(image, tempFile, params);
 
             final String xmpXmlOut = Imaging.getXmpXml(tempFile);
 
             assertNotNull(xmpXmlOut);
-
             assertEquals(xmpXmlOut, xmpXml);
-
-            // Debug.debug("xmpXmlOut", xmpXmlOut.length());
-            // Debug.debug("xmpXml", xmpXml);
-            // Debug.debug();
         }
     }
 }

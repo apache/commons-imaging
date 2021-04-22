@@ -16,14 +16,8 @@
  */
 package org.apache.commons.imaging.formats.tiff;
 
-import org.apache.commons.imaging.ImageFormats;
-import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
-import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
-import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
-import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -34,10 +28,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.ByteOrder;
 import java.nio.file.Path;
-import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
+import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
+import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
+import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Performs a round-trip that writes an image containing Alpha and then reads it
@@ -82,9 +80,7 @@ public class TiffAlphaRoundTripTest {
             //         correctness of a round-trip test.
             final File file = new File(tempDir.toFile(), "TiffAlphaRoundTripTest.tif");
             file.delete();
-            final HashMap<String, Object> params = new HashMap<>();
-
-            Imaging.writeImage(image0, file, ImageFormats.TIFF, params);
+            Imaging.writeImage(image0, file, new TiffImagingParameters());
             final BufferedImage image1 = Imaging.getBufferedImage(file);
 
             // Step 2:  create a composite image overlaying a white background

@@ -19,15 +19,11 @@ package org.apache.commons.imaging.examples;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
-import org.apache.commons.imaging.ImageFormat;
-import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingConstants;
+import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 
 public class ImageWriteExample {
@@ -36,14 +32,11 @@ public class ImageWriteExample {
         // read image
         final BufferedImage image = Imaging.getBufferedImage(file);
 
-        final ImageFormat format = ImageFormats.TIFF;
-        final Map<String, Object> params = new HashMap<>();
-
         // set optional parameters if you like
-        params.put(ImagingConstants.PARAM_KEY_COMPRESSION, Integer.valueOf(
-                TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED));
+        final TiffImagingParameters params = new TiffImagingParameters();
+        params.setCompression(TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED);
 
-        return Imaging.writeImageToBytes(image, format, params);
+        return Imaging.writeImageToBytes(image, params);
     }
 
 }

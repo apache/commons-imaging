@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.imaging.FormatCompliance;
@@ -67,7 +66,6 @@ public class TiffReadTest extends TiffBaseTest {
                 continue;
             }
             final ByteSourceFile byteSource = new ByteSourceFile(imageFile);
-            final HashMap<String, Object> params = new HashMap<>();
             final TiffReader tiffReader = new TiffReader(true);
             final TiffContents contents = tiffReader.readDirectories(
                 byteSource,

@@ -21,8 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
@@ -35,7 +33,7 @@ public class JpegWithJpegThumbnailTest extends ImagingTest {
     public void testSingleImage() throws Exception {
         final File imageFile = getTestImageByName("img_F028c_small.jpg");
 
-        final Map<String, Object> params = new HashMap<>();
+        final JpegImagingParameters params = new JpegImagingParameters();
         final ImageMetadata metadata = Imaging.getMetadata(imageFile, params);
         assertNotNull(metadata);
         final JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;

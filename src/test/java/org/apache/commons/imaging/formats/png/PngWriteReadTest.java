@@ -25,13 +25,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
-import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
@@ -42,10 +39,6 @@ import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 
 public class PngWriteReadTest extends ImagingTest {
-    // public PngWriteReadTest(String name)
-    // {
-    // super(name);
-    // }
 
     private int[][] getSimpleRawData(final int width, final int height, final int value) {
         final int[][] result = new int[height][width];
@@ -113,21 +106,17 @@ public class PngWriteReadTest extends ImagingTest {
     public void testTransparency() throws Exception {
         // Test for https://issues.apache.org/jira/browse/SANSELAN-52
         final int[][] smallAscendingPixels = getAscendingRawData(256, 256);
-        final byte[] pngBytes = Imaging.writeImageToBytes(
-                imageDataToBufferedImage(smallAscendingPixels),
-                ImageFormats.PNG, null);
+        final byte[] pngBytes = Imaging.writeImageToBytes(imageDataToBufferedImage(smallAscendingPixels), new PngImagingParameters());
         assertTrue(Imaging.getImageInfo(pngBytes).isTransparent());
     }
 
     @Test
     public void testPhysicalScaleMeters() throws Exception {
-        final Map<String, Object> optionalParams = new HashMap<>();
-        optionalParams.put(PngConstants.PARAM_KEY_PHYSICAL_SCALE, PhysicalScale.createFromMeters(0.01, 0.02));
+        final PngImagingParameters optionalParams = new PngImagingParameters();
+        optionalParams.setPhysicalScale(PhysicalScale.createFromMeters(0.01, 0.02));
 
         final int[][] smallAscendingPixels = getAscendingRawData(256, 256);
-        final byte[] pngBytes = Imaging.writeImageToBytes(
-              imageDataToBufferedImage(smallAscendingPixels),
-              ImageFormats.PNG, optionalParams);
+        final byte[] pngBytes = Imaging.writeImageToBytes(imageDataToBufferedImage(smallAscendingPixels), optionalParams);
         final PngImageInfo imageInfo = (PngImageInfo) Imaging.getImageInfo(pngBytes);
         final PhysicalScale physicalScale = imageInfo.getPhysicalScale();
         assertTrue(physicalScale.isInMeters());
@@ -137,13 +126,11 @@ public class PngWriteReadTest extends ImagingTest {
 
     @Test
     public void testPhysicalScaleRadians() throws Exception {
-        final Map<String, Object> optionalParams = new HashMap<>();
-        optionalParams.put(PngConstants.PARAM_KEY_PHYSICAL_SCALE, PhysicalScale.createFromRadians(0.01, 0.02));
+        final PngImagingParameters optionalParams = new PngImagingParameters();
+        optionalParams.setPhysicalScale(PhysicalScale.createFromRadians(0.01, 0.02));
 
         final int[][] smallAscendingPixels = getAscendingRawData(256, 256);
-        final byte[] pngBytes = Imaging.writeImageToBytes(
-              imageDataToBufferedImage(smallAscendingPixels),
-              ImageFormats.PNG, optionalParams);
+        final byte[] pngBytes = Imaging.writeImageToBytes(imageDataToBufferedImage(smallAscendingPixels), optionalParams);
         final PngImageInfo imageInfo = (PngImageInfo) Imaging.getImageInfo(pngBytes);
         final PhysicalScale physicalScale = imageInfo.getPhysicalScale();
         assertTrue(physicalScale.isInRadians());
@@ -181,14 +168,13 @@ public class PngWriteReadTest extends ImagingTest {
             ImageReadException, ImageWriteException {
         final BufferedImage srcImage = imageDataToBufferedImage(rawData);
 
-        final Map<String, Object> writeParams = new HashMap<>();
+        final PngImagingParameters writeParams = new PngImagingParameters();
         // writeParams.put(ImagingConstants.PARAM_KEY_FORMAT,
         // ImageFormat.IMAGE_FORMAT_PNG);
         // writeParams.put(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR,
         // Boolean.TRUE);
 
-        final byte[] bytes = Imaging.writeImageToBytes(srcImage,
-                ImageFormats.PNG, writeParams);
+        final byte[] bytes = Imaging.writeImageToBytes(srcImage, writeParams);
 
         // Debug.debug("bytes", bytes);
 
@@ -212,12 +198,10 @@ public class PngWriteReadTest extends ImagingTest {
         final List<PngText.Text> textChunks = new LinkedList<>();
         textChunks.add(new PngText.Text("a", "b"));
         textChunks.add(new PngText.Text("c", "d"));
-        final Map<String, Object> writeParams = new HashMap<>();
-        writeParams.put(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS,
-           textChunks);
+        final PngImagingParameters writeParams = new PngImagingParameters();
+        writeParams.setTextChunks(textChunks);
 
-        final byte[] bytes = Imaging.writeImageToBytes(srcImage,
-           ImageFormats.PNG, writeParams);
+        final byte[] bytes = Imaging.writeImageToBytes(srcImage, writeParams);
 
         // Debug.debug("bytes", bytes);
 

@@ -26,6 +26,7 @@ import javax.imageio.ImageIO;
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.formats.tiff.TiffContents;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffField;
@@ -81,7 +82,7 @@ public class ReadTagsAndImages {
             = rootName != null && !rootName.isEmpty();
 
         final ByteSourceFile byteSource = new ByteSourceFile(target);
-        final HashMap<String, Object> params = new HashMap<>();
+        final JpegImagingParameters params = new JpegImagingParameters();
 
         // Establish a TiffReader. This is just a simple constructor that
         // does not actually access the file.  So the application cannot

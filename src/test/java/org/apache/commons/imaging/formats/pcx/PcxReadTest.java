@@ -21,9 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
@@ -46,11 +44,11 @@ public class PcxReadTest extends PcxBaseTest {
             final ImageMetadata metadata = Imaging.getMetadata(imageFile);
             Assertions.assertFalse(metadata instanceof File); // Dummy check to avoid unused warning (it may be null)
 
-            final Map<String, Object> params = new HashMap<>();
+            final PcxImagingParameters params = new PcxImagingParameters();
             final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
             assertNotNull(imageInfo);
 
-            final BufferedImage image = Imaging.getBufferedImage(imageFile);
+            final BufferedImage image = Imaging.getBufferedImage(imageFile, params);
             assertNotNull(image);
         }
     }

@@ -26,15 +26,12 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImagingTestConstants;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
-import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PaletteEntry;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PaletteEntryForRange;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PaletteEntryForValue;
@@ -92,8 +89,8 @@ public class TiffFloatingPointReadTest {
         pList.add(new PaletteEntryForValue(fNot, Color.red));
         pList.add(new PaletteEntryForRange(f0, f1, Color.black, Color.white));
         final PhotometricInterpreterFloat pInterp = new PhotometricInterpreterFloat(pList);
-        final HashMap<String, Object> params = new HashMap<>();
-        params.put(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER, pInterp);
+        final TiffImagingParameters params = new TiffImagingParameters();
+        params.setCustomPhotometricInterpreter(pInterp);
         final BufferedImage bImage = directory.getTiffImage(byteOrder, params);
         if (bImage == null) {
             return null;
@@ -112,7 +109,7 @@ public class TiffFloatingPointReadTest {
      * @throws IOException in the event of an I/O error
      */
     private TiffRasterData readRasterFromTIFF(
-        final File target, final Map<String, Object> params)
+        final File target, final TiffImagingParameters params)
         throws ImageReadException, IOException {
         final ByteSourceFile byteSource = new ByteSourceFile(target);
         final TiffReader tiffReader = new TiffReader(true);
@@ -126,7 +123,6 @@ public class TiffFloatingPointReadTest {
 
     @Test
     public void test() {
-        final Map<String, Object> params = new HashMap<>();
         // These TIFF sample data includes files that contain known
         // floating-point values in various formats.  We know the range
         // of values from inspection using separate utilies. This
@@ -155,7 +151,7 @@ public class TiffFloatingPointReadTest {
             // that the source file is organized using strips of 2 rows each.
             // The source file is of dimensions 451x337.
             // The dimensions of the sub-image are arbitrary
-            TiffRasterData fullRaster = readRasterFromTIFF(target, null);
+            TiffRasterData fullRaster = readRasterFromTIFF(target, new TiffImagingParameters());
             int height = fullRaster.getHeight();
             int width  = fullRaster.getWidth();
             // checks based on the 2-rows per strip model
@@ -196,7 +192,7 @@ public class TiffFloatingPointReadTest {
             assertTrue(testCondition, "Min,Max values not in range -2 to 62: " + minVal + ", " + maxVal);
             assertTrue(minVal <= maxVal, "Min Value not <= maxVal: " + minVal + ", " + maxVal);
 
-            fullRaster = readRasterFromTIFF(target, null);
+            fullRaster = readRasterFromTIFF(target, new TiffImagingParameters());
             // The tile size for this file is 128-by-128. The following tests
             // read subsections starting right before the tile transition and right after it.
             height = fullRaster.getHeight();
@@ -226,11 +222,11 @@ public class TiffFloatingPointReadTest {
 
     private void checkSubImage(final File target, final TiffRasterData fullRaster, final int x0, final int y0, final int width, final int height){
         try{
-            final Map<String, Object> params = new HashMap<>();
-            params.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, x0);
-            params.put(TiffConstants.PARAM_KEY_SUBIMAGE_Y, y0);
-            params.put(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, width);
-            params.put(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, height);
+            final TiffImagingParameters params = new TiffImagingParameters();
+            params.setSubImageX(x0);
+            params.setSubImageY(y0);
+            params.setSubImageWidth(width);
+            params.setSubImageHeight(height);
             final TiffRasterData partRaster = readRasterFromTIFF(target, params);
             assertEquals(width, partRaster.getWidth(), "Invalid width in partial for " + target.getName());
             assertEquals(height, partRaster.getHeight(), "Invalid height in partial for " + target.getName());
