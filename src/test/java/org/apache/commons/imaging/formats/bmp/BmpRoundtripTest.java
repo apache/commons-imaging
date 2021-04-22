@@ -23,11 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
-import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
@@ -140,14 +137,13 @@ public class BmpRoundtripTest extends BmpBaseTest {
             ImageReadException, ImageWriteException {
         final BufferedImage srcImage = imageDataToBufferedImage(rawData);
 
-        final Map<String, Object> writeParams = new HashMap<>();
+        final BmpImagingParameters writeParams = new BmpImagingParameters();
         // writeParams.put(ImagingConstants.PARAM_KEY_FORMAT,
         // ImageFormat.IMAGE_FORMAT_BMP);
         // writeParams.put(PngConstants.PARAM_KEY_BMP_FORCE_TRUE_COLOR,
         // Boolean.TRUE);
 
-        final byte[] bytes = Imaging.writeImageToBytes(srcImage,
-                ImageFormats.BMP, writeParams);
+        final byte[] bytes = Imaging.writeImageToBytes(srcImage, writeParams);
 
         // Debug.debug("bytes", bytes);
 

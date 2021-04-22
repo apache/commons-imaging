@@ -21,9 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
@@ -67,7 +65,7 @@ public class RgbeReadTest extends RgbeBaseTest {
                 RgbeReadTest.class.getResource("/IMAGING-219/timeout-9713502c9c371f1654b493650c16ab17c0444369")
                         .getFile());
         final ByteSourceFile byteSourceFile = new ByteSourceFile(inputFile);
-        final Map<String, Object> params = Collections.emptyMap();
+        final RgbeImagingParameters params = new RgbeImagingParameters();
         Assertions.assertThrows(ImageReadException.class, () -> new RgbeImageParser().getBufferedImage(byteSourceFile, params));
     }
 }

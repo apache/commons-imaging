@@ -24,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageReadException;
@@ -32,6 +31,7 @@ import org.apache.commons.imaging.common.GenericImageMetadata.GenericImageMetada
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
+import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.formats.jpeg.JpegPhotoshopMetadata;
 import org.junit.jupiter.api.Test;
 
@@ -65,7 +65,7 @@ public class IptcParserTest {
                 .getFile();
         final File imageFile = new File(location);
         final JpegImageMetadata metadata = (JpegImageMetadata) new JpegImageParser()
-                .getMetadata(new ByteSourceFile(imageFile), new HashMap<>());
+                .getMetadata(new ByteSourceFile(imageFile), new JpegImagingParameters());
         final JpegPhotoshopMetadata photoshopMetadata = metadata.getPhotoshop();
         final PhotoshopApp13Data photoshopApp13Data = photoshopMetadata.photoshopApp13Data;
         final List<IptcBlock> blocks = photoshopApp13Data.getRawBlocks();

@@ -25,11 +25,8 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
@@ -44,7 +41,7 @@ public class PngTextTest extends PngBaseTest {
                 BufferedImage.TYPE_INT_ARGB);
         srcImage.setRGB(0, 0, Color.red.getRGB());
 
-        final Map<String, Object> writeParams = new HashMap<>();
+        final PngImagingParameters writeParams = new PngImagingParameters();
 
         final List<PngText> writeTexts = new ArrayList<>();
         {
@@ -66,10 +63,9 @@ public class PngTextTest extends PngBaseTest {
                     translatedKeyword));
         }
 
-        writeParams.put(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS, writeTexts);
+        writeParams.setTextChunks(writeTexts);
 
-        final byte[] bytes = Imaging.writeImageToBytes(srcImage,
-                ImageFormats.PNG, writeParams);
+        final byte[] bytes = Imaging.writeImageToBytes(srcImage, writeParams);
 
         final File tempFile = File.createTempFile("temp", ".png");
         FileUtils.writeByteArrayToFile(tempFile, bytes);

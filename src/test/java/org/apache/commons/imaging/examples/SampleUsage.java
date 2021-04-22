@@ -22,8 +22,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageFormat;
@@ -31,6 +29,7 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.ImageMetadata;
+import org.apache.commons.imaging.formats.png.PngImagingParameters;
 
 public class SampleUsage {
 
@@ -67,11 +66,11 @@ public class SampleUsage {
             final BufferedImage image = someImage;
             final File dst = someFile;
             final ImageFormat format = ImageFormats.PNG;
-            final Map<String, Object> optionalParams = new HashMap<>();
-            Imaging.writeImage(image, dst, format, optionalParams);
+            final PngImagingParameters optionalParams = new PngImagingParameters();
+            Imaging.writeImage(image, dst, optionalParams);
 
             final OutputStream os = someOutputStream;
-            Imaging.writeImage(image, os, format, optionalParams);
+            Imaging.writeImage(image, os, optionalParams);
 
             // <b>get the image's embedded ICC Profile, if it has one. </b>
             final byte[] iccProfileBytes = Imaging.getICCProfileBytes(imageBytes);

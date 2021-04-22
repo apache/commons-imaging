@@ -157,11 +157,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.HashMap;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.TiffImageParser;
+import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 /**
  * A "test stand" for evaluating the speed an memory use of different Apache
  * Imaging operations
@@ -202,7 +202,7 @@ public class ApacheImagingSpeedAndMemoryTest {
                 // new ByteSourceInputStream(bins, target.getName());
                 // ready the parser (you may modify this code block
                 // to use your parser of choice)
-                HashMap<String, Object> params = new HashMap<>();
+                TiffImagingParameters params = new TiffImagingParameters();
                 TiffImageParser tiffImageParser = new TiffImageParser();
                 // load the file and record time needed to do so
                 final long time0Nanos = System.nanoTime();

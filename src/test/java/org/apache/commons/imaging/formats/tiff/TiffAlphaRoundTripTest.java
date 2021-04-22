@@ -16,19 +16,17 @@
  */
 package org.apache.commons.imaging.formats.tiff;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Path;
-import java.util.HashMap;
 
-import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
-
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
@@ -74,9 +72,7 @@ public class TiffAlphaRoundTripTest {
             //         correctness of a round-trip test.
             final File file = new File(tempDir.toFile(), "TiffAlphaRoundTripTest.tif");
             file.delete();
-            final HashMap<String, Object> params = new HashMap<>();
-
-            Imaging.writeImage(image0, file, ImageFormats.TIFF, params);
+            Imaging.writeImage(image0, file, new TiffImagingParameters());
             final BufferedImage image1 = Imaging.getBufferedImage(file);
 
             // Step 2:  create a composite image overlaying a white background

@@ -24,20 +24,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
-import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.iptc.JpegIptcRewriter;
 import org.apache.commons.imaging.formats.jpeg.xmp.JpegXmpRewriter;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
+import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.formats.tiff.constants.MicrosoftTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
@@ -59,9 +56,9 @@ public class MicrosoftTagTest extends ExifBaseTest {
         root.add(MicrosoftTagConstants.EXIF_TAG_XPCOMMENT, COMMENT);
         root.add(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT, SUBJECT);
         root.add(MicrosoftTagConstants.EXIF_TAG_XPTITLE, TITLE);
-        final Map<String, Object> params = new TreeMap<>();
-        params.put(ImagingConstants.PARAM_KEY_EXIF, exifSet);
-        final byte[] bytes = Imaging.writeImageToBytes(image, ImageFormats.TIFF, params);
+        final TiffImagingParameters params = new TiffImagingParameters();
+        params.setExif(exifSet);
+        final byte[] bytes = Imaging.writeImageToBytes(image, params);
         checkFields(bytes);
     }
 

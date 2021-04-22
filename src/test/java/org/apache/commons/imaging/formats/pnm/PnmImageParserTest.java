@@ -24,11 +24,7 @@ import java.awt.image.DataBufferInt;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
-import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
@@ -43,7 +39,7 @@ public class PnmImageParserTest {
     @Test
     public void testGetImageInfo_happyCase() throws ImageReadException, IOException {
         final byte[] bytes = "P1\n3 2\n0 1 0\n1 0 1\n".getBytes(US_ASCII);
-        final Map<String, Object> params = Collections.emptyMap();
+        final PnmImagingParameters params = new PnmImagingParameters();
         final PnmImageParser underTest = new PnmImageParser();
         final ImageInfo results = underTest.getImageInfo(bytes, params);
         assertEquals(results.getBitsPerPixel(), 1);
@@ -56,10 +52,10 @@ public class PnmImageParserTest {
     public void testWriteImageRaw_happyCase() throws ImageWriteException,
                                                      ImageReadException, IOException {
         final BufferedImage srcImage = new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
-        final Map<String, Object> params = new HashMap<>();
-        params.put(PnmImageParser.PARAM_KEY_PNM_RAWBITS, PnmImageParser.PARAM_VALUE_PNM_RAWBITS_YES);
+        final PnmImagingParameters params = new PnmImagingParameters();
+        params.setRawBits(Boolean.TRUE);
 
-        final byte[] dstBytes = Imaging.writeImageToBytes(srcImage, ImageFormats.PNM, params);
+        final byte[] dstBytes = Imaging.writeImageToBytes(srcImage, params);
         final BufferedImage dstImage = Imaging.getBufferedImage(dstBytes);
 
         assertEquals(srcImage.getWidth(), dstImage.getWidth());
@@ -83,7 +79,7 @@ public class PnmImageParserTest {
     @Test
     public void testGetImageInfo_invalidWidth() {
         final byte[] bytes = "P1\na 2\n0 0 0 0 0 0 0 0 0 0 0\n1 1 1 1 1 1 1 1 1 1 1\n".getBytes(US_ASCII);
-        final Map<String, Object> params = Collections.emptyMap();
+        final PnmImagingParameters params = new PnmImagingParameters();
         final PnmImageParser underTest = new PnmImageParser();
         Assertions.assertThrows(ImageReadException.class, () -> underTest.getImageInfo(bytes, params));
     }
@@ -91,7 +87,7 @@ public class PnmImageParserTest {
     @Test
     public void testGetImageInfo_invalidHeight() {
         final byte[] bytes = "P1\n2 a\n0 0\n0 0\n0 0\n0 0\n0 0\n0 1\n1 1\n1 1\n1 1\n1 1\n1 1\n".getBytes(US_ASCII);
-        final Map<String, Object> params = Collections.emptyMap();
+        final PnmImagingParameters params = new PnmImagingParameters();
         final PnmImageParser underTest = new PnmImageParser();
         Assertions.assertThrows(ImageReadException.class, () -> underTest.getImageInfo(bytes, params));
     }
@@ -99,7 +95,7 @@ public class PnmImageParserTest {
     @Test
     public void testGetImageInfo_missingWidthValue() {
         final byte[] bytes = "P7\nWIDTH \n".getBytes(US_ASCII);
-        final Map<String, Object> params = Collections.emptyMap();
+        final PnmImagingParameters params = new PnmImagingParameters();
         final PnmImageParser underTest = new PnmImageParser();
         Assertions.assertThrows(ImageReadException.class, () -> underTest.getImageInfo(bytes, params));
     }

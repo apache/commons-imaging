@@ -21,14 +21,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.internal.Debug;
@@ -60,10 +56,9 @@ public class TiffRoundtripTest extends TiffBaseTest {
             };
             for (final int compression : compressions) {
                 final File tempFile = File.createTempFile(imageFile.getName() + "-" + compression + ".", ".tif");
-                final Map<String, Object> params = new HashMap<>();
-                params.put(ImagingConstants.PARAM_KEY_COMPRESSION, compression);
-                Imaging.writeImage(image, tempFile, ImageFormats.TIFF,
-                        params);
+                final TiffImagingParameters params = new TiffImagingParameters();
+                params.setCompression(compression);
+                Imaging.writeImage(image, tempFile, params);
                 final BufferedImage image2 = Imaging.getBufferedImage(tempFile);
                 assertNotNull(image2);
             }
