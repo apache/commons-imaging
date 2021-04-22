@@ -32,6 +32,7 @@ import java.util.Objects;
 
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.XmpEmbeddable;
+import org.apache.commons.imaging.common.XmpImagingParameters;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
@@ -890,7 +891,7 @@ public final class Imaging {
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static String getXmpXml(final InputStream is, final String fileName, final ImagingParameters params)
+    public static String getXmpXml(final InputStream is, final String fileName, final XmpImagingParameters params)
             throws ImageReadException, IOException {
         return getXmpXml(new ByteSourceInputStream(is, fileName), params);
     }
@@ -921,7 +922,7 @@ public final class Imaging {
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static String getXmpXml(final byte[] bytes, final ImagingParameters params)
+    public static String getXmpXml(final byte[] bytes, final XmpImagingParameters params)
             throws ImageReadException, IOException {
         return getXmpXml(new ByteSourceArray(bytes), params);
     }
@@ -938,7 +939,7 @@ public final class Imaging {
      */
     public static String getXmpXml(final File file) throws ImageReadException,
             IOException {
-        return getXmpXml(file, null);
+        return getXmpXml(file, new XmpImagingParameters());
     }
 
     /**
@@ -952,7 +953,7 @@ public final class Imaging {
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static String getXmpXml(final File file, final ImagingParameters params)
+    public static String getXmpXml(final File file, final XmpImagingParameters params)
             throws ImageReadException, IOException {
         return getXmpXml(new ByteSourceFile(file), params);
     }
@@ -968,9 +969,7 @@ public final class Imaging {
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    // TODO: we have no way of knowing whether getImageParser will return a parser that is compatible with the ImagingParameters instance given
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-	public static String getXmpXml(final ByteSource byteSource, final ImagingParameters params)
+	public static String getXmpXml(final ByteSource byteSource, final XmpImagingParameters params)
             throws ImageReadException, IOException {
         final ImageParser<?> imageParser = getImageParser(byteSource);
         if (imageParser instanceof XmpEmbeddable) {
@@ -1324,7 +1323,7 @@ public final class Imaging {
      */
     public static BufferedImage getBufferedImage(final InputStream is, final ImagingParameters params)
             throws ImageReadException, IOException {
-        String fileName = params != null ? "" : null;
+        String fileName = params != null ? params.getFileName() : null;
         return getBufferedImage(new ByteSourceInputStream(is, fileName), params);
     }
 

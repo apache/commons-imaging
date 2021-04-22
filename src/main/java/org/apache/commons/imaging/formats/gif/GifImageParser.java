@@ -48,13 +48,14 @@ import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.XmpEmbeddable;
+import org.apache.commons.imaging.common.XmpImagingParameters;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.mylzw.MyLzwCompressor;
 import org.apache.commons.imaging.common.mylzw.MyLzwDecompressor;
 import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
 
-public class GifImageParser extends ImageParser<GifImagingParameters> implements XmpEmbeddable<GifImagingParameters> {
+public class GifImageParser extends ImageParser<GifImagingParameters> implements XmpEmbeddable {
 
     private static final Logger LOGGER = Logger.getLogger(GifImageParser.class.getName());
 
@@ -1068,7 +1069,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     @Override
-    public String getXmpXml(final ByteSource byteSource, final GifImagingParameters params)
+    public String getXmpXml(final ByteSource byteSource, final XmpImagingParameters params)
             throws ImageReadException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             final GifHeaderInfo ghi = readHeader(is, null);

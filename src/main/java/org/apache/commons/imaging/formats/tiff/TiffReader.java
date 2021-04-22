@@ -288,7 +288,7 @@ public class TiffReader extends BinaryFileParser {
         private final boolean readThumbnails;
 
         Collector() {
-            this(null);
+            this(new TiffImagingParameters());
         }
 
         Collector(final TiffImagingParameters params) {
@@ -367,11 +367,10 @@ public class TiffReader extends BinaryFileParser {
 //        }
 //    }
 
-    public TiffContents readFirstDirectory(final ByteSource byteSource, final TiffImagingParameters params,
-            final boolean readImageData, final FormatCompliance formatCompliance)
+    public TiffContents readFirstDirectory(final ByteSource byteSource, final boolean readImageData, final FormatCompliance formatCompliance)
             throws ImageReadException, IOException {
         final Collector collector = new FirstDirectoryCollector(readImageData);
-        read(byteSource, params, formatCompliance, collector);
+        read(byteSource, formatCompliance, collector);
         final TiffContents contents = collector.getContents();
         if (contents.directories.isEmpty()) {
             throw new ImageReadException(
@@ -400,14 +399,12 @@ public class TiffReader extends BinaryFileParser {
             IOException {
 
         final Collector collector = new Collector(params);
-        read(byteSource, params, formatCompliance, collector);
+        read(byteSource, formatCompliance, collector);
         return collector.getContents();
     }
 
-    public void read(final ByteSource byteSource, final TiffImagingParameters params,
-            final FormatCompliance formatCompliance, final Listener listener)
+    public void read(final ByteSource byteSource, final FormatCompliance formatCompliance, final Listener listener)
             throws ImageReadException, IOException {
-        // TiffContents contents =
         readDirectories(byteSource, formatCompliance, listener);
     }
 

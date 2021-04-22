@@ -15,6 +15,7 @@
 
 package org.apache.commons.imaging.formats.xbm;
 
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImagingParameters;
 
 /**
@@ -23,4 +24,7 @@ import org.apache.commons.imaging.ImagingParameters;
  */
 public class XbmImagingParameters extends ImagingParameters {
 
+    public XbmImagingParameters() {
+        setImageFormat(ImageFormats.XBM);
+    }
 }
