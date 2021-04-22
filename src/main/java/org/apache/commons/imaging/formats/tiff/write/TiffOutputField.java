@@ -37,9 +37,9 @@ public class TiffOutputField {
     private int sortHint = -1;
     private static final String NEWLINE = System.getProperty("line.separator");
 
-    public TiffOutputField(final TagInfo tagInfo, final FieldType tagtype, final int count,
+    public TiffOutputField(final TagInfo tagInfo, final FieldType fieldType, final int count,
             final byte[] bytes) {
-        this(tagInfo.tag, tagInfo, tagtype, count, bytes);
+        this(tagInfo.tag, tagInfo, fieldType, count, bytes);
     }
 
     public TiffOutputField(final int tag, final TagInfo tagInfo, final FieldType fieldType,

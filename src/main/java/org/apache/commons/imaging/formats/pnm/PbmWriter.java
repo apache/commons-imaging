@@ -26,17 +26,17 @@ import org.apache.commons.imaging.ImageWriteException;
 
 class PbmWriter implements PnmWriter {
 
-    private final boolean rawbits;
+    private final boolean rawBits;
 
-    PbmWriter(final boolean rawbits) {
-        this.rawbits = rawbits;
+    PbmWriter(final boolean rawBits) {
+        this.rawBits = rawBits;
     }
 
     @Override
     public void writeImage(final BufferedImage src, final OutputStream os, final Map<String, Object> params)
             throws ImageWriteException, IOException {
         os.write(PnmConstants.PNM_PREFIX_BYTE);
-        os.write(rawbits ? PnmConstants.PBM_RAW_CODE : PnmConstants.PBM_TEXT_CODE);
+        os.write(rawBits ? PnmConstants.PBM_RAW_CODE : PnmConstants.PBM_TEXT_CODE);
         os.write(PnmConstants.PNM_SEPARATOR);
 
         final int width = src.getWidth();
@@ -64,7 +64,7 @@ class PbmWriter implements PnmWriter {
                     sample = 1;
                 }
 
-                if (rawbits) {
+                if (rawBits) {
                     bitcache = (bitcache << 1) | (0x1 & sample);
                     bitsInCache++;
 
@@ -81,7 +81,7 @@ class PbmWriter implements PnmWriter {
                 }
             }
 
-            if (rawbits && (bitsInCache > 0)) {
+            if (rawBits && (bitsInCache > 0)) {
                 bitcache = bitcache << (8 - bitsInCache);
                 os.write((byte) bitcache);
                 bitcache = 0;

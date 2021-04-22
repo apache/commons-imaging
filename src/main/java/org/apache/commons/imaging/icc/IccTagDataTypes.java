@@ -80,16 +80,16 @@ public enum IccTagDataTypes implements IccTagDataType {
             try (InputStream bis = new ByteArrayInputStream(bytes)) {
                 read4Bytes("type_signature", bis, "ICC: corrupt tag data", ByteOrder.BIG_ENDIAN);
                 read4Bytes("ignore", bis, "ICC: corrupt tag data", ByteOrder.BIG_ENDIAN);
-                final int thesignature = read4Bytes("thesignature ", bis, "ICC: corrupt tag data", ByteOrder.BIG_ENDIAN);
+                final int theSignature = read4Bytes("theSignature ", bis, "ICC: corrupt tag data", ByteOrder.BIG_ENDIAN);
                 LOGGER.fine(prefix
-                        + "thesignature: "
-                        + Integer.toHexString(thesignature)
+                        + "theSignature: "
+                        + Integer.toHexString(theSignature)
                         + " ("
                         + new String(new byte[]{
-                                (byte) (0xff & (thesignature >> 24)),
-                                (byte) (0xff & (thesignature >> 16)),
-                                (byte) (0xff & (thesignature >> 8)),
-                                (byte) (0xff & (thesignature >> 0)), }, StandardCharsets.US_ASCII)
+                                (byte) (0xff & (theSignature >> 24)),
+                                (byte) (0xff & (theSignature >> 16)),
+                                (byte) (0xff & (theSignature >> 8)),
+                                (byte) (0xff & (theSignature >> 0)), }, StandardCharsets.US_ASCII)
                         + ")");
             }
         }

@@ -38,7 +38,7 @@ class PixelParserBitFields extends PixelParserSimple {
     private final int blueMask;
     private final int alphaMask;
 
-    private int bytecount;
+    private int byteCount;
 
     PixelParserBitFields(final BmpHeaderInfo bhi, final byte[] colorTable, final byte[] imageData) {
         super(bhi, colorTable, imageData);
@@ -82,20 +82,20 @@ class PixelParserBitFields extends PixelParserSimple {
 
         switch (bhi.bitsPerPixel) {
         case 8:
-            data = 0xff & imageData[bytecount + 0];
-            bytecount += 1;
+            data = 0xff & imageData[byteCount + 0];
+            byteCount += 1;
             break;
         case 24:
             data = read3Bytes("Pixel", is, "BMP Image Data", ByteOrder.LITTLE_ENDIAN);
-            bytecount += 3;
+            byteCount += 3;
             break;
         case 32:
             data = read4Bytes("Pixel", is, "BMP Image Data", ByteOrder.LITTLE_ENDIAN);
-            bytecount += 4;
+            byteCount += 4;
             break;
         case 16:
             data = read2Bytes("Pixel", is, "BMP Image Data", ByteOrder.LITTLE_ENDIAN);
-            bytecount += 2;
+            byteCount += 2;
             break;
         default:
             throw new ImageReadException("Unknown BitsPerPixel: " + bhi.bitsPerPixel);
@@ -116,9 +116,9 @@ class PixelParserBitFields extends PixelParserSimple {
 
     @Override
     public void newline() throws ImageReadException, IOException {
-        while ((bytecount % 4) != 0) {
+        while ((byteCount % 4) != 0) {
             readByte("Pixel", is, "BMP Image Data");
-            bytecount++;
+            byteCount++;
         }
     }
 }

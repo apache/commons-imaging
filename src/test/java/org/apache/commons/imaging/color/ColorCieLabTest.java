@@ -36,17 +36,17 @@ public class ColorCieLabTest {
     }
 
     @Test
-    public void testLAssignement() {
+    public void testLAssignment() {
         assertEquals(1.0, color.L, 0.0);
     }
 
     @Test
-    public void testAAssignement() {
+    public void testAAssignment() {
         assertEquals(2.0, color.a, 0.0);
     }
 
     @Test
-    public void testBAssignement() {
+    public void testBAssignment() {
         assertEquals(3.0, color.b, 0.0);
     }
 

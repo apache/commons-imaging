@@ -25,7 +25,7 @@ import java.nio.ByteOrder;
 import org.apache.commons.imaging.ImageReadException;
 
 class PixelParserRgb extends PixelParserSimple {
-    private int bytecount;
+    private int byteCount;
     private int cachedBitCount;
     private int cachedByte;
 
@@ -46,8 +46,8 @@ class PixelParserRgb extends PixelParserSimple {
                 }
 
                 cachedBitCount += 8;
-                cachedByte = (0xff & imageData[bytecount]);
-                bytecount++;
+                cachedByte = (0xff & imageData[byteCount]);
+                byteCount++;
             }
             final int cacheMask = (1 << bhi.bitsPerPixel) - 1;
             final int sample = cacheMask & (cachedByte >> (8 - bhi.bitsPerPixel));
@@ -57,11 +57,11 @@ class PixelParserRgb extends PixelParserSimple {
             return getColorTableRGB(sample);
         }
         if (bhi.bitsPerPixel == 8) { // always grayscale?
-            final int sample = 0xff & imageData[bytecount + 0];
+            final int sample = 0xff & imageData[byteCount + 0];
 
             final int rgb = getColorTableRGB(sample);
 
-            bytecount += 1;
+            byteCount += 1;
 
             return rgb;
         }
@@ -75,31 +75,31 @@ class PixelParserRgb extends PixelParserSimple {
 
             final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
 
-            bytecount += 2;
+            byteCount += 2;
 
             return rgb;
         }
         if (bhi.bitsPerPixel == 24) {
-            final int blue = 0xff & imageData[bytecount + 0];
-            final int green = 0xff & imageData[bytecount + 1];
-            final int red = 0xff & imageData[bytecount + 2];
+            final int blue = 0xff & imageData[byteCount + 0];
+            final int green = 0xff & imageData[byteCount + 1];
+            final int red = 0xff & imageData[byteCount + 2];
             final int alpha = 0xff;
 
             final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
 
-            bytecount += 3;
+            byteCount += 3;
 
             return rgb;
         }
         if (bhi.bitsPerPixel == 32) {
-            final int blue = 0xff & imageData[bytecount + 0];
-            final int green = 0xff & imageData[bytecount + 1];
-            final int red = 0xff & imageData[bytecount + 2];
+            final int blue = 0xff & imageData[byteCount + 0];
+            final int green = 0xff & imageData[byteCount + 1];
+            final int red = 0xff & imageData[byteCount + 2];
             final int alpha = 0xff;
 
             final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
 
-            bytecount += 4;
+            byteCount += 4;
 
             return rgb;
         }
@@ -112,9 +112,9 @@ class PixelParserRgb extends PixelParserSimple {
     public void newline() throws ImageReadException, IOException {
         cachedBitCount = 0;
 
-        while (((bytecount) % 4) != 0) {
+        while (((byteCount) % 4) != 0) {
             readByte("Pixel", is, "BMP Image Data");
-            bytecount++;
+            byteCount++;
         }
     }
 }
