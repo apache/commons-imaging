@@ -39,8 +39,8 @@ public class QuantizedPalette implements Palette {
                 for (int j = subset.mins[1]; j <= subset.maxs[1]; j++) {
                     for (int k = subset.mins[2]; k <= subset.maxs[2]; k++) {
                         final int index = (u << (precision * 2))
-                                | (j << (precision * 1))
-                                | (k << (precision * 0));
+                                | (j << (precision))
+                                | (k << (0));
                         straight[index] = subset;
                     }
                 }

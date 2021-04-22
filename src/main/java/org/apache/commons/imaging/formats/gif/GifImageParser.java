@@ -668,7 +668,7 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
         final int[] result = new int[length];
 
         for (int i = 0; i < length; i++) {
-            final int red = 0xff & bytes[(i * 3) + 0];
+            final int red = 0xff & bytes[(i * 3)];
             final int green = 0xff & bytes[(i * 3) + 1];
             final int blue = 0xff & bytes[(i * 3) + 2];
 

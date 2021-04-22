@@ -144,8 +144,8 @@ class ColorSpaceSubset {
                 for (int blue = mins[2]; blue <= maxs[2]; blue++) {
                     // note: order reversed
                     final int idx = (blue << (2 * precision))
-                            | (green << (1 * precision))
-                            | (red << (0 * precision));
+                            | (green << (precision))
+                            | (red << (0));
                     final int count = table[idx];
                     redsum += count * (red << (8 - precision));
                     greensum += count * (green << (8 - precision));

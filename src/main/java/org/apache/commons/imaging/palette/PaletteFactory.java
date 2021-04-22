@@ -117,7 +117,7 @@ public class PaletteFactory {
         for (int blue = mins[2]; blue <= maxs[2]; blue++) {
             final int b = (blue << (2 * precision));
             for (int green = mins[1]; green <= maxs[1]; green++) {
-                final int g = (green << (1 * precision));
+                final int g = (green << (precision));
                 for (int red = mins[0]; red <= maxs[0]; red++) {
                     final int index = b | g | red;
 

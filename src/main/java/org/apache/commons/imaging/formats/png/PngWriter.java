@@ -237,7 +237,7 @@ class PngWriter {
             final int rgb = palette.getEntry(i);
             final int index = i * 3;
             // Debug.debug("index", index);
-            bytes[index + 0] = (byte) (0xff & (rgb >> 16));
+            bytes[index] = (byte) (0xff & (rgb >> 16));
             bytes[index + 1] = (byte) (0xff & (rgb >> 8));
             bytes[index + 2] = (byte) (0xff & (rgb >> 0));
         }
