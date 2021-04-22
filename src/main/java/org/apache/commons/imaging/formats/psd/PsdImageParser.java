@@ -41,6 +41,7 @@ import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.XmpEmbeddable;
+import org.apache.commons.imaging.common.XmpImagingParameters;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
 import org.apache.commons.imaging.formats.psd.dataparsers.DataParserBitmap;
@@ -53,7 +54,7 @@ import org.apache.commons.imaging.formats.psd.datareaders.CompressedDataReader;
 import org.apache.commons.imaging.formats.psd.datareaders.DataReader;
 import org.apache.commons.imaging.formats.psd.datareaders.UncompressedDataReader;
 
-public class PsdImageParser extends ImageParser<PsdImagingParameters> implements XmpEmbeddable<PsdImagingParameters> {
+public class PsdImageParser extends ImageParser<PsdImagingParameters> implements XmpEmbeddable {
     private static final String DEFAULT_EXTENSION = ".psd";
     private static final String[] ACCEPTED_EXTENSIONS = { DEFAULT_EXTENSION, };
     private static final int PSD_SECTION_HEADER = 0;
@@ -656,7 +657,7 @@ public class PsdImageParser extends ImageParser<PsdImagingParameters> implements
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     @Override
-    public String getXmpXml(final ByteSource byteSource, final PsdImagingParameters params)
+    public String getXmpXml(final ByteSource byteSource, final XmpImagingParameters params)
             throws ImageReadException, IOException {
 
         final PsdImageContents imageContents = readImageContents(byteSource);

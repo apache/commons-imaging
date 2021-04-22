@@ -17,6 +17,7 @@
 
 package org.apache.commons.imaging.formats.psd;
 
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImagingParameters;
 
 /**
@@ -25,4 +26,7 @@ import org.apache.commons.imaging.ImagingParameters;
  */
 public class PsdImagingParameters extends ImagingParameters {
 
+    public PsdImagingParameters() {
+        setImageFormat(ImageFormats.PSD);
+    }
 }

@@ -44,9 +44,6 @@ public class PnmImageParser extends ImageParser<PnmImagingParameters> {
     private static final String DEFAULT_EXTENSION = ".pnm";
     private static final String[] ACCEPTED_EXTENSIONS = { ".pbm", ".pgm",
             ".ppm", ".pnm", ".pam" };
-    public static final String PARAM_KEY_PNM_RAWBITS = "PNM_RAWBITS";
-    public static final String PARAM_VALUE_PNM_RAWBITS_YES = "YES";
-    public static final String PARAM_VALUE_PNM_RAWBITS_NO = "NO";
 
     public PnmImageParser() {
         super.setByteOrder(ByteOrder.LITTLE_ENDIAN);

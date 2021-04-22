@@ -14,10 +14,17 @@
 
 package org.apache.commons.imaging.formats.xpm;
 
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImagingParameters;
 
 /**
  * Xpm format parameters.
  * @since 1.0-alpha3
  */
-public class XpmImagingParameters extends ImagingParameters {}
+public class XpmImagingParameters extends ImagingParameters {
+
+    public XpmImagingParameters() {
+        setImageFormat(ImageFormats.XPM);
+    }
+
+}

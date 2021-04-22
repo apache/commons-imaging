@@ -19,7 +19,6 @@ package org.apache.commons.imaging.common;
 import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 
 /**
@@ -29,7 +28,7 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
  * @see <a href="https://en.wikipedia.org/wiki/Extensible_Metadata_Platform">https://en.wikipedia.org/wiki/Extensible_Metadata_Platform</a>
  * @since 1.0
  */
-public interface XmpEmbeddable<T extends ImagingParameters> {
+public interface XmpEmbeddable {
 
     /**
      * Get a string containing XML-formatted text conforming to the Extensible
@@ -48,7 +47,7 @@ public interface XmpEmbeddable<T extends ImagingParameters> {
      *                            parser implementation.
      * @throws IOException        In the event of unsuccessful read or access operation.
      */
-    String getXmpXml(ByteSource byteSource, T params)
+    String getXmpXml(ByteSource byteSource, XmpImagingParameters params)
             throws ImageReadException, IOException;
 
 }

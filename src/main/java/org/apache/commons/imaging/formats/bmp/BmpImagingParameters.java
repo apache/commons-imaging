@@ -17,10 +17,16 @@
 
 package org.apache.commons.imaging.formats.bmp;
 
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImagingParameters;
 
 /**
  * Bmp format parameters.
  * @since 1.0-alpha3
  */
-public class BmpImagingParameters extends ImagingParameters {}
+public class BmpImagingParameters extends ImagingParameters {
+
+    public BmpImagingParameters() {
+        setImageFormat(ImageFormats.BMP);
+    }
+}

@@ -441,7 +441,7 @@ class PngWriter {
             writeChunkXmpiTXt(os, xmpXml);
         }
 
-        final List<PngText> outputTexts = params.getTextChunks();
+        final List<? extends PngText> outputTexts = params.getTextChunks();
         if (outputTexts != null) {
             for (final PngText text : outputTexts) {
                 if (text instanceof PngText.Text) {

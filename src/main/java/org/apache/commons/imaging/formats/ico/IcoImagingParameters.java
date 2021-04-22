@@ -15,6 +15,7 @@
 
 package org.apache.commons.imaging.formats.ico;
 
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImagingParameters;
 
 /**
@@ -23,4 +24,7 @@ import org.apache.commons.imaging.ImagingParameters;
  */
 public class IcoImagingParameters extends ImagingParameters {
 
+    public IcoImagingParameters () {
+        setImageFormat(ImageFormats.ICO);
+    }
 }
