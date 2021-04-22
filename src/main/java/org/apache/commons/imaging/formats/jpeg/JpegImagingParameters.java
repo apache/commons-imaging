@@ -15,6 +15,7 @@
 
 package org.apache.commons.imaging.formats.jpeg;
 
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 
 /**
@@ -23,4 +24,7 @@ import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
  */
 public class JpegImagingParameters extends TiffImagingParameters {
 
+    public JpegImagingParameters() {
+        setImageFormat(ImageFormats.JPEG);
+    }
 }

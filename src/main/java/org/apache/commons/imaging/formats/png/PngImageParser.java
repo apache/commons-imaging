@@ -50,6 +50,7 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.GenericImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.XmpEmbeddable;
+import org.apache.commons.imaging.common.XmpImagingParameters;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.png.chunks.PngChunk;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkGama;
@@ -69,7 +70,7 @@ import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFi
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilterTrueColor;
 import org.apache.commons.imaging.icc.IccProfileParser;
 
-public class PngImageParser extends ImageParser<PngImagingParameters>  implements XmpEmbeddable<PngImagingParameters> {
+public class PngImageParser extends ImageParser<PngImagingParameters>  implements XmpEmbeddable {
 
     private static final Logger LOGGER = Logger.getLogger(PngImageParser.class.getName());
 
@@ -703,7 +704,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
     }
 
     @Override
-    public String getXmpXml(final ByteSource byteSource, final PngImagingParameters params)
+    public String getXmpXml(final ByteSource byteSource, final XmpImagingParameters params)
             throws ImageReadException, IOException {
 
         final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] { ChunkType.iTXt }, false);

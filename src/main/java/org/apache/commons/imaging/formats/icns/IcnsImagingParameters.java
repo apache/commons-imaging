@@ -15,6 +15,7 @@
 
 package org.apache.commons.imaging.formats.icns;
 
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImagingParameters;
 
 /**
@@ -23,4 +24,7 @@ import org.apache.commons.imaging.ImagingParameters;
  */
 public class IcnsImagingParameters extends ImagingParameters {
 
+    public IcnsImagingParameters() {
+        setImageFormat(ImageFormats.ICNS);
+    }
 }

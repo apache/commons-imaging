@@ -40,6 +40,7 @@ import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.XmpEmbeddable;
+import org.apache.commons.imaging.common.XmpImagingParameters;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.decoder.JpegDecoder;
 import org.apache.commons.imaging.formats.jpeg.iptc.IptcParser;
@@ -61,7 +62,7 @@ import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.internal.Debug;
 
-public class JpegImageParser extends ImageParser<JpegImagingParameters> implements XmpEmbeddable<JpegImagingParameters> {
+public class JpegImageParser extends ImageParser<JpegImagingParameters> implements XmpEmbeddable {
 
     private static final Logger LOGGER = Logger.getLogger(JpegImageParser.class.getName());
 
@@ -317,8 +318,11 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
     }
 
     @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final JpegImagingParameters params)
+    public ImageMetadata getMetadata(final ByteSource byteSource, JpegImagingParameters params)
             throws ImageReadException, IOException {
+        if (params == null) {
+            params = new JpegImagingParameters();
+        }
         final TiffImageMetadata exif = getExifMetadata(byteSource, params);
 
         final JpegPhotoshopMetadata photoshop = getPhotoshopMetadata(byteSource,
@@ -534,7 +538,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     @Override
-    public String getXmpXml(final ByteSource byteSource, final JpegImagingParameters params)
+    public String getXmpXml(final ByteSource byteSource, final XmpImagingParameters params)
             throws ImageReadException, IOException {
 
         final List<String> result = new ArrayList<>();
