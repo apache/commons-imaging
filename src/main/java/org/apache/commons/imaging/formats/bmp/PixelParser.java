@@ -51,7 +51,7 @@ abstract class PixelParser {
         return (alpha << 24)
                 | (red << 16)
                 | (green << 8)
-                | (blue << 0);
+                | (blue);
     }
 
 }

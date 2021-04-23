@@ -70,7 +70,7 @@ abstract class ScanExpediter {
         return ((0xff & alpha) << 24)
              | ((0xff & red)   << 16)
              | ((0xff & green) << 8)
-             | ((0xff & blue)  << 0);
+             | ((0xff & blue));
     }
 
     final int getPixelRGB(final int red, final int green, final int blue) {

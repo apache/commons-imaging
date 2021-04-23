@@ -30,7 +30,7 @@ public class DataParserIndexed extends DataParser {
             final int alpha = 0xff;
 
             final int rgb = ((0xff & alpha) << 24) | ((0xff & red) << 16)
-                    | ((0xff & green) << 8) | ((0xff & blue) << 0);
+                    | ((0xff & green) << 8) | ((0xff & blue));
 
             colorTable[i] = rgb;
         }

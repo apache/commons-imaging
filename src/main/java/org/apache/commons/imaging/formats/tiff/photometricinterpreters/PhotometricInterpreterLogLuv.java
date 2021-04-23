@@ -82,7 +82,7 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
         final int green = Math.min(255, Math.max(0, rgbValues.g));
         final int blue = Math.min(255, Math.max(0, rgbValues.b));
         final int alpha = 0xff;
-        final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+        final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue);
         imageBuilder.setRGB(x, y, rgb);
 
     }

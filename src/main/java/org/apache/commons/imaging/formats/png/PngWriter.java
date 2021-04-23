@@ -55,7 +55,7 @@ class PngWriter {
         os.write(0xff & (value >> 24));
         os.write(0xff & (value >> 16));
         os.write(0xff & (value >> 8));
-        os.write(0xff & (value >> 0));
+        os.write(0xff & (value));
     }
 
     private void writeChunk(final OutputStream os, final ChunkType chunkType,
@@ -239,7 +239,7 @@ class PngWriter {
             // Debug.debug("index", index);
             bytes[index + 0] = (byte) (0xff & (rgb >> 16));
             bytes[index + 1] = (byte) (0xff & (rgb >> 8));
-            bytes[index + 2] = (byte) (0xff & (rgb >> 0));
+            bytes[index + 2] = (byte) (0xff & (rgb));
         }
 
         writeChunk(os, ChunkType.PLTE, bytes);
@@ -270,11 +270,11 @@ class PngWriter {
         bytes[0] = (byte) (0xff & (xPPU >> 24));
         bytes[1] = (byte) (0xff & (xPPU >> 16));
         bytes[2] = (byte) (0xff & (xPPU >> 8));
-        bytes[3] = (byte) (0xff & (xPPU >> 0));
+        bytes[3] = (byte) (0xff & (xPPU));
         bytes[4] = (byte) (0xff & (yPPU >> 24));
         bytes[5] = (byte) (0xff & (yPPU >> 16));
         bytes[6] = (byte) (0xff & (yPPU >> 8));
-        bytes[7] = (byte) (0xff & (yPPU >> 0));
+        bytes[7] = (byte) (0xff & (yPPU));
         bytes[8] = units;
         writeChunk(os, ChunkType.pHYs, bytes);
     }
@@ -527,7 +527,7 @@ class PngWriter {
                             final int alpha = 0xff & (argb >> 24);
                             final int red = 0xff & (argb >> 16);
                             final int green = 0xff & (argb >> 8);
-                            final int blue = 0xff & (argb >> 0);
+                            final int blue = 0xff & (argb);
 
                             if (isGrayscale) {
                                 final int gray = (red + green + blue) / 3;

@@ -148,7 +148,7 @@ public final class Debug {
         final byte b1 = (byte) ((byteQuad >> 24) & 0xff);
         final byte b2 = (byte) ((byteQuad >> 16) & 0xff);
         final byte b3 = (byte) ((byteQuad >> 8) & 0xff);
-        final byte b4 = (byte) ((byteQuad >> 0) & 0xff);
+        final byte b4 = (byte) ((byteQuad) & 0xff);
 
         final char c1 = (char) b1;
         final char c2 = (char) b2;

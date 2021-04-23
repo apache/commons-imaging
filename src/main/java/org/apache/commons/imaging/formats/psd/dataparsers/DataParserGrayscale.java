@@ -28,7 +28,7 @@ public class DataParserGrayscale extends DataParser {
         return ((0xff & alpha)   << 24)
               | ((0xff & sample) << 16)
               | ((0xff & sample) << 8)
-              | ((0xff & sample) << 0);
+              | ((0xff & sample));
     }
 
     @Override

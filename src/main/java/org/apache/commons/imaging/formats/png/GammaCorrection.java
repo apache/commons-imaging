@@ -49,13 +49,13 @@ public class GammaCorrection {
         final int alpha = (0xff000000) & pixel;
         int red = (pixel >> 16) & 0xff;
         int green = (pixel >> 8) & 0xff;
-        int blue = (pixel >> 0) & 0xff;
+        int blue = (pixel) & 0xff;
 
         red = correctSample(red);
         green = correctSample(green);
         blue = correctSample(blue);
 
-        return alpha | ((0xff & red) << 16) | ((0xff & green) << 8) | ((0xff & blue) << 0);
+        return alpha | ((0xff & red) << 16) | ((0xff & green) << 8) | ((0xff & blue));
     }
 
     private int correctSample(final int sample, final double srcGamma, final double dstGamma) {

@@ -89,7 +89,7 @@ public enum IccTagDataTypes implements IccTagDataType {
                                 (byte) (0xff & (theSignature >> 24)),
                                 (byte) (0xff & (theSignature >> 16)),
                                 (byte) (0xff & (theSignature >> 8)),
-                                (byte) (0xff & (theSignature >> 0)), }, StandardCharsets.US_ASCII)
+                                (byte) (0xff & (theSignature)), }, StandardCharsets.US_ASCII)
                         + ")");
             }
         }

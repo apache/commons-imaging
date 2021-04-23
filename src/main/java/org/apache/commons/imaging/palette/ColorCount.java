@@ -30,7 +30,7 @@ class ColorCount {
         alpha = 0xff & (argb >> 24);
         red = 0xff & (argb >> 16);
         green = 0xff & (argb >> 8);
-        blue = 0xff & (argb >> 0);
+        blue = 0xff & (argb);
     }
 
     @Override

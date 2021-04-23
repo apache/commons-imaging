@@ -203,10 +203,10 @@ public final class BinaryFunctions {
         final int result;
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
             result = (byte0 << 24) | (byte1 << 16)
-                    | (byte2 << 8) | (byte3 << 0);
+                    | (byte2 << 8) | (byte3);
         } else {
             result = (byte3 << 24) | (byte2 << 16)
-                    | (byte1 << 8) | (byte0 << 0);
+                    | (byte1 << 8) | (byte0);
         }
 
         return result;
@@ -224,10 +224,10 @@ public final class BinaryFunctions {
         final int result;
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
             result = (byte0 << 16) | (byte1 << 8)
-                    | (byte2 << 0);
+                    | (byte2);
         } else {
             result = (byte2 << 16) | (byte1 << 8)
-                    | (byte0 << 0);
+                    | (byte0);
         }
 
         return result;
@@ -254,14 +254,14 @@ public final class BinaryFunctions {
     public static void printCharQuad(final String msg, final int i) {
         LOGGER.finest(msg + ": '" + (char) (0xff & (i >> 24))
                 + (char) (0xff & (i >> 16)) + (char) (0xff & (i >> 8))
-                + (char) (0xff & (i >> 0)) + "'");
+                + (char) (0xff & (i)) + "'");
 
     }
 
     public static void printCharQuad(final PrintWriter pw, final String msg, final int i) {
         pw.println(msg + ": '" + (char) (0xff & (i >> 24))
                 + (char) (0xff & (i >> 16)) + (char) (0xff & (i >> 8))
-                + (char) (0xff & (i >> 0)) + "'");
+                + (char) (0xff & (i)) + "'");
 
     }
 
@@ -270,7 +270,7 @@ public final class BinaryFunctions {
     }
 
     public static int charsToQuad(final char c1, final char c2, final char c3, final char c4) {
-        return (((0xff & c1) << 24) | ((0xff & c2) << 16) | ((0xff & c3) << 8) | ((0xff & c4) << 0));
+        return (((0xff & c1) << 24) | ((0xff & c2) << 16) | ((0xff & c3) << 8) | ((0xff & c4)));
     }
 
     /**

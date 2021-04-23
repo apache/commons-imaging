@@ -98,14 +98,14 @@ class BitInputStream extends InputStream {
             switch (count) {
             case 16:
                 bytesRead += 2;
-                return (is.read() << 8) | (is.read() << 0);
+                return (is.read() << 8) | (is.read());
             case 24:
                 bytesRead += 3;
-                return (is.read() << 16) | (is.read() << 8) | (is.read() << 0);
+                return (is.read() << 16) | (is.read() << 8) | (is.read());
             case 32:
                 bytesRead += 4;
                 return (is.read() << 24) | (is.read() << 16) | (is.read() << 8)
-                        | (is.read() << 0);
+                        | (is.read());
             default:
                 break;
             }
@@ -113,13 +113,13 @@ class BitInputStream extends InputStream {
             switch (count) {
             case 16:
                 bytesRead += 2;
-                return ((is.read() << 0) | (is.read() << 8));
+                return ((is.read()) | (is.read() << 8));
             case 24:
                 bytesRead += 3;
-                return ((is.read() << 0) | (is.read() << 8) | (is.read() << 16));
+                return ((is.read()) | (is.read() << 8) | (is.read() << 16));
             case 32:
                 bytesRead += 4;
-                return ((is.read() << 0) | (is.read() << 8) | (is.read() << 16) | (is.read() << 24));
+                return ((is.read()) | (is.read() << 8) | (is.read() << 16) | (is.read() << 24));
             default:
                 break;
             }

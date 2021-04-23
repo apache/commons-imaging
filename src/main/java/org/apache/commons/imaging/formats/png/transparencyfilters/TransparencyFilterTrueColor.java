@@ -36,7 +36,7 @@ public class TransparencyFilterTrueColor extends TransparencyFilter {
 
         transparentColor = ((0xff & transparentRed) << 16)
                 | ((0xff & transparentGreen) << 8)
-                | ((0xff & transparentBlue) << 0);
+                | ((0xff & transparentBlue));
 
     }
 

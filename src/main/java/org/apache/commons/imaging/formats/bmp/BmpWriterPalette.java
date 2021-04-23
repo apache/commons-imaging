@@ -57,7 +57,7 @@ class BmpWriterPalette implements BmpWriter {
 
             final int red = 0xff & (rgb >> 16);
             final int green = 0xff & (rgb >> 8);
-            final int blue = 0xff & (rgb >> 0);
+            final int blue = 0xff & (rgb);
 
             bos.write(blue);
             bos.write(green);

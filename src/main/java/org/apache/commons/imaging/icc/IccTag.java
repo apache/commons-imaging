@@ -94,7 +94,7 @@ public class IccTag {
                         (byte) (0xff & (signature >> 24)),
                         (byte) (0xff & (signature >> 16)),
                         (byte) (0xff & (signature >> 8)),
-                        (byte) (0xff & (signature >> 0)), }, StandardCharsets.US_ASCII)
+                        (byte) (0xff & (signature)), }, StandardCharsets.US_ASCII)
                 + ")");
 
         if (data == null) {
@@ -110,7 +110,7 @@ public class IccTag {
                             (byte) (0xff & (dataTypeSignature >> 24)),
                             (byte) (0xff & (dataTypeSignature >> 16)),
                             (byte) (0xff & (dataTypeSignature >> 8)),
-                            (byte) (0xff & (dataTypeSignature >> 0)), }, StandardCharsets.US_ASCII)
+                            (byte) (0xff & (dataTypeSignature)), }, StandardCharsets.US_ASCII)
                     + ")");
 
             if (itdt == null) {

@@ -147,7 +147,7 @@ public final class ColorConversions {
     public static ColorXyz convertRGBtoXYZ(final int rgb) {
         final int r = 0xff & (rgb >> 16);
         final int g = 0xff & (rgb >> 8);
-        final int b = 0xff & (rgb >> 0);
+        final int b = 0xff & (rgb);
 
         double var_R = r / 255.0; // Where R = 0 ÷ 255
         double var_G = g / 255.0; // Where G = 0 ÷ 255
@@ -179,7 +179,7 @@ public final class ColorConversions {
     public static ColorCmy convertRGBtoCMY(final int rgb) {
         final int R = 0xff & (rgb >> 16);
         final int G = 0xff & (rgb >> 8);
-        final int B = 0xff & (rgb >> 0);
+        final int B = 0xff & (rgb);
 
         // RGB values = 0 ÷ 255
         // CMY values = 0 ÷ 1
@@ -266,7 +266,7 @@ public final class ColorConversions {
 
         final int R = 0xff & (rgb >> 16);
         final int G = 0xff & (rgb >> 8);
-        final int B = 0xff & (rgb >> 0);
+        final int B = 0xff & (rgb);
 
         final double var_R = (R / 255.0); // Where RGB values = 0 ÷ 255
         final double var_G = (G / 255.0);
@@ -390,7 +390,7 @@ public final class ColorConversions {
     public static ColorHsv convertRGBtoHSV(final int rgb) {
         final int R = 0xff & (rgb >> 16);
         final int G = 0xff & (rgb >> 8);
-        final int B = 0xff & (rgb >> 0);
+        final int B = 0xff & (rgb);
 
         final double var_R = (R / 255.0); // RGB values = 0 ÷ 255
         final double var_G = (G / 255.0);
@@ -571,7 +571,7 @@ public final class ColorConversions {
         blue = Math.min(255, Math.max(0, blue));
 
         final int alpha = 0xff;
-        final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+        final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue);
 
         return rgb;
     }
@@ -582,7 +582,7 @@ public final class ColorConversions {
         blue = Math.min(255, Math.max(0, blue));
 
         final int alpha = 0xff;
-        final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+        final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue);
 
         return rgb;
     }

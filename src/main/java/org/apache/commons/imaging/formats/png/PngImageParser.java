@@ -106,7 +106,7 @@ public class PngImageParser extends ImageParser  implements XmpEmbeddable {
         result.append((char) (0xff & (chunkType >> 24)));
         result.append((char) (0xff & (chunkType >> 16)));
         result.append((char) (0xff & (chunkType >> 8)));
-        result.append((char) (0xff & (chunkType >> 0)));
+        result.append((char) (0xff & (chunkType)));
         return result.toString();
     }
 

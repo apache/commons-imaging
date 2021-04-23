@@ -138,9 +138,9 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
 
         if (LOGGER.isLoggable(Level.FINEST)) {
             printCharQuad("identifier: ", ((identifier1 << 16)
-                    | (identifier2 << 8) | (identifier3 << 0)));
+                    | (identifier2 << 8) | (identifier3)));
             printCharQuad("version: ",
-                    ((version1 << 16) | (version2 << 8) | (version3 << 0)));
+                    ((version1 << 16) | (version2 << 8) | (version3)));
         }
 
         final int logicalScreenWidth = read2Bytes("Logical Screen Width", is, "Not a Valid GIF File", getByteOrder());
@@ -674,7 +674,7 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
 
             final int alpha = 0xff;
 
-            final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+            final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue);
             result[i] = rgb;
         }
 
@@ -1012,8 +1012,7 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
                             | (sortFlag ? SORT_FLAG_MASK : 0)
                             | (7 & sizeOfLocalColorTable));
                 } else {
-                    packedFields = (0
-                            | (interlaceFlag ? INTERLACE_FLAG_MASK : 0)
+                    packedFields = ((interlaceFlag ? INTERLACE_FLAG_MASK : 0)
                             | (sortFlag ? SORT_FLAG_MASK : 0)
                             | (7 & sizeOfLocalColorTable));
                 }
@@ -1028,7 +1027,7 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
 
                     final int red = 0xff & (rgb >> 16);
                     final int green = 0xff & (rgb >> 8);
-                    final int blue = 0xff & (rgb >> 0);
+                    final int blue = 0xff & (rgb);
 
                     bos.write(red);
                     bos.write(green);

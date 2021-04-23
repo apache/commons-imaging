@@ -656,7 +656,7 @@ public abstract class TiffImageWriterBase {
                         final int rgb = src.getRGB(x, y);
                         final int red = 0xff & (rgb >> 16);
                         final int green = 0xff & (rgb >> 8);
-                        final int blue = 0xff & (rgb >> 0);
+                        final int blue = 0xff & (rgb);
 
                         if (bitsPerSample == 1) {
                             int sample = (red + green + blue) / 3;
