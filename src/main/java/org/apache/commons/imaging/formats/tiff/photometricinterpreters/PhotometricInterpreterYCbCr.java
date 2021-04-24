@@ -60,8 +60,7 @@ public class PhotometricInterpreterYCbCr extends PhotometricInterpreter {
         final int b = limit((int) b1, 0, 255);
 
         final int alpha = 0xff;
-        final int rgb = (alpha << 24) | (r << 16) | (g << 8) | (b << 0);
-        return rgb;
+        return (alpha << 24) | (r << 16) | (g << 8) | (b << 0);
     }
 
     @Override

@@ -105,6 +105,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="IMAGING-289" dev="kinow" type="fix" due-to="Arturo Bernal">
         Fix javadoc
       </action>
+      <action issue="IMAGING-290" dev="kinow" type="update" due-to="Arturo Bernal">
+        Remove redundant local variable
+      </action>
     </release>
     <release version="1.0-alpha2" date="2020-08-01" description="Second 1.0 alpha release">
       <action issue="IMAGING-258" dev="kinow" type="update" due-to="Gary Lucas">

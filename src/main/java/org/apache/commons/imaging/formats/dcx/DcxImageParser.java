@@ -153,8 +153,7 @@ public class DcxImageParser extends ImageParser {
                 pages[i] = ((Long) objects[i]);
             }
 
-            final DcxHeader ret = new DcxHeader(id, pages);
-            return ret;
+            return new DcxHeader(id, pages);
         }
     }
 

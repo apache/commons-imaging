@@ -480,8 +480,7 @@ public class BmpImageParser extends ImageParser {
     private BmpHeaderInfo readBmpHeaderInfo(final ByteSource byteSource) throws ImageReadException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             // readSignature(is);
-            final BmpHeaderInfo ret = readBmpHeaderInfo(is, null);
-            return ret;
+            return readBmpHeaderInfo(is, null);
         }
     }
 
@@ -640,8 +639,7 @@ public class BmpImageParser extends ImageParser {
     public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
-            final BufferedImage ret = getBufferedImage(is, params);
-            return ret;
+            return getBufferedImage(is, params);
         }
     }
 

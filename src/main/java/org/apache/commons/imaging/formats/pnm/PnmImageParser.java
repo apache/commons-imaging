@@ -317,8 +317,7 @@ public class PnmImageParser extends ImageParser {
                     hasAlpha);
             info.readImage(imageBuilder, is);
 
-            final BufferedImage ret = imageBuilder.getBufferedImage();
-            return ret;
+            return imageBuilder.getBufferedImage();
         }
     }
 

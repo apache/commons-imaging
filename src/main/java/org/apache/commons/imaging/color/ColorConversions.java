@@ -571,9 +571,8 @@ public final class ColorConversions {
         blue = Math.min(255, Math.max(0, blue));
 
         final int alpha = 0xff;
-        final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
 
-        return rgb;
+        return (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
     }
 
     private static int convertRGBtoRGB(int red, int green, int blue) {
@@ -582,9 +581,8 @@ public final class ColorConversions {
         blue = Math.min(255, Math.max(0, blue));
 
         final int alpha = 0xff;
-        final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
 
-        return rgb;
+        return (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
     }
 
     public static ColorCieLch convertCIELabtoCIELCH(final ColorCieLab cielab) {

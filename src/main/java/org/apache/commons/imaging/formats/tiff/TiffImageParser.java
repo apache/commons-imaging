@@ -302,13 +302,11 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
             break;
         }
 
-        final ImageInfo result = new ImageInfo(formatDetails, bitsPerPixel, comments,
+        return new ImageInfo(formatDetails, bitsPerPixel, comments,
                 format, formatName, height, mimeType, numberOfImages,
                 physicalHeightDpi, physicalHeightInch, physicalWidthDpi,
                 physicalWidthInch, width, progressive, transparent,
                 usesPalette, colorType, compressionAlgorithm);
-
-        return result;
     }
 
     @Override

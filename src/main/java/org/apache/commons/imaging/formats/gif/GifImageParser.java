@@ -475,9 +475,8 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
             final List<GifBlock> blocks = readBlocks(ghi, is, stopBeforeImageData,
                     formatCompliance);
 
-            final GifImageContents result = new GifImageContents(ghi, globalColorTable,
+            return new GifImageContents(ghi, globalColorTable,
                     blocks);
-            return result;
         }
     }
 

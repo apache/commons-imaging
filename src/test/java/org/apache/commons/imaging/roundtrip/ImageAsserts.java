@@ -72,9 +72,8 @@ final class ImageAsserts {
         final int bRed = 0xff & (b >> 16);
         final int bGreen = 0xff & (b >> 8);
         final int bBlue = 0xff & (b >> 0);
-        final int diff = Math.abs(aAlpha - bAlpha) + Math.abs(aRed - bRed)
+        return Math.abs(aAlpha - bAlpha) + Math.abs(aRed - bRed)
                 + Math.abs(aGreen - bGreen) + Math.abs(aBlue - bBlue);
-        return diff;
 
     }
 

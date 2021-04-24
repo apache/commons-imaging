@@ -128,9 +128,8 @@ class ColorSpaceSubset {
         final int rdiff = maxs[0] - mins[0] + 1;
         final int gdiff = maxs[1] - mins[1] + 1;
         final int bdiff = maxs[2] - mins[2] + 1;
-        final int colorArea = rdiff * gdiff * bdiff;
 
-        return colorArea;
+        return rdiff * gdiff * bdiff;
 
     }
 
