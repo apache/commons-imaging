@@ -35,7 +35,7 @@ class JpegInputStream {
 
     /**
      * Returns {@code true} as long there are unread fields available, else {@code false}
-     * @return
+     * @return {@code true} as long there are unread fields available, else {@code false}
      */
     public boolean hasNext() {
         return nextPos < this.interval.length;
@@ -71,7 +71,7 @@ class JpegInputStream {
     /**
      * Returns the value from current field (as {@code InputStream.read()} would do)
      * and set the position of the pointer to the next field to read.
-     * @return
+     * @return the value from current field (as {@code InputStream.read()} would do).
      * @throws IllegalStateException if the stream hasn't any other value.
      */
     int read() {
