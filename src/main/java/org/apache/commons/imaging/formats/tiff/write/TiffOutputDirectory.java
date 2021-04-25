@@ -74,15 +74,7 @@ public final class TiffOutputDirectory extends TiffOutputItem {
     private final List<TiffOutputField> fields = new ArrayList<>();
     private final ByteOrder byteOrder;
     private TiffOutputDirectory nextDirectory;
-    public static final Comparator<TiffOutputDirectory> COMPARATOR = (o1, o2) -> {
-        if (o1.type < o2.type) {
-            return -1;
-        }
-        if (o1.type > o2.type) {
-            return 1;
-        }
-        return 0;
-    };
+    public static final Comparator<TiffOutputDirectory> COMPARATOR = Comparator.comparingInt(o -> o.type);
     private JpegImageData jpegImageData;
     private TiffImageData tiffImageData;
 
