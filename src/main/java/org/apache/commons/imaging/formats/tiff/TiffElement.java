@@ -21,15 +21,7 @@ import java.util.Comparator;
 public abstract class TiffElement {
     public final long offset;
     public final int length;
-    public static final Comparator<TiffElement> COMPARATOR = (e1, e2) -> {
-        if (e1.offset < e2.offset) {
-            return -1;
-        }
-        if (e1.offset > e2.offset) {
-            return 1;
-        }
-        return 0;
-    };
+    public static final Comparator<TiffElement> COMPARATOR = Comparator.comparingLong(e -> e.offset);
 
     public TiffElement(final long offset, final int length) {
         this.offset = offset;
