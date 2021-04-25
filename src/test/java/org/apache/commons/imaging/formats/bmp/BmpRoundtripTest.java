@@ -160,7 +160,7 @@ public class BmpRoundtripTest extends BmpBaseTest {
         assertEquals(srcImage.getWidth(), dstImage.getWidth());
         assertEquals(srcImage.getHeight(), dstImage.getHeight());
 
-        final int dstData[][] = bufferedImageToImageData(dstImage);
+        final int[][] dstData = bufferedImageToImageData(dstImage);
         compare(rawData, dstData);
     }
 

@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public abstract class ByteSourceTest extends ImagingTest {
-    protected File createTempFile(final byte src[]) throws IOException {
+    protected File createTempFile(final byte[] src) throws IOException {
         final File file = File.createTempFile("raw_", ".bin");
 
         // write test bytes to file.
@@ -47,24 +47,24 @@ public abstract class ByteSourceTest extends ImagingTest {
     }
 
     protected static byte[][] getTestByteArrays() {
-        final byte single[] = new byte[1];
+        final byte[] single = new byte[1];
         for (int i = 0; i < single.length; i++) {
             single[i] = (byte) i;
         }
 
-        final byte simple[] = new byte[256];
+        final byte[] simple = new byte[256];
         for (int i = 0; i < simple.length; i++) {
             simple[i] = (byte) i;
         }
 
-        final byte zeroes[] = new byte[256];
+        final byte[] zeroes = new byte[256];
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         for (int i = 0; i < 256 * 256; i++) {
             baos.write(0xff & i);
             baos.write(0xff & (i >> 8));
         }
-        final byte longArray[] = (baos.toByteArray());
+        final byte[] longArray = (baos.toByteArray());
 
         return new byte[][]{ImagingConstants.EMPTY_BYTE_ARRAY, single, simple, zeroes, longArray,};
     }

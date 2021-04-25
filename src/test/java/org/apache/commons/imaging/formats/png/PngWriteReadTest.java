@@ -201,7 +201,7 @@ public class PngWriteReadTest extends ImagingTest {
         assertEquals(srcImage.getWidth(), dstImage.getWidth());
         assertEquals(srcImage.getHeight(), dstImage.getHeight());
 
-        final int dstData[][] = bufferedImageToImageData(dstImage);
+        final int[][] dstData = bufferedImageToImageData(dstImage);
         assertArrayEquals(rawData, dstData);
     }
 
@@ -230,7 +230,7 @@ public class PngWriteReadTest extends ImagingTest {
         assertEquals(srcImage.getWidth(), dstImage.getWidth());
         assertEquals(srcImage.getHeight(), dstImage.getHeight());
 
-        final int dstData[][] = bufferedImageToImageData(dstImage);
+        final int[][] dstData = bufferedImageToImageData(dstImage);
         assertArrayEquals(rawData, dstData);
 
         final ImageMetadata imageMetadata = Imaging.getMetadata(bytes);

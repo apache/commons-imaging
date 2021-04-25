@@ -76,7 +76,7 @@ public class TiffLzwTest extends TiffBaseTest {
         }
     }
 
-    private void compressRoundtripAndValidate(final byte src[]) throws IOException {
+    private void compressRoundtripAndValidate(final byte[] src) throws IOException {
         final boolean DEBUG = false;
 
         if (DEBUG) {
@@ -110,7 +110,7 @@ public class TiffLzwTest extends TiffBaseTest {
 
         final MyLzwCompressor compressor = new MyLzwCompressor(LZW_MINIMUM_CODE_SIZE,
                 ByteOrder.BIG_ENDIAN, true, compressionListener);
-        final byte compressed[] = compressor.compress(src);
+        final byte[] compressed = compressor.compress(src);
 
         final MyLzwDecompressor.Listener decompressionListener = new MyLzwDecompressor.Listener() {
 
@@ -161,7 +161,7 @@ public class TiffLzwTest extends TiffBaseTest {
                 LZW_MINIMUM_CODE_SIZE, ByteOrder.BIG_ENDIAN,
                 decompressionListener);
         decompressor.setTiffLZWMode();
-        final byte decompressed[] = decompressor.decompress(is, src.length);
+        final byte[] decompressed = decompressor.decompress(is, src.length);
 
         assertEquals(src.length, decompressed.length);
         for (int i = 0; i < src.length; i++) {
@@ -169,7 +169,7 @@ public class TiffLzwTest extends TiffBaseTest {
         }
     }
 
-    private void decompressRoundtripAndValidate(final byte src[]) throws IOException {
+    private void decompressRoundtripAndValidate(final byte[] src) throws IOException {
         Debug.debug();
         Debug.debug("roundtripAndValidate: " + src.length);
         Debug.debug();
@@ -198,7 +198,7 @@ public class TiffLzwTest extends TiffBaseTest {
                 LZW_MINIMUM_CODE_SIZE, ByteOrder.BIG_ENDIAN,
                 decompressionListener);
         decompressor.setTiffLZWMode();
-        final byte decompressed[] = decompressor.decompress(is, src.length);
+        final byte[] decompressed = decompressor.decompress(is, src.length);
 
         final MyLzwCompressor.Listener compressionListener = new MyLzwCompressor.Listener() {
 
@@ -261,7 +261,7 @@ public class TiffLzwTest extends TiffBaseTest {
 
         final MyLzwCompressor compressor = new MyLzwCompressor(LZW_MINIMUM_CODE_SIZE,
                 ByteOrder.BIG_ENDIAN, true, compressionListener);
-        final byte compressed[] = compressor.compress(decompressed);
+        final byte[] compressed = compressor.compress(decompressed);
 
         assertEquals(src.length, compressed.length);
         for (int i = 0; i < src.length; i++) {

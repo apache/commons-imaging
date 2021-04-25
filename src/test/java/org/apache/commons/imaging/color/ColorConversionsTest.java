@@ -23,7 +23,7 @@ import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 
 public class ColorConversionsTest {
-    private static final int SAMPLE_RGBS[] = { 0xffffffff, 0xff000000,
+    private static final int[] SAMPLE_RGBS = { 0xffffffff, 0xff000000,
             0xffff0000, 0xff00ff00, 0xff0000ff, 0xffff00ff, 0xfff0ff00,
             0xff00ffff, 0x00000000, 0xff7f7f7f, };
 

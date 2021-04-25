@@ -107,9 +107,9 @@ public class MetadataExample {
                     gpsLongitudeField != null) {
                 // all of these values are strings.
                 final String gpsLatitudeRef = (String) gpsLatitudeRefField.getValue();
-                final RationalNumber gpsLatitude[] = (RationalNumber[]) (gpsLatitudeField.getValue());
+                final RationalNumber[] gpsLatitude = (RationalNumber[]) (gpsLatitudeField.getValue());
                 final String gpsLongitudeRef = (String) gpsLongitudeRefField.getValue();
-                final RationalNumber gpsLongitude[] = (RationalNumber[]) gpsLongitudeField.getValue();
+                final RationalNumber[] gpsLongitude = (RationalNumber[]) gpsLongitudeField.getValue();
 
                 final RationalNumber gpsLatitudeDegrees = gpsLatitude[0];
                 final RationalNumber gpsLatitudeMinutes = gpsLatitude[1];
