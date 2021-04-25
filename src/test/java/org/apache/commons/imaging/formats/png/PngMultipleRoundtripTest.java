@@ -40,7 +40,7 @@ public class PngMultipleRoundtripTest extends PngBaseTest {
         final File imagesFolder = new File(imagesFolderPath);
         assertTrue(imagesFolder.exists() && imagesFolder.isDirectory());
 
-        final File files[] = imagesFolder.listFiles();
+        final File[] files = imagesFolder.listFiles();
         for (final File file : files) {
             final File imageFile = file;
             if (!imageFile.isFile()) {

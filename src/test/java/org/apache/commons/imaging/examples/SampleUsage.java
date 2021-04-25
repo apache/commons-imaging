@@ -43,7 +43,7 @@ public class SampleUsage {
             // Imaging works equally well with File, byte array or InputStream
             // inputs.</b>
             final BufferedImage someImage = null;
-            final byte someBytes[] = null;
+            final byte[] someBytes = null;
             final File someFile = null;
             final InputStream someInputStream = null;
             final OutputStream someOutputStream = null;
@@ -52,7 +52,7 @@ public class SampleUsage {
             // </b>
 
             // <b>how to read an image: </b>
-            final byte imageBytes[] = someBytes;
+            final byte[] imageBytes = someBytes;
             final BufferedImage image_1 = Imaging.getBufferedImage(imageBytes);
 
             // <b>methods of Imaging usually accept files, byte arrays, or
@@ -74,7 +74,7 @@ public class SampleUsage {
             Imaging.writeImage(image, os, format, optionalParams);
 
             // <b>get the image's embedded ICC Profile, if it has one. </b>
-            final byte iccProfileBytes[] = Imaging.getICCProfileBytes(imageBytes);
+            final byte[] iccProfileBytes = Imaging.getICCProfileBytes(imageBytes);
 
             final ICC_Profile iccProfile = Imaging.getICCProfile(imageBytes);
 
