@@ -55,9 +55,7 @@ public class BmpReadTest extends BmpBaseTest {
     @ParameterizedTest
     @MethodSource("data")
     public void testMetaData(final File imageFile) {
-        Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-            Imaging.getMetadata(imageFile);
-        });
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> Imaging.getMetadata(imageFile));
     }
 
     @ParameterizedTest

@@ -39,8 +39,6 @@ public class JpegDecoderTest {
                 JpegDecoderTest.class.getResource("/IMAGING-220/timeout-48eb4251935b4ca8b26d1859ea525c1b42ae0c78.jpeg")
                         .getFile());
         final ByteSourceFile byteSourceFile = new ByteSourceFile(inputFile);
-        Assertions.assertThrows(ImageReadException.class, () -> {
-            new JpegDecoder().decode(byteSourceFile);
-        });
+        Assertions.assertThrows(ImageReadException.class, () -> new JpegDecoder().decode(byteSourceFile));
     }
 }

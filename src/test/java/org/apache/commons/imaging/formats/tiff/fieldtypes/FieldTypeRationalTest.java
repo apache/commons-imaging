@@ -44,9 +44,7 @@ public class FieldTypeRationalTest {
   public void testWriteDataWithNonNull() {
       final FieldTypeRational fieldTypeRational = new FieldTypeRational((-922), "z_AX");
       final ByteOrder byteOrder = ByteOrder.nativeOrder();
-      Assertions.assertThrows(ImageWriteException.class, () -> {
-          fieldTypeRational.writeData("z_AX", byteOrder);
-      });
+      Assertions.assertThrows(ImageWriteException.class, () -> fieldTypeRational.writeData("z_AX", byteOrder));
   }
 
 }

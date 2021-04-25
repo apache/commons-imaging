@@ -86,9 +86,7 @@ public class PnmImageParserTest {
         final byte[] bytes = "P1\na 2\n0 0 0 0 0 0 0 0 0 0 0\n1 1 1 1 1 1 1 1 1 1 1\n".getBytes(US_ASCII);
         final Map<String, Object> params = Collections.emptyMap();
         final PnmImageParser underTest = new PnmImageParser();
-        Assertions.assertThrows(ImageReadException.class, () -> {
-            underTest.getImageInfo(bytes, params);
-        });
+        Assertions.assertThrows(ImageReadException.class, () -> underTest.getImageInfo(bytes, params));
     }
 
     @Test
@@ -96,9 +94,7 @@ public class PnmImageParserTest {
         final byte[] bytes = "P1\n2 a\n0 0\n0 0\n0 0\n0 0\n0 0\n0 1\n1 1\n1 1\n1 1\n1 1\n1 1\n".getBytes(US_ASCII);
         final Map<String, Object> params = Collections.emptyMap();
         final PnmImageParser underTest = new PnmImageParser();
-        Assertions.assertThrows(ImageReadException.class, () -> {
-            underTest.getImageInfo(bytes, params);
-        });
+        Assertions.assertThrows(ImageReadException.class, () -> underTest.getImageInfo(bytes, params));
     }
 
     @Test
@@ -106,8 +102,6 @@ public class PnmImageParserTest {
         final byte[] bytes = "P7\nWIDTH \n".getBytes(US_ASCII);
         final Map<String, Object> params = Collections.emptyMap();
         final PnmImageParser underTest = new PnmImageParser();
-        Assertions.assertThrows(ImageReadException.class, () -> {
-            underTest.getImageInfo(bytes, params);
-        });
+        Assertions.assertThrows(ImageReadException.class, () -> underTest.getImageInfo(bytes, params));
     }
 }

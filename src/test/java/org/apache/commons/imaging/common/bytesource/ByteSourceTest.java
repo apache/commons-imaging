@@ -73,9 +73,7 @@ public abstract class ByteSourceTest extends ImagingTest {
     public void testGetInputStreamThrowsNullPointerException() {
         final ByteSourceArray byteSourceArray = new ByteSourceArray(null);
 
-        Assertions.assertThrows(NullPointerException.class, () -> {
-            byteSourceArray.getInputStream(0L);
-        });
+        Assertions.assertThrows(NullPointerException.class, () -> byteSourceArray.getInputStream(0L));
     }
 
 }

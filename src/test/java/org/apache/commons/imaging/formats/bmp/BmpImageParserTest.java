@@ -57,8 +57,6 @@ public class BmpImageParserTest {
         final String file = "/images/bmp/IMAGING-279/negative_array_size_exception.bmp";
         final File bmp = new File(BmpImageParser.class.getResource(file).getFile());
         final BmpImageParser parser = new BmpImageParser();
-        assertThrows(IOException.class, () -> {
-            parser.getImageInfo(bmp, Collections.emptyMap());
-        });
+        assertThrows(IOException.class, () -> parser.getImageInfo(bmp, Collections.emptyMap()));
     }
 }

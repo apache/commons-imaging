@@ -33,9 +33,7 @@ public class JpegInputStreamTest {
     byteArray[1] = (byte) 74;
     final JpegInputStream jpegInputStream = new JpegInputStream(byteArray);
 
-    Assertions.assertThrows(ImageReadException.class, () -> {
-        jpegInputStream.nextBit();
-    });
+    Assertions.assertThrows(ImageReadException.class, jpegInputStream::nextBit);
 
   }
 
@@ -44,9 +42,7 @@ public class JpegInputStreamTest {
     final int[] byteArray = new int[0];
     final JpegInputStream jpegInputStream = new JpegInputStream(byteArray);
 
-    Assertions.assertThrows(IllegalStateException.class, () -> {
-        jpegInputStream.nextBit();
-    });
+    Assertions.assertThrows(IllegalStateException.class, jpegInputStream::nextBit);
 
   }
 

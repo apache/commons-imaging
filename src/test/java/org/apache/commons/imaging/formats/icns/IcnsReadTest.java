@@ -64,9 +64,7 @@ public class IcnsReadTest extends IcnsBaseTest {
     @ParameterizedTest
     @MethodSource("data")
     public void testImageMetadata(final File imageFile) {
-        Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-            Imaging.getMetadata(imageFile);
-        });
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> Imaging.getMetadata(imageFile));
     }
 
     @ParameterizedTest

@@ -84,11 +84,7 @@ final class TiffTags {
         final Map<Integer, List<TagInfo>> map = new HashMap<>();
 
         for (final TagInfo tag : tags) {
-            List<TagInfo> tagList = map.get(tag.tag);
-            if (tagList == null) {
-                tagList = new ArrayList<>();
-                map.put(tag.tag, tagList);
-            }
+            List<TagInfo> tagList = map.computeIfAbsent(tag.tag, k -> new ArrayList<>());
             tagList.add(tag);
         }
 
@@ -99,12 +95,7 @@ final class TiffTags {
         final Map<Integer, Integer> map = new HashMap<>();
 
         for (final TagInfo tag : tags) {
-            final Integer count = map.get(tag.tag);
-            if (count == null) {
-                map.put(tag.tag, 1);
-            } else {
-                map.put(tag.tag, count + 1);
-            }
+            map.merge(tag.tag, 1, Integer::sum);
         }
 
         return map;

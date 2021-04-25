@@ -42,9 +42,7 @@ public class PngChunkIccpTest {
     @Test
     public void testErrorOnNoProfileName() {
         final byte[] data = ImagingConstants.EMPTY_BYTE_ARRAY;
-        Assertions.assertThrows(ImageReadException.class, () -> {
-            new PngChunkIccp(0, chunkType, 0, data);
-        });
+        Assertions.assertThrows(ImageReadException.class, () -> new PngChunkIccp(0, chunkType, 0, data));
     }
 
     @Test
@@ -76,9 +74,7 @@ public class PngChunkIccpTest {
                 data[i] = bytes.get(i).byteValue();
             }
             // gather the compressed data
-            IntStream.range(0, compressedData.length).forEach(i -> {
-                data[bytes.size() + i] = compressedData[i];
-            });
+            IntStream.range(0, compressedData.length).forEach(i -> data[bytes.size() + i] = compressedData[i]);
             // create the chunk
             final PngChunkIccp chunk = new PngChunkIccp(data.length, chunkType, 0, data);
             assertArrayEquals(uncompressedData, chunk.getUncompressedProfile());

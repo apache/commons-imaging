@@ -68,8 +68,6 @@ public class RgbeReadTest extends RgbeBaseTest {
                         .getFile());
         final ByteSourceFile byteSourceFile = new ByteSourceFile(inputFile);
         final Map<String, Object> params = Collections.emptyMap();
-        Assertions.assertThrows(ImageReadException.class, () -> {
-            new RgbeImageParser().getBufferedImage(byteSourceFile, params);
-        });
+        Assertions.assertThrows(ImageReadException.class, () -> new RgbeImageParser().getBufferedImage(byteSourceFile, params));
     }
 }
