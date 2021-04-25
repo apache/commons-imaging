@@ -17,8 +17,8 @@
 
 package org.apache.commons.imaging.formats.jpeg.iptc;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -90,6 +90,6 @@ public class IptcAddTest extends IptcBaseTest {
                 updateByteSource, params);
 
         assertNotNull(outMetadata);
-        assertTrue(outMetadata.getItems().size() == newRecords.size());
+        assertEquals(outMetadata.getItems().size(), newRecords.size());
     }
 }

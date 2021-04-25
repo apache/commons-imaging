@@ -18,6 +18,8 @@ package org.apache.commons.imaging.formats.tiff.photometricinterpreters.floating
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -79,14 +81,14 @@ public class PaletteEntryForValueTest {
         final int a0 = c0.getRGB();
         assertEquals(0xff0000ff, a0, "Invalid value for 0.0f");
         c0 = instance.getColor(1f);
-        assertTrue(c0 == null, "Non-null return for invalid target 1.0f");
+        assertNull(c0, "Non-null return for invalid target 1.0f");
         c0 = instance.getColor(Float.NaN);
-        assertTrue(c0 == null, "Non-null return for invalid target 1.0f");
+        assertNull(c0, "Non-null return for invalid target 1.0f");
         instance = new PaletteEntryForValue(Float.NaN, cTest);
         c0 = instance.getColor(Float.NaN);
-        assertTrue(c0 != null, "Invalid return for valid target Float.NaN");
+        assertNotNull(c0, "Invalid return for valid target Float.NaN");
         c0 = instance.getColor(1.0f);
-        assertTrue(c0 == null, "Invalid return for invalid valid target 1.0f");
+        assertNull(c0, "Invalid return for invalid valid target 1.0f");
 
     }
 

@@ -17,6 +17,7 @@
 
 package org.apache.commons.imaging.formats.jpeg.iptc;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -120,7 +121,7 @@ public class IptcUpdateTest extends IptcBaseTest {
                 updateByteSource, params);
 
         assertNotNull(outMetadata);
-        assertTrue(outMetadata.getItems().size() == 2);
+        assertEquals(2, outMetadata.getItems().size());
     }
 
     @ParameterizedTest
@@ -152,7 +153,7 @@ public class IptcUpdateTest extends IptcBaseTest {
                 updateByteSource, params);
 
         assertNotNull(outMetadata);
-        assertTrue(outMetadata.getItems().size() == 2);
+        assertEquals(2, outMetadata.getItems().size());
     }
 
     public File writeIptc(final ByteSource byteSource, final PhotoshopApp13Data newData, final File imageFile) throws IOException, ImageReadException, ImageWriteException {
@@ -198,7 +199,7 @@ public class IptcUpdateTest extends IptcBaseTest {
         final JpegPhotoshopMetadata outMetadata = new JpegImageParser().getPhotoshopMetadata(updateByteSource, params);
 
         assertNotNull(outMetadata);
-        assertTrue(outMetadata.getItems().size() == newRecords.size());
+        assertEquals(outMetadata.getItems().size(), newRecords.size());
     }
 
 }

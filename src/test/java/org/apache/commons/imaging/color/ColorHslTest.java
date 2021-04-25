@@ -19,7 +19,7 @@ package org.apache.commons.imaging.color;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -70,7 +70,7 @@ public class ColorHslTest {
         assertEquals(667.226, colorHslTwo.S, 0.01);
         assertEquals(100.0, colorHslTwo.H, 0.01);
         assertEquals((-687.72287636), colorHslTwo.L, 0.01);
-        assertFalse(colorHsl.equals(colorHslTwo));
+        assertNotEquals(colorHsl, colorHslTwo);
     }
 
 }

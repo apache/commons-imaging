@@ -19,6 +19,7 @@ package org.apache.commons.imaging.formats.jpeg.exif;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -90,7 +91,7 @@ public class ExifRewriteTest extends ExifBaseTest {
                 Debug.debug("Output Segments:");
                 new JpegUtils().dumpJFIF(new ByteSourceArray(bytes));
 
-                assertTrue(!hasExifData(tempFile));
+                assertFalse(hasExifData(tempFile));
             }
         }
     }
@@ -130,7 +131,7 @@ public class ExifRewriteTest extends ExifBaseTest {
                 stripped = new ByteSourceArray(bytes);
                 new JpegUtils().dumpJFIF(stripped);
 
-                assertTrue(!hasExifData(tempFile));
+                assertFalse(hasExifData(tempFile));
             }
 
             {
@@ -283,7 +284,7 @@ public class ExifRewriteTest extends ExifBaseTest {
         final List<? extends ImageMetadataItem> oldDirectories = oldExifMetadata.getDirectories();
         final List<? extends ImageMetadataItem> newDirectories = newExifMetadata.getDirectories();
 
-        assertTrue(oldDirectories.size() == newDirectories.size());
+        assertEquals(oldDirectories.size(), newDirectories.size());
 
         final Map<Integer,TiffImageMetadata.Directory> oldDirectoryMap = makeDirectoryMap(oldDirectories);
         final Map<Integer,TiffImageMetadata.Directory> newDirectoryMap = makeDirectoryMap(newDirectories);

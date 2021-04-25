@@ -18,7 +18,10 @@
 package org.apache.commons.imaging.common.bytesource;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Dimension;
@@ -57,7 +60,7 @@ public class ByteSourceImageTest extends ByteSourceTest {
 
         final byte imageFileBytes[] = FileUtils.readFileToByteArray(imageFile);
         assertNotNull(imageFileBytes);
-        assertTrue(imageFileBytes.length == imageFile.length());
+        assertEquals(imageFileBytes.length, imageFile.length());
 
         if (imageFile.getName().toLowerCase().endsWith(".ico")
                 || imageFile.getName().toLowerCase().endsWith(".tga")
@@ -106,8 +109,8 @@ public class ByteSourceImageTest extends ByteSourceTest {
 
         final BufferedImage imageBytes = Imaging.getBufferedImage(bytes);
         assertNotNull(imageBytes);
-        assertTrue(imageFileWidth == imageBytes.getWidth());
-        assertTrue(imageFileHeight == imageBytes.getHeight());
+        assertEquals(imageFileWidth, imageBytes.getWidth());
+        assertEquals(imageFileHeight, imageBytes.getHeight());
     }
 
     public void checkGetImageSize(final File imageFile, final byte[] imageFileBytes)
@@ -119,8 +122,8 @@ public class ByteSourceImageTest extends ByteSourceTest {
 
         final Dimension imageSizeBytes = Imaging.getImageSize(imageFileBytes);
         assertNotNull(imageSizeBytes);
-        assertTrue(imageSizeFile.width == imageSizeBytes.width);
-        assertTrue(imageSizeFile.height == imageSizeBytes.height);
+        assertEquals(imageSizeFile.width, imageSizeBytes.width);
+        assertEquals(imageSizeFile.height, imageSizeBytes.height);
     }
 
     public void checkGuessFormat(final File imageFile, final byte[] imageFileBytes)
@@ -128,15 +131,15 @@ public class ByteSourceImageTest extends ByteSourceTest {
         // check guessFormat()
         final ImageFormat imageFormatFile = Imaging.guessFormat(imageFile);
         assertNotNull(imageFormatFile);
-        assertTrue(imageFormatFile != ImageFormats.UNKNOWN);
+        assertNotSame(imageFormatFile, ImageFormats.UNKNOWN);
         // Debug.debug("imageFormatFile", imageFormatFile);
 
         final ImageFormat imageFormatBytes = Imaging.guessFormat(imageFileBytes);
         assertNotNull(imageFormatBytes);
-        assertTrue(imageFormatBytes != ImageFormats.UNKNOWN);
+        assertNotSame(imageFormatBytes, ImageFormats.UNKNOWN);
         // Debug.debug("imageFormatBytes", imageFormatBytes);
 
-        assertTrue(imageFormatBytes == imageFormatFile);
+        assertSame(imageFormatBytes, imageFormatFile);
     }
 
     public void checkGetICCProfileBytes(final File imageFile, final byte[] imageFileBytes)
@@ -146,7 +149,7 @@ public class ByteSourceImageTest extends ByteSourceTest {
 
         final byte iccBytesBytes[] = Imaging.getICCProfileBytes(imageFileBytes);
 
-        assertTrue((iccBytesFile != null) == (iccBytesBytes != null));
+        assertEquals((iccBytesFile != null), (iccBytesBytes != null));
 
         if (iccBytesFile == null) {
             return;
@@ -193,7 +196,7 @@ public class ByteSourceImageTest extends ByteSourceTest {
             final Object valueFile = method.invoke(imageInfoFile, (Object[])null);
             final Object valueBytes = method.invoke(imageInfoBytes, (Object[])null);
 
-            assertTrue(valueFile.equals(valueBytes));
+            assertEquals(valueFile, valueBytes);
         }
 
         // only have to test values from imageInfoFile; we already know values
@@ -201,7 +204,7 @@ public class ByteSourceImageTest extends ByteSourceTest {
         assertTrue(imageInfoFile.getBitsPerPixel() > 0);
 
         assertNotNull(imageInfoFile.getFormat());
-        assertTrue(imageInfoFile.getFormat() != ImageFormats.UNKNOWN);
+        assertNotSame(imageInfoFile.getFormat(), ImageFormats.UNKNOWN);
 
         assertNotNull(imageInfoFile.getFormatName());
 

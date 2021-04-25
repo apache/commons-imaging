@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.common.itu_t4;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +27,7 @@ public class HuffmanTreeExceptionTest{
         final HuffmanTreeException huffmanTreeException = new HuffmanTreeException("");
         final HuffmanTreeException huffmanTreeExceptionTwo = new HuffmanTreeException("", huffmanTreeException);
 
-        assertFalse(huffmanTreeExceptionTwo.equals(huffmanTreeException));
+        assertNotEquals(huffmanTreeExceptionTwo, huffmanTreeException);
     }
 
 }
