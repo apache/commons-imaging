@@ -82,8 +82,8 @@ final class ImageAsserts {
         assertTrue(b.exists() && b.isFile());
         Assertions.assertEquals(a.length(), b.length());
 
-        final byte aData[] = FileUtils.readFileToByteArray(a);
-        final byte bData[] = FileUtils.readFileToByteArray(b);
+        final byte[] aData = FileUtils.readFileToByteArray(a);
+        final byte[] bData = FileUtils.readFileToByteArray(b);
 
         for (int i = 0; i < a.length(); i++) {
             final int aByte = 0xff & aData[i];

@@ -58,7 +58,7 @@ public class ByteSourceImageTest extends ByteSourceTest {
         Debug.debug("imageFile", imageFile);
         assertNotNull(imageFile);
 
-        final byte imageFileBytes[] = FileUtils.readFileToByteArray(imageFile);
+        final byte[] imageFileBytes = FileUtils.readFileToByteArray(imageFile);
         assertNotNull(imageFileBytes);
         assertEquals(imageFileBytes.length, imageFile.length());
 
@@ -145,9 +145,9 @@ public class ByteSourceImageTest extends ByteSourceTest {
     public void checkGetICCProfileBytes(final File imageFile, final byte[] imageFileBytes)
             throws Exception {
         // check guessFormat()
-        final byte iccBytesFile[] = Imaging.getICCProfileBytes(imageFile);
+        final byte[] iccBytesFile = Imaging.getICCProfileBytes(imageFile);
 
-        final byte iccBytesBytes[] = Imaging.getICCProfileBytes(imageFileBytes);
+        final byte[] iccBytesBytes = Imaging.getICCProfileBytes(imageFileBytes);
 
         assertEquals((iccBytesFile != null), (iccBytesBytes != null));
 
@@ -176,7 +176,7 @@ public class ByteSourceImageTest extends ByteSourceTest {
         assertNotNull(imageInfoFile);
         assertNotNull(imageInfoBytes);
 
-        final Method methods[] = ImageInfo.class.getMethods();
+        final Method[] methods = ImageInfo.class.getMethods();
         for (final Method method2 : methods) {
             final Method method = method2;
             method.getModifiers();

@@ -534,7 +534,7 @@ public abstract class ImageDataReader {
      * @param rasterData the raster data.
      */
     void transferBlockToRaster(final int xBlock, final int yBlock,
-        final int blockWidth, final int blockHeight, final int blockData[],
+        final int blockWidth, final int blockHeight, final int[] blockData,
         final int xRaster, final int yRaster,
         final int rasterWidth, final int rasterHeight, final float[] rasterData) {
 

@@ -61,7 +61,7 @@ public class FileSystemTraversal {
                 }
             }
         } else if (file.isDirectory()) {
-            final File files[] = file.listFiles();
+            final File[] files = file.listFiles();
             if (files != null) {
                 for (int i = 0; i < files.length; i++) {
                     final File child = files[i];
@@ -134,7 +134,7 @@ public class FileSystemTraversal {
 
     private boolean traverse(final int mode, final Visitor visitor, final double estimate,
             final double estimateIncrement) {
-        File roots[] = File.listRoots();
+        File[] roots = File.listRoots();
 
         if (ON_MAC_OS_X) {
             final File Volumes = new File("/Volumes/");

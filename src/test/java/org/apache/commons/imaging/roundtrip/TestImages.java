@@ -82,7 +82,7 @@ final class TestImages {
     }
 
     static BufferedImage createLimitedColorImage(final int width, final int height) {
-        final int colors[] = {0xffffffff, 0xff000000, 0xfff00000, 0xff0000ff,
+        final int[] colors = {0xffffffff, 0xff000000, 0xfff00000, 0xff0000ff,
                 0xff123456, 0xfffefeff, 0xff7f817f,};
 
         final BufferedImage result = new BufferedImage(width, height,

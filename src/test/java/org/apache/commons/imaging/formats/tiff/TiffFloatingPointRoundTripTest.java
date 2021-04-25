@@ -81,7 +81,7 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
         try {
             final PhotometricInterpreterFloat pi = getPhotometricInterpreter();
             final ImageBuilder builder = new ImageBuilder(width, height, false);
-            final int samples[] = new int[1];
+            final int[] samples = new int[1];
             for (int iCol = 0; iCol < width; iCol++) {
                 for (int iRow = 0; iRow < height; iRow++) {
                     final int index = iRow * width + iCol;
