@@ -366,14 +366,10 @@ public class PnmImageParser extends ImageParser {
         }
 
         // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT)) {
-            params.remove(PARAM_KEY_FORMAT);
-        }
+        params.remove(PARAM_KEY_FORMAT);
 
         // clear rawbits key.
-        if (params.containsKey(PARAM_KEY_PNM_RAWBITS)) {
-            params.remove(PARAM_KEY_PNM_RAWBITS);
-        }
+        params.remove(PARAM_KEY_PNM_RAWBITS);
 
         if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();

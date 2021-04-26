@@ -648,9 +648,7 @@ public class BmpImageParser extends ImageParser {
         // make copy of params; we'll clear keys as we consume them.
         params = (params == null) ? new HashMap<>() : new HashMap<>(params);
 
-        if (params.containsKey(BUFFERED_IMAGE_FACTORY)) {
-            params.remove(BUFFERED_IMAGE_FACTORY);
-        }
+        params.remove(BUFFERED_IMAGE_FACTORY);
 
         if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
@@ -693,9 +691,7 @@ public class BmpImageParser extends ImageParser {
         PixelDensity pixelDensity = null;
 
         // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT)) {
-            params.remove(PARAM_KEY_FORMAT);
-        }
+        params.remove(PARAM_KEY_FORMAT);
         if (params.containsKey(PARAM_KEY_PIXEL_DENSITY)) {
             pixelDensity = (PixelDensity) params.remove(PARAM_KEY_PIXEL_DENSITY);
         }

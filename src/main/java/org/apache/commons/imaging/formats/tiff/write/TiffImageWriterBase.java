@@ -309,9 +309,7 @@ public abstract class TiffImageWriterBase {
         params = new HashMap<>(params);
 
         // clear format key.
-        if (params.containsKey(ImagingConstants.PARAM_KEY_FORMAT)) {
-            params.remove(ImagingConstants.PARAM_KEY_FORMAT);
-        }
+        params.remove(ImagingConstants.PARAM_KEY_FORMAT);
 
         TiffOutputSet userExif = null;
         if (params.containsKey(ImagingConstants.PARAM_KEY_EXIF)) {

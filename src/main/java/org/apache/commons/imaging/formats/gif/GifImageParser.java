@@ -870,9 +870,7 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
         params = new HashMap<>(params);
 
         // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT)) {
-            params.remove(PARAM_KEY_FORMAT);
-        }
+        params.remove(PARAM_KEY_FORMAT);
 
         String xmpXml = null;
         if (params.containsKey(PARAM_KEY_XMP_XML)) {

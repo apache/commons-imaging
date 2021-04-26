@@ -341,27 +341,15 @@ class PngWriter {
         params = new HashMap<>(params);
 
         // clear format key.
-        if (params.containsKey(ImagingConstants.PARAM_KEY_FORMAT)) {
-            params.remove(ImagingConstants.PARAM_KEY_FORMAT);
-        }
+        params.remove(ImagingConstants.PARAM_KEY_FORMAT);
 
         int compressionLevel = Deflater.DEFAULT_COMPRESSION;
         final Map<String, Object> rawParams = new HashMap<>(params);
-        if (params.containsKey(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR)) {
-            params.remove(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR);
-        }
-        if (params.containsKey(PngConstants.PARAM_KEY_PNG_FORCE_INDEXED_COLOR)) {
-            params.remove(PngConstants.PARAM_KEY_PNG_FORCE_INDEXED_COLOR);
-        }
-        if (params.containsKey(PngConstants.PARAM_KEY_PNG_BIT_DEPTH)) {
-            params.remove(PngConstants.PARAM_KEY_PNG_BIT_DEPTH);
-        }
-        if (params.containsKey(ImagingConstants.PARAM_KEY_XMP_XML)) {
-            params.remove(ImagingConstants.PARAM_KEY_XMP_XML);
-        }
-        if (params.containsKey(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS)) {
-            params.remove(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS);
-        }
+        params.remove(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR);
+        params.remove(PngConstants.PARAM_KEY_PNG_FORCE_INDEXED_COLOR);
+        params.remove(PngConstants.PARAM_KEY_PNG_BIT_DEPTH);
+        params.remove(ImagingConstants.PARAM_KEY_XMP_XML);
+        params.remove(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS);
         if (params.containsKey(PngConstants.PARAM_KEY_PNG_COMPRESSION_LEVEL)) {
             compressionLevel = (int) params.remove(PngConstants.PARAM_KEY_PNG_COMPRESSION_LEVEL);
         }
