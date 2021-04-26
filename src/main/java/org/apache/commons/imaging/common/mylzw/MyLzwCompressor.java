@@ -183,10 +183,10 @@ public class MyLzwCompressor {
         return code;
     }
 
-    private boolean addTableEntry(final MyBitOutputStream bos, final byte[] bytes,
+    private void addTableEntry(final MyBitOutputStream bos, final byte[] bytes,
             final int start, final int length) throws IOException {
         final ByteArray key = arrayToKey(bytes, start, length);
-        return addTableEntry(bos, key);
+        addTableEntry(bos, key);
     }
 
     private boolean addTableEntry(final MyBitOutputStream bos, final ByteArray key)
