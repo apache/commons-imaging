@@ -583,7 +583,11 @@ public class PngImageParser extends ImageParser  implements XmpEmbeddable {
                 final PngChunkIccp pngChunkiCCP = (PngChunkIccp) iCCPs.get(0);
                 final byte[] bytes = pngChunkiCCP.getUncompressedProfile();
 
-                iccProfile = ICC_Profile.getInstance(bytes);
+                try {
+                    iccProfile = ICC_Profile.getInstance(bytes);
+                } catch (IllegalArgumentException iae) {
+                    throw new ImageReadException("The image data does not correspond to a valid ICC Profile", iae);
+                }
             } else if (gAMAs.size() == 1) {
                 final PngChunkGama pngChunkgAMA = (PngChunkGama) gAMAs.get(0);
                 final double gamma = pngChunkgAMA.getGamma();

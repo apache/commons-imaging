@@ -22,11 +22,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageInfo;
+import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.ImageMetadata;
+import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -74,4 +78,22 @@ public class PngReadTest extends PngBaseTest {
         }
     }
 
+    /**
+     * If the PNG image data contains an invalid ICC Profile, previous versions would
+     * simply rethrow the IAE. This test verifies we are instead raising the documented
+     * {@literal ImageReadException}.
+     *
+     * <p>See Google OSS Fuzz issue 33691</p>
+     *
+     * @throws IOException if it fails to read the test image
+     */
+    @Test
+    public void testUncaughtExceptionOssFuzz33691() throws IOException {
+        final String input = "/images/png/oss-fuzz-33691/clusterfuzz-testcase-minimized-ImagingPngFuzzer-6177282101215232";
+        final String file = PngReadTest.class.getResource(input).getFile();
+        final PngImageParser parser = new PngImageParser();
+        assertThrows(ImageReadException.class, () -> {
+            parser.getBufferedImage(new ByteSourceFile(new File(file)), Collections.emptyMap());
+        });
+    }
 }
