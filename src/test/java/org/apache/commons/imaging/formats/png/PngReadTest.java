@@ -92,8 +92,6 @@ public class PngReadTest extends PngBaseTest {
         final String input = "/images/png/oss-fuzz-33691/clusterfuzz-testcase-minimized-ImagingPngFuzzer-6177282101215232";
         final String file = PngReadTest.class.getResource(input).getFile();
         final PngImageParser parser = new PngImageParser();
-        assertThrows(ImageReadException.class, () -> {
-            parser.getBufferedImage(new ByteSourceFile(new File(file)), Collections.emptyMap());
-        });
+        assertThrows(ImageReadException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), Collections.emptyMap()));
     }
 }
