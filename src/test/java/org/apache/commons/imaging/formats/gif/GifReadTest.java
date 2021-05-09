@@ -19,16 +19,20 @@ package org.apache.commons.imaging.formats.gif;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -141,5 +145,22 @@ public class GifReadTest extends GifBaseTest {
     @Test
     public void testConvertInvalidDisposalMethodValues() {
         Assertions.assertThrows(ImageReadException.class, () -> GifImageParser.createDisposalMethodFromIntValue(8));
+    }
+
+    /**
+     * If the GIF image data may lead to out of bound array access. This
+     * test verifies that we handle that case and raise an appropriate
+     * exception.
+     *
+     * <p>See Google OSS Fuzz issue 33501</p>
+     *
+     * @throws IOException if it fails to read the test image
+     */
+    @Test
+    public void testUncaughtExceptionOssFuzz33501() throws IOException {
+        final String input = "/images/gif/oss-fuzz-33501/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5914278319226880";
+        final String file = GifReadTest.class.getResource(input).getFile();
+        final GifImageParser parser = new GifImageParser();
+        assertThrows(ImageReadException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), Collections.emptyMap()));
     }
 }
