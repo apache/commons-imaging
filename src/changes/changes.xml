@@ -123,6 +123,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="IMAGING-298" dev="kinow" type="update" due-to="OSS-Fuzz">
         Throw ImageReadException if the PNG parser is given an image with invalid ICC Profile.
       </action>
+      <action issue="IMAGING-300" dev="kinow" type="update" due-to="OSS-Fuzz">
+        Throw ImageReadException if the GIF parser is given an image with invalid image data instead of throwing IndexOutOfBoundsException.
+      </action>
     </release>
     <release version="1.0-alpha2" date="2020-08-01" description="Second 1.0 alpha release">
       <action issue="IMAGING-258" dev="kinow" type="update" due-to="Gary Lucas">
