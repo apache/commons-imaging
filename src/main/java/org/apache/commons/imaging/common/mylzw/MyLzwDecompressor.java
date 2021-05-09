@@ -22,6 +22,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.ByteOrder;
 
+import org.apache.commons.imaging.ImageReadException;
+
 public final class MyLzwDecompressor {
     private static final int MAX_TABLE_SIZE = 1 << 12;
     private final byte[][] table;
@@ -41,12 +43,12 @@ public final class MyLzwDecompressor {
         void init(int clearCode, int eoiCode);
     }
 
-    public MyLzwDecompressor(final int initialCodeSize, final ByteOrder byteOrder) {
+    public MyLzwDecompressor(final int initialCodeSize, final ByteOrder byteOrder) throws ImageReadException {
         this(initialCodeSize, byteOrder, null);
     }
 
     public MyLzwDecompressor(final int initialCodeSize, final ByteOrder byteOrder,
-            final Listener listener) {
+            final Listener listener) throws ImageReadException {
         this.listener = listener;
         this.byteOrder = byteOrder;
 
@@ -63,12 +65,16 @@ public final class MyLzwDecompressor {
         initializeTable();
     }
 
-    private void initializeTable() {
+    private void initializeTable() throws ImageReadException {
         codeSize = initialCodeSize;
 
-        final int intialEntriesCount = 1 << codeSize + 2;
+        final int initialEntriesCount = 1 << codeSize + 2;
 
-        for (int i = 0; i < intialEntriesCount; i++) {
+        if (initialEntriesCount > table.length) {
+            throw new ImageReadException(String.format("Invalid Lzw table length [%d]; entries count is [%d]", table.length, initialEntriesCount));
+        }
+
+        for (int i = 0; i < initialEntriesCount; i++) {
             table[i] = new byte[] { (byte) i, };
         }
     }

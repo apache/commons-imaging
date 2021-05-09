@@ -76,7 +76,7 @@ public class TiffLzwTest extends TiffBaseTest {
         }
     }
 
-    private void compressRoundtripAndValidate(final byte[] src) throws IOException {
+    private void compressRoundtripAndValidate(final byte[] src) throws IOException, ImageReadException {
         final boolean DEBUG = false;
 
         if (DEBUG) {
@@ -169,7 +169,7 @@ public class TiffLzwTest extends TiffBaseTest {
         }
     }
 
-    private void decompressRoundtripAndValidate(final byte[] src) throws IOException {
+    private void decompressRoundtripAndValidate(final byte[] src) throws IOException, ImageReadException {
         Debug.debug();
         Debug.debug("roundtripAndValidate: " + src.length);
         Debug.debug();
