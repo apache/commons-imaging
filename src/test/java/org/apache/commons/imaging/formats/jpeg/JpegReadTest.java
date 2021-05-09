@@ -19,9 +19,12 @@ package org.apache.commons.imaging.formats.jpeg;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -31,7 +34,9 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.ImageMetadata;
+import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.internal.Debug;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -65,6 +70,25 @@ public class JpegReadTest extends JpegBaseTest {
             assertEquals("Only sequential, baseline JPEGs are supported at the moment",
                     imageReadException.getMessage());
         }
+    }
+
+    /**
+     * The JPEG image data may contain a negative number of segments,
+     * in which case the parser could throw a NegativeArraySizeException.
+     *
+     * <p>This test case verifies that we are handling that scenario, and
+     * throwing an ImageReadException instead.</p>
+     *
+     * <p>See Google OSS Fuzz issue 33458</p>
+     *
+     * @throws IOException if it fails to read the test image
+     */
+    @Test
+    public void testUncaughtExceptionOssFuzz33458() throws IOException {
+        final String input = "/images/jpeg/oss-fuzz-33458/clusterfuzz-testcase-minimized-ImagingJpegFuzzer-4548690447564800";
+        final String file = JpegReadTest.class.getResource(input).getFile();
+        final JpegImageParser parser = new JpegImageParser();
+        assertThrows(ImageReadException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), Collections.emptyMap()));
     }
 
 }

@@ -129,6 +129,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="IMAGING-301" dev="kinow" type="update" due-to="OSS-Fuzz">
         Throw ImageReadException if the GIF parser is given an image with invalid Lzw table instead of throwing IndexOutOfBoundsException.
       </action>
+      <action issue="IMAGING-302" dev="kinow" type="update" due-to="OSS-Fuzz">
+        Throw ImageReadException if the JPEG parser is given an image with a negative number of segments in SOF0Segment.
+      </action>
     </release>
     <release version="1.0-alpha2" date="2020-08-01" description="Second 1.0 alpha release">
       <action issue="IMAGING-258" dev="kinow" type="update" due-to="Gary Lucas">
