@@ -1,0 +1,9 @@
+github:
+  description: "Apache Commons Imaging (previously Sanselan) is a pure-Java image library"
+  homepage: https://commons.apache.org/proper/commons-imaging/
+  labels:
+    - java
+    - image
+    - imaging
+    - image-processing
+    - apache
