@@ -148,7 +148,7 @@ public class GifReadTest extends GifBaseTest {
     }
 
     /**
-     * If the GIF image data may lead to out of bound array access. This
+     * The GIF image data may lead to out of bound array access. This
      * test verifies that we handle that case and raise an appropriate
      * exception.
      *
@@ -159,6 +159,25 @@ public class GifReadTest extends GifBaseTest {
     @Test
     public void testUncaughtExceptionOssFuzz33501() throws IOException {
         final String input = "/images/gif/oss-fuzz-33501/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5914278319226880";
+        final String file = GifReadTest.class.getResource(input).getFile();
+        final GifImageParser parser = new GifImageParser();
+        assertThrows(ImageReadException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), Collections.emptyMap()));
+    }
+
+    /**
+     * The GIF image Lzw compression may contain a table with length inferior to
+     * the length of entries in the image data. Which results in an ArrayOutOfBoundsException.
+     * This verifies that instead of throwing an AOOBE, we are handling the case and
+     * informing the user why the parser failed to read it, by throwin an ImageReadException
+     * with a more descriptive message.
+     *
+     * <p>See Google OSS Fuzz issue 33464</p>
+     *
+     * @throws IOException if it fails to read the test image
+     */
+    @Test
+    public void testUncaughtExceptionOssFuzz33496() throws IOException {
+        final String input = "/images/gif/oss-fuzz-33464/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5174009164595200";
         final String file = GifReadTest.class.getResource(input).getFile();
         final GifImageParser parser = new GifImageParser();
         assertThrows(ImageReadException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), Collections.emptyMap()));
