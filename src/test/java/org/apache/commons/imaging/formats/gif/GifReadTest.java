@@ -176,7 +176,7 @@ public class GifReadTest extends GifBaseTest {
      * @throws IOException if it fails to read the test image
      */
     @Test
-    public void testUncaughtExceptionOssFuzz33496() throws IOException {
+    public void testUncaughtExceptionOssFuzz33464() throws IOException {
         final String input = "/images/gif/oss-fuzz-33464/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5174009164595200";
         final String file = GifReadTest.class.getResource(input).getFile();
         final GifImageParser parser = new GifImageParser();
