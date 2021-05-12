@@ -135,6 +135,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="IMAGING-304" dev="kinow" type="update" due-to="Arturo Bernal">
         Use Comparator combinator
       </action>
+      <action issue="IMAGING-303" dev="kinow" type="update" due-to="Arturo Bernal">
+        Simplify If-else conditions
+      </action>
     </release>
     <release version="1.0-alpha2" date="2020-08-01" description="Second 1.0 alpha release">
       <action issue="IMAGING-258" dev="kinow" type="update" due-to="Gary Lucas">
