@@ -147,11 +147,7 @@ public class TiffDirectory extends TiffElement {
     }
 
     public boolean hasJpegImageData() throws ImageReadException {
-        if (null != findField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT)) {
-            return true;
-        }
-
-        return false;
+        return null != findField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT);
     }
 
     public boolean hasTiffImageData() throws ImageReadException {
@@ -159,11 +155,7 @@ public class TiffDirectory extends TiffElement {
             return true;
         }
 
-        if (null != findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS)) {
-            return true;
-        }
-
-        return false;
+        return null != findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS);
     }
 
     /**
