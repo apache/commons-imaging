@@ -47,8 +47,8 @@ import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 
 public class TiffImageWriterLossless extends TiffImageWriterBase {
     private final byte[] exifBytes;
-    private static final Comparator<TiffElement> ELEMENT_SIZE_COMPARATOR = (e1, e2) -> e1.length - e2.length;
-    private static final Comparator<TiffOutputItem> ITEM_SIZE_COMPARATOR = (e1, e2) -> e1.getItemLength() - e2.getItemLength();
+    private static final Comparator<TiffElement> ELEMENT_SIZE_COMPARATOR = Comparator.comparingInt(e -> e.length);
+    private static final Comparator<TiffOutputItem> ITEM_SIZE_COMPARATOR = Comparator.comparingInt(TiffOutputItem::getItemLength);
 
     public TiffImageWriterLossless(final byte[] exifBytes) {
         this.exifBytes = exifBytes;
