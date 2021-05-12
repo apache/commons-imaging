@@ -21,7 +21,6 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -377,7 +376,7 @@ public class PaletteFactory {
             }
         }
 
-        Collections.sort(subsets, ColorSpaceSubset.RGB_COMPARATOR);
+        subsets.sort(ColorSpaceSubset.RGB_COMPARATOR);
 
         return new QuantizedPalette(subsets, precision);
     }

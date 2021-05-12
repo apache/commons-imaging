@@ -76,7 +76,7 @@ public class TiffContents {
     public void dissect() throws ImageReadException {
         final List<TiffElement> elements = getElements();
 
-        Collections.sort(elements, TiffElement.COMPARATOR);
+        elements.sort(TiffElement.COMPARATOR);
 
         long lastEnd = 0;
         for (final TiffElement element : elements) {
