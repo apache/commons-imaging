@@ -605,7 +605,7 @@ public abstract class TiffImageWriterBase {
     private void combineUserExifIntoFinalExif(final TiffOutputSet userExif,
             final TiffOutputSet outputSet) throws ImageWriteException {
         final List<TiffOutputDirectory> outputDirectories = outputSet.getDirectories();
-        Collections.sort(outputDirectories, TiffOutputDirectory.COMPARATOR);
+        outputDirectories.sort(TiffOutputDirectory.COMPARATOR);
         for (final TiffOutputDirectory userDirectory : userExif.getDirectories()) {
             final int location = Collections.binarySearch(outputDirectories,
                     userDirectory, TiffOutputDirectory.COMPARATOR);

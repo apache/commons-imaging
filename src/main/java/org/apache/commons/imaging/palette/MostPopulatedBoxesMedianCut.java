@@ -17,7 +17,6 @@
 package org.apache.commons.imaging.palette;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageWriteException;
@@ -50,7 +49,7 @@ public class MostPopulatedBoxesMedianCut implements MedianCut {
             if (ignoreAlpha && colorComponent == ColorComponent.ALPHA) {
                 continue;
             }
-            Collections.sort(colorCounts, new ColorCountComparator(colorComponent));
+            colorCounts.sort(new ColorCountComparator(colorComponent));
             final int countHalf = (int) Math.round((double) colorGroup.totalPoints / 2);
             int oldCount = 0;
             int newCount = 0;
@@ -98,7 +97,7 @@ public class MostPopulatedBoxesMedianCut implements MedianCut {
             return false;
         }
 
-        Collections.sort(colorCounts, new ColorCountComparator(bestColorComponent));
+        colorCounts.sort(new ColorCountComparator(bestColorComponent));
         final List<ColorCount> lowerColors = new ArrayList<>(
                 colorCounts.subList(0, bestMedianIndex + 1));
         final List<ColorCount> upperColors = new ArrayList<>(
