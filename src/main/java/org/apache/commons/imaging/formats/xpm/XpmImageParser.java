@@ -660,10 +660,7 @@ public class XpmImageParser extends ImageParser {
         }
 
         final PaletteFactory paletteFactory = new PaletteFactory();
-        boolean hasTransparency = false;
-        if (paletteFactory.hasTransparency(src, 1)) {
-            hasTransparency = true;
-        }
+        final boolean hasTransparency = paletteFactory.hasTransparency(src, 1);
         SimplePalette palette = null;
         int maxColors = WRITE_PALETTE.length;
         int charsPerPixel = 1;
