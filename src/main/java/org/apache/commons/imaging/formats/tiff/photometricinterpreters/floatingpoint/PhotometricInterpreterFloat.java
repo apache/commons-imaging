@@ -19,7 +19,6 @@ package org.apache.commons.imaging.formats.tiff.photometricinterpreters.floating
 import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -159,8 +158,8 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
             return Double.compare(o1.getLowerBound(), o2.getLowerBound());
         };
 
-        Collections.sort(rangePaletteEntries, comparator);
-        Collections.sort(singleValuePaletteEntries, comparator);
+        rangePaletteEntries.sort(comparator);
+        singleValuePaletteEntries.sort(comparator);
     }
 
     @Override

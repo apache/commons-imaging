@@ -592,7 +592,7 @@ public final class TiffOutputDirectory extends TiffOutputItem {
             }
             return e1.getSortHint() - e2.getSortHint();
         };
-        Collections.sort(fields, comparator);
+        fields.sort(comparator);
     }
 
     public String description() {

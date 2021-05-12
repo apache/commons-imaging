@@ -100,7 +100,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
                 }
             }
 
-            Collections.sort(elements, TiffElement.COMPARATOR);
+            elements.sort(TiffElement.COMPARATOR);
 
             final List<TiffElement> rewritableElements = new ArrayList<>();
             final int TOLERANCE = 3;
@@ -191,7 +191,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         final List<TiffElement> unusedElements = new ArrayList<>(analysis);
 
         // should already be in order of offset, but make sure.
-        Collections.sort(unusedElements, TiffElement.COMPARATOR);
+        unusedElements.sort(TiffElement.COMPARATOR);
         Collections.reverse(unusedElements);
         // any items that represent a gap at the end of the exif segment, can be
         // discarded.
@@ -206,13 +206,13 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
             unusedElements.remove(0);
         }
 
-        Collections.sort(unusedElements, ELEMENT_SIZE_COMPARATOR);
+        unusedElements.sort(ELEMENT_SIZE_COMPARATOR);
         Collections.reverse(unusedElements);
 
         // make copy.
         final List<TiffOutputItem> unplacedItems = new ArrayList<>(
                 outputItems);
-        Collections.sort(unplacedItems, ITEM_SIZE_COMPARATOR);
+        unplacedItems.sort(ITEM_SIZE_COMPARATOR);
         Collections.reverse(unplacedItems);
 
         while (!unplacedItems.isEmpty()) {
@@ -250,7 +250,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
                     unusedElements.add(new TiffElement.Stub(excessOffset,
                             excessLength));
                     // make sure the new element is in the correct order.
-                    Collections.sort(unusedElements, ELEMENT_SIZE_COMPARATOR);
+                    unusedElements.sort(ELEMENT_SIZE_COMPARATOR);
                     Collections.reverse(unusedElements);
                 }
             }

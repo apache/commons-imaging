@@ -17,7 +17,6 @@
 package org.apache.commons.imaging.palette;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class LongestAxisMedianCut implements MedianCut {
     @Override
     public boolean performNextMedianCut(final List<ColorGroup> colorGroups, final boolean ignoreAlpha)
             throws ImageWriteException {
-        Collections.sort(colorGroups, COMPARATOR);
+        colorGroups.sort(COMPARATOR);
         final ColorGroup colorGroup = colorGroups.get(0);
 
         if (colorGroup.maxDiff == 0) {
@@ -60,7 +59,7 @@ public class LongestAxisMedianCut implements MedianCut {
             final List<ColorGroup> colorGroups, final boolean ignoreAlpha) throws ImageWriteException {
 
         final List<ColorCount> colorCounts = colorGroup.getColorCounts();
-        Collections.sort(colorCounts, new ColorCountComparator(mode));
+        colorCounts.sort(new ColorCountComparator(mode));
         final int countHalf = (int) Math.round((double) colorGroup.totalPoints / 2);
         int oldCount = 0;
         int newCount = 0;

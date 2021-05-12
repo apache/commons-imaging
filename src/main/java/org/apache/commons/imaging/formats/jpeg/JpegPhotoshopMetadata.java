@@ -16,7 +16,6 @@
  */
 package org.apache.commons.imaging.formats.jpeg;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.imaging.common.GenericImageMetadata;
@@ -33,7 +32,7 @@ public class JpegPhotoshopMetadata extends GenericImageMetadata {
         this.photoshopApp13Data = photoshopApp13Data;
 
         final List<IptcRecord> records = photoshopApp13Data.getRecords();
-        Collections.sort(records, IptcRecord.COMPARATOR);
+        records.sort(IptcRecord.COMPARATOR);
         for (final IptcRecord element : records) {
             if (element.iptcType != IptcTypes.RECORD_VERSION) {
                 add(element.getIptcTypeName(), element.getValue());
