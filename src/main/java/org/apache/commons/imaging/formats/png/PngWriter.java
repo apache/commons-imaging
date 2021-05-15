@@ -414,7 +414,7 @@ class PngWriter {
         }
 
         final Object pixelDensityObj = params.getPixelDensity();
-        if (pixelDensityObj instanceof PixelDensity) {
+        if (pixelDensityObj != null) {
             final PixelDensity pixelDensity = (PixelDensity) pixelDensityObj;
             if (pixelDensity.isUnitless()) {
                 writeChunkPHYS(os, (int) Math.round(pixelDensity.getRawHorizontalDensity()),
