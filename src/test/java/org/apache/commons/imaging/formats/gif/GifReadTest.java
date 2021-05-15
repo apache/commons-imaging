@@ -25,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -161,7 +160,7 @@ public class GifReadTest extends GifBaseTest {
         final String input = "/images/gif/oss-fuzz-33501/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5914278319226880";
         final String file = GifReadTest.class.getResource(input).getFile();
         final GifImageParser parser = new GifImageParser();
-        assertThrows(ImageReadException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), Collections.emptyMap()));
+        assertThrows(ImageReadException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), new GifImagingParameters()));
     }
 
     /**
@@ -180,7 +179,7 @@ public class GifReadTest extends GifBaseTest {
         final String input = "/images/gif/oss-fuzz-33464/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5174009164595200";
         final String file = GifReadTest.class.getResource(input).getFile();
         final GifImageParser parser = new GifImageParser();
-        assertThrows(ImageReadException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), Collections.emptyMap()));
+        assertThrows(ImageReadException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), new GifImagingParameters()));
     }
 
     /**

@@ -23,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageInfo;
@@ -92,7 +91,7 @@ public class PngReadTest extends PngBaseTest {
         final String input = "/images/png/oss-fuzz-33691/clusterfuzz-testcase-minimized-ImagingPngFuzzer-6177282101215232";
         final String file = PngReadTest.class.getResource(input).getFile();
         final PngImageParser parser = new PngImageParser();
-        assertThrows(ImageReadException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), Collections.emptyMap()));
+        assertThrows(ImageReadException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), new PngImagingParameters()));
     }
 
     /**
