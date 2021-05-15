@@ -430,9 +430,9 @@ class PngWriter {
         final PhysicalScale physicalScale = params.getPhysicalScale();
         if (physicalScale != null) {
             writeChunkSCAL(
-            		os,
-            		physicalScale.getHorizontalUnitsPerPixel(),
-            		physicalScale.getVerticalUnitsPerPixel(),
+                    os,
+                    physicalScale.getHorizontalUnitsPerPixel(),
+                    physicalScale.getVerticalUnitsPerPixel(),
                     physicalScale.isInMeters() ? (byte) 1 : (byte) 2);
         }
 

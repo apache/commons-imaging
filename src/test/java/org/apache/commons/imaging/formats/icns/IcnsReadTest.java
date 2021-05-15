@@ -52,11 +52,11 @@ public class IcnsReadTest extends IcnsBaseTest {
      * @return stream of test arguments
      */
     public static Stream<Arguments> provideIcnsImagesWithMonoAndJpegPngData() {
-    	return Arrays
-    			.asList(
-    					Arguments.of("/images/icns/IMAGING-248/python.icns", 7),
-    					Arguments.of("/images/icns/IMAGING-248/groovy.icns", 3))
-    			.stream();
+        return Arrays
+                .asList(
+                        Arguments.of("/images/icns/IMAGING-248/python.icns", 7),
+                        Arguments.of("/images/icns/IMAGING-248/groovy.icns", 3))
+                .stream();
     }
 
     @Disabled(value = "RoundtripTest has to be fixed befor implementation can throw UnsupportedOperationException")
@@ -90,8 +90,8 @@ public class IcnsReadTest extends IcnsBaseTest {
     @ParameterizedTest()
     @MethodSource("provideIcnsImagesWithMonoAndJpegPngData")
     public void testIcnsElementMonoPngJpeg(final String file, final int numberOfImages) throws ImageReadException, IOException {
-    	final File testFile = new File(IcnsReadTest.class.getResource(file).getFile());
-    	final List<BufferedImage> images = new IcnsImageParser().getAllBufferedImages(testFile);
-    	assertEquals(numberOfImages, images.size());
+        final File testFile = new File(IcnsReadTest.class.getResource(file).getFile());
+        final List<BufferedImage> images = new IcnsImageParser().getAllBufferedImages(testFile);
+        assertEquals(numberOfImages, images.size());
     }
 }

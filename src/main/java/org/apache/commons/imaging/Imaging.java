@@ -721,14 +721,14 @@ public final class Imaging {
 
     // See getImageParser
     @SuppressWarnings("unchecked")
-	private static ImageInfo getImageInfo(final ByteSource byteSource, final ImagingParameters params) throws ImageReadException, IOException {
+    private static ImageInfo getImageInfo(final ByteSource byteSource, final ImagingParameters params) throws ImageReadException, IOException {
         return Imaging.getImageParser(byteSource).getImageInfo(byteSource, params);
     }
 
     // TODO: We have no way of knowing whether the returned ImageParser will accept the ImagingParameters,
     // even if we specified generic types for the static methods.
     @SuppressWarnings("rawtypes")
-	private static ImageParser getImageParser(final ByteSource byteSource) throws ImageReadException, IOException {
+    private static ImageParser getImageParser(final ByteSource byteSource) throws ImageReadException, IOException {
         final ImageFormat format = guessFormat(byteSource);
         if (!format.equals(ImageFormats.UNKNOWN)) {
 
@@ -969,7 +969,7 @@ public final class Imaging {
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-	public static String getXmpXml(final ByteSource byteSource, final XmpImagingParameters params)
+    public static String getXmpXml(final ByteSource byteSource, final XmpImagingParameters params)
             throws ImageReadException, IOException {
         final ImageParser<?> imageParser = getImageParser(byteSource);
         if (imageParser instanceof XmpEmbeddable) {
@@ -1516,13 +1516,13 @@ public final class Imaging {
      */
     // TODO: fix generics due to ImageParser retrieved via getAllImageParsers, and the given ImagingParameters type
     @SuppressWarnings({ "unchecked", "rawtypes" })
-	public static void writeImage(final BufferedImage src, final OutputStream os,
+    public static void writeImage(final BufferedImage src, final OutputStream os,
             ImagingParameters params) throws ImageWriteException,
             IOException {
         Objects.requireNonNull(params, "You must provide a valid imaging parameters object.");
         final ImageParser<?>[] imageParsers = ImageParser.getAllImageParsers();
 
-		ImageParser imageParser = null;
+        ImageParser imageParser = null;
         for (final ImageParser<?> imageParser2 : imageParsers) {
             if (imageParser2.canAcceptType(params.getImageFormat())) {
                 imageParser = imageParser2;

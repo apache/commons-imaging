@@ -27,74 +27,74 @@ import org.apache.commons.imaging.common.XmpImagingParameters;
  */
 public class PngImagingParameters extends XmpImagingParameters {
 
-	public static final byte DEFAULT_BIT_DEPTH = 8;
+    public static final byte DEFAULT_BIT_DEPTH = 8;
 
-	/**
-	 * Bit depth. Default value is {@literal 8}.
-	 */
-	private byte bitDepth = DEFAULT_BIT_DEPTH;
+    /**
+     * Bit depth. Default value is {@literal 8}.
+     */
+    private byte bitDepth = DEFAULT_BIT_DEPTH;
 
-	private boolean forceIndexedColor = false;
+    private boolean forceIndexedColor = false;
 
-	private boolean forceTrueColor = false;
+    private boolean forceTrueColor = false;
 
-	/**
+    /**
      * Used in write operations to indicate the Physical Scale - sCAL.
      *
      * <p>Valid values: PhysicalScale</p>
      *
      * @see org.apache.commons.imaging.formats.png.PhysicalScale
      */
-	private PhysicalScale physicalScale = null;
+    private PhysicalScale physicalScale = null;
 
-	/**
+    /**
      * <p>Only used when writing Png images.</p>
      *
      * <p>Valid values: a list of WriteTexts.</p>
      */
-	private List<? extends PngText> textChunks = null;
+    private List<? extends PngText> textChunks = null;
 
-	public PngImagingParameters() {
-	    setImageFormat(ImageFormats.PNG);
-	}
+    public PngImagingParameters() {
+        setImageFormat(ImageFormats.PNG);
+    }
 
-	public byte getBitDepth() {
-		return bitDepth;
-	}
+    public byte getBitDepth() {
+        return bitDepth;
+    }
 
-	public void setBitDepth(byte bitDepth) {
-		this.bitDepth = bitDepth;
-	}
+    public void setBitDepth(byte bitDepth) {
+        this.bitDepth = bitDepth;
+    }
 
-	public boolean isForceIndexedColor() {
-		return forceIndexedColor;
-	}
+    public boolean isForceIndexedColor() {
+        return forceIndexedColor;
+    }
 
-	public void setForceIndexedColor(boolean forceIndexedColor) {
-		this.forceIndexedColor = forceIndexedColor;
-	}
+    public void setForceIndexedColor(boolean forceIndexedColor) {
+        this.forceIndexedColor = forceIndexedColor;
+    }
 
-	public boolean isForceTrueColor() {
-		return forceTrueColor;
-	}
+    public boolean isForceTrueColor() {
+        return forceTrueColor;
+    }
 
-	public void setForceTrueColor(boolean forceTrueColor) {
-		this.forceTrueColor = forceTrueColor;
-	}
+    public void setForceTrueColor(boolean forceTrueColor) {
+        this.forceTrueColor = forceTrueColor;
+    }
 
-	public PhysicalScale getPhysicalScale() {
-		return physicalScale;
-	}
+    public PhysicalScale getPhysicalScale() {
+        return physicalScale;
+    }
 
-	public void setPhysicalScale(PhysicalScale physicalScale) {
-		this.physicalScale = physicalScale;
-	}
+    public void setPhysicalScale(PhysicalScale physicalScale) {
+        this.physicalScale = physicalScale;
+    }
 
-	public List<? extends PngText> getTextChunks() {
-		return textChunks != null ? Collections.unmodifiableList(textChunks) : null;
-	}
+    public List<? extends PngText> getTextChunks() {
+        return textChunks != null ? Collections.unmodifiableList(textChunks) : null;
+    }
 
-	public void setTextChunks(List<? extends PngText> textChunks) {
-		this.textChunks = textChunks;
-	}
+    public void setTextChunks(List<? extends PngText> textChunks) {
+        this.textChunks = textChunks;
+    }
 }
