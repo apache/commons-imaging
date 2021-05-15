@@ -47,8 +47,8 @@ import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 
 public class XbmImageParser extends ImageParser<XbmImagingParameters> {
-    private static final String DEFAULT_EXTENSION = ".xbm";
-    private static final String[] ACCEPTED_EXTENSIONS = { ".xbm", };
+    private static final String DEFAULT_EXTENSION = ImageFormats.XBM.getDefaultExtension();
+    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.XBM.getExtensions();
 
     @Override
     public String getName() {

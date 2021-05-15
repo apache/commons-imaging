@@ -74,8 +74,8 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
 
     private static final Logger LOGGER = Logger.getLogger(PngImageParser.class.getName());
 
-    private static final String DEFAULT_EXTENSION = ".png";
-    private static final String[] ACCEPTED_EXTENSIONS = { DEFAULT_EXTENSION, };
+    private static final String DEFAULT_EXTENSION = ImageFormats.PNG.getDefaultExtension();
+    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.PNG.getExtensions();
 
     @Override
     public String getName() {

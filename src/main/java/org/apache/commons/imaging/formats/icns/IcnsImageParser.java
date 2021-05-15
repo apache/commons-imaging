@@ -41,8 +41,8 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 
 public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
     static final int ICNS_MAGIC = IcnsType.typeAsInt("icns");
-    private static final String DEFAULT_EXTENSION = ".icns";
-    private static final String[] ACCEPTED_EXTENSIONS = { ".icns", };
+    private static final String DEFAULT_EXTENSION = ImageFormats.ICNS.getDefaultExtension();
+    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.ICNS.getExtensions();
 
     public IcnsImageParser() {
         super.setByteOrder(ByteOrder.BIG_ENDIAN);

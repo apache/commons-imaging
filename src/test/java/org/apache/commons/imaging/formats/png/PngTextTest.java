@@ -27,6 +27,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
@@ -65,7 +66,7 @@ public class PngTextTest extends PngBaseTest {
 
         writeParams.setTextChunks(writeTexts);
 
-        final byte[] bytes = Imaging.writeImageToBytes(srcImage, writeParams);
+        final byte[] bytes = Imaging.writeImageToBytes(srcImage, ImageFormats.PNG, writeParams);
 
         final File tempFile = File.createTempFile("temp", ".png");
         FileUtils.writeByteArrayToFile(tempFile, bytes);

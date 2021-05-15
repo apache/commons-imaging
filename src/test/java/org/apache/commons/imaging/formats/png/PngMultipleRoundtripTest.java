@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.io.FilenameUtils;
@@ -62,7 +63,7 @@ public class PngMultipleRoundtripTest extends PngBaseTest {
                 Debug.debug("tempFile", tempFile);
 
                 final PngImagingParameters writeParams = new PngImagingParameters();
-                Imaging.writeImage(image, tempFile, writeParams);
+                Imaging.writeImage(image, tempFile, ImageFormats.PNG, writeParams);
 
                 lastFile = tempFile;
             }

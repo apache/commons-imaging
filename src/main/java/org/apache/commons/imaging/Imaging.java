@@ -28,7 +28,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
+import java.util.stream.Stream;
 
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.XmpEmbeddable;
@@ -330,7 +330,25 @@ public final class Imaging {
             } else if (compareBytePair(MAGIC_NUMBERS_RGBE, bytePair)) {
                 return ImageFormats.RGBE;
             }
-            return ImageFormats.UNKNOWN;
+            return Stream
+                .of(ImageFormats.values())
+                .filter((imageFormat) -> {
+                    return Stream
+                        .of(imageFormat.getExtensions())
+                        .anyMatch((extension) -> {
+                            final String fileName = byteSource.getFileName();
+                            if (fileName == null || fileName.trim().length() == 0) {
+                                return false;
+                            }
+                            final String fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1);
+                            return extension != null
+                                    && extension.trim().length() > 0
+                                    && fileExtension.equalsIgnoreCase(extension);
+                        });
+                })
+                .findFirst()
+                .orElse(ImageFormats.UNKNOWN)
+            ;
         }
     }
 
@@ -1418,13 +1436,15 @@ public final class Imaging {
         return getBufferedImage(new ByteSourceFile(file), params);
     }
 
-
-
+    @SuppressWarnings("unchecked")
     private static <T extends ImagingParameters> BufferedImage getBufferedImage(final ByteSource byteSource,
             T params) throws ImageReadException, IOException {
         // TODO: better generics or redesign API
-        @SuppressWarnings("unchecked")
         final ImageParser<T> imageParser = (ImageParser<T>) getImageParser(byteSource);
+        if (params == null) {
+            ImageFormat format = Imaging.guessFormat(byteSource);
+            params = (T) format.createImagingParameters();
+        }
         return imageParser.getBufferedImage(byteSource, params);
     }
 
@@ -1444,6 +1464,7 @@ public final class Imaging {
      * provide this data.
      * @param src a valid BufferedImage object
      * @param file the file to which the output image is to be written
+     * @param format the format in which the output image is to be written
      * @param params optional parameters
      * @throws ImageWriteException in the event of a format violation,
      * unsupported image format, etc.
@@ -1451,11 +1472,11 @@ public final class Imaging {
      * @see ImagingConstants
      */
     public static void writeImage(final BufferedImage src, final File file,
-            final ImagingParameters params) throws ImageWriteException,
+            final ImageFormat format, final ImagingParameters params) throws ImageWriteException,
             IOException {
         try (FileOutputStream fos = new FileOutputStream(file);
                 BufferedOutputStream os = new BufferedOutputStream(fos)) {
-            writeImage(src, os, params);
+            writeImage(src, os, format, params);
         }
     }
 
@@ -1475,6 +1496,7 @@ public final class Imaging {
      * image info, metadata and ICC profiles from all image formats that
      * provide this data.
      * @param src a valid BufferedImage object
+     * @param format the format in which the output image is to be written
      * @param params optional parameters
      * @return if successful, a valid array of bytes.
      * @throws ImageWriteException in the event of a format violation,
@@ -1483,11 +1505,11 @@ public final class Imaging {
      * @see ImagingConstants
      */
     public static byte[] writeImageToBytes(final BufferedImage src,
-            final ImagingParameters params) throws ImageWriteException,
+            final ImageFormat format, final ImagingParameters params) throws ImageWriteException,
             IOException {
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
 
-        writeImage(src, os, params);
+        writeImage(src, os, format, params);
 
         return os.toByteArray();
     }
@@ -1508,6 +1530,7 @@ public final class Imaging {
      * provide this data.
      * @param src a valid BufferedImage object
      * @param os the OutputStream to which the output image is to be written
+     * @param format the format in which the output image is to be written
      * @param params optional parameters
      * @throws ImageWriteException in the event of a format violation,
      * unsupported image format, etc.
@@ -1517,20 +1540,22 @@ public final class Imaging {
     // TODO: fix generics due to ImageParser retrieved via getAllImageParsers, and the given ImagingParameters type
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void writeImage(final BufferedImage src, final OutputStream os,
-            ImagingParameters params) throws ImageWriteException,
+            final ImageFormat format, ImagingParameters params) throws ImageWriteException,
             IOException {
-        Objects.requireNonNull(params, "You must provide a valid imaging parameters object.");
         final ImageParser<?>[] imageParsers = ImageParser.getAllImageParsers();
+        if (params == null) {
+            params = format.createImagingParameters();
+        }
 
         ImageParser imageParser = null;
         for (final ImageParser<?> imageParser2 : imageParsers) {
-            if (imageParser2.canAcceptType(params.getImageFormat())) {
+            if (imageParser2.canAcceptType(format)) {
                 imageParser = imageParser2;
                 break;
             }
         }
         if (imageParser == null) {
-            throw new ImageWriteException("Unknown Format: " + params.getImageFormat());
+            throw new ImageWriteException("Unknown Format: " + format);
         }
         imageParser.writeImage(src, os, params);
     }

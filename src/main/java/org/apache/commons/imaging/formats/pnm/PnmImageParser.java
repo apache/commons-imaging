@@ -41,9 +41,14 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.palette.PaletteFactory;
 
 public class PnmImageParser extends ImageParser<PnmImagingParameters> {
-    private static final String DEFAULT_EXTENSION = ".pnm";
-    private static final String[] ACCEPTED_EXTENSIONS = { ".pbm", ".pgm",
-            ".ppm", ".pnm", ".pam" };
+    private static final String DEFAULT_EXTENSION = ImageFormats.PNM.getDefaultExtension();
+    private static final String[] ACCEPTED_EXTENSIONS = {
+            ImageFormats.PAM.getDefaultExtension(),
+            ImageFormats.PBM.getDefaultExtension(),
+            ImageFormats.PGM.getDefaultExtension(),
+            ImageFormats.PNM.getDefaultExtension(),
+            ImageFormats.PPM.getDefaultExtension()
+    };
 
     public PnmImageParser() {
         super.setByteOrder(ByteOrder.LITTLE_ENDIAN);

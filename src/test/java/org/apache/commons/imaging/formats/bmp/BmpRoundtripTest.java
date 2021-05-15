@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
@@ -143,7 +144,7 @@ public class BmpRoundtripTest extends BmpBaseTest {
         // writeParams.put(PngConstants.PARAM_KEY_BMP_FORCE_TRUE_COLOR,
         // Boolean.TRUE);
 
-        final byte[] bytes = Imaging.writeImageToBytes(srcImage, writeParams);
+        final byte[] bytes = Imaging.writeImageToBytes(srcImage, ImageFormats.BMP, writeParams);
 
         // Debug.debug("bytes", bytes);
 

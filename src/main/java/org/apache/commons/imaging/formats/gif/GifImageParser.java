@@ -59,8 +59,8 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
 
     private static final Logger LOGGER = Logger.getLogger(GifImageParser.class.getName());
 
-    private static final String DEFAULT_EXTENSION = ".gif";
-    private static final String[] ACCEPTED_EXTENSIONS = { DEFAULT_EXTENSION, };
+    private static final String DEFAULT_EXTENSION = ImageFormats.GIF.getDefaultExtension();
+    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.GIF.getExtensions();
     private static final byte[] GIF_HEADER_SIGNATURE = { 71, 73, 70 };
     private static final int EXTENSION_CODE = 0x21;
     private static final int IMAGE_SEPARATOR = 0x2C;

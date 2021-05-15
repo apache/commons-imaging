@@ -23,6 +23,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
 
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.ImageMetadata;
@@ -58,7 +59,7 @@ public class TiffRoundtripTest extends TiffBaseTest {
                 final File tempFile = File.createTempFile(imageFile.getName() + "-" + compression + ".", ".tif");
                 final TiffImagingParameters params = new TiffImagingParameters();
                 params.setCompression(compression);
-                Imaging.writeImage(image, tempFile, params);
+                Imaging.writeImage(image, tempFile, ImageFormats.TIFF, params);
                 final BufferedImage image2 = Imaging.getBufferedImage(tempFile);
                 assertNotNull(image2);
             }

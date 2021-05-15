@@ -29,6 +29,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
@@ -106,7 +107,7 @@ public class PngWriteReadTest extends ImagingTest {
     public void testTransparency() throws Exception {
         // Test for https://issues.apache.org/jira/browse/SANSELAN-52
         final int[][] smallAscendingPixels = getAscendingRawData(256, 256);
-        final byte[] pngBytes = Imaging.writeImageToBytes(imageDataToBufferedImage(smallAscendingPixels), new PngImagingParameters());
+        final byte[] pngBytes = Imaging.writeImageToBytes(imageDataToBufferedImage(smallAscendingPixels), ImageFormats.PNG, new PngImagingParameters());
         assertTrue(Imaging.getImageInfo(pngBytes).isTransparent());
     }
 
@@ -116,7 +117,7 @@ public class PngWriteReadTest extends ImagingTest {
         optionalParams.setPhysicalScale(PhysicalScale.createFromMeters(0.01, 0.02));
 
         final int[][] smallAscendingPixels = getAscendingRawData(256, 256);
-        final byte[] pngBytes = Imaging.writeImageToBytes(imageDataToBufferedImage(smallAscendingPixels), optionalParams);
+        final byte[] pngBytes = Imaging.writeImageToBytes(imageDataToBufferedImage(smallAscendingPixels), ImageFormats.PNG, optionalParams);
         final PngImageInfo imageInfo = (PngImageInfo) Imaging.getImageInfo(pngBytes);
         final PhysicalScale physicalScale = imageInfo.getPhysicalScale();
         assertTrue(physicalScale.isInMeters());
@@ -130,7 +131,7 @@ public class PngWriteReadTest extends ImagingTest {
         optionalParams.setPhysicalScale(PhysicalScale.createFromRadians(0.01, 0.02));
 
         final int[][] smallAscendingPixels = getAscendingRawData(256, 256);
-        final byte[] pngBytes = Imaging.writeImageToBytes(imageDataToBufferedImage(smallAscendingPixels), optionalParams);
+        final byte[] pngBytes = Imaging.writeImageToBytes(imageDataToBufferedImage(smallAscendingPixels), ImageFormats.PNG, optionalParams);
         final PngImageInfo imageInfo = (PngImageInfo) Imaging.getImageInfo(pngBytes);
         final PhysicalScale physicalScale = imageInfo.getPhysicalScale();
         assertTrue(physicalScale.isInRadians());
@@ -174,7 +175,7 @@ public class PngWriteReadTest extends ImagingTest {
         // writeParams.put(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR,
         // Boolean.TRUE);
 
-        final byte[] bytes = Imaging.writeImageToBytes(srcImage, writeParams);
+        final byte[] bytes = Imaging.writeImageToBytes(srcImage, ImageFormats.PNG, writeParams);
 
         // Debug.debug("bytes", bytes);
 
@@ -201,7 +202,7 @@ public class PngWriteReadTest extends ImagingTest {
         final PngImagingParameters writeParams = new PngImagingParameters();
         writeParams.setTextChunks(textChunks);
 
-        final byte[] bytes = Imaging.writeImageToBytes(srcImage, writeParams);
+        final byte[] bytes = Imaging.writeImageToBytes(srcImage, ImageFormats.PNG, writeParams);
 
         // Debug.debug("bytes", bytes);
 

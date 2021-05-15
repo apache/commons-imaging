@@ -66,8 +66,8 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
 
     private static final Logger LOGGER = Logger.getLogger(JpegImageParser.class.getName());
 
-    private static final String DEFAULT_EXTENSION = ".jpg";
-    private static final String[] ACCEPTED_EXTENSIONS = { ".jpg", ".jpeg", };
+    private static final String DEFAULT_EXTENSION = ImageFormats.JPEG.getDefaultExtension();
+    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.JPEG.getExtensions();
 
     public JpegImageParser() {
         setByteOrder(ByteOrder.BIG_ENDIAN);

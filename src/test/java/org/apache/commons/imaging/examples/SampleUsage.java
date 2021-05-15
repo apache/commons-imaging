@@ -67,10 +67,10 @@ public class SampleUsage {
             final File dst = someFile;
             final ImageFormat format = ImageFormats.PNG;
             final PngImagingParameters optionalParams = new PngImagingParameters();
-            Imaging.writeImage(image, dst, optionalParams);
+            Imaging.writeImage(image, dst, format, optionalParams);
 
             final OutputStream os = someOutputStream;
-            Imaging.writeImage(image, os, optionalParams);
+            Imaging.writeImage(image, os, format, optionalParams);
 
             // <b>get the image's embedded ICC Profile, if it has one. </b>
             final byte[] iccProfileBytes = Imaging.getICCProfileBytes(imageBytes);

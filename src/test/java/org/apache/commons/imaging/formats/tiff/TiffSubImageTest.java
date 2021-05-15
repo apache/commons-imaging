@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
@@ -40,7 +41,7 @@ public class TiffSubImageTest extends TiffBaseTest {
     public void testSubImage() throws ImageReadException, ImageWriteException, IOException {
         final BufferedImage src = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
         final TiffImagingParameters params = new TiffImagingParameters();
-        final byte[] imageBytes = Imaging.writeImageToBytes(src, params);
+        final byte[] imageBytes = Imaging.writeImageToBytes(src, ImageFormats.TIFF, params);
         params.setSubImageX(0);
         params.setSubImageY(0);
         params.setSubImageWidth(2);

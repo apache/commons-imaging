@@ -62,8 +62,8 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
     // don't support uncompressed PCX, and/or don't handle black and white
     // images properly.
 
-    private static final String DEFAULT_EXTENSION = ".pcx";
-    private static final String[] ACCEPTED_EXTENSIONS = { ".pcx", ".pcc", };
+    private static final String DEFAULT_EXTENSION = ImageFormats.PCX.getDefaultExtension();
+    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.PCX.getExtensions();
 
     public PcxImageParser() {
         super.setByteOrder(ByteOrder.LITTLE_ENDIAN);

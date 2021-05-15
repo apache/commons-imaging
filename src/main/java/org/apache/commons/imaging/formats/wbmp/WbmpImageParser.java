@@ -41,8 +41,8 @@ import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 
 public class WbmpImageParser extends ImageParser<WbmpImagingParameters> {
-    private static final String DEFAULT_EXTENSION = ".wbmp";
-    private static final String[] ACCEPTED_EXTENSIONS = { ".wbmp", };
+    private static final String DEFAULT_EXTENSION = ImageFormats.WBMP.getDefaultExtension();
+    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.WBMP.getExtensions();
 
     @Override
     public String getName() {
