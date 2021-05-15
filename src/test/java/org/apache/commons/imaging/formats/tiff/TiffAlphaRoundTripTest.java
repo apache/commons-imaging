@@ -29,6 +29,7 @@ import java.io.FileOutputStream;
 import java.nio.ByteOrder;
 import java.nio.file.Path;
 
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
@@ -80,7 +81,7 @@ public class TiffAlphaRoundTripTest {
             //         correctness of a round-trip test.
             final File file = new File(tempDir.toFile(), "TiffAlphaRoundTripTest.tif");
             file.delete();
-            Imaging.writeImage(image0, file, new TiffImagingParameters());
+            Imaging.writeImage(image0, file, ImageFormats.TIFF, new TiffImagingParameters());
             final BufferedImage image1 = Imaging.getBufferedImage(file);
 
             // Step 2:  create a composite image overlaying a white background

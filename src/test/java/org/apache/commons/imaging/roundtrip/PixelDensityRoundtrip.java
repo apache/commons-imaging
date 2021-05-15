@@ -48,7 +48,7 @@ public class PixelDensityRoundtrip extends RoundtripBase {
         params.setImageFormat(formatInfo.format);
         final PixelDensity pixelDensity = PixelDensity.createFromPixelsPerInch(75, 150);
         params.setPixelDensity(pixelDensity);
-        Imaging.writeImage(testImage, temp1, params);
+        Imaging.writeImage(testImage, temp1, formatInfo.format, params);
 
         final ImageInfo imageInfo = Imaging.getImageInfo(temp1);
         if (imageInfo != null) {

@@ -65,8 +65,8 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 
 public class TiffImageParser extends ImageParser<TiffImagingParameters> implements XmpEmbeddable {
-    private static final String DEFAULT_EXTENSION = ".tif";
-    private static final String[] ACCEPTED_EXTENSIONS = { ".tif", ".tiff", };
+    private static final String DEFAULT_EXTENSION = ImageFormats.TIFF.getDefaultExtension();
+    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.TIFF.getExtensions();
 
     @Override
     public String getName() {
@@ -92,7 +92,6 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
     @Override
     public byte[] getICCProfileBytes(final ByteSource byteSource, final TiffImagingParameters params)
             throws ImageReadException, IOException {
-        
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffContents contents = new TiffReader(params != null ? params.isStrict() : false).readFirstDirectory(
                 byteSource, false, formatCompliance);

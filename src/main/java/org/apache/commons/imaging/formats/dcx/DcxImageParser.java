@@ -42,10 +42,9 @@ import org.apache.commons.imaging.formats.pcx.PcxImageParser;
 import org.apache.commons.imaging.formats.pcx.PcxImagingParameters;
 
 public class DcxImageParser extends ImageParser<PcxImagingParameters> {
-    private static final ImageFormat imageFormat = ImageFormats.DCX;
     // See http://www.fileformat.fine/format/pcx/egff.htm for documentation
-    private static final String DEFAULT_EXTENSION = imageFormat.getDefaultExtension();
-    private static final String[] ACCEPTED_EXTENSIONS = imageFormat.getExtensions();
+    private static final String DEFAULT_EXTENSION = ImageFormats.DCX.getDefaultExtension();
+    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.DCX.getExtensions();
 
     public DcxImageParser() {
         super.setByteOrder(ByteOrder.LITTLE_ENDIAN);

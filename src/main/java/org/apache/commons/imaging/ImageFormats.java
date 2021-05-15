@@ -44,21 +44,21 @@ public enum ImageFormats implements ImageFormat {
     BMP(BmpImagingParameters.class, "bmp", "dib"),
     DCX(PcxImagingParameters.class, "dcx"),
     GIF(GifImagingParameters.class, "gif"),
-    ICNS(IcnsImagingParameters.class, ""),
+    ICNS(IcnsImagingParameters.class, "icns"),
     ICO(IcoImagingParameters.class, "ico"),
     JBIG2(ImagingParameters.class),
-    JPEG(JpegImagingParameters.class, "jpg", "jpeg", "jpe", "jif", "jfif", "jfi"),
+    JPEG(JpegImagingParameters.class, "jpg", "jpeg"),
     PAM(PnmImagingParameters.class, "pam"),
     PSD(PsdImagingParameters.class, "psd"),
     PBM(PnmImagingParameters.class, "pbm"),
     PGM(PnmImagingParameters.class, "pgm"),
     PNM(PnmImagingParameters.class, "pnm"),
     PPM(PnmImagingParameters.class, "ppm"),
-    PCX(PcxImagingParameters.class, "pcx"),
+    PCX(PcxImagingParameters.class, "pcx", "pcc"),
     PNG(PngImagingParameters.class, "png"),
     RGBE(RgbeImagingParameters.class, "rgbe"),
     TGA(ImagingParameters.class),
-    TIFF(TiffImagingParameters.class, "tiff", "tif"), // TODO: Or is it .tif the default one?
+    TIFF(TiffImagingParameters.class, "tif", "tiff"),
     WBMP(WbmpImagingParameters.class, "wbmp"),
     XBM(XbmImagingParameters.class, "xbm"),
     XPM(XpmImagingParameters.class, "xpm");
@@ -90,16 +90,18 @@ public enum ImageFormats implements ImageFormat {
 
     @Override
     public ImagingParameters createImagingParameters() {
+        ImagingParameters parameters = null;
         if (this.parametersClass != null) {
             Constructor<?> ctor;
             try {
                 ctor = this.parametersClass.getConstructor();
-                return (ImagingParameters) ctor.newInstance();
+                parameters = (ImagingParameters) ctor.newInstance();
             } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                 LOGGER.log(Level.WARNING, "Failed to create imaging parameters: " + e.getMessage(), e);
-                return new ImagingParameters();
+                parameters = new ImagingParameters();
             }
+            parameters.setImageFormat(this);
         }
-        return null;
+        return parameters;
     }
 }

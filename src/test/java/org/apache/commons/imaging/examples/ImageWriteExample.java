@@ -20,6 +20,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
@@ -36,7 +37,7 @@ public class ImageWriteExample {
         final TiffImagingParameters params = new TiffImagingParameters();
         params.setCompression(TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED);
 
-        return Imaging.writeImageToBytes(image, params);
+        return Imaging.writeImageToBytes(image, ImageFormats.TIFF, params);
     }
 
 }
