@@ -37,7 +37,7 @@ public class RoundtripBase {
                              final String tempPrefix, final boolean imageExact) throws IOException,
             ImageReadException, ImageWriteException {
         final File temp1 = File.createTempFile(tempPrefix + ".", "."
-                + formatInfo.format.getExtension());
+                + formatInfo.format.getDefaultExtension());
         Debug.debug("tempFile: " + temp1.getName());
 
         final ImagingParameters params = new ImagingParameters();
@@ -57,8 +57,7 @@ public class RoundtripBase {
 
         if (formatInfo.identicalSecondWrite) {
             final File temp2 = File.createTempFile(tempPrefix + ".", "."
-                    + formatInfo.format.getExtension());
-            // Debug.debug("tempFile: " + tempFile.getName());
+                    + formatInfo.format.getDefaultExtension());
             Imaging.writeImage(image2, temp2, params);
 
             ImageAsserts.assertEquals(temp1, temp2);

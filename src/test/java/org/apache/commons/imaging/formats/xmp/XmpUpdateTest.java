@@ -71,7 +71,7 @@ public class XmpUpdateTest extends ImagingTest {
             }
 
             final File tempFile = File.createTempFile(imageFile.getName() + ".", "."
-                    + imageFormat.getExtension());
+                    + imageFormat.getDefaultExtension());
             final BufferedImage image = Imaging.getBufferedImage(imageFile);
 
             // ----
