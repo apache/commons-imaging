@@ -53,8 +53,8 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
 
     private static final Logger LOGGER = Logger.getLogger(BmpImageParser.class.getName());
 
-    private static final String DEFAULT_EXTENSION = ".bmp";
-    private static final String[] ACCEPTED_EXTENSIONS = { DEFAULT_EXTENSION, };
+    private static final String DEFAULT_EXTENSION = ImageFormats.BMP.getDefaultExtension();
+    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.BMP.getExtensions();
     private static final byte[] BMP_HEADER_SIGNATURE = { 0x42, 0x4d, };
     private static final int BI_RGB = 0;
     private static final int BI_RLE4 = 2;

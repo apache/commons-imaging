@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
@@ -55,7 +56,7 @@ public class PnmImageParserTest {
         final PnmImagingParameters params = new PnmImagingParameters();
         params.setRawBits(Boolean.TRUE);
 
-        final byte[] dstBytes = Imaging.writeImageToBytes(srcImage, params);
+        final byte[] dstBytes = Imaging.writeImageToBytes(srcImage, ImageFormats.PNM,  params);
         final BufferedImage dstImage = Imaging.getBufferedImage(dstBytes);
 
         assertEquals(srcImage.getWidth(), dstImage.getWidth());

@@ -52,8 +52,8 @@ import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 
 public class XpmImageParser extends ImageParser<XpmImagingParameters> {
-    private static final String DEFAULT_EXTENSION = ".xpm";
-    private static final String[] ACCEPTED_EXTENSIONS = { ".xpm", };
+    private static final String DEFAULT_EXTENSION = ImageFormats.XPM.getDefaultExtension();
+    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.XPM.getExtensions();
     private static Map<String, Integer> colorNames;
     private static final char[] WRITE_PALETTE = { ' ', '.', 'X', 'o', 'O', '+',
         '@', '#', '$', '%', '&', '*', '=', '-', ';', ':', '>', ',', '<',

@@ -23,6 +23,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
 
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.formats.gif.GifImagingParameters;
 import org.apache.commons.imaging.internal.Debug;
@@ -49,7 +50,7 @@ public class ConvertPngToGifTest extends PngBaseTest {
             final File outFile = File.createTempFile(imageFile.getName() + ".", ".gif");
 
             final GifImagingParameters gifParams = new GifImagingParameters();
-            Imaging.writeImage(image, outFile, gifParams);
+            Imaging.writeImage(image, outFile, ImageFormats.GIF, gifParams);
         }
         Debug.debug("complete.");
     }

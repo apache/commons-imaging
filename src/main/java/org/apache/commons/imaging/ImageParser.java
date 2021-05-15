@@ -905,12 +905,11 @@ public abstract class ImageParser<T extends ImagingParameters> extends BinaryFil
 
         final int index = fileName.lastIndexOf('.');
         if (index >= 0) {
-            String ext = fileName.substring(index);
+            String ext = fileName.substring(index + 1);
             ext = ext.toLowerCase(Locale.ENGLISH);
 
             for (final String ext2 : exts) {
-                final String ext2Lower = ext2.toLowerCase(Locale.ENGLISH);
-                if (ext2Lower.equals(ext)) {
+                if (ext2.equals(ext)) {
                     return true;
                 }
             }

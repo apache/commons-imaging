@@ -23,6 +23,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
 
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
@@ -54,7 +55,7 @@ public class PngWriteForceTrueColorText extends PngBaseTest {
 
                 final PngImagingParameters params = new PngImagingParameters();
                 params.setForceTrueColor(Boolean.TRUE);
-                Imaging.writeImage(image, outFile, params);
+                Imaging.writeImage(image, outFile, ImageFormats.PNG, params);
 
                 final BufferedImage image2 = Imaging.getBufferedImage(outFile, new PngImagingParameters());
                 assertNotNull(image2);

@@ -49,8 +49,8 @@ import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 
 public class IcoImageParser extends ImageParser<IcoImagingParameters> {
-    private static final String DEFAULT_EXTENSION = ".ico";
-    private static final String[] ACCEPTED_EXTENSIONS = { ".ico", ".cur", };
+    private static final String DEFAULT_EXTENSION = ImageFormats.ICO.getDefaultExtension();
+    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.ICO.getExtensions();
 
     public IcoImageParser() {
         super.setByteOrder(ByteOrder.LITTLE_ENDIAN);

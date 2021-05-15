@@ -77,7 +77,7 @@ public class XmpUpdateTest extends ImagingTest {
             // ----
 
             params.setXmpXml(xmpXml);
-            Imaging.writeImage(image, tempFile, params);
+            Imaging.writeImage(image, tempFile, imageFormat, params);
 
             final String xmpXmlOut = Imaging.getXmpXml(tempFile);
 

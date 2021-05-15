@@ -40,11 +40,11 @@ public class RoundtripBase {
                 + formatInfo.format.getDefaultExtension());
         Debug.debug("tempFile: " + temp1.getName());
 
-        final ImagingParameters params = new ImagingParameters();
+        final ImagingParameters params = formatInfo.format.createImagingParameters();
         params.setImageFormat(formatInfo.format);
-        Imaging.writeImage(testImage, temp1, params);
+        Imaging.writeImage(testImage, temp1, formatInfo.format, params);
 
-        final ImagingParameters readParams = new ImagingParameters();
+        final ImagingParameters readParams = formatInfo.format.createImagingParameters();
         readParams.setBufferedImageFactory(new RgbBufferedImageFactory());
         final BufferedImage image2 = Imaging.getBufferedImage(temp1, readParams);
         assertNotNull(image2);
@@ -58,7 +58,7 @@ public class RoundtripBase {
         if (formatInfo.identicalSecondWrite) {
             final File temp2 = File.createTempFile(tempPrefix + ".", "."
                     + formatInfo.format.getDefaultExtension());
-            Imaging.writeImage(image2, temp2, params);
+            Imaging.writeImage(image2, temp2, formatInfo.format, params);
 
             ImageAsserts.assertEquals(temp1, temp2);
         }
