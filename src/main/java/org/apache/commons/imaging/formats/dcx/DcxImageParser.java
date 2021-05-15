@@ -42,9 +42,10 @@ import org.apache.commons.imaging.formats.pcx.PcxImageParser;
 import org.apache.commons.imaging.formats.pcx.PcxImagingParameters;
 
 public class DcxImageParser extends ImageParser<PcxImagingParameters> {
+    private static final ImageFormat imageFormat = ImageFormats.DCX;
     // See http://www.fileformat.fine/format/pcx/egff.htm for documentation
-    private static final String DEFAULT_EXTENSION = ".dcx";
-    private static final String[] ACCEPTED_EXTENSIONS = { ".dcx", };
+    private static final String DEFAULT_EXTENSION = imageFormat.getDefaultExtension();
+    private static final String[] ACCEPTED_EXTENSIONS = imageFormat.getExtensions();
 
     public DcxImageParser() {
         super.setByteOrder(ByteOrder.LITTLE_ENDIAN);
@@ -67,9 +68,7 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] {
-                ImageFormats.DCX, //
-        };
+        return new ImageFormat[] { ImageFormats.DCX };
     }
 
     // FIXME should throw UOE

@@ -359,6 +359,9 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
             return null;
         }
 
+        if (params == null) {
+            params = new JpegImagingParameters();
+        }
         params.setReadThumbnails(Boolean.TRUE);
 
         return (TiffImageMetadata) new TiffImageParser().getMetadata(bytes,

@@ -42,7 +42,7 @@ public class PixelDensityRoundtrip extends RoundtripBase {
         final BufferedImage testImage = TestImages.createFullColorImage(2, 2);
 
         final File temp1 = File.createTempFile("pixeldensity.", "."
-                + formatInfo.format.getExtension());
+                + formatInfo.format.getDefaultExtension());
 
         final ImagingParameters params = new ImagingParameters();
         params.setImageFormat(formatInfo.format);
