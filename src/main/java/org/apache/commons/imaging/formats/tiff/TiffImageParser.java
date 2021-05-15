@@ -349,7 +349,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
             // try
             {
                 final FormatCompliance formatCompliance = FormatCompliance.getDefault();
-                final TiffImagingParameters params = null;
+                final TiffImagingParameters params = new TiffImagingParameters();
                 final TiffContents contents = new TiffReader(true).readContents(
                         byteSource, params, formatCompliance);
 
@@ -390,7 +390,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
     public FormatCompliance getFormatCompliance(final ByteSource byteSource)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
-        final TiffImagingParameters params = null;
+        final TiffImagingParameters params = new TiffImagingParameters();
         new TiffReader(isStrict(params)).readContents(byteSource, params,
                 formatCompliance);
         return formatCompliance;
