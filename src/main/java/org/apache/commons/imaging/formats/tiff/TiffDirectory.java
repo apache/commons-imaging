@@ -216,8 +216,7 @@ public class TiffDirectory extends TiffElement {
      */
     public BufferedImage getTiffImage(final ByteOrder byteOrder) throws ImageReadException,
             IOException {
-        final Map<String, Object> params = null;
-        return getTiffImage(byteOrder, params);
+        return getTiffImage(byteOrder, null);
     }
 
     /**

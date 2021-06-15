@@ -63,10 +63,9 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
             IOException {
         try {
             final ByteSource byteSource = new ByteSourceArray(exifBytes);
-            final Map<String, Object> params = null;
             final FormatCompliance formatCompliance = FormatCompliance.getDefault();
             final TiffContents contents = new TiffReader(false).readContents(
-                    byteSource, params, formatCompliance);
+                    byteSource, null, formatCompliance);
 
             final List<TiffElement> elements = new ArrayList<>();
 

@@ -503,10 +503,6 @@ public class BmpImageParser extends ImageParser {
 
         final BmpHeaderInfo bhi = readBmpHeaderInfo(byteSource);
 
-        if (bhi == null) {
-            throw new ImageReadException("BMP: couldn't read header");
-        }
-
         return new Dimension(bhi.width, bhi.height);
 
     }
@@ -555,10 +551,6 @@ public class BmpImageParser extends ImageParser {
         BmpImageContents ic = null;
         try (InputStream is = byteSource.getInputStream()) {
             ic = readImageContents(is, FormatCompliance.getDefault());
-        }
-
-        if (ic == null) {
-            throw new ImageReadException("Couldn't read BMP Data");
         }
 
         final BmpHeaderInfo bhi = ic.bhi;
@@ -658,9 +650,6 @@ public class BmpImageParser extends ImageParser {
         }
 
         final BmpImageContents ic = readImageContents(inputStream, FormatCompliance.getDefault());
-        if (ic == null) {
-            throw new ImageReadException("Couldn't read BMP Data");
-        }
 
         final BmpHeaderInfo bhi = ic.bhi;
         // byte colorTable[] = ic.colorTable;

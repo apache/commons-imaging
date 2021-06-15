@@ -298,12 +298,7 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
                                 completeCode);
                     }
 
-                    // if (label == new String("ICCRGBG1"))
-                    //{
-                        // GIF's can have embedded ICC Profiles - who knew?
-                    //}
-
-                    if ((label != null) && (label.length > 0)) {
+                    if (label.length > 0) {
                         final GenericGifBlock block = readGenericGIFBlock(is,
                                 completeCode, label);
                         result.add(block);
@@ -491,10 +486,6 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
             throws ImageReadException, IOException {
         final GifImageContents blocks = readFile(byteSource, false);
 
-        if (blocks == null) {
-            throw new ImageReadException("GIF: Couldn't read blocks");
-        }
-
         final GifHeaderInfo bhi = blocks.gifHeaderInfo;
         if (bhi == null) {
             throw new ImageReadException("GIF: Couldn't read Header");
@@ -537,10 +528,6 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
             throws ImageReadException, IOException {
         final GifImageContents imageContents = readFile(byteSource, false);
 
-        if (imageContents == null) {
-            throw new ImageReadException("GIF: Couldn't read blocks");
-        }
-
         final GifHeaderInfo bhi = imageContents.gifHeaderInfo;
         if (bhi == null) {
             throw new ImageReadException("GIF: Couldn't read Header");
@@ -573,10 +560,6 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
     public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final GifImageContents blocks = readFile(byteSource, false);
-
-        if (blocks == null) {
-            throw new ImageReadException("GIF: Couldn't read blocks");
-        }
 
         final GifHeaderInfo bhi = blocks.gifHeaderInfo;
         if (bhi == null) {
@@ -818,10 +801,6 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
             throws ImageReadException, IOException {
         final GifImageContents imageContents = readFile(byteSource, false);
 
-        if (imageContents == null) {
-            throw new ImageReadException("GIF: Couldn't read blocks");
-        }
-
         final GifHeaderInfo ghi = imageContents.gifHeaderInfo;
         if (ghi == null) {
             throw new ImageReadException("GIF: Couldn't read Header");
@@ -839,10 +818,6 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
     public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final GifImageContents imageContents = readFile(byteSource, false);
-
-        if (imageContents == null) {
-            throw new ImageReadException("GIF: Couldn't read blocks");
-        }
 
         final GifHeaderInfo ghi = imageContents.gifHeaderInfo;
         if (ghi == null) {
@@ -1113,14 +1088,13 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
     public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
-            final FormatCompliance formatCompliance = null;
-            final GifHeaderInfo ghi = readHeader(is, formatCompliance);
+            final GifHeaderInfo ghi = readHeader(is, null);
 
             if (ghi.globalColorTableFlag) {
                 readColorTable(is, ghi.sizeOfGlobalColorTable);
             }
 
-            final List<GifBlock> blocks = readBlocks(ghi, is, true, formatCompliance);
+            final List<GifBlock> blocks = readBlocks(ghi, is, true, null);
 
             final List<String> result = new ArrayList<>();
             for (final GifBlock block : blocks) {

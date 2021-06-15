@@ -347,15 +347,10 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
             // try
             {
                 final FormatCompliance formatCompliance = FormatCompliance.getDefault();
-                final Map<String, Object> params = null;
                 final TiffContents contents = new TiffReader(true).readContents(
-                        byteSource, params, formatCompliance);
+                        byteSource, null, formatCompliance);
 
                 final List<TiffDirectory> directories = contents.directories;
-
-                if (directories == null) {
-                    return false;
-                }
 
                 for (int d = 0; d < directories.size(); d++) {
                     final TiffDirectory directory = directories.get(d);
@@ -392,8 +387,7 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
     public FormatCompliance getFormatCompliance(final ByteSource byteSource)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
-        final Map<String, Object> params = null;
-        new TiffReader(isStrict(params)).readContents(byteSource, params,
+        new TiffReader(isStrict(null)).readContents(byteSource, null,
                 formatCompliance);
         return formatCompliance;
     }

@@ -98,7 +98,7 @@ public class IccTag {
                 + ")");
 
         if (data == null) {
-            pw.println(prefix + "data: " + Arrays.toString(data));
+            pw.println(prefix + "data: " + Arrays.toString((byte[]) null));
         } else {
             pw.println(prefix + "data: " + data.length);
 
