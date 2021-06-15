@@ -243,8 +243,7 @@ public class PngImageParser extends ImageParser  implements XmpEmbeddable {
         final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] { ChunkType.iCCP },
                 true);
 
-        if ((chunks == null) || (chunks.isEmpty())) {
-            // throw new ImageReadException("Png: No chunks");
+        if (chunks.isEmpty()) {
             return null;
         }
 
@@ -264,7 +263,7 @@ public class PngImageParser extends ImageParser  implements XmpEmbeddable {
             throws ImageReadException, IOException {
         final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] { ChunkType.IHDR, }, true);
 
-        if ((chunks == null) || (chunks.isEmpty())) {
+        if (chunks.isEmpty()) {
             throw new ImageReadException("Png: No chunks");
         }
 
@@ -282,7 +281,7 @@ public class PngImageParser extends ImageParser  implements XmpEmbeddable {
             throws ImageReadException, IOException {
         final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] { ChunkType.tEXt, ChunkType.zTXt, }, false);
 
-        if ((chunks == null) || (chunks.isEmpty())) {
+        if (chunks.isEmpty()) {
             return null;
         }
 
@@ -343,10 +342,7 @@ public class PngImageParser extends ImageParser  implements XmpEmbeddable {
                 ChunkType.iTXt,
             }, false);
 
-        // if(chunks!=null)
-        // System.out.println("chunks: " + chunks.size());
-
-        if ((chunks == null) || (chunks.isEmpty())) {
+        if (chunks.isEmpty()) {
             throw new ImageReadException("PNG: no chunks");
         }
 
@@ -506,7 +502,7 @@ public class PngImageParser extends ImageParser  implements XmpEmbeddable {
                 ChunkType.sRGB,
             }, false);
 
-        if ((chunks == null) || (chunks.isEmpty())) {
+        if (chunks.isEmpty()) {
             throw new ImageReadException("PNG: no chunks");
         }
 
@@ -653,8 +649,8 @@ public class PngImageParser extends ImageParser  implements XmpEmbeddable {
             scanExpediter.drive();
 
             if (iccProfile != null) {
-                final Boolean is_srgb = new IccProfileParser().issRGB(iccProfile);
-                if (is_srgb == null || !is_srgb.booleanValue()) {
+                final boolean is_srgb = new IccProfileParser().issRGB(iccProfile);
+                if (!is_srgb) {
                     final ICC_ColorSpace cs = new ICC_ColorSpace(iccProfile);
 
                     final ColorModel srgbCM = ColorModel.getRGBdefault();
@@ -721,7 +717,7 @@ public class PngImageParser extends ImageParser  implements XmpEmbeddable {
 
         final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] { ChunkType.iTXt }, false);
 
-        if ((chunks == null) || (chunks.isEmpty())) {
+        if (chunks.isEmpty()) {
             return null;
         }
 

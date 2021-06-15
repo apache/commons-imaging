@@ -194,7 +194,6 @@ public class IccProfileParser extends BinaryFileParser {
                 printCharQuad("ProfileCreatorSignature", profileCreatorSignature);
             }
 
-            final byte[] profileId = null;
             skipBytes(is, 16, "Not a Valid ICC Profile");
             // readByteArray("ProfileID", 16, is,
             // "Not a Valid ICC Profile");
@@ -258,7 +257,7 @@ public class IccProfileParser extends BinaryFileParser {
                     profileConnectionSpace, profileFileSignature,
                     primaryPlatformSignature, variousFlags, deviceManufacturer,
                     deviceModel, renderingIntent, profileCreatorSignature,
-                    profileId, tags);
+                    null, tags);
 
             if (LOGGER.isLoggable(Level.FINEST)) {
                 LOGGER.finest("issRGB: " + result.issRGB());

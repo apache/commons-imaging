@@ -428,11 +428,11 @@ public class IptcParser extends BinaryFileParser {
         byte[] blockData;
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (BinaryOutputStream bos = new BinaryOutputStream(baos, getByteOrder())) {
-            if (charset != null && !charset.equals(DEFAULT_CHARSET)) {
+            if (!charset.equals(DEFAULT_CHARSET)) {
                 bos.write(IptcConstants.IPTC_RECORD_TAG_MARKER);
                 bos.write(IptcConstants.IPTC_ENVELOPE_RECORD_NUMBER);
                 bos.write(ENV_TAG_CODED_CHARACTER_SET);
-                byte[] codedCharset = charset.equals(StandardCharsets.UTF_8) ? CHARACTER_ESCAPE_SEQUENCE: charset.name().getBytes(StandardCharsets.ISO_8859_1);
+                byte[] codedCharset = CHARACTER_ESCAPE_SEQUENCE;
                 bos.write2Bytes(codedCharset.length);
                 bos.write(codedCharset);
             }

@@ -233,10 +233,6 @@ public class PnmImageParser extends ImageParser {
             throws ImageReadException, IOException {
         final FileInfo info = readHeader(byteSource);
 
-        if (info == null) {
-            throw new ImageReadException("PNM: Couldn't read Header");
-        }
-
         return new Dimension(info.width, info.height);
     }
 
@@ -250,10 +246,6 @@ public class PnmImageParser extends ImageParser {
     public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final FileInfo info = readHeader(byteSource);
-
-        if (info == null) {
-            throw new ImageReadException("PNM: Couldn't read Header");
-        }
 
         final List<String> comments = new ArrayList<>();
 

@@ -186,7 +186,6 @@ public final class DataReaderStrips extends ImageDataReader {
             if (bitsPerPixel == 24) {
                 // 24 bit case, we don't mask the red byte because any
                 // sign-extended bits get covered by opacity mask
-                k = 0;
                 for (int i = i0; i < i1; i++) {
                     for (int j = 0; j < width; j++, k += 3) {
                         final int rgb = 0xff000000
@@ -199,7 +198,6 @@ public final class DataReaderStrips extends ImageDataReader {
             } else {
                 // 32 bit case, we don't mask the high byte because any
                 // sign-extended bits get shifted up and out of result
-                k = 0;
                 for (int i = i0; i < i1; i++) {
                     for (int j = 0; j < width; j++, k += 4) {
                         final int rgb

@@ -386,7 +386,7 @@ public class PsdImageParser extends ImageParser implements XmpEmbeddable {
         final List<ImageResourceBlock> blocks = readImageResourceBlocks(byteSource,
                 new int[] { IMAGE_RESOURCE_ID_ICC_PROFILE, }, 1);
 
-        if ((blocks == null) || (blocks.isEmpty())) {
+        if (blocks.isEmpty()) {
             return null;
         }
 
@@ -402,9 +402,6 @@ public class PsdImageParser extends ImageParser implements XmpEmbeddable {
     public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final PsdHeaderInfo bhi = readHeader(byteSource);
-        if (bhi == null) {
-            throw new ImageReadException("PSD: couldn't read header");
-        }
 
         return new Dimension(bhi.columns, bhi.rows);
 
@@ -445,10 +442,6 @@ public class PsdImageParser extends ImageParser implements XmpEmbeddable {
             throws ImageReadException, IOException {
         final PsdImageContents imageContents = readImageContents(byteSource);
         // ImageContents imageContents = readImage(byteSource, false);
-
-        if (imageContents == null) {
-            throw new ImageReadException("PSD: Couldn't read blocks");
-        }
 
         final PsdHeaderInfo header = imageContents.header;
         if (header == null) {
@@ -556,10 +549,6 @@ public class PsdImageParser extends ImageParser implements XmpEmbeddable {
             throws ImageReadException, IOException {
         final PsdImageContents imageContents = readImageContents(byteSource);
         // ImageContents imageContents = readImage(byteSource, false);
-
-        if (imageContents == null) {
-            throw new ImageReadException("PSD: Couldn't read blocks");
-        }
 
         final PsdHeaderInfo header = imageContents.header;
         if (header == null) {
@@ -673,10 +662,6 @@ public class PsdImageParser extends ImageParser implements XmpEmbeddable {
 
         final PsdImageContents imageContents = readImageContents(byteSource);
 
-        if (imageContents == null) {
-            throw new ImageReadException("PSD: Couldn't read blocks");
-        }
-
         final PsdHeaderInfo header = imageContents.header;
         if (header == null) {
             throw new ImageReadException("PSD: Couldn't read Header");
@@ -685,7 +670,7 @@ public class PsdImageParser extends ImageParser implements XmpEmbeddable {
         final List<ImageResourceBlock> blocks = readImageResourceBlocks(byteSource,
                 new int[] { IMAGE_RESOURCE_ID_XMP, }, -1);
 
-        if ((blocks == null) || (blocks.isEmpty())) {
+        if (blocks.isEmpty()) {
             return null;
         }
 
