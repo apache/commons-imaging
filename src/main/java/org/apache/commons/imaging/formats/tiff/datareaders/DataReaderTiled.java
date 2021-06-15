@@ -129,13 +129,11 @@ public final class DataReaderTiled extends ImageDataReader {
 
         if ((bitsPerPixel == 24 || bitsPerPixel == 32) && allSamplesAreOneByte
             && photometricInterpreter instanceof PhotometricInterpreterRgb) {
-            final int i0 = startY;
             int i1 = startY + tileLength;
             if (i1 > yLimit) {
                 // the tile is padded past bottom of image
                 i1 = yLimit;
             }
-            final int j0 = startX;
             int j1 = startX + tileWidth;
             if (j1 > xLimit) {
                 // the tile is padded to beyond the tile width
@@ -143,15 +141,15 @@ public final class DataReaderTiled extends ImageDataReader {
             }
 
             if (predictor == TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING) {
-                applyPredictorToBlock(tileWidth, i1 - i0, samplesPerPixel, bytes);
+                applyPredictorToBlock(tileWidth, i1 - startY, samplesPerPixel, bytes);
             }
 
             if (bitsPerPixel == 24) {
                 // 24 bit case, we don't mask the red byte because any
                 // sign-extended bits get covered by opacity mask
-                for (int i = i0; i < i1; i++) {
-                    int k = (i - i0) * tileWidth * 3;
-                    for (int j = j0; j < j1; j++, k += 3) {
+                for (int i = startY; i < i1; i++) {
+                    int k = (i - startY) * tileWidth * 3;
+                    for (int j = startX; j < j1; j++, k += 3) {
                         final int rgb = 0xff000000
                             | (bytes[k] << 16)
                             | ((bytes[k + 1] & 0xff) << 8)
@@ -162,9 +160,9 @@ public final class DataReaderTiled extends ImageDataReader {
             } else if (bitsPerPixel == 32) {
                 // 32 bit case, we don't mask the high byte because any
                 // sign-extended bits get shifted up and out of result.
-                for (int i = i0; i < i1; i++) {
-                    int k = (i - i0) * tileWidth * 4;
-                    for (int j = j0; j < j1; j++, k += 4) {
+                for (int i = startY; i < i1; i++) {
+                    int k = (i - startY) * tileWidth * 4;
+                    for (int j = startX; j < j1; j++, k += 4) {
                         final int rgb
                             = ((bytes[k] & 0xff) << 16)
                             | ((bytes[k + 1] & 0xff) << 8)

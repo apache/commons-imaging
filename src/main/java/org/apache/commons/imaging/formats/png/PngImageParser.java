@@ -254,9 +254,8 @@ public class PngImageParser extends ImageParser  implements XmpEmbeddable {
         }
 
         final PngChunkIccp pngChunkiCCP = (PngChunkIccp) chunks.get(0);
-        final byte[] bytes = pngChunkiCCP.getUncompressedProfile(); // TODO should this be a clone?
 
-        return (bytes);
+        return (pngChunkiCCP.getUncompressedProfile());// TODO should this be a clone?
     }
 
     @Override
