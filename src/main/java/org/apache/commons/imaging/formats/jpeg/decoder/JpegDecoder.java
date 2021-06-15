@@ -241,8 +241,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             sofnSegment = new SofnSegment(marker, segmentData);
         } else if (marker == JpegConstants.DQT_MARKER) {
             final DqtSegment dqtSegment = new DqtSegment(marker, segmentData);
-            for (final QuantizationTable element : dqtSegment.quantizationTables) {
-                final DqtSegment.QuantizationTable table = element;
+            for (final QuantizationTable table : dqtSegment.quantizationTables) {
                 if (0 > table.destinationIdentifier
                         || table.destinationIdentifier >= quantizationTables.length) {
                     throw new ImageReadException(
@@ -261,8 +260,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             }
         } else if (marker == JpegConstants.DHT_MARKER) {
             final DhtSegment dhtSegment = new DhtSegment(marker, segmentData);
-            for (final HuffmanTable element : dhtSegment.huffmanTables) {
-                final DhtSegment.HuffmanTable table = element;
+            for (final HuffmanTable table : dhtSegment.huffmanTables) {
                 DhtSegment.HuffmanTable[] tables;
                 if (table.tableClass == 0) {
                     tables = huffmanDCTables;
