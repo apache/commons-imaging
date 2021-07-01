@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -36,7 +35,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class PixelDensityRoundtrip extends RoundtripBase {
 
     public static Stream<FormatInfo> testPixelDensityRoundtrip() {
-        return Arrays.stream(FormatInfo.PRESERVING_RESOLUTION_FORMATS);
+        return Stream.of(FormatInfo.PRESERVING_RESOLUTION_FORMATS);
     }
 
     @ParameterizedTest

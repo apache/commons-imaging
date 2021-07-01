@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -69,6 +68,6 @@ public class RoundtripBase {
     }
 
     public static Stream<Arguments> createRoundtripArguments(final BufferedImage[] images) {
-        return Arrays.stream(images).flatMap(i -> Arrays.stream(FormatInfo.READ_WRITE_FORMATS).map(f -> Arguments.of(i, f)));
+        return Stream.of(images).flatMap(i -> Stream.of(FormatInfo.READ_WRITE_FORMATS).map(f -> Arguments.of(i, f)));
     }
 }
