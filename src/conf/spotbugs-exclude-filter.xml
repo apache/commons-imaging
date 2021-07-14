@@ -105,6 +105,61 @@
     <Class name="org.apache.commons.imaging.palette.SimplePalette" />
     <Bug pattern="EI_EXPOSE_REP2" />
   </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory" />
+    <Method name="setNextDirectory" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.TiffImageMetadata$Directory" />
+    <Method name="&lt;init&gt;" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.TiffField" />
+    <Method name="getFieldType" />
+    <Bug pattern="EI_EXPOSE_REP" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.jpeg.decoder.JpegDecoder" />
+    <Method name="decode" />
+    <Bug pattern="EI_EXPOSE_REP" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.jpeg.JpegImageMetadata" />
+    <Method name="getExif" />
+    <Bug pattern="EI_EXPOSE_REP" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.jpeg.JpegImageMetadata" />
+    <Method name="getPhotoshop" />
+    <Bug pattern="EI_EXPOSE_REP" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.jpeg.JpegImageMetadata" />
+    <Method name="&lt;init&gt;" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.common.mylzw.MyLzwCompressor" />
+    <Method name="&lt;init&gt;" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.common.mylzw.MyBitOutputStream" />
+    <Method name="&lt;init&gt;" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.common.mylzw.BitsToByteInputStream" />
+    <Method name="&lt;init&gt;" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.common.BinaryOutputStream" />
+    <Method name="&lt;init&gt;" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
   <!-- Reason: For code clarity, we could use a simple 'else', but instead keep a complete expression -->
   <Match>
     <Class name="org.apache.commons.imaging.formats.pnm.PnmImageParser" />

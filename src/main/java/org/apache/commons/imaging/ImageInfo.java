@@ -19,6 +19,7 @@ package org.apache.commons.imaging;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -114,7 +115,7 @@ public class ImageInfo {
         this.formatDetails = formatDetails;
 
         this.bitsPerPixel = bitsPerPixel;
-        this.comments = comments;
+        this.comments = comments == null ? Collections.emptyList() : Collections.unmodifiableList(comments);
 
         this.format = format;
         this.formatName = formatName;

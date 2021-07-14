@@ -16,6 +16,7 @@
  */
 package org.apache.commons.imaging.palette;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageWriteException;
@@ -26,12 +27,12 @@ public class QuantizedPalette implements Palette {
     private final ColorSpaceSubset[] straight;
 
     public QuantizedPalette(final List<ColorSpaceSubset> subsets, final int precision) {
-        this.subsets = subsets;
+        this.subsets = subsets == null ? Collections.emptyList() : Collections.unmodifiableList(subsets);
         this.precision = precision;
 
         straight = new ColorSpaceSubset[1 << (precision * 3)];
 
-        for (int i = 0; i < subsets.size(); i++) {
+        for (int i = 0; i < this.subsets.size(); i++) {
             final ColorSpaceSubset subset = subsets.get(i);
             subset.setIndex(i);
 

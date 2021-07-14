@@ -18,6 +18,7 @@
 package org.apache.commons.imaging.formats.jpeg.iptc;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PhotoshopApp13Data {
@@ -26,8 +27,8 @@ public class PhotoshopApp13Data {
 
     public PhotoshopApp13Data(final List<IptcRecord> records,
             final List<IptcBlock> rawBlocks) {
-        this.rawBlocks = rawBlocks;
-        this.records = records;
+        this.rawBlocks = rawBlocks == null ? Collections.emptyList() : Collections.unmodifiableList(rawBlocks);
+        this.records = records == null ? Collections.emptyList() : Collections.unmodifiableList(records);
     }
 
     public List<IptcRecord> getRecords() {
