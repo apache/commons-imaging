@@ -60,6 +60,6 @@ public class GifImageMetadata implements ImageMetadata {
 
     @Override
     public List<GifImageMetadataItem> getItems() {
-        return items;
+        return Collections.unmodifiableList(items);
     }
 }
