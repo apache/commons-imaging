@@ -630,9 +630,7 @@ public class IcoImageParser extends ImageParser {
         params = (params == null) ? new HashMap<>() : new HashMap<>(params);
 
         // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT)) {
-            params.remove(PARAM_KEY_FORMAT);
-        }
+        params.remove(PARAM_KEY_FORMAT);
 
         final PixelDensity pixelDensity = (PixelDensity) params.remove(PARAM_KEY_PIXEL_DENSITY);
 

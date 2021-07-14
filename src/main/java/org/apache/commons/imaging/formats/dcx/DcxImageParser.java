@@ -201,9 +201,7 @@ public class DcxImageParser extends ImageParser {
         final HashMap<String, Object> pcxParams = new HashMap<>();
 
         // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT)) {
-            params.remove(PARAM_KEY_FORMAT);
-        }
+        params.remove(PARAM_KEY_FORMAT);
 
         if (params.containsKey(PcxConstants.PARAM_KEY_PCX_COMPRESSION)) {
             final Object value = params.remove(PcxConstants.PARAM_KEY_PCX_COMPRESSION);

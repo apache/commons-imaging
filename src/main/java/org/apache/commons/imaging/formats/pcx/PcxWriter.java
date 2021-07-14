@@ -42,9 +42,7 @@ class PcxWriter {
         params = (params == null) ? new HashMap<>() : new HashMap<>(params);
 
         // clear format key.
-        if (params.containsKey(ImagingConstants.PARAM_KEY_FORMAT)) {
-            params.remove(ImagingConstants.PARAM_KEY_FORMAT);
-        }
+        params.remove(ImagingConstants.PARAM_KEY_FORMAT);
 
         // uncompressed PCX files are not even documented in ZSoft's spec,
         // let alone supported by most image viewers

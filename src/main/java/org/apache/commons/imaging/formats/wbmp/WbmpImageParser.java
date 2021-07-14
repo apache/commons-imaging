@@ -222,9 +222,7 @@ public class WbmpImageParser extends ImageParser {
         params = (params == null) ? new HashMap<>() : new HashMap<>(params);
 
         // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT)) {
-            params.remove(PARAM_KEY_FORMAT);
-        }
+        params.remove(PARAM_KEY_FORMAT);
 
         if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
