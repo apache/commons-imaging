@@ -95,6 +95,6 @@ public class PngImagingParameters extends XmpImagingParameters {
     }
 
     public void setTextChunks(List<? extends PngText> textChunks) {
-        this.textChunks = textChunks;
+        this.textChunks = Collections.unmodifiableList(textChunks);
     }
 }
