@@ -26,32 +26,6 @@ package org.apache.commons.imaging;
 public final class ImagingConstants {
 
     /**
-     * <p>Parameter key. Used in write operations to indicate desired compression
-     * algorithm.</p>
-     *
-     * <p>Currently only applies to writing TIFF image files.</p>
-     *
-     * <p>Valid values: {@code TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED,
-     * TiffConstants.TIFF_COMPRESSION_CCITT_1D,
-     * TiffConstants.TIFF_COMPRESSION_LZW,
-     * TiffConstants.TIFF_COMPRESSION_PACKBITS.}</p>
-     *
-     * @see org.apache.commons.imaging.formats.tiff.constants.TiffConstants
-     */
-    public static final String PARAM_KEY_COMPRESSION = "COMPRESSION";
-
-    /**
-     * <p>Parameter key. Indicates whether to throw exceptions when parsing invalid
-     * files, or whether to tolerate small problems.</p>
-     *
-     * <p>Valid values: {@code Boolean.TRUE} and {@code Boolean.FALSE}. Default value:
-     * {@code Boolean.FALSE}.</p>
-     *
-     * @see org.apache.commons.imaging.formats.tiff.constants.TiffConstants
-     */
-    public static final String PARAM_KEY_STRICT = "STRICT";
-
-    /**
      * Empty byte array.
      */
     public static final byte[] EMPTY_BYTE_ARRAY = new byte[0];

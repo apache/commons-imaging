@@ -768,15 +768,9 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
      * Reads the content of a TIFF file that contains numerical data samples
      * rather than image-related pixels.
      * <p>
-<<<<<<< HEAD
      * If desired, sub-image data can be read from the file by using a Java
-     * {@code Map} instance to specify the subsection of the image that
+     * {@code TiffImagingParameters} instance to specify the subsection of the image that
      * is required. The following code illustrates the approach:
-=======
-     * If desired, sub-image data can be read from the file by using an {@code TiffImagingParameters}
-     * instance to specify the subsection of the image that is required. The
-     * following code illustrates the approach:
->>>>>>> [IMAGING-159] Use ImagingParameters and define new classes as needed for other formats
      * <pre>
      *   int x; // coordinate (column) of corner of sub-image
      *   int y; // coordinate (row) of corner of sub-image
