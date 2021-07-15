@@ -749,7 +749,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
      * Reads the content of a TIFF file that contains floating-point data
      * samples.
      * <p>
-     * If desired, sub-image data can be read from the file by using an {@code TiffImagingParameters}
+     * If desired, sub-image data can be read from the file by using a {@code TiffImagingParameters}
      * instance to specify the subsection of the image that is required. The
      * following code illustrates the approach:
      * <pre>
