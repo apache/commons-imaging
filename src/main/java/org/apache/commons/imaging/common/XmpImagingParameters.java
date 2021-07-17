@@ -17,6 +17,7 @@
 
 package org.apache.commons.imaging.common;
 
+import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImagingParameters;
 
 /**
@@ -24,6 +25,10 @@ import org.apache.commons.imaging.ImagingParameters;
  * @since 1.0-alpha3
  */
 public class XmpImagingParameters extends ImagingParameters {
+
+    public XmpImagingParameters(ImageFormat imageFormat) {
+        super(imageFormat);
+    }
 
     private String xmpXml;
 

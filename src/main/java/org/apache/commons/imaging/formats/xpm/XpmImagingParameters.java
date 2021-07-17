@@ -24,7 +24,7 @@ import org.apache.commons.imaging.ImagingParameters;
 public class XpmImagingParameters extends ImagingParameters {
 
     public XpmImagingParameters() {
-        setImageFormat(ImageFormats.XPM);
+        super(ImageFormats.XPM);
     }
 
 }

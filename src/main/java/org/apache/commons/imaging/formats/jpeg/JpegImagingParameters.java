@@ -25,6 +25,6 @@ import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 public class JpegImagingParameters extends TiffImagingParameters {
 
     public JpegImagingParameters() {
-        setImageFormat(ImageFormats.JPEG);
+        super(ImageFormats.JPEG);
     }
 }

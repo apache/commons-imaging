@@ -41,7 +41,6 @@ public class RoundtripBase {
         Debug.debug("tempFile: " + temp1.getName());
 
         final ImagingParameters params = formatInfo.format.createImagingParameters();
-        params.setImageFormat(formatInfo.format);
         Imaging.writeImage(testImage, temp1, formatInfo.format, params);
 
         final ImagingParameters readParams = formatInfo.format.createImagingParameters();
