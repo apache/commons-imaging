@@ -65,8 +65,8 @@ public enum ImageFormats implements ImageFormat {
 
     private static final Logger LOGGER = Logger.getLogger(ImageFormats.class.getName());
 
-    private String[] extensions;
-    private Class<? extends ImagingParameters> parametersClass;
+    private final String[] extensions;
+    private final Class<? extends ImagingParameters> parametersClass;
 
     ImageFormats(Class<? extends ImagingParameters> parametersClass, String ...extensions) {
         this.extensions = extensions;
