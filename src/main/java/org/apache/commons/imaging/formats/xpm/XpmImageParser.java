@@ -169,15 +169,15 @@ public class XpmImageParser extends ImageParser<XpmImagingParameters> {
     }
 
     private static class XpmHeader {
-        int width;
-        int height;
-        int numColors;
-        int numCharsPerPixel;
+        final int width;
+        final int height;
+        final int numColors;
+        final int numCharsPerPixel;
         int xHotSpot = -1;
         int yHotSpot = -1;
-        boolean xpmExt;
+        final boolean xpmExt;
 
-        Map<Object, PaletteEntry> palette = new HashMap<>();
+        final  Map<Object, PaletteEntry> palette = new HashMap<>();
 
         XpmHeader(final int width, final int height, final int numColors,
                 final int numCharsPerPixel, final int xHotSpot, final int yHotSpot, final boolean xpmExt) {

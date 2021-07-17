@@ -24,6 +24,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -98,9 +99,8 @@ public abstract class ImageParser<T extends ImagingParameters> extends BinaryFil
      *
      * @return A valid array of image parsers
      */
-    public static ImageParser<?>[] getAllImageParsers() {
-
-        return new ImageParser[]{
+    public static List<ImageParser<?>> getAllImageParsers() {
+        return Arrays.asList(
                 new BmpImageParser(),
                 new DcxImageParser(),
                 new GifImageParser(),
@@ -115,10 +115,10 @@ public abstract class ImageParser<T extends ImagingParameters> extends BinaryFil
                 new TiffImageParser(),
                 new WbmpImageParser(),
                 new XbmImageParser(),
-                new XpmImageParser(),
+                new XpmImageParser()
                 // new JBig2ImageParser(),
                 // new TgaImageParser(),
-        };
+        );
     }
 
     /**
@@ -898,18 +898,16 @@ public abstract class ImageParser<T extends ImagingParameters> extends BinaryFil
      * @return If the parser can accept the format, true; otherwise, false.
      */
     protected final boolean canAcceptExtension(final String fileName) {
-        final String[] exts = getAcceptedExtensions();
-        if (exts == null) {
+        final String[] extensions = getAcceptedExtensions();
+        if (extensions == null) {
             return true;
         }
 
         final int index = fileName.lastIndexOf('.');
         if (index >= 0) {
-            String ext = fileName.substring(index + 1);
-            ext = ext.toLowerCase(Locale.ENGLISH);
-
-            for (final String ext2 : exts) {
-                if (ext2.equals(ext)) {
+            final String fileNameExtension = fileName.substring(index + 1).toLowerCase(Locale.ENGLISH);
+            for (final String extension : extensions) {
+                if (extension.equals(fileNameExtension)) {
                     return true;
                 }
             }

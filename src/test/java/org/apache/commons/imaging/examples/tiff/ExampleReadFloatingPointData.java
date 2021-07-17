@@ -154,7 +154,7 @@ public class ExampleReadFloatingPointData {
             System.out.println("Writing image to " + output.getPath());
             // create a new photometric interpreter based on the range
             // of values found above.
-            final List<PaletteEntry> paletteList = new ArrayList();
+            final List<PaletteEntry> paletteList = new ArrayList<>();
             if (!Float.isNaN(excludedValue)) {
                 // draw the excluded value in red.
                 paletteList.add(new PaletteEntryForValue(excludedValue, Color.red));
