@@ -27,6 +27,6 @@ import org.apache.commons.imaging.ImagingParameters;
 public class BmpImagingParameters extends ImagingParameters {
 
     public BmpImagingParameters() {
-        setImageFormat(ImageFormats.BMP);
+        super(ImageFormats.BMP);
     }
 }

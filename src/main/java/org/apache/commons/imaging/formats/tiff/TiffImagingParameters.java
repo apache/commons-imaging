@@ -15,6 +15,7 @@
 
 package org.apache.commons.imaging.formats.tiff;
 
+import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.common.XmpImagingParameters;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
@@ -100,7 +101,11 @@ public class TiffImagingParameters extends XmpImagingParameters {
     private Integer t6Options = null;
 
     public TiffImagingParameters() {
-        setImageFormat(ImageFormats.TIFF);
+        super(ImageFormats.TIFF);
+    }
+
+    public TiffImagingParameters(ImageFormat imageFormat) {
+        super(imageFormat);
     }
 
     public boolean isReadThumbnails() {

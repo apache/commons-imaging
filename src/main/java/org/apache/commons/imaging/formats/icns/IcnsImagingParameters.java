@@ -25,6 +25,6 @@ import org.apache.commons.imaging.ImagingParameters;
 public class IcnsImagingParameters extends ImagingParameters {
 
     public IcnsImagingParameters() {
-        setImageFormat(ImageFormats.ICNS);
+        super(ImageFormats.ICNS);
     }
 }

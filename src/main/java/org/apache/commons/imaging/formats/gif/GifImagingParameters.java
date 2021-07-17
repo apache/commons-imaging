@@ -27,6 +27,6 @@ import org.apache.commons.imaging.common.XmpImagingParameters;
 public class GifImagingParameters extends XmpImagingParameters {
 
     public GifImagingParameters() {
-        setImageFormat(ImageFormats.GIF);
+        super(ImageFormats.GIF);
     }
 }

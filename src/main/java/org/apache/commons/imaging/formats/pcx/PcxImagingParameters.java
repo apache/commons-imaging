@@ -29,7 +29,7 @@ public class PcxImagingParameters extends ImagingParameters {
     private int compression = PcxConstants.PCX_COMPRESSION_UNCOMPRESSED;
 
     public PcxImagingParameters() {
-        setImageFormat(ImageFormats.PCX);
+        super(ImageFormats.PCX);
     }
 
     public int getPlanes() {

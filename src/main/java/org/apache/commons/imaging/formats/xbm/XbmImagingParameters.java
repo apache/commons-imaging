@@ -25,6 +25,6 @@ import org.apache.commons.imaging.ImagingParameters;
 public class XbmImagingParameters extends ImagingParameters {
 
     public XbmImagingParameters() {
-        setImageFormat(ImageFormats.XBM);
+        super(ImageFormats.XBM);
     }
 }

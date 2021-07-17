@@ -25,6 +25,6 @@ import org.apache.commons.imaging.ImagingParameters;
 public class WbmpImagingParameters extends ImagingParameters {
 
     public WbmpImagingParameters() {
-        setImageFormat(ImageFormats.WBMP);
+        super(ImageFormats.WBMP);
     }
 }

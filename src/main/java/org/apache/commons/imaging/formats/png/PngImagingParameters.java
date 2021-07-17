@@ -55,7 +55,7 @@ public class PngImagingParameters extends XmpImagingParameters {
     private List<? extends PngText> textChunks = null;
 
     public PngImagingParameters() {
-        setImageFormat(ImageFormats.PNG);
+        super(ImageFormats.PNG);
     }
 
     public byte getBitDepth() {

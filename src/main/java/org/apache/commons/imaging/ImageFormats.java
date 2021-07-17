@@ -98,9 +98,8 @@ public enum ImageFormats implements ImageFormat {
                 parameters = (ImagingParameters) ctor.newInstance();
             } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                 LOGGER.log(Level.WARNING, "Failed to create imaging parameters: " + e.getMessage(), e);
-                parameters = new ImagingParameters();
+                parameters = new ImagingParameters(this);
             }
-            parameters.setImageFormat(this);
         }
         return parameters;
     }

@@ -25,6 +25,6 @@ import org.apache.commons.imaging.ImagingParameters;
 public class IcoImagingParameters extends ImagingParameters {
 
     public IcoImagingParameters () {
-        setImageFormat(ImageFormats.ICO);
+        super(ImageFormats.ICO);
     }
 }

@@ -17,18 +17,18 @@
 
 package org.apache.commons.imaging.roundtrip;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.apache.commons.imaging.ImageInfo;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.PixelDensity;
+import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.stream.Stream;
 
-import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingParameters;
-import org.apache.commons.imaging.PixelDensity;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PixelDensityRoundtrip extends RoundtripBase {
 
@@ -44,8 +44,7 @@ public class PixelDensityRoundtrip extends RoundtripBase {
         final File temp1 = File.createTempFile("pixeldensity.", "."
                 + formatInfo.format.getDefaultExtension());
 
-        final ImagingParameters params = new ImagingParameters();
-        params.setImageFormat(formatInfo.format);
+        final TiffImagingParameters params = new TiffImagingParameters();
         final PixelDensity pixelDensity = PixelDensity.createFromPixelsPerInch(75, 150);
         params.setPixelDensity(pixelDensity);
         Imaging.writeImage(testImage, temp1, formatInfo.format, params);
