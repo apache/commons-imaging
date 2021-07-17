@@ -332,20 +332,18 @@ public final class Imaging {
             }
             return Stream
                 .of(ImageFormats.values())
-                .filter((imageFormat) -> {
-                    return Stream
-                        .of(imageFormat.getExtensions())
-                        .anyMatch((extension) -> {
-                            final String fileName = byteSource.getFileName();
-                            if (fileName == null || fileName.trim().length() == 0) {
-                                return false;
-                            }
-                            final String fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1);
-                            return extension != null
-                                    && extension.trim().length() > 0
-                                    && fileExtension.equalsIgnoreCase(extension);
-                        });
-                })
+                .filter((imageFormat) -> Stream
+                    .of(imageFormat.getExtensions())
+                    .anyMatch((extension) -> {
+                        final String fileName = byteSource.getFileName();
+                        if (fileName == null || fileName.trim().length() == 0) {
+                            return false;
+                        }
+                        final String fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1);
+                        return extension != null
+                                && extension.trim().length() > 0
+                                && fileExtension.equalsIgnoreCase(extension);
+                    }))
                 .findFirst()
                 .orElse(ImageFormats.UNKNOWN)
             ;
@@ -749,23 +747,22 @@ public final class Imaging {
     private static ImageParser getImageParser(final ByteSource byteSource) throws ImageReadException, IOException {
         final ImageFormat format = guessFormat(byteSource);
         if (!format.equals(ImageFormats.UNKNOWN)) {
-
-            final ImageParser<?>[] imageParsers = ImageParser.getAllImageParsers();
+            final List<ImageParser<?>> imageParsers = ImageParser.getAllImageParsers();
 
             for (final ImageParser<?> imageParser : imageParsers) {
                 if (imageParser.canAcceptType(format)) {
-                    return (ImageParser) imageParser;
+                    return imageParser;
                 }
             }
         }
 
         final String fileName = byteSource.getFileName();
         if (fileName != null) {
-            final ImageParser<?>[] imageParsers = ImageParser.getAllImageParsers();
+            final List<ImageParser<?>> imageParsers = ImageParser.getAllImageParsers();
 
             for (final ImageParser<?> imageParser : imageParsers) {
                 if (imageParser.canAcceptExtension(fileName)) {
-                    return (ImageParser) imageParser;
+                    return imageParser;
                 }
             }
         }
@@ -1542,7 +1539,7 @@ public final class Imaging {
     public static void writeImage(final BufferedImage src, final OutputStream os,
             final ImageFormat format, ImagingParameters params) throws ImageWriteException,
             IOException {
-        final ImageParser<?>[] imageParsers = ImageParser.getAllImageParsers();
+        final List<ImageParser<?>> imageParsers = ImageParser.getAllImageParsers();
         if (params == null) {
             params = format.createImagingParameters();
         }

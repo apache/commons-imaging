@@ -97,10 +97,10 @@ public class WbmpImageParser extends ImageParser<WbmpImagingParameters> {
     }
 
     static class WbmpHeader {
-        int typeField;
-        byte fixHeaderField;
-        int width;
-        int height;
+        final int typeField;
+        final byte fixHeaderField;
+        final int width;
+        final int height;
 
         WbmpHeader(final int typeField, final byte fixHeaderField, final int width,
                 final int height) {

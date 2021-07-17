@@ -241,8 +241,8 @@ class T4_T6_Tables {
     public static final Entry VL3 = new Entry("0000010", 0);
 
     public static class Entry {
-        String bitString;
-        Integer value;
+        final String bitString;
+        final Integer value;
 
         Entry(final String bitString, final int value) {
             this.bitString = bitString;
