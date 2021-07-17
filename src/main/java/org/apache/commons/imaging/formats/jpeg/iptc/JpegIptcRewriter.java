@@ -27,12 +27,12 @@ import java.util.List;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.ImagingConstants;
-import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.common.bytesource.ByteSourceInputStream;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
+import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.formats.jpeg.xmp.JpegRewriter;
 
 /**
@@ -233,7 +233,7 @@ public class JpegIptcRewriter extends JpegRewriter {
         final List<JFIFPiece> newPieces = removePhotoshopApp13Segments(oldPieces);
         if (!removeSegment && photoshopApp13Segments.size() == 1) {
             final JFIFPieceSegment oldSegment = (JFIFPieceSegment) photoshopApp13Segments.get(0);
-            final ImagingParameters params = new ImagingParameters();
+            final JpegImagingParameters params = new JpegImagingParameters();
             final PhotoshopApp13Data oldData = new IptcParser().parsePhotoshopSegment(oldSegment.getSegmentData(), params);
             final List<IptcBlock> newBlocks = oldData.getNonIptcBlocks();
             final List<IptcRecord> newRecords = new ArrayList<>();

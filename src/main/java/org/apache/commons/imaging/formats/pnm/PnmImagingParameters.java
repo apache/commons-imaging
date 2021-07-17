@@ -32,7 +32,7 @@ public class PnmImagingParameters extends ImagingParameters {
     private ImageFormats subtype = null;
 
     public PnmImagingParameters() {
-        setImageFormat(ImageFormats.PNM);
+        super(ImageFormats.PNM);
     }
 
     public boolean isRawBits() {

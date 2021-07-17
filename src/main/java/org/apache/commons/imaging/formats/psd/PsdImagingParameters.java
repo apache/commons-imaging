@@ -27,6 +27,6 @@ import org.apache.commons.imaging.ImagingParameters;
 public class PsdImagingParameters extends ImagingParameters {
 
     public PsdImagingParameters() {
-        setImageFormat(ImageFormats.PSD);
+        super(ImageFormats.PSD);
     }
 }

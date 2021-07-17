@@ -25,6 +25,6 @@ import org.apache.commons.imaging.ImagingParameters;
 public class RgbeImagingParameters extends ImagingParameters {
 
     public RgbeImagingParameters() {
-        setImageFormat(ImageFormats.RGBE);
+        super(ImageFormats.RGBE);
     }
 }

@@ -29,6 +29,17 @@ import org.apache.commons.imaging.common.BufferedImageFactory;
 public class ImagingParameters {
 
     /**
+     * Image format used in write operations to indicate desired image format.
+     * Default is {@code null}.
+     *
+     * <p>Valid values: Any format defined in ImageFormat, such as
+     * ImageFormat.IMAGE_FORMAT_PNG.</p>
+     *
+     * @see org.apache.commons.imaging.ImageFormats
+     */
+    private final ImageFormat imageFormat;
+
+    /**
      * Whether to throw an exception when any issue occurs during reading
      * or writing a file format. Default is {@code false}.
      */
@@ -45,17 +56,6 @@ public class ImagingParameters {
      * Factory to create {@code BufferedImage}s. Default is {@code null}.
      */
     private BufferedImageFactory bufferedImageFactory = null;
-
-    /**
-     * Image format used in write operations to indicate desired image format.
-     * Default is {@code null}.
-     *
-     * <p>Valid values: Any format defined in ImageFormat, such as
-     * ImageFormat.IMAGE_FORMAT_PNG.</p>
-     *
-     * @see org.apache.commons.imaging.ImageFormats
-     */
-    private ImageFormat imageFormat;
 
     /**
      * <p>Parameter key. Used in write operations to indicate the desired pixel
@@ -93,10 +93,6 @@ public class ImagingParameters {
         return imageFormat;
     }
 
-    public void setImageFormat(ImageFormat imageFormat) {
-        this.imageFormat = imageFormat;
-    }
-
     public PixelDensity getPixelDensity() {
         return pixelDensity;
     }
@@ -105,4 +101,7 @@ public class ImagingParameters {
         this.pixelDensity = pixelDensity;
     }
 
+    protected ImagingParameters(final ImageFormat imageFormat) {
+        this.imageFormat = imageFormat;
+    }
 }
