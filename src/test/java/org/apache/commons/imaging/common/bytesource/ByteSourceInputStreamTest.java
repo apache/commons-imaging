@@ -23,12 +23,11 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Collections;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.ImagingTestConstants;
+import org.apache.commons.imaging.formats.ico.IcoImagingParameters;
 import org.apache.commons.io.FilenameUtils;
 import org.junit.jupiter.api.Test;
 
@@ -45,8 +44,9 @@ class ByteSourceInputStreamTest {
         final File imageFile = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, imagePath);
         try(BufferedInputStream imageStream = new BufferedInputStream(new FileInputStream(imageFile))) {
          // ByteSourceInputStream is created inside of following method
-            final BufferedImage bufferedImage = Imaging.getBufferedImage(imageStream,
-                    Collections.singletonMap(ImagingConstants.PARAM_KEY_FILENAME, ICO_IMAGE_FILE));
+            IcoImagingParameters params = new IcoImagingParameters();
+            params.setFileName(ICO_IMAGE_FILE);
+            final BufferedImage bufferedImage = Imaging.getBufferedImage(imageStream, params);
 
             assertEquals(bufferedImage.getWidth(), ICO_IMAGE_WIDTH);
             assertEquals(bufferedImage.getHeight(), ICO_IMAGE_HEIGHT);

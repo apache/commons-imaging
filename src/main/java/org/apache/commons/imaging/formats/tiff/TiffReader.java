@@ -27,13 +27,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -291,15 +288,11 @@ public class TiffReader extends BinaryFileParser {
         private final boolean readThumbnails;
 
         Collector() {
-            this(null);
+            this(new TiffImagingParameters());
         }
 
-        Collector(final Map<String, Object> params) {
-            boolean tmpReadThumbnails = true;
-            if (params != null && params.containsKey(ImagingConstants.PARAM_KEY_READ_THUMBNAILS)) {
-                tmpReadThumbnails = Boolean.TRUE.equals(params.get(ImagingConstants.PARAM_KEY_READ_THUMBNAILS));
-            }
-            this.readThumbnails = tmpReadThumbnails;
+        Collector(final TiffImagingParameters params) {
+            this.readThumbnails = params.isReadThumbnails();
         }
 
         @Override
@@ -374,11 +367,10 @@ public class TiffReader extends BinaryFileParser {
 //        }
 //    }
 
-    public TiffContents readFirstDirectory(final ByteSource byteSource, final Map<String, Object> params,
-            final boolean readImageData, final FormatCompliance formatCompliance)
+    public TiffContents readFirstDirectory(final ByteSource byteSource, final boolean readImageData, final FormatCompliance formatCompliance)
             throws ImageReadException, IOException {
         final Collector collector = new FirstDirectoryCollector(readImageData);
-        read(byteSource, params, formatCompliance, collector);
+        read(byteSource, formatCompliance, collector);
         final TiffContents contents = collector.getContents();
         if (contents.directories.isEmpty()) {
             throw new ImageReadException(
@@ -390,8 +382,8 @@ public class TiffReader extends BinaryFileParser {
     public TiffContents readDirectories(final ByteSource byteSource,
             final boolean readImageData, final FormatCompliance formatCompliance)
             throws ImageReadException, IOException {
-        final Map<String, Object> params = Collections.singletonMap(
-          ImagingConstants.PARAM_KEY_READ_THUMBNAILS, readImageData);
+        final TiffImagingParameters params = new TiffImagingParameters();
+        params.setReadThumbnails(readImageData);
         final Collector collector = new Collector(params);
         readDirectories(byteSource, formatCompliance, collector);
         final TiffContents contents = collector.getContents();
@@ -402,19 +394,17 @@ public class TiffReader extends BinaryFileParser {
         return contents;
     }
 
-    public TiffContents readContents(final ByteSource byteSource, final Map<String, Object> params,
+    public TiffContents readContents(final ByteSource byteSource, final TiffImagingParameters params,
             final FormatCompliance formatCompliance) throws ImageReadException,
             IOException {
 
         final Collector collector = new Collector(params);
-        read(byteSource, params, formatCompliance, collector);
+        read(byteSource, formatCompliance, collector);
         return collector.getContents();
     }
 
-    public void read(final ByteSource byteSource, final Map<String, Object> params,
-            final FormatCompliance formatCompliance, final Listener listener)
+    public void read(final ByteSource byteSource, final FormatCompliance formatCompliance, final Listener listener)
             throws ImageReadException, IOException {
-        // TiffContents contents =
         readDirectories(byteSource, formatCompliance, listener);
     }
 

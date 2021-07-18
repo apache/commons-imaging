@@ -13,8 +13,6 @@
  */
 package org.apache.commons.imaging.formats.xpm;
 
-import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_FORMAT;
-
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
@@ -53,9 +51,9 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 
-public class XpmImageParser extends ImageParser {
-    private static final String DEFAULT_EXTENSION = ".xpm";
-    private static final String[] ACCEPTED_EXTENSIONS = { ".xpm", };
+public class XpmImageParser extends ImageParser<XpmImagingParameters> {
+    private static final String DEFAULT_EXTENSION = ImageFormats.XPM.getDefaultExtension();
+    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.XPM.getExtensions();
     private static Map<String, Integer> colorNames;
     private static final char[] WRITE_PALETTE = { ' ', '.', 'X', 'o', 'O', '+',
         '@', '#', '$', '%', '&', '*', '=', '-', ';', ':', '>', ',', '<',
@@ -127,13 +125,13 @@ public class XpmImageParser extends ImageParser {
     }
 
     @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageMetadata getMetadata(final ByteSource byteSource, final XpmImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, final XpmImagingParameters params)
             throws ImageReadException, IOException {
         final XpmHeader xpmHeader = readXpmHeader(byteSource);
         boolean transparent = false;
@@ -158,28 +156,28 @@ public class XpmImageParser extends ImageParser {
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
+    public Dimension getImageSize(final ByteSource byteSource, final XpmImagingParameters params)
             throws ImageReadException, IOException {
         final XpmHeader xpmHeader = readXpmHeader(byteSource);
         return new Dimension(xpmHeader.width, xpmHeader.height);
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final XpmImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
 
     private static class XpmHeader {
-        int width;
-        int height;
-        int numColors;
-        int numCharsPerPixel;
+        final int width;
+        final int height;
+        final int numColors;
+        final int numCharsPerPixel;
         int xHotSpot = -1;
         int yHotSpot = -1;
-        boolean xpmExt;
+        final boolean xpmExt;
 
-        Map<Object, PaletteEntry> palette = new HashMap<>();
+        final  Map<Object, PaletteEntry> palette = new HashMap<>();
 
         XpmHeader(final int width, final int height, final int numColors,
                 final int numCharsPerPixel, final int xHotSpot, final int yHotSpot, final boolean xpmExt) {
@@ -598,7 +596,7 @@ public class XpmImageParser extends ImageParser {
 
     @Override
     public final BufferedImage getBufferedImage(final ByteSource byteSource,
-            final Map<String, Object> params) throws ImageReadException, IOException {
+            final XpmImagingParameters params) throws ImageReadException, IOException {
         final XpmParseResult result = parseXpmHeader(byteSource);
         return readXpmImage(result.xpmHeader, result.cParser);
     }
@@ -644,21 +642,8 @@ public class XpmImageParser extends ImageParser {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, XpmImagingParameters params)
             throws ImageWriteException, IOException {
-        // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<>() : new HashMap<>(params);
-
-        // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT)) {
-            params.remove(PARAM_KEY_FORMAT);
-        }
-
-        if (!params.isEmpty()) {
-            final Object firstKey = params.keySet().iterator().next();
-            throw new ImageWriteException("Unknown parameter: " + firstKey);
-        }
-
         final PaletteFactory paletteFactory = new PaletteFactory();
         final boolean hasTransparency = paletteFactory.hasTransparency(src, 1);
         SimplePalette palette = null;

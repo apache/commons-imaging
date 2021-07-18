@@ -42,6 +42,7 @@ import org.apache.commons.imaging.formats.tiff.TiffElement;
 import org.apache.commons.imaging.formats.tiff.TiffElement.DataElement;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
+import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.formats.tiff.TiffReader;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 
@@ -65,7 +66,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
             final ByteSource byteSource = new ByteSourceArray(exifBytes);
             final FormatCompliance formatCompliance = FormatCompliance.getDefault();
             final TiffContents contents = new TiffReader(false).readContents(
-                    byteSource, null, formatCompliance);
+                    byteSource, new TiffImagingParameters(), formatCompliance);
 
             final List<TiffElement> elements = new ArrayList<>();
 

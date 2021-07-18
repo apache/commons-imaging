@@ -24,7 +24,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -53,11 +52,11 @@ public class IcnsReadTest extends IcnsBaseTest {
      * @return stream of test arguments
      */
     public static Stream<Arguments> provideIcnsImagesWithMonoAndJpegPngData() {
-    	return Arrays
-    			.asList(
-    					Arguments.of("/images/icns/IMAGING-248/python.icns", 7),
-    					Arguments.of("/images/icns/IMAGING-248/groovy.icns", 3))
-    			.stream();
+        return Arrays
+                .asList(
+                        Arguments.of("/images/icns/IMAGING-248/python.icns", 7),
+                        Arguments.of("/images/icns/IMAGING-248/groovy.icns", 3))
+                .stream();
     }
 
     @Disabled(value = "RoundtripTest has to be fixed befor implementation can throw UnsupportedOperationException")
@@ -70,7 +69,7 @@ public class IcnsReadTest extends IcnsBaseTest {
     @ParameterizedTest
     @MethodSource("data")
     public void testImageInfo(final File imageFile) throws Exception {
-        final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, Collections.emptyMap());
+        final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, new IcnsImagingParameters());
         assertNotNull(imageInfo);
     }
 
@@ -91,8 +90,8 @@ public class IcnsReadTest extends IcnsBaseTest {
     @ParameterizedTest()
     @MethodSource("provideIcnsImagesWithMonoAndJpegPngData")
     public void testIcnsElementMonoPngJpeg(final String file, final int numberOfImages) throws ImageReadException, IOException {
-    	final File testFile = new File(IcnsReadTest.class.getResource(file).getFile());
-    	final List<BufferedImage> images = new IcnsImageParser().getAllBufferedImages(testFile);
-    	assertEquals(numberOfImages, images.size());
+        final File testFile = new File(IcnsReadTest.class.getResource(file).getFile());
+        final List<BufferedImage> images = new IcnsImageParser().getAllBufferedImages(testFile);
+        assertEquals(numberOfImages, images.size());
     }
 }

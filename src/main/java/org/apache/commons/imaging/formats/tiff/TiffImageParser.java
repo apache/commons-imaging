@@ -35,7 +35,6 @@ import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageFormat;
@@ -47,9 +46,9 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.XmpEmbeddable;
+import org.apache.commons.imaging.common.XmpImagingParameters;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory.ImageDataElement;
-import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffEpTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
@@ -64,9 +63,9 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterYCbCr;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 
-public class TiffImageParser extends ImageParser implements XmpEmbeddable {
-    private static final String DEFAULT_EXTENSION = ".tif";
-    private static final String[] ACCEPTED_EXTENSIONS = { ".tif", ".tiff", };
+public class TiffImageParser extends ImageParser<TiffImagingParameters> implements XmpEmbeddable {
+    private static final String DEFAULT_EXTENSION = ImageFormats.TIFF.getDefaultExtension();
+    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.TIFF.getExtensions();
 
     @Override
     public String getName() {
@@ -90,11 +89,11 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final TiffImagingParameters params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
-        final TiffContents contents = new TiffReader(isStrict(params)).readFirstDirectory(
-                byteSource, params, false, formatCompliance);
+        final TiffContents contents = new TiffReader(params != null ? params.isStrict() : false).readFirstDirectory(
+                byteSource, false, formatCompliance);
         final TiffDirectory directory = contents.directories.get(0);
 
         return directory.getFieldValue(TiffEpTagConstants.EXIF_TAG_INTER_COLOR_PROFILE,
@@ -102,11 +101,11 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
+    public Dimension getImageSize(final ByteSource byteSource, final TiffImagingParameters params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
-        final TiffContents contents = new TiffReader(isStrict(params)).readFirstDirectory(
-                byteSource, params, false, formatCompliance);
+        final TiffContents contents = new TiffReader(params != null ? params.isStrict() : false)
+                .readFirstDirectory(byteSource, false, formatCompliance);
         final TiffDirectory directory = contents.directories.get(0);
 
         final TiffField widthField = directory.findField(
@@ -125,12 +124,14 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
     }
 
     @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageMetadata getMetadata(final ByteSource byteSource, TiffImagingParameters params)
             throws ImageReadException, IOException {
+        if (params == null) {
+            params = new TiffImagingParameters();
+        }
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
-        final TiffReader tiffReader = new TiffReader(isStrict(params));
-        final TiffContents contents = tiffReader.readContents(byteSource, params,
-                formatCompliance);
+        final TiffReader tiffReader = new TiffReader(params.isStrict());
+        final TiffContents contents = tiffReader.readContents(byteSource, params, formatCompliance);
 
         final List<TiffDirectory> directories = contents.directories;
 
@@ -153,10 +154,10 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, final TiffImagingParameters params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
-        final TiffContents contents = new TiffReader(isStrict(params)).readDirectories(
+        final TiffContents contents = new TiffReader(params != null ? params.isStrict() : false).readDirectories(
                 byteSource, false, formatCompliance);
         final TiffDirectory directory = contents.directories.get(0);
 
@@ -310,7 +311,7 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
     }
 
     @Override
-    public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
+    public String getXmpXml(final ByteSource byteSource, final XmpImagingParameters params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffContents contents = new TiffReader(isStrict(params)).readDirectories(
@@ -347,8 +348,9 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
             // try
             {
                 final FormatCompliance formatCompliance = FormatCompliance.getDefault();
+                final TiffImagingParameters params = new TiffImagingParameters();
                 final TiffContents contents = new TiffReader(true).readContents(
-                        byteSource, null, formatCompliance);
+                        byteSource, params, formatCompliance);
 
                 final List<TiffDirectory> directories = contents.directories;
 
@@ -387,15 +389,16 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
     public FormatCompliance getFormatCompliance(final ByteSource byteSource)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
-        new TiffReader(isStrict(null)).readContents(byteSource, null,
+        final TiffImagingParameters params = new TiffImagingParameters();
+        new TiffReader(isStrict(params)).readContents(byteSource, params,
                 formatCompliance);
         return formatCompliance;
     }
 
-    public List<byte[]> collectRawImageData(final ByteSource byteSource, final Map<String, Object> params)
+    public List<byte[]> collectRawImageData(final ByteSource byteSource, final TiffImagingParameters params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
-        final TiffContents contents = new TiffReader(isStrict(params)).readDirectories(
+        final TiffContents contents = new TiffReader(params != null ? params.isStrict() : false).readDirectories(
                 byteSource, true, formatCompliance);
 
         final List<byte[]> result = new ArrayList<>();
@@ -428,11 +431,11 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
      * as follows:</p>
      *
      * <pre>
-     *   HashMap&lt;String, Object&gt; params = new HashMap&lt;String, Object&gt;();
-     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, new Integer(x));
-     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_Y, new Integer(y));
-     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, new Integer(width));
-     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, new Integer(height));
+     *   TiffImagingParameters params = new TiffImagingParameters();
+     *   params.setSubImageX(x);
+     *   params.setSubImageY(y);
+     *   params.setSubImageWidth(width);
+     *   params.setSubImageHeight(height);
      * </pre>
      *
      * <p>Note that the arguments x, y, width, and height must specify a
@@ -451,12 +454,14 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
      * access operation.
      */
     @Override
-    public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String, Object> params)
+    public BufferedImage getBufferedImage(final ByteSource byteSource, TiffImagingParameters params)
             throws ImageReadException, IOException {
+        if (params == null) {
+            params = new TiffImagingParameters();
+        }
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
-        final TiffReader reader = new TiffReader(isStrict(params));
-        final TiffContents contents = reader.readFirstDirectory(byteSource, params,
-                true, formatCompliance);
+        final TiffReader reader = new TiffReader(params.isStrict());
+        final TiffContents contents = reader.readFirstDirectory(byteSource, true, formatCompliance);
         final ByteOrder byteOrder = reader.getByteOrder();
         final TiffDirectory directory = contents.directories.get(0);
         final BufferedImage result = directory.getTiffImage(byteOrder, params);
@@ -485,32 +490,13 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
         return results;
     }
 
-    private Integer getIntegerParameter(
-            final String key, final Map<String, Object>params)
-            throws ImageReadException {
-        if (params == null) {
-            return null;
-        }
-
-        if (!params.containsKey(key)) {
-            return null;
-        }
-
-        final Object obj = params.get(key);
-
-        if (obj instanceof Integer) {
-            return (Integer) obj;
-        }
-        throw new ImageReadException("Non-Integer parameter " + key);
-    }
-
     private Rectangle checkForSubImage(
-            final Map<String, Object> params)
+            final TiffImagingParameters params)
             throws ImageReadException {
-        final Integer ix0 = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_X, params);
-        final Integer iy0 = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_Y, params);
-        final Integer iwidth = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, params);
-        final Integer iheight = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, params);
+        final Integer ix0 = params.getSubImageX();
+        final Integer iy0 = params.getSubImageY();
+        final Integer iwidth = params.getSubImageWidth();
+        final Integer iheight = params.getSubImageHeight();
 
         if (ix0 == null && iy0 == null && iwidth == null && iheight == null) {
             return null;
@@ -538,7 +524,7 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
     }
 
     protected BufferedImage getBufferedImage(final TiffDirectory directory,
-            final ByteOrder byteOrder, final Map<String, Object> params)
+            final ByteOrder byteOrder, final TiffImagingParameters params)
             throws ImageReadException, IOException {
         final List<TiffField> entries = directory.entries;
 
@@ -636,13 +622,8 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
             }
         }
 
-        PhotometricInterpreter photometricInterpreter;
-        final Object test = params == null
-            ? null
-            : params.get(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER);
-        if (test instanceof PhotometricInterpreter) {
-            photometricInterpreter = (PhotometricInterpreter) test;
-        } else {
+        PhotometricInterpreter photometricInterpreter = params.getCustomPhotometricInterpreter();
+        if (photometricInterpreter == null) {
             photometricInterpreter = getPhotometricInterpreter(
                 directory, photometricInterpretation, bitsPerPixel,
                 bitsPerSample, predictor, samplesPerPixel, width, height);
@@ -756,8 +737,11 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, final Map<String, Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, TiffImagingParameters params)
             throws ImageWriteException, IOException {
+        if (params == null) {
+            params = new TiffImagingParameters();
+        }
         new TiffImageWriterLossy().writeImage(src, os, params);
     }
 
@@ -765,7 +749,7 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
      * Reads the content of a TIFF file that contains floating-point data
      * samples.
      * <p>
-     * If desired, sub-image data can be read from the file by using a Java Map
+     * If desired, sub-image data can be read from the file by using a {@code TiffImagingParameters}
      * instance to specify the subsection of the image that is required. The
      * following code illustrates the approach:
      * <pre>
@@ -774,11 +758,11 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
      *   int width; // width of sub-image
      *   int height; // height of sub-image
      *
-     *   Map&lt;String, Object&gt;params = new HashMap&lt;&gt;();
-     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, x);
-     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_Y, y);
-     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, width);
-     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, height);
+     *   TiffImagingParameters params = new TiffImagingParameters();
+     *   params.setSubImageX(x);
+     *   params.setSubImageY(y);
+     *   params.setSubImageWidth(width);
+     *   params.setSubImageHeight(height);
      *   TiffRasterData raster =
      *        readFloatingPointRasterData(directory, byteOrder, params);
      * </pre>
@@ -786,7 +770,7 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
      * @param directory the TIFF directory pointing to the data to be extracted
      * (TIFF files may contain multiple directories)
      * @param byteOrder the byte order of the data to be extracted
-     * @param params an optional parameter map instance
+     * @param params an optional parameter object instance
      * @return a valid instance
      * @throws ImageReadException in the event of incompatible or malformed data
      * @throws IOException in the event of an I/O error
@@ -794,7 +778,7 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
     TiffRasterData getFloatingPointRasterData(
         final TiffDirectory directory,
         final ByteOrder byteOrder,
-        final Map<String, Object> params)
+        final TiffImagingParameters params)
         throws ImageReadException, IOException {
         final List<TiffField> entries = directory.entries;
 

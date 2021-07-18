@@ -19,17 +19,16 @@ package org.apache.commons.imaging.examples.tiff;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.formats.tiff.TiffContents;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffReader;
-import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PhotometricInterpreterFloat;
 
@@ -147,8 +146,8 @@ public class ReadAndRenderFloatingPoint {
         //    For this demo, we store the Photometric Interpreter instance
         // as a option-parameter to be passed into the read-image method.
         final PhotometricInterpreterFloat pi = new PhotometricInterpreterFloat(0.0f, 1.0f);
-        HashMap<String, Object> params = new HashMap<>();
-        params.put(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER, pi);
+        JpegImagingParameters params = new JpegImagingParameters();
+        params.setCustomPhotometricInterpreter(pi);
         BufferedImage bImage = directory.getTiffImage(params);
 
         final float maxValue = pi.getMaxFound();
@@ -163,8 +162,8 @@ public class ReadAndRenderFloatingPoint {
             // of values found above.
             final PhotometricInterpreterFloat grayScale
                 = new PhotometricInterpreterFloat(minValue, maxValue);
-            params = new HashMap<>();
-            params.put(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER, grayScale);
+            params = new JpegImagingParameters();
+            params.setCustomPhotometricInterpreter(grayScale);
             bImage = directory.getTiffImage(params);
             ImageIO.write(bImage, "JPEG", output);
         }

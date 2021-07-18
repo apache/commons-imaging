@@ -16,7 +16,6 @@
  */
 package org.apache.commons.imaging.formats.pcx;
 
-import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_STRICT;
 import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
 import static org.apache.commons.imaging.common.BinaryFunctions.skipBytes;
 import static org.apache.commons.imaging.common.ByteConversions.toUInt16;
@@ -39,8 +38,6 @@ import java.io.PrintWriter;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.imaging.ImageFormat;
@@ -52,7 +49,7 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 
-public class PcxImageParser extends ImageParser {
+public class PcxImageParser extends ImageParser<PcxImagingParameters> {
     // ZSoft's official spec is at http://www.qzx.com/pc-gpe/pcx.txt
     // (among other places) but it's pretty thin. The fileformat.fine document
     // at http://www.fileformat.fine/format/pcx/egff.htm is a little better
@@ -65,8 +62,8 @@ public class PcxImageParser extends ImageParser {
     // don't support uncompressed PCX, and/or don't handle black and white
     // images properly.
 
-    private static final String DEFAULT_EXTENSION = ".pcx";
-    private static final String[] ACCEPTED_EXTENSIONS = { ".pcx", ".pcc", };
+    private static final String DEFAULT_EXTENSION = ImageFormats.PCX.getDefaultExtension();
+    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.PCX.getExtensions();
 
     public PcxImageParser() {
         super.setByteOrder(ByteOrder.LITTLE_ENDIAN);
@@ -94,13 +91,13 @@ public class PcxImageParser extends ImageParser {
     }
 
     @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageMetadata getMetadata(final ByteSource byteSource, final PcxImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, final PcxImagingParameters params)
             throws ImageReadException, IOException {
         final PcxHeader pcxHeader = readPcxHeader(byteSource);
         final Dimension size = getImageSize(byteSource, params);
@@ -127,7 +124,7 @@ public class PcxImageParser extends ImageParser {
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
+    public Dimension getImageSize(final ByteSource byteSource, final PcxImagingParameters params)
             throws ImageReadException, IOException {
         final PcxHeader pcxHeader = readPcxHeader(byteSource);
         final int xSize = pcxHeader.xMax - pcxHeader.xMin + 1;
@@ -142,7 +139,7 @@ public class PcxImageParser extends ImageParser {
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final PcxImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
@@ -474,22 +471,15 @@ public class PcxImageParser extends ImageParser {
 
     @Override
     public final BufferedImage getBufferedImage(final ByteSource byteSource,
-            Map<String, Object> params) throws ImageReadException, IOException {
-        params = (params == null) ? new HashMap<>() : new HashMap<>(params);
-        boolean isStrict = false;
-        final Object strictness = params.get(PARAM_KEY_STRICT);
-        if (strictness != null) {
-            isStrict = ((Boolean) strictness).booleanValue();
-        }
-
+            PcxImagingParameters params) throws ImageReadException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
-            final PcxHeader pcxHeader = readPcxHeader(is, isStrict);
+            final PcxHeader pcxHeader = readPcxHeader(is, params.isStrict());
             return readImage(pcxHeader, is, byteSource);
         }
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, final Map<String, Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, final PcxImagingParameters params)
             throws ImageWriteException, IOException {
         new PcxWriter(params).writeImage(src, os);
     }

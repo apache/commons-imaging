@@ -42,7 +42,7 @@ class FormatInfo {
                     COLOR_FULL_RGB, true, true), //
     };
 
-    static FormatInfo[] READ_WRITE_FORMATS = new FormatInfo[] {
+    static final FormatInfo[] READ_WRITE_FORMATS = new FormatInfo[] {
             new FormatInfo(ImageFormats.PNG, true, true,
                     COLOR_FULL_RGB, true, true), //
             new FormatInfo(ImageFormats.GIF, true, true,

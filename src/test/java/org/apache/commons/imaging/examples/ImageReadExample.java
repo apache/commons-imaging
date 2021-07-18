@@ -16,33 +16,27 @@
  */
 package org.apache.commons.imaging.examples;
 
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.Transparency;
+import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.common.BufferedImageFactory;
+import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
+
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingConstants;
-import org.apache.commons.imaging.common.BufferedImageFactory;
 
 public class ImageReadExample {
     public static BufferedImage imageReadExample(final File file)
             throws ImageReadException, IOException {
-        final Map<String, Object> params = new HashMap<>();
+        final TiffImagingParameters params = new TiffImagingParameters();
 
         // set optional parameters if you like
-        params.put(ImagingConstants.BUFFERED_IMAGE_FACTORY,
-                new ManagedImageBufferedImageFactory());
+        params.setBufferedImageFactory(new ManagedImageBufferedImageFactory());
 
-        // params.put(ImagingConstants.PARAM_KEY_VERBOSE, Boolean.TRUE);
+        // params.setStrict(Boolean.TRUE);
 
-        // read and return the image
+        // read and return the TIFF image
         return Imaging.getBufferedImage(file, params);
     }
 

@@ -20,7 +20,6 @@ package org.apache.commons.imaging.examples.tiff;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -28,6 +27,7 @@ import javax.imageio.ImageIO;
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.formats.tiff.TiffContents;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffField;
@@ -76,7 +76,7 @@ public class ReadTagsAndImages {
             = rootName != null && !rootName.isEmpty();
 
         final ByteSourceFile byteSource = new ByteSourceFile(target);
-        final HashMap<String, Object> params = new HashMap<>();
+        final JpegImagingParameters params = new JpegImagingParameters();
 
 
         // Establish a TiffReader. This is just a simple constructor that

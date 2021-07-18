@@ -16,6 +16,7 @@
  */
 package org.apache.commons.imaging;
 
+
 /**
  * Simple image format interface.
  */
@@ -33,6 +34,9 @@ public interface ImageFormat {
      *
      * @return String extension
      */
-    String getExtension();
+    String[] getExtensions();
 
+    String getDefaultExtension();
+
+    ImagingParameters createImagingParameters();
 }

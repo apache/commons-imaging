@@ -20,8 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Map;
-import java.util.TreeMap;
 
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
@@ -68,9 +66,8 @@ public class TiffReadWriteTagsTest extends TiffBaseTest {
         writer.write(tiff, set);
 
         final TiffReader reader = new TiffReader(true);
-        final Map<String, Object> params = new TreeMap<>();
         final FormatCompliance formatCompliance = new FormatCompliance("");
-        final TiffContents contents = reader.readFirstDirectory(new ByteSourceArray(tiff.toByteArray()), params, true, formatCompliance);
+        final TiffContents contents = reader.readFirstDirectory(new ByteSourceArray(tiff.toByteArray()), true, formatCompliance);
         final TiffDirectory rootDir = contents.directories.get(0);
         assertEquals(description, rootDir.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION));
         assertEquals(page, rootDir.getFieldValue(TiffTagConstants.TIFF_TAG_PAGE_NUMBER, true)[0]);

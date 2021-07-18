@@ -31,8 +31,6 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import org.apache.commons.imaging.ImageFormat;
@@ -40,7 +38,9 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingConstants;
+import org.apache.commons.imaging.ImagingParameters;
+import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
+import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -161,12 +161,14 @@ public class ByteSourceImageTest extends ByteSourceTest {
     public void checkGetImageInfo(final File imageFile, final byte[] imageFileBytes)
             throws IOException, ImageReadException, IllegalAccessException,
             IllegalArgumentException, InvocationTargetException {
-        final Map<String, Object> params = new HashMap<>();
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
         final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
-        if (imageFormat.equals(ImageFormats.TIFF)
-                || imageFormat.equals(ImageFormats.JPEG)) {
-            params.put(ImagingConstants.PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));
+        final ImagingParameters params = imageFormat.createImagingParameters();
+        if (imageFormat == ImageFormats.TIFF) {
+            ((TiffImagingParameters) params).setReadThumbnails(Boolean.valueOf(!ignoreImageData));
+        }
+        if (imageFormat == ImageFormats.JPEG) {
+            ((JpegImagingParameters) params).setReadThumbnails(Boolean.valueOf(!ignoreImageData));
         }
 
         final ImageInfo imageInfoFile = Imaging.getImageInfo(imageFile, params);
