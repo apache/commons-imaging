@@ -16,11 +16,6 @@
  */
 package org.apache.commons.imaging;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.apache.commons.imaging.formats.bmp.BmpImagingParameters;
 import org.apache.commons.imaging.formats.gif.GifImagingParameters;
 import org.apache.commons.imaging.formats.icns.IcnsImagingParameters;
@@ -36,41 +31,42 @@ import org.apache.commons.imaging.formats.wbmp.WbmpImagingParameters;
 import org.apache.commons.imaging.formats.xbm.XbmImagingParameters;
 import org.apache.commons.imaging.formats.xpm.XpmImagingParameters;
 
+import java.util.function.Supplier;
+
 /**
  * Enum of known image formats.
  */
 public enum ImageFormats implements ImageFormat {
-    UNKNOWN(ImagingParameters.class),
-    BMP(BmpImagingParameters.class, "bmp", "dib"),
-    DCX(PcxImagingParameters.class, "dcx"),
-    GIF(GifImagingParameters.class, "gif"),
-    ICNS(IcnsImagingParameters.class, "icns"),
-    ICO(IcoImagingParameters.class, "ico"),
-    JBIG2(ImagingParameters.class),
-    JPEG(JpegImagingParameters.class, "jpg", "jpeg"),
-    PAM(PnmImagingParameters.class, "pam"),
-    PSD(PsdImagingParameters.class, "psd"),
-    PBM(PnmImagingParameters.class, "pbm"),
-    PGM(PnmImagingParameters.class, "pgm"),
-    PNM(PnmImagingParameters.class, "pnm"),
-    PPM(PnmImagingParameters.class, "ppm"),
-    PCX(PcxImagingParameters.class, "pcx", "pcc"),
-    PNG(PngImagingParameters.class, "png"),
-    RGBE(RgbeImagingParameters.class, "rgbe"),
-    TGA(ImagingParameters.class),
-    TIFF(TiffImagingParameters.class, "tif", "tiff"),
-    WBMP(WbmpImagingParameters.class, "wbmp"),
-    XBM(XbmImagingParameters.class, "xbm"),
-    XPM(XpmImagingParameters.class, "xpm");
+    UNKNOWN(null),
+    BMP(BmpImagingParameters::new, "bmp", "dib"),
+    DCX(PcxImagingParameters::new, "dcx"),
+    GIF(GifImagingParameters::new, "gif"),
+    ICNS(IcnsImagingParameters::new, "icns"),
+    ICO(IcoImagingParameters::new, "ico"),
+    JBIG2(null),
+    JPEG(JpegImagingParameters::new, "jpg", "jpeg"),
+    PAM(PnmImagingParameters::new, "pam"),
+    PSD(PsdImagingParameters::new, "psd"),
+    PBM(PnmImagingParameters::new, "pbm"),
+    PGM(PnmImagingParameters::new, "pgm"),
+    PNM(PnmImagingParameters::new, "pnm"),
+    PPM(PnmImagingParameters::new, "ppm"),
+    PCX(PcxImagingParameters::new, "pcx", "pcc"),
+    PNG(PngImagingParameters::new, "png"),
+    RGBE(RgbeImagingParameters::new, "rgbe"),
+    TGA(null),
+    TIFF(TiffImagingParameters::new, "tif", "tiff"),
+    WBMP(WbmpImagingParameters::new, "wbmp"),
+    XBM(XbmImagingParameters::new, "xbm"),
+    XPM(XpmImagingParameters::new, "xpm");
 
-    private static final Logger LOGGER = Logger.getLogger(ImageFormats.class.getName());
+    private final Supplier<? extends ImagingParameters> factory;
 
     private final String[] extensions;
-    private final Class<? extends ImagingParameters> parametersClass;
 
-    ImageFormats(Class<? extends ImagingParameters> parametersClass, String ...extensions) {
+    ImageFormats(Supplier<? extends ImagingParameters> factory, String ...extensions) {
+        this.factory = factory;
         this.extensions = extensions;
-        this.parametersClass = parametersClass;
     }
 
     @Override
@@ -90,17 +86,6 @@ public enum ImageFormats implements ImageFormat {
 
     @Override
     public ImagingParameters createImagingParameters() {
-        ImagingParameters parameters = null;
-        if (this.parametersClass != null) {
-            Constructor<?> ctor;
-            try {
-                ctor = this.parametersClass.getConstructor();
-                parameters = (ImagingParameters) ctor.newInstance();
-            } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                LOGGER.log(Level.WARNING, "Failed to create imaging parameters: " + e.getMessage(), e);
-                parameters = new ImagingParameters(this);
-            }
-        }
-        return parameters;
+        return this.factory == null ? null : factory.get();
     }
 }
