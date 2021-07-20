@@ -93,14 +93,14 @@ public class SurveyTiffFolder {
         }
     }
 
-    private static int collectPaths(
+    private static void collectPaths(
         final File parent,
         final List<String[]> pathList,
         final String[] scratch,
         final int depth) {
         if (depth == scratch.length) {
             // directory hierarchy is too deep
-            return 0;
+            return;
         }
 
         final File[] files = parent.listFiles();
@@ -123,7 +123,6 @@ public class SurveyTiffFolder {
                 }
             }
         }
-        return depth;
     }
 
     private static class PathComparator implements Comparator<String[]> {

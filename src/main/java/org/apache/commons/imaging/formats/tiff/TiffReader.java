@@ -108,11 +108,11 @@ public class TiffReader extends BinaryFileParser {
         readDirectory(byteSource, offset, dirType, formatCompliance, listener, visited);
     }
 
-    private boolean readDirectory(final ByteSource byteSource, final long offset,
+    private void readDirectory(final ByteSource byteSource, final long offset,
             final int dirType, final FormatCompliance formatCompliance, final Listener listener,
             final List<Number> visited) throws ImageReadException, IOException {
         final boolean ignoreNextDirectory = false;
-        return readDirectory(byteSource, offset, dirType, formatCompliance,
+        readDirectory(byteSource, offset, dirType, formatCompliance,
                 listener, ignoreNextDirectory, visited);
     }
 
