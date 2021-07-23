@@ -40,6 +40,13 @@ public final class JpegConstants {
                     0x46, // F
                     0x20, //
             });
+    public static final BinaryConstant JFXX0_EXTENSION_SIGNATURE = new BinaryConstant(
+            new byte[] { 0x4a, // J
+                    0x46, // F
+                    0x58, // X
+                    0x58, // X
+                    0x0, //
+            });
 
     public static final BinaryConstant EXIF_IDENTIFIER_CODE = new BinaryConstant(
             new byte[] { 0x45, // E
