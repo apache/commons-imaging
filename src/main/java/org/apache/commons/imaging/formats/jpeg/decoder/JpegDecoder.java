@@ -241,8 +241,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             sofnSegment = new SofnSegment(marker, segmentData);
         } else if (marker == JpegConstants.DQT_MARKER) {
             final DqtSegment dqtSegment = new DqtSegment(marker, segmentData);
-            for (final QuantizationTable element : dqtSegment.quantizationTables) {
-                final DqtSegment.QuantizationTable table = element;
+            for (final QuantizationTable table : dqtSegment.quantizationTables) {
                 if (0 > table.destinationIdentifier
                         || table.destinationIdentifier >= quantizationTables.length) {
                     throw new ImageReadException(
@@ -262,23 +261,22 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
         } else if (marker == JpegConstants.DHT_MARKER) {
             final DhtSegment dhtSegment = new DhtSegment(marker, segmentData);
             for (final HuffmanTable element : dhtSegment.huffmanTables) {
-                final DhtSegment.HuffmanTable table = element;
                 DhtSegment.HuffmanTable[] tables;
-                if (table.tableClass == 0) {
+                if (element.tableClass == 0) {
                     tables = huffmanDCTables;
-                } else if (table.tableClass == 1) {
+                } else if (element.tableClass == 1) {
                     tables = huffmanACTables;
                 } else {
                     throw new ImageReadException("Invalid huffman table class "
-                            + table.tableClass);
+                            + element.tableClass);
                 }
-                if (0 > table.destinationIdentifier
-                        || table.destinationIdentifier >= tables.length) {
+                if (0 > element.destinationIdentifier
+                        || element.destinationIdentifier >= tables.length) {
                     throw new ImageReadException(
                             "Invalid huffman table identifier "
-                                    + table.destinationIdentifier);
+                                    + element.destinationIdentifier);
                 }
-                tables[table.destinationIdentifier] = table;
+                tables[element.destinationIdentifier] = element;
             }
         }
         return true;

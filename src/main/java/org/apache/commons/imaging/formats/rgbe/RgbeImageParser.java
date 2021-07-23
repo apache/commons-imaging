@@ -102,7 +102,7 @@ public class RgbeImageParser extends ImageParser {
             final DataBuffer buffer = new DataBufferFloat(info.getPixelData(),
                     info.getWidth() * info.getHeight());
 
-            final BufferedImage ret = new BufferedImage(new ComponentColorModel(
+            return new BufferedImage(new ComponentColorModel(
                     ColorSpace.getInstance(ColorSpace.CS_sRGB), false, false,
                     Transparency.OPAQUE, buffer.getDataType()),
                     Raster.createWritableRaster(
@@ -110,7 +110,6 @@ public class RgbeImageParser extends ImageParser {
                                     info.getWidth(), info.getHeight(), 3),
                             buffer,
                             new Point()), false, null);
-            return ret;
         }
     }
 
