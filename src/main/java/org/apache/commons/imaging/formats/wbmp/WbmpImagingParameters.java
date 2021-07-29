@@ -15,16 +15,10 @@
 
 package org.apache.commons.imaging.formats.wbmp;
 
-import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImagingParameters;
 
 /**
  * Wbmp format parameters.
  * @since 1.0-alpha3
  */
-public class WbmpImagingParameters extends ImagingParameters {
-
-    public WbmpImagingParameters() {
-        super(ImageFormats.WBMP);
-    }
-}
+public class WbmpImagingParameters extends ImagingParameters {}

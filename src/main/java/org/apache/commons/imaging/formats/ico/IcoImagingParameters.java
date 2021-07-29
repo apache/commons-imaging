@@ -15,16 +15,10 @@
 
 package org.apache.commons.imaging.formats.ico;
 
-import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImagingParameters;
 
 /**
  * Ico format parameters.
  * @since 1.0-alpha3
  */
-public class IcoImagingParameters extends ImagingParameters {
-
-    public IcoImagingParameters () {
-        super(ImageFormats.ICO);
-    }
-}
+public class IcoImagingParameters extends ImagingParameters {}

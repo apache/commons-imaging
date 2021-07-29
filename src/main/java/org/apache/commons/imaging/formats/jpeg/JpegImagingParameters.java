@@ -15,16 +15,10 @@
 
 package org.apache.commons.imaging.formats.jpeg;
 
-import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 
 /**
  * Jpeg format parameters.
  * @since 1.0-alpha3
  */
-public class JpegImagingParameters extends TiffImagingParameters {
-
-    public JpegImagingParameters() {
-        super(ImageFormats.JPEG);
-    }
-}
+public class JpegImagingParameters extends TiffImagingParameters {}

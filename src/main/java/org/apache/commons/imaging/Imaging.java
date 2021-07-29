@@ -954,7 +954,7 @@ public final class Imaging {
      */
     public static String getXmpXml(final File file) throws ImageReadException,
             IOException {
-        return getXmpXml(file, new XmpImagingParameters(Imaging.guessFormat(file)));
+        return getXmpXml(file, new XmpImagingParameters());
     }
 
     /**

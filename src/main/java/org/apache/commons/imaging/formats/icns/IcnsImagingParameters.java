@@ -15,16 +15,10 @@
 
 package org.apache.commons.imaging.formats.icns;
 
-import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImagingParameters;
 
 /**
  * Icns format parameters.
  * @since 1.0-alpha3
  */
-public class IcnsImagingParameters extends ImagingParameters {
-
-    public IcnsImagingParameters() {
-        super(ImageFormats.ICNS);
-    }
-}
+public class IcnsImagingParameters extends ImagingParameters {}

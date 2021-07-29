@@ -17,16 +17,10 @@
 
 package org.apache.commons.imaging.formats.gif;
 
-import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.common.XmpImagingParameters;
 
 /**
  * Gif format parameters.
  * @since 1.0-alpha3
  */
-public class GifImagingParameters extends XmpImagingParameters {
-
-    public GifImagingParameters() {
-        super(ImageFormats.GIF);
-    }
-}
+public class GifImagingParameters extends XmpImagingParameters {}
