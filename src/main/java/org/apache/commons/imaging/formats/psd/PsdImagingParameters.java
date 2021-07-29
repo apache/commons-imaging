@@ -17,16 +17,10 @@
 
 package org.apache.commons.imaging.formats.psd;
 
-import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImagingParameters;
 
 /**
  * Psd format parameters.
  * @since 1.0-alpha3
  */
-public class PsdImagingParameters extends ImagingParameters {
-
-    public PsdImagingParameters() {
-        super(ImageFormats.PSD);
-    }
-}
+public class PsdImagingParameters extends ImagingParameters {}

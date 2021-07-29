@@ -15,16 +15,10 @@
 
 package org.apache.commons.imaging.formats.xbm;
 
-import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImagingParameters;
 
 /**
  * Xbm format parameters.
  * @since 1.0-alpha3
  */
-public class XbmImagingParameters extends ImagingParameters {
-
-    public XbmImagingParameters() {
-        super(ImageFormats.XBM);
-    }
-}
+public class XbmImagingParameters extends ImagingParameters {}

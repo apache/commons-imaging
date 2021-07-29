@@ -15,16 +15,10 @@
 
 package org.apache.commons.imaging.formats.rgbe;
 
-import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImagingParameters;
 
 /**
  * Rgbe format parameters.
  * @since 1.0-alpha3
  */
-public class RgbeImagingParameters extends ImagingParameters {
-
-    public RgbeImagingParameters() {
-        super(ImageFormats.RGBE);
-    }
-}
+public class RgbeImagingParameters extends ImagingParameters {}
