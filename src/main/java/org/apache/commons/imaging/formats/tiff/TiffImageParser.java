@@ -354,6 +354,9 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
                         byteSource, params, formatCompliance);
 
                 final List<TiffDirectory> directories = contents.directories;
+                if (directories == null) {
+                    return false;
+                }
 
                 for (int d = 0; d < directories.size(); d++) {
                     final TiffDirectory directory = directories.get(d);
@@ -494,34 +497,20 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
     private Rectangle checkForSubImage(
             final TiffImagingParameters params)
             throws ImageReadException {
-        final Integer ix0 = params.getSubImageX();
-        final Integer iy0 = params.getSubImageY();
-        final Integer iwidth = params.getSubImageWidth();
-        final Integer iheight = params.getSubImageHeight();
-
-        if (ix0 == null && iy0 == null && iwidth == null && iheight == null) {
+        // the params class enforces a correct specification for the
+        // sub-image, but does not have knowledge of the actual
+        // dimensions of the image that is being read.  This method
+        // returns the sub-image specification, if any, and leaves
+        // further tests to the calling module.
+        if (params.isSubImageSet()) {
+            final int ix0 = params.getSubImageX();
+            final int iy0 = params.getSubImageY();
+            final int iwidth = params.getSubImageWidth();
+            final int iheight = params.getSubImageHeight();
+            return new Rectangle(ix0, iy0, iwidth, iheight);
+        } else {
             return null;
         }
-
-        final StringBuilder sb = new StringBuilder(32);
-        if (ix0 == null) {
-            sb.append(" x0,");
-        }
-        if (iy0 == null) {
-            sb.append(" y0,");
-        }
-        if (iwidth == null) {
-            sb.append(" width,");
-        }
-        if (iheight == null) {
-            sb.append(" height,");
-        }
-        if (sb.length() > 0) {
-            sb.setLength(sb.length() - 1);
-            throw new ImageReadException("Incomplete subimage parameters, missing" + sb.toString());
-        }
-
-        return new Rectangle(ix0, iy0, iwidth, iheight);
     }
 
     protected BufferedImage getBufferedImage(final TiffDirectory directory,
