@@ -42,10 +42,7 @@ public class TiffSubImageTest extends TiffBaseTest {
         final BufferedImage src = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
         final TiffImagingParameters params = new TiffImagingParameters();
         final byte[] imageBytes = Imaging.writeImageToBytes(src, ImageFormats.TIFF, params);
-        params.setSubImageX(0);
-        params.setSubImageY(0);
-        params.setSubImageWidth(2);
-        params.setSubImageHeight(3);
+        params.setSubImage(0, 0, 2, 3);
         final BufferedImage image = Imaging.getBufferedImage(imageBytes, params);
         assertEquals(image.getWidth(), 2);
         assertEquals(image.getHeight(), 3);
@@ -59,10 +56,7 @@ public class TiffSubImageTest extends TiffBaseTest {
         final int height = referenceImage.getHeight();
 
         final TiffImagingParameters params = new TiffImagingParameters();
-        params.setSubImageX(0);
-        params.setSubImageY(0);
-        params.setSubImageWidth(width);
-        params.setSubImageHeight(height);
+        params.setSubImage(0, 0, width, height);
 
         final BufferedImage image = Imaging.getBufferedImage(target, params);
         assertEquals(image.getWidth(), width, "Improper width when sub-imaging entire image");
@@ -79,13 +73,10 @@ public class TiffSubImageTest extends TiffBaseTest {
     private void processBadParams(final File target, final int x, final int y, final int width, final int height, final String comment) throws IOException{
         try{
             final TiffImagingParameters params = new TiffImagingParameters();
-            params.setSubImageX(x);
-            params.setSubImageY(y);
-            params.setSubImageWidth(width);
-            params.setSubImageHeight(height);
+            params.setSubImage(x, y, width, height);
             final BufferedImage image = Imaging.getBufferedImage(target, params);
             fail("Reading TIFF sub-image failed to detect bad parameter: "+comment);
-        }catch(final ImageReadException ire){
+        }catch(final ImageReadException | IllegalArgumentException ire){
             // the test passed
         }
     }
@@ -102,10 +93,7 @@ public class TiffSubImageTest extends TiffBaseTest {
             final int []rArgb = new int[rW*rH];
             referenceImage.getRGB(0, 0, rW, rH, rArgb, 0, rW);
             final TiffImagingParameters params = new TiffImagingParameters();
-            params.setSubImageX(1);
-            params.setSubImageY(1);
-            params.setSubImageWidth(rW - 2);
-            params.setSubImageHeight(rH - 2);
+            params.setSubImage(1, 1, rW-2, rH-2);
             final BufferedImage image = Imaging.getBufferedImage(target, params);
             final int iW = image.getWidth();
             final int iH = image.getHeight();

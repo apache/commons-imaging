@@ -223,10 +223,7 @@ public class TiffFloatingPointReadTest {
     private void checkSubImage(final File target, final TiffRasterData fullRaster, final int x0, final int y0, final int width, final int height){
         try{
             final TiffImagingParameters params = new TiffImagingParameters();
-            params.setSubImageX(x0);
-            params.setSubImageY(y0);
-            params.setSubImageWidth(width);
-            params.setSubImageHeight(height);
+            params.setSubImage(x0, y0, width, height);
             final TiffRasterData partRaster = readRasterFromTIFF(target, params);
             assertEquals(width, partRaster.getWidth(), "Invalid width in partial for " + target.getName());
             assertEquals(height, partRaster.getHeight(), "Invalid height in partial for " + target.getName());
