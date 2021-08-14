@@ -348,11 +348,27 @@ public final class ByteConversions {
         return result;
     }
 
-    public static RationalNumber toRational(final byte[] bytes, final ByteOrder byteOrder) {
-        return toRational(bytes, 0, byteOrder);
+    /**
+     * Interprets the content of a specified bytes array to create
+     * an instance of the RationalNumber class.
+     * @param bytes a valid array dimensioned to at least 8.
+     * @param byteOrder the byte order for integer conversion
+     * @param unsignedType indicates whether the extracted value is
+     * an unsigned type.
+     * @return a valid instance
+     */
+    public static RationalNumber toRational(
+            final byte[] bytes,
+            final ByteOrder byteOrder,
+            final boolean unsignedType) {
+        return toRational(bytes, 0, byteOrder, unsignedType);
     }
 
-    private static RationalNumber toRational(final byte[] bytes, final int offset, final ByteOrder byteOrder) {
+    private static RationalNumber toRational(
+            final byte[] bytes,
+            final int offset,
+            final ByteOrder byteOrder,
+            final boolean unsignedType) {
         final int byte0 = 0xff & bytes[offset + 0];
         final int byte1 = 0xff & bytes[offset + 1];
         final int byte2 = 0xff & bytes[offset + 2];
@@ -370,18 +386,25 @@ public final class ByteConversions {
             numerator = (byte3 << 24) | (byte2 << 16) | (byte1 << 8) | byte0;
             divisor = (byte7 << 24) | (byte6 << 16) | (byte5 << 8) | byte4;
         }
-        return new RationalNumber(numerator, divisor);
+        return new RationalNumber(numerator, divisor, unsignedType);
     }
 
-    public static RationalNumber[] toRationals(final byte[] bytes, final ByteOrder byteOrder) {
-        return toRationals(bytes, 0, bytes.length, byteOrder);
+    public static RationalNumber[] toRationals(
+            final byte[] bytes,
+            final ByteOrder byteOrder,
+            boolean unsignedType) {
+        return toRationals(bytes, 0, bytes.length, byteOrder, unsignedType);
     }
 
-    private static RationalNumber[] toRationals(final byte[] bytes,
-            final int offset, final int length, final ByteOrder byteOrder) {
+    private static RationalNumber[] toRationals(
+            final byte[] bytes,
+            final int offset,
+            final int length,
+            final ByteOrder byteOrder,
+            boolean unsignedType) {
         final RationalNumber[] result = new RationalNumber[length / 8];
         for (int i = 0; i < result.length; i++) {
-            result[i] = toRational(bytes, offset + 8 * i, byteOrder);
+            result[i] = toRational(bytes, offset + 8 * i, byteOrder, unsignedType);
         }
         return result;
     }

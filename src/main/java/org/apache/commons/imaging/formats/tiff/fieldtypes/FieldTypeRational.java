@@ -31,11 +31,19 @@ public class FieldTypeRational extends FieldType {
     @Override
     public Object getValue(final TiffField entry) {
         final byte[] bytes = entry.getByteArrayValue();
-        if (entry.getCount() == 1) {
-            return ByteConversions.toRational(bytes,
-                    entry.getByteOrder());
+        boolean unsignedType = true;
+        if(entry.getFieldType()==RATIONAL){
+            unsignedType = true;
+        }else if(entry.getFieldType()==SRATIONAL){
+            unsignedType = false;
         }
-        return ByteConversions.toRationals(bytes, entry.getByteOrder());
+        if (entry.getCount() == 1) {
+            return ByteConversions.toRational(
+                    bytes,
+                    entry.getByteOrder(),
+                    unsignedType);
+        }
+        return ByteConversions.toRationals(bytes, entry.getByteOrder(), unsignedType);
     }
 
     @Override

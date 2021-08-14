@@ -26,6 +26,10 @@ import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.Test;
+
 public class RationalNumberTest extends ImagingTest {
 
     public static Stream<Double> data() {
@@ -118,6 +122,17 @@ public class RationalNumberTest extends ImagingTest {
         Debug.debug("rational: " + rational);
         Debug.debug("difference: " + difference);
         Debug.debug();
+    }
+    
+    @Test
+    public void testSpecialRationalNumber(){
+        RationalNumber test = new RationalNumber(0xF5937B1F, 70_000_000, true);
+        assertEquals(58.858331871428570, test.doubleValue(), 1.0e-14, "Unsigned integer support failed for double conversion");
+        assertEquals(58.858334f, test.floatValue(), 1.0e-6f, "Float conversion failed");
+        assertEquals(58L, test.longValue(), "Long value conversion failed");
+        assertEquals(58, test.intValue(), "Int value conversion failed");
+        assertThrows(NumberFormatException.class, () -> test.negate(), "Failed to detect negation of large unsigned value");
+
     }
 
 }
