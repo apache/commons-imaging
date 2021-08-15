@@ -101,6 +101,7 @@ public class IptcParserTest {
         List<GenericImageMetadataItem> items = (List<GenericImageMetadataItem>) photoshopMetadata.getItems();
         GenericImageMetadataItem thanksInMandarin = items.get(3);
         // converted the thank-you in chinese characters to unicode for comparison here
-        assertArrayEquals("\u8c22\u8c22".getBytes(StandardCharsets.UTF_8), thanksInMandarin.getText().getBytes());
+        assertArrayEquals("\u8c22\u8c22".getBytes(StandardCharsets.UTF_8), 
+              thanksInMandarin.getText().getBytes(StandardCharsets.UTF_8));
     }
 }
