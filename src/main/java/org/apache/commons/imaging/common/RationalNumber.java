@@ -25,7 +25,7 @@ import java.text.NumberFormat;
  * a pair of 32-bit integers.  Rational is based on unsigned 32-bit integers
  * and SRational is based on signed 32-bit integers.  This treatment is
  * problematic in Java because Java does not support unsigned types.
- * Type address this challenge, this class stores the numerator and divisor
+ * T0 address this challenge, this class stores the numerator and divisor
  * in long (64-bit) integers, applying masks as necessary for the unsigned
  * type.
  */
