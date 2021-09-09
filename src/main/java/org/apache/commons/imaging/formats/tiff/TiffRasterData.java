@@ -17,16 +17,21 @@
 package org.apache.commons.imaging.formats.tiff;
 
 /**
- * Provides a simple container for floating-point data. Some TIFF files are used
- * to store floating-point data rather than images. This class is intended to
- * support access to those TIFF files.
+ * Provides a simple container for numeric-raster data. Some TIFF files are used
+ * to store floating-point or integer data rather than images. This class is
+ * intended to support access to those TIFF files.
+ * <p>
+ * <strong>Note:</strong> The getData() and getIntData() methods can return
+ * direct references to the internal arrays stored in instances of this class.
+ * Because these are not safe copies of the data, an application that
+ * modified the arrays returned by these methods will change the content
+ * of the associated instance. This approach is used for purposes of efficiency
+ * when dealing with very large TIFF images.
  */
-public class TiffRasterData {
+public abstract class TiffRasterData {
 
-
-    private final int width;
-    private final int height;
-    private final float[] data;
+    protected final int width;
+    protected final int height;
 
     /**
      * Construct an instance allocating memory for the specified dimensions.
@@ -37,36 +42,44 @@ public class TiffRasterData {
     public TiffRasterData(final int width, final int height) {
         if (width <= 0 || height <= 0) {
             throw new IllegalArgumentException(
-                "Raster dimensions less than or equal to zero are not supported");
+                    "Raster dimensions less than or equal to zero are not supported");
         }
-        final int nCells = width * height;
-        data = new float[nCells];
         this.width = width;
         this.height = height;
+    }
 
+    protected final int checkCoordinatesAndComputeIndex(final int x, final int y) {
+        if (x < 0 || x >= width || y < 0 || y >= height) {
+            throw new IllegalArgumentException(
+                    "Coordinates out of range (" + x + ", " + y + ")");
+        }
+        return y * width + x;
     }
 
     /**
-     * Construct an instance allocating memory for the specified dimensions.
+     * Gets the width (number of columns) of the raster.
      *
-     * @param width a value of 1 or greater
-     * @param height a value of 1 or greater
-     * @param data the data to be stored in the raster.
+     * @return the width of the raster
      */
-    public TiffRasterData(final int width, final int height, final float[] data) {
-        if (width <= 0 || height <= 0) {
-            throw new IllegalArgumentException(
-                "Raster dimensions less than or equal to zero are not supported");
-        }
-        if (data == null || data.length < width * height) {
-            throw new IllegalArgumentException(
-                "Specified data does not contain sufficient elements");
-        }
-        this.width = width;
-        this.height = height;
-        this.data = data;
-
+    public final int getWidth() {
+        return width;
     }
+
+    /**
+     * Gets the height (number of rows) of the raster.
+     *
+     * @return the height of the raster.
+     */
+    public final int getHeight() {
+        return height;
+    }
+
+    /**
+     * Gets the raster data type from the instance.
+     *
+     * @return a valid enumeration value.
+     */
+    public abstract TiffRasterDataType getDataType();
 
     /**
      * Sets the value stored at the specified raster coordinates.
@@ -76,13 +89,7 @@ public class TiffRasterData {
      * @param value the value to be stored at the specified location;
      * potentially a Float&#46;NaN.
      */
-    public void setValue(final int x, final int y, final float value) {
-        if (x < 0 || x >= width || y < 0 || y >= height) {
-            throw new IllegalArgumentException(
-                "Coordinates out of range (" + x + ", " + y + ")");
-        }
-        data[y * width + x] = value;
-    }
+    public abstract void setValue(int x, int y, float value);
 
     /**
      * Gets the value stored at the specified raster coordinates.
@@ -92,23 +99,34 @@ public class TiffRasterData {
      * @return the value stored at the specified location; potentially a
      * Float&#46;NaN.
      */
-    public float getValue(final int x, final int y) {
-        if (x < 0 || x >= width || y < 0 || y >= height) {
-            throw new IllegalArgumentException(
-                "Coordinates out of range (" + x + ", " + y + ")");
-        }
-        return data[y * width + x];
-    }
+    public abstract float getValue(int x, int y);
+
+    /**
+     * Sets the value stored at the specified raster coordinates.
+     *
+     * @param x integer coordinate in the columnar direction
+     * @param y integer coordinate in the row direction
+     * @param value the value to be stored at the specified location.
+     */
+    public abstract void setIntValue(int x, int y, int value);
+
+    /**
+     * Gets the value stored at the specified raster coordinates.
+     *
+     * @param x integer coordinate in the columnar direction
+     * @param y integer coordinate in the row direction
+     * @return the value stored at the specified location
+     */
+    public abstract int getIntValue(int x, int y);
 
     /**
      * Tabulates simple statistics for the raster and returns an instance
      * containing general metadata.
      *
      * @return a valid instance containing a safe copy of the current simple
-   * statistics for the raster.     */
-    public TiffRasterStatistics getSimpleStatistics() {
-        return new TiffRasterStatistics(this, Float.NaN);
-    }
+     * statistics for the raster.
+     */
+    public abstract TiffRasterStatistics getSimpleStatistics();
 
     /**
      * Tabulates simple statistics for the raster excluding the specified value
@@ -117,42 +135,37 @@ public class TiffRasterData {
      * @param valueToExclude exclude samples with this specified value.
      * @return a valid instance.
      */
-    public TiffRasterStatistics getSimpleStatistics(final float valueToExclude) {
-        return new TiffRasterStatistics(this, valueToExclude);
-    }
+    public abstract TiffRasterStatistics getSimpleStatistics(float valueToExclude);
 
     /**
-     * Gets the width (number of columns) of the raster.
+     * Returns the content stored as an array in this instance. Note that in
+     * many cases, the returned array is <strong>not</strong> a safe copy of the
+     * data but a direct reference to the member element. In such cases,
+     * modifying it would directly affect the content of the instance. While
+     * this design approach carries some risk in terms of data security, it was
+     * chosen for reasons of performance and memory conservation. TIFF images
+     * that contain floating-point data are often quite large. Sizes of 100
+     * million raster cells are common. Making a redundant copy of such a large
+     * in-memory object might exceed the resources available to a Java
+     * application.
      *
-     * @return the width of the raster
+     * @return the data content stored in this instance.
      */
-    public int getWidth() {
-        return width;
-    }
+    public abstract float[] getData();
 
     /**
-     * Gets the height (number of rows) of the raster.
+     * Returns the content stored as an array in this instance. Note that in
+     * many cases, the returned array is <strong>not</strong> a safe copy of the
+     * data but a direct reference to the member element. In such cases,
+     * modifying it would directly affect the content of the instance. While
+     * this design approach carries some risk in terms of data security, it was
+     * chosen for reasons of performance and memory conservation. TIFF images
+     * that contain floating-point data are often quite large. Sizes of 100
+     * million raster cells are common. Making a redundant copy of such a large
+     * in-memory object might exceed the resources available to a Java
+     * application.
      *
-     * @return the height of the raster.
+     * @return the data content stored in this instance.
      */
-    public int getHeight() {
-        return height;
-    }
-
-    /**
-     * Returns a reference to the data array stored in this instance. Note that
-     * value is <strong>not</strong> a safe copy and that modifying it would
-     * directly affect the content of the instance. While this design approach
-     * carries some risk in terms of data security, it was chosen for reasons of
-     * performance and memory conservation. TIFF images that contain
-     * floating-point data are often quite large. Sizes of 100 million raster
-     * cells are common. Making a redundant copy of such a large in-memory object
-     * might exceed the resources available to a Java application.
-     *
-     * @return a direct reference to the data array stored in this instance.
-     */
-    public float[] getData() {
-        return data;
-    }
-
+    public abstract int[] getIntData();
 }

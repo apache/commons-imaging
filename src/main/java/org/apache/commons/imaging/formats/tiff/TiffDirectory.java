@@ -92,6 +92,16 @@ public class TiffDirectory extends TiffElement {
         this.headerByteOrder = byteOrder;
     }
 
+    /**
+     * Gets the byte order used by the source file for storing this directory
+     * and its content.
+     *
+     * @return A valid byte order instance.
+     */
+    public ByteOrder getByteOrder() {
+        return headerByteOrder;
+    }
+
     public String description() {
         return TiffDirectory.description(type);
     }
@@ -845,11 +855,11 @@ public class TiffDirectory extends TiffElement {
     }
 
     /**
-     * Reads the floating-point data stored in this TIFF directory, if
-     * available. Note that this method is defined only for TIFF directories
-     * that contain floating-point data.
+     * Reads the numerical data stored in this TIFF directory, if available.
+     * Note that this method is defined only for TIFF directories that contain
+     * floating-point data or two-byte signed integer data.
      * <p>
-     * TIFF directories that provide floating-point data do not directly specify
+     * TIFF directories that provide numerical data do not directly specify
      * images, though it is possible to interpret the data as an image using
      * this library. TIFF files may contain multiple directories which are
      * allowed to have different formats. Thus it is possible for a TIFF file to
@@ -872,37 +882,62 @@ public class TiffDirectory extends TiffElement {
      *   TiffRasterData raster =
      *        directory.readFloatingPointRasterData(params);
      * </pre>
-
+     *
      * @param params an optional parameter map instance
      * @return a valid instance
      * @throws ImageReadException in the event of incompatible or malformed data
      * @throws IOException in the event of an I/O error
      */
-    public TiffRasterData getFloatingPointRasterData(
-        final Map<String, Object> params)
-        throws ImageReadException, IOException {
+    public TiffRasterData getRasterData(
+            final Map<String, Object> params)
+            throws ImageReadException, IOException {
 
         final TiffImageParser parser = new TiffImageParser();
-        return parser.getFloatingPointRasterData(this, headerByteOrder, params);
+        return parser.getRasterData(this, headerByteOrder, params);
     }
 
     /**
      * Indicates whether the directory definition specifies a float-point data
      * format.
      *
-     * @return true if the directory contains floating point data; otherwise,
-     * false
+     * @return {@code true} if the directory contains floating point data;
+     * otherwise, {@code false}
+     *
      * @throws ImageReadException in the event of an invalid or malformed
      * specification.
      */
     public boolean hasTiffFloatingPointRasterData() throws ImageReadException {
-        if (this.hasTiffImageData()) {
-            final short[] sSampleFmt = getFieldValue(
-                TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, false);
-            return sSampleFmt != null && sSampleFmt.length > 0
-                && sSampleFmt[0] == TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT;
-
+        if (!this.hasTiffImageData()) {
+            return false;
         }
-        return false;
+        final short[] s = getFieldValue(
+                TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, false);
+        return s != null
+                && s.length > 0
+                && s[0] == TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT;
+
+    }
+
+    /**
+     * Indicates whether the content associated with the directory is given in a
+     * supported numerical-data format. If this method returns {@code true}, the
+     * Imaging API will be able to extract a TiffRasterData instance from the
+     * associated TIFF file using this directory.
+     *
+     * @return {@code true} if the directory contains a supported raster data
+     * format; otherwise, {@code false}.
+     * @throws ImageReadException in the event of an invalid or malformed
+     * specification.
+     */
+    public boolean hasTiffRasterData() throws ImageReadException {
+        if (!this.hasTiffImageData()) {
+            return false;
+        }
+        final short[] s = getFieldValue(
+                TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, false);
+        return s != null
+                && s.length > 0
+                && (s[0] == TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT
+                || s[0] == TiffTagConstants.SAMPLE_FORMAT_VALUE_TWOS_COMPLEMENT_SIGNED_INTEGER);
     }
 }

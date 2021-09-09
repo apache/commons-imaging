@@ -142,7 +142,6 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
  * is implemented, it should get their own block of code so as not to interfere
  * with the processing of the more common non-interleaved variations.
  */
-@SuppressWarnings("PMD.TooManyStaticImports")
 public abstract class ImageDataReader {
     protected final TiffDirectory directory;
     protected final PhotometricInterpreter photometricInterpreter;
@@ -171,7 +170,6 @@ public abstract class ImageDataReader {
         this.height = height;
         last = new int[samplesPerPixel];
     }
-
 
     /**
      * Read the image data from the IFD associated with this
@@ -211,11 +209,9 @@ public abstract class ImageDataReader {
     /**
      * Reads samples and returns them in an int array.
      *
-     * @param bis
-     *            the stream to read from
-     * @param result
-     *            the samples array to populate, must be the same length as
-     *            bitsPerSample.length
+     * @param bis the stream to read from
+     * @param result the samples array to populate, must be the same length as
+     * bitsPerSample.length
      * @throws IOException
      */
     void getSamplesAsBytes(final BitInputStream bis, final int[] result) throws IOException {
@@ -371,7 +367,7 @@ public abstract class ImageDataReader {
      *
      * @param width the width of the data block to be extracted
      * @param height the height of the data block to be extracted
-     * @param scansize the number of pixels in a single row of the block
+     * @param scanSize the number of pixels in a single row of the block
      * @param bytes the raw bytes
      * @param predictor the predictor specified by the source, only predictor 3
      * is supported.
@@ -384,16 +380,17 @@ public abstract class ImageDataReader {
     protected int[] unpackFloatingPointSamples(
         final int width,
         final int height,
-        final int scansize,
+        final int scanSize,
         final byte[] bytes,
         final int predictor,
-        final int bitsPerSample, final ByteOrder byteOrder)
+        final int bitsPerSample,
+        final ByteOrder byteOrder)
         throws ImageReadException {
         final int bytesPerSample = bitsPerSample / 8;
-        final int nBytes = bytesPerSample * scansize * height;
-        final int length = bytes.length < nBytes ? nBytes / scansize : height;
+        final int nBytes = bytesPerSample * scanSize * height;
+        final int length = bytes.length < nBytes ? nBytes / scanSize : height;
 
-        final int[] samples = new int[scansize * height];
+        final int[] samples = new int[scanSize * height];
         // floating-point differencing is indicated by a predictor value of 3.
         if (predictor == TiffTagConstants.PREDICTOR_VALUE_FLOATING_POINT_DIFFERENCING) {
             // at this time, this class supports the 32-bit format.  The
@@ -405,12 +402,12 @@ public abstract class ImageDataReader {
                     + " with predictor type 3 for "
                     + bitsPerSample + " bits per sample");
             }
-            final int bytesInRow = scansize * 4;
+            final int bytesInRow = scanSize * 4;
             for (int i = 0; i < length; i++) {
                 final int aOffset = i * bytesInRow;
-                final int bOffset = aOffset + scansize;
-                final int cOffset = bOffset + scansize;
-                final int dOffset = cOffset + scansize;
+                final int bOffset = aOffset + scanSize;
+                final int cOffset = bOffset + scanSize;
+                final int dOffset = cOffset + scanSize;
                 // in this loop, the source bytes give delta values.
                 // we adjust them to give true values.  This operation is
                 // done on a row-by-row basis.
@@ -419,7 +416,7 @@ public abstract class ImageDataReader {
                 }
                 // pack the bytes into the integer bit-equivalent of
                 // floating point values
-                int index = i * scansize;
+                int index = i * scanSize;
                 for (int j = 0; j < width; j++) {
                     final int a = bytes[aOffset + j];
                     final int b = bytes[bOffset + j];
@@ -441,7 +438,7 @@ public abstract class ImageDataReader {
             int k = 0;
             int index = 0;
             for (int i = 0; i < length; i++) {
-                for (int j = 0; j < scansize; j++) {
+                for (int j = 0; j < scanSize; j++) {
                     final long b0 = bytes[k++] & 0xffL;
                     final long b1 = bytes[k++] & 0xffL;
                     final long b2 = bytes[k++] & 0xffL;
@@ -483,7 +480,7 @@ public abstract class ImageDataReader {
             int k = 0;
             int index = 0;
             for (int i = 0; i < length; i++) {
-                for (int j = 0; j < scansize; j++) {
+                for (int j = 0; j < scanSize; j++) {
                     final int b0 = bytes[k++] & 0xff;
                     final int b1 = bytes[k++] & 0xff;
                     final int b2 = bytes[k++] & 0xff;
@@ -519,8 +516,80 @@ public abstract class ImageDataReader {
         return samples;
     }
 
+
     /**
+     * Given a source file that specifies numerical data as short integers, unpack
+     * the raw bytes obtained from the source file and organize them into an
+     * array of integers.
+     * <p>
+     * This method supports either the tile format or the strip format of TIFF
+     * source files. The scan size indicates the number of columns to be
+     * extracted. For strips, the width and the scan size are always the full
+     * width of the image. For tiles, the scan size is the full width of the
+     * tile, but the width may be smaller in the cases where the tiles do not
+     * evenly divide the width (for example, a 256 pixel wide tile in a 257
+     * pixel wide image would result in two columns of tiles, the second column
+     * having only one column of pixels that were worth extracting.
      *
+     * @param width the width of the data block to be extracted
+     * @param height the height of the data block to be extracted
+     * @param scanSize the number of pixels in a single row of the block
+     * @param bytes the raw bytes
+     * @param predictor the predictor specified by the source, only predictor 3
+     * is supported.
+     * @param bitsPerSample the number of bits per sample, 32 or 64.
+     * @param byteOrder the byte order for the source data
+     * @return a valid array of integers in row major order, dimensions
+     * scan-size wide and height height.
+     */
+    protected int[] unpackIntSamples(
+        final int width,
+        final int height,
+        final int scanSize,
+        final byte[] bytes,
+        final int predictor,
+        final int bitsPerSample,
+        final ByteOrder byteOrder) {
+        final int bytesPerSample = bitsPerSample / 8;
+        final int nBytes = bytesPerSample * scanSize * height;
+        final int length = bytes.length < nBytes ? nBytes / scanSize : height;
+
+        final int[] samples = new int[scanSize * height];
+        // At this time, Commons Imaging only supports two-byte
+        // two's complement short integers.  It is assumed that
+        // the calling module already checked the arguments for
+        // compliance, so this method simply assumes that they are correct.
+
+        // The logic that follows is simplified by the fact that
+        // the existing API only supports two-byte signed integers.
+        boolean useDifferencing
+                = predictor == TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING;
+
+        for (int i = 0; i < length; i++) {
+            int index = i * scanSize;
+            int offset = index * 2;
+            if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
+                for (int j = 0; j < width; j++, offset += 2) {
+                    samples[index + j] = (bytes[offset + 1] << 8) | (bytes[offset] & 0xff);
+                }
+            } else {
+                for (int j = 0; j < width; j++, offset += 2) {
+                    samples[index + j] = (bytes[offset] << 8) | (bytes[offset + 1] & 0xff);
+                }
+            }
+            if (useDifferencing) {
+                for (int j = 1; j < width; j++) {
+                    samples[index + j] += samples[index + j - 1];
+                }
+            }
+        }
+
+        return samples;
+    }
+
+    /**
+     * Transfer samples obtained from the TIFF file to a floating-point
+     * raster.
      * @param xBlock coordinate of block relative to source data
      * @param yBlock coordinate of block relative to source data
      * @param blockWidth width of block, in pixels
@@ -599,6 +668,87 @@ public abstract class ImageDataReader {
             for (int j = 0; j < w; j++) {
                 rasterData[rOffset + j] = Float.intBitsToFloat(blockData[bOffset + j]);
             }
+        }
+    }
+
+    /**
+     * Transfer samples obtained from the TIFF file to an integer raster.
+     * @param xBlock coordinate of block relative to source data
+     * @param yBlock coordinate of block relative to source data
+     * @param blockWidth width of block, in pixels
+     * @param blockHeight height of block in pixels
+     * @param blockData the data for the block
+     * @param xRaster coordinate of raster relative to source data
+     * @param yRaster coordinate of raster relative to source data
+     * @param rasterWidth width of the raster (always smaller than source data)
+     * @param rasterHeight height of the raster (always smaller than source
+     * data)
+     * @param rasterData the raster data.
+     */
+    void transferBlockToRaster(final int xBlock, final int yBlock,
+        final int blockWidth, final int blockHeight, final int[] blockData,
+        final int xRaster, final int yRaster,
+        final int rasterWidth, final int rasterHeight, final int[] rasterData) {
+
+        // xR0, yR0 are the coordinates within the raster (upper-left corner)
+        // xR1, yR1 are ONE PAST the coordinates of the lower-right corner
+        int xR0 = xBlock - xRaster;  // xR0, yR0 coordinates relative to
+        int yR0 = yBlock - yRaster; // the raster
+        int xR1 = xR0 + blockWidth;
+        int yR1 = yR0 + blockHeight;
+        if (xR0 < 0) {
+            xR0 = 0;
+        }
+        if (yR0 < 0) {
+            yR0 = 0;
+        }
+        if (xR1 > rasterWidth) {
+            xR1 = rasterWidth;
+        }
+        if (yR1 > rasterHeight) {
+            yR1 = rasterHeight;
+        }
+
+        // Recall that the above logic may have adjusted xR0, xY0 so that
+        // they are not necessarily point to the source pixel at xRaster, yRaster
+        // we compute xSource = xR0+xRaster.
+        //            xOffset = xSource-xBlock
+        // since the block cannot be accessed with a negative offset,
+        // we check for negatives and adjust xR0, yR0 upward as necessary
+        int xB0 = xR0 + xRaster - xBlock;
+        int yB0 = yR0 + yRaster - yBlock;
+        if (xB0 < 0) {
+            xR0 -= xB0;
+            xB0 = 0;
+        }
+        if (yB0 < 0) {
+            yR0 -= yB0;
+            yB0 = 0;
+        }
+
+        int w = xR1 - xR0;
+        int h = yR1 - yR0;
+        if (w <= 0 || h <= 0) {
+            // The call to this method puts the block outside the
+            // bounds of the raster.  There is nothing to do.  Ideally,
+            // this situation never arises, because it would mean that
+            // the data was read from the file unnecessarily.
+            return;
+        }
+        // see if the xR1, yR1 would extend past the limits of the block
+        if (w > blockWidth) {
+            w = blockWidth;
+        }
+        if (h > blockHeight) {
+            h = blockHeight;
+        }
+
+        for (int i = 0; i < h; i++) {
+            final int yR = yR0 + i;
+            final int yB = yB0 + i;
+            final int rOffset = yR * rasterWidth + xR0;
+            final int bOffset = yB * blockWidth + xB0;
+            System.arraycopy(blockData, bOffset, rasterData, rOffset, w);
         }
     }
 

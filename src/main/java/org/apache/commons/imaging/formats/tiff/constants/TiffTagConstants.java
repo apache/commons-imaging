@@ -358,7 +358,7 @@ public final class TiffTagConstants {
     public static final int SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT = 3;
     public static final int SAMPLE_FORMAT_VALUE_UNDEFINED = 4;
     public static final int SAMPLE_FORMAT_VALUE_COMPLEX_INTEGER = 5;
-    public static final int SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT_1 = 6;
+    public static final int SAMPLE_FORMAT_VALUE_IEEE_COMPLEX_FLOAT = 6;
 
     public static final TagInfoAny TIFF_TAG_SMIN_SAMPLE_VALUE = new TagInfoAny(
             "SMinSampleValue", 0x154, -1,

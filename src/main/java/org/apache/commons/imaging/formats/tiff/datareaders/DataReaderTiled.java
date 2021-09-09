@@ -33,6 +33,8 @@ import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
+import org.apache.commons.imaging.formats.tiff.TiffRasterDataFloat;
+import org.apache.commons.imaging.formats.tiff.TiffRasterDataInt;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
@@ -286,7 +288,20 @@ public final class DataReaderTiled extends ImageDataReader {
 
     @Override
     public TiffRasterData readRasterData(final Rectangle subImage)
-        throws ImageReadException, IOException {
+            throws ImageReadException, IOException {
+        switch (sampleFormat) {
+            case TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT:
+                return readRasterDataFloat(subImage);
+            case TiffTagConstants.SAMPLE_FORMAT_VALUE_TWOS_COMPLEMENT_SIGNED_INTEGER:
+                return readRasterDataInt(subImage);
+            default:
+                throw new ImageReadException("Unsupported sample format, value="
+                        + sampleFormat);
+        }
+    }
+
+    private TiffRasterData readRasterDataFloat(final Rectangle subImage)
+            throws ImageReadException, IOException {
         final int bitsPerRow = tileWidth * bitsPerPixel;
         final int bytesPerRow = (bitsPerRow + 7) / 8;
         final int bytesPerTile = bytesPerRow * tileLength;
@@ -305,7 +320,7 @@ public final class DataReaderTiled extends ImageDataReader {
             rasterWidth = width;
             rasterHeight = height;
         }
-        final float[] rasterData = new float[rasterWidth * rasterHeight];
+        float[] rasterDataFloat = new float[rasterWidth * rasterHeight];
 
         // tileWidth is the width of the tile
         // tileLength is the height of the tile
@@ -321,19 +336,68 @@ public final class DataReaderTiled extends ImageDataReader {
                 final int tile = iRow * nColumnsOfTiles + iCol;
                 final byte[] compressed = imageData.tiles[tile].getData();
                 final byte[] decompressed = decompress(compressed, compression,
-                    bytesPerTile, tileWidth, tileLength);
+                        bytesPerTile, tileWidth, tileLength);
                 final int x = iCol * tileWidth;
                 final int y = iRow * tileLength;
+
                 final int[] blockData = unpackFloatingPointSamples(
-                    tileWidth, tileLength, tileWidth,
-                    decompressed,
-                    predictor, bitsPerPixel, byteOrder);
+                        tileWidth, tileLength, tileWidth,
+                        decompressed,
+                        predictor, bitsPerPixel, byteOrder);
                 transferBlockToRaster(x, y, tileWidth, tileLength, blockData,
-                    xRaster, yRaster, rasterWidth, rasterHeight, rasterData);
+                        xRaster, yRaster, rasterWidth, rasterHeight, rasterDataFloat);
             }
         }
-
-        return new TiffRasterData(rasterWidth, rasterHeight, rasterData);
+        return new TiffRasterDataFloat(rasterWidth, rasterHeight, rasterDataFloat);
     }
 
+    private TiffRasterData readRasterDataInt(final Rectangle subImage)
+            throws ImageReadException, IOException {
+        final int bitsPerRow = tileWidth * bitsPerPixel;
+        final int bytesPerRow = (bitsPerRow + 7) / 8;
+        final int bytesPerTile = bytesPerRow * tileLength;
+        int xRaster;
+        int yRaster;
+        int rasterWidth;
+        int rasterHeight;
+        if (subImage != null) {
+            xRaster = subImage.x;
+            yRaster = subImage.y;
+            rasterWidth = subImage.width;
+            rasterHeight = subImage.height;
+        } else {
+            xRaster = 0;
+            yRaster = 0;
+            rasterWidth = width;
+            rasterHeight = height;
+        }
+        int[] rasterDataInt = new int[rasterWidth * rasterHeight];
+
+        // tileWidth is the width of the tile
+        // tileLength is the height of the tile
+        final int col0 = xRaster / tileWidth;
+        final int col1 = (xRaster + rasterWidth - 1) / tileWidth;
+        final int row0 = yRaster / tileLength;
+        final int row1 = (yRaster + rasterHeight - 1) / tileLength;
+
+        final int nColumnsOfTiles = (width + tileWidth - 1) / tileWidth;
+
+        for (int iRow = row0; iRow <= row1; iRow++) {
+            for (int iCol = col0; iCol <= col1; iCol++) {
+                final int tile = iRow * nColumnsOfTiles + iCol;
+                final byte[] compressed = imageData.tiles[tile].getData();
+                final byte[] decompressed = decompress(compressed, compression,
+                        bytesPerTile, tileWidth, tileLength);
+                final int x = iCol * tileWidth;
+                final int y = iRow * tileLength;
+                final int[] blockData = unpackIntSamples(
+                        tileWidth, tileLength, tileWidth,
+                        decompressed,
+                        predictor, bitsPerPixel, byteOrder);
+                transferBlockToRaster(x, y, tileWidth, tileLength, blockData,
+                        xRaster, yRaster, rasterWidth, rasterHeight, rasterDataInt);
+            }
+        }
+        return new TiffRasterDataInt(rasterWidth, rasterHeight, rasterDataInt);
+    }
 }
