@@ -121,7 +121,7 @@ public class TiffFloatingPointReadTest {
             true, // indicates that application should read image data, if present
             FormatCompliance.getDefault());
         final TiffDirectory directory = contents.directories.get(0);
-        return directory.getFloatingPointRasterData(params);
+        return directory.getRasterData(params);
     }
 
     @Test

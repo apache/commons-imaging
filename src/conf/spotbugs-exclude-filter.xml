@@ -72,6 +72,24 @@
     <Bug pattern="EI_EXPOSE_REP2" />
   </Match>
   <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.TiffRasterDataFloat" />
+    <Method name="getData" />
+    <Bug pattern="EI_EXPOSE_REP" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.TiffRasterDataFloat" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+    <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.TiffRasterDataInt" />
+    <Method name="getIntData" />
+    <Bug pattern="EI_EXPOSE_REP" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.TiffRasterDataInt" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
     <Class name="org.apache.commons.imaging.formats.tiff.datareaders.ImageDataReader" />
     <Bug pattern="EI_EXPOSE_REP2" />
   </Match>

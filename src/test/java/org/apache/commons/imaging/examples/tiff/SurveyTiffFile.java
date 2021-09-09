@@ -237,8 +237,9 @@ public class SurveyTiffFile {
             case TiffTagConstants.SAMPLE_FORMAT_VALUE_COMPLEX_INTEGER:
                 return "Comp I" + heterogeneous;
             case TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT:
-            case TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT_1:
                 return "Float" + heterogeneous;
+            case TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_COMPLEX_FLOAT:
+                return "Comp F" + heterogeneous;
             case TiffTagConstants.SAMPLE_FORMAT_VALUE_TWOS_COMPLEMENT_SIGNED_INTEGER:
                 return "Sgn Int" + heterogeneous;
             case TiffTagConstants.SAMPLE_FORMAT_VALUE_UNSIGNED_INTEGER:

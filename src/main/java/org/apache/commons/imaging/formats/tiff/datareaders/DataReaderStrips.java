@@ -27,6 +27,8 @@ import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
+import org.apache.commons.imaging.formats.tiff.TiffRasterDataFloat;
+import org.apache.commons.imaging.formats.tiff.TiffRasterDataInt;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
@@ -352,8 +354,20 @@ public final class DataReaderStrips extends ImageDataReader {
 
     @Override
     public TiffRasterData readRasterData(final Rectangle subImage)
-        throws ImageReadException, IOException {
+            throws ImageReadException, IOException {
+        switch(sampleFormat){
+            case TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT:
+                return readRasterDataFloat(subImage);
+            case TiffTagConstants.SAMPLE_FORMAT_VALUE_TWOS_COMPLEMENT_SIGNED_INTEGER:
+                 return readRasterDataInt(subImage);
+            default:
+                throw new ImageReadException("Unsupported sample format, value="
+                        +sampleFormat);
+        }
+    }
 
+    private TiffRasterData readRasterDataFloat(final Rectangle subImage)
+            throws ImageReadException, IOException {
         int xRaster;
         int yRaster;
         int rasterWidth;
@@ -369,7 +383,8 @@ public final class DataReaderStrips extends ImageDataReader {
             rasterWidth = width;
             rasterHeight = height;
         }
-        final float[] rasterData = new float[rasterWidth * rasterHeight];
+
+        float[] rasterDataFloat = new float[rasterWidth * rasterHeight];
 
         // the legacy code is optimized to the reading of whole
         // strips (except for the last strip in the image, which can
@@ -390,16 +405,69 @@ public final class DataReaderStrips extends ImageDataReader {
 
             final byte[] compressed = imageData.getImageData(strip).getData();
             final byte[] decompressed = decompress(compressed, compression,
-                bytesPerStrip, width, rowsInThisStrip);
+                    bytesPerStrip, width, rowsInThisStrip);
 
             final int[] blockData = unpackFloatingPointSamples(
-                width, (int) rowsInThisStrip, width,
-                decompressed,
-                predictor, bitsPerPixel, byteOrder);
+                    width,
+                    rowsInThisStrip,
+                    width,
+                    decompressed,
+                    predictor, bitsPerPixel, byteOrder);
             transferBlockToRaster(0, yStrip, width, (int) rowsInThisStrip, blockData,
-                xRaster, yRaster, rasterWidth, rasterHeight, rasterData);
+                    xRaster, yRaster, rasterWidth, rasterHeight, rasterDataFloat);
         }
-        return new TiffRasterData(rasterWidth, rasterHeight, rasterData);
+        return new TiffRasterDataFloat(rasterWidth, rasterHeight, rasterDataFloat);
     }
 
+    private TiffRasterData readRasterDataInt(final Rectangle subImage)
+            throws ImageReadException, IOException {
+        int xRaster;
+        int yRaster;
+        int rasterWidth;
+        int rasterHeight;
+        if (subImage != null) {
+            xRaster = subImage.x;
+            yRaster = subImage.y;
+            rasterWidth = subImage.width;
+            rasterHeight = subImage.height;
+        } else {
+            xRaster = 0;
+            yRaster = 0;
+            rasterWidth = width;
+            rasterHeight = height;
+        }
+
+        int[] rasterDataInt = new int[rasterWidth * rasterHeight];
+
+        // the legacy code is optimized to the reading of whole
+        // strips (except for the last strip in the image, which can
+        // be a partial).  So create a working image with compatible
+        // dimensions and read that.  Later on, the working image
+        // will be sub-imaged to the proper size.
+        // strip0 and strip1 give the indices of the strips containing
+        // the first and last rows of pixels in the subimage
+        final int strip0 = yRaster / rowsPerStrip;
+        final int strip1 = (yRaster + rasterHeight - 1) / rowsPerStrip;
+
+        for (int strip = strip0; strip <= strip1; strip++) {
+            final int yStrip = strip * rowsPerStrip;
+            final int rowsRemaining = height - yStrip;
+            final int rowsInThisStrip = Math.min(rowsRemaining, rowsPerStrip);
+            final int bytesPerRow = (bitsPerPixel * width + 7) / 8;
+            final int bytesPerStrip = rowsInThisStrip * bytesPerRow;
+
+            final byte[] compressed = imageData.getImageData(strip).getData();
+            final byte[] decompressed = decompress(compressed, compression,
+                    bytesPerStrip, width, rowsInThisStrip);
+            final int[] blockData = unpackIntSamples(
+                    width,
+                    rowsInThisStrip,
+                    width,
+                    decompressed,
+                    predictor, bitsPerPixel, byteOrder);
+            transferBlockToRaster(0, yStrip, width, rowsInThisStrip, blockData,
+                    xRaster, yRaster, rasterWidth, rasterHeight, rasterDataInt);
+        }
+        return new TiffRasterDataInt(rasterWidth, rasterHeight, rasterDataInt);
+    }
 }

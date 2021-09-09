@@ -117,7 +117,7 @@ public class ExampleReadFloatingPointData {
         final long time0Nanos = System.nanoTime();
         final HashMap<String, Object> params = new HashMap<>();
         final TiffRasterData rasterData
-            = directory.getFloatingPointRasterData(params);
+            = directory.getRasterData(params);
         final long time1Nanos = System.nanoTime();
         System.out.println("Data read in " + ((time1Nanos - time0Nanos) / 1.0e+6) + " ms");
 

@@ -50,7 +50,7 @@ public class TiffRasterStatisticsTest {
             }
         }
         data[width * height / 2] = Float.NaN;
-        raster = new TiffRasterData(width, height, data);
+        raster = new TiffRasterDataFloat(width, height, data);
         meanValue = (float) (sum / k);
         stat0 = raster.getSimpleStatistics();
         stat1 = raster.getSimpleStatistics(stat0.getMaxValue());
@@ -101,7 +101,7 @@ public class TiffRasterStatisticsTest {
 
         final float[] zero = new float[100];
         Arrays.fill(zero, 10);
-        final TiffRasterData zeroData = new TiffRasterData(10, 10, zero);
+        final TiffRasterData zeroData = new TiffRasterDataFloat(10, 10, zero);
         final TiffRasterStatistics zeroStat = zeroData.getSimpleStatistics(10);
         assertEquals(0.0f, zeroStat.getMeanValue(),
             "Invalid mean data for excluded value");
