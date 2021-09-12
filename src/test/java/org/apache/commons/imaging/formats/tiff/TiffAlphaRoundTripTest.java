@@ -16,20 +16,28 @@
  */
 package org.apache.commons.imaging.formats.tiff;
 
+import org.apache.commons.imaging.ImageFormats;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
+import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
+import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
+import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.ByteOrder;
 import java.nio.file.Path;
 import java.util.HashMap;
 
-import org.apache.commons.imaging.ImageFormats;
-import org.apache.commons.imaging.Imaging;
-
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.io.TempDir;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Performs a round-trip that writes an image containing Alpha and then reads it
@@ -130,5 +138,86 @@ public class TiffAlphaRoundTripTest {
             delta = -delta;
         }
         return delta < iTolerance;
+    }
+
+    @Test
+    void testExtraSamples() throws Exception{
+
+        final int bytesPerSample = 4;
+        final int width = 10;
+        final int height = 10;
+        final int nBytesPerStrip = bytesPerSample * height * width;
+        final ByteOrder byteOrder = ByteOrder.nativeOrder();
+
+        int[] samples = new int[width * height];
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                int index = i * width + j;
+                samples[index] = j > i ? 0xffff0000 : 0x88ff0000;
+            }
+        }
+
+        for (int iExtra = 0; iExtra < 3; iExtra++) {
+            final TiffOutputSet outputSet = new TiffOutputSet(byteOrder);
+            final TiffOutputDirectory outDir = outputSet.addRootDirectory();
+            outDir.add(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH, width);
+            outDir.add(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH, height);
+            outDir.add(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL, (short) 4);
+            outDir.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE, new short[]{8, 8, 8, 8});
+            outDir.add(TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION,
+                    (short) TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_RGB);
+            outDir.add(TiffTagConstants.TIFF_TAG_COMPRESSION,
+                    (short) TiffTagConstants.COMPRESSION_VALUE_UNCOMPRESSED);
+            outDir.add(TiffTagConstants.TIFF_TAG_PLANAR_CONFIGURATION,
+                    (short) TiffTagConstants.PLANAR_CONFIGURATION_VALUE_CHUNKY);
+            outDir.add(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP, height);
+            outDir.add(TiffTagConstants.TIFF_TAG_STRIP_BYTE_COUNTS, nBytesPerStrip);
+
+            outDir.add(TiffTagConstants.TIFF_TAG_EXTRA_SAMPLES, (short) iExtra);
+
+            final byte[] b = new byte[nBytesPerStrip];
+            int k = 0;
+            for (int sample : samples) {
+                b[k++] = (byte) ((sample >> 16) & 0xff);  // R
+                b[k++] = (byte) ((sample >> 8) & 0xff);   // G
+                b[k++] = (byte) (sample & 0xff);          // B
+                b[k++] = (byte) ((sample >> 24) & 0xff);  // A
+            }
+
+            final TiffElement.DataElement[] imageData = new TiffElement.DataElement[1];
+            imageData[0] = new TiffImageData.Data(0, b.length, b);
+
+            TiffImageData tiffImageData
+                = new TiffImageData.Strips(imageData, height);
+
+            outDir.setTiffImageData(tiffImageData);
+
+            final File outputFile = new File(tempDir.toFile(), "TestExtraSamples" + iExtra + ".tiff");
+            try (FileOutputStream fos = new FileOutputStream(outputFile);
+                    BufferedOutputStream bos = new BufferedOutputStream(fos)) {
+                final TiffImageWriterLossy writer = new TiffImageWriterLossy(byteOrder);
+                writer.write(bos, outputSet);
+                bos.flush();
+            }
+
+            BufferedImage result = Imaging.getBufferedImage(outputFile);
+            int []argb = new int[samples.length];
+            result.getRGB(0, 0, width, height, argb, 0, width);
+            int index = 3*width+1;
+            int iSample = samples[index];
+            int iArgb   = argb[index];
+            if (iExtra == 0) {
+                // when extra samples is zero, the alpha channel is ignored.
+                // We expect ARGB to start with 0xff.  So we OR in 0xff for
+                // the alpha value of the sample
+                iSample |= 0xff000000;
+            } else if (iExtra==1) {
+                // The pre-multiply alpha case
+                iSample = 0x89de0000;
+            }
+            String p = String.format("%08x", iSample);
+            String q = String.format("%08x", iArgb);
+            assertEquals(p, q, "Failure on ExtraSamples="+iExtra);
+        }
     }
 }
