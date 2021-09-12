@@ -623,17 +623,35 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
         final int photometricInterpretation = 0xffff & directory.getFieldValue(
                 TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION);
 
-        final boolean hasAlpha =
-            photometricInterpretation == TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_RGB
-            && samplesPerPixel==4;
+        boolean hasAlpha = false;
         boolean isAlphaPremultiplied = false;
-        if(hasAlpha){
-            final TiffField extraSamplesField =
-                directory.findField(TiffTagConstants.TIFF_TAG_EXTRA_SAMPLES);
-            if (extraSamplesField != null) {
+        if (photometricInterpretation == TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_RGB
+                && samplesPerPixel == 4) {
+            final TiffField extraSamplesField
+                    = directory.findField(TiffTagConstants.TIFF_TAG_EXTRA_SAMPLES);
+            if (extraSamplesField == null) {
+                // this state is not defined in the TIFF specification
+                // and so this code will interpret it as meaning that the
+                // proper handling would be ARGB.
+                hasAlpha = true;
+                isAlphaPremultiplied = false;
+            } else {
                 final int extraSamplesValue = extraSamplesField.getIntValue();
-                isAlphaPremultiplied =
-                    (extraSamplesValue==TiffTagConstants.EXTRA_SAMPLE_ASSOCIATED_ALPHA);
+                switch (extraSamplesValue) {
+                    case TiffTagConstants.EXTRA_SAMPLE_UNASSOCIATED_ALPHA:
+                        hasAlpha = true;
+                        isAlphaPremultiplied = false;
+                        break;
+                    case TiffTagConstants.EXTRA_SAMPLE_ASSOCIATED_ALPHA:
+                        hasAlpha = true;
+                        isAlphaPremultiplied = true;
+                        break;
+                    case 0:
+                    default:
+                        hasAlpha = false;
+                        isAlphaPremultiplied = false;
+                        break;
+                }
             }
         }
 
