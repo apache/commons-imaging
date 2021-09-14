@@ -20,8 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Map;
-import java.util.TreeMap;
 
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
@@ -31,6 +29,8 @@ import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.formats.tiff.constants.GeoTiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.MicrosoftHdPhotoTagConstants;
+import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
+import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
@@ -50,6 +50,11 @@ public class TiffReadWriteTagsTest extends TiffBaseTest {
         final String area = "A good area";
         final float widthRes = 2.2f;
         final double geoDoubleParams = -8.4;
+        RationalNumber exposureCompensation = new RationalNumber(-17, 10);
+        RationalNumber[] latitude = new RationalNumber[3];
+        latitude[0] = new RationalNumber(38, 1, true);
+        latitude[1] = new RationalNumber(36, 1, true);
+        latitude[2] = new RationalNumber(0xF5937B1E, 70_000_000, true);
 
         final TiffOutputSet set = new TiffOutputSet();
         final TiffOutputDirectory dir = set.getOrCreateRootDirectory();
@@ -62,15 +67,16 @@ public class TiffReadWriteTagsTest extends TiffBaseTest {
         dir.add(GpsTagConstants.GPS_TAG_GPS_AREA_INFORMATION, area);
         dir.add(MicrosoftHdPhotoTagConstants.EXIF_TAG_WIDTH_RESOLUTION, widthRes);
         dir.add(GeoTiffTagConstants.EXIF_TAG_GEO_DOUBLE_PARAMS_TAG, geoDoubleParams);
+        dir.add(ExifTagConstants.EXIF_TAG_EXPOSURE_COMPENSATION, exposureCompensation);
+        dir.add(GpsTagConstants.GPS_TAG_GPS_LATITUDE, latitude);
 
         final TiffImageWriterLossy writer = new TiffImageWriterLossy();
         final ByteArrayOutputStream tiff = new ByteArrayOutputStream();
         writer.write(tiff, set);
 
         final TiffReader reader = new TiffReader(true);
-        final Map<String, Object> params = new TreeMap<>();
         final FormatCompliance formatCompliance = new FormatCompliance("");
-        final TiffContents contents = reader.readFirstDirectory(new ByteSourceArray(tiff.toByteArray()), params, true, formatCompliance);
+        final TiffContents contents = reader.readDirectories(new ByteSourceArray(tiff.toByteArray()), true, formatCompliance);
         final TiffDirectory rootDir = contents.directories.get(0);
         assertEquals(description, rootDir.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION));
         assertEquals(page, rootDir.getFieldValue(TiffTagConstants.TIFF_TAG_PAGE_NUMBER, true)[0]);
@@ -83,5 +89,10 @@ public class TiffReadWriteTagsTest extends TiffBaseTest {
         assertEquals(area, rootDir.getFieldValue(GpsTagConstants.GPS_TAG_GPS_AREA_INFORMATION, true));
         assertEquals(widthRes, rootDir.getFieldValue(MicrosoftHdPhotoTagConstants.EXIF_TAG_WIDTH_RESOLUTION), 0.0);
         assertEquals(geoDoubleParams, rootDir.getFieldValue(GeoTiffTagConstants.EXIF_TAG_GEO_DOUBLE_PARAMS_TAG, true)[0], 0.0);
+        assertEquals(exposureCompensation.doubleValue(), rootDir.getFieldValue(ExifTagConstants.EXIF_TAG_EXPOSURE_COMPENSATION).doubleValue(), 0.0);
+        RationalNumber[] testLat = rootDir.getFieldValue(GpsTagConstants.GPS_TAG_GPS_LATITUDE, true);
+        for (int i = 0; i < 3; i++) {
+            assertEquals(latitude[i].doubleValue(), testLat[i].doubleValue(), 0.0);
+        }
     }
 }
