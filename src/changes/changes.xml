@@ -88,7 +88,7 @@ The <action> type attribute can be add,update,fix,remove.
         Bump commons-io from 2.7 to 2.11.0 #96 #152 #153, #158.
       </action>
       <action dev="kinow" type="update" due-to="Dependabot">
-        Bump junit-jupiter from 5.6.2 to 5.7.2 #97 #119 #151.
+        Bump junit-jupiter from 5.6.2 to 5.8.0 #97 #119 #151 #170.
       </action>
       <action dev="kinow" type="update" due-to="Dependabot">
         Bump actions/checkout from v2.3.2 to v2.3.4 #99 #107.
