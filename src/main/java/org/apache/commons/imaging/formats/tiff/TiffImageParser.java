@@ -911,18 +911,19 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
             }
         }
 
+        // Obtain the planar configuration
+        final TiffField pcField = directory.findField(
+                TiffTagConstants.TIFF_TAG_PLANAR_CONFIGURATION);
+        final TiffPlanarConfiguration planarConfiguration
+                = pcField == null
+                        ? TiffPlanarConfiguration.CHUNKY
+                        : TiffPlanarConfiguration.lenientValueOf(pcField.getIntValue());
+
         if (sSampleFmt[0] == TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT) {
-
-            if (samplesPerPixel != 1) {
+            if (bitsPerSample[0] != 32 && bitsPerSample[0] != 64) {
                 throw new ImageReadException(
-                        "TIFF floating-point data uses unsupported samples per pixel: "
-                        + samplesPerPixel);
-            }
-
-            if (bitsPerPixel != 32 && bitsPerPixel != 64) {
-                throw new ImageReadException(
-                        "TIFF floating-point data uses unsupported bits-per-pixel: "
-                        + bitsPerPixel);
+                        "TIFF floating-point data uses unsupported bits-per-sample: "
+                        + bitsPerSample[0]);
             }
 
             if (predictor != -1
@@ -966,7 +967,7 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
         final ImageDataReader dataReader = imageData.getDataReader(directory,
                 photometricInterpreter, bitsPerPixel, bitsPerSample, predictor,
                 samplesPerPixel, width, height, compression,
-                TiffPlanarConfiguration.CHUNKY, byteOrder);
+                planarConfiguration, byteOrder);
 
         return dataReader.readRasterData(subImage);
     }
