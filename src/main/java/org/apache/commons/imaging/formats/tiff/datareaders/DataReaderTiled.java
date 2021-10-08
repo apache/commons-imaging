@@ -20,7 +20,6 @@
  *    See ImageDataReader and DataReaderStrips for notes on development
  * with particular emphasis on run-time performance.
  */
-
 package org.apache.commons.imaging.formats.tiff.datareaders;
 
 import java.awt.Rectangle;
@@ -56,15 +55,15 @@ public final class DataReaderTiled extends ImageDataReader {
     private final TiffImageData.Tiles imageData;
 
     public DataReaderTiled(final TiffDirectory directory,
-      final PhotometricInterpreter photometricInterpreter, final int tileWidth,
-      final int tileLength, final int bitsPerPixel, final int[] bitsPerSample,
-      final int predictor, final int samplesPerPixel, final int sampleFormat,
-      final int width, final int height,
-      final int compression,
-      final TiffPlanarConfiguration planarConfiguration,
-      final ByteOrder byteOrder, final TiffImageData.Tiles imageData) {
+        final PhotometricInterpreter photometricInterpreter, final int tileWidth,
+        final int tileLength, final int bitsPerPixel, final int[] bitsPerSample,
+        final int predictor, final int samplesPerPixel, final int sampleFormat,
+        final int width, final int height,
+        final int compression,
+        final TiffPlanarConfiguration planarConfiguration,
+        final ByteOrder byteOrder, final TiffImageData.Tiles imageData) {
         super(directory, photometricInterpreter, bitsPerSample, predictor,
-            samplesPerPixel, sampleFormat, width, height);
+            samplesPerPixel, sampleFormat, width, height, planarConfiguration);
 
         this.tileWidth = tileWidth;
         this.tileLength = tileLength;
@@ -83,7 +82,7 @@ public final class DataReaderTiled extends ImageDataReader {
         // for the compressed floating-point, there is a standard that allows
         // 16 bit floats (which is an IEEE 754 standard) and 24 bits (which is
         // a non-standard format implemented for TIFF).  At this time, this
-        // code only supports the 32-bit format.
+        // code only supports the 32-bit and 64-bit formats.
         if (sampleFormat == TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT) {
             // tileLength: number of rows in tile
             // tileWidth:  number of columns in tile
@@ -102,13 +101,14 @@ public final class DataReaderTiled extends ImageDataReader {
             final int[] samples = new int[4];
             final int[] b = unpackFloatingPointSamples(
                 j1 - j0, i1 - i0, tileWidth, bytes,
-                predictor, bitsPerPixel, byteOrder);
+                bitsPerPixel, byteOrder);
             for (int i = i0; i < i1; i++) {
                 final int row = i - startY;
                 final int rowOffset = row * tileWidth;
                 for (int j = j0; j < j1; j++) {
                     final int column = j - startX;
-                    samples[0] = b[rowOffset + column];
+                    int k = (rowOffset + column) * samplesPerPixel;
+                    samples[0] = b[k];
                     photometricInterpreter.interpretPixel(
                         imageBuilder, samples, j, i);
                 }
@@ -117,7 +117,6 @@ public final class DataReaderTiled extends ImageDataReader {
         }
 
         // End of March 2020 changes to support floating-point format
-
         // changes introduced May 2012
         // The following block of code implements changes that
         // reduce image loading time by using special-case processing
@@ -125,7 +124,6 @@ public final class DataReaderTiled extends ImageDataReader {
         // implementation. For a detailed discussion, see the comments for
         // a similar treatment in the DataReaderStrip class
         //
-
         // verify that all samples are one byte in size
         final boolean allSamplesAreOneByte = isHomogenous(8);
 
@@ -181,7 +179,6 @@ public final class DataReaderTiled extends ImageDataReader {
         }
 
         // End of May 2012 changes
-
         try (BitInputStream bis = new BitInputStream(new ByteArrayInputStream(bytes), byteOrder)) {
 
             final int pixelsPerTile = tileWidth * tileLength;
@@ -233,11 +230,9 @@ public final class DataReaderTiled extends ImageDataReader {
             subImage = subImageSpecification;
         }
 
-
         final int bitsPerRow = tileWidth * bitsPerPixel;
         final int bytesPerRow = (bitsPerRow + 7) / 8;
         final int bytesPerTile = bytesPerRow * tileLength;
-
 
         // tileWidth is the width of the tile
         // tileLength is the height of the tile
@@ -256,8 +251,8 @@ public final class DataReaderTiled extends ImageDataReader {
         final int x0 = col0 * tileWidth;
         final int y0 = row0 * tileLength;
 
-        final ImageBuilder workingBuilder =
-                new ImageBuilder(workingWidth, workingHeight,
+        final ImageBuilder workingBuilder
+            = new ImageBuilder(workingWidth, workingHeight,
                 hasAlpha, isAlphaPreMultiplied);
 
         for (int iRow = row0; iRow <= row1; iRow++) {
@@ -320,7 +315,7 @@ public final class DataReaderTiled extends ImageDataReader {
             rasterWidth = width;
             rasterHeight = height;
         }
-        float[] rasterDataFloat = new float[rasterWidth * rasterHeight];
+        float[] rasterDataFloat = new float[rasterWidth * rasterHeight * samplesPerPixel];
 
         // tileWidth is the width of the tile
         // tileLength is the height of the tile
@@ -343,12 +338,13 @@ public final class DataReaderTiled extends ImageDataReader {
                 final int[] blockData = unpackFloatingPointSamples(
                         tileWidth, tileLength, tileWidth,
                         decompressed,
-                        predictor, bitsPerPixel, byteOrder);
+                        bitsPerPixel, byteOrder);
                 transferBlockToRaster(x, y, tileWidth, tileLength, blockData,
-                        xRaster, yRaster, rasterWidth, rasterHeight, rasterDataFloat);
+                        xRaster, yRaster, rasterWidth, rasterHeight, samplesPerPixel, rasterDataFloat);
             }
         }
-        return new TiffRasterDataFloat(rasterWidth, rasterHeight, rasterDataFloat);
+
+        return new TiffRasterDataFloat(rasterWidth, rasterHeight, samplesPerPixel,rasterDataFloat);
     }
 
     private TiffRasterData readRasterDataInt(final Rectangle subImage)

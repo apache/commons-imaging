@@ -18,6 +18,7 @@ package org.apache.commons.imaging.formats.tiff;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -85,6 +86,45 @@ public class TiffRasterDataTest {
     }
 
     /**
+     * Test of setValue method, of class TiffRasterData.
+     */
+    @Test
+    public void testSetValue2() {
+        final TiffRasterData instance = new TiffRasterDataFloat(width, height, 2);
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                final int index = y * width + height;
+                instance.setValue(x, y, 1, index);
+                final int test = (int) instance.getValue(x, y, 1);
+                assertEquals(index, test, "Set/get value test failed at (" + x + "," + y + ")");
+                instance.setIntValue(x, y, 1, index);
+                final int iTest = instance.getIntValue(x, y, 1);
+                assertEquals(index, iTest, "Get/set value test failed at (" + x + "," + y + ")");
+            }
+        }
+    }
+
+    /**
+     * Test of getValue method, of class TiffRasterData.
+     */
+    @Test
+    public void testGetValue2() {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                final int index = y * width + x;
+                final int test = (int) raster.getValue(x, y, 0);
+                assertEquals(index, test, "Get into source data test failed at (" + x + "," + y + ")");
+                final int iTest = raster.getIntValue(x, y, 0);
+                assertEquals(index, iTest, "Get into source data test failed at (" + x + "," + y + ")");
+            }
+        }
+    }
+
+
+
+
+
+    /**
      * Test of getSimpleStatistics method, of class TiffRasterData.
      */
     @Test
@@ -130,6 +170,8 @@ public class TiffRasterDataTest {
     public void testGetData() {
         final float[] result = raster.getData();
         assertArrayEquals(data, result);
+        int samplesPerPixel = raster.getSamplesPerPixel();
+        assertEquals(1, samplesPerPixel, "Incorrect number of samples per pixel");
     }
 
     /**
@@ -163,39 +205,13 @@ public class TiffRasterDataTest {
      */
     @Test
     public void testBadConstructor() {
-        try{
-            final TiffRasterData raster = new TiffRasterDataFloat(-1, 10);
-            fail("Constructor did not detect bad width");
-        }catch(final IllegalArgumentException illArgEx){
-            // success!
-        }
-        try{
-            final TiffRasterData raster = new TiffRasterDataFloat(10, -1);
-            fail("Constructor did not detect bad height");
-        }catch(final IllegalArgumentException illArgEx){
-            // success!
-        }
-        try{
-            final float []f = new float[10];
-            final TiffRasterData raster = new TiffRasterDataFloat(2, 10, f);
-            fail("Constructor did not detect insufficient input array size");
-        }catch(final IllegalArgumentException illArgEx){
-            // success!
-        }
-        try{
-            final float []f = new float[10];
-            final TiffRasterData raster = new TiffRasterDataFloat(-1, 10, f);
-            fail("Constructor did not detect bad width");
-        }catch(final IllegalArgumentException illArgEx){
-            // success!
-        }
-        try{
-            final float []f = new float[10];
-            final TiffRasterData raster = new TiffRasterDataFloat(10, -1, f);
-            fail("Constructor did not detect bad height");
-        }catch(final IllegalArgumentException illArgEx){
-            // success!
-        }
+        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataFloat(-1, 10), "Constructor did not detect bad width");
+        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataFloat(10, -1), "Constructor did not detect bad height");
+        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataFloat(1, 1, 0), "Constructor did not detect bad samplesPerPixel");
+
+        final float []f = new float[10];
+        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataFloat(2, 10, f), "Constructor did not detect insufficient input array size");
+        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataFloat(2, 3, 2, f), "Constructor did not detect insufficient input array size");
     }
 
     /**
@@ -203,23 +219,11 @@ public class TiffRasterDataTest {
      */
     @Test
     public void testBadCoordinates() {
-
-        try{
-            final float []f = new float[100];
-            final TiffRasterData raster = new TiffRasterDataFloat(10, 10, f);
-            raster.getValue(11, 11);
-            fail("Access method getValue() did not detect bad coordinates");
-        }catch(final IllegalArgumentException illArgEx){
-            // success!
-        }
-        try{
-            final float []f = new float[100];
-            final TiffRasterData raster = new TiffRasterDataFloat(10, 10, f);
-            raster.setValue(11, 11, 5.0f);
-            fail("Access method setValue() did not detect bad coordinates");
-        }catch(final IllegalArgumentException illArgEx){
-            // success!
-        }
+        final float []f = new float[100];
+        final TiffRasterData instance = new TiffRasterDataFloat(10, 10, 1, f);
+        assertThrows(IllegalArgumentException.class, ()->instance.getValue(11, 11),       "Access method getValue() did not detect bad coordinates");
+        assertThrows(IllegalArgumentException.class, ()->instance.setValue(11, 11, 5.0f), "Access method setValue() did not detect bad coordinates");
+        assertThrows(IllegalArgumentException.class, ()->instance.getValue(1, 1, 2),  "Access method setValue() did not detect bad sample index");
     }
 
 }
