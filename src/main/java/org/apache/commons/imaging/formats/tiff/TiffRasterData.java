@@ -28,13 +28,13 @@ package org.apache.commons.imaging.formats.tiff;
  * associated instance. This approach is used for purposes of efficiency when
  * dealing with very large TIFF images.
  * <p>
- * <strong>Data layout:</strong> The elements in the returned array are
- * stored in row-major order. In cases where the data contains multiple samples
- * per raster cell (pixel), the data is organized into blocks of data one sample
- * at a time. The first block contains width*height values for the first
- * sample for each cell, the second block contains width*height values for the
- * second sample for each cell, etc.  Thus, the array index for a particular
- * value is computed as
+ * <strong>Data layout:</strong> The elements in the returned array are stored
+ * in row-major order. In cases where the data contains multiple samples per
+ * raster cell (pixel), the data is organized into blocks of data one sample at
+ * a time. The first block contains width*height values for the first sample for
+ * each cell, the second block contains width*height values for the second
+ * sample for each cell, etc. Thus, the array index for a particular value is
+ * computed as
  * <pre>
  *    index = y*width + x + iSample * width *height;
  * </pre>
@@ -44,6 +44,7 @@ public abstract class TiffRasterData {
     protected final int width;
     protected final int height;
     protected final int samplesPerPixel;
+    protected final int nCells;
     protected final int planarOffset;
 
     /**
@@ -60,6 +61,7 @@ public abstract class TiffRasterData {
         this.width = width;
         this.height = height;
         this.samplesPerPixel = 1;
+        nCells = width*height;
         planarOffset = 0;
     }
 
@@ -78,6 +80,7 @@ public abstract class TiffRasterData {
         this.width = width;
         this.height = height;
         this.samplesPerPixel = samplesPerPixel;
+        nCells = width*height*samplesPerPixel;
         planarOffset = width * height;
     }
 
@@ -115,9 +118,10 @@ public abstract class TiffRasterData {
 
     /**
      * Gets the number of samples per pixel.
+     *
      * @return a value of 1 or greater.
      */
-    public final int getSamplesPerPixel(){
+    public final int getSamplesPerPixel() {
         return samplesPerPixel;
     }
 
@@ -137,6 +141,18 @@ public abstract class TiffRasterData {
      * potentially a Float&#46;NaN.
      */
     public abstract void setValue(int x, int y, float value);
+
+    /**
+     * Sets the value stored at the specified raster coordinates.
+     *
+     * @param x integer coordinate in the columnar direction
+     * @param y integer coordinate in the row direction
+     * @param i integer sample index (for data sets giving multiple samples per
+     * raster cell).
+     * @param value the value to be stored at the specified location;
+     * potentially a Float&#46;NaN.
+     */
+    public abstract void setValue(int x, int y, int i, float value);
 
     /**
      * Gets the value stored at the specified raster coordinates.
@@ -169,6 +185,17 @@ public abstract class TiffRasterData {
     public abstract void setIntValue(int x, int y, int value);
 
     /**
+     * Sets the value stored at the specified raster coordinates.
+     *
+     * @param x integer coordinate in the columnar direction
+     * @param y integer coordinate in the row direction
+     * @param i integer sample index (for data sets giving multiple samples per
+     * raster cell).
+     * @param value the value to be stored at the specified location.
+     */
+    public abstract void setIntValue(int x, int y, int i, int value);
+
+    /**
      * Gets the value stored at the specified raster coordinates.
      *
      * @param x integer coordinate in the columnar direction
@@ -176,6 +203,17 @@ public abstract class TiffRasterData {
      * @return the value stored at the specified location
      */
     public abstract int getIntValue(int x, int y);
+
+    /**
+     * Gets the value stored at the specified raster coordinates.
+     *
+     * @param x integer coordinate in the columnar direction
+     * @param y integer coordinate in the row direction
+     * @param i integer sample index (for data sets giving multiple samples per
+     * raster cell).
+     * @return the value stored at the specified location
+     */
+    public abstract int getIntValue(final int x, final int y, int i);
 
     /**
      * Tabulates simple statistics for the raster and returns an instance
@@ -207,7 +245,8 @@ public abstract class TiffRasterData {
      * in-memory object might exceed the resources available to a Java
      * application.
      * <p>
-     * See the class API documentation above for notes on accessing array elements.
+     * See the class API documentation above for notes on accessing array
+     * elements.
      *
      * @return the data content stored in this instance.
      */
@@ -225,7 +264,8 @@ public abstract class TiffRasterData {
      * in-memory object might exceed the resources available to a Java
      * application.
      * <p>
-     * See the class API documentation above for notes on accessing array elements.
+     * See the class API documentation above for notes on accessing array
+     * elements.
      *
      * @return the data content stored in this instance.
      */

@@ -84,6 +84,44 @@ public class TiffRasterDataIntTest {
             }
         }
     }
+	
+	
+	
+    /**
+     * Test of setValue method, of class TiffRasterData.
+     */
+    @Test
+    public void testSetValue2() {
+        final TiffRasterData instance = new TiffRasterDataInt(width, height, 2);
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                final int index = y * width + height;
+                instance.setValue(x, y, 1, index+0.4f);
+                int test = (int) instance.getValue(x, y, 1);
+                assertEquals(index, test, "Set/get value test failed");
+                instance.setIntValue(x, y, 1, index);
+                test = instance.getIntValue(x, y, 1);
+                assertEquals(index, test, "Set/get int value test failed");
+            }
+        }
+    }
+
+    /**
+     * Test of getValue method, of class TiffRasterData.
+     */
+    @Test
+    public void testGetValue2() {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                final int index = y * width + x;
+                int test = (int) raster.getValue(x, y, 0);
+                assertEquals(index, test, "Get into source data test failed at (" + x + "," + y + ")");
+                test = raster.getIntValue(x, y, 0);
+                assertEquals(index, test, "Get into source data test failed at (" + x + "," + y + ")");
+            }
+        }
+    }
+
 
     /**
      * Test of getSimpleStatistics method, of class TiffRasterData.
@@ -148,17 +186,20 @@ public class TiffRasterDataIntTest {
 
 
      /**
-     * Test of constructors with bad arguments, of class TiffRasterData.
+     * Test of constructors with bad arguments, of class TiffRasterDataInt.
      */
+
     @Test
     public void testBadConstructor() {
-        final int []sample = new int[10];
-        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataInt(-1, 10));
-        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataInt(10, -1));
-        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataInt(2, 10, sample));
-        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataInt(-1, 10, sample));
-        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataInt(10, -1, sample));
+        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataInt(-1, 10), "Constructor did not detect bad width");
+        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataInt(10, -1), "Constructor did not detect bad height");
+        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataInt(1, 1, 0), "Constructor did not detect bad samplesPerPixel");
+
+        final int []s = new int[10];
+        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataInt(2, 10, s), "Constructor did not detect insufficient input array size");
+        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataInt(2, 3, 2, s), "Constructor did not detect insufficient input array size");
     }
+ 
 
     /**
      * Test of access with bad coordinates, of class TiffRasterData.

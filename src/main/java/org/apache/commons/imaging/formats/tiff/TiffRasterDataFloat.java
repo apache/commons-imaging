@@ -30,13 +30,13 @@ import java.util.stream.IntStream;
  * associated instance. This approach is used for purposes of efficiency when
  * dealing with very large TIFF images.
  * <p>
- * <strong>Data layout:</strong> The elements in the returned array are
- * stored in row-major order. In cases where the data contains multiple samples
- * per raster cell (pixel), the data is organized into blocks of data one sample
- * at a time. The first block contains width*height values for the first
- * sample for each cell, the second block contains width*height values for the
- * second sample for each cell, etc.  Thus, the array index for a particular
- * value is computed as
+ * <strong>Data layout:</strong> The elements in the returned array are stored
+ * in row-major order. In cases where the data contains multiple samples per
+ * raster cell (pixel), the data is organized into blocks of data one sample at
+ * a time. The first block contains width*height values for the first sample for
+ * each cell, the second block contains width*height values for the second
+ * sample for each cell, etc. Thus, the array index for a particular value is
+ * computed as
  * <pre>
  *    index = y*width + x + iSample * width *height;
  * </pre>
@@ -53,7 +53,18 @@ public class TiffRasterDataFloat extends TiffRasterData {
      */
     public TiffRasterDataFloat(final int width, final int height) {
         super(width, height, 1);
-        final int nCells = width * height;
+        data = new float[nCells];
+    }
+
+    /**
+     * Construct an instance allocating memory for the specified dimensions.
+     *
+     * @param width a value of 1 or greater
+     * @param height a value of 1 or greater
+     * @param samplesPerPixel a value of 1 or greater
+     */
+    public TiffRasterDataFloat(final int width, final int height, int samplesPerPixel) {
+        super(width, height, samplesPerPixel);
         data = new float[nCells];
     }
 
@@ -67,7 +78,7 @@ public class TiffRasterDataFloat extends TiffRasterData {
     public TiffRasterDataFloat(final int width, final int height, final float[] data) {
         super(width, height, 1);
 
-        if (data == null || data.length < width * height * samplesPerPixel) {
+        if (data == null || data.length < nCells) {
             throw new IllegalArgumentException(
                     "Specified data does not contain sufficient elements");
         }
@@ -85,7 +96,7 @@ public class TiffRasterDataFloat extends TiffRasterData {
     public TiffRasterDataFloat(final int width, final int height, int samplesPerCell, final float[] data) {
         super(width, height, samplesPerCell);
 
-        if (data == null || data.length < width * height * samplesPerCell) {
+        if (data == null || data.length < nCells) {
             throw new IllegalArgumentException(
                     "Specified data does not contain sufficient elements");
         }
@@ -113,6 +124,22 @@ public class TiffRasterDataFloat extends TiffRasterData {
     @Override
     public void setValue(final int x, final int y, final float value) {
         int index = checkCoordinatesAndComputeIndex(x, y, 0);
+        data[index] = value;
+    }
+
+    /**
+     * Sets the value stored at the specified raster coordinates.
+     *
+     * @param x integer coordinate in the columnar direction
+     * @param y integer coordinate in the row direction
+     * @param i integer sample index (for data sets giving multiple samples per
+     * raster cell).
+     * @param value the value to be stored at the specified location;
+     * potentially a Float&#46;NaN.
+     */
+    @Override
+    public void setValue(final int x, final int y, int i, final float value) {
+        int index = checkCoordinatesAndComputeIndex(x, y, i);
         data[index] = value;
     }
 
@@ -160,6 +187,22 @@ public class TiffRasterDataFloat extends TiffRasterData {
     }
 
     /**
+     * Sets the value stored at the specified raster coordinates.
+     *
+     * @param x integer coordinate in the columnar direction
+     * @param y integer coordinate in the row direction
+     * @param i integer sample index (for data sets giving multiple samples per
+     * raster cell).
+     * @param value the value to be stored at the specified location
+     */
+    @Override
+    public void setIntValue(final int x, final int y, int i, final int value) {
+        int index = checkCoordinatesAndComputeIndex(x, y, 0);
+        data[index] = value;
+    }
+
+
+    /**
      * Gets the value stored at the specified raster coordinates.
      *
      * @param x integer coordinate in the columnar direction
@@ -168,6 +211,21 @@ public class TiffRasterDataFloat extends TiffRasterData {
      */
     @Override
     public int getIntValue(final int x, final int y) {
+        int index = checkCoordinatesAndComputeIndex(x, y, 0);
+        return (int) data[index];
+    }
+
+    /**
+     * Gets the value stored at the specified raster coordinates.
+     *
+     * @param x integer coordinate in the columnar direction
+     * @param y integer coordinate in the row direction
+     * @param i integer sample index (for data sets giving multiple samples per
+     * raster cell).
+     * @return the value stored at the specified location
+     */
+    @Override
+    public int getIntValue(final int x, final int y, int i) {
         int index = checkCoordinatesAndComputeIndex(x, y, 0);
         return (int) data[index];
     }
@@ -206,7 +264,9 @@ public class TiffRasterDataFloat extends TiffRasterData {
      * cells are common. Making a redundant copy of such a large in-memory
      * object might exceed the resources available to a Java application.
      * <p>
-     * See the class API documentation above for notes on accessing array elements.
+     * See the class API documentation above for notes on accessing array
+     * elements.
+     *
      * @return a direct reference to the data array stored in this instance.
      */
     @Override
@@ -218,13 +278,14 @@ public class TiffRasterDataFloat extends TiffRasterData {
      * Returns an array of integer approximations for the floating-point content
      * stored as an array in this instance.
      * <p>
-     * See the class API documentation above for notes on accessing array elements.
+     * See the class API documentation above for notes on accessing array
+     * elements.
+     *
      * @return the integer equivalents to the data content stored in this
      * instance.
      */
     @Override
     public int[] getIntData() {
-        final int nCells = width * height * samplesPerPixel;
         return IntStream.range(0, nCells)
                 .map(i -> (int) data[i])
                 .toArray();

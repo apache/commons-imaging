@@ -28,13 +28,13 @@ package org.apache.commons.imaging.formats.tiff;
  * associated instance. This approach is used for purposes of efficiency when
  * dealing with very large TIFF images.
  * <p>
- * <strong>Data layout:</strong> The elements in the returned array are
- * stored in row-major order. In cases where the data contains multiple samples
- * per raster cell (pixel), the data is organized into blocks of data one sample
- * at a time. The first block contains width*height values for the first
- * sample for each cell, the second block contains width*height values for the
- * second sample for each cell, etc.  Thus, the array index for a particular
- * value is computed as
+ * <strong>Data layout:</strong> The elements in the returned array are stored
+ * in row-major order. In cases where the data contains multiple samples per
+ * raster cell (pixel), the data is organized into blocks of data one sample at
+ * a time. The first block contains width*height values for the first sample for
+ * each cell, the second block contains width*height values for the second
+ * sample for each cell, etc. Thus, the array index for a particular value is
+ * computed as
  * <pre>
  *    index = y * width + x + iSample * width * height;
  * </pre>
@@ -51,7 +51,18 @@ public class TiffRasterDataInt extends TiffRasterData {
      */
     public TiffRasterDataInt(final int width, final int height) {
         super(width, height, 1);
-        final int nCells = width * height;
+        data = new int[nCells];
+    }
+
+    /**
+     * Construct an instance allocating memory for the specified dimensions.
+     *
+     * @param width a value of 1 or greater
+     * @param height a value of 1 or greater
+     * @param samplesPerPixel a value of 1 or greater
+     */
+    public TiffRasterDataInt(final int width, final int height, int samplesPerPixel) {
+        super(width, height, samplesPerPixel);
         data = new int[nCells];
     }
 
@@ -65,7 +76,25 @@ public class TiffRasterDataInt extends TiffRasterData {
     public TiffRasterDataInt(final int width, final int height, final int[] data) {
         super(width, height, 1);
 
-        if (data == null || data.length < width * height) {
+        if (data == null || data.length < nCells) {
+            throw new IllegalArgumentException(
+                    "Specified data does not contain sufficient elements");
+        }
+        this.data = data;
+    }
+
+    /**
+     * Construct an instance allocating memory for the specified dimensions.
+     *
+     * @param width a value of 1 or greater
+     * @param height a value of 1 or greater
+     * @param samplesPerPixel a value of 1 or greater
+     * @param data the data to be stored in the raster.
+     */
+    public TiffRasterDataInt(final int width, final int height, int samplesPerPixel, final int[] data) {
+        super(width, height, samplesPerPixel);
+
+        if (data == null || data.length < nCells) {
             throw new IllegalArgumentException(
                     "Specified data does not contain sufficient elements");
         }
@@ -93,6 +122,22 @@ public class TiffRasterDataInt extends TiffRasterData {
     @Override
     public void setValue(final int x, final int y, final float value) {
         int index = checkCoordinatesAndComputeIndex(x, y, 0);
+        data[index] = (int) value;
+    }
+
+    /**
+     * Sets the value stored at the specified raster coordinates.
+     *
+     * @param x integer coordinate in the columnar direction
+     * @param y integer coordinate in the row direction
+     * @param i integer sample index (for data sets giving multiple samples per
+     * raster cell).
+     * @param value the value to be stored at the specified location;
+     * potentially a Float&#46;NaN.
+     */
+    @Override
+    public void setValue(final int x, final int y, int i, final float value) {
+        int index = checkCoordinatesAndComputeIndex(x, y, i);
         data[index] = (int) value;
     }
 
@@ -140,6 +185,21 @@ public class TiffRasterDataInt extends TiffRasterData {
     }
 
     /**
+     * Sets the value stored at the specified raster coordinates.
+     *
+     * @param x integer coordinate in the columnar direction
+     * @param y integer coordinate in the row direction
+     * @param i integer sample index (for data sets giving multiple samples per
+     * raster cell).
+     * @param value the value to be stored at the specified location
+     */
+    @Override
+    public void setIntValue(final int x, final int y, int i, final int value) {
+        int index = checkCoordinatesAndComputeIndex(x, y, i);
+        data[index] = value;
+    }
+
+    /**
      * Gets the value stored at the specified raster coordinates.
      *
      * @param x integer coordinate in the columnar direction
@@ -149,6 +209,21 @@ public class TiffRasterDataInt extends TiffRasterData {
     @Override
     public int getIntValue(final int x, final int y) {
         int index = checkCoordinatesAndComputeIndex(x, y, 0);
+        return data[index];
+    }
+
+    /**
+     * Gets the value stored at the specified raster coordinates.
+     *
+     * @param x integer coordinate in the columnar direction
+     * @param y integer coordinate in the row direction
+     * @param i integer sample index (for data sets giving multiple samples per
+     * raster cell).
+     * @return the value stored at the specified location
+     */
+    @Override
+    public int getIntValue(final int x, final int y, int i) {
+        int index = checkCoordinatesAndComputeIndex(x, y, i);
         return data[index];
     }
 
@@ -203,7 +278,6 @@ public class TiffRasterDataInt extends TiffRasterData {
      */
     @Override
     public float[] getData() {
-        final int nCells = data.length;
         final float[] result = new float[nCells];
         for (int i = 0; i < nCells; i++) {
             result[i] = (int) data[i];
