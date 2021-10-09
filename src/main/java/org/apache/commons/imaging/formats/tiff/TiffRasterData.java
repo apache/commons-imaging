@@ -213,7 +213,7 @@ public abstract class TiffRasterData {
      * raster cell).
      * @return the value stored at the specified location
      */
-    public abstract int getIntValue(final int x, final int y, int i);
+    public abstract int getIntValue(int x, int y, int i);
 
     /**
      * Tabulates simple statistics for the raster and returns an instance
