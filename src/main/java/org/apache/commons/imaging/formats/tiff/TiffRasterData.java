@@ -47,23 +47,6 @@ public abstract class TiffRasterData {
     protected final int nCells;
     protected final int planarOffset;
 
-    /**
-     * Construct an instance allocating memory for the specified dimensions.
-     *
-     * @param width a value of 1 or greater
-     * @param height a value of 1 or greater
-     */
-    public TiffRasterData(final int width, final int height) {
-        if (width <= 0 || height <= 0) {
-            throw new IllegalArgumentException(
-                    "Raster dimensions less than or equal to zero are not supported");
-        }
-        this.width = width;
-        this.height = height;
-        this.samplesPerPixel = 1;
-        nCells = width*height;
-        planarOffset = 0;
-    }
 
     /**
      * Construct an instance allocating memory for the specified dimensions.
