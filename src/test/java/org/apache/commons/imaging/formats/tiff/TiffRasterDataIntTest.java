@@ -84,9 +84,9 @@ public class TiffRasterDataIntTest {
             }
         }
     }
-	
-	
-	
+    
+    
+    
     /**
      * Test of setValue method, of class TiffRasterData.
      */
@@ -111,10 +111,16 @@ public class TiffRasterDataIntTest {
      */
     @Test
     public void testGetValue2() {
+        int []data = new int[width*height*2];
+        data[width*height] = 77;
+        TiffRasterDataInt instance = new TiffRasterDataInt(width, height, 2, data);
+        int test = instance.getIntValue(0, 0, 1);
+        assertEquals(77, test, "Get into source data test failed at (0, 0, 1)");
+        
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 final int index = y * width + x;
-                int test = (int) raster.getValue(x, y, 0);
+                test = (int) raster.getValue(x, y, 0);
                 assertEquals(index, test, "Get into source data test failed at (" + x + "," + y + ")");
                 test = raster.getIntValue(x, y, 0);
                 assertEquals(index, test, "Get into source data test failed at (" + x + "," + y + ")");
@@ -199,7 +205,7 @@ public class TiffRasterDataIntTest {
         assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataInt(2, 10, s), "Constructor did not detect insufficient input array size");
         assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataInt(2, 3, 2, s), "Constructor did not detect insufficient input array size");
     }
- 
+
 
     /**
      * Test of access with bad coordinates, of class TiffRasterData.

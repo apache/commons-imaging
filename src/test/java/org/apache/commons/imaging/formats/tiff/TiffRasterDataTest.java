@@ -170,6 +170,8 @@ public class TiffRasterDataTest {
     public void testGetData() {
         final float[] result = raster.getData();
         assertArrayEquals(data, result);
+        int samplesPerPixel = raster.getSamplesPerPixel();
+        assertEquals(1, samplesPerPixel, "Incorrect number of samples per pixel");
     }
 
     /**
@@ -217,23 +219,11 @@ public class TiffRasterDataTest {
      */
     @Test
     public void testBadCoordinates() {
-
-        try{
-            final float []f = new float[100];
-            final TiffRasterData raster = new TiffRasterDataFloat(10, 10, f);
-            raster.getValue(11, 11);
-            fail("Access method getValue() did not detect bad coordinates");
-        }catch(final IllegalArgumentException illArgEx){
-            // success!
-        }
-        try{
-            final float []f = new float[100];
-            final TiffRasterData raster = new TiffRasterDataFloat(10, 10, f);
-            raster.setValue(11, 11, 5.0f);
-            fail("Access method setValue() did not detect bad coordinates");
-        }catch(final IllegalArgumentException illArgEx){
-            // success!
-        }
+        final float []f = new float[100];
+        final TiffRasterData instance = new TiffRasterDataFloat(10, 10, 1, f);
+        assertThrows(IllegalArgumentException.class, ()->instance.getValue(11, 11),       "Access method getValue() did not detect bad coordinates");
+        assertThrows(IllegalArgumentException.class, ()->instance.setValue(11, 11, 5.0f), "Access method setValue() did not detect bad coordinates");
+        assertThrows(IllegalArgumentException.class, ()->instance.getValue(1, 1, 2),  "Access method setValue() did not detect bad sample index");
     }
 
 }
