@@ -93,6 +93,10 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
         testFiles.add(writeFile(ByteOrder.BIG_ENDIAN,    false, TiffPlanarConfiguration.CHUNKY));
         testFiles.add(writeFile(ByteOrder.LITTLE_ENDIAN, true, TiffPlanarConfiguration.CHUNKY));
         testFiles.add(writeFile(ByteOrder.BIG_ENDIAN,    true, TiffPlanarConfiguration.CHUNKY));
+        testFiles.add(writeFile(ByteOrder.LITTLE_ENDIAN, false, TiffPlanarConfiguration.PLANAR));
+        testFiles.add(writeFile(ByteOrder.BIG_ENDIAN,    false, TiffPlanarConfiguration.PLANAR));
+        testFiles.add(writeFile(ByteOrder.LITTLE_ENDIAN, true, TiffPlanarConfiguration.PLANAR));
+        testFiles.add(writeFile(ByteOrder.BIG_ENDIAN,    true, TiffPlanarConfiguration.PLANAR));
  
         for(File testFile : testFiles){
             final String name = testFile.getName();
@@ -154,7 +158,8 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
         nBytesInBlock = nRowsInBlock * nColsInBlock * bytesPerSample;
 
         byte[][] blocks;
-            blocks = this.getBytesForOutput32(nRowsInBlock, nColsInBlock, byteOrder, planarConfiguration);
+            blocks = this.getBytesForOutput32(nRowsInBlock, nColsInBlock, byteOrder, 
+            useTiles, planarConfiguration);
  
         final TiffOutputSet outputSet = new TiffOutputSet(byteOrder);
         final TiffOutputDirectory outDir = outputSet.addRootDirectory();
@@ -182,7 +187,7 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
             outDir.add(TiffTagConstants.TIFF_TAG_TILE_LENGTH, nRowsInBlock);
             outDir.add(TiffTagConstants.TIFF_TAG_TILE_BYTE_COUNTS, nBytesInBlock);
         } else {
-            outDir.add(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP, 2);
+            outDir.add(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP, nRowsInBlock);
             outDir.add(TiffTagConstants.TIFF_TAG_STRIP_BYTE_COUNTS, nBytesInBlock);
         }
 
@@ -228,7 +233,8 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
      */
     private byte[][] getBytesForOutput32( 
         final int nRowsInBlock, final int nColsInBlock,
-        ByteOrder byteOrder, TiffPlanarConfiguration planarConfiguration ) {
+        ByteOrder byteOrder, 
+        boolean useTiles, TiffPlanarConfiguration planarConfiguration ) {
         final int nColsOfBlocks = (width + nColsInBlock - 1) / nColsInBlock;
         final int nRowsOfBlocks = (height + nRowsInBlock + 1) / nRowsInBlock;
         final int bytesPerPixel = 4 * samplesPerPixel;
@@ -263,7 +269,36 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
                 }
             }
         }else{
-            // Not implemented yet
+            for (int i = 0; i < height; i++) {
+                final int blockRow = i / nRowsInBlock;
+                final int rowInBlock = i - blockRow * nRowsInBlock;
+                int blockPlanarOffset = nRowsInBlock*nColsInBlock;
+                if(!useTiles && (blockRow+1)*nRowsInBlock>height){
+                     int nRowsAdjusted = height - blockRow*nRowsInBlock;
+                     blockPlanarOffset = nRowsAdjusted * nColsInBlock;
+                }
+                for (int j = 0; j < width; j++) {
+                    final int blockCol = j / nColsInBlock;
+                    final int colInBlock = j - blockCol * nColsInBlock;
+                    final byte[] b = blocks[blockRow * nColsOfBlocks + blockCol];  // reference to relevant block
+                    for(int k=0; k<2; k++){
+                        final float sValue = fSample[k*width*height + i * width + j];
+                        final int sample = Float.floatToRawIntBits(sValue);
+                        final int offset = (k * blockPlanarOffset + rowInBlock * nColsInBlock + colInBlock)* 4;
+                        if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
+                            b[offset] = (byte) (sample & 0xff);
+                            b[offset + 1] = (byte) ((sample >> 8) & 0xff);
+                            b[offset + 2] = (byte) ((sample >> 16) & 0xff);
+                            b[offset + 3] = (byte) ((sample >> 24) & 0xff);
+                        } else {
+                            b[offset] = (byte) ((sample >> 24) & 0xff);
+                            b[offset + 1] = (byte) ((sample >> 16) & 0xff);
+                            b[offset + 2] = (byte) ((sample >> 8) & 0xff);
+                            b[offset + 3] = (byte) (sample & 0xff);
+                        }
+                    }
+                }
+            }
         }
 
         return blocks;
