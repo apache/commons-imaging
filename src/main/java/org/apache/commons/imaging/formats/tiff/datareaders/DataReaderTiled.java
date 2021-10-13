@@ -55,15 +55,15 @@ public final class DataReaderTiled extends ImageDataReader {
     private final TiffImageData.Tiles imageData;
 
     public DataReaderTiled(final TiffDirectory directory,
-            final PhotometricInterpreter photometricInterpreter, final int tileWidth,
-            final int tileLength, final int bitsPerPixel, final int[] bitsPerSample,
-            final int predictor, final int samplesPerPixel, final int sampleFormat,
-            final int width, final int height,
-            final int compression,
-            final TiffPlanarConfiguration planarConfiguration,
-            final ByteOrder byteOrder, final TiffImageData.Tiles imageData) {
+        final PhotometricInterpreter photometricInterpreter, final int tileWidth,
+        final int tileLength, final int bitsPerPixel, final int[] bitsPerSample,
+        final int predictor, final int samplesPerPixel, final int sampleFormat,
+        final int width, final int height,
+        final int compression,
+        final TiffPlanarConfiguration planarConfiguration,
+        final ByteOrder byteOrder, final TiffImageData.Tiles imageData) {
         super(directory, photometricInterpreter, bitsPerSample, predictor,
-                samplesPerPixel, sampleFormat, width, height, planarConfiguration);
+            samplesPerPixel, sampleFormat, width, height, planarConfiguration);
 
         this.tileWidth = tileWidth;
         this.tileLength = tileLength;
@@ -76,7 +76,7 @@ public final class DataReaderTiled extends ImageDataReader {
     }
 
     private void interpretTile(final ImageBuilder imageBuilder, final byte[] bytes,
-            final int startX, final int startY, final int xLimit, final int yLimit) throws ImageReadException, IOException {
+        final int startX, final int startY, final int xLimit, final int yLimit) throws ImageReadException, IOException {
 
         // March 2020 change to handle floating-point with compression
         // for the compressed floating-point, there is a standard that allows
@@ -100,8 +100,8 @@ public final class DataReaderTiled extends ImageDataReader {
             }
             final int[] samples = new int[4];
             final int[] b = unpackFloatingPointSamples(
-                    j1 - j0, i1 - i0, tileWidth, bytes,
-                    bitsPerPixel, byteOrder);
+                j1 - j0, i1 - i0, tileWidth, bytes,
+                bitsPerPixel, byteOrder);
             for (int i = i0; i < i1; i++) {
                 final int row = i - startY;
                 final int rowOffset = row * tileWidth;
@@ -110,7 +110,7 @@ public final class DataReaderTiled extends ImageDataReader {
                     int k = (rowOffset + column) * samplesPerPixel;
                     samples[0] = b[k];
                     photometricInterpreter.interpretPixel(
-                            imageBuilder, samples, j, i);
+                        imageBuilder, samples, j, i);
                 }
             }
             return;
@@ -128,7 +128,7 @@ public final class DataReaderTiled extends ImageDataReader {
         final boolean allSamplesAreOneByte = isHomogenous(8);
 
         if ((bitsPerPixel == 24 || bitsPerPixel == 32) && allSamplesAreOneByte
-                && photometricInterpreter instanceof PhotometricInterpreterRgb) {
+            && photometricInterpreter instanceof PhotometricInterpreterRgb) {
             final int i0 = startY;
             int i1 = startY + tileLength;
             if (i1 > yLimit) {
@@ -153,9 +153,9 @@ public final class DataReaderTiled extends ImageDataReader {
                     int k = (i - i0) * tileWidth * 3;
                     for (int j = j0; j < j1; j++, k += 3) {
                         final int rgb = 0xff000000
-                                | (bytes[k] << 16)
-                                | ((bytes[k + 1] & 0xff) << 8)
-                                | (bytes[k + 2] & 0xff);
+                            | (bytes[k] << 16)
+                            | ((bytes[k + 1] & 0xff) << 8)
+                            | (bytes[k + 2] & 0xff);
                         imageBuilder.setRGB(j, i, rgb);
                     }
                 }
@@ -166,10 +166,10 @@ public final class DataReaderTiled extends ImageDataReader {
                     int k = (i - i0) * tileWidth * 4;
                     for (int j = j0; j < j1; j++, k += 4) {
                         final int rgb
-                                = ((bytes[k] & 0xff) << 16)
-                                | ((bytes[k + 1] & 0xff) << 8)
-                                | (bytes[k + 2] & 0xff)
-                                | (bytes[k + 3] << 24);
+                            = ((bytes[k] & 0xff) << 16)
+                            | ((bytes[k + 1] & 0xff) << 8)
+                            | (bytes[k + 2] & 0xff)
+                            | (bytes[k + 3] << 24);
                         imageBuilder.setRGB(j, i, rgb);
                     }
                 }
@@ -218,8 +218,8 @@ public final class DataReaderTiled extends ImageDataReader {
 
     @Override
     public ImageBuilder readImageData(final Rectangle subImageSpecification,
-            final boolean hasAlpha,
-            final boolean isAlphaPreMultiplied)
+        final boolean hasAlpha,
+        final boolean isAlphaPreMultiplied)
             throws ImageReadException, IOException {
 
         final Rectangle subImage;
@@ -252,8 +252,8 @@ public final class DataReaderTiled extends ImageDataReader {
         final int y0 = row0 * tileLength;
 
         final ImageBuilder workingBuilder
-                = new ImageBuilder(workingWidth, workingHeight,
-                        hasAlpha, isAlphaPreMultiplied);
+            = new ImageBuilder(workingWidth, workingHeight,
+                hasAlpha, isAlphaPreMultiplied);
 
         for (int iRow = row0; iRow <= row1; iRow++) {
             for (int iCol = col0; iCol <= col1; iCol++) {
@@ -275,10 +275,10 @@ public final class DataReaderTiled extends ImageDataReader {
         }
 
         return workingBuilder.getSubset(
-                subImage.x - x0,
-                subImage.y - y0,
-                subImage.width,
-                subImage.height);
+            subImage.x - x0,
+            subImage.y - y0,
+            subImage.width,
+            subImage.height);
     }
 
     @Override

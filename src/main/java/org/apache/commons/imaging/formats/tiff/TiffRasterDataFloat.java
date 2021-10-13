@@ -98,7 +98,7 @@ public class TiffRasterDataFloat extends TiffRasterData {
 
         if (data == null || data.length < nCells) {
             throw new IllegalArgumentException(
-                    "Specified data does not contain sufficient elements");
+                "Specified data does not contain sufficient elements");
         }
         this.data = data;
     }

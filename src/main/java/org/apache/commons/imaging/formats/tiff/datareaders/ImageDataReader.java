@@ -186,9 +186,9 @@ public abstract class ImageDataReader {
     protected final TiffPlanarConfiguration planarConfiguration;
 
     public ImageDataReader(final TiffDirectory directory,
-            final PhotometricInterpreter photometricInterpreter, final int[] bitsPerSample,
-            final int predictor, final int samplesPerPixel, final int sampleFormat,
-            final int width, final int height, final TiffPlanarConfiguration planarConfiguration) {
+        final PhotometricInterpreter photometricInterpreter, final int[] bitsPerSample,
+        final int predictor, final int samplesPerPixel, final int sampleFormat,
+        final int width, final int height, final TiffPlanarConfiguration planarConfiguration) {
         this.directory = directory;
         this.photometricInterpreter = photometricInterpreter;
         this.bitsPerSample = bitsPerSample;
@@ -314,72 +314,72 @@ public abstract class ImageDataReader {
         }
 
         switch (compression) {
-            case TIFF_COMPRESSION_UNCOMPRESSED: // None;
-                return compressedOrdered;
-            case TIFF_COMPRESSION_CCITT_1D: // CCITT Group 3 1-Dimensional Modified
-                // Huffman run-length encoding.
-                return T4AndT6Compression.decompressModifiedHuffman(compressedOrdered,
-                        tileWidth, tileHeight);
-            case TIFF_COMPRESSION_CCITT_GROUP_3: {
-                int t4Options = 0;
-                final TiffField field = directory.findField(TiffTagConstants.TIFF_TAG_T4_OPTIONS);
-                if (field != null) {
-                    t4Options = field.getIntValue();
-                }
-                final boolean is2D = (t4Options & TIFF_FLAG_T4_OPTIONS_2D) != 0;
-                final boolean usesUncompressedMode = (t4Options & TIFF_FLAG_T4_OPTIONS_UNCOMPRESSED_MODE) != 0;
-                if (usesUncompressedMode) {
-                    throw new ImageReadException(
-                            "T.4 compression with the uncompressed mode extension is not yet supported");
-                }
-                final boolean hasFillBitsBeforeEOL = (t4Options & TIFF_FLAG_T4_OPTIONS_FILL) != 0;
-                if (is2D) {
-                    return T4AndT6Compression.decompressT4_2D(compressedOrdered,
-                            tileWidth, tileHeight, hasFillBitsBeforeEOL);
-                }
-                return T4AndT6Compression.decompressT4_1D(compressedOrdered,
+        case TIFF_COMPRESSION_UNCOMPRESSED: // None;
+            return compressedOrdered;
+        case TIFF_COMPRESSION_CCITT_1D: // CCITT Group 3 1-Dimensional Modified
+                                        // Huffman run-length encoding.
+            return T4AndT6Compression.decompressModifiedHuffman(compressedOrdered,
+                    tileWidth, tileHeight);
+        case TIFF_COMPRESSION_CCITT_GROUP_3: {
+            int t4Options = 0;
+            final TiffField field = directory.findField(TiffTagConstants.TIFF_TAG_T4_OPTIONS);
+            if (field != null) {
+                t4Options = field.getIntValue();
+            }
+            final boolean is2D = (t4Options & TIFF_FLAG_T4_OPTIONS_2D) != 0;
+            final boolean usesUncompressedMode = (t4Options & TIFF_FLAG_T4_OPTIONS_UNCOMPRESSED_MODE) != 0;
+            if (usesUncompressedMode) {
+                throw new ImageReadException(
+                        "T.4 compression with the uncompressed mode extension is not yet supported");
+            }
+            final boolean hasFillBitsBeforeEOL = (t4Options & TIFF_FLAG_T4_OPTIONS_FILL) != 0;
+            if (is2D) {
+                return T4AndT6Compression.decompressT4_2D(compressedOrdered,
                         tileWidth, tileHeight, hasFillBitsBeforeEOL);
             }
-            case TIFF_COMPRESSION_CCITT_GROUP_4: {
-                int t6Options = 0;
-                final TiffField field = directory.findField(TiffTagConstants.TIFF_TAG_T6_OPTIONS);
-                if (field != null) {
-                    t6Options = field.getIntValue();
-                }
-                final boolean usesUncompressedMode = (t6Options & TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE) != 0;
-                if (usesUncompressedMode) {
-                    throw new ImageReadException(
-                            "T.6 compression with the uncompressed mode extension is not yet supported");
-                }
-                return T4AndT6Compression.decompressT6(compressedOrdered, tileWidth,
-                        tileHeight);
+            return T4AndT6Compression.decompressT4_1D(compressedOrdered,
+                    tileWidth, tileHeight, hasFillBitsBeforeEOL);
+        }
+        case TIFF_COMPRESSION_CCITT_GROUP_4: {
+            int t6Options = 0;
+            final TiffField field = directory.findField(TiffTagConstants.TIFF_TAG_T6_OPTIONS);
+            if (field != null) {
+                t6Options = field.getIntValue();
             }
-            case TIFF_COMPRESSION_LZW: {
-                final InputStream is = new ByteArrayInputStream(compressedOrdered);
-
-                final int lzwMinimumCodeSize = 8;
-
-                final MyLzwDecompressor myLzwDecompressor = new MyLzwDecompressor(
-                        lzwMinimumCodeSize, ByteOrder.BIG_ENDIAN);
-
-                myLzwDecompressor.setTiffLZWMode();
-
-                return myLzwDecompressor.decompress(is, expectedSize);
+            final boolean usesUncompressedMode = (t6Options & TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE) != 0;
+            if (usesUncompressedMode) {
+                throw new ImageReadException(
+                        "T.6 compression with the uncompressed mode extension is not yet supported");
             }
+            return T4AndT6Compression.decompressT6(compressedOrdered, tileWidth,
+                    tileHeight);
+        }
+        case TIFF_COMPRESSION_LZW: {
+            final InputStream is = new ByteArrayInputStream(compressedOrdered);
 
-            // Packbits
-            case TIFF_COMPRESSION_PACKBITS: {
-                return new PackBits().decompress(compressedOrdered, expectedSize);
-            }
+            final int lzwMinimumCodeSize = 8;
 
-            // deflate
-            case TIFF_COMPRESSION_DEFLATE_ADOBE:
-            case TIFF_COMPRESSION_DEFLATE_PKZIP: {
-                return ZlibDeflate.decompress(compressedInput, expectedSize);
-            }
+            final MyLzwDecompressor myLzwDecompressor = new MyLzwDecompressor(
+                    lzwMinimumCodeSize, ByteOrder.BIG_ENDIAN);
 
-            default:
-                throw new ImageReadException("Tiff: unknown/unsupported compression: " + compression);
+            myLzwDecompressor.setTiffLZWMode();
+
+            return myLzwDecompressor.decompress(is, expectedSize);
+        }
+
+        // Packbits
+        case TIFF_COMPRESSION_PACKBITS: {
+            return new PackBits().decompress(compressedOrdered, expectedSize);
+        }
+
+        // deflate
+        case TIFF_COMPRESSION_DEFLATE_ADOBE:
+        case TIFF_COMPRESSION_DEFLATE_PKZIP: {
+            return ZlibDeflate.decompress(compressedInput, expectedSize);
+        }
+
+        default:
+            throw new ImageReadException("Tiff: unknown/unsupported compression: " + compression);
         }
     }
 
@@ -409,13 +409,13 @@ public abstract class ImageDataReader {
      * @throws ImageReadException in the event of an invalid format.
      */
     protected int[] unpackFloatingPointSamples(
-            final int width,
-            final int height,
-            final int scanSize,
-            final byte[] bytes,
-            final int bitsPerPixel,
-            final ByteOrder byteOrder)
-            throws ImageReadException {
+        final int width,
+        final int height,
+        final int scanSize,
+        final byte[] bytes,
+        final int bitsPerPixel,
+        final ByteOrder byteOrder)
+        throws ImageReadException {
         final int bitsPerSample = bitsPerPixel / samplesPerPixel;
         final int bytesPerSample = bitsPerSample / 8;
         final int bytesPerScan = scanSize * samplesPerPixel * bytesPerSample;
@@ -429,9 +429,9 @@ public abstract class ImageDataReader {
             // that can be used for testing and analysis.
             if (bitsPerPixel / samplesPerPixel != 32) {
                 throw new ImageReadException(
-                        "Imaging does not yet support floating-point data"
-                        + " with predictor type 3 for "
-                        + bitsPerPixel + " bits per sample");
+                    "Imaging does not yet support floating-point data"
+                    + " with predictor type 3 for "
+                    + bitsPerPixel + " bits per sample");
             }
 
             if (planarConfiguration == TiffPlanarConfiguration.CHUNKY) {
@@ -458,9 +458,9 @@ public abstract class ImageDataReader {
                         // Pack the 4 byte components into a single integer
                         // in the byte order used by the TIFF standard
                         samples[index++] = ((a & 0xff) << 24)
-                                | ((b & 0xff) << 16)
-                                | ((c & 0xff) << 8)
-                                | (d & 0xff);
+                            | ((b & 0xff) << 16)
+                            | ((c & 0xff) << 8)
+                            | (d & 0xff);
                     }
                 }
             } else {
@@ -491,9 +491,9 @@ public abstract class ImageDataReader {
                             // Pack the 4 byte components into a single integer
                             // in the byte order used by the TIFF standard
                             samples[index++] = ((a & 0xff) << 24)
-                                    | ((b & 0xff) << 16)
-                                    | ((c & 0xff) << 8)
-                                    | (d & 0xff);
+                                | ((b & 0xff) << 16)
+                                | ((c & 0xff) << 8)
+                                | (d & 0xff);
                         }
                     }
                 }
@@ -519,23 +519,23 @@ public abstract class ImageDataReader {
                     long sbits;
                     if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
                         sbits = (b7 << 56)
-                                | (b6 << 48)
-                                | (b5 << 40)
-                                | (b4 << 32)
-                                | (b3 << 24)
-                                | (b2 << 16)
-                                | (b1 << 8)
-                                | b0;
+                            | (b6 << 48)
+                            | (b5 << 40)
+                            | (b4 << 32)
+                            | (b3 << 24)
+                            | (b2 << 16)
+                            | (b1 << 8)
+                            | b0;
 
                     } else {
                         sbits = (b0 << 56)
-                                | (b1 << 48)
-                                | (b2 << 40)
-                                | (b3 << 32)
-                                | (b4 << 24)
-                                | (b5 << 16)
-                                | (b6 << 8)
-                                | b7;
+                            | (b1 << 48)
+                            | (b2 << 40)
+                            | (b3 << 32)
+                            | (b4 << 24)
+                            | (b5 << 16)
+                            | (b6 << 8)
+                            | b7;
                     }
                     // since the photometric interpreter does not
                     // currently support doubles, we need to replace this
@@ -557,17 +557,17 @@ public abstract class ImageDataReader {
                     int sbits;
                     if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
                         sbits
-                                = (b3 << 24)
-                                | (b2 << 16)
-                                | (b1 << 8)
-                                | b0;
+                            = (b3 << 24)
+                            | (b2 << 16)
+                            | (b1 << 8)
+                            | b0;
 
                     } else {
                         sbits
-                                = (b0 << 24)
-                                | (b1 << 16)
-                                | (b2 << 8)
-                                | b3;
+                            = (b0 << 24)
+                            | (b1 << 16)
+                            | (b2 << 8)
+                            | b3;
                     }
                     // since the photometric interpreter does not
                     // currently support doubles, we need to replace this
@@ -578,8 +578,8 @@ public abstract class ImageDataReader {
             }
         } else {
             throw new ImageReadException(
-                    "Imaging does not support floating-point samples with "
-                    + bitsPerPixel + " bits per sample");
+                "Imaging does not support floating-point samples with "
+                + bitsPerPixel + " bits per sample");
         }
 
         return samples;
@@ -794,9 +794,9 @@ public abstract class ImageDataReader {
      * @param rasterData the raster data.
      */
     void transferBlockToRaster(final int xBlock, final int yBlock,
-            final int blockWidth, final int blockHeight, final int[] blockData,
-            final int xRaster, final int yRaster,
-            final int rasterWidth, final int rasterHeight, final int[] rasterData) {
+        final int blockWidth, final int blockHeight, final int[] blockData,
+        final int xRaster, final int yRaster,
+        final int rasterWidth, final int rasterHeight, final int[] rasterData) {
 
         // xR0, yR0 are the coordinates within the raster (upper-left corner)
         // xR1, yR1 are ONE PAST the coordinates of the lower-right corner
@@ -873,5 +873,5 @@ public abstract class ImageDataReader {
      * @throws IOException in the event of I/O error.
      */
     public abstract TiffRasterData readRasterData(Rectangle subImage)
-            throws ImageReadException, IOException;
+        throws ImageReadException, IOException;
 }

@@ -291,6 +291,11 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
                 final int rowInBlock = i - blockRow * nRowsInBlock;
                 int blockPlanarOffset = nRowsInBlock*nColsInBlock;
                 if(!useTiles && (blockRow+1)*nRowsInBlock>height){
+                    // For TIFF files using the Strip format, the convention
+                    // is to not include any extra padding in the data.  So if the
+                    // height of the image is not evenly divided by the number
+                    // of rows per strip, an adjustmnet is made to the size of the block.
+                    // However, the TIFF specification calls for tiles to always be padded.
                      int nRowsAdjusted = height - blockRow*nRowsInBlock;
                      blockPlanarOffset = nRowsAdjusted * nColsInBlock;
                 }

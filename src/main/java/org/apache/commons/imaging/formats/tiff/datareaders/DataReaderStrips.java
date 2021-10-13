@@ -51,15 +51,15 @@ public final class DataReaderStrips extends ImageDataReader {
     private final TiffImageData.Strips imageData;
 
     public DataReaderStrips(final TiffDirectory directory,
-            final PhotometricInterpreter photometricInterpreter, final int bitsPerPixel,
-            final int[] bitsPerSample, final int predictor,
-            final int samplesPerPixel, final int sampleFormat, final int width,
-            final int height, final int compression,
-            final TiffPlanarConfiguration planarConfiguration,
-            final ByteOrder byteOrder,
-            final int rowsPerStrip, final TiffImageData.Strips imageData) {
+        final PhotometricInterpreter photometricInterpreter, final int bitsPerPixel,
+        final int[] bitsPerSample, final int predictor,
+        final int samplesPerPixel, final int sampleFormat, final int width,
+        final int height, final int compression,
+        final TiffPlanarConfiguration planarConfiguration,
+        final ByteOrder byteOrder,
+        final int rowsPerStrip, final TiffImageData.Strips imageData) {
         super(directory, photometricInterpreter, bitsPerSample, predictor,
-                samplesPerPixel, sampleFormat, width, height, planarConfiguration);
+            samplesPerPixel, sampleFormat, width, height, planarConfiguration);
 
         this.bitsPerPixel = bitsPerPixel;
         this.compression = compression;
@@ -91,14 +91,14 @@ public final class DataReaderStrips extends ImageDataReader {
             y += nRows;
             final int[] samples = new int[1];
             final int[] b = unpackFloatingPointSamples(
-                    width, i1 - i0, width, bytes, bitsPerPixel, byteOrder);
+                width, i1 - i0, width, bytes, bitsPerPixel, byteOrder);
 
             for (int i = i0; i < i1; i++) {
                 for (int j = 0; j < width; j++) {
                     samples[0] = b[k];
                     k += samplesPerPixel;
                     photometricInterpreter.interpretPixel(imageBuilder,
-                            samples, j, i);
+                        samples, j, i);
                 }
             }
 
@@ -163,13 +163,13 @@ public final class DataReaderStrips extends ImageDataReader {
                 for (int j = 0; j < width; j++) {
                     samples[0] = bytes[k++] & 0xff;
                     photometricInterpreter.interpretPixel(imageBuilder,
-                            samples, j, i);
+                        samples, j, i);
                 }
             }
             return;
         }
         if ((bitsPerPixel == 24 || bitsPerPixel == 32) && allSamplesAreOneByte
-                && photometricInterpreter instanceof PhotometricInterpreterRgb) {
+            && photometricInterpreter instanceof PhotometricInterpreterRgb) {
             int k = 0;
             int nRows = pixelsPerStrip / width;
             if (y + nRows > yLimit) {
@@ -189,9 +189,9 @@ public final class DataReaderStrips extends ImageDataReader {
                 for (int i = i0; i < i1; i++) {
                     for (int j = 0; j < width; j++, k += 3) {
                         final int rgb = 0xff000000
-                                | (bytes[k] << 16)
-                                | ((bytes[k + 1] & 0xff) << 8)
-                                | (bytes[k + 2] & 0xff);
+                            | (bytes[k] << 16)
+                            | ((bytes[k + 1] & 0xff) << 8)
+                            | (bytes[k + 2] & 0xff);
                         imageBuilder.setRGB(j, i, rgb);
                     }
                 }
@@ -201,10 +201,10 @@ public final class DataReaderStrips extends ImageDataReader {
                 for (int i = i0; i < i1; i++) {
                     for (int j = 0; j < width; j++, k += 4) {
                         final int rgb
-                                = ((bytes[k] & 0xff) << 16)
-                                | ((bytes[k + 1] & 0xff) << 8)
-                                | (bytes[k + 2] & 0xff)
-                                | (bytes[k + 3] << 24);
+                            = ((bytes[k] & 0xff) << 16)
+                            | ((bytes[k + 1] & 0xff) << 8)
+                            | (bytes[k + 2] & 0xff)
+                            | (bytes[k + 3] << 24);
                         imageBuilder.setRGB(j, i, rgb);
                     }
                 }
@@ -246,9 +246,9 @@ public final class DataReaderStrips extends ImageDataReader {
 
     @Override
     public ImageBuilder readImageData(final Rectangle subImageSpecification,
-            final boolean hasAlpha,
-            final boolean isAlphaPreMultiplied)
-            throws ImageReadException, IOException {
+        final boolean hasAlpha,
+        final boolean isAlphaPreMultiplied)
+        throws ImageReadException, IOException {
 
         final Rectangle subImage;
         if (subImageSpecification == null) {
@@ -277,11 +277,9 @@ public final class DataReaderStrips extends ImageDataReader {
         final int y0 = strip0 * rowsPerStrip;
         final int yLimit = subImage.y - y0 + subImage.height;
 
-        // TO DO: we can probably save some processing by using yLimit instead
-        //        or working
         final ImageBuilder workingBuilder
-                = new ImageBuilder(width, workingHeight,
-                        hasAlpha, isAlphaPreMultiplied);
+            = new ImageBuilder(width, workingHeight,
+                hasAlpha, isAlphaPreMultiplied);
         if (planarConfiguration != TiffPlanarConfiguration.PLANAR) {
             for (int strip = strip0; strip <= strip1; strip++) {
                 final long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
@@ -297,10 +295,10 @@ public final class DataReaderStrips extends ImageDataReader {
                         (int) bytesPerStrip, width, (int) rowsInThisStrip);
 
                 interpretStrip(
-                        workingBuilder,
-                        decompressed,
-                        (int) pixelsPerStrip,
-                        yLimit);
+                    workingBuilder,
+                    decompressed,
+                    (int) pixelsPerStrip,
+                    yLimit);
             }
         } else {
             final int nStripsInPlane = imageData.getImageDataLength() / 3;
@@ -317,7 +315,7 @@ public final class DataReaderStrips extends ImageDataReader {
                     final int planeStrip = iPlane * nStripsInPlane + strip;
                     final byte[] compressed = imageData.getImageData(planeStrip).getData();
                     final byte[] decompressed = decompress(compressed, compression,
-                            (int) bytesPerStrip, width, (int) rowsInThisStrip);
+                        (int) bytesPerStrip, width, (int) rowsInThisStrip);
                     int index = iPlane;
                     for (final byte element : decompressed) {
                         b[index] = element;
