@@ -78,8 +78,8 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
             }
         }
     }
-     
- 
+
+
 
     @Test
     public void test() throws Exception {
@@ -89,15 +89,22 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
         // Note also that the compressed floating-point with predictor=3
         // is processed in other tests, but not here.
         List<File>testFiles = new ArrayList<>();
-        testFiles.add(writeFile(ByteOrder.LITTLE_ENDIAN, false, TiffPlanarConfiguration.CHUNKY));
-        testFiles.add(writeFile(ByteOrder.BIG_ENDIAN,    false, TiffPlanarConfiguration.CHUNKY));
-        testFiles.add(writeFile(ByteOrder.LITTLE_ENDIAN, true, TiffPlanarConfiguration.CHUNKY));
-        testFiles.add(writeFile(ByteOrder.BIG_ENDIAN,    true, TiffPlanarConfiguration.CHUNKY));
-        testFiles.add(writeFile(ByteOrder.LITTLE_ENDIAN, false, TiffPlanarConfiguration.PLANAR));
-        testFiles.add(writeFile(ByteOrder.BIG_ENDIAN,    false, TiffPlanarConfiguration.PLANAR));
-        testFiles.add(writeFile(ByteOrder.LITTLE_ENDIAN, true, TiffPlanarConfiguration.PLANAR));
-        testFiles.add(writeFile(ByteOrder.BIG_ENDIAN,    true, TiffPlanarConfiguration.PLANAR));
- 
+        testFiles.add(writeFile(ByteOrder.LITTLE_ENDIAN, false, false, TiffPlanarConfiguration.CHUNKY));
+        testFiles.add(writeFile(ByteOrder.BIG_ENDIAN,    false, false, TiffPlanarConfiguration.CHUNKY));
+        testFiles.add(writeFile(ByteOrder.LITTLE_ENDIAN, true, false, TiffPlanarConfiguration.CHUNKY));
+        testFiles.add(writeFile(ByteOrder.BIG_ENDIAN,    true, false, TiffPlanarConfiguration.CHUNKY));
+        testFiles.add(writeFile(ByteOrder.LITTLE_ENDIAN, false, false, TiffPlanarConfiguration.PLANAR));
+        testFiles.add(writeFile(ByteOrder.BIG_ENDIAN,    false, false, TiffPlanarConfiguration.PLANAR));
+        testFiles.add(writeFile(ByteOrder.LITTLE_ENDIAN, true, false, TiffPlanarConfiguration.PLANAR));
+        testFiles.add(writeFile(ByteOrder.BIG_ENDIAN,    true, false, TiffPlanarConfiguration.PLANAR));
+
+        // To exercise the horizontal-differencing-predictor logic, we include a writer that will
+        // reorganize the bytes into the form used by the floating-pont horizontal predictor.
+        // This test does not apply data compression, but it does apply the predictor.
+        // Note that although the TIFF predictor does not require big-endian formats, per se,
+        // the test logic implemented here does.
+        testFiles.add(writeFile(ByteOrder.BIG_ENDIAN, true, true, TiffPlanarConfiguration.PLANAR));
+
         for(File testFile : testFiles){
             final String name = testFile.getName();
             final ByteSourceFile byteSource = new ByteSourceFile(testFile);
@@ -127,18 +134,20 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
     }
 
     private File writeFile(
-        final ByteOrder byteOrder, 
+        final ByteOrder byteOrder,
         final boolean useTiles,
+        final boolean usePredictorForTiles,
         TiffPlanarConfiguration planarConfiguration ) throws IOException, ImageWriteException {
- 
-        final String name = String.format("FpMultiVarRoundTrip_%s_%s.tiff",
+
+        final String name = String.format("FpMultiVarRoundTrip_%s_%s%s.tiff",
             planarConfiguration==TiffPlanarConfiguration.CHUNKY ? "Chunky" : "Planar",
-            useTiles ? "Tiles" : "Strips");
+            useTiles ? "Tiles" : "Strips",
+            usePredictorForTiles ? "_Predictor" : "");
         final File outputFile = new File(tempDir.toFile(), name);
 
         final int bytesPerSample = 4 * samplesPerPixel;
         final int bitsPerSample =  8 * bytesPerSample;
-        
+
         int nRowsInBlock;
         int nColsInBlock;
         int nBytesInBlock;
@@ -158,9 +167,9 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
         nBytesInBlock = nRowsInBlock * nColsInBlock * bytesPerSample;
 
         byte[][] blocks;
-            blocks = this.getBytesForOutput32(nRowsInBlock, nColsInBlock, byteOrder, 
+            blocks = this.getBytesForOutput32(nRowsInBlock, nColsInBlock, byteOrder,
             useTiles, planarConfiguration);
- 
+
         final TiffOutputSet outputSet = new TiffOutputSet(byteOrder);
         final TiffOutputDirectory outDir = outputSet.addRootDirectory();
         outDir.add(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH, width);
@@ -174,6 +183,14 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
         outDir.add(TiffTagConstants.TIFF_TAG_COMPRESSION,
             (short) TiffTagConstants.COMPRESSION_VALUE_UNCOMPRESSED);
 
+        if(useTiles && usePredictorForTiles){
+            outDir.add(TiffTagConstants.TIFF_TAG_PREDICTOR,
+            (short) TiffTagConstants.PREDICTOR_VALUE_FLOATING_POINT_DIFFERENCING);
+              for(int iBlock=0; iBlock<blocks.length; iBlock++){
+                  applyTilePredictor(nRowsInBlock, nColsInBlock, blocks[iBlock]);
+              }
+        }
+
         if(planarConfiguration==TiffPlanarConfiguration.CHUNKY){
         outDir.add(TiffTagConstants.TIFF_TAG_PLANAR_CONFIGURATION,
             (short) TiffTagConstants.PLANAR_CONFIGURATION_VALUE_CHUNKY);
@@ -181,7 +198,7 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
                outDir.add(TiffTagConstants.TIFF_TAG_PLANAR_CONFIGURATION,
             (short) TiffTagConstants.PLANAR_CONFIGURATION_VALUE_PLANAR);
         }
-        
+
         if (useTiles) {
             outDir.add(TiffTagConstants.TIFF_TAG_TILE_WIDTH, nColsInBlock);
             outDir.add(TiffTagConstants.TIFF_TAG_TILE_LENGTH, nRowsInBlock);
@@ -231,9 +248,9 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
      * @param byteOrder little endian or big endian
      * @return a valid array of equally sized array.
      */
-    private byte[][] getBytesForOutput32( 
+    private byte[][] getBytesForOutput32(
         final int nRowsInBlock, final int nColsInBlock,
-        ByteOrder byteOrder, 
+        ByteOrder byteOrder,
         boolean useTiles, TiffPlanarConfiguration planarConfiguration ) {
         final int nColsOfBlocks = (width + nColsInBlock - 1) / nColsInBlock;
         final int nRowsOfBlocks = (height + nRowsInBlock + 1) / nRowsInBlock;
@@ -303,5 +320,41 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
 
         return blocks;
     }
- 
+
+    private void applyTilePredictor(int nRowsInBlock, int nColsInBlock, byte[] bytes) {
+        // The floating-point horizonal predictor breaks the samples into
+        // separate sets of bytes.  The first set contains the high-order bytes.
+        // The second the second-highest order bytes, etc.  Once the bytes are
+        // separated, differencing is applied.  This treatment improves the
+        // statistical predictability of the data. By doing so, it improves
+        // its compressibility.
+        //     More extensive discussions of this technique are given in the
+        // Javadoc for the TIFF-specific ImageDataReader class.
+        byte[] b = new byte[bytes.length];
+        int bytesInRow = nColsInBlock * 4;
+        for (int iPlane = 0; iPlane < samplesPerPixel; iPlane++) {
+            // separate out the groups of bytes
+            int planarByteOffset = iPlane * nRowsInBlock * nColsInBlock * 4;
+            for (int i = 0; i < nRowsInBlock; i++) {
+                int aOffset = planarByteOffset + i * bytesInRow;
+                int bOffset = aOffset + nColsInBlock;
+                int cOffset = bOffset + nColsInBlock;
+                int dOffset = cOffset + nColsInBlock;
+                for (int j = 0; j < nColsInBlock; j++) {
+                    b[aOffset + j] = bytes[aOffset + j * 4];
+                    b[bOffset + j] = bytes[aOffset + j * 4 + 1];
+                    b[cOffset + j] = bytes[aOffset + j * 4 + 2];
+                    b[dOffset + j] = bytes[aOffset + j * 4 + 3];
+                }
+                // apply differencing
+                for (int j = bytesInRow - 1; j > 0; j--) {
+                    b[aOffset + j] -= b[aOffset + j - 1];
+                }
+            }
+        }
+        // copy the the results back over the input byte array
+        System.arraycopy(b, 0, bytes, 0, bytes.length);
+    }
+
+
 }
