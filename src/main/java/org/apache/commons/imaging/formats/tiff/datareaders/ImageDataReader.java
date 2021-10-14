@@ -280,13 +280,13 @@ public abstract class ImageDataReader {
         return samples;
     }
 
-    protected void applyPredictorToBlock(final int width, final int height, final int nSamplesPerPixel, final byte[] p) {
-        final int k = width * nSamplesPerPixel;
-        for (int i = 0; i < height; i++) {
-            final int j0 = i * k + nSamplesPerPixel;
-            final int j1 = (i + 1) * k;
-            for (int j = j0; j < j1; j++) {
-                p[j] += p[j - nSamplesPerPixel];
+    protected void applyPredictorToBlock(final int width, final int height, final int nSamplesPerPixel, final byte []p ){
+        final int k = width*nSamplesPerPixel;
+        for(int i=0; i<height; i++){
+            final int j0  = i*k+nSamplesPerPixel;
+            final int j1 = (i+1)*k;
+            for(int j=j0; j<j1; j++){
+                p[j]+=p[j-nSamplesPerPixel];
             }
         }
     }
@@ -612,13 +612,13 @@ public abstract class ImageDataReader {
      * scan-size wide and height height.
      */
     protected int[] unpackIntSamples(
-            final int width,
-            final int height,
-            final int scanSize,
-            final byte[] bytes,
-            final int predictor,
-            final int bitsPerSample,
-            final ByteOrder byteOrder) {
+        final int width,
+        final int height,
+        final int scanSize,
+        final byte[] bytes,
+        final int predictor,
+        final int bitsPerSample,
+        final ByteOrder byteOrder) {
         final int bytesPerSample = bitsPerSample / 8;
         final int nBytes = bytesPerSample * scanSize * height;
         final int length = bytes.length < nBytes ? nBytes / scanSize : height;
