@@ -79,8 +79,6 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
         }
     }
 
-
-
     @Test
     public void test() throws Exception {
         // we set up the 32 and 64 bit test cases.  At this time,
@@ -360,6 +358,5 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
         // copy the the results back over the input byte array
         System.arraycopy(b, 0, bytes, 0, bytes.length);
     }
-
 
 }

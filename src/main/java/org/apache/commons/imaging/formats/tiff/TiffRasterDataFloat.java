@@ -201,7 +201,6 @@ public class TiffRasterDataFloat extends TiffRasterData {
         data[index] = value;
     }
 
-
     /**
      * Gets the value stored at the specified raster coordinates.
      *

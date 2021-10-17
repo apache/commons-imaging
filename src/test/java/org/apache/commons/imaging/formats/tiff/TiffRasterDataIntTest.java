@@ -84,9 +84,7 @@ public class TiffRasterDataIntTest {
             }
         }
     }
-    
-    
-    
+
     /**
      * Test of setValue method, of class TiffRasterData.
      */
@@ -127,7 +125,6 @@ public class TiffRasterDataIntTest {
             }
         }
     }
-
 
     /**
      * Test of getSimpleStatistics method, of class TiffRasterData.
@@ -190,7 +187,6 @@ public class TiffRasterDataIntTest {
         assertTrue(dataType == TiffRasterDataType.INTEGER, "Unexpected data type "+dataType.name());
     }
 
-
      /**
      * Test of constructors with bad arguments, of class TiffRasterDataInt.
      */
@@ -205,7 +201,6 @@ public class TiffRasterDataIntTest {
         assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataInt(2, 10, s), "Constructor did not detect insufficient input array size");
         assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataInt(2, 3, 2, s), "Constructor did not detect insufficient input array size");
     }
-
 
     /**
      * Test of access with bad coordinates, of class TiffRasterData.
@@ -230,5 +225,4 @@ public class TiffRasterDataIntTest {
             // success!
         }
     }
-
 }

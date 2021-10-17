@@ -142,7 +142,7 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
  * <li>32-bit floating-point data</li>
  * <li>Uncompressed, Deflate, or LZW compression</li>
  * <li>Optional horizontal predictors used with compression</li>
- * <li>PlanarConfiguration interleaved (CHUNKY) or non-interleaved (PLANAR)
+ * <li>PlanarConfiguration interleaved (CHUNKY) or non-interleaved (PLANAR)</li>
  * </ul>
  * <p>
  * Note that integer formats are not supported at this time.

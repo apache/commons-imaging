@@ -56,9 +56,13 @@ public abstract class TiffRasterData {
      * @param samplesPerPixel a value of 1 or greater
      */
     public TiffRasterData(final int width, final int height, int samplesPerPixel) {
-        if (width <= 0 || height <= 0 || samplesPerPixel <= 0) {
+        if (width <= 0 || height <= 0) {
             throw new IllegalArgumentException(
                     "Raster dimensions less than or equal to zero are not supported");
+        }
+        if(samplesPerPixel <= 0){
+            throw new IllegalArgumentException(
+                    "Raster samples-per-pixel specification must be at least 1");
         }
         this.width = width;
         this.height = height;
