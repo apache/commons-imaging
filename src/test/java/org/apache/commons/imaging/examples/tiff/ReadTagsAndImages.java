@@ -275,7 +275,7 @@ public class ReadTagsAndImages {
             ps.format("%nContent Type: %s", contentTypeString);
             String gdalNoDataString[] = directory.getFieldValue(
                 GdalLibraryTagConstants.EXIF_TAG_GDAL_NO_DATA, false);
-            if (gdalNoDataString != null || gdalNoDataString.length > 0) {
+            if (gdalNoDataString != null && gdalNoDataString.length > 0) {
                 ps.format("    GDAL No-Data value: %s", gdalNoDataString[0]);
             }
             ps.format("%n");
@@ -419,6 +419,63 @@ public class ReadTagsAndImages {
     }
 
     /**
+     * Provides specifications for Coordinate Transformation Codes as defined
+     * in Appendix 6.3.3.3 "Coordinate Transformation Codes" of the
+     * original GeoTiff specification (Ritter, 1995).
+     */
+    enum CoordinateTransformationCode {
+        TransverseMercator(             1),
+        TransvMercator_Modified_Alaska( 2),
+        ObliqueMercator(                3),
+        ObliqueMercator_Laborde(        4),
+        ObliqueMercator_Rosenmund(      5),
+        ObliqueMercator_Spherical(      6),
+        Mercator(                       7),
+        LambertConfConic_2SP(           8),
+        LambertConfConic_Helmert(       9),
+        LambertAzimEqualArea(          10),
+        AlbersEqualArea(               11),
+        AzimuthalEquidistant(          12),
+        EquidistantConic(              13),
+        Stereographic(                 14),
+        PolarStereographic(            15),
+        ObliqueStereographic(          16),
+        Equirectangular(               17),
+        CassiniSoldner(                18),
+        Gnomonic(                      19),
+        MillerCylindrical(             20),
+        Orthographic(                  21),
+        Polyconic(                     22),
+        Robinson(                      23),
+        Sinusoidal(                    24),
+        VanDerGrinten(                 25),
+        NewZealandMapGrid(             26),
+        TransvMercator_SouthOriented(  27);
+
+        int key;
+
+        CoordinateTransformationCode(int key){
+         this.key = key;
+        } 
+        
+        /**
+         * Gets the enumeration value associated with the specified
+         * key if any.
+         * @param key a positive integer
+         * @return if the key is matched, a value enumeration value;
+         * otherwise, a null.
+         */
+        static CoordinateTransformationCode getValueForKey(int key){
+            for(CoordinateTransformationCode v: values()){
+                if(v.key==key){
+                    return v;
+                }
+            }
+            return null;
+        }
+    }
+
+    /**
      * Interprets elements from one row of the GeoKey table, returning a
      * descriptive string where possible. The GeoTIFF specification is
      * extensive, and only a subset of the possible descriptions are supported
@@ -500,6 +557,18 @@ public class ReadTagsAndImages {
                     return "User-Defined Projection";
                 }
                 break;
+            case ProjectionGeoKey:
+                if(valueOrPosition==32767){
+                    return "User-Defined";
+                }
+                break;
+            case ProjCoordTransGeoKey:
+                CoordinateTransformationCode code = 
+                    CoordinateTransformationCode.getValueForKey(valueOrPosition);
+                if(code!=null){
+                    return code.name();
+                }
+                break;
             case ProjLinearUnitsGeoKey:
                 switch (valueOrPosition) {
                     case 9001:
@@ -511,6 +580,20 @@ public class ReadTagsAndImages {
                     default:
                         break;
                 }
+                break;
+            case ProjStdParallel1GeoKey:
+            case ProjStdParallel2GeoKey:
+            case ProjNatOriginLongGeoKey:
+            case ProjFalseEastingGeoKey:
+            case ProjFalseNorthingGeoKey:
+            case ProjFalseOriginLongGeoKey:
+            case ProjFalseOriginLatGeoKey:
+            case ProjFalseOriginEastingGeoKey:
+            case ProjFalseOriginNorthingGeoKey:
+            case ProjCenterLongGeoKey:
+            case ProjCenterLatGeoKey:
+                return String.format("%13.4f", doubleParameters[valueOrPosition]);
+                
             default:
                 break;
         }
