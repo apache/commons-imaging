@@ -172,7 +172,7 @@ public class TiffShortIntRoundTripTest extends TiffBaseTest {
             outDir.add(TiffTagConstants.TIFF_TAG_TILE_LENGTH, nRowsInBlock);
             outDir.add(TiffTagConstants.TIFF_TAG_TILE_BYTE_COUNTS, nBytesInBlock);
         } else {
-            outDir.add(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP, 2);
+            outDir.add(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP, nRowsInBlock);
             outDir.add(TiffTagConstants.TIFF_TAG_STRIP_BYTE_COUNTS, nBytesInBlock);
         }
 

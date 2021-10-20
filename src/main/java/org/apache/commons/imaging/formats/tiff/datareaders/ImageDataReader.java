@@ -45,6 +45,7 @@ import org.apache.commons.imaging.common.ZlibDeflate;
 import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffField;
+import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 
@@ -62,15 +63,15 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
  * Unfortunately, the TIFF floating-point format allows for a lot of different
  * variations. At this time, only the most widely used of these are supported.
  * When this code was written, only a small set of test data products were
- * available. Thus it is likely that developers will wish to extend the
- * range of floating-point data that can be processed as
- * additional test data become available. When implementing extensions to this
- * logic, developers are reminded that image processing requires
- * the handling of literally millions of pixels, so attention to performance
- * is essential to a successful implementation (please see the notes in
- * DataReaderStrips.java for more information).
+ * available. Thus it is likely that developers will wish to extend the range of
+ * floating-point data that can be processed as additional test data become
+ * available. When implementing extensions to this logic, developers are
+ * reminded that image processing requires the handling of literally millions of
+ * pixels, so attention to performance is essential to a successful
+ * implementation (please see the notes in {@link DataReaderStrips} for more
+ * information).
  * <p>
- * The TIFF floating-point specification is very poorly documented. So these
+ * The TIFF floating-point specification is poorly documented. So these
  * notes are included to provide clarification on at least some aspects of the
  * format. Some documentation and C-code examples are available in "TIFF
  * Technical Note 3, April 8, 2005)".
@@ -81,23 +82,23 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
  * compression ratios for floating-point values. This predictor is specified
  * using the TIFF predictor TAG with a value of 3 (see TIFF Technical Note 3).
  * Consider a 4-byte floating point value given in IEEE-754 format. Let f3 be
- * the high-order byte, with f2 the next highest, followed by
- * f1, and f0 for the low-order byte. This designation should not be confused
- * with the in-memory layout of the bytes (little-endian versus big-endian), but
- * rather their numerical values. The sign bit and upper 7 bits of the exponent
- * are given in the high-order byte, followed by the remaining sign bit and the
- * mantissa in the lower.
+ * the high-order byte, with f2 the next highest, followed by f1, and f0 for the
+ * low-order byte. This designation should not be confused with the in-memory
+ * layout of the bytes (little-endian versus big-endian), but rather their
+ * numerical values. The sign bit and upper 7 bits of the exponent are given in
+ * the high-order byte, followed by the one remaining exponent bit and the
+ * mantissa in the lower-order bytes.
  * <p>
  * In many real-valued raster data sets, the sign and magnitude (exponent) of
  * the values change slowly. But the bits in the mantissa vary rapidly in a
  * semi-random manner. The information entropy in the mantissa tends to increase
  * in the lowest ordered bytes. Thus, the high-order bytes have more redundancy
  * than the low-order bytes and can compress more efficiently. To exploit this,
- * the TIFF format splits the bytes into groups based on their order-of-magnitude.
- * This splitting process takes place on a ROW-BY-ROW basis (note the emphasis,
- * this point is not clearly documented in the spec). For example, for a row of
- * length 3 pixels -- A, B, and C -- the data for two rows would be given as
- * shown below (again, ignoring endian issues):
+ * the TIFF format splits the bytes into groups based on their
+ * order-of-magnitude. This splitting process takes place on a ROW-BY-ROW basis
+ * (note the emphasis, this point is not clearly documented in the spec). For
+ * example, for a row of length 3 pixels -- A, B, and C -- the data for two rows
+ * would be given as shown below (again, ignoring endian issues):
  * <pre>
  *   Original:
  *      A3 A2 A1 A0   B3 B2 B1 B0   C3 C2 C1 C0
@@ -106,8 +107,7 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
  *   Bytes split into groups by order-of-magnitude:
  *      A3 B3 C3   A2 B2 C2   A1 B1 C1   A0 B0 C0
  *      D3 E3 F3   D2 E2 F2   D1 E1 F1   D0 E0 F0
- * </pre>
- * To further improve the compression, the predictor takes the difference
+ * </pre> To further improve the compression, the predictor takes the difference
  * of each subsequent bytes. Again, the differences (deltas) are computed on a
  * row-byte-row basis. For the most part, the differences combine bytes
  * associated with the same order-of-magnitude, though there is a special
@@ -115,8 +115,7 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
  * <pre>
  *      A3, B3-A3, C3-B3, (A2-C3), B2-A2, C2-B2, (A1-C2), etc.
  *      D3, E3-D3, F3-D3, (D2-F3), E3-D2, etc.
- * </pre>
- * Once the predictor transform is complete, the data is stored using
+ * </pre> Once the predictor transform is complete, the data is stored using
  * conventional data compression techniques such as Deflate or LZW. In practice,
  * floating point data does not compress especially well, but using the above
  * technique, the TIFF process typically reduces the overall storage size by 20
@@ -126,23 +125,52 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
  *     32 bits    IEEE-754 single-precision standard
  *     16 bits    IEEE-754 half-precision standard
  *     24 bits    A non-standard representation
- * </pre>
- * At this time, we have not obtained data samples for the smaller
+ * </pre> At this time, we have not obtained data samples for the smaller
  * representations used in combination with a predictor.
  * <p>
  * <strong>Interleaved formats</strong>
  * <p>
- * TIFF Technical Note 3 also provides sample code for interleaved data, such as
- * a real-valued vector or a complex pair. At this time no samples of
- * interleaved data were available. As a caveat, the specification that the
- * document provides has disadvantages in terms of code complexity and
- * performance. Because the interleaved evaluation is embedded inside the pixel
- * row and column loops, it puts a lot of redundant conditional evaluations
- * inside the double nested loops. It is recommended that when interleaved data
- * is implemented, it should get their own block of code so as not to interfere
- * with the processing of the more common non-interleaved variations.
+ * TIFF Technical Note 3 also provides example code for cases where each pixel
+ * (or raster cell) in the image is associated with more than one floating-point
+ * samples. Data in this format might be used for real-valued vector data,
+ * complex-valued pairs, or other numerical applications).
+ * <p>At this time, we have encountered only a limited selection of the possible
+ * configurations for multi-variable data. The code below only supports those
+ * configurations for which we had actual images that could be used to verify
+ * our implementation.  The implementation supports the following formats:
+ * <ul>
+ * <li>32-bit floating-point data</li>
+ * <li>Uncompressed, Deflate, or LZW compression</li>
+ * <li>Optional horizontal predictors used with compression</li>
+ * <li>PlanarConfiguration interleaved (CHUNKY) or non-interleaved (PLANAR)</li>
+ * </ul>
+ * <p>
+ * Note that integer formats are not supported at this time.
+ * <p>
+ * Often, the TIFF files store multi-variable data in so that samples are
+ * interleaved. For example, a configuration that gave two samples per pixel (or
+ * cell) would give the two values for the first pixel in order followed by the
+ * two values for the second pixel, etc. If a differencing approach were used
+ * for data compression, the byte-stream would begin with the high-order byte
+ * for each of the two samples for the first pixel, followed by the high-order
+ * byte for each of the next two samples, and so forth for the remainder of the
+ * row of pixels. It would then follow with the second-highest-order bytes for
+ * the first two samples, etc.
+ * <p>
+ * This implementation also supports the non-interleaved (PLANAR) configuration.
+ * One consideration in implementing this feature was that TIFF Technical Note 3
+ * does not address the case where a TIFF image uses the alternate planar
+ * configuration.  For conventional images, the TIFF specification (Revision 6.0)
+ * recommends that the planar configuration should be avoided (see pg. 38).
+ * But for numerical data products, the planar configuration may yield better
+ * data compression in the case where different sample sets have different
+ * statistical properties. Because separated groups often have more
+ * uniformity and predictability than interleaved data sets, they sometimes lead
+ * to a small improvement in storage-size reduction when data compression is
+ * used.
  */
 public abstract class ImageDataReader {
+
     protected final TiffDirectory directory;
     protected final PhotometricInterpreter photometricInterpreter;
     private final int[] bitsPerSample;
@@ -155,10 +183,12 @@ public abstract class ImageDataReader {
     protected final int height;
     protected final int sampleFormat;
 
+    protected final TiffPlanarConfiguration planarConfiguration;
+
     public ImageDataReader(final TiffDirectory directory,
-            final PhotometricInterpreter photometricInterpreter, final int[] bitsPerSample,
+        final PhotometricInterpreter photometricInterpreter, final int[] bitsPerSample,
         final int predictor, final int samplesPerPixel, final int sampleFormat,
-        final int width, final int height) {
+        final int width, final int height, final TiffPlanarConfiguration planarConfiguration) {
         this.directory = directory;
         this.photometricInterpreter = photometricInterpreter;
         this.bitsPerSample = bitsPerSample;
@@ -168,32 +198,35 @@ public abstract class ImageDataReader {
         this.predictor = predictor;
         this.width = width;
         this.height = height;
+        this.planarConfiguration = planarConfiguration;
         last = new int[samplesPerPixel];
+
     }
 
     /**
-     * Read the image data from the IFD associated with this
-     * instance of ImageDataReader using the optional sub-image specification
-     * if desired.
-     * @param subImageSpecification a rectangle describing a sum-region of
-     * the image for reading, or a null if the whole image is to be read.
+     * Read the image data from the IFD associated with this instance of
+     * ImageDataReader using the optional sub-image specification if desired.
+     *
+     * @param subImageSpecification a rectangle describing a sub-region of the
+     * image for reading, or a null if the whole image is to be read.
      * @param hasAlpha indicates that the image has an alpha (transparency)
      * channel (RGB color model only).
-     * @param isAlphaPremultiplied indicates that the image uses the
-     * associated alpha channel format (pre-multiplied alpha).
+     * @param isAlphaPremultiplied indicates that the image uses the associated
+     * alpha channel format (pre-multiplied alpha).
      * @return a valid instance containing the pixel data from the image.
-     * @throws ImageReadException in the event of a data format error
-     * or other TIFF-specific failure.
+     * @throws ImageReadException in the event of a data format error or other
+     * TIFF-specific failure.
      * @throws IOException in the event of an unrecoverable I/O error.
      */
     public abstract ImageBuilder readImageData(
-        Rectangle subImageSpecification,
-        boolean hasAlpha,
-        boolean isAlphaPremultiplied)
+            Rectangle subImageSpecification,
+            boolean hasAlpha,
+            boolean isAlphaPremultiplied)
             throws ImageReadException, IOException;
 
     /**
      * Checks if all the bits per sample entries are the same size
+     *
      * @param size the size to check
      * @return true if all the bits per sample entries are the same
      */
@@ -369,9 +402,7 @@ public abstract class ImageDataReader {
      * @param height the height of the data block to be extracted
      * @param scanSize the number of pixels in a single row of the block
      * @param bytes the raw bytes
-     * @param predictor the predictor specified by the source, only predictor 3
-     * is supported.
-     * @param bitsPerSample the number of bits per sample, 32 or 64.
+     * @param bitsPerPixel the number of bits per sample, 32 or 64.
      * @param byteOrder the byte order for the source data
      * @return a valid array of integers in row major order, dimensions
      * scan-size wide and height height.
@@ -382,53 +413,91 @@ public abstract class ImageDataReader {
         final int height,
         final int scanSize,
         final byte[] bytes,
-        final int predictor,
-        final int bitsPerSample,
+        final int bitsPerPixel,
         final ByteOrder byteOrder)
         throws ImageReadException {
+        final int bitsPerSample = bitsPerPixel / samplesPerPixel;
         final int bytesPerSample = bitsPerSample / 8;
-        final int nBytes = bytesPerSample * scanSize * height;
-        final int length = bytes.length < nBytes ? nBytes / scanSize : height;
-
-        final int[] samples = new int[scanSize * height];
+        final int bytesPerScan = scanSize * samplesPerPixel * bytesPerSample;
+        final int nBytes = bytesPerScan * height;
+        final int length = bytes.length < nBytes ? nBytes / bytesPerScan : height;
+        final int[] samples = new int[scanSize * samplesPerPixel * height];
         // floating-point differencing is indicated by a predictor value of 3.
         if (predictor == TiffTagConstants.PREDICTOR_VALUE_FLOATING_POINT_DIFFERENCING) {
             // at this time, this class supports the 32-bit format.  The
             // main reason for this is that we have not located sample data
             // that can be used for testing and analysis.
-            if (bitsPerSample != 32) {
+            if (bitsPerPixel / samplesPerPixel != 32) {
                 throw new ImageReadException(
                     "Imaging does not yet support floating-point data"
                     + " with predictor type 3 for "
-                    + bitsPerSample + " bits per sample");
+                    + bitsPerPixel + " bits per sample");
             }
-            final int bytesInRow = scanSize * 4;
-            for (int i = 0; i < length; i++) {
-                final int aOffset = i * bytesInRow;
-                final int bOffset = aOffset + scanSize;
-                final int cOffset = bOffset + scanSize;
-                final int dOffset = cOffset + scanSize;
-                // in this loop, the source bytes give delta values.
-                // we adjust them to give true values.  This operation is
-                // done on a row-by-row basis.
-                for (int j = 1; j < bytesInRow; j++) {
-                    bytes[aOffset + j] += bytes[aOffset + j - 1];
+
+            if (planarConfiguration == TiffPlanarConfiguration.CHUNKY) {
+                final int bytesInRow = scanSize * 4 * samplesPerPixel;
+                for (int i = 0; i < length; i++) {
+                    final int aOffset = i * bytesInRow;
+                    final int bOffset = aOffset + scanSize * samplesPerPixel;
+                    final int cOffset = bOffset + scanSize * samplesPerPixel;
+                    final int dOffset = cOffset + scanSize * samplesPerPixel;
+                    // in this loop, the source bytes give delta values.
+                    // we adjust them to give true values.  This operation is
+                    // done on a row-by-row basis.
+                    for (int j = 1; j < bytesInRow; j++) {
+                        bytes[aOffset + j] += bytes[aOffset + j - 1];
+                    }
+                    // pack the bytes into the integer bit-equivalent of
+                    // floating point values
+                    int index = i * scanSize;
+                    for (int j = 0; j < width * samplesPerPixel; j++) {
+                        final int a = bytes[aOffset + j];
+                        final int b = bytes[bOffset + j];
+                        final int c = bytes[cOffset + j];
+                        final int d = bytes[dOffset + j];
+                        // Pack the 4 byte components into a single integer
+                        // in the byte order used by the TIFF standard
+                        samples[index++] = ((a & 0xff) << 24)
+                            | ((b & 0xff) << 16)
+                            | ((c & 0xff) << 8)
+                            | (d & 0xff);
+                    }
                 }
-                // pack the bytes into the integer bit-equivalent of
-                // floating point values
-                int index = i * scanSize;
-                for (int j = 0; j < width; j++) {
-                    final int a = bytes[aOffset + j];
-                    final int b = bytes[bOffset + j];
-                    final int c = bytes[cOffset + j];
-                    final int d = bytes[dOffset + j];
-                    // Pack the 4 byte components into a single integer
-                    // in the byte order used by the TIFF standard
-                    samples[index++] = ((a & 0xff) << 24)
-                        | ((b & 0xff) << 16)
-                        | ((c & 0xff) << 8)
-                        | (d & 0xff);
+            } else {
+                final int bytesInRow = scanSize * 4;
+                for (int iPlane = 0; iPlane < samplesPerPixel; iPlane++) {
+                    int planarIntOffset = iPlane * length * scanSize;
+                    int planarByteOffset = planarIntOffset * 4;
+
+                    for (int i = 0; i < length; i++) {
+                        final int aOffset = i * bytesInRow + planarByteOffset;
+                        final int bOffset = aOffset + scanSize;
+                        final int cOffset = bOffset + scanSize;
+                        final int dOffset = cOffset + scanSize;
+                        // in this loop, the source bytes give delta values.
+                        // we adjust them to give true values.  This operation is
+                        // done on a row-by-row basis.
+                        for (int j = 1; j < bytesInRow; j++) {
+                            bytes[aOffset + j] += bytes[aOffset + j - 1];
+                        }
+                        // pack the bytes into the integer bit-equivalent of
+                        // floating point values
+                        int index = planarIntOffset + i * scanSize;
+                        for (int j = 0; j < width; j++) {
+                            final int a = bytes[aOffset + j];
+                            final int b = bytes[bOffset + j];
+                            final int c = bytes[cOffset + j];
+                            final int d = bytes[dOffset + j];
+                            // Pack the 4 byte components into a single integer
+                            // in the byte order used by the TIFF standard
+                            samples[index++] = ((a & 0xff) << 24)
+                                | ((b & 0xff) << 16)
+                                | ((c & 0xff) << 8)
+                                | (d & 0xff);
+                        }
+                    }
                 }
+
             }
             return samples;
         }  // end of predictor==3 case.
@@ -480,7 +549,7 @@ public abstract class ImageDataReader {
             int k = 0;
             int index = 0;
             for (int i = 0; i < length; i++) {
-                for (int j = 0; j < scanSize; j++) {
+                for (int j = 0; j < scanSize * samplesPerPixel; j++) {
                     final int b0 = bytes[k++] & 0xff;
                     final int b1 = bytes[k++] & 0xff;
                     final int b2 = bytes[k++] & 0xff;
@@ -510,26 +579,26 @@ public abstract class ImageDataReader {
         } else {
             throw new ImageReadException(
                 "Imaging does not support floating-point samples with "
-                + bitsPerSample + " bits per sample");
+                + bitsPerPixel + " bits per sample");
         }
 
         return samples;
     }
 
-
     /**
-     * Given a source file that specifies numerical data as short integers, unpack
-     * the raw bytes obtained from the source file and organize them into an
-     * array of integers.
+     * Given a source file that specifies numerical data as short integers,
+     * unpack the raw bytes obtained from the source file and organize them into
+     * an array of integers.
      * <p>
      * This method supports either the tile format or the strip format of TIFF
      * source files. The scan size indicates the number of columns to be
      * extracted. For strips, the width and the scan size are always the full
      * width of the image. For tiles, the scan size is the full width of the
-     * tile, but the width may be smaller in the cases where the tiles do not
-     * evenly divide the width (for example, a 256 pixel wide tile in a 257
-     * pixel wide image would result in two columns of tiles, the second column
-     * having only one column of pixels that were worth extracting.
+     * tile, but the "width" parameter may be smaller in the cases where the
+     * tiles do not evenly divide the width (for example, a 256 pixel wide tile
+     * in a 257 pixel wide image would result in two columns of tiles, the
+     * second column having only one column of pixels that were worth
+     * extracting.
      *
      * @param width the width of the data block to be extracted
      * @param height the height of the data block to be extracted
@@ -588,8 +657,8 @@ public abstract class ImageDataReader {
     }
 
     /**
-     * Transfer samples obtained from the TIFF file to a floating-point
-     * raster.
+     * Transfer samples obtained from the TIFF file to a floating-point raster.
+     *
      * @param xBlock coordinate of block relative to source data
      * @param yBlock coordinate of block relative to source data
      * @param blockWidth width of block, in pixels
@@ -603,9 +672,10 @@ public abstract class ImageDataReader {
      * @param rasterData the raster data.
      */
     void transferBlockToRaster(final int xBlock, final int yBlock,
-        final int blockWidth, final int blockHeight, final int[] blockData,
-        final int xRaster, final int yRaster,
-        final int rasterWidth, final int rasterHeight, final float[] rasterData) {
+            final int blockWidth, final int blockHeight, final int[] blockData,
+            final int xRaster, final int yRaster,
+            final int rasterWidth, final int rasterHeight, int samplesPerPixel,
+            final float[] rasterData) {
 
         // xR0, yR0 are the coordinates within the raster (upper-left corner)
         // xR1, yR1 are ONE PAST the coordinates of the lower-right corner
@@ -660,19 +730,57 @@ public abstract class ImageDataReader {
             h = blockHeight;
         }
 
-        for (int i = 0; i < h; i++) {
-            final int yR = yR0 + i;
-            final int yB = yB0 + i;
-            final int rOffset = yR * rasterWidth + xR0;
-            final int bOffset = yB * blockWidth + xB0;
-            for (int j = 0; j < w; j++) {
-                rasterData[rOffset + j] = Float.intBitsToFloat(blockData[bOffset + j]);
+        // The TiffRasterData class expects data to be in the order
+        // corresponding to TiffPlanarConfiguration.PLANAR.  So for the
+        // multivariable case, we must convert CHUNKY data to PLANAR.
+        if (samplesPerPixel == 1) {
+            for (int i = 0; i < h; i++) {
+                final int yR = yR0 + i;
+                final int yB = yB0 + i;
+                final int rOffset = yR * rasterWidth + xR0;
+                final int bOffset = yB * blockWidth + xB0;
+                for (int j = 0; j < w; j++) {
+                    rasterData[rOffset + j] = Float.intBitsToFloat(blockData[bOffset + j]);
+                }
+            }
+        } else if (this.planarConfiguration == TiffPlanarConfiguration.CHUNKY) {
+            // The source data is in the interleaved (Chunky) order,
+            // but the TiffRasterData class expects non-interleaved order.
+            // So we transcribe the elements as appropriate.
+            int pixelsPerPlane = rasterWidth * rasterHeight;
+            for (int i = 0; i < h; i++) {
+                final int yR = yR0 + i;
+                final int yB = yB0 + i;
+                final int rOffset = yR * rasterWidth + xR0;
+                final int bOffset = yB * blockWidth + xB0;
+                for (int j = 0; j < w; j++) {
+                    for (int k = 0; k < samplesPerPixel; k++) {
+                        rasterData[k * pixelsPerPlane + rOffset + j]
+                                = Float.intBitsToFloat(blockData[(bOffset + j) * samplesPerPixel + k]);
+                    }
+                }
+            }
+        } else {
+            for (int iPlane = 0; iPlane < samplesPerPixel; iPlane++) {
+                int rPlanarOffset = iPlane * rasterWidth * rasterHeight;
+                int bPlanarOffset = iPlane * blockWidth * blockHeight;
+                for (int i = 0; i < h; i++) {
+                    final int yR = yR0 + i;
+                    final int yB = yB0 + i;
+                    final int rOffset = rPlanarOffset + yR * rasterWidth + xR0;
+                    final int bOffset = bPlanarOffset + yB * blockWidth + xB0;
+                    for (int j = 0; j < w; j++) {
+                        rasterData[rOffset + j] = Float.intBitsToFloat(blockData[bOffset + j]);
+                    }
+                }
             }
         }
+
     }
 
     /**
      * Transfer samples obtained from the TIFF file to an integer raster.
+     *
      * @param xBlock coordinate of block relative to source data
      * @param yBlock coordinate of block relative to source data
      * @param blockWidth width of block, in pixels
