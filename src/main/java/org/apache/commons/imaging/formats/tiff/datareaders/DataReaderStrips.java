@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.imaging.formats.tiff.datareaders;
 
 import java.awt.Rectangle;
@@ -37,7 +36,7 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
 /**
  * Provides a data reader for TIFF file images organized by tiles.
  * <p>
- * @see ImageDataReader for notes discussing design and development with
+ * See {@link ImageDataReader} for notes discussing design and development with
  * particular emphasis on run-time performance.
  */
 public final class DataReaderStrips extends ImageDataReader {
@@ -52,15 +51,15 @@ public final class DataReaderStrips extends ImageDataReader {
     private final TiffImageData.Strips imageData;
 
     public DataReaderStrips(final TiffDirectory directory,
-      final PhotometricInterpreter photometricInterpreter, final int bitsPerPixel,
-      final int[] bitsPerSample, final int predictor,
-      final int samplesPerPixel, final int sampleFormat, final int width,
-      final int height, final int compression,
-      final TiffPlanarConfiguration planarConfiguration,
-      final ByteOrder byteOrder,
-      final int rowsPerStrip, final TiffImageData.Strips imageData) {
+        final PhotometricInterpreter photometricInterpreter, final int bitsPerPixel,
+        final int[] bitsPerSample, final int predictor,
+        final int samplesPerPixel, final int sampleFormat, final int width,
+        final int height, final int compression,
+        final TiffPlanarConfiguration planarConfiguration,
+        final ByteOrder byteOrder,
+        final int rowsPerStrip, final TiffImageData.Strips imageData) {
         super(directory, photometricInterpreter, bitsPerSample, predictor,
-            samplesPerPixel, sampleFormat, width, height);
+            samplesPerPixel, sampleFormat, width, height, planarConfiguration);
 
         this.bitsPerPixel = bitsPerPixel;
         this.compression = compression;
@@ -81,7 +80,6 @@ public final class DataReaderStrips extends ImageDataReader {
 
         // changes added March 2020
         if (sampleFormat == TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT) {
-
             int k = 0;
             int nRows = pixelsPerStrip / width;
             if (y + nRows > yLimit) {
@@ -93,11 +91,12 @@ public final class DataReaderStrips extends ImageDataReader {
             y += nRows;
             final int[] samples = new int[1];
             final int[] b = unpackFloatingPointSamples(
-                width, i1 - i0, width, bytes, predictor, bitsPerPixel, byteOrder);
+                width, i1 - i0, width, bytes, bitsPerPixel, byteOrder);
 
             for (int i = i0; i < i1; i++) {
                 for (int j = 0; j < width; j++) {
-                    samples[0] = b[k++];
+                    samples[0] = b[k];
+                    k += samplesPerPixel;
                     photometricInterpreter.interpretPixel(imageBuilder,
                         samples, j, i);
                 }
@@ -146,7 +145,6 @@ public final class DataReaderStrips extends ImageDataReader {
         // implementation. Taking this approach saves one conditional
         // operation per pixel or about 5 percent of the total run time
         // in the 8 bits/pixel case.
-
         // verify that all samples are one byte in size
         final boolean allSamplesAreOneByte = isHomogenous(8);
 
@@ -170,7 +168,7 @@ public final class DataReaderStrips extends ImageDataReader {
             }
             return;
         }
-        if ((bitsPerPixel == 24  || bitsPerPixel==32) && allSamplesAreOneByte
+        if ((bitsPerPixel == 24 || bitsPerPixel == 32) && allSamplesAreOneByte
             && photometricInterpreter instanceof PhotometricInterpreterRgb) {
             int k = 0;
             int nRows = pixelsPerStrip / width;
@@ -219,7 +217,6 @@ public final class DataReaderStrips extends ImageDataReader {
         // original code before May 2012 modification
         // this logic will handle all cases not conforming to the
         // special case handled above
-
         try (BitInputStream bis = new BitInputStream(new ByteArrayInputStream(bytes), byteOrder)) {
 
             int[] samples = new int[bitsPerSampleLength];
@@ -247,12 +244,11 @@ public final class DataReaderStrips extends ImageDataReader {
         }
     }
 
-
     @Override
     public ImageBuilder readImageData(final Rectangle subImageSpecification,
         final boolean hasAlpha,
         final boolean isAlphaPreMultiplied)
-            throws ImageReadException, IOException {
+        throws ImageReadException, IOException {
 
         final Rectangle subImage;
         if (subImageSpecification == null) {
@@ -267,29 +263,23 @@ public final class DataReaderStrips extends ImageDataReader {
         // be a partial).  So create a working image with compatible
         // dimensions and read that.  Later on, the working image
         // will be sub-imaged to the proper size.
-
         // strip0 and strip1 give the indices of the strips containing
         // the first and last rows of pixels in the subimage
         final int strip0 = subImage.y / rowsPerStrip;
         final int strip1 = (subImage.y + subImage.height - 1) / rowsPerStrip;
         final int workingHeight = (strip1 - strip0 + 1) * rowsPerStrip;
 
-
         // the legacy code uses a member element "y" to keep track
         // of the row index of the output image that is being processed
         // by interpretStrip. y is set to zero before the first
         // call to interpretStrip.  y0 will be the index of the first row
         // in the full image (the source image) that will be processed.
-
         final int y0 = strip0 * rowsPerStrip;
         final int yLimit = subImage.y - y0 + subImage.height;
 
-
-        // TO DO: we can probably save some processing by using yLimit instead
-        //        or working
-        final ImageBuilder workingBuilder =
-                new ImageBuilder(width, workingHeight,
-                    hasAlpha, isAlphaPreMultiplied);
+        final ImageBuilder workingBuilder
+            = new ImageBuilder(width, workingHeight,
+                hasAlpha, isAlphaPreMultiplied);
         if (planarConfiguration != TiffPlanarConfiguration.PLANAR) {
             for (int strip = strip0; strip <= strip1; strip++) {
                 final long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
@@ -302,13 +292,13 @@ public final class DataReaderStrips extends ImageDataReader {
                 final byte[] compressed = imageData.getImageData(strip).getData();
 
                 final byte[] decompressed = decompress(compressed, compression,
-                  (int) bytesPerStrip, width, (int) rowsInThisStrip);
+                        (int) bytesPerStrip, width, (int) rowsInThisStrip);
 
                 interpretStrip(
-                  workingBuilder,
-                  decompressed,
-                  (int) pixelsPerStrip,
-                  yLimit);
+                    workingBuilder,
+                    decompressed,
+                    (int) pixelsPerStrip,
+                    yLimit);
             }
         } else {
             final int nStripsInPlane = imageData.getImageDataLength() / 3;
@@ -325,7 +315,7 @@ public final class DataReaderStrips extends ImageDataReader {
                     final int planeStrip = iPlane * nStripsInPlane + strip;
                     final byte[] compressed = imageData.getImageData(planeStrip).getData();
                     final byte[] decompressed = decompress(compressed, compression,
-                      (int) bytesPerStrip, width, (int) rowsInThisStrip);
+                        (int) bytesPerStrip, width, (int) rowsInThisStrip);
                     int index = iPlane;
                     for (final byte element : decompressed) {
                         b[index] = element;
@@ -335,7 +325,6 @@ public final class DataReaderStrips extends ImageDataReader {
                 interpretStrip(workingBuilder, b, (int) pixelsPerStrip, height);
             }
         }
-
 
         if (subImage.x == 0
                 && subImage.y == y0
@@ -355,14 +344,14 @@ public final class DataReaderStrips extends ImageDataReader {
     @Override
     public TiffRasterData readRasterData(final Rectangle subImage)
             throws ImageReadException, IOException {
-        switch(sampleFormat){
+        switch (sampleFormat) {
             case TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT:
                 return readRasterDataFloat(subImage);
             case TiffTagConstants.SAMPLE_FORMAT_VALUE_TWOS_COMPLEMENT_SIGNED_INTEGER:
-                 return readRasterDataInt(subImage);
+                return readRasterDataInt(subImage);
             default:
                 throw new ImageReadException("Unsupported sample format, value="
-                        +sampleFormat);
+                        + sampleFormat);
         }
     }
 
@@ -384,7 +373,7 @@ public final class DataReaderStrips extends ImageDataReader {
             rasterHeight = height;
         }
 
-        float[] rasterDataFloat = new float[rasterWidth * rasterHeight];
+        float[] rasterDataFloat = new float[rasterWidth * rasterHeight * samplesPerPixel];
 
         // the legacy code is optimized to the reading of whole
         // strips (except for the last strip in the image, which can
@@ -412,11 +401,11 @@ public final class DataReaderStrips extends ImageDataReader {
                     rowsInThisStrip,
                     width,
                     decompressed,
-                    predictor, bitsPerPixel, byteOrder);
+                    bitsPerPixel, byteOrder);
             transferBlockToRaster(0, yStrip, width, (int) rowsInThisStrip, blockData,
-                    xRaster, yRaster, rasterWidth, rasterHeight, rasterDataFloat);
+                    xRaster, yRaster, rasterWidth, rasterHeight, samplesPerPixel, rasterDataFloat);
         }
-        return new TiffRasterDataFloat(rasterWidth, rasterHeight, rasterDataFloat);
+        return new TiffRasterDataFloat(rasterWidth, rasterHeight, samplesPerPixel, rasterDataFloat);
     }
 
     private TiffRasterData readRasterDataInt(final Rectangle subImage)
