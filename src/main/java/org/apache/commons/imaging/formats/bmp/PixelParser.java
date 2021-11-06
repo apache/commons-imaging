@@ -19,6 +19,7 @@ package org.apache.commons.imaging.formats.bmp;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
@@ -32,9 +33,9 @@ abstract class PixelParser {
     final InputStream is;
 
     PixelParser(final BmpHeaderInfo bhi, final byte[] colorTable, final byte[] imageData) {
-        this.bhi = bhi;
-        this.colorTable = colorTable;
-        this.imageData = imageData;
+        this.bhi = Objects.requireNonNull(bhi, "BmpHeaderInfo must not be null");
+        this.colorTable = Objects.requireNonNull(colorTable, "Color table must not be null");
+        this.imageData = Objects.requireNonNull(imageData, "Image data must not be null");
 
         is = new ByteArrayInputStream(imageData);
     }
