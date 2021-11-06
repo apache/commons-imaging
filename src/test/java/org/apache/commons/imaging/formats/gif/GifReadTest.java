@@ -182,4 +182,19 @@ public class GifReadTest extends GifBaseTest {
         final GifImageParser parser = new GifImageParser();
         assertThrows(ImageReadException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), Collections.emptyMap()));
     }
+
+    /**
+     * Test that invalid indexes are validated when accessing GIF color table array.
+     *
+     * <p>See Google OSS Fuzz issue 34185</p>
+     *
+     * @throws IOException if it fails to read the test image
+     */
+    @Test
+    public void testUncaughtExceptionOssFuzz34185() throws IOException {
+        final String input = "/images/gif/IMAGING-318/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5005192379629568";
+        final String file = GifReadTest.class.getResource(input).getFile();
+        final GifImageParser parser = new GifImageParser();
+        assertThrows(ImageReadException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), Collections.emptyMap()));
+    }
 }

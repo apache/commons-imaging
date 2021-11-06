@@ -165,6 +165,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="IMAGING-317" dev="kinow" type="fix" due-to="OSS-Fuzz">
         A PNG image using indexed color type but no PLTE chunks throws NPE.
       </action>
+      <action issue="IMAGING-318" dev="kinow" type="fix" due-to="OSS-Fuzz">
+        Validate when accessing GIF color table array.
+      </action>
     </release>
     <release version="1.0-alpha2" date="2020-08-01" description="Second 1.0 alpha release">
       <action issue="IMAGING-258" dev="kinow" type="update" due-to="Gary Lucas">
