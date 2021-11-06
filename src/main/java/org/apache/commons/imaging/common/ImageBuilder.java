@@ -16,7 +16,20 @@
  */
 
 
-/**
+package org.apache.commons.imaging.common;
+
+import java.awt.color.ColorSpace;
+import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.DataBuffer;
+import java.awt.image.DataBufferInt;
+import java.awt.image.DirectColorModel;
+import java.awt.image.Raster;
+import java.awt.image.RasterFormatException;
+import java.awt.image.WritableRaster;
+import java.util.Properties;
+
+/*
  * Development notes:
  * This class was introduced to the Apache Commons Imaging library in
  * order to improve performance in building images.  The setRGB method
@@ -38,18 +51,6 @@
  * is required.
  *
  */
-package org.apache.commons.imaging.common;
-
-import java.awt.color.ColorSpace;
-import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.DataBuffer;
-import java.awt.image.DataBufferInt;
-import java.awt.image.DirectColorModel;
-import java.awt.image.Raster;
-import java.awt.image.RasterFormatException;
-import java.awt.image.WritableRaster;
-import java.util.Properties;
 
 /**
  * A utility class primary intended for storing data obtained by reading
@@ -102,6 +103,11 @@ public class ImageBuilder {
         this.isAlphaPremultiplied = isAlphaPremultiplied;
     }
 
+    /**
+     * @param width image width (must be greater than zero)
+     * @param height image height (must be greater than zero)
+     * @throws RasterFormatException if {@code width} or {@code height} are equal or less than zero
+     */
     private void checkDimensions(final int width, final int height) {
         if (width <= 0) {
             throw new RasterFormatException("zero or negative width value");
@@ -172,6 +178,7 @@ public class ImageBuilder {
      * specified rectangular region
      * @param w the width of the specified rectangular region
      * @param h the height of the specified rectangular region
+     * @throws RasterFormatException if width or height are equal or less than zero, or if the subimage is outside raster (on x or y axis)
      */
     private void checkBounds(final int x, final int y, final int w, final int h) {
         if (w <= 0) {
