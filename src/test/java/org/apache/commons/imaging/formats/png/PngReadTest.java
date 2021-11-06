@@ -94,4 +94,20 @@ public class PngReadTest extends PngBaseTest {
         final PngImageParser parser = new PngImageParser();
         assertThrows(ImageReadException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), Collections.emptyMap()));
     }
+
+    /**
+     * Test that a PNG image using indexed color type but no PLTE chunks
+     * does not throw a {@code NullPointerException}.
+     *
+     * <p>See Google OSS Fuzz issue 37607</p>
+     *
+     * @throws IOException if it fails to read the test image
+     */
+    @Test
+    public void testUncaughtExceptionOssFuzz37607() throws IOException {
+        final String input = "/images/png/IMAGING-317/clusterfuzz-testcase-minimized-ImagingPngFuzzer-6242400830357504";
+        final String file = PngReadTest.class.getResource(input).getFile();
+        final PngImageParser parser = new PngImageParser();
+        assertThrows(ImageReadException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), Collections.emptyMap()));
+    }
 }

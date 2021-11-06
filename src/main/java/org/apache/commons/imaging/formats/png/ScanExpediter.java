@@ -127,6 +127,9 @@ abstract class ScanExpediter {
         case INDEXED_COLOR: {
             // 1,2,4,8 Each pixel is a palette index;
             // a PLTE chunk must appear.
+            if (pngChunkPLTE == null) {
+                throw new ImageReadException("A PLTE chunk is required for an indexed color type.");
+            }
             final int index = bitParser.getSample(pixelIndexInScanline, 0);
 
             int rgb = pngChunkPLTE.getRGB(index);
