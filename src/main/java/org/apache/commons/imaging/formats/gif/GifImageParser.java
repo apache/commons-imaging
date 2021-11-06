@@ -784,6 +784,9 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
                     throw new ImageReadException(String.format("Invalid GIF image data length [%d], greater than the image data length [%d]", id.imageData.length, width));
                 }
                 final int index = 0xff & id.imageData[counter++];
+                if (index >= colorTable.length) {
+                    throw new ImageReadException(String.format("Invalid GIF color table index [%d], greater than the color table length [%d]", index, colorTable.length));
+                }
                 int rgb = colorTable[index];
 
                 if (transparentIndex == index) {
