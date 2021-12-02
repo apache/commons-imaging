@@ -122,6 +122,12 @@ public abstract class ImageParser<T extends ImagingParameters> extends BinaryFil
     }
 
     /**
+     * Get a default parameters instance for this parser.
+     * @return default parameters instance
+     */
+    public abstract T getDefaultParameters();
+
+    /**
      * Get image metadata from the specified byte source.  Format-specific
      * ImageParser implementations are expected to return a valid
      * IImageMetadata object or to throw an ImageReadException if unable
@@ -886,7 +892,7 @@ public abstract class ImageParser<T extends ImagingParameters> extends BinaryFil
      * @param file An valid file reference.
      * @return If the parser can accept the format, true; otherwise, false.
      */
-    protected final boolean canAcceptExtension(final File file) {
+    public boolean canAcceptExtension(final File file) {
         return canAcceptExtension(file.getName());
     }
 
@@ -897,7 +903,7 @@ public abstract class ImageParser<T extends ImagingParameters> extends BinaryFil
      * @param fileName A valid string giving a file name or file path.
      * @return If the parser can accept the format, true; otherwise, false.
      */
-    protected final boolean canAcceptExtension(final String fileName) {
+    public final boolean canAcceptExtension(final String fileName) {
         final String[] extensions = getAcceptedExtensions();
         if (extensions == null) {
             return true;

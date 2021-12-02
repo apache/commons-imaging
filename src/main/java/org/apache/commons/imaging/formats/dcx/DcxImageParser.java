@@ -51,6 +51,11 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
     }
 
     @Override
+    public PcxImagingParameters getDefaultParameters() {
+        return new PcxImagingParameters();
+    }
+
+    @Override
     public String getName() {
         return "Dcx-Custom";
     }

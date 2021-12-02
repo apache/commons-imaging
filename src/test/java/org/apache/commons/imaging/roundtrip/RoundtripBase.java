@@ -29,6 +29,7 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.common.RgbBufferedImageFactory;
 import org.apache.commons.imaging.internal.Debug;
+import org.apache.commons.imaging.internal.Util;
 import org.junit.jupiter.params.provider.Arguments;
 
 public class RoundtripBase {
@@ -40,10 +41,10 @@ public class RoundtripBase {
                 + formatInfo.format.getDefaultExtension());
         Debug.debug("tempFile: " + temp1.getName());
 
-        final ImagingParameters params = formatInfo.format.createImagingParameters();
+        final ImagingParameters params = Util.getImageParser(formatInfo.format).getDefaultParameters();
         Imaging.writeImage(testImage, temp1, formatInfo.format, params);
 
-        final ImagingParameters readParams = formatInfo.format.createImagingParameters();
+        final ImagingParameters readParams = Util.getImageParser(formatInfo.format).getDefaultParameters();
         readParams.setBufferedImageFactory(new RgbBufferedImageFactory());
         final BufferedImage image2 = Imaging.getBufferedImage(temp1, readParams);
         assertNotNull(image2);

@@ -37,6 +37,4 @@ public interface ImageFormat {
     String[] getExtensions();
 
     String getDefaultExtension();
-
-    ImagingParameters createImagingParameters();
 }

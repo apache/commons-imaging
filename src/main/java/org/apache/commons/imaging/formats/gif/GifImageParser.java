@@ -94,6 +94,11 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
     }
 
     @Override
+    public GifImagingParameters getDefaultParameters() {
+        return new GifImagingParameters();
+    }
+
+    @Override
     public String getName() {
         return "Graphics Interchange Format";
     }

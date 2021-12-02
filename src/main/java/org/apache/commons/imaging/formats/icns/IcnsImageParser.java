@@ -49,6 +49,11 @@ public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
     }
 
     @Override
+    public IcnsImagingParameters getDefaultParameters() {
+        return new IcnsImagingParameters();
+    }
+
+    @Override
     public String getName() {
         return "Apple Icon Image";
     }

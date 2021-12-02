@@ -60,12 +60,9 @@ public enum ImageFormats implements ImageFormat {
     XBM(XbmImagingParameters::new, "xbm"),
     XPM(XpmImagingParameters::new, "xpm");
 
-    private final Supplier<? extends ImagingParameters> factory;
-
     private final String[] extensions;
 
     ImageFormats(Supplier<? extends ImagingParameters> factory, String ...extensions) {
-        this.factory = factory;
         this.extensions = extensions;
     }
 
@@ -82,10 +79,5 @@ public enum ImageFormats implements ImageFormat {
     @Override
     public String getDefaultExtension() {
         return this.extensions[0];
-    }
-
-    @Override
-    public ImagingParameters createImagingParameters() {
-        return this.factory == null ? null : factory.get();
     }
 }

@@ -68,6 +68,11 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
     }
 
     @Override
+    public BmpImagingParameters getDefaultParameters() {
+        return new BmpImagingParameters();
+    }
+
+    @Override
     public String getName() {
         return "Bmp-Custom";
     }

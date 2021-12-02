@@ -78,6 +78,11 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.PNG.getExtensions();
 
     @Override
+    public PngImagingParameters getDefaultParameters() {
+        return new PngImagingParameters();
+    }
+
+    @Override
     public String getName() {
         return "Png-Custom";
     }

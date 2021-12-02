@@ -69,6 +69,11 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.TIFF.getExtensions();
 
     @Override
+    public TiffImagingParameters getDefaultParameters() {
+        return new TiffImagingParameters();
+    }
+
+    @Override
     public String getName() {
         return "Tiff-Custom";
     }
