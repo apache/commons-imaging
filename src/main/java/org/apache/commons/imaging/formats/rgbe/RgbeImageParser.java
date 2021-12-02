@@ -50,6 +50,11 @@ public class RgbeImageParser extends ImageParser<RgbeImagingParameters> {
     }
 
     @Override
+    public RgbeImagingParameters getDefaultParameters() {
+        return new RgbeImagingParameters();
+    }
+
+    @Override
     public String getName() {
         return "Radiance HDR";
     }

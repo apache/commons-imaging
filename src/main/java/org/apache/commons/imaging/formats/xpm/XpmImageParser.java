@@ -104,6 +104,11 @@ public class XpmImageParser extends ImageParser<XpmImagingParameters> {
     }
 
     @Override
+    public XpmImagingParameters getDefaultParameters() {
+        return new XpmImagingParameters();
+    }
+
+    @Override
     public String getName() {
         return "X PixMap";
     }

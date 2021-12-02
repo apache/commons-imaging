@@ -70,7 +70,11 @@ public class PsdImageParser extends ImageParser<PsdImagingParameters> implements
 
     public PsdImageParser() {
         super.setByteOrder(ByteOrder.BIG_ENDIAN);
-        // setDebug(true);
+    }
+
+    @Override
+    public PsdImagingParameters getDefaultParameters() {
+        return new PsdImagingParameters();
     }
 
     @Override

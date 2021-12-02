@@ -51,6 +51,11 @@ public class XbmImageParser extends ImageParser<XbmImagingParameters> {
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.XBM.getExtensions();
 
     @Override
+    public XbmImagingParameters getDefaultParameters() {
+        return new XbmImagingParameters();
+    }
+
+    @Override
     public String getName() {
         return "X BitMap";
     }

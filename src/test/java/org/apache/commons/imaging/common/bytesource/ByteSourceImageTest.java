@@ -163,11 +163,13 @@ public class ByteSourceImageTest extends ByteSourceTest {
             IllegalArgumentException, InvocationTargetException {
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
         final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
-        final ImagingParameters params = imageFormat.createImagingParameters();
+        ImagingParameters params = null;
         if (imageFormat == ImageFormats.TIFF) {
+            params = new TiffImagingParameters();
             ((TiffImagingParameters) params).setReadThumbnails(Boolean.valueOf(!ignoreImageData));
         }
         if (imageFormat == ImageFormats.JPEG) {
+            params = new JpegImagingParameters();
             ((JpegImagingParameters) params).setReadThumbnails(Boolean.valueOf(!ignoreImageData));
         }
 

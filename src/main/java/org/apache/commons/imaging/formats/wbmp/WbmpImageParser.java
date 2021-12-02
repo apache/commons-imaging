@@ -45,6 +45,11 @@ public class WbmpImageParser extends ImageParser<WbmpImagingParameters> {
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.WBMP.getExtensions();
 
     @Override
+    public WbmpImagingParameters getDefaultParameters() {
+        return new WbmpImagingParameters();
+    }
+
+    @Override
     public String getName() {
         return "Wireless Application Protocol Bitmap Format";
     }

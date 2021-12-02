@@ -52,7 +52,11 @@ public class PnmImageParser extends ImageParser<PnmImagingParameters> {
 
     public PnmImageParser() {
         super.setByteOrder(ByteOrder.LITTLE_ENDIAN);
-        // setDebug(true);
+    }
+
+    @Override
+    public PnmImagingParameters getDefaultParameters() {
+        return new PnmImagingParameters();
     }
 
     @Override

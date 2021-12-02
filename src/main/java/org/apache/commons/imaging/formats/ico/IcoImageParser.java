@@ -57,6 +57,11 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
     }
 
     @Override
+    public IcoImagingParameters getDefaultParameters() {
+        return new IcoImagingParameters();
+    }
+
+    @Override
     public String getName() {
         return "ico-Custom";
     }

@@ -80,6 +80,11 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
     }
 
     @Override
+    public JpegImagingParameters getDefaultParameters() {
+        return new JpegImagingParameters();
+    }
+
+    @Override
     public String getName() {
         return "Jpeg-Custom";
     }
