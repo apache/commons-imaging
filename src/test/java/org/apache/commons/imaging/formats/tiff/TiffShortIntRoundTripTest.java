@@ -25,14 +25,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteOrder;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
-import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
@@ -92,11 +89,8 @@ public class TiffShortIntRoundTripTest extends TiffBaseTest {
                 "Extracted data does not match original, test "+name+": "
                 + i + ", index " + j);
             }
-            final Map<String, Object> params = new HashMap<>();
-            params.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, 2);
-            params.put(TiffConstants.PARAM_KEY_SUBIMAGE_Y, 2);
-            params.put(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, width-4);
-            params.put(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, height-4);
+            final TiffImagingParameters params = new TiffImagingParameters();
+            params.setSubImage(2, 2, width-4, height-4);
             TiffRasterData rdSub = directory.getRasterData(params);
             assertEquals(width-4, rdSub.getWidth(), "Invalid sub-image width");
             assertEquals(height-4, rdSub.getHeight(), "Invalid sub-image height");
@@ -107,11 +101,8 @@ public class TiffShortIntRoundTripTest extends TiffBaseTest {
                     assertEquals(a, b, "Sub Image test failed at (" + x + "," + y + ")");
                 }
             }
-            final Map<String, Object> xparams = new HashMap<>();
-            xparams.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, 2);
-            xparams.put(TiffConstants.PARAM_KEY_SUBIMAGE_Y, 2);
-            xparams.put(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, width);
-            xparams.put(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, height);
+            final TiffImagingParameters xparams = new TiffImagingParameters();
+            xparams.setSubImage(2, 2, width, height);
             assertThrows(ImageReadException.class, ()->directory.getRasterData(xparams),
                 "Failed to catch bad subimage for test "+name);
         }

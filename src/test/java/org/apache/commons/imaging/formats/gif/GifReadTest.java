@@ -194,6 +194,6 @@ public class GifReadTest extends GifBaseTest {
         final String input = "/images/gif/IMAGING-318/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5005192379629568";
         final String file = GifReadTest.class.getResource(input).getFile();
         final GifImageParser parser = new GifImageParser();
-        assertThrows(ImageReadException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), Collections.emptyMap()));
+        assertThrows(ImageReadException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), new GifImagingParameters()));
     }
 }
