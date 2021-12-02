@@ -18,9 +18,7 @@ package org.apache.commons.imaging.formats.tiff;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
 
-import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,18 +26,13 @@ import java.io.IOException;
 import java.nio.ByteOrder;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.imaging.FormatCompliance;
-import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
-import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
-import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PhotometricInterpreterFloat;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
@@ -112,9 +105,7 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
                 true, // indicates that application should read image data, if present
                 FormatCompliance.getDefault());
             final TiffDirectory directory = contents.directories.get(0);
-            final HashMap<String, Object> params = new HashMap<>();
-            final ByteOrder byteOrder = tiffReader.getByteOrder();
-            final TiffRasterData raster = directory.getRasterData(params);
+            final TiffRasterData raster = directory.getRasterData(new TiffImagingParameters());
             assertNotNull(raster, "Failed to get raster from " + name);
             assertEquals(2, raster.getSamplesPerPixel(), "Invalid samples per pixel in " + name);
             for(int iPlane = 0; iPlane<2; iPlane++){
@@ -260,7 +251,6 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
             for (int i = 0; i < height; i++) {
                 final int blockRow = i / nRowsInBlock;
                 final int rowInBlock = i - blockRow * nRowsInBlock;
-                final int blockRowOffset = rowInBlock * nColsInBlock;
                 for (int j = 0; j < width; j++) {
                     final int blockCol = j / nColsInBlock;
                     final int colInBlock = j - blockCol * nColsInBlock;

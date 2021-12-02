@@ -34,7 +34,6 @@ import java.io.PrintWriter;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.imaging.FormatCompliance;
@@ -133,7 +132,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
     public ImageMetadata getMetadata(final ByteSource byteSource, TiffImagingParameters params)
             throws ImageReadException, IOException {
         if (params == null) {
-            params = new TiffImagingParameters();
+            params = this.getDefaultParameters();
         }
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffReader tiffReader = new TiffReader(params.isStrict());
