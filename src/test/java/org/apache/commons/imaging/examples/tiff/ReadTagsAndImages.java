@@ -30,6 +30,7 @@ import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.formats.tiff.TiffContents;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffField;
+import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.formats.tiff.TiffReader;
 import org.apache.commons.imaging.formats.tiff.constants.GdalLibraryTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.GeoTiffTagConstants;
@@ -82,7 +83,7 @@ public class ReadTagsAndImages {
             = rootName != null && !rootName.isEmpty();
 
         final ByteSourceFile byteSource = new ByteSourceFile(target);
-        final JpegImagingParameters params = new JpegImagingParameters();
+        final TiffImagingParameters params = new TiffImagingParameters();
 
         // Establish a TiffReader. This is just a simple constructor that
         // does not actually access the file.  So the application cannot

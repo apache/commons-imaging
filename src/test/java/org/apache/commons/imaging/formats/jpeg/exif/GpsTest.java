@@ -42,8 +42,6 @@ public class GpsTest extends ExifBaseTest {
         }
 
         final JpegImagingParameters params = new JpegImagingParameters();
-        final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        params.setReadThumbnails(!ignoreImageData);
 
         final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(imageFile, params);
         if (null == metadata) {

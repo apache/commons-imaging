@@ -22,16 +22,14 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImagingParameters;
-import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.formats.jpeg.iptc.IptcParser;
 import org.apache.commons.imaging.formats.jpeg.iptc.PhotoshopApp13Data;
 
 public class App13Segment extends AppnSegment {
 
-    public App13Segment(final JpegImageParser parser, final int marker, final byte[] segmentData)
+    public App13Segment(final int marker, final byte[] segmentData)
             throws IOException {
-        this(marker, segmentData.length, new ByteArrayInputStream(
-                segmentData));
+        this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
     public App13Segment(final int marker, final int markerLength,

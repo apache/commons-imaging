@@ -56,8 +56,6 @@ public abstract class SpecificExifTagTest extends ExifBaseTest {
         // Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
         final JpegImagingParameters params = new JpegImagingParameters();
-        final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        params.setReadThumbnails(!ignoreImageData);
 
         // note that metadata might be null if no metadata is found.
         final ImageMetadata metadata = Imaging.getMetadata(imageFile, params);

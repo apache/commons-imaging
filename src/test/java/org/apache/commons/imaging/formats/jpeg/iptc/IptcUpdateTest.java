@@ -55,8 +55,6 @@ public class IptcUpdateTest extends IptcBaseTest {
         final ByteSource byteSource = new ByteSourceFile(imageFile);
 
         final JpegImagingParameters params = new JpegImagingParameters();
-        final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        params.setReadThumbnails(!ignoreImageData);
 
         final JpegPhotoshopMetadata metadata = new JpegImageParser().getPhotoshopMetadata(
                 byteSource, params);
@@ -87,8 +85,6 @@ public class IptcUpdateTest extends IptcBaseTest {
         final ByteSource byteSource = new ByteSourceFile(imageFile);
 
         final JpegImagingParameters params = new JpegImagingParameters();
-        final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        params.setReadThumbnails(!ignoreImageData);
 
         final JpegPhotoshopMetadata metadata = new JpegImageParser().getPhotoshopMetadata(
                 byteSource, params);
@@ -128,8 +124,6 @@ public class IptcUpdateTest extends IptcBaseTest {
         final ByteSource byteSource = new ByteSourceFile(imageFile);
 
         final JpegImagingParameters params = new JpegImagingParameters();
-        final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        params.setReadThumbnails(!ignoreImageData);
 
         final JpegPhotoshopMetadata metadata = new JpegImageParser().getPhotoshopMetadata(byteSource, params);
         assertNotNull(metadata);
@@ -170,8 +164,6 @@ public class IptcUpdateTest extends IptcBaseTest {
         final ByteSource byteSource = new ByteSourceFile(imageFile);
 
         final JpegImagingParameters params = new JpegImagingParameters();
-        final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        params.setReadThumbnails(!ignoreImageData);
 
         final JpegPhotoshopMetadata metadata = new JpegImageParser().getPhotoshopMetadata(byteSource, params);
         assertNotNull(metadata);

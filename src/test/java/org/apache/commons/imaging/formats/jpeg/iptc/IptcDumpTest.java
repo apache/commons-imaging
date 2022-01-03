@@ -41,8 +41,6 @@ public class IptcDumpTest extends IptcBaseTest {
     @MethodSource("data")
     public void test(final File imageFile) throws Exception {
         final JpegImagingParameters params = new JpegImagingParameters();
-        final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        params.setReadThumbnails(!ignoreImageData);
 
         final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(imageFile, params);
         assertNotNull(metadata);
