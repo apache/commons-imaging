@@ -23,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.stream.Stream;
 
 import org.apache.commons.imaging.ImageInfo;
@@ -31,6 +30,7 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -46,10 +46,9 @@ public class JpegReadTest extends JpegBaseTest {
     @MethodSource("data")
     public void test(final File imageFile) throws Exception {
         final JpegImagingParameters params = new JpegImagingParameters();
-        final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        params.setReadThumbnails(!ignoreImageData);
 
-        final ImageMetadata metadata = Imaging.getMetadata(imageFile, params);
+        JpegImageParser jpegImageParser = new JpegImageParser();
+        final ImageMetadata metadata = jpegImageParser.getExifMetadata(new ByteSourceFile(imageFile), new TiffImagingParameters());
         // TODO only run this tests with images that have metadata...
         //assertNotNull(metadata);
         Debug.debug("metadata", metadata);
@@ -76,11 +75,9 @@ public class JpegReadTest extends JpegBaseTest {
      * throwing an ImageReadException instead.</p>
      *
      * <p>See Google OSS Fuzz issue 33458</p>
-     *
-     * @throws IOException if it fails to read the test image
      */
     @Test
-    public void testUncaughtExceptionOssFuzz33458() throws IOException {
+    public void testUncaughtExceptionOssFuzz33458() {
         final String input = "/images/jpeg/oss-fuzz-33458/clusterfuzz-testcase-minimized-ImagingJpegFuzzer-4548690447564800";
         final String file = JpegReadTest.class.getResource(input).getFile();
         final JpegImageParser parser = new JpegImageParser();

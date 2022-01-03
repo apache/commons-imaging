@@ -25,9 +25,9 @@ import javax.imageio.ImageIO;
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
-import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.formats.tiff.TiffContents;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
+import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.formats.tiff.TiffReader;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PhotometricInterpreterFloat;
@@ -146,7 +146,7 @@ public class ReadAndRenderFloatingPoint {
         //    For this demo, we store the Photometric Interpreter instance
         // as a option-parameter to be passed into the read-image method.
         final PhotometricInterpreterFloat pi = new PhotometricInterpreterFloat(0.0f, 1.0f);
-        JpegImagingParameters params = new JpegImagingParameters();
+        TiffImagingParameters params = new TiffImagingParameters();
         params.setCustomPhotometricInterpreter(pi);
         BufferedImage bImage = directory.getTiffImage(params);
 
@@ -162,7 +162,7 @@ public class ReadAndRenderFloatingPoint {
             // of values found above.
             final PhotometricInterpreterFloat grayScale
                 = new PhotometricInterpreterFloat(minValue, maxValue);
-            params = new JpegImagingParameters();
+            params = new TiffImagingParameters();
             params.setCustomPhotometricInterpreter(grayScale);
             bImage = directory.getTiffImage(params);
             ImageIO.write(bImage, "JPEG", output);

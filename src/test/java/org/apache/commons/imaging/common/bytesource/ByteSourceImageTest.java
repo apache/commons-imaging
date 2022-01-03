@@ -166,11 +166,10 @@ public class ByteSourceImageTest extends ByteSourceTest {
         ImagingParameters params = null;
         if (imageFormat == ImageFormats.TIFF) {
             params = new TiffImagingParameters();
-            ((TiffImagingParameters) params).setReadThumbnails(Boolean.valueOf(!ignoreImageData));
+            ((TiffImagingParameters) params).setReadThumbnails(!ignoreImageData);
         }
         if (imageFormat == ImageFormats.JPEG) {
             params = new JpegImagingParameters();
-            ((JpegImagingParameters) params).setReadThumbnails(Boolean.valueOf(!ignoreImageData));
         }
 
         final ImageInfo imageInfoFile = Imaging.getImageInfo(imageFile, params);
@@ -182,23 +181,21 @@ public class ByteSourceImageTest extends ByteSourceTest {
 
         final Method[] methods = ImageInfo.class.getMethods();
         for (final Method method2 : methods) {
-            final Method method = method2;
-            method.getModifiers();
-            if (!Modifier.isPublic(method.getModifiers())) {
+            if (!Modifier.isPublic(method2.getModifiers())) {
                 continue;
             }
-            if (!method.getName().startsWith("get")) {
+            if (!method2.getName().startsWith("get")) {
                 continue;
             }
-            if (method.getName().equals("getClass"))
+            if (method2.getName().equals("getClass"))
              {
                 continue;
             // if (method.getGenericParameterTypes().length > 0)
             // continue;
             }
 
-            final Object valueFile = method.invoke(imageInfoFile, (Object[])null);
-            final Object valueBytes = method.invoke(imageInfoBytes, (Object[])null);
+            final Object valueFile = method2.invoke(imageInfoFile, (Object[])null);
+            final Object valueBytes = method2.invoke(imageInfoBytes, (Object[])null);
 
             assertEquals(valueFile, valueBytes);
         }

@@ -59,6 +59,7 @@ import org.apache.commons.imaging.formats.jpeg.xmp.JpegXmpParser;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffImageParser;
+import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.internal.Debug;
 
@@ -121,11 +122,8 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
         return false;
     }
 
-    public List<Segment> readSegments(final ByteSource byteSource,
-            final int[] markers, final boolean returnAfterFirst,
-            final boolean readEverything) throws ImageReadException, IOException {
+    public List<Segment> readSegments(final ByteSource byteSource, final int[] markers, final boolean returnAfterFirst) throws ImageReadException, IOException {
         final List<Segment> result = new ArrayList<>();
-        final JpegImageParser parser = this;
         final int[] sofnSegments = {
                 // kJFIFMarker,
                 JpegConstants.SOF0_MARKER,
@@ -178,7 +176,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
                 switch (marker) {
                 case JpegConstants.JPEG_APP13_MARKER:
                     // Debug.debug("app 13 segment data", segmentData.length);
-                    result.add(new App13Segment(parser, marker, segmentData));
+                    result.add(new App13Segment(marker, segmentData));
                     break;
                 case JpegConstants.JPEG_APP14_MARKER:
                     result.add(new App14Segment(marker, segmentData));
@@ -203,11 +201,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
                     break;
                 }
 
-                if (returnAfterFirst) {
-                    return false;
-                }
-
-                return true;
+                return !returnAfterFirst;
             }
         };
 
@@ -287,11 +281,6 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
         Debug.debug();
     }
 
-    public List<Segment> readSegments(final ByteSource byteSource, final int[] markers,
-            final boolean returnAfterFirst) throws ImageReadException, IOException {
-        return readSegments(byteSource, markers, returnAfterFirst, false);
-    }
-
     @Override
     public byte[] getICCProfileBytes(final ByteSource byteSource, final JpegImagingParameters params)
             throws ImageReadException, IOException {
@@ -328,10 +317,9 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
         if (params == null) {
             params = new JpegImagingParameters();
         }
-        final TiffImageMetadata exif = getExifMetadata(byteSource, params);
+        final TiffImageMetadata exif = getExifMetadata(byteSource, new TiffImagingParameters());
 
-        final JpegPhotoshopMetadata photoshop = getPhotoshopMetadata(byteSource,
-                params);
+        final JpegPhotoshopMetadata photoshop = getPhotoshopMetadata(byteSource, params);
 
         if (null == exif && null == photoshop) {
             return null;
@@ -357,7 +345,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
         return result;
     }
 
-    public TiffImageMetadata getExifMetadata(final ByteSource byteSource, JpegImagingParameters params)
+    public TiffImageMetadata getExifMetadata(final ByteSource byteSource, TiffImagingParameters params)
             throws ImageReadException, IOException {
         final byte[] bytes = getExifRawData(byteSource);
         if (null == bytes) {
@@ -365,12 +353,11 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
         }
 
         if (params == null) {
-            params = new JpegImagingParameters();
+            params = new TiffImagingParameters();
         }
         params.setReadThumbnails(Boolean.TRUE);
 
-        return (TiffImageMetadata) new TiffImageParser().getMetadata(bytes,
-                params);
+        return (TiffImageMetadata) new TiffImageParser().getMetadata(bytes, params);
     }
 
     public byte[] getExifRawData(final ByteSource byteSource)
@@ -431,7 +418,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
             @Override
             public boolean visitSegment(final int marker, final byte[] markerBytes,
                     final int markerLength, final byte[] markerLengthBytes,
-                    final byte[] segmentData) throws ImageReadException, IOException {
+                    final byte[] segmentData) {
                 if (marker == 0xffd9) {
                     return false;
                 }
@@ -473,7 +460,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
             @Override
             public boolean visitSegment(final int marker, final byte[] markerBytes,
                     final int markerLength, final byte[] markerLengthBytes,
-                    final byte[] segmentData) throws ImageReadException, IOException {
+                    final byte[] segmentData) {
                 if (marker == 0xffd9) {
                     return false;
                 }
@@ -515,7 +502,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
             @Override
             public boolean visitSegment(final int marker, final byte[] markerBytes,
                     final int markerLength, final byte[] markerLengthBytes,
-                    final byte[] segmentData) throws ImageReadException, IOException {
+                    final byte[] segmentData) {
                 if (marker == 0xffd9) {
                     return false;
                 }
@@ -568,7 +555,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
             @Override
             public boolean visitSegment(final int marker, final byte[] markerBytes,
                     final int markerLength, final byte[] markerLengthBytes,
-                    final byte[] segmentData) throws ImageReadException, IOException {
+                    final byte[] segmentData) throws ImageReadException {
                 if (marker == 0xffd9) {
                     return false;
                 }
