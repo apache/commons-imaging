@@ -16,53 +16,36 @@
  */
 package org.apache.commons.imaging;
 
-import org.apache.commons.imaging.formats.bmp.BmpImagingParameters;
-import org.apache.commons.imaging.formats.gif.GifImagingParameters;
-import org.apache.commons.imaging.formats.icns.IcnsImagingParameters;
-import org.apache.commons.imaging.formats.ico.IcoImagingParameters;
-import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
-import org.apache.commons.imaging.formats.pcx.PcxImagingParameters;
-import org.apache.commons.imaging.formats.png.PngImagingParameters;
-import org.apache.commons.imaging.formats.pnm.PnmImagingParameters;
-import org.apache.commons.imaging.formats.psd.PsdImagingParameters;
-import org.apache.commons.imaging.formats.rgbe.RgbeImagingParameters;
-import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
-import org.apache.commons.imaging.formats.wbmp.WbmpImagingParameters;
-import org.apache.commons.imaging.formats.xbm.XbmImagingParameters;
-import org.apache.commons.imaging.formats.xpm.XpmImagingParameters;
-
-import java.util.function.Supplier;
-
 /**
  * Enum of known image formats.
  */
 public enum ImageFormats implements ImageFormat {
-    UNKNOWN(null),
-    BMP(BmpImagingParameters::new, "bmp", "dib"),
-    DCX(PcxImagingParameters::new, "dcx"),
-    GIF(GifImagingParameters::new, "gif"),
-    ICNS(IcnsImagingParameters::new, "icns"),
-    ICO(IcoImagingParameters::new, "ico"),
-    JBIG2(null),
-    JPEG(JpegImagingParameters::new, "jpg", "jpeg"),
-    PAM(PnmImagingParameters::new, "pam"),
-    PSD(PsdImagingParameters::new, "psd"),
-    PBM(PnmImagingParameters::new, "pbm"),
-    PGM(PnmImagingParameters::new, "pgm"),
-    PNM(PnmImagingParameters::new, "pnm"),
-    PPM(PnmImagingParameters::new, "ppm"),
-    PCX(PcxImagingParameters::new, "pcx", "pcc"),
-    PNG(PngImagingParameters::new, "png"),
-    RGBE(RgbeImagingParameters::new, "rgbe"),
-    TGA(null),
-    TIFF(TiffImagingParameters::new, "tif", "tiff"),
-    WBMP(WbmpImagingParameters::new, "wbmp"),
-    XBM(XbmImagingParameters::new, "xbm"),
-    XPM(XpmImagingParameters::new, "xpm");
+    UNKNOWN(),
+    BMP("bmp", "dib"),
+    DCX("dcx"),
+    GIF("gif"),
+    ICNS("icns"),
+    ICO("ico"),
+    JBIG2(),
+    JPEG("jpg", "jpeg"),
+    PAM("pam"),
+    PSD("psd"),
+    PBM("pbm"),
+    PGM("pgm"),
+    PNM("pnm"),
+    PPM("ppm"),
+    PCX("pcx", "pcc"),
+    PNG("png"),
+    RGBE("rgbe"),
+    TGA(),
+    TIFF("tif", "tiff"),
+    WBMP("wbmp"),
+    XBM("xbm"),
+    XPM("xpm");
 
     private final String[] extensions;
 
-    ImageFormats(Supplier<? extends ImagingParameters> factory, String ...extensions) {
+    ImageFormats(String ...extensions) {
         this.extensions = extensions;
     }
 
@@ -78,6 +61,6 @@ public enum ImageFormats implements ImageFormat {
 
     @Override
     public String getDefaultExtension() {
-        return this.extensions[0];
+        return this.extensions != null ? this.extensions[0] : null;
     }
 }
