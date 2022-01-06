@@ -64,7 +64,7 @@ The <action> type attribute can be add,update,fix,remove.
         Bump spotbugs from 4.0.6 to 4.5.3 #111 #118 #123 #128 #156 #160 #167 #174 #185 #188 #191.
       </action>
       <action dev="kinow" type="update" due-to="Dependabot">
-        Bump spotbugs-maven-plugin from 4.0.4 to 4.5.0.0 #111 #115 #125 #129 #157 #171 #176 #180 #186.
+        Bump spotbugs-maven-plugin from 4.0.4 to 4.5.3.0 #111 #115 #125 #129 #157 #171 #176 #180 #186 #192.
       </action>
       <action dev="kinow" type="update" due-to="Dependabot">
         Bump maven-pmd-plugin from 3.13.0 to 3.15.0 #109 #166.
