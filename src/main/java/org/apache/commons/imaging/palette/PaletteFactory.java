@@ -145,11 +145,6 @@ public class PaletteFactory {
             return null;
         }
 
-        final int remainder = total - sum;
-        if ((remainder < 1) || (remainder >= total)) {
-            return null;
-        }
-
         final int[] sliceMins = new int[subset.mins.length];
         System.arraycopy(subset.mins, 0, sliceMins, 0, subset.mins.length);
         final int[] sliceMaxs = new int[subset.maxs.length];
@@ -268,8 +263,8 @@ public class PaletteFactory {
         }
     }
 
-    private List<ColorSpaceSubset> divide(final List<ColorSpaceSubset> v,
-            final int desiredCount, final int[] table, final int precision) {
+    private void divide(final List<ColorSpaceSubset> v,
+                        final int desiredCount, final int[] table, final int precision) {
         final List<ColorSpaceSubset> ignore = new ArrayList<>();
 
         while (true) {
@@ -292,7 +287,7 @@ public class PaletteFactory {
             }
 
             if (maxSubset == null) {
-                return v;
+                return;
             }
             if (LOGGER.isLoggable(Level.FINEST)) {
                 LOGGER.finest("\t" + "area: " + maxArea);
@@ -309,7 +304,7 @@ public class PaletteFactory {
             }
 
             if (v.size() == desiredCount) {
-                return v;
+                return;
             }
         }
     }
@@ -359,7 +354,7 @@ public class PaletteFactory {
             LOGGER.finest("width * height: " + (width * height));
         }
 
-        subsets = divide(subsets, max, table, precision);
+        divide(subsets, max, table, precision);
 
         if (LOGGER.isLoggable(Level.FINEST)) {
             LOGGER.finest("subsets: " + subsets.size());

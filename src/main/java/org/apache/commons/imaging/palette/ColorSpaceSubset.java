@@ -42,7 +42,6 @@ class ColorSpaceSubset {
         mins = new int[PaletteFactory.COMPONENTS];
         maxs = new int[PaletteFactory.COMPONENTS];
         for (int i = 0; i < PaletteFactory.COMPONENTS; i++) {
-            mins[i] = 0;
             maxs[i] = precisionMask;
         }
 
