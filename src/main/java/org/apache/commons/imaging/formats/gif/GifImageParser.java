@@ -847,8 +847,10 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, GifImagingParameters params)
-            throws ImageWriteException, IOException {
+    public void writeImage(final BufferedImage src, final OutputStream os, GifImagingParameters params) throws ImageWriteException, IOException {
+        if (params == null) {
+            params = new GifImagingParameters();
+        }
 
         String xmpXml = params.getXmpXml();
 

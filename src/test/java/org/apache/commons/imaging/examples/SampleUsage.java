@@ -16,20 +16,19 @@
  */
 package org.apache.commons.imaging.examples;
 
-import java.awt.Dimension;
-import java.awt.color.ICC_Profile;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.InputStream;
-import java.io.OutputStream;
-
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.ImageMetadata;
-import org.apache.commons.imaging.formats.png.PngImagingParameters;
+
+import java.awt.Dimension;
+import java.awt.color.ICC_Profile;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class SampleUsage {
 
@@ -66,11 +65,10 @@ public class SampleUsage {
             final BufferedImage image = someImage;
             final File dst = someFile;
             final ImageFormat format = ImageFormats.PNG;
-            final PngImagingParameters optionalParams = new PngImagingParameters();
-            Imaging.writeImage(image, dst, format, optionalParams);
+            Imaging.writeImage(image, dst, format);
 
             final OutputStream os = someOutputStream;
-            Imaging.writeImage(image, os, format, optionalParams);
+            Imaging.writeImage(image, os, format);
 
             // <b>get the image's embedded ICC Profile, if it has one. </b>
             final byte[] iccProfileBytes = Imaging.getICCProfileBytes(imageBytes);

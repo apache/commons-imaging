@@ -17,15 +17,15 @@
 
 package org.apache.commons.imaging.roundtrip;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.apache.commons.imaging.Imaging;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.stream.Stream;
 
-import org.apache.commons.imaging.Imaging;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class NullParametersRoundtripTest extends RoundtripBase {
 
@@ -38,12 +38,12 @@ public class NullParametersRoundtripTest extends RoundtripBase {
     public void testNullParametersRoundtrip(final FormatInfo formatInfo) throws Exception {
         final BufferedImage testImage = TestImages.createFullColorImage(1, 1);
         final File temp1 = File.createTempFile("nullParameters.", "." + formatInfo.format.getDefaultExtension());
-        Imaging.writeImage(testImage, temp1, formatInfo.format, null);
-        Imaging.getImageInfo(temp1, null);
-        Imaging.getImageSize(temp1, null);
-        Imaging.getMetadata(temp1, null);
-        Imaging.getICCProfile(temp1, null);
-        final BufferedImage imageRead = Imaging.getBufferedImage(temp1, null);
+        Imaging.writeImage(testImage, temp1, formatInfo.format);
+        Imaging.getImageInfo(temp1);
+        Imaging.getImageSize(temp1);
+        Imaging.getMetadata(temp1);
+        Imaging.getICCProfile(temp1);
+        final BufferedImage imageRead = Imaging.getBufferedImage(temp1);
 
         assertNotNull(imageRead);
     }

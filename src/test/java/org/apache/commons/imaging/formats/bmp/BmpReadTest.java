@@ -43,8 +43,7 @@ public class BmpReadTest extends BmpBaseTest {
     @ParameterizedTest
     @MethodSource("data")
     public void testImageInfo(final File imageFile) throws ImageReadException, IOException {
-        final BmpImagingParameters params = new BmpImagingParameters();
-        final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
+        final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
         assertNotNull(imageInfo);
         // TODO assert more
     }

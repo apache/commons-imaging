@@ -341,7 +341,7 @@ public abstract class TiffImageWriterBase {
         int stripSizeInBits = 64000; // the default from legacy implementation
         Integer compressionParameter = params.getCompression();
         if (compressionParameter != null) {
-            compression = compressionParameter.intValue();
+            compression = compressionParameter;
             final Integer stripSizeInBytes = params.getLzwCompressionBlockSize();
             if (stripSizeInBytes != null) {
                 if (stripSizeInBytes < 8000) {

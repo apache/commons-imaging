@@ -17,22 +17,21 @@
 
 package org.apache.commons.imaging.formats.png;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.apache.commons.imaging.internal.Debug;
+import org.junit.jupiter.api.Test;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageFormats;
-import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.internal.Debug;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class PngWriteForceTrueColorText extends PngBaseTest {
 
     @Test
     public void test() throws Exception {
-
+        final PngImageParser pngImageParser = new PngImageParser();
         final List<File> images = getPngImages();
         for (final File imageFile : images) {
 
@@ -47,7 +46,7 @@ public class PngWriteForceTrueColorText extends PngBaseTest {
                 // params.put(ImagingConstants.PARAM_KEY_VERBOSE,
                 // Boolean.TRUE);
 
-                final BufferedImage image = Imaging.getBufferedImage(imageFile, new PngImagingParameters());
+                final BufferedImage image = pngImageParser.getBufferedImage(imageFile, new PngImagingParameters());
                 assertNotNull(image);
 
                 final File outFile = File.createTempFile(imageFile.getName() + ".", ".gif");
@@ -55,9 +54,11 @@ public class PngWriteForceTrueColorText extends PngBaseTest {
 
                 final PngImagingParameters params = new PngImagingParameters();
                 params.setForceTrueColor(Boolean.TRUE);
-                Imaging.writeImage(image, outFile, ImageFormats.PNG, params);
+                try (FileOutputStream fos = new FileOutputStream(outFile)) {
+                    pngImageParser.writeImage(image, fos, params);
+                }
 
-                final BufferedImage image2 = Imaging.getBufferedImage(outFile, new PngImagingParameters());
+                final BufferedImage image2 = pngImageParser.getBufferedImage(outFile, new PngImagingParameters());
                 assertNotNull(image2);
             } catch (final Exception e) {
                 Debug.debug("imageFile", imageFile);

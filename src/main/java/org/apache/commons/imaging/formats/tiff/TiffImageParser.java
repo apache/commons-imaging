@@ -316,8 +316,11 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
     }
 
     @Override
-    public String getXmpXml(final ByteSource byteSource, final XmpImagingParameters params)
+    public String getXmpXml(final ByteSource byteSource, XmpImagingParameters params)
             throws ImageReadException, IOException {
+        if (params == null) {
+            params = new XmpImagingParameters();
+        }
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffContents contents = new TiffReader(isStrict(params)).readDirectories(
                 byteSource, false, formatCompliance);

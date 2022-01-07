@@ -625,8 +625,10 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
     // }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, IcoImagingParameters params)
-            throws ImageWriteException, IOException {
+    public void writeImage(final BufferedImage src, final OutputStream os, IcoImagingParameters params) throws ImageWriteException, IOException {
+        if (params == null) {
+            params = new IcoImagingParameters();
+        }
         final PixelDensity pixelDensity = params.getPixelDensity();
 
         final PaletteFactory paletteFactory = new PaletteFactory();

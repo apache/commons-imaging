@@ -33,8 +33,7 @@ public class XmpDumpTest extends ImagingTest {
         final List<File> images = getTestImages();
         for (final File imageFile : images) {
 
-            if (imageFile.getName().toLowerCase().endsWith(".png")
-                    && isInvalidPNGTestFile(imageFile)) {
+            if (imageFile.getName().toLowerCase().endsWith(".png") && isInvalidPNGTestFile(imageFile)) {
                 continue;
             }
 

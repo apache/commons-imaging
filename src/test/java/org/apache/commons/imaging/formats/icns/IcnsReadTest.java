@@ -17,16 +17,6 @@
 
 package org.apache.commons.imaging.formats.icns;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
-
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
@@ -35,6 +25,16 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class IcnsReadTest extends IcnsBaseTest {
 
@@ -69,7 +69,7 @@ public class IcnsReadTest extends IcnsBaseTest {
     @ParameterizedTest
     @MethodSource("data")
     public void testImageInfo(final File imageFile) throws Exception {
-        final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, new IcnsImagingParameters());
+        final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
         assertNotNull(imageInfo);
     }
 

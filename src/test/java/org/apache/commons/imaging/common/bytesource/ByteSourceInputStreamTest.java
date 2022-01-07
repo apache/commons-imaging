@@ -16,7 +16,11 @@
  */
 package org.apache.commons.imaging.common.bytesource;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingTestConstants;
+import org.apache.commons.io.FilenameUtils;
+import org.junit.jupiter.api.Test;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
@@ -24,12 +28,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingTestConstants;
-import org.apache.commons.imaging.formats.ico.IcoImagingParameters;
-import org.apache.commons.io.FilenameUtils;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ByteSourceInputStreamTest {
 
@@ -43,10 +42,8 @@ class ByteSourceInputStreamTest {
         final String imagePath = FilenameUtils.separatorsToSystem(ICO_IMAGE_FILE);
         final File imageFile = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, imagePath);
         try(BufferedInputStream imageStream = new BufferedInputStream(new FileInputStream(imageFile))) {
-         // ByteSourceInputStream is created inside of following method
-            IcoImagingParameters params = new IcoImagingParameters();
-            params.setFileName(ICO_IMAGE_FILE);
-            final BufferedImage bufferedImage = Imaging.getBufferedImage(imageStream, params);
+            // ByteSourceInputStream is created inside of following method
+            final BufferedImage bufferedImage = Imaging.getBufferedImage(imageStream, ICO_IMAGE_FILE);
 
             assertEquals(bufferedImage.getWidth(), ICO_IMAGE_WIDTH);
             assertEquals(bufferedImage.getHeight(), ICO_IMAGE_HEIGHT);

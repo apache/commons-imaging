@@ -17,12 +17,12 @@
 
 package org.apache.commons.imaging.formats.jpeg;
 
-import java.io.File;
-
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
 
 /**
  * Test that an invalid segment will not cause an ArrayIndexOutOfBoundsException
@@ -37,6 +37,6 @@ public class JpegWithInvalidDhtSegmentTest {
         final File imageFile = new File(JpegWithInvalidDhtSegmentTest.class
                 .getResource("/IMAGING-215/ArrayIndexOutOfBoundsException_DhtSegment_79.jpeg")
                 .getFile());
-        Assertions.assertThrows(ImageReadException.class, () -> Imaging.getMetadata(imageFile, new JpegImagingParameters()));
+        Assertions.assertThrows(ImageReadException.class, () -> Imaging.getMetadata(imageFile));
     }
 }

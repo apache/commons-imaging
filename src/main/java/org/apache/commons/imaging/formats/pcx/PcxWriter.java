@@ -37,6 +37,9 @@ class PcxWriter {
     PcxWriter(PcxImagingParameters params) throws ImageWriteException {
         // uncompressed PCX files are not even documented in ZSoft's spec,
         // let alone supported by most image viewers
+        if (params == null) {
+            params = new PcxImagingParameters();
+        }
         encoding = PcxImageParser.PcxHeader.ENCODING_RLE;
         final int compression = params.getCompression();
         if (compression == PcxConstants.PCX_COMPRESSION_UNCOMPRESSED) {

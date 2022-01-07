@@ -17,19 +17,18 @@
 
 package org.apache.commons.imaging.formats.jpeg.iptc;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
+import org.apache.commons.imaging.formats.jpeg.JpegPhotoshopMetadata;
+import org.apache.commons.imaging.internal.Debug;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.File;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
-import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
-import org.apache.commons.imaging.formats.jpeg.JpegPhotoshopMetadata;
-import org.apache.commons.imaging.internal.Debug;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class IptcDumpTest extends IptcBaseTest {
 
@@ -40,9 +39,7 @@ public class IptcDumpTest extends IptcBaseTest {
     @ParameterizedTest
     @MethodSource("data")
     public void test(final File imageFile) throws Exception {
-        final JpegImagingParameters params = new JpegImagingParameters();
-
-        final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(imageFile, params);
+        final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(imageFile);
         assertNotNull(metadata);
         assertNotNull(metadata.getPhotoshop());
 

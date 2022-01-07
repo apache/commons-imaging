@@ -475,8 +475,10 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
     }
 
     @Override
-    public final BufferedImage getBufferedImage(final ByteSource byteSource,
-            PcxImagingParameters params) throws ImageReadException, IOException {
+    public final BufferedImage getBufferedImage(final ByteSource byteSource, PcxImagingParameters params) throws ImageReadException, IOException {
+        if (params == null) {
+            params = new PcxImagingParameters();
+        }
         try (InputStream is = byteSource.getInputStream()) {
             final PcxHeader pcxHeader = readPcxHeader(is, params.isStrict());
             return readImage(pcxHeader, is, byteSource);

@@ -17,16 +17,15 @@
 
 package org.apache.commons.imaging.formats.jpeg.exif;
 
-import java.io.File;
-import java.util.stream.Stream;
-
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
-import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.io.File;
+import java.util.stream.Stream;
 
 public class GpsTest extends ExifBaseTest {
 
@@ -41,9 +40,7 @@ public class GpsTest extends ExifBaseTest {
             return;
         }
 
-        final JpegImagingParameters params = new JpegImagingParameters();
-
-        final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(imageFile, params);
+        final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(imageFile);
         if (null == metadata) {
             return;
         }

@@ -327,8 +327,10 @@ class PngWriter {
      tEXt   Yes None
      zTXt   Yes None
      */
-    public void writeImage(final BufferedImage src, final OutputStream os, PngImagingParameters params)
-            throws ImageWriteException, IOException {
+    public void writeImage(final BufferedImage src, final OutputStream os, PngImagingParameters params) throws ImageWriteException, IOException {
+        if (params == null) {
+            params = new PngImagingParameters();
+        }
         int compressionLevel = Deflater.DEFAULT_COMPRESSION;
 
         final int width = src.getWidth();
