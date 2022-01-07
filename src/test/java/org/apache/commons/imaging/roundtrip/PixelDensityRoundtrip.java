@@ -20,11 +20,13 @@ package org.apache.commons.imaging.roundtrip;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.PixelDensity;
+import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.stream.Stream;
 
@@ -41,13 +43,13 @@ public class PixelDensityRoundtrip extends RoundtripBase {
     public void testPixelDensityRoundtrip(final FormatInfo formatInfo) throws Exception {
         final BufferedImage testImage = TestImages.createFullColorImage(2, 2);
 
-        final File temp1 = File.createTempFile("pixeldensity.", "."
-                + formatInfo.format.getDefaultExtension());
+        final File temp1 = File.createTempFile("pixeldensity.", "." + formatInfo.format.getDefaultExtension());
 
         final TiffImagingParameters params = new TiffImagingParameters();
         final PixelDensity pixelDensity = PixelDensity.createFromPixelsPerInch(75, 150);
         params.setPixelDensity(pixelDensity);
-        Imaging.writeImage(testImage, temp1, formatInfo.format, params);
+        TiffImageParser tiffImageParser = new TiffImageParser();
+        tiffImageParser.writeImage(testImage, new ByteArrayOutputStream(), params);
 
         final ImageInfo imageInfo = Imaging.getImageInfo(temp1);
         if (imageInfo != null) {

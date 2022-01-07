@@ -17,19 +17,19 @@
 
 package org.apache.commons.imaging.formats.tiff;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.List;
-
-import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class TiffRoundtripTest extends TiffBaseTest {
 
@@ -55,11 +55,14 @@ public class TiffRoundtripTest extends TiffBaseTest {
                     TiffConstants.TIFF_COMPRESSION_PACKBITS,
                     TiffConstants.TIFF_COMPRESSION_DEFLATE_ADOBE
             };
+            final TiffImageParser tiffImageParser = new TiffImageParser();
             for (final int compression : compressions) {
                 final File tempFile = File.createTempFile(imageFile.getName() + "-" + compression + ".", ".tif");
                 final TiffImagingParameters params = new TiffImagingParameters();
                 params.setCompression(compression);
-                Imaging.writeImage(image, tempFile, ImageFormats.TIFF, params);
+                try (FileOutputStream fos = new FileOutputStream(tempFile)) {
+                    tiffImageParser.writeImage(image, fos, params);
+                }
                 final BufferedImage image2 = Imaging.getBufferedImage(tempFile);
                 assertNotNull(image2);
             }

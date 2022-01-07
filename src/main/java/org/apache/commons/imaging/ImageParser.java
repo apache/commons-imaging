@@ -576,8 +576,7 @@ public abstract class ImageParser<T extends ImagingParameters> extends BinaryFil
             throws ImageWriteException, IOException {
         os.close(); // we are obligated to close stream.
 
-        throw new ImageWriteException("This image format (" + getName()
-                + ") cannot be written.");
+        throw new ImageWriteException("This image format (" + getName() + ") cannot be written.");
     }
 
     /**
@@ -951,6 +950,7 @@ public abstract class ImageParser<T extends ImagingParameters> extends BinaryFil
      * @param params optional parameters.
      * @return If the params specify strict format compliance, true;
      *         otherwise, false.
+     * @param <T> type of parameters used by this image parser
      */
     public static <T extends ImagingParameters> boolean isStrict(final T params) {
         return params.isStrict();

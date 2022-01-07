@@ -17,14 +17,6 @@
 
 package org.apache.commons.imaging.formats.jpeg;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.stream.Stream;
-
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
@@ -36,6 +28,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public class JpegReadTest extends JpegBaseTest {
 
     public static Stream<File> data() throws Exception{
@@ -45,21 +45,19 @@ public class JpegReadTest extends JpegBaseTest {
     @ParameterizedTest
     @MethodSource("data")
     public void test(final File imageFile) throws Exception {
-        final JpegImagingParameters params = new JpegImagingParameters();
-
         JpegImageParser jpegImageParser = new JpegImageParser();
         final ImageMetadata metadata = jpegImageParser.getExifMetadata(new ByteSourceFile(imageFile), new TiffImagingParameters());
         // TODO only run this tests with images that have metadata...
         //assertNotNull(metadata);
         Debug.debug("metadata", metadata);
 
-        Debug.debug("ICC profile", Imaging.getICCProfile(imageFile, params));
+        Debug.debug("ICC profile", Imaging.getICCProfile(imageFile));
 
-        final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
+        final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
         assertNotNull(imageInfo);
 
         try {
-            final BufferedImage image = Imaging.getBufferedImage(imageFile, params);
+            final BufferedImage image = Imaging.getBufferedImage(imageFile);
             assertNotNull(image);
         } catch (final ImageReadException imageReadException) {
             assertEquals("Only sequential, baseline JPEGs are supported at the moment",

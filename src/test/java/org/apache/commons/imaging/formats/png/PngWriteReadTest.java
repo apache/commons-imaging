@@ -17,18 +17,6 @@
 
 package org.apache.commons.imaging.formats.png;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
@@ -38,6 +26,19 @@ import org.apache.commons.imaging.common.GenericImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
+
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PngWriteReadTest extends ImagingTest {
 
@@ -100,24 +101,29 @@ public class PngWriteReadTest extends ImagingTest {
     public void test_withMultipletEXt() throws Exception {
         final int[][] smallBlackPixels = getSimpleRawData(256, 256, 0);
 
-        writeAndReadMultipletEXt(smallBlackPixels);
+        writeAndReadMultipleEXt(smallBlackPixels);
     }
 
     @Test
     public void testTransparency() throws Exception {
         // Test for https://issues.apache.org/jira/browse/SANSELAN-52
         final int[][] smallAscendingPixels = getAscendingRawData(256, 256);
-        final byte[] pngBytes = Imaging.writeImageToBytes(imageDataToBufferedImage(smallAscendingPixels), ImageFormats.PNG, new PngImagingParameters());
+        final byte[] pngBytes = Imaging.writeImageToBytes(imageDataToBufferedImage(smallAscendingPixels), ImageFormats.PNG);
         assertTrue(Imaging.getImageInfo(pngBytes).isTransparent());
     }
 
     @Test
     public void testPhysicalScaleMeters() throws Exception {
+        final PngImageParser pngImageParser = new PngImageParser();
         final PngImagingParameters optionalParams = new PngImagingParameters();
         optionalParams.setPhysicalScale(PhysicalScale.createFromMeters(0.01, 0.02));
 
         final int[][] smallAscendingPixels = getAscendingRawData(256, 256);
-        final byte[] pngBytes = Imaging.writeImageToBytes(imageDataToBufferedImage(smallAscendingPixels), ImageFormats.PNG, optionalParams);
+        final byte[] pngBytes;
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            pngImageParser.writeImage(imageDataToBufferedImage(smallAscendingPixels), baos, optionalParams);
+            pngBytes = baos.toByteArray();
+        }
         final PngImageInfo imageInfo = (PngImageInfo) Imaging.getImageInfo(pngBytes);
         final PhysicalScale physicalScale = imageInfo.getPhysicalScale();
         assertTrue(physicalScale.isInMeters());
@@ -127,11 +133,16 @@ public class PngWriteReadTest extends ImagingTest {
 
     @Test
     public void testPhysicalScaleRadians() throws Exception {
+        final PngImageParser pngImageParser = new PngImageParser();
         final PngImagingParameters optionalParams = new PngImagingParameters();
         optionalParams.setPhysicalScale(PhysicalScale.createFromRadians(0.01, 0.02));
 
         final int[][] smallAscendingPixels = getAscendingRawData(256, 256);
-        final byte[] pngBytes = Imaging.writeImageToBytes(imageDataToBufferedImage(smallAscendingPixels), ImageFormats.PNG, optionalParams);
+        final byte[] pngBytes;
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            pngImageParser.writeImage(imageDataToBufferedImage(smallAscendingPixels), baos, optionalParams);
+            pngBytes = baos.toByteArray();
+        }
         final PngImageInfo imageInfo = (PngImageInfo) Imaging.getImageInfo(pngBytes);
         final PhysicalScale physicalScale = imageInfo.getPhysicalScale();
         assertTrue(physicalScale.isInRadians());
@@ -169,15 +180,7 @@ public class PngWriteReadTest extends ImagingTest {
             ImageReadException, ImageWriteException {
         final BufferedImage srcImage = imageDataToBufferedImage(rawData);
 
-        final PngImagingParameters writeParams = new PngImagingParameters();
-        // writeParams.put(ImagingConstants.PARAM_KEY_FORMAT,
-        // ImageFormat.IMAGE_FORMAT_PNG);
-        // writeParams.put(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR,
-        // Boolean.TRUE);
-
-        final byte[] bytes = Imaging.writeImageToBytes(srcImage, ImageFormats.PNG, writeParams);
-
-        // Debug.debug("bytes", bytes);
+        final byte[] bytes = Imaging.writeImageToBytes(srcImage, ImageFormats.PNG);
 
         final File tempFile = File.createTempFile("temp", ".png");
         FileUtils.writeByteArrayToFile(tempFile, bytes);
@@ -192,7 +195,7 @@ public class PngWriteReadTest extends ImagingTest {
         assertArrayEquals(rawData, dstData);
     }
 
-    private void writeAndReadMultipletEXt(final int[][] rawData) throws IOException,
+    private void writeAndReadMultipleEXt(final int[][] rawData) throws IOException,
        ImageReadException, ImageWriteException {
         final BufferedImage srcImage = imageDataToBufferedImage(rawData);
 
@@ -202,9 +205,12 @@ public class PngWriteReadTest extends ImagingTest {
         final PngImagingParameters writeParams = new PngImagingParameters();
         writeParams.setTextChunks(textChunks);
 
-        final byte[] bytes = Imaging.writeImageToBytes(srcImage, ImageFormats.PNG, writeParams);
-
-        // Debug.debug("bytes", bytes);
+        PngImageParser pngImageParser = new PngImageParser();
+        final byte[] bytes;
+        try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
+            pngImageParser.writeImage(srcImage, os, writeParams);
+            bytes = os.toByteArray();
+        }
 
         final File tempFile = File.createTempFile("temp", ".png");
         FileUtils.writeByteArrayToFile(tempFile, bytes);

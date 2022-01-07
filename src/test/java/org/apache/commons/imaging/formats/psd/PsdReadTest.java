@@ -16,18 +16,18 @@
  */
 package org.apache.commons.imaging.formats.psd;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.List;
-
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class PsdReadTest extends PsdBaseTest {
 
@@ -43,11 +43,10 @@ public class PsdReadTest extends PsdBaseTest {
             final ImageMetadata metadata = Imaging.getMetadata(imageFile);
             Assertions.assertFalse(metadata instanceof File); // Dummy check to avoid unused warning (it may be null)
 
-            final PsdImagingParameters params = new PsdImagingParameters();
-            final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
+            final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
             assertNotNull(imageInfo);
 
-            Imaging.getICCProfile(imageFile, params);
+            Imaging.getICCProfile(imageFile);
 
             final BufferedImage image = Imaging.getBufferedImage(imageFile);
             assertNotNull(image);

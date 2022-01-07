@@ -17,20 +17,20 @@
 
 package org.apache.commons.imaging.formats.png;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.Test;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageFormats;
-import org.apache.commons.imaging.Imaging;
-import org.apache.commons.io.FileUtils;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class PngTextTest extends PngBaseTest {
 
@@ -66,7 +66,12 @@ public class PngTextTest extends PngBaseTest {
 
         writeParams.setTextChunks(writeTexts);
 
-        final byte[] bytes = Imaging.writeImageToBytes(srcImage, ImageFormats.PNG, writeParams);
+        final PngImageParser pngImageParser = new PngImageParser();
+        final byte[] bytes;
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            pngImageParser.writeImage(srcImage, baos, writeParams);
+            bytes = baos.toByteArray();
+        }
 
         final File tempFile = File.createTempFile("temp", ".png");
         FileUtils.writeByteArrayToFile(tempFile, bytes);

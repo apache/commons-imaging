@@ -16,23 +16,24 @@
  */
 package org.apache.commons.imaging.formats.xmp;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
+import org.apache.commons.imaging.ImageParser;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingParameters;
+import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.common.XmpImagingParameters;
+import org.apache.commons.imaging.internal.Debug;
+import org.apache.commons.imaging.internal.Util;
+import org.junit.jupiter.api.Test;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageFormat;
-import org.apache.commons.imaging.ImageFormats;
-import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingTest;
-import org.apache.commons.imaging.common.XmpImagingParameters;
-import org.apache.commons.imaging.formats.gif.GifImagingParameters;
-import org.apache.commons.imaging.formats.png.PngImagingParameters;
-import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
-import org.apache.commons.imaging.internal.Debug;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class XmpUpdateTest extends ImagingTest {
 
@@ -50,18 +51,11 @@ public class XmpUpdateTest extends ImagingTest {
             Debug.debug();
 
             final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
-            XmpImagingParameters params = null;
-            if (imageFormat.equals(ImageFormats.PNG)) {
-                params = new PngImagingParameters();
-            } else if (imageFormat.equals(ImageFormats.TIFF)) {
-                params = new TiffImagingParameters();
-            } else if (imageFormat.equals(ImageFormats.GIF)) {
-                params = new GifImagingParameters();
-            } else {
+            if (!imageFormat.equals(ImageFormats.PNG) || !imageFormat.equals(ImageFormats.TIFF) || !imageFormat.equals(ImageFormats.GIF)) {
                 continue;
             }
 
-            String xmpXml = Imaging.getXmpXml(imageFile, params);
+            String xmpXml = Imaging.getXmpXml(imageFile);
             if (null == xmpXml
                     && imageFormat.equals(ImageFormats.GIF)) {
                 xmpXml = "temporary test until I can locate a GIF with XMP in the wild.";
@@ -70,14 +64,17 @@ public class XmpUpdateTest extends ImagingTest {
                 continue;
             }
 
-            final File tempFile = File.createTempFile(imageFile.getName() + ".", "."
-                    + imageFormat.getDefaultExtension());
+            final File tempFile = File.createTempFile(imageFile.getName() + ".", "." + imageFormat.getDefaultExtension());
             final BufferedImage image = Imaging.getBufferedImage(imageFile);
 
             // ----
 
-            params.setXmpXml(xmpXml);
-            Imaging.writeImage(image, tempFile, imageFormat, params);
+            ImageParser parser = Util.getImageParser("." + imageFormat.getDefaultExtension());
+            ImagingParameters params = parser.getDefaultParameters();
+            ((XmpImagingParameters) params).setXmpXml(xmpXml);
+            try (FileOutputStream fos = new FileOutputStream(tempFile)) {
+                parser.writeImage(image, fos, params);
+            }
 
             final String xmpXmlOut = Imaging.getXmpXml(tempFile);
 

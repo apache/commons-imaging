@@ -16,6 +16,14 @@
  */
 package org.apache.commons.imaging.formats.rgbe;
 
+import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
+import org.apache.commons.imaging.ImageInfo;
+import org.apache.commons.imaging.ImageParser;
+import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.common.ImageMetadata;
+import org.apache.commons.imaging.common.bytesource.ByteSource;
+
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Transparency;
@@ -29,14 +37,6 @@ import java.awt.image.Raster;
 import java.io.IOException;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
-
-import org.apache.commons.imaging.ImageFormat;
-import org.apache.commons.imaging.ImageFormats;
-import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.ImageParser;
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.ImageMetadata;
-import org.apache.commons.imaging.common.bytesource.ByteSource;
 
 /**
  * Parser for Radiance HDR images
@@ -61,12 +61,12 @@ public class RgbeImageParser extends ImageParser<RgbeImagingParameters> {
 
     @Override
     public String getDefaultExtension() {
-        return ".hdr";
+        return ImageFormats.RGBE.getDefaultExtension();
     }
 
     @Override
     protected String[] getAcceptedExtensions() {
-        return new String[] { ".hdr", ".pic" };
+        return ImageFormats.RGBE.getExtensions();
     }
 
     @Override

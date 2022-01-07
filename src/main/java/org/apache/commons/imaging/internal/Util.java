@@ -16,12 +16,15 @@
  */
 package org.apache.commons.imaging.internal;
 
+import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
+import org.apache.commons.imaging.ImageParser;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.common.bytesource.ByteSource;
+
+import java.io.IOException;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-
-import org.apache.commons.imaging.ImageFormat;
-import org.apache.commons.imaging.ImageParser;
-import org.apache.commons.imaging.ImagingParameters;
 
 /**
  * Internal utilities.
@@ -32,23 +35,37 @@ public class Util {
 
     private Util() {}
 
-    public static <T extends ImagingParameters> ImageParser<T> getImageParser(ImageFormat format) {
-        return getImageParser((parser) -> parser.canAcceptType(format), () -> new RuntimeException("Unknown Format: " + format));
+    public static ImageParser<?> getImageParser(ImageFormat format) {
+        return getImageParser((parser) -> parser.canAcceptType(format), () -> new IllegalArgumentException("Unknown Format: " + format));
     }
 
-    public static <T extends ImagingParameters> ImageParser<T> getImageParser(String fileExtension) {
-        return getImageParser((parser) -> parser.canAcceptExtension(fileExtension), () -> new RuntimeException("Unknown Extension: " + fileExtension));
+    public static ImageParser<?> getImageParser(String fileExtension) {
+        return getImageParser((parser) -> parser.canAcceptExtension(fileExtension), () -> new IllegalArgumentException("Unknown Extension: " + fileExtension));
     }
 
     // This generics suppression is as good as the predicate given. If the predicate violates a generics design,
     // then there will be an error during runtime.
-    @SuppressWarnings("unchecked")
-    private static <T extends ImagingParameters> ImageParser<T> getImageParser(Predicate<ImageParser<?>> pred, Supplier<? extends RuntimeException> supl) {
-        return (ImageParser<T>) ImageParser
+    private static ImageParser<?> getImageParser(Predicate<ImageParser<?>> pred, Supplier<? extends RuntimeException> supplier) {
+        return (ImageParser<?>) ImageParser
                 .getAllImageParsers()
                 .stream()
-                .filter((parser) -> pred.test(parser))
+                .filter(pred)
                 .findFirst()
-                .orElseThrow(supl);
+                .orElseThrow(supplier);
+    }
+
+    public static ImageParser<?> getImageParser(final ByteSource byteSource) throws IOException {
+        // TODO: circular dependency between Imaging and internal Util class below.
+        final ImageFormat format = Imaging.guessFormat(byteSource);
+        if (!format.equals(ImageFormats.UNKNOWN)) {
+            return Util.getImageParser(format);
+        }
+
+        final String fileName = byteSource.getFileName();
+        if (fileName != null) {
+            return Util.getImageParser(fileName);
+        }
+
+        throw new IllegalArgumentException("Can't parse this format.");
     }
 }

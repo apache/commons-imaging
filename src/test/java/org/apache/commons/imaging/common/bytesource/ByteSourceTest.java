@@ -35,8 +35,7 @@ public abstract class ByteSourceTest extends ImagingTest {
         final File file = File.createTempFile("raw_", ".bin");
 
         // write test bytes to file.
-        try (FileOutputStream fos = new FileOutputStream(file);
-             OutputStream os = new BufferedOutputStream(fos)) {
+        try (FileOutputStream fos = new FileOutputStream(file); OutputStream os = new BufferedOutputStream(fos)) {
             os.write(src);
         }
 
@@ -72,7 +71,6 @@ public abstract class ByteSourceTest extends ImagingTest {
     @Test
     public void testGetInputStreamThrowsNullPointerException() {
         final ByteSourceArray byteSourceArray = new ByteSourceArray(null);
-
         Assertions.assertThrows(NullPointerException.class, () -> byteSourceArray.getInputStream(0L));
     }
 

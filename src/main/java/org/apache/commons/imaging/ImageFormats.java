@@ -36,7 +36,7 @@ public enum ImageFormats implements ImageFormat {
     PPM("ppm"),
     PCX("pcx", "pcc"),
     PNG("png"),
-    RGBE("rgbe"),
+    RGBE("hdr", "pic"),
     TGA(),
     TIFF("tif", "tiff"),
     WBMP("wbmp"),

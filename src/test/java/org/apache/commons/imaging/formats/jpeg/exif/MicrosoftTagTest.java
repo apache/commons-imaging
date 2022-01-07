@@ -35,6 +35,7 @@ import org.apache.commons.imaging.formats.jpeg.iptc.JpegIptcRewriter;
 import org.apache.commons.imaging.formats.jpeg.xmp.JpegXmpRewriter;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
+import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.formats.tiff.constants.MicrosoftTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
@@ -59,7 +60,12 @@ public class MicrosoftTagTest extends ExifBaseTest {
         root.add(MicrosoftTagConstants.EXIF_TAG_XPTITLE, TITLE);
         final TiffImagingParameters params = new TiffImagingParameters();
         params.setExif(exifSet);
-        final byte[] bytes = Imaging.writeImageToBytes(image, ImageFormats.TIFF, params);
+        TiffImageParser tiffImageParser = new TiffImageParser();
+        final byte[] bytes;
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            tiffImageParser.writeImage(image, baos, params);
+            bytes = baos.toByteArray();
+        }
         checkFields(bytes);
     }
 

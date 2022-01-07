@@ -17,12 +17,20 @@
 
 package org.apache.commons.imaging.common.bytesource;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
+import org.apache.commons.imaging.ImageInfo;
+import org.apache.commons.imaging.ImageParser;
+import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingParameters;
+import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
+import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
+import org.apache.commons.imaging.internal.Debug;
+import org.apache.commons.imaging.internal.Util;
+import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
@@ -33,18 +41,12 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.stream.Stream;
 
-import org.apache.commons.imaging.ImageFormat;
-import org.apache.commons.imaging.ImageFormats;
-import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingParameters;
-import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
-import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
-import org.apache.commons.imaging.internal.Debug;
-import org.apache.commons.io.FileUtils;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ByteSourceImageTest extends ByteSourceTest {
 
@@ -158,9 +160,7 @@ public class ByteSourceImageTest extends ByteSourceTest {
         assertArrayEquals(iccBytesFile, iccBytesBytes);
     }
 
-    public void checkGetImageInfo(final File imageFile, final byte[] imageFileBytes)
-            throws IOException, ImageReadException, IllegalAccessException,
-            IllegalArgumentException, InvocationTargetException {
+    public void checkGetImageInfo(final File imageFile, final byte[] imageFileBytes) throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, ImageReadException {
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
         final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
         ImagingParameters params = null;
@@ -172,9 +172,11 @@ public class ByteSourceImageTest extends ByteSourceTest {
             params = new JpegImagingParameters();
         }
 
-        final ImageInfo imageInfoFile = Imaging.getImageInfo(imageFile, params);
+        ImageParser imageParser = Util.getImageParser(imageFormat);
 
-        final ImageInfo imageInfoBytes = Imaging.getImageInfo(imageFileBytes, params);
+        final ImageInfo imageInfoFile = imageParser.getImageInfo(imageFile, params);
+
+        final ImageInfo imageInfoBytes = imageParser.getImageInfo(imageFileBytes, params);
 
         assertNotNull(imageInfoFile);
         assertNotNull(imageInfoBytes);

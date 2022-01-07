@@ -16,19 +16,19 @@
  */
 package org.apache.commons.imaging.formats.tiff;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
-
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-
-import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
 import org.junit.jupiter.api.Test;
+
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class TiffSubImageTest extends TiffBaseTest {
     final List<File> imageFileList;
@@ -39,17 +39,24 @@ public class TiffSubImageTest extends TiffBaseTest {
 
     @Test
     public void testSubImage() throws ImageReadException, ImageWriteException, IOException {
+        final TiffImageParser tiffImageParser = new TiffImageParser();
         final BufferedImage src = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
         final TiffImagingParameters params = new TiffImagingParameters();
-        final byte[] imageBytes = Imaging.writeImageToBytes(src, ImageFormats.TIFF, params);
+        final byte[] imageBytes;
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            tiffImageParser.writeImage(src, baos, params);
+            imageBytes = baos.toByteArray();
+        }
+
         params.setSubImage(0, 0, 2, 3);
-        final BufferedImage image = Imaging.getBufferedImage(imageBytes, params);
+        final BufferedImage image = tiffImageParser.getBufferedImage(imageBytes, params);
         assertEquals(image.getWidth(), 2);
         assertEquals(image.getHeight(), 3);
     }
 
     @Test
-    public void testBadSubImage()  throws ImageReadException, IOException{
+    public void testBadSubImage()  throws ImageReadException, IOException {
+        final TiffImageParser tiffImageParser = new TiffImageParser();
         final File target = imageFileList.get(0);
         final BufferedImage referenceImage = Imaging.getBufferedImage(target);
         final int width = referenceImage.getWidth();
@@ -58,7 +65,7 @@ public class TiffSubImageTest extends TiffBaseTest {
         final TiffImagingParameters params = new TiffImagingParameters();
         params.setSubImage(0, 0, width, height);
 
-        final BufferedImage image = Imaging.getBufferedImage(target, params);
+        final BufferedImage image = tiffImageParser.getBufferedImage(target, params);
         assertEquals(image.getWidth(), width, "Improper width when sub-imaging entire image");
         assertEquals(image.getHeight(), height, "Improper height when sub-imaging entire image");
 
@@ -71,10 +78,11 @@ public class TiffSubImageTest extends TiffBaseTest {
     }
 
     private void processBadParams(final File target, final int x, final int y, final int width, final int height, final String comment) throws IOException{
-        try{
+        final TiffImageParser tiffImageParser = new TiffImageParser();
+        try {
             final TiffImagingParameters params = new TiffImagingParameters();
             params.setSubImage(x, y, width, height);
-            Imaging.getBufferedImage(target, params);
+            tiffImageParser.getBufferedImage(target, params);
             fail("Reading TIFF sub-image failed to detect bad parameter: "+comment);
         }catch(final ImageReadException | IllegalArgumentException ire){
             // the test passed
@@ -83,7 +91,8 @@ public class TiffSubImageTest extends TiffBaseTest {
 
     @Test
     public void testSubImageCorrectness() throws ImageReadException, IOException {
-        for(final File target: imageFileList){
+        final TiffImageParser tiffImageParser = new TiffImageParser();
+        for(final File target: imageFileList) {
             final BufferedImage referenceImage = Imaging.getBufferedImage(target);
             final int rW = referenceImage.getWidth();
             final int rH = referenceImage.getHeight();
@@ -94,7 +103,7 @@ public class TiffSubImageTest extends TiffBaseTest {
             referenceImage.getRGB(0, 0, rW, rH, rArgb, 0, rW);
             final TiffImagingParameters params = new TiffImagingParameters();
             params.setSubImage(1, 1, rW-2, rH-2);
-            final BufferedImage image = Imaging.getBufferedImage(target, params);
+            final BufferedImage image = tiffImageParser.getBufferedImage(target, params);
             final int iW = image.getWidth();
             final int iH = image.getHeight();
             assertEquals(iW, rW-2, "Invalid subimage width");

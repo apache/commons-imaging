@@ -17,17 +17,16 @@
 
 package org.apache.commons.imaging.formats.png;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.apache.commons.imaging.ImageFormats;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.internal.Debug;
+import org.junit.jupiter.api.Test;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageFormats;
-import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.formats.gif.GifImagingParameters;
-import org.apache.commons.imaging.internal.Debug;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ConvertPngToGifTest extends PngBaseTest {
 
@@ -42,15 +41,12 @@ public class ConvertPngToGifTest extends PngBaseTest {
                 continue;
             }
 
-            final PngImagingParameters pngParams = new PngImagingParameters();
-
-            final BufferedImage image = Imaging.getBufferedImage(imageFile, pngParams);
+            final BufferedImage image = Imaging.getBufferedImage(imageFile);
             assertNotNull(image);
 
             final File outFile = File.createTempFile(imageFile.getName() + ".", ".gif");
 
-            final GifImagingParameters gifParams = new GifImagingParameters();
-            Imaging.writeImage(image, outFile, ImageFormats.GIF, gifParams);
+            Imaging.writeImage(image, outFile, ImageFormats.GIF);
         }
         Debug.debug("complete.");
     }

@@ -17,11 +17,6 @@
 
 package org.apache.commons.imaging.formats.jpeg.exif;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import java.io.File;
-import java.util.stream.Stream;
-
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
@@ -31,6 +26,11 @@ import org.apache.commons.imaging.formats.jpeg.JpegUtils;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.io.File;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ExifDumpTest extends ExifBaseTest {
 
@@ -52,7 +52,7 @@ public class ExifDumpTest extends ExifBaseTest {
     public void testMetadata(final File imageFile) throws Exception {
         final JpegImagingParameters params = new JpegImagingParameters();
 
-        final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(imageFile, params);
+        final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(imageFile);
         assertNotNull(metadata);
         // TODO assert more
     }

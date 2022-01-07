@@ -646,8 +646,10 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, final BmpImagingParameters params)
-            throws ImageWriteException, IOException {
+    public void writeImage(final BufferedImage src, final OutputStream os, BmpImagingParameters params) throws ImageWriteException, IOException {
+        if (params == null) {
+            params = new BmpImagingParameters();
+        }
         PixelDensity pixelDensity = params.getPixelDensity();
 
         final SimplePalette palette = new PaletteFactory().makeExactRgbPaletteSimple(
@@ -660,7 +662,7 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
             writer = new BmpWriterPalette(palette);
         }
 
-        final byte[] imagedata = writer.getImageData(src);
+        final byte[] imageData = writer.getImageData(src);
         final BinaryOutputStream bos = new BinaryOutputStream(os, ByteOrder.LITTLE_ENDIAN);
 
         // write BitmapFileHeader
@@ -669,7 +671,7 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
 
         final int filesize = BITMAP_FILE_HEADER_SIZE + BITMAP_INFO_HEADER_SIZE + // header size
                 4 * writer.getPaletteSize() + // palette size in bytes
-                imagedata.length;
+                imageData.length;
         bos.write4Bytes(filesize);
 
         bos.write4Bytes(0); // reserved
@@ -687,7 +689,7 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
         bos.write2Bytes(writer.getBitsPerPixel()); // Bits Per Pixel
 
         bos.write4Bytes(BI_RGB); // Compression
-        bos.write4Bytes(imagedata.length); // Bitmap Data Size
+        bos.write4Bytes(imageData.length); // Bitmap Data Size
         bos.write4Bytes(pixelDensity != null ? (int) Math.round(pixelDensity.horizontalDensityMetres()) : 0); // HResolution
         bos.write4Bytes(pixelDensity != null ? (int) Math.round(pixelDensity.verticalDensityMetres()) : 0); // VResolution
         if (palette == null) {
@@ -701,6 +703,6 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
         // write Palette
         writer.writePalette(bos);
         // write Image Data
-        bos.write(imagedata);
+        bos.write(imageData);
     }
 }

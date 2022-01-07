@@ -17,14 +17,13 @@
 
 package org.apache.commons.imaging.formats.png;
 
-import java.io.File;
-
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.examples.ImageReadExample.ManagedImageBufferedImageFactory;
 import org.apache.commons.imaging.formats.jpeg.JpegWithInvalidDhtSegmentTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
 
 /**
  * Tests for PNG files with invalid chunk sizes.
@@ -37,11 +36,11 @@ public class PngWithInvalidPngChunkSizeTest {
      */
     @Test
     public void testPngWithInvalidPngChunkSize() {
-        final File imageFile = new File(
-                JpegWithInvalidDhtSegmentTest.class.getResource("/IMAGING-211/testfile_2.png").getFile());
+        final File imageFile = new File(JpegWithInvalidDhtSegmentTest.class.getResource("/IMAGING-211/testfile_2.png").getFile());
         final PngImagingParameters params = new PngImagingParameters();
         params.setBufferedImageFactory(new ManagedImageBufferedImageFactory());
-        Assertions.assertThrows(ImageReadException.class, () -> Imaging.getBufferedImage(imageFile, params));
+        PngImageParser jpegImageParser = new PngImageParser();
+        Assertions.assertThrows(ImageReadException.class, () -> jpegImageParser.getBufferedImage(imageFile, params));
     }
 
     /**
@@ -54,6 +53,7 @@ public class PngWithInvalidPngChunkSizeTest {
                 JpegWithInvalidDhtSegmentTest.class.getResource("/IMAGING-210/testfile.png").getFile());
         final PngImagingParameters params = new PngImagingParameters();
         params.setBufferedImageFactory(new ManagedImageBufferedImageFactory());
-        Assertions.assertThrows(ImageReadException.class, () -> Imaging.getBufferedImage(imageFile, params));
+        PngImageParser jpegImageParser = new PngImageParser();
+        Assertions.assertThrows(ImageReadException.class, () -> jpegImageParser.getBufferedImage(imageFile, params));
     }
 }

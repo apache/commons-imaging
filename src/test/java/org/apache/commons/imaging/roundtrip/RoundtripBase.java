@@ -16,21 +16,22 @@
  */
 package org.apache.commons.imaging.roundtrip;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.stream.Stream;
-
+import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.common.RgbBufferedImageFactory;
 import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.imaging.internal.Util;
 import org.junit.jupiter.params.provider.Arguments;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class RoundtripBase {
 
@@ -41,12 +42,16 @@ public class RoundtripBase {
                 + formatInfo.format.getDefaultExtension());
         Debug.debug("tempFile: " + temp1.getName());
 
+        ImageParser imageParser = Util.getImageParser(formatInfo.format);
+
         final ImagingParameters params = Util.getImageParser(formatInfo.format).getDefaultParameters();
-        Imaging.writeImage(testImage, temp1, formatInfo.format, params);
+        try (FileOutputStream fos = new FileOutputStream(temp1)) {
+            imageParser.writeImage(testImage, fos, params);
+        }
 
         final ImagingParameters readParams = Util.getImageParser(formatInfo.format).getDefaultParameters();
         readParams.setBufferedImageFactory(new RgbBufferedImageFactory());
-        final BufferedImage image2 = Imaging.getBufferedImage(temp1, readParams);
+        final BufferedImage image2 = imageParser.getBufferedImage(temp1, readParams);
         assertNotNull(image2);
 
         if (imageExact) {
@@ -56,9 +61,10 @@ public class RoundtripBase {
         }
 
         if (formatInfo.identicalSecondWrite) {
-            final File temp2 = File.createTempFile(tempPrefix + ".", "."
-                    + formatInfo.format.getDefaultExtension());
-            Imaging.writeImage(image2, temp2, formatInfo.format, params);
+            final File temp2 = File.createTempFile(tempPrefix + ".", "." + formatInfo.format.getDefaultExtension());
+            try (FileOutputStream fos = new FileOutputStream(temp2)) {
+                imageParser.writeImage(image2, fos, params);
+            }
 
             ImageAsserts.assertEquals(temp1, temp2);
         }

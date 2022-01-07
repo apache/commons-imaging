@@ -16,16 +16,17 @@
  */
 package org.apache.commons.imaging.examples;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
+
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 
 public class ImageWriteExample {
     public static byte[] imageWriteExample(final File file)
@@ -37,7 +38,10 @@ public class ImageWriteExample {
         final TiffImagingParameters params = new TiffImagingParameters();
         params.setCompression(TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED);
 
-        return Imaging.writeImageToBytes(image, ImageFormats.TIFF, params);
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            new TiffImageParser().writeImage(image, baos, params);
+            return baos.toByteArray();
+        }
     }
 
 }
