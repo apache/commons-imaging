@@ -48,6 +48,21 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="IMAGING-320" dev="kinow" type="fix" due-to="Gary Lucas">
         Read TIFFs with 32-bit samples.
       </action>
+      <action issue="IMAGING-159" dev="kinow" type="fix" due-to="Bruno P. Kinoshita, Gary Lucas, Matt Juntunen">
+        The Imaging ImageParser's used HashMap's before, but on this issue we replaced the maps by proper
+        ImagingParameter classes, that encapsulate the parameters for each image format.
+
+        The Imaging class also had the HashMap methods removed, but we also removed the public methods that
+        supported parameters. This was due to the complexity to handle cases where users could provide a byte
+        array, or file, and parameters. In Java, with or without generics, it was rather difficult to handle
+        the cases where users could provide a PNG image stream with TIFF parameters.
+
+        To prevent issues like this, we will improve the ImageParser's API's, and work on either providing
+        other ways to customize and create parsers (factories, builders, etc.) or similar ways to use
+        the Imaging entry class (like merging parameters or using parameter builders.)
+
+        This was the last blocker issue of the 1.0 release vote, rolled a few years ago.
+      </action>
       <action issue="IMAGING-168" dev="kinow" type="fix" due-to="Yavuz Kavus">
         Encoding Support for IPTC metadata.
       </action>
