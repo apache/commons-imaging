@@ -940,7 +940,7 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
                         + samplesPerPixel);
             }
 
-            if (bitsPerPixel != 16) {
+            if (bitsPerPixel != 16 && bitsPerPixel != 32) {
                 throw new ImageReadException(
                         "TIFF integer data uses unsupported bits-per-pixel: "
                         + bitsPerPixel);

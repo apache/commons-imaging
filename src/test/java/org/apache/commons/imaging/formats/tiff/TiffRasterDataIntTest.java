@@ -114,7 +114,7 @@ public class TiffRasterDataIntTest {
         TiffRasterDataInt instance = new TiffRasterDataInt(width, height, 2, data);
         int test = instance.getIntValue(0, 0, 1);
         assertEquals(77, test, "Get into source data test failed at (0, 0, 1)");
-        
+
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 final int index = y * width + x;
