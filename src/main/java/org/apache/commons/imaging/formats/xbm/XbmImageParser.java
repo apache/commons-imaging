@@ -86,7 +86,7 @@ public class XbmImageParser extends ImageParser<XbmImagingParameters> {
     public ImageInfo getImageInfo(final ByteSource byteSource, final XbmImagingParameters params)
             throws ImageReadException, IOException {
         final XbmHeader xbmHeader = readXbmHeader(byteSource);
-        return new ImageInfo("XBM", 1, new ArrayList<String>(),
+        return new ImageInfo("XBM", 1, new ArrayList<>(),
                 ImageFormats.XBM, "X BitMap", xbmHeader.height,
                 "image/x-xbitmap", 1, 0, 0, 0, 0, xbmHeader.width, false,
                 false, false, ImageInfo.ColorType.BW,

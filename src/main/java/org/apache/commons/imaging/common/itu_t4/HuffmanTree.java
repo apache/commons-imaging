@@ -54,7 +54,7 @@ class HuffmanTree<T> {
 
     private Node<T> growAndGetNode(final int position) {
         while (position >= nodes.size()) {
-            nodes.add(new Node<T>());
+            nodes.add(new Node<>());
         }
         final Node<T> node = nodes.get(position);
         node.empty = false;
