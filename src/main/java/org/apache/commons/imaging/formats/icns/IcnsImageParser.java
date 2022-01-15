@@ -89,7 +89,7 @@ public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
             throw new ImageReadException("No icons in ICNS file");
         }
         final BufferedImage image0 = images.get(0);
-        return new ImageInfo("Icns", 32, new ArrayList<String>(),
+        return new ImageInfo("Icns", 32, new ArrayList<>(),
                 ImageFormats.ICNS, "ICNS Apple Icon Image",
                 image0.getHeight(), "image/x-icns", images.size(), 0, 0, 0, 0,
                 image0.getWidth(), false, true, false,

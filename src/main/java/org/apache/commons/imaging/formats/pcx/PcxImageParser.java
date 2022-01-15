@@ -109,7 +109,7 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
         return new ImageInfo(
                 "PCX",
                 pcxHeader.nPlanes * pcxHeader.bitsPerPixel,
-                new ArrayList<String>(),
+                new ArrayList<>(),
                 ImageFormats.PCX,
                 "ZSoft PCX Image",
                 size.height,

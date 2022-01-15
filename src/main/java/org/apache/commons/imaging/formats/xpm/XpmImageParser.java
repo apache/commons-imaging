@@ -154,7 +154,7 @@ public class XpmImageParser extends ImageParser<XpmImagingParameters> {
             }
         }
         return new ImageInfo("XPM version 3", xpmHeader.numCharsPerPixel * 8,
-                new ArrayList<String>(), ImageFormats.XPM,
+                new ArrayList<>(), ImageFormats.XPM,
                 "X PixMap", xpmHeader.height, "image/x-xpixmap", 1, 0, 0, 0, 0,
                 xpmHeader.width, false, transparent, true, colorType,
                 ImageInfo.CompressionAlgorithm.NONE);
