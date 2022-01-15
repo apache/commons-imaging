@@ -322,7 +322,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
             params = new XmpImagingParameters();
         }
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
-        final TiffContents contents = new TiffReader(isStrict(params)).readDirectories(
+        final TiffContents contents = new TiffReader(params.isStrict()).readDirectories(
                 byteSource, false, formatCompliance);
         final TiffDirectory directory = contents.directories.get(0);
 
@@ -401,7 +401,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffImagingParameters params = new TiffImagingParameters();
-        new TiffReader(isStrict(params)).readContents(byteSource, params,
+        new TiffReader(params.isStrict()).readContents(byteSource, params,
                 formatCompliance);
         return formatCompliance;
     }
