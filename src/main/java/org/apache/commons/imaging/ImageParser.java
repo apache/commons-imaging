@@ -941,18 +941,4 @@ public abstract class ImageParser<T extends ImagingParameters> extends BinaryFil
 
         return new SimpleBufferedImageFactory();
     }
-
-    /**
-     * A utility method to search a params specification and determine
-     * whether it contains the parameters contain the strict flag. Intended
-     * for internal use by ImageParser implementations.
-     *
-     * @param params optional parameters.
-     * @return If the params specify strict format compliance, true;
-     *         otherwise, false.
-     * @param <T> type of parameters used by this image parser
-     */
-    public static <T extends ImagingParameters> boolean isStrict(final T params) {
-        return params.isStrict();
-    }
 }
