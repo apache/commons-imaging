@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.formats.bmp;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -75,5 +76,13 @@ public class BmpReadTest extends BmpBaseTest {
         final File inputFile = new File(ImagingTestConstants.TEST_IMAGE_FOLDER +
                 "/bmp/5/@broken/timeout-bd15dbfa26b4e88070de540c6603039e8a88626f");
         new BmpImageParser().dumpImageFile(new ByteSourceFile(inputFile));
+    }
+
+    @Test
+    public void testNegativePaletteLength() throws ImageReadException, IOException {
+        final String input = "/images/bmp/IMAGING-325/crash-3afb569de74522535ef65922233e1920455cdc14.bmp";
+        final String location = BmpReadTest.class.getResource(input).getFile();
+        final File inputFile = new File(location);
+        assertThrows(ImageReadException.class, () -> new BmpImageParser().dumpImageFile(new ByteSourceFile(inputFile)));
     }
 }

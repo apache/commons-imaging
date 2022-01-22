@@ -385,6 +385,10 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
                     + bhi.compression);
         }
 
+        if (paletteLength < 0) {
+            throw new ImageReadException("BMP: Invalid negative palette length: " + paletteLength);
+        }
+
         byte[] colorTable = null;
         if (paletteLength > 0) {
             colorTable = readBytes("ColorTable", is, paletteLength,

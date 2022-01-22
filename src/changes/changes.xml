@@ -45,6 +45,10 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
     <release version="1.0-alpha3" date="2022-??-??" description="Third 1.0 alpha release">
+      <action issue="IMAGING-325" dev="kinow" type="fix" due-to="Jin Wang">
+        Prevent OutOfMemoryError in BmpImageParser. This can happen when the color palette length is
+        a large negative number.
+      </action>
       <action issue="IMAGING-320" dev="kinow" type="fix" due-to="Gary Lucas">
         Read TIFFs with 32-bit samples.
       </action>
