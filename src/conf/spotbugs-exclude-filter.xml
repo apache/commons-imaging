@@ -180,12 +180,12 @@
   </Match>
   <Match>
     <Class name="org.apache.commons.imaging.formats.tiff.TiffImagingParameters" />
-    <Method name="getExif" />
+    <Method name="getOutputSet" />
     <Bug pattern="EI_EXPOSE_REP" />
   </Match>
   <Match>
     <Class name="org.apache.commons.imaging.formats.tiff.TiffImagingParameters" />
-    <Method name="setExif" />
+    <Method name="setOutputSet" />
     <Bug pattern="EI_EXPOSE_REP2" />
   </Match>
   <!-- Reason: For code clarity, we could use a simple 'else', but instead keep a complete expression -->
