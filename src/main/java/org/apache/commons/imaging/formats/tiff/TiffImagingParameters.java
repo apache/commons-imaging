@@ -34,7 +34,7 @@ public class TiffImagingParameters extends XmpImagingParameters {
 
     /**
      * User provided {@code TiffOutputSet} used to write into
-     * the image's EXIF metadata.
+     * the image's metadata including standard directory and EXIF tags.
      */
     private TiffOutputSet tiffOutputSet = null;
 
@@ -111,7 +111,7 @@ public class TiffImagingParameters extends XmpImagingParameters {
      * Get the TIFF output set for writing TIFF files.
      * @return if set, a valid instance; otherwise, a null reference.
      */
-    public TiffOutputSet getExif() {
+    public TiffOutputSet getOutputSet() {
         return tiffOutputSet;
     }
 

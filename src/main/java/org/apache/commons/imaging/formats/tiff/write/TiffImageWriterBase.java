@@ -302,7 +302,7 @@ public abstract class TiffImageWriterBase {
 
     public void writeImage(final BufferedImage src, final OutputStream os, TiffImagingParameters params)
             throws ImageWriteException, IOException {
-        TiffOutputSet userExif = params.getExif();
+        TiffOutputSet userExif = params.getOutputSet();
 
         String xmpXml = params.getXmpXml();
 
