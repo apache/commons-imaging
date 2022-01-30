@@ -33,9 +33,10 @@ public class TiffImagingParameters extends XmpImagingParameters {
     private boolean readThumbnails = true;
 
     /**
-     * User provided {@code TiffOutputSet} used to write into the image's EXIF metadata.
+     * User provided {@code TiffOutputSet} used to write into
+     * the image's EXIF metadata.
      */
-    private TiffOutputSet exif = null;
+    private TiffOutputSet tiffOutputSet = null;
 
     /**
      * X-coordinate of a sub-image.
@@ -106,12 +107,23 @@ public class TiffImagingParameters extends XmpImagingParameters {
         this.readThumbnails = readThumbnails;
     }
 
+    /**
+     * Get the TIFF output set for writing TIFF files.
+     * @return if set, a valid instance; otherwise, a null reference.
+     */
     public TiffOutputSet getExif() {
-        return exif;
+        return tiffOutputSet;
     }
 
-    public void setExif(TiffOutputSet exif) {
-        this.exif = exif;
+    /**
+     * Set the TIFF output set for writing TIFF files.  An output set
+     * may contain various types of TiffDirectories including image directories,
+     * EXIF directories, GPS-related directories, etc.
+     * 
+     * @param tiffOutputSet A valid instance.
+     */
+    public void setOutputSet(TiffOutputSet tiffOutputSet) {
+        this.tiffOutputSet = tiffOutputSet;
     }
 
     /**

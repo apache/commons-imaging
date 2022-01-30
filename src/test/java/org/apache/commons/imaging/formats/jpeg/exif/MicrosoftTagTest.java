@@ -59,7 +59,7 @@ public class MicrosoftTagTest extends ExifBaseTest {
         root.add(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT, SUBJECT);
         root.add(MicrosoftTagConstants.EXIF_TAG_XPTITLE, TITLE);
         final TiffImagingParameters params = new TiffImagingParameters();
-        params.setExif(exifSet);
+        params.setOutputSet(exifSet);
         TiffImageParser tiffImageParser = new TiffImageParser();
         final byte[] bytes;
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
