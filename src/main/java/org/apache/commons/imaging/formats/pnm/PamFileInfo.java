@@ -53,14 +53,21 @@ class PamFileInfo extends FileInfo {
         }
 
         hasAlpha = tupleType.endsWith("_ALPHA");
-        if ("BLACKANDWHITE".equals(tupleType) || "BLACKANDWHITE_ALPHA".equals(tupleType)) {
-            tupleReader = new GrayscaleTupleReader(ImageInfo.ColorType.BW);
-        } else if ("GRAYSCALE".equals(tupleType) || "GRAYSCALE_ALPHA".equals(tupleType)) {
-            tupleReader = new GrayscaleTupleReader(ImageInfo.ColorType.GRAYSCALE);
-        } else if ("RGB".equals(tupleType) || "RGB_ALPHA".equals(tupleType)) {
-            tupleReader = new ColorTupleReader();
-        } else {
-            throw new ImageReadException("Unknown PAM tupletype '" + tupleType + "'");
+        switch (tupleType) {
+            case "BLACKANDWHITE":
+            case "BLACKANDWHITE_ALPHA":
+                tupleReader = new GrayscaleTupleReader(ImageInfo.ColorType.BW);
+                break;
+            case "GRAYSCALE":
+            case "GRAYSCALE_ALPHA":
+                tupleReader = new GrayscaleTupleReader(ImageInfo.ColorType.GRAYSCALE);
+                break;
+            case "RGB":
+            case "RGB_ALPHA":
+                tupleReader = new ColorTupleReader();
+                break;
+            default:
+                throw new ImageReadException("Unknown PAM tupletype '" + tupleType + "'");
         }
     }
 
