@@ -80,7 +80,7 @@ The <action> type attribute can be add,update,fix,remove.
         Array sizes not checked for overflow in BmpImageParser.
       </action>
       <action dev="kinow" type="update" due-to="Dependabot">
-        Bump animal-sniffer-maven-plugin from 1.19 to 1.20 #120.
+        Bump animal-sniffer-maven-plugin from 1.19 to 1.21 #120, #199.
       </action>
       <action dev="kinow" type="update" due-to="Dependabot">
         Bump maven-checkstyle-plugin from 3.1.1 to 3.1.2 #117.
