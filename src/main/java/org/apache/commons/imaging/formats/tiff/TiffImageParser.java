@@ -97,7 +97,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
     public byte[] getICCProfileBytes(final ByteSource byteSource, final TiffImagingParameters params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
-        final TiffContents contents = new TiffReader(params != null ? params.isStrict() : false).readFirstDirectory(
+        final TiffContents contents = new TiffReader(params != null && params.isStrict()).readFirstDirectory(
                 byteSource, false, formatCompliance);
         final TiffDirectory directory = contents.directories.get(0);
 
@@ -109,7 +109,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
     public Dimension getImageSize(final ByteSource byteSource, final TiffImagingParameters params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
-        final TiffContents contents = new TiffReader(params != null ? params.isStrict() : false)
+        final TiffContents contents = new TiffReader(params != null && params.isStrict())
                 .readFirstDirectory(byteSource, false, formatCompliance);
         final TiffDirectory directory = contents.directories.get(0);
 
@@ -162,7 +162,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
     public ImageInfo getImageInfo(final ByteSource byteSource, final TiffImagingParameters params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
-        final TiffContents contents = new TiffReader(params != null ? params.isStrict() : false).readDirectories(
+        final TiffContents contents = new TiffReader(params != null && params.isStrict()).readDirectories(
                 byteSource, false, formatCompliance);
         final TiffDirectory directory = contents.directories.get(0);
 
@@ -409,7 +409,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
     public List<byte[]> collectRawImageData(final ByteSource byteSource, final TiffImagingParameters params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
-        final TiffContents contents = new TiffReader(params != null ? params.isStrict() : false).readDirectories(
+        final TiffContents contents = new TiffReader(params != null && params.isStrict()).readDirectories(
                 byteSource, true, formatCompliance);
 
         final List<byte[]> result = new ArrayList<>();
