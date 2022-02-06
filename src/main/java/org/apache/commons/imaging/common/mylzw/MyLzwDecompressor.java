@@ -172,14 +172,13 @@ public final class MyLzwDecompressor {
 
                     addStringToTable(appendBytes(stringFromCode(oldCode),
                             firstChar(stringFromCode(code))));
-                    oldCode = code;
                 } else {
                     final byte[] outString = appendBytes(stringFromCode(oldCode),
                             firstChar(stringFromCode(oldCode)));
                     writeToResult(baos, outString);
                     addStringToTable(outString);
-                    oldCode = code;
                 }
+                oldCode = code;
             }
 
             if (written >= expectedLength) {
