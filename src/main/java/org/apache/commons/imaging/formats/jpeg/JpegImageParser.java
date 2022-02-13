@@ -16,6 +16,22 @@
  */
 package org.apache.commons.imaging.formats.jpeg;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.remainingBytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.startsWith;
+
+import java.awt.Dimension;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
@@ -45,23 +61,6 @@ import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.internal.Debug;
-
-import java.awt.Dimension;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.ByteOrder;
-import java.nio.charset.StandardCharsets;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import static org.apache.commons.imaging.common.BinaryFunctions.remainingBytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.startsWith;
 
 public class JpegImageParser extends ImageParser<JpegImagingParameters> implements XmpEmbeddable {
 
@@ -231,7 +230,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
                     + segments.size() + ", Expected: " + markerCount + ".");
         }
 
-        Collections.sort(segments);
+        segments.sort(null);
 
         final int offset = startWithZero ? 0 : 1;
 

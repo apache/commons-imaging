@@ -175,7 +175,7 @@ public abstract class TiffImageWriterBase {
 
         // "normal" TIFF directories should have continous indices starting with
         // 0, ie. 0, 1, 2...
-        Collections.sort(directoryIndices);
+        directoryIndices.sort(null);
 
         TiffOutputDirectory previousDirectory = null;
         for (int i = 0; i < directoryIndices.size(); i++) {

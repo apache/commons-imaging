@@ -33,7 +33,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -450,7 +449,7 @@ public class IptcParser extends BinaryFileParser {
 
             // sort the list. Records must be in numerical order.
             final Comparator<IptcRecord> comparator = (e1, e2) -> e2.iptcType.getType() - e1.iptcType.getType();
-            Collections.sort(elements, comparator);
+            elements.sort(comparator);
             // TODO: make sure order right
 
             // write the list.
