@@ -62,7 +62,6 @@ public class ColorConversionsTest {
         for (final int rgb : SAMPLE_RGBS) {
             final ColorHsv hsv = ColorConversions.convertRGBtoHSV(rgb);
             final int hsv_rgb = ColorConversions.convertHSVtoRGB(hsv);
-
             Debug.debug("hsv: " + hsv);
             Debug.debug("hsv_rgb: " + hsv_rgb + " (" + Integer.toHexString(hsv_rgb) + ")");
 
