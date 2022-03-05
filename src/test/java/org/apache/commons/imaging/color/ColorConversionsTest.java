@@ -45,6 +45,12 @@ public class ColorConversionsTest {
     }
 
     @Test
+    public void testCMYKtoCMYtoRGBtoCMYtoCMYK() {
+        int magentaRGB = ColorConversions.convertCMYtoRGB(ColorConversions.convertCMYKtoCMY(ColorCmyk.MAGENTA));
+        assertEquals(ColorCmyk.MAGENTA, ColorConversions.convertCMYtoCMYK(ColorConversions.convertRGBtoCMY(magentaRGB)));
+    }
+
+    @Test
     public void testRGBtoHSL() {
         for (final int rgb : SAMPLE_RGBS) {
             final ColorHsl hsl = ColorConversions.convertRGBtoHSL(rgb);
@@ -55,6 +61,11 @@ public class ColorConversionsTest {
 
             assertEquals(toHexString(0xffffff & rgb), toHexString(0xffffff & hsl_rgb));
         }
+    }
+
+    @Test
+    public void testHSLtoRGBtoHSL() {
+        assertEquals(ColorHsl.RED, ColorConversions.convertRGBtoHSL(ColorConversions.convertHSLtoRGB(ColorHsl.RED)));
     }
 
     @Test
@@ -120,6 +131,32 @@ public class ColorConversionsTest {
             Debug.debug("cieluv", cieluv);
             Debug.debug("cieluv_xyz", cieluv_xyz);
         }
+    }
+
+    @Test
+    public void testCIELabtoXYZtoRGBtoXYZtoCIELab() {
+        int greenRGB = ColorConversions.convertXYZtoRGB(ColorConversions.convertCIELabtoXYZ(ColorCieLab.GREEN));
+        ColorCieLab greehCIELab = ColorConversions.convertXYZtoCIELab(ColorConversions.convertRGBtoXYZ(greenRGB));
+        assertEquals(ColorCieLab.GREEN.L, greehCIELab.L, 0.3);
+        assertEquals(ColorCieLab.GREEN.a, greehCIELab.a, 0.3);
+        assertEquals(ColorCieLab.GREEN.b, greehCIELab.b, 0.3);
+    }
+
+    @Test
+    public void testCIELUVtoXYZtoRGBtoXYZtoCIELUV() {
+        int whiteRGB = ColorConversions.convertXYZtoRGB(ColorConversions.convertCIELuvtoXYZ(ColorCieLuv.WHITE));
+        ColorCieLuv whiteCIELuv = ColorConversions.convertXYZtoCIELuv(ColorConversions.convertRGBtoXYZ(whiteRGB));
+        assertEquals(ColorCieLuv.WHITE.L, whiteCIELuv.L,  0.1);
+        assertEquals(ColorCieLuv.WHITE.u, whiteCIELuv.u,  0.1);
+        assertEquals(ColorCieLuv.WHITE.v, whiteCIELuv.v,  0.1);
+    }
+
+    @Test
+    public void testCIELchtoCIELabtoCIELch() {
+        ColorCieLch redCIELch = ColorConversions.convertCIELabtoCIELCH(ColorConversions.convertCIELCHtoCIELab(ColorCieLch.RED));
+        assertEquals(ColorCieLch.RED.L, redCIELch.L, 0.1);
+        assertEquals(ColorCieLch.RED.C, redCIELch.C, 0.1);
+        assertEquals(ColorCieLch.RED.h, redCIELch.h, 0.1);
     }
 
     @Test
