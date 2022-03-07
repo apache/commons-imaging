@@ -268,9 +268,12 @@ public final class ColorConversions {
         final int G = 0xff & (rgb >> 8);
         final int B = 0xff & (rgb >> 0);
 
+        System.out.println("R: " + R + " G: " + G + " B: " + B);
+
         final double var_R = (R / 255.0); // Where RGB values = 0 ÷ 255
         final double var_G = (G / 255.0);
         final double var_B = (B / 255.0);
+
 
         final double var_Min = Math.min(var_R, Math.min(var_G, var_B)); // Min. value
                                                                   // of RGB
@@ -334,6 +337,8 @@ public final class ColorConversions {
             // Debug.debug("H2", H);
         }
 
+        System.out.println("H: " + H + " S: " + S + " L: " + L);
+
         return new ColorHsl(H, S, L);
     }
 
@@ -343,6 +348,8 @@ public final class ColorConversions {
 
     public static int convertHSLtoRGB(final double H, final double S, final double L) {
         double R, G, B;
+
+        System.out.println("H: " + H + " S: " + S + " L: " + L);
 
         if (S == 0) {
             // HSL values = 0 ÷ 1

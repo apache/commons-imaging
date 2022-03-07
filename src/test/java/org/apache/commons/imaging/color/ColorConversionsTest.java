@@ -75,6 +75,11 @@ public class ColorConversionsTest {
     }
 
     @Test
+    public void testHSLtoRGBtoHSL() {
+        assertEquals(ColorHsl.BLUE, ColorConversions.convertRGBtoHSL(ColorConversions.convertHSLtoRGB(ColorHsl.BLUE)));
+    }
+
+    @Test
     public void testXYZ() {
         for (final int rgb : SAMPLE_RGBS) {
             final ColorXyz xyz = ColorConversions.convertRGBtoXYZ(rgb);
