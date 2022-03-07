@@ -185,6 +185,7 @@ public final class ColorConversions {
         final double C = (1 - (R / 255.0))*100.0;
         final double M = (1 - (G / 255.0))*100.0;
         final double Y = (1 - (B / 255.0))*100.0;
+
         return new ColorCmy(C, M, Y);
     }
 
@@ -227,16 +228,17 @@ public final class ColorConversions {
             C = 0;
             M = 0;
             Y = 0;
-            var_K = 100.0;
         } else {
             C = ((C - var_K) / (1 - var_K))*100;
             M = ((M - var_K) / (1 - var_K))*100;
             Y = ((Y - var_K) / (1 - var_K))*100;
         }
+        var_K = var_K*100;
+
         return new ColorCmyk(C, M, Y, var_K);
     }
 
-    public static ColorCmy convertCMYKtoCMY(final ColorCmyk cmyk) {             
+    public static ColorCmy convertCMYKtoCMY(final ColorCmyk cmyk) {
         return convertCMYKtoCMY(cmyk.C, cmyk.M, cmyk.Y, cmyk.K);
     }
 
@@ -252,6 +254,7 @@ public final class ColorConversions {
         C = (C * (1 - k) + k)* 100;
         M = (M * (1 - k) + k)* 100;
         Y = (Y * (1 - k) + k)* 100;
+
         return new ColorCmy(C, M, Y);
     }
 
