@@ -268,8 +268,6 @@ public final class ColorConversions {
         final int G = 0xff & (rgb >> 8);
         final int B = 0xff & (rgb >> 0);
 
-        System.out.println("R: " + R + " G: " + G + " B: " + B);
-
         final double var_R = (R / 255.0); // Where RGB values = 0 ÷ 255
         final double var_G = (G / 255.0);
         final double var_B = (B / 255.0);
@@ -337,9 +335,7 @@ public final class ColorConversions {
             // Debug.debug("H2", H);
         }
 
-        System.out.println("H: " + H + " S: " + S + " L: " + L);
-
-        return new ColorHsl(H, S, L);
+        return new ColorHsl(H, S*100, L*100);
     }
 
     public static int convertHSLtoRGB(final ColorHsl hsl) {
@@ -349,23 +345,21 @@ public final class ColorConversions {
     public static int convertHSLtoRGB(final double H, final double S, final double L) {
         double R, G, B;
 
-        System.out.println("H: " + H + " S: " + S + " L: " + L);
-
         if (S == 0) {
             // HSL values = 0 ÷ 1
-            R = L * 255; // RGB results = 0 ÷ 255
-            G = L * 255;
-            B = L * 255;
+            R = L * 2.55; // RGB results = 0 ÷ 255
+            G = L * 2.55;
+            B = L * 2.55;
         } else {
             double var_2;
 
             if (L < 0.5) {
-                var_2 = L * (1 + S);
+                var_2 = L/100 * (1 + S/100);
             } else {
-                var_2 = (L + S) - (S * L);
+                var_2 = (L/100 + S/100) - (S/100 * L/100);
             }
 
-            final double var_1 = 2 * L - var_2;
+            final double var_1 = 2 * L/100 - var_2;
 
             R = 255 * convertHuetoRGB(var_1, var_2, H + (1 / 3.0));
             G = 255 * convertHuetoRGB(var_1, var_2, H);

@@ -65,7 +65,7 @@ public class ColorConversionsTest {
 
     @Test
     public void testHSLtoRGBtoHSL() {
-        assertEquals(ColorHsl.RED, ColorConversions.convertRGBtoHSL(ColorConversions.convertHSLtoRGB(ColorHsl.RED)));
+        assertEquals(ColorHsl.BLACK, ColorConversions.convertRGBtoHSL(ColorConversions.convertHSLtoRGB(ColorHsl.BLACK)));
     }
 
     @Test
@@ -83,11 +83,6 @@ public class ColorConversionsTest {
     @Test
     public void testHSVtoRGBtoHSV() {
         assertEquals(ColorHsv.BLUE, ColorConversions.convertRGBtoHSV(ColorConversions.convertHSVtoRGB(ColorHsv.BLUE)));
-    }
-
-    @Test
-    public void testHSLtoRGBtoHSL() {
-        assertEquals(ColorHsl.BLUE, ColorConversions.convertRGBtoHSL(ColorConversions.convertHSLtoRGB(ColorHsl.BLUE)));
     }
 
     @Test
