@@ -29,12 +29,12 @@ public class DataParserCmyk extends DataParser {
         int sk = 0xff & data[3][y][x];
 
         // CRAZY adobe has to store the bytes in reverse form.
-        sc = 255 - sc;
-        sm = 255 - sm;
-        sy = 255 - sy;
-        sk = 255 - sk;
+        final double SC = 100 - sc/2.550;
+        final double SM = 100 - sm/2.550;
+        final double SY = 100 - sy/2.550;
+        final double SK = 100 - sk/2.550;
 
-        return ColorConversions.convertCMYKtoRGB(sc, sm, sy, sk);
+        return ColorConversions.convertCMYKtoRGB(SC, SM, SY, SK);
     }
 
     @Override
