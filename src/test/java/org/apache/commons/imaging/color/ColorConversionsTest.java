@@ -73,7 +73,7 @@ public class ColorConversionsTest {
 
     @Test
     public void testHSLtoRGBtoHSL() {
-        assertEquals(ColorHsl.RED, ColorConversions.convertRGBtoHSL(ColorConversions.convertHSLtoRGB(ColorHsl.RED)));
+        assertEquals(ColorHsl.BLACK, ColorConversions.convertRGBtoHSL(ColorConversions.convertHSLtoRGB(ColorHsl.BLACK)));
     }
 
     @Test
