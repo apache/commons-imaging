@@ -32,10 +32,10 @@ public class PhotometricInterpreterCmyk extends PhotometricInterpreter {
     public void interpretPixel(final ImageBuilder imageBuilder, final int[] samples, final int x,
             final int y) throws ImageReadException, IOException {
 
-        final int sc = samples[0];
-        final int sm = samples[1];
-        final int sy = samples[2];
-        final int sk = samples[3];
+        final double sc = samples[0]/2.550;
+        final double sm = samples[1]/2.550;
+        final double sy = samples[2]/2.550;
+        final double sk = samples[3]/2.550;
 
         final int rgb = ColorConversions.convertCMYKtoRGB(sc, sm, sy, sk);
         imageBuilder.setRGB(x, y, rgb);
