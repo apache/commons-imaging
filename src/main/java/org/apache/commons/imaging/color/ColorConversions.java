@@ -177,16 +177,16 @@ public final class ColorConversions {
     }
 
     public static ColorCmy convertRGBtoCMY(final int rgb) {
+        // CMY values = 0 ÷ 100
+        // RGB values = 0 ÷ 255
+        
         final int R = 0xff & (rgb >> 16);
         final int G = 0xff & (rgb >> 8);
         final int B = 0xff & (rgb >> 0);
 
-        // RGB values = 0 ÷ 255
-        // CMY values = 0 ÷ 1
-
-        final double C = 1 - (R / 255.0);
-        final double M = 1 - (G / 255.0);
-        final double Y = 1 - (B / 255.0);
+        final double C = (1 - (R / 255.0))*100.0;
+        final double M = (1 - (G / 255.0))*100.0;
+        final double Y = (1 - (B / 255.0))*100.0;
 
         return new ColorCmy(C, M, Y);
     }
@@ -198,24 +198,23 @@ public final class ColorConversions {
         // and similarly for G and B.
         // This is Ghostscript's formula with K = 0.
 
-        // CMY values = 0 ÷ 1
+        // CMY values = 0 ÷ 100
         // RGB values = 0 ÷ 255
 
-        final double R = (1 - cmy.C) * 255.0;
-        final double G = (1 - cmy.M) * 255.0;
-        final double B = (1 - cmy.Y) * 255.0;
-
+        final double R = (1 - cmy.C / 100) * 255.0;
+        final double G = (1 - cmy.M / 100) * 255.0;
+        final double B = (1 - cmy.Y / 100) * 255.0;
+        
         return convertRGBtoRGB(R, G, B);
     }
 
     public static ColorCmyk convertCMYtoCMYK(final ColorCmy cmy) {
-        // Where CMYK and CMY values = 0 ÷ 1
+        // Where CMYK and CMY values = 0 ÷ 100
 
         double C = cmy.C;
         double M = cmy.M;
         double Y = cmy.Y;
-
-        double var_K = 1.0;
+        double var_K = 100.0;
 
         if (C < var_K) {
             var_K = C;
@@ -226,15 +225,16 @@ public final class ColorConversions {
         if (Y < var_K) {
             var_K = Y;
         }
-        if (var_K == 1) { // Black
+        if (var_K == 100.0) { // Black
             C = 0;
             M = 0;
             Y = 0;
         } else {
-            C = (C - var_K) / (1 - var_K);
-            M = (M - var_K) / (1 - var_K);
-            Y = (Y - var_K) / (1 - var_K);
+            C = (C - var_K) / (1 - var_K / 100.0);
+            M = (M - var_K) / (1 - var_K / 100.0);
+            Y = (Y - var_K) / (1 - var_K / 100.0);
         }
+
         return new ColorCmyk(C, M, Y, var_K);
     }
 
@@ -244,21 +244,15 @@ public final class ColorConversions {
 
     public static ColorCmy convertCMYKtoCMY(double C, double M, double Y,
             final double K) {
-        // Where CMYK and CMY values = 0 ÷ 1
+        // Where CMYK and CMY values = 0 ÷ 100
 
-        C = (C * (1 - K) + K);
-        M = (M * (1 - K) + K);
-        Y = (Y * (1 - K) + K);
-
+        C = C * (1 - K / 100.0) + K;
+        M = M * (1 - K / 100.0) + K;
+        Y = Y * (1 - K / 100.0) + K;
         return new ColorCmy(C, M, Y);
     }
 
-    public static int convertCMYKtoRGB(final int c, final int m, final int y, final int k) {
-        final double C = c / 255.0;
-        final double M = m / 255.0;
-        final double Y = y / 255.0;
-        final double K = k / 255.0;
-
+    public static int convertCMYKtoRGB(final double C, final double M, final double Y, final double K) {
         return convertCMYtoRGB(convertCMYKtoCMY(C, M, Y, K));
     }
 

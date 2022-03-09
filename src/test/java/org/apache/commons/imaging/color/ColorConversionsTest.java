@@ -51,6 +51,14 @@ public class ColorConversionsTest {
     }
 
     @Test
+    public void testCMYtoCMYKtoCMY() {
+        for(int i = 0; i<5; i++){
+            ColorCmy cmy1 = new ColorCmy(10 + 12 * i, 15*i, 60/(i+1));
+            assertEquals(cmy1, ColorConversions.convertCMYKtoCMY(ColorConversions.convertCMYtoCMYK(cmy1)));
+        }
+    }
+ 
+    @Test
     public void testRGBtoHSL() {
         for (final int rgb : SAMPLE_RGBS) {
             final ColorHsl hsl = ColorConversions.convertRGBtoHSL(rgb);
