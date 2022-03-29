@@ -37,6 +37,8 @@ public class PngImagingParameters extends XmpImagingParameters {
 
     private boolean forceTrueColor = false;
 
+    private boolean predictorEnabled = false;
+
     /**
      * Used in write operations to indicate the Physical Scale - sCAL.
      *
@@ -91,5 +93,28 @@ public class PngImagingParameters extends XmpImagingParameters {
 
     public void setTextChunks(List<? extends PngText> textChunks) {
         this.textChunks = Collections.unmodifiableList(textChunks);
+    }
+
+    /**
+     * Indicates that the PNG write operation should enable
+     * the predictor.
+     * @return true if the predictor is enabled; otherwise, false.
+     */
+    public boolean isPredictorEnabled(){
+        return predictorEnabled;
+    }
+
+    /**
+     * Sets the enabled status of the predictor. When performing
+     * data compression on an image, a PNG predictor often results in a
+     * reduced file size. Predictors are particularly effective on
+     * photographic images, but may also work on graphics.
+     * The specification of a predictor may result in an increased
+     * processing time when writing an image, but will not affect the
+     * time required to read an image.
+     * @param predictorEnabled true if a predictor is enabled; otherwise, false.
+     */
+    public void setPredictorEnabled(boolean predictorEnabled){
+        this.predictorEnabled = predictorEnabled;
     }
 }
