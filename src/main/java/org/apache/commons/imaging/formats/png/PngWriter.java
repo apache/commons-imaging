@@ -463,8 +463,15 @@ class PngWriter {
 
             // IDAT Yes Multiple IDAT chunks shall be consecutive
 
+            // 28 March 2022.  At this time, we only apply the predictor
+            // for non-grayscale, true-color images.  This choice is made
+            // out of caution and is not necessarily required by the PNG
+            // spec.  We may broaden the use of predictors in future versions.
+            boolean usePredictor = params.isPredictorEnabled() &&
+                !isGrayscale && palette==null;
+
             byte[] uncompressed;
-            {
+            if(!usePredictor) {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
                 final boolean useAlpha = pngColorType == PngColorType.GREYSCALE_WITH_ALPHA
@@ -515,7 +522,45 @@ class PngWriter {
                     }
                 }
                 uncompressed = baos.toByteArray();
+            } else {
+                final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+                final boolean useAlpha = pngColorType == PngColorType.GREYSCALE_WITH_ALPHA
+                        || pngColorType == PngColorType.TRUE_COLOR_WITH_ALPHA;
+
+                final int[] row = new int[width];
+                for (int y = 0; y < height; y++) {
+                    // Debug.debug("y", y + "/" + height);
+                    src.getRGB(0, y, width, 1, row, 0, width);
+
+                    int priorA = 0;
+                    int priorR = 0;
+                    int priorG = 0;
+                    int priorB = 0;
+                    baos.write(FilterType.SUB.ordinal());
+                    for (int x = 0; x < width; x++) {
+                      final int argb  = row[x];
+                      final int alpha = 0xff & (argb >> 24);
+                      final int red   = 0xff & (argb >> 16);
+                      final int green = 0xff & (argb >> 8);
+                      final int blue  = 0xff & argb;
+
+                      baos.write(red   - priorR);
+                      baos.write(green - priorG);
+                      baos.write(blue  - priorB);
+                      priorR = red;
+                      priorG = green;
+                      priorB = blue;
+
+                      if (useAlpha) {
+                          baos.write(alpha - priorA);
+                          priorA = alpha;
+                      }
+                    }
+                }
+                uncompressed = baos.toByteArray();
             }
+
 
             // Debug.debug("uncompressed", uncompressed.length);
 
