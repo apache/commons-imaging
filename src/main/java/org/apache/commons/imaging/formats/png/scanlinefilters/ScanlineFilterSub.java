@@ -21,10 +21,20 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImageReadException;
 
 public class ScanlineFilterSub implements ScanlineFilter {
+    private static ScanlineFilterSub obj123;
     private final int bytesPerPixel;
 
-    public ScanlineFilterSub(final int bytesPerPixel) {
+    private ScanlineFilterSub(final int bytesPerPixel) {
         this.bytesPerPixel = bytesPerPixel;
+    }
+
+    public static ScanlineFilterSub getObject(final int bytesPerPixel){
+        if(obj123 == null) {
+            return new ScanlineFilterSub(bytesPerPixel);
+        }
+        else {
+            return obj123;
+        }
     }
 
     @Override
@@ -34,7 +44,7 @@ public class ScanlineFilterSub implements ScanlineFilter {
             final int prevIndex = i - bytesPerPixel;
             if (prevIndex >= 0) {
                 dst[i] = (byte) ((src[i] + dst[prevIndex]) % 256);
-            // dst[i] = 0xff & (src[i] + src[prevIndex]);
+                // dst[i] = 0xff & (src[i] + src[prevIndex]);
             } else {
                 dst[i] = src[i];
             }

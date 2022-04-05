@@ -43,6 +43,18 @@ public class ByteSourceDataTest extends ByteSourceTest {
         ByteSource getByteSource(byte[] src) throws IOException;
     }
 
+    public class FactoryFinder{
+        public ByteSourceFactory getObjinform(String str){
+            if(str.equals("BSFF")){
+                return new ByteSourceFileFactory();
+            }else if(str.equals("BSISFF")){
+                return new ByteSourceInputStreamFileFactory();
+            }else {
+                return null;
+            }
+        }
+    }
+
     private class ByteSourceFileFactory implements ByteSourceFactory {
         @Override
         public ByteSource getByteSource(final byte[] src) throws IOException {
@@ -77,13 +89,15 @@ public class ByteSourceDataTest extends ByteSourceTest {
     }
 
     protected void writeAndReadBytes(final ByteSourceFactory byteSourceFactory,
-            final byte[] src) throws IOException {
-        final ByteSource byteSource = byteSourceFactory.getByteSource(src);
+                                     final byte[] src) throws IOException {
+        //final ByteSource byteSource = byteSourceFactory.getByteSource(src);
+        FactoryFinder tff = new FactoryFinder();
+        ByteSourceFactory byteSource = tff.getObjinform("BSFF");
 
         // test cache during interrupted read cache by reading only first N
         // bytes.
         {
-            try (InputStream is = byteSource.getInputStream()) {
+            try (InputStream is = byteSource.getByteSource(src).getInputStream()) {
                 final byte[] prefix = new byte[256];
                 final int read = is.read(prefix);
 
@@ -96,7 +110,7 @@ public class ByteSourceDataTest extends ByteSourceTest {
 
         // test cache by completely reading InputStream N times.
         for (int j = 0; j < 5; j++) {
-            try (final InputStream is = byteSource.getInputStream()) {
+            try (final InputStream is = byteSource.getByteSource(src).getInputStream()) {
                 final byte[] dst = IOUtils.toByteArray(is);
 
                 assertArrayEquals(src, dst);
@@ -105,7 +119,7 @@ public class ByteSourceDataTest extends ByteSourceTest {
 
         {
             // test getAll() method.
-            final byte[] all = byteSource.getAll();
+            final byte[] all = byteSource.getByteSource(src).getAll();
             assertArrayEquals(src, all);
         }
 
@@ -114,7 +128,7 @@ public class ByteSourceDataTest extends ByteSourceTest {
 
             final int start = src.length / 2;
 
-            try (InputStream is = byteSource.getInputStream(start)) {
+            try (InputStream is = byteSource.getByteSource(src).getInputStream(start)) {
                 final byte[] dst = IOUtils.toByteArray(is);
 
                 assertEquals(src.length, dst.length + start);

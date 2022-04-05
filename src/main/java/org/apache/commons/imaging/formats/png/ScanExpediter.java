@@ -177,7 +177,7 @@ abstract class ScanExpediter {
             case NONE:
                 return new ScanlineFilterNone();
             case SUB:
-                return new ScanlineFilterSub(bytesPerPixel);
+                return ScanlineFilterSub.getObject(bytesPerPixel);
             case UP:
                 return new ScanlineFilterUp();
             case AVERAGE:
