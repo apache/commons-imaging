@@ -110,7 +110,7 @@ The <action> type attribute can be add,update,fix,remove.
         ArrayIndexOutOfBoundsException on reading simple GeoTIFF.
       </action>
       <action dev="kinow" type="update" due-to="Dependabot">
-        Bump actions/setup-java from v1.4.0 to v2 #92 #95 #101 #127.
+        Bump actions/setup-java from v1.4.0 to v3 #92 #95 #101 #127 #213.
       </action>
       <action dev="kinow" type="update" due-to="Dependabot">
         Bump commons-io from 2.7 to 2.11.0 #96 #152 #153, #158.
