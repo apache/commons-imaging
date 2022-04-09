@@ -965,26 +965,8 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
             bos.write2Bytes(height); // Image Height
 
             {
-                final boolean localColorTableFlag = true;
-                // boolean LocalColorTableFlag = false;
-                final boolean interlaceFlag = false;
-                final boolean sortFlag = false;
-                final int sizeOfLocalColorTable = colorTableScaleLessOne;
-
-                // int SizeOfLocalColorTable = 0;
-
                 final int packedFields;
-                if (localColorTableFlag) {
-                    packedFields = (LOCAL_COLOR_TABLE_FLAG_MASK
-                            | (interlaceFlag ? INTERLACE_FLAG_MASK : 0)
-                            | (sortFlag ? SORT_FLAG_MASK : 0)
-                            | (7 & sizeOfLocalColorTable));
-                } else {
-                    packedFields = (0
-                            | (interlaceFlag ? INTERLACE_FLAG_MASK : 0)
-                            | (sortFlag ? SORT_FLAG_MASK : 0)
-                            | (7 & sizeOfLocalColorTable));
-                }
+                packedFields = LOCAL_COLOR_TABLE_FLAG_MASK | 7 & colorTableScaleLessOne;
                 bos.write(packedFields); // one byte
             }
         }

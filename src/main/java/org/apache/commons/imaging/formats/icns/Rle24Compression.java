@@ -45,21 +45,21 @@ final class Rle24Compression {
             int remaining = pixelCount;
             int resultPos = 0;
             while (remaining > 0) {
+                final int count;
                 if ((data[dataPos] & 0x80) != 0) {
-                    final int count = (0xff & data[dataPos]) - 125;
+                    count = (0xff & data[dataPos]) - 125;
                     for (int i = 0; i < count; i++) {
                         result[band + 4 * (resultPos++)] = data[dataPos + 1];
                     }
                     dataPos += 2;
-                    remaining -= count;
                 } else {
-                    final int count = (0xff & data[dataPos]) + 1;
+                    count = (0xff & data[dataPos]) + 1;
                     dataPos++;
                     for (int i = 0; i < count; i++) {
                         result[band + 4 * (resultPos++)] = data[dataPos++];
                     }
-                    remaining -= count;
                 }
+                remaining -= count;
             }
         }
         return result;

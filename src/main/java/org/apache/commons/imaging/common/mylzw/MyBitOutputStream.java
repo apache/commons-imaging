@@ -53,20 +53,20 @@ public class MyBitOutputStream extends OutputStream {
         bitsInCache += sampleBits;
 
         while (bitsInCache >= 8) {
+            final int b;
             if (byteOrder == ByteOrder.BIG_ENDIAN) {
                 // MSB, so write from left
-                final int b = 0xff & (bitCache >> (bitsInCache - 8));
+                b = 0xff & (bitCache >> (bitsInCache - 8));
                 actualWrite(b);
 
-                bitsInCache -= 8;
             } else {
                 // LSB, so write from right
-                final int b = 0xff & bitCache;
+                b = 0xff & bitCache;
                 actualWrite(b);
 
                 bitCache >>= 8;
-                bitsInCache -= 8;
             }
+            bitsInCache -= 8;
             final int remainderMask = (1 << bitsInCache) - 1; // unnecessary
             bitCache &= remainderMask; // unnecessary
         }
