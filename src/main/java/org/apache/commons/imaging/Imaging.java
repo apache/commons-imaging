@@ -185,7 +185,7 @@ public final class Imaging {
 
     private static boolean compareBytePair(final int[] a, final int[] b) {
         if (a.length != 2 && b.length != 2) {
-            throw new RuntimeException("Invalid Byte Pair.");
+            throw new IllegalArgumentException("Invalid Byte Pair.");
         }
         return (a[0] == b[0]) && (a[1] == b[1]);
     }
