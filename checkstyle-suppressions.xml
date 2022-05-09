@@ -20,4 +20,6 @@ limitations under the License.
     <suppress checks="JavadocMethod" files=".*[/\\]test[/\\].*"/>
     <suppress checks="JavadocPackage" files=".*[/\\]test[/\\].*"/>
     <suppress checks="MagicNumber" files="ColorConversions.java"/>
+    <!-- Due to fail in Checkstyle on Windows, in GH Actions -->
+    <suppress checks="NewlineAtEndOfFile" files="target[/\\]maven-archiver[/\\]pom.properties"/>
 </suppressions>
