@@ -1,137 +1,76 @@
-              Apache Commons Imaging 1.0-alpha2
-                  RELEASE NOTES
-
-The Apache Commons Imaging team is pleased to announce the release of Apache Commons Imaging 1.0-alpha2
+The Apache Commons Imaging team is pleased to announce the commons-imaging-1.0-alpha3 release!
 
 Apache Commons Imaging (previously Sanselan) is a pure-Java image library.
-
-Second 1.0 alpha release
 
 Changes in this version include:
 
 New features:
-o IMAGING-248:  ICNS: missing element types; some safety checks Thanks to Greg Shrago.
-o IMAGING-245:  Add disposal method to GIF metadata Thanks to Christoffer Rydberg.
-o IMAGING-146:  Add documentation for the color package
-o IMAGING-244:  Use isEmpty instead of comparing size() with integers
-o IMAGING-243:  PNG Writer Indexed Color with semi-transparent Pixels and Better Compression Thanks to Andreas Menze.
-o IMAGING-239:  Add inflate (deflate algorithm) to TIFF files Thanks to Paul Austin.
-o IMAGING-164:  Simplify code in IcoImageParser::writeImage Thanks to Michael Groß.
-o IMAGING-165:  Add the fields from TiffReader.Collector to TiffContents Thanks to Michael Groß.
-o IMAGING-228:  Remove private method PhotometricInterpreterLogLuv#cube by Math.pow
-o IMAGING-236:  Add support to read multiple images from GIF Thanks to Christoffer Rydberg.
+o Add CIELAB and DIN99 conversion, reduce code duplication, and issues related to zero-division and precision.  Issue: IMAGING-283. Thanks to Wanja Gayk. 
+o Imaging.getBufferedImage() drops alpha layer for TIFF images.  Issue: IMAGING-216. Thanks to Gary Lucas. 
+o Consolidate redundant methods in TIFF datareaders.  Issue: IMAGING-269. Thanks to Gary Lucas. 
+o Add list of TIFF files and example survey application.  Issue: IMAGING-268. Thanks to Gary Lucas. 
 
 Fixed Bugs:
-o IMAGING-247:  Fix crash when reading TIFF using PackBits Thanks to Gary Lucas.
-o IMAGING-246:  Invalid Block Size error prevents handling of block 1084, Macintosh NSPrintInfo
-o IMAGING-163:  Add XmpEmbedabble interface to parsers that support it
-o IMAGING-151:  ColorGroup.color_counts is mutable public List and is multiply sorted
-o IMAGING-242:  Upgrade to JUnit 5
-o IMAGING-241:  Copy byte arrays fixing TODO markers
-o IMAGING-136:  Imaging.getImageInfo() fails to read JPEG file Thanks to Michael Groß.
-o IMAGING-238:  Return copied byte arrays in Png Chunk and Png Chunk ICCP
-o IMAGING-230:  Properly close resources with try-with-resources in T4AndT6Compression
-o IMAGING-134:  Invalid (RST) marker found in entropy data Thanks to Michael Sommerville.
-o IMAGING-130:  Reading of some GIF images throws java.io.IOException: AddStringToTable: codes: 4096 code_size: 12 Thanks to Michael Sommerville.
-o IMAGING-224:  Fix build errors in Travis
-o IMAGING-167:  Possible infinite loop at XpmImageParser::writeImage Thanks to Michael Groß.
-o IMAGING-211:  Imaging.getBufferedImage fails throwing java.lang.ArrayIndexOutOfBoundsException for specific inputs
-o IMAGING-210:  Imaging.getBufferedImage fails throwing NegativeArraySizeException for specific inputs
+o Add PNG predictor to reduce output size.  Issue: IMAGING-330. Thanks to Gary Lucas. 
+o Change getExif name to getOutputSet.  Issue: IMAGING-327. Thanks to Gary Lucas. 
+o Prevent OutOfMemoryError in BmpImageParser. This can happen when the color palette length is
+        a large negative number.  Issue: IMAGING-325. Thanks to Jin Wang. 
+o Read TIFFs with 32-bit samples.  Issue: IMAGING-320. Thanks to Gary Lucas. 
+o The Imaging ImageParser's used HashMap's before, but on this issue we replaced the maps by proper
+        ImagingParameter classes, that encapsulate the parameters for each image format.
+
+        The Imaging class also had the HashMap methods removed, but we also removed the public methods that
+        supported parameters. This was due to the complexity to handle cases where users could provide a byte
+        array, or file, and parameters. In Java, with or without generics, it was rather difficult to handle
+        the cases where users could provide a PNG image stream with TIFF parameters.
+
+        To prevent issues like this, we will improve the ImageParser's API's, and work on either providing
+        other ways to customize and create parsers (factories, builders, etc.) or similar ways to use
+        the Imaging entry class (like merging parameters or using parameter builders.)
+
+        This was the last blocker issue of the 1.0 release vote, rolled a few years ago.  Issue: IMAGING-159. Thanks to Bruno P. Kinoshita, Gary Lucas, Matt Juntunen. 
+o Encoding Support for IPTC metadata.  Issue: IMAGING-168. Thanks to Yavuz Kavus. 
+o Array sizes not checked for overflow in BmpImageParser.  Issue: IMAGING-279. 
+o ArrayIndexOutOfBoundsException on reading simple GeoTIFF.  Issue: IMAGING-265. Thanks to Gary Lucas. 
+o BMP Parser physicalWidthDpi and physicalHeightDpi truncated before rounding off.  Issue: IMAGING-264. 
+o Failure when reading a partial raster from a floating-point TIFF  Issue: IMAGING-263. Thanks to Gary Lucas. 
+o Fix typos  Issue: IMAGING-291. Thanks to Arturo Bernal. 
+o Fix javadoc  Issue: IMAGING-289. Thanks to Arturo Bernal. 
+o Fix IptcParserTest on Windows  Issue: IMAGING-308. Thanks to Gary Lucas. 
+o Read integer data from GeoTIFFS  Issue: IMAGING-266. Thanks to Gary Lucas. 
+o Corrected handling of ExtraSamples tag  Issue: IMAGING-312. Thanks to Gary Lucas. 
+o Decoding of Rational Numbers broken when large values present  Issue: IMAGING-285. Thanks to Gary Lucas. 
+o Update examples, add GeoTIFF metadata to output  Issue: IMAGING-314. Thanks to Gary Lucas. 
+o Read TIFFs with multiple floating-point sampless  Issue: IMAGING-311. Thanks to Gary Lucas. 
+o A PNG image using indexed color type but no PLTE chunks throws NPE.  Issue: IMAGING-317. Thanks to OSS-Fuzz. 
+o Validate when accessing GIF color table array.  Issue: IMAGING-318. Thanks to OSS-Fuzz. 
 
 Changes:
-o IMAGING-258:  Prevent exception in TIFF when reading EXIF directory Thanks to Gary Lucas.
-o IMAGING-260:  Fix mvn site failure with JavaNCSS parse error
-o IMAGING-259:  Enhance TIFF DataReaders speed for compressed RGB Thanks to Gary Lucas.
-o IMAGING-251:  Support for TIFF floating-point formats Thanks to Gary Lucas.
-o IMAGING-254:  Small code improvements
-o IMAGING-253:  ByteSourceInputStream has initialized its length when reading starts Thanks to David Hrbacek.
-o IMAGING-249:  Make IPTCBlock members private and add getter/setter
-o               Update tests from commons-io:commons-io 2.6 to 2.7. Thanks to Gary Gregory.
-o               Update commons-parent from 50 to 51 #88. Thanks to Dependabot.
-o               Update actions/checkout from v1 to v2.3.1 #87. Thanks to Dependabot.
-o               Update junit-jupiter from 5.5.2 to 5.6.2 #86. Thanks to Dependabot.
+o Bump animal-sniffer-maven-plugin from 1.19 to 1.21 #120, #199. Thanks to Dependabot. 
+o Bump maven-checkstyle-plugin from 3.1.1 to 3.1.2 #117. Thanks to Dependabot. 
+o Bump spotbugs from 4.0.6 to 4.7.0 #111 #118 #123 #128 #156 #160 #167 #174 #185 #188 #191 #208 #218. Thanks to Dependabot. 
+o Bump spotbugs-maven-plugin from 4.0.4 to 4.6.0.0 #111 #115 #125 #129 #157 #171 #176 #180 #186 #192 #211. Thanks to Dependabot. 
+o Bump maven-pmd-plugin from 3.13.0 to 3.15.0 #109 #166. Thanks to Dependabot. 
+o Bump actions/setup-java from v1.4.0 to v3 #92 #95 #101 #127 #213. Thanks to Dependabot. 
+o Bump commons-io from 2.7 to 2.11.0 #96 #152 #153, #158. Thanks to Dependabot. 
+o Bump junit-jupiter from 5.6.2 to 5.8.2 #97 #119 #151 #170 #172 #187. Thanks to Dependabot. 
+o Bump actions/checkout from v2.3.2 to v3 #99 #107 #175 #181 #205. Thanks to Dependabot. 
+o Remove redundant local variable  Issue: IMAGING-290. Thanks to Arturo Bernal. 
+o Java 8 improvements  Issue: IMAGING-288. Thanks to Arturo Bernal. 
+o Simplify assertions in tests  Issue: IMAGING-287. Thanks to Arturo Bernal. 
+o Use 'compare()' method to compare numbers  Issue: IMAGING-295. Thanks to Arturo Bernal. 
+o Use java style array declaration  Issue: IMAGING-294. Thanks to Arturo Bernal. 
+o Throw ImageReadException if the PNG parser is given an image with invalid ICC Profile.  Issue: IMAGING-298. Thanks to OSS-Fuzz. 
+o Throw ImageReadException if the GIF parser is given an image with invalid image data instead of throwing IndexOutOfBoundsException.  Issue: IMAGING-300. Thanks to OSS-Fuzz. 
+o Throw ImageReadException if the GIF parser is given an image with invalid Lzw table instead of throwing IndexOutOfBoundsException.  Issue: IMAGING-301. Thanks to OSS-Fuzz. 
+o Throw ImageReadException if the JPEG parser is given an image with a negative number of segments in SOF0Segment.  Issue: IMAGING-302. Thanks to OSS-Fuzz. 
+o Use Comparator combinator  Issue: IMAGING-304. Thanks to Arturo Bernal. 
+o Simplify If-else conditions  Issue: IMAGING-303. Thanks to Arturo Bernal. 
+o Replace Collections.sort with list.sort  Issue: IMAGING-305. Thanks to Arturo Bernal. 
+o Remove redundant variables  Issue: IMAGING-315. Thanks to Arturo Bernal. 
+o Bump github/codeql-action from 1 to 2 #216 Thanks to Dependabot. 
 
 
-Historical list of changes: https://commons.apache.org/proper/commons-imaging/changes-report.html
-
-For complete information on Apache Commons Imaging, including instructions on how to submit bug reports,
-patches, or suggestions for improvement, see the Apache Apache Commons Imaging website:
-
-https://commons.apache.org/proper/commons-imaging/
-
-The following changes are here only for history, from when the project was initially
-created and was called Sanselan.
-
-Release 0.97
-------------
-	
- * Rewrote the info.txt files for many images in the sample image library to clarify contribution to project.
- * Removed the images from the www.wpclipart.com Public Domain library.
- * Improved the examples illustrating how to change EXIF metadata.
- * Applied a patch from Niall Pemberton around jdk1.5 compatibility:
-	"""
-	Sanselan claims JDK 1.4 compatibility, but a JDK 1.5 method (Class's getSimpleName() [1]) has been used in JpegRewriter
-	"""
- * Applied a "Build Improvements" patch from Niall Pemberton:
-	"""
-	I took a look at the propsed 0.96 relelase and have some suggestions to improve the build:
-	 * Add standard manifest entries to jar
-	 * Lock down version numbers for maven compiler, surefire and javadoc plugins
-	 * generate sources jar for the release
-	 * include the RELEASE-NOTES in the binary distribution
-	 * include NOTICE/LICENSE files in the javadoc jar
-	"""
-
-Release 0.96
-------------
-
- * Updated KEYS file.
- * Added more unit tests around BMP.
- * Added more images to the test image suite.
- * Fixed a bug where errors were being wrongly logged to System.out.
- * Moved the example code into the test source directory, to comply with Maven's standard project layout.
- * Added a couple of images to the sample image library that demonstrate a couple variations on Photoshop/IPTC data.  
- * Fixed a small bug in the IPTC constants introduced while cleaning up the constants.
- * Started shift towards moving field-level parsing into BinaryInputStream and BinaryOutputStream.
- * Fixed a png unit test that used a piece of Java 1.6 syntax.
- * Added unit tests around the new IPTC functionality.
- * Added IPTC remove/update/insert functionality.
- * Rewrote the IPTC parsing support.  
- * Added improved support for reading and writing iTXt, tEXt, zTXt Png chunks.
- 	Added a unit test that demonstrates the feature.
- * Found a new regression wherein DeflaterOutputStream needs to be closed.
- * Added the .tar.bz2 distributions back into the maven assembly descriptors.
- * Moved the example/sample code to a new top-level source folder, "example."
- * Replaced dependency on java.util.zip.DeflaterOutputStream, which is only available in Java 1.6.
- * Added a unit test around reading and writing images in every format.
- * We now sort some (but not all) GIF color tables.
- * Applied the BMP "buffer flushing" bug to the PBM reading and writing code.
- * Fixed a regression around flushing the bit buffer when writing BMPs with very small palettes.
- * Removed assumption about DataBuffer type when reading BMPs.
- * When writing a GIF, we now always include a Graphic Control Extension block, even if its not necessary.
- * We are more defensive about missing GCEs.
- * Lastly, we now set a minimum bound on initial code sizes for LZW-compressed Gif image data.
- * Found a regression in writing TIFFs around strip offsets being properly updated.  Not a LZW issue after all.
-	Added a few unit tests around this issue.	
-	see: https://issues.apache.org/jira/browse/SANSELAN-6
- * Added ability to remove and update XMP XML in existing JPEG files.
- * Added ability to embed XMP XML when writing the following formats: GIF, PNG, TIFF.
- * Improved handling of tEXt and zTXt PNG text blocks.
- * Added XMP XML extraction for the following formats: GIF (untested), JPEG, TIFF, PNG, PSD.
- * Added RELEASE_NOTES file (this file).
- * Added Apache license header to bin.xml and src.xml Maven assembly descriptors.
- * Added Javadocs to the binary distribution
- 
-
-Release 0.94
-------------
-
-First Apache release of Sanselan
-
-Fixed bugs:
------------
- * Can't convert PNG image to GIF image
-    The PNG reader wasn't handling the 16-bit mode 4 PNGs properly. 
-    The PNG reader wasn't gamma-correcting non-palette values properly in PNGs.
-	see: https://issues.apache.org/jira/browse/SANSELAN-5
+Have fun!
+-Apache Commons Imaging team
 
