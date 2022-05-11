@@ -50,7 +50,7 @@ public class PngWriteForceTrueColorText extends PngBaseTest {
                 final BufferedImage image = pngImageParser.getBufferedImage(imageFile, new PngImagingParameters());
                 assertNotNull(image);
 
-                final File outFile = Files.createTempFile(imageFile.getName() + ".", ".gif").toFile();
+                final File outFile = Files.createTempFile(imageFile.getName() + ".", ".png").toFile();
                 // Debug.debug("outFile", outFile);
 
                 final PngImagingParameters params = new PngImagingParameters();
