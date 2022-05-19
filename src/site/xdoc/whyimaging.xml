@@ -33,7 +33,7 @@ limitations under the License.
 </p>
 
 <p>
-    There are no dependencies. Commons Imaging only requires Java 1.5 or later.
+    There are no dependencies. Commons Imaging only requires Java 1.8 or later.
 </p>
 
 <p>
@@ -45,7 +45,7 @@ limitations under the License.
 </p>
 
 <p>
-    It reads and writes a wide variety of image formats, and supports some variations and encodings missed by all or most other libaries. See the <a href="formatsupport.html">Format Support</a> list.
+    It reads and writes a wide variety of image formats, and supports some variations and encodings missed by all or most other libraries. See the <a href="formatsupport.html">Format Support</a> list.
 </p>
 
 <p>
@@ -67,10 +67,10 @@ limitations under the License.
 <p>
     Most other libraries offer little or incomplete support for ICC Profiles.
     Commons Imaging can extract and (simply) parse embedded ICC Profiles.
-    Moreover, it applies the ICC profile by default, coverting read images to sRGB.
+    Moreover, it applies the ICC profile by default, converting read images to sRGB.
     This means images are color-corrected by default.
-    see: <a href="http://en.wikipedia.org/wiki/International_Color_Consortium">http://en.wikipedia.org/wiki/International_Color_Consortium</a>,
-    <a href="http://en.wikipedia.org/wiki/sRGB">http://en.wikipedia.org/wiki/sRGB</a>
+    see: <a href="https://en.wikipedia.org/wiki/International_Color_Consortium">https://en.wikipedia.org/wiki/International_Color_Consortium</a>,
+    <a href="https://en.wikipedia.org/wiki/sRGB">https://en.wikipedia.org/wiki/sRGB</a>
 </p>
 
 <p>
@@ -81,7 +81,7 @@ limitations under the License.
 
 <p>
     It is Free Software/Open Source. It is available under the 
-    <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache Software License</a>.
+    <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache Software License</a>.
 </p>
 
 <p>
@@ -91,7 +91,7 @@ limitations under the License.
 <p>
     The ColorConversions class offers methods to convert between the following color spaces: CIE-L*CH°, CIE-L*ab, CIE-L*uv,
     CMY, CMYK, HSL, HSV, Hunter-Lab, RGB, XYZ and Yxy (algorithms courtesy of EasyRGB's).
-    see: <a href="http://www.easyrgb.com/">http://www.easyrgb.com/</a>
+    see: <a href="https://www.easyrgb.com/">https://www.easyrgb.com/</a>
 </p>
 
 </section>
