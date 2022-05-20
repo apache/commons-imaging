@@ -45,6 +45,9 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
     <release version="1.0" date="2022-??-??" description="1.0 release">
+      <action dev="kinow" type="update" due-to="Dependabot">
+        Bump spotbugs-maven-plugin from 4.6.0.0 to 4.7.0.0 #221.
+      </action>
     </release>
     <release version="1.0-alpha3" date="2022-05-13" description="Third 1.0 alpha release">
       <action issue="IMAGING-330" dev="kinow" type="fix" due-to="Gary Lucas">
