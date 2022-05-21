@@ -513,10 +513,6 @@ public final class ColorConversions {
         return convertRGBtoRGB(red, green, blue);
     }
 
-    private static double cube(final double f) {
-        return f * f * f;
-    }
-
     private static double square(final double f) {
         return f * f;
     }
