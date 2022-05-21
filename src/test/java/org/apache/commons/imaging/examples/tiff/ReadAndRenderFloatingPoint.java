@@ -57,7 +57,7 @@ public class ReadAndRenderFloatingPoint {
      * file and an output JPEG.
      * @throws org.apache.commons.imaging.ImageReadException in the event of an
      * internal data format or version compatibility error reading the image.
-     * @throws java.io.IOException in the event of an I/O error.
+     * @throws IOException in the event of an I/O error.
      */
     public static void main(final String[] args) throws ImageReadException, IOException {
         if (args.length == 0) {
