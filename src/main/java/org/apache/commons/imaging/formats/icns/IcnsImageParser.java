@@ -81,7 +81,7 @@ public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, IcnsImagingParameters params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, final IcnsImagingParameters params)
             throws ImageReadException, IOException {
         final IcnsContents contents = readImage(byteSource);
         final List<BufferedImage> images = IcnsDecoder.decodeAllImages(contents.icnsElements);
@@ -98,7 +98,7 @@ public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, IcnsImagingParameters params)
+    public Dimension getImageSize(final ByteSource byteSource, final IcnsImagingParameters params)
             throws ImageReadException, IOException {
         final IcnsContents contents = readImage(byteSource);
         final List<BufferedImage> images = IcnsDecoder.decodeAllImages(contents.icnsElements);
@@ -247,7 +247,7 @@ public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, IcnsImagingParameters params)
+    public void writeImage(final BufferedImage src, final OutputStream os, final IcnsImagingParameters params)
             throws ImageWriteException, IOException {
         IcnsType imageType;
         if (src.getWidth() == 16 && src.getHeight() == 16) {

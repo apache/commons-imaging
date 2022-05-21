@@ -35,7 +35,7 @@ public class PnmImagingParameters extends ImagingParameters {
         return rawBits;
     }
 
-    public void setRawBits(boolean rawBits) {
+    public void setRawBits(final boolean rawBits) {
         this.rawBits = rawBits;
     }
 
@@ -43,7 +43,7 @@ public class PnmImagingParameters extends ImagingParameters {
         return subtype;
     }
 
-    public void setSubtype(ImageFormats subtype) {
+    public void setSubtype(final ImageFormats subtype) {
         this.subtype = subtype;
     }
 }

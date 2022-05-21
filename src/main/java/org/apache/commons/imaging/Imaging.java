@@ -288,7 +288,7 @@ public final class Imaging {
             }
             return Stream
                 .of(ImageFormats.values())
-                .filter((imageFormat) -> Stream
+                .filter(imageFormat -> Stream
                     .of(imageFormat.getExtensions())
                     .anyMatch((extension) -> {
                         final String fileName = byteSource.getFileName();
@@ -793,7 +793,7 @@ public final class Imaging {
      * @throws ImageReadException in the event of a processing error while reading an image (i.e. a format violation, etc.).
      * @throws IOException  in the event of an unrecoverable I/O exception.
      */
-    public static BufferedImage getBufferedImage(final InputStream is, String fileName) throws ImageReadException, IOException {
+    public static BufferedImage getBufferedImage(final InputStream is, final String fileName) throws ImageReadException, IOException {
         return getBufferedImage(new ByteSourceInputStream(is, fileName));
     }
 
@@ -912,7 +912,7 @@ public final class Imaging {
         Objects.requireNonNull(os, "os must not be null");
         Objects.requireNonNull(format, "format must not be null");
 
-        ImageParser<?> imageParser = Util.getImageParser(format);
+        final ImageParser<?> imageParser = Util.getImageParser(format);
         imageParser.writeImage(src, os, null);
     }
 }

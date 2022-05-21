@@ -62,10 +62,10 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
     float[] fSample = new float[width * height * samplesPerPixel];
     public TiffFloatingPointMultivariableTest() {
         for(int iPlane = 0; iPlane<2; iPlane++){
-            int pOffset = iPlane*width*height;
+            final int pOffset = iPlane*width*height;
             for(int iRow=0; iRow<height; iRow++){
                 for(int iCol=0; iCol<width; iCol++){
-                    int index = pOffset + iRow*width +iCol;
+                    final int index = pOffset + iRow*width +iCol;
                     fSample[index] = index;
                 }
             }
@@ -79,7 +79,7 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
         // TIFF datareaders classes.  So that format is not yet exercised.
         // Note also that the compressed floating-point with predictor=3
         // is processed in other tests, but not here.
-        List<File>testFiles = new ArrayList<>();
+        final List<File>testFiles = new ArrayList<>();
         testFiles.add(writeFile(ByteOrder.LITTLE_ENDIAN, false, false, TiffPlanarConfiguration.CHUNKY));
         testFiles.add(writeFile(ByteOrder.BIG_ENDIAN,    false, false, TiffPlanarConfiguration.CHUNKY));
         testFiles.add(writeFile(ByteOrder.LITTLE_ENDIAN, true, false, TiffPlanarConfiguration.CHUNKY));
@@ -96,7 +96,7 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
         // the test logic implemented here does.
         testFiles.add(writeFile(ByteOrder.BIG_ENDIAN, true, true, TiffPlanarConfiguration.PLANAR));
 
-        for(File testFile : testFiles){
+        for(final File testFile : testFiles){
             final String name = testFile.getName();
             final ByteSourceFile byteSource = new ByteSourceFile(testFile);
             final TiffReader tiffReader = new TiffReader(true);
@@ -109,12 +109,12 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
             assertNotNull(raster, "Failed to get raster from " + name);
             assertEquals(2, raster.getSamplesPerPixel(), "Invalid samples per pixel in " + name);
             for(int iPlane = 0; iPlane<2; iPlane++){
-                int pOffset = iPlane*width*height;
+                final int pOffset = iPlane*width*height;
                 for(int iRow=0; iRow<height; iRow++){
                     for(int iCol=0; iCol<width; iCol++){
-                        int index = pOffset + iRow*width +iCol;
-                        float tValue = fSample[index];
-                        float rValue = raster.getValue(iCol, iRow, iPlane);
+                        final int index = pOffset + iRow*width +iCol;
+                        final float tValue = fSample[index];
+                        final float rValue = raster.getValue(iCol, iRow, iPlane);
                         assertEquals(tValue, rValue, "Failed at index x="+iCol+", y="+iRow+", iPlane="+iPlane);
                     }
                 }
@@ -126,7 +126,7 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
         final ByteOrder byteOrder,
         final boolean useTiles,
         final boolean usePredictorForTiles,
-        TiffPlanarConfiguration planarConfiguration ) throws IOException, ImageWriteException {
+        final TiffPlanarConfiguration planarConfiguration ) throws IOException, ImageWriteException {
 
         final String name = String.format("FpMultiVarRoundTrip_%s_%s%s.tiff",
             planarConfiguration==TiffPlanarConfiguration.CHUNKY ? "Chunky" : "Planar",
@@ -175,8 +175,8 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
         if(useTiles && usePredictorForTiles){
             outDir.add(TiffTagConstants.TIFF_TAG_PREDICTOR,
             (short) TiffTagConstants.PREDICTOR_VALUE_FLOATING_POINT_DIFFERENCING);
-              for(int iBlock=0; iBlock<blocks.length; iBlock++){
-                  applyTilePredictor(nRowsInBlock, nColsInBlock, blocks[iBlock]);
+              for (final byte[] block : blocks) {
+                  applyTilePredictor(nRowsInBlock, nColsInBlock, block);
               }
         }
 
@@ -239,8 +239,8 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
      */
     private byte[][] getBytesForOutput32(
         final int nRowsInBlock, final int nColsInBlock,
-        ByteOrder byteOrder,
-        boolean useTiles, TiffPlanarConfiguration planarConfiguration ) {
+        final ByteOrder byteOrder,
+        final boolean useTiles, final TiffPlanarConfiguration planarConfiguration ) {
         final int nColsOfBlocks = (width + nColsInBlock - 1) / nColsInBlock;
         final int nRowsOfBlocks = (height + nRowsInBlock + 1) / nRowsInBlock;
         final int bytesPerPixel = 4 * samplesPerPixel;
@@ -284,7 +284,7 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
                     // height of the image is not evenly divided by the number
                     // of rows per strip, an adjustmnet is made to the size of the block.
                     // However, the TIFF specification calls for tiles to always be padded.
-                     int nRowsAdjusted = height - blockRow*nRowsInBlock;
+                     final int nRowsAdjusted = height - blockRow*nRowsInBlock;
                      blockPlanarOffset = nRowsAdjusted * nColsInBlock;
                 }
                 for (int j = 0; j < width; j++) {
@@ -314,7 +314,7 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
         return blocks;
     }
 
-    private void applyTilePredictor(int nRowsInBlock, int nColsInBlock, byte[] bytes) {
+    private void applyTilePredictor(final int nRowsInBlock, final int nColsInBlock, final byte[] bytes) {
         // The floating-point horizonal predictor breaks the samples into
         // separate sets of bytes.  The first set contains the high-order bytes.
         // The second the second-highest order bytes, etc.  Once the bytes are
@@ -323,16 +323,16 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
         // its compressibility.
         //     More extensive discussions of this technique are given in the
         // Javadoc for the TIFF-specific ImageDataReader class.
-        byte[] b = new byte[bytes.length];
-        int bytesInRow = nColsInBlock * 4;
+        final byte[] b = new byte[bytes.length];
+        final int bytesInRow = nColsInBlock * 4;
         for (int iPlane = 0; iPlane < samplesPerPixel; iPlane++) {
             // separate out the groups of bytes
-            int planarByteOffset = iPlane * nRowsInBlock * nColsInBlock * 4;
+            final int planarByteOffset = iPlane * nRowsInBlock * nColsInBlock * 4;
             for (int i = 0; i < nRowsInBlock; i++) {
-                int aOffset = planarByteOffset + i * bytesInRow;
-                int bOffset = aOffset + nColsInBlock;
-                int cOffset = bOffset + nColsInBlock;
-                int dOffset = cOffset + nColsInBlock;
+                final int aOffset = planarByteOffset + i * bytesInRow;
+                final int bOffset = aOffset + nColsInBlock;
+                final int cOffset = bOffset + nColsInBlock;
+                final int dOffset = cOffset + nColsInBlock;
                 for (int j = 0; j < nColsInBlock; j++) {
                     b[aOffset + j] = bytes[aOffset + j * 4];
                     b[bOffset + j] = bytes[aOffset + j * 4 + 1];

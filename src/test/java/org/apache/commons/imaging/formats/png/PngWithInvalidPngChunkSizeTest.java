@@ -39,7 +39,7 @@ public class PngWithInvalidPngChunkSizeTest {
         final File imageFile = new File(JpegWithInvalidDhtSegmentTest.class.getResource("/IMAGING-211/testfile_2.png").getFile());
         final PngImagingParameters params = new PngImagingParameters();
         params.setBufferedImageFactory(new ManagedImageBufferedImageFactory());
-        PngImageParser jpegImageParser = new PngImageParser();
+        final PngImageParser jpegImageParser = new PngImageParser();
         Assertions.assertThrows(ImageReadException.class, () -> jpegImageParser.getBufferedImage(imageFile, params));
     }
 
@@ -53,7 +53,7 @@ public class PngWithInvalidPngChunkSizeTest {
                 JpegWithInvalidDhtSegmentTest.class.getResource("/IMAGING-210/testfile.png").getFile());
         final PngImagingParameters params = new PngImagingParameters();
         params.setBufferedImageFactory(new ManagedImageBufferedImageFactory());
-        PngImageParser jpegImageParser = new PngImageParser();
+        final PngImageParser jpegImageParser = new PngImageParser();
         Assertions.assertThrows(ImageReadException.class, () -> jpegImageParser.getBufferedImage(imageFile, params));
     }
 }

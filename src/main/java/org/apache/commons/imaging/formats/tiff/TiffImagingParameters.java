@@ -103,7 +103,7 @@ public class TiffImagingParameters extends XmpImagingParameters {
         return readThumbnails;
     }
 
-    public void setReadThumbnails(boolean readThumbnails) {
+    public void setReadThumbnails(final boolean readThumbnails) {
         this.readThumbnails = readThumbnails;
     }
 
@@ -122,7 +122,7 @@ public class TiffImagingParameters extends XmpImagingParameters {
      *
      * @param tiffOutputSet A valid instance.
      */
-    public void setOutputSet(TiffOutputSet tiffOutputSet) {
+    public void setOutputSet(final TiffOutputSet tiffOutputSet) {
         this.tiffOutputSet = tiffOutputSet;
     }
 
@@ -143,7 +143,7 @@ public class TiffImagingParameters extends XmpImagingParameters {
      * @param height height of the image subset to be read, must be greater than
      * zero.
      */
-    public void setSubImage(int x, int y, int width, int height) {
+    public void setSubImage(final int x, final int y, final int width, final int height) {
         if (x < 0 || y < 0) {
             throw new IllegalArgumentException(
                     "Invalid sub-image specification: negative x and y values not allowed");
@@ -222,7 +222,7 @@ public class TiffImagingParameters extends XmpImagingParameters {
         return customPhotometricInterpreter;
     }
 
-    public void setCustomPhotometricInterpreter(PhotometricInterpreter customPhotometricInterpreter) {
+    public void setCustomPhotometricInterpreter(final PhotometricInterpreter customPhotometricInterpreter) {
         this.customPhotometricInterpreter = customPhotometricInterpreter;
     }
 
@@ -230,7 +230,7 @@ public class TiffImagingParameters extends XmpImagingParameters {
         return compression;
     }
 
-    public void setCompression(Integer compression) {
+    public void setCompression(final Integer compression) {
         this.compression = compression;
     }
 
@@ -238,7 +238,7 @@ public class TiffImagingParameters extends XmpImagingParameters {
         return lzwCompressionBlockSize;
     }
 
-    public void setLzwCompressionBlockSize(Integer lzwCompressionBlockSize) {
+    public void setLzwCompressionBlockSize(final Integer lzwCompressionBlockSize) {
         this.lzwCompressionBlockSize = lzwCompressionBlockSize;
     }
 
@@ -246,7 +246,7 @@ public class TiffImagingParameters extends XmpImagingParameters {
         return t4Options;
     }
 
-    public void setT4Options(Integer t4Options) {
+    public void setT4Options(final Integer t4Options) {
         this.t4Options = t4Options;
     }
 
@@ -254,7 +254,7 @@ public class TiffImagingParameters extends XmpImagingParameters {
         return t6Options;
     }
 
-    public void setT6Options(Integer t6Options) {
+    public void setT6Options(final Integer t6Options) {
         this.t6Options = t6Options;
     }
 

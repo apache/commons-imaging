@@ -49,8 +49,8 @@ public class TiffReadWriteTagsTest extends TiffBaseTest {
         final String area = "A good area";
         final float widthRes = 2.2f;
         final double geoDoubleParams = -8.4;
-        RationalNumber exposureCompensation = new RationalNumber(-17, 10);
-        RationalNumber[] latitude = new RationalNumber[3];
+        final RationalNumber exposureCompensation = new RationalNumber(-17, 10);
+        final RationalNumber[] latitude = new RationalNumber[3];
         latitude[0] = new RationalNumber(38, 1, true);
         latitude[1] = new RationalNumber(36, 1, true);
         latitude[2] = new RationalNumber(0xF5937B1E, 70_000_000, true);
@@ -89,7 +89,7 @@ public class TiffReadWriteTagsTest extends TiffBaseTest {
         assertEquals(widthRes, rootDir.getFieldValue(MicrosoftHdPhotoTagConstants.EXIF_TAG_WIDTH_RESOLUTION), 0.0);
         assertEquals(geoDoubleParams, rootDir.getFieldValue(GeoTiffTagConstants.EXIF_TAG_GEO_DOUBLE_PARAMS_TAG, true)[0], 0.0);
         assertEquals(exposureCompensation.doubleValue(), rootDir.getFieldValue(ExifTagConstants.EXIF_TAG_EXPOSURE_COMPENSATION).doubleValue(), 0.0);
-        RationalNumber[] testLat = rootDir.getFieldValue(GpsTagConstants.GPS_TAG_GPS_LATITUDE, true);
+        final RationalNumber[] testLat = rootDir.getFieldValue(GpsTagConstants.GPS_TAG_GPS_LATITUDE, true);
         for (int i = 0; i < 3; i++) {
             assertEquals(latitude[i].doubleValue(), testLat[i].doubleValue(), 0.0);
         }

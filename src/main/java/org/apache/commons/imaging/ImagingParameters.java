@@ -58,7 +58,7 @@ public class ImagingParameters {
         return strict;
     }
 
-    public void setStrict(boolean strict) {
+    public void setStrict(final boolean strict) {
         this.strict = strict;
     }
 
@@ -66,7 +66,7 @@ public class ImagingParameters {
         return fileName;
     }
 
-    public void setFileName(String fileName) {
+    public void setFileName(final String fileName) {
         this.fileName = fileName;
     }
 
@@ -74,7 +74,7 @@ public class ImagingParameters {
         return bufferedImageFactory;
     }
 
-    public void setBufferedImageFactory(BufferedImageFactory bufferedImageFactory) {
+    public void setBufferedImageFactory(final BufferedImageFactory bufferedImageFactory) {
         this.bufferedImageFactory = bufferedImageFactory;
     }
 
@@ -82,7 +82,7 @@ public class ImagingParameters {
         return pixelDensity;
     }
 
-    public void setPixelDensity(PixelDensity pixelDensity) {
+    public void setPixelDensity(final PixelDensity pixelDensity) {
         this.pixelDensity = pixelDensity;
     }
 }

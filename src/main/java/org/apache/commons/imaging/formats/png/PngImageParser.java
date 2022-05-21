@@ -486,7 +486,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
     }
 
     @Override
-    public BufferedImage getBufferedImage(final ByteSource byteSource, PngImagingParameters params)
+    public BufferedImage getBufferedImage(final ByteSource byteSource, final PngImagingParameters params)
             throws ImageReadException, IOException {
 
         final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] {
@@ -578,7 +578,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
 
                 try {
                     iccProfile = ICC_Profile.getInstance(bytes);
-                } catch (IllegalArgumentException iae) {
+                } catch (final IllegalArgumentException iae) {
                     throw new ImageReadException("The image data does not correspond to a valid ICC Profile", iae);
                 }
             } else if (gAMAs.size() == 1) {

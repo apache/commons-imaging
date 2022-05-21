@@ -146,10 +146,10 @@ public class TiffAlphaRoundTripTest {
         final int nBytesPerStrip = bytesPerSample * height * width;
         final ByteOrder byteOrder = ByteOrder.nativeOrder();
 
-        int[] samples = new int[width * height];
+        final int[] samples = new int[width * height];
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                int index = i * width + j;
+                final int index = i * width + j;
                 samples[index] = j > i ? 0xffff0000 : 0x88ff0000;
             }
         }
@@ -174,7 +174,7 @@ public class TiffAlphaRoundTripTest {
 
             final byte[] b = new byte[nBytesPerStrip];
             int k = 0;
-            for (int sample : samples) {
+            for (final int sample : samples) {
                 b[k++] = (byte) ((sample >> 16) & 0xff);  // R
                 b[k++] = (byte) ((sample >> 8) & 0xff);   // G
                 b[k++] = (byte) (sample & 0xff);          // B
@@ -184,7 +184,7 @@ public class TiffAlphaRoundTripTest {
             final TiffElement.DataElement[] imageData = new TiffElement.DataElement[1];
             imageData[0] = new TiffImageData.Data(0, b.length, b);
 
-            TiffImageData tiffImageData
+            final TiffImageData tiffImageData
                 = new TiffImageData.Strips(imageData, height);
 
             outDir.setTiffImageData(tiffImageData);
@@ -197,12 +197,12 @@ public class TiffAlphaRoundTripTest {
                 bos.flush();
             }
 
-            BufferedImage result = Imaging.getBufferedImage(outputFile);
-            int []argb = new int[samples.length];
+            final BufferedImage result = Imaging.getBufferedImage(outputFile);
+            final int []argb = new int[samples.length];
             result.getRGB(0, 0, width, height, argb, 0, width);
-            int index = 3*width+1;
+            final int index = 3*width+1;
             int iSample = samples[index];
-            int iArgb   = argb[index];
+            final int iArgb   = argb[index];
             if (iExtra == 0) {
                 // when extra samples is zero, the alpha channel is ignored.
                 // We expect ARGB to start with 0xff.  So we OR in 0xff for
@@ -212,8 +212,8 @@ public class TiffAlphaRoundTripTest {
                 // The pre-multiply alpha case
                 iSample = 0x89de0000;
             }
-            String p = String.format("%08x", iSample);
-            String q = String.format("%08x", iArgb);
+            final String p = String.format("%08x", iSample);
+            final String q = String.format("%08x", iArgb);
             assertEquals(p, q, "Failure on ExtraSamples="+iExtra);
         }
     }

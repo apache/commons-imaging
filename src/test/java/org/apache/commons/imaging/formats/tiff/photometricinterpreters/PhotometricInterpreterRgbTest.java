@@ -30,7 +30,7 @@ public class PhotometricInterpreterRgbTest {
     private PhotometricInterpreterRgb p;
 
     private final int samplesPerPixel = 3;
-    private final int[] bitsPerSample = new int[] {8, 8, 8};
+    private final int[] bitsPerSample = {8, 8, 8};
     private final int predictor = 1;
     private final int width = 800;
     private final int height = 600;

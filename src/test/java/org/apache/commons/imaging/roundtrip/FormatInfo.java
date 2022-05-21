@@ -27,7 +27,7 @@ class FormatInfo {
     static final int COLOR_GRAYSCALE = 2;
     static final int COLOR_BITMAP = 3;
 
-    static final FormatInfo[] PRESERVING_RESOLUTION_FORMATS = new FormatInfo[] {
+    static final FormatInfo[] PRESERVING_RESOLUTION_FORMATS = {
             new FormatInfo(ImageFormats.PNG, true, true,
                     COLOR_FULL_RGB, true, true), //
             new FormatInfo(ImageFormats.ICO, true, true,
@@ -42,7 +42,7 @@ class FormatInfo {
                     COLOR_FULL_RGB, true, true), //
     };
 
-    static final FormatInfo[] READ_WRITE_FORMATS = new FormatInfo[] {
+    static final FormatInfo[] READ_WRITE_FORMATS = {
             new FormatInfo(ImageFormats.PNG, true, true,
                     COLOR_FULL_RGB, true, true), //
             new FormatInfo(ImageFormats.GIF, true, true,

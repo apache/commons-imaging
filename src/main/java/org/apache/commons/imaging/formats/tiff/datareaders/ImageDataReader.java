@@ -466,8 +466,8 @@ public abstract class ImageDataReader {
             } else {
                 final int bytesInRow = scanSize * 4;
                 for (int iPlane = 0; iPlane < samplesPerPixel; iPlane++) {
-                    int planarIntOffset = iPlane * length * scanSize;
-                    int planarByteOffset = planarIntOffset * 4;
+                    final int planarIntOffset = iPlane * length * scanSize;
+                    final int planarByteOffset = planarIntOffset * 4;
 
                     for (int i = 0; i < length; i++) {
                         final int aOffset = i * bytesInRow + planarByteOffset;
@@ -631,11 +631,11 @@ public abstract class ImageDataReader {
 
         // The logic that follows is simplified by the fact that
         // the existing API only supports two-byte signed integers.
-        boolean useDifferencing
+        final boolean useDifferencing
                 = predictor == TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING;
 
         for (int i = 0; i < length; i++) {
-            int index = i * scanSize;
+            final int index = i * scanSize;
             int offset = index * bytesPerSample;
             if (bitsPerSample == 16) {
                 if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
@@ -696,7 +696,7 @@ public abstract class ImageDataReader {
     void transferBlockToRaster(final int xBlock, final int yBlock,
             final int blockWidth, final int blockHeight, final int[] blockData,
             final int xRaster, final int yRaster,
-            final int rasterWidth, final int rasterHeight, int samplesPerPixel,
+            final int rasterWidth, final int rasterHeight, final int samplesPerPixel,
             final float[] rasterData) {
 
         // xR0, yR0 are the coordinates within the raster (upper-left corner)
@@ -769,7 +769,7 @@ public abstract class ImageDataReader {
             // The source data is in the interleaved (Chunky) order,
             // but the TiffRasterData class expects non-interleaved order.
             // So we transcribe the elements as appropriate.
-            int pixelsPerPlane = rasterWidth * rasterHeight;
+            final int pixelsPerPlane = rasterWidth * rasterHeight;
             for (int i = 0; i < h; i++) {
                 final int yR = yR0 + i;
                 final int yB = yB0 + i;
@@ -784,8 +784,8 @@ public abstract class ImageDataReader {
             }
         } else {
             for (int iPlane = 0; iPlane < samplesPerPixel; iPlane++) {
-                int rPlanarOffset = iPlane * rasterWidth * rasterHeight;
-                int bPlanarOffset = iPlane * blockWidth * blockHeight;
+                final int rPlanarOffset = iPlane * rasterWidth * rasterHeight;
+                final int bPlanarOffset = iPlane * blockWidth * blockHeight;
                 for (int i = 0; i < h; i++) {
                     final int yR = yR0 + i;
                     final int yB = yB0 + i;

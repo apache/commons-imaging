@@ -293,7 +293,7 @@ class PngWriter {
     }
 
     private byte getBitDepth(final PngColorType pngColorType, final PngImagingParameters params) {
-        byte depth = params.getBitDepth();
+        final byte depth = params.getBitDepth();
 
         return pngColorType.isBitDepthAllowed(depth) ? depth : PngImagingParameters.DEFAULT_BIT_DEPTH;
     }
@@ -331,7 +331,7 @@ class PngWriter {
         if (params == null) {
             params = new PngImagingParameters();
         }
-        int compressionLevel = Deflater.DEFAULT_COMPRESSION;
+        final int compressionLevel = Deflater.DEFAULT_COMPRESSION;
 
         final int width = src.getWidth();
         final int height = src.getHeight();
@@ -467,7 +467,7 @@ class PngWriter {
             // for non-grayscale, true-color images.  This choice is made
             // out of caution and is not necessarily required by the PNG
             // spec.  We may broaden the use of predictors in future versions.
-            boolean usePredictor = params.isPredictorEnabled() &&
+            final boolean usePredictor = params.isPredictorEnabled() &&
                 !isGrayscale && palette==null;
 
             byte[] uncompressed;

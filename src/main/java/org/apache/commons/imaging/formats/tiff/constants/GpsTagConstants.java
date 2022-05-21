@@ -35,7 +35,7 @@ public final class GpsTagConstants {
             "GPSVersionID", 0x0000, 4,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
-    private static final byte[] GPS_VERSION = new byte[] { (byte)2, (byte)3, (byte)0, (byte)0 };
+    private static final byte[] GPS_VERSION = { (byte)2, (byte)3, (byte)0, (byte)0 };
 
     public static byte[] gpsVersion() {
         return GPS_VERSION.clone();

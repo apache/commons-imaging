@@ -220,9 +220,8 @@ public class PaletteFactory {
 
     private DivisionCandidate divideSubset2(final int[] table,
             final ColorSpaceSubset subset, final int precision) {
-        final List<DivisionCandidate> dcs = new ArrayList<>();
+        final List<DivisionCandidate> dcs = new ArrayList<>(divideSubset2(table, subset, 0, precision));
 
-        dcs.addAll(divideSubset2(table, subset, 0, precision));
         dcs.addAll(divideSubset2(table, subset, 1, precision));
         dcs.addAll(divideSubset2(table, subset, 2, precision));
 
@@ -238,10 +237,7 @@ public class PaletteFactory {
             final int diff = Math.abs(area1 - area2);
             final double score = ((double) diff) / ((double) Math.max(area1, area2));
 
-            if (bestV == null) {
-                bestV = dc;
-                bestScore = score;
-            } else if (score < bestScore) {
+            if (bestV == null || score < bestScore) {
                 bestV = dc;
                 bestScore = score;
             }
@@ -277,10 +273,7 @@ public class PaletteFactory {
                 }
                 final int area = subset.total;
 
-                if (maxSubset == null) {
-                    maxSubset = subset;
-                    maxArea = area;
-                } else if (area > maxArea) {
+                if (maxSubset == null || area > maxArea) {
                     maxSubset = subset;
                     maxArea = area;
                 }
@@ -328,7 +321,7 @@ public class PaletteFactory {
         final int width = src.getWidth();
         final int height = src.getHeight();
 
-        List<ColorSpaceSubset> subsets = new ArrayList<>();
+        final List<ColorSpaceSubset> subsets = new ArrayList<>();
         final ColorSpaceSubset all = new ColorSpaceSubset(width * height, precision);
         subsets.add(all);
 

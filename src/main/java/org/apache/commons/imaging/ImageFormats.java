@@ -45,7 +45,7 @@ public enum ImageFormats implements ImageFormat {
 
     private final String[] extensions;
 
-    ImageFormats(String ...extensions) {
+    ImageFormats(final String ...extensions) {
         this.extensions = extensions;
     }
 

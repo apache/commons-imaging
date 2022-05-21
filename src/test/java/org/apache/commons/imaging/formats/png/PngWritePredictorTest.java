@@ -55,12 +55,12 @@ public class PngWritePredictorTest {
    */
   private int[] populateARGB() {
     //populate array with a blend of color components
-    int[] argb = new int[256 * 256];
+    final int[] argb = new int[256 * 256];
     for (int i = 0; i < 256; i++) {
       for (int j = 0; j < 256; j++) {
-        int red = i;
-        int green = (255 - i);
-        int blue = j;
+        final int red = i;
+        final int green = (255 - i);
+        final int blue = j;
         argb[i * 256 + j] = ((((0xff00 | red) << 8) | green) << 8) | blue;
       }
     }
@@ -77,7 +77,7 @@ public class PngWritePredictorTest {
 
   @Test
   void testWriteWithPredictor() {
-    int[] argb = populateARGB();
+    final int[] argb = populateARGB();
 
     // Test the RGB (no alpha) case ---------------------
     BufferedImage bImage = new BufferedImage(256, 256, BufferedImage.TYPE_INT_RGB);
@@ -87,12 +87,12 @@ public class PngWritePredictorTest {
 
     try {
       tempFile = File.createTempFile("PngWritePredictorRGB", ".png");
-    } catch (IOException ioex) {
+    } catch (final IOException ioex) {
       fail("Failed to create temporary file, " + ioex.getMessage());
     }
-    PngImagingParameters params = new PngImagingParameters();
+    final PngImagingParameters params = new PngImagingParameters();
     params.setPredictorEnabled(true);
-    PngImageParser parser = new PngImageParser();
+    final PngImageParser parser = new PngImageParser();
     try ( FileOutputStream fos = new FileOutputStream(tempFile);  BufferedOutputStream bos = new BufferedOutputStream(fos)) {
       parser.writeImage(bImage, bos, params);
       bos.flush();
@@ -101,11 +101,11 @@ public class PngWritePredictorTest {
     }
 
     try {
-      int[] brgb = new int[256 * 256];
+      final int[] brgb = new int[256 * 256];
       bImage = ImageIO.read(tempFile);
       bImage.getRGB(0, 0, 256, 256, brgb, 0, 256);
       assertArrayEquals(argb, brgb, "Round trip for RGB failed");
-    } catch (IOException ex) {
+    } catch (final IOException ex) {
       fail("Failed reading RGB with exception " + ex.getMessage());
     }
 
@@ -122,11 +122,11 @@ public class PngWritePredictorTest {
       fail("Failed writing ARGB with exception " + ex.getMessage());
     }
     try {
-      int[] brgb = new int[256 * 256];
+      final int[] brgb = new int[256 * 256];
       bImage = ImageIO.read(tempFile);
       bImage.getRGB(0, 0, 256, 256, brgb, 0, 256);
       assertArrayEquals(argb, brgb, "Round trip for ARGB failed");
-    } catch (IOException ex) {
+    } catch (final IOException ex) {
       fail("Failed reading ARGB with exception " + ex.getMessage());
     }
 

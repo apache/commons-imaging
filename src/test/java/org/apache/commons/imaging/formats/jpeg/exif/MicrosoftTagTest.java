@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
@@ -60,7 +59,7 @@ public class MicrosoftTagTest extends ExifBaseTest {
         root.add(MicrosoftTagConstants.EXIF_TAG_XPTITLE, TITLE);
         final TiffImagingParameters params = new TiffImagingParameters();
         params.setOutputSet(exifSet);
-        TiffImageParser tiffImageParser = new TiffImageParser();
+        final TiffImageParser tiffImageParser = new TiffImageParser();
         final byte[] bytes;
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             tiffImageParser.writeImage(image, baos, params);

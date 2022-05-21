@@ -59,7 +59,7 @@ public class PngImagingParameters extends XmpImagingParameters {
         return bitDepth;
     }
 
-    public void setBitDepth(byte bitDepth) {
+    public void setBitDepth(final byte bitDepth) {
         this.bitDepth = bitDepth;
     }
 
@@ -67,7 +67,7 @@ public class PngImagingParameters extends XmpImagingParameters {
         return forceIndexedColor;
     }
 
-    public void setForceIndexedColor(boolean forceIndexedColor) {
+    public void setForceIndexedColor(final boolean forceIndexedColor) {
         this.forceIndexedColor = forceIndexedColor;
     }
 
@@ -75,7 +75,7 @@ public class PngImagingParameters extends XmpImagingParameters {
         return forceTrueColor;
     }
 
-    public void setForceTrueColor(boolean forceTrueColor) {
+    public void setForceTrueColor(final boolean forceTrueColor) {
         this.forceTrueColor = forceTrueColor;
     }
 
@@ -83,7 +83,7 @@ public class PngImagingParameters extends XmpImagingParameters {
         return physicalScale;
     }
 
-    public void setPhysicalScale(PhysicalScale physicalScale) {
+    public void setPhysicalScale(final PhysicalScale physicalScale) {
         this.physicalScale = physicalScale;
     }
 
@@ -91,7 +91,7 @@ public class PngImagingParameters extends XmpImagingParameters {
         return textChunks != null ? Collections.unmodifiableList(textChunks) : null;
     }
 
-    public void setTextChunks(List<? extends PngText> textChunks) {
+    public void setTextChunks(final List<? extends PngText> textChunks) {
         this.textChunks = Collections.unmodifiableList(textChunks);
     }
 
@@ -114,7 +114,7 @@ public class PngImagingParameters extends XmpImagingParameters {
      * time required to read an image.
      * @param predictorEnabled true if a predictor is enabled; otherwise, false.
      */
-    public void setPredictorEnabled(boolean predictorEnabled){
+    public void setPredictorEnabled(final boolean predictorEnabled){
         this.predictorEnabled = predictorEnabled;
     }
 }

@@ -26,7 +26,6 @@ import javax.imageio.ImageIO;
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
-import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.formats.tiff.TiffContents;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffField;
@@ -72,7 +71,7 @@ public class ReadTagsAndImages {
         // For brevity, map System.out to a PrintStream reference.
         // In the future, this might also be used for writing to a text file
         // rather than standard output.
-        PrintStream ps = System.out;
+        final PrintStream ps = System.out;
 
         final File target = new File(args[0]);
         String rootName = null;
@@ -156,13 +155,13 @@ public class ReadTagsAndImages {
     // See also:
     //     Open Geospatial Consortium [OGC] (2019) OGC GeoTIFF Standard Version 1.1
     //     http://www.opengis.net/doc/IS/GeoTIFF/1.1
-    
+
     enum GeoKey{
       // From 6.2.1 GeoTiff Configuration Keys
         GTModelTypeGeoKey(             1024), /* Section 6.3.1.1 Codes       */
         GTRasterTypeGeoKey(            1025), /* Section 6.3.1.2 Codes       */
         GTCitationGeoKey(              1026), /* documentation */
-        
+
         // From 6.2.2 Geographic Coordinate System Parameter Keys
         GeographicTypeGeoKey(          2048), /* Section 6.3.2.1 Codes     */
         GeogCitationGeoKey(            2049), /* documentation             */
@@ -178,7 +177,7 @@ public class ReadTagsAndImages {
         GeogInvFlatteningGeoKey(       2059), /* ratio                     */
         GeogAzimuthUnitsGeoKey(        2060), /* Section 6.3.1.4 Codes     */
         GeogPrimeMeridianLongGeoKey(   2061), /* GeogAngularUnit           */
-        
+
         // From 6.2.3 Projected Coordinate System Parameter Keys
         ProjectedCRSGeoKey(              3072),  /* Section 6.3.3.1 codes   */
         PCSCitationGeoKey(               3073),  /* documentation           */
@@ -209,16 +208,16 @@ public class ReadTagsAndImages {
         VerticalCitationGeoKey(          4097),   /* documentation */
         VerticalDatumGeoKey(             4098),   /* Section 6.3.4.2 codes   */
         VerticalUnitsGeoKey(             4099),   /* Section 6.3.1.3 codes   */
-        
+
         // Widely used key not defined in original specification
         To_WGS84_GeoKey(                 2062);   /* Not in original spec */
-         
+
         int key;
-        GeoKey(int key) {
-            this.key = key; 
+        GeoKey(final int key) {
+            this.key = key;
         }
-    };
-    
+    }
+
     private static HashMap<Integer, GeoKey> keyMap;
     private static String nameFormat;
 
@@ -231,15 +230,15 @@ public class ReadTagsAndImages {
      * @throws ImageReadException in the event of a data-format error or
      * unhandled I/O error.
      */
-    private static void summarizeGeoTiffTags(PrintStream ps, TiffDirectory directory)
+    private static void summarizeGeoTiffTags(final PrintStream ps, final TiffDirectory directory)
         throws ImageReadException {
 
         if (keyMap == null) {
-            GeoKey[] values = GeoKey.values();
+            final GeoKey[] values = GeoKey.values();
             int maxNameLength = 0;
             keyMap = new HashMap<>();
-            for (GeoKey g : values) {
-                String name = g.name();
+            for (final GeoKey g : values) {
+                final String name = g.name();
                 if (name.length() > maxNameLength) {
                     maxNameLength = name.length();
                 }
@@ -251,7 +250,7 @@ public class ReadTagsAndImages {
         }
 
         // check to see if the directory has GeoTIFF tags.
-        short[] geoKeyDirectory = directory.getFieldValue(
+        final short[] geoKeyDirectory = directory.getFieldValue(
             GeoTiffTagConstants.EXIF_TAG_GEO_KEY_DIRECTORY_TAG, false);
         if (geoKeyDirectory == null || geoKeyDirectory.length < 4) {
             // The TIFF directory does not contain GeoTIFF information
@@ -260,9 +259,9 @@ public class ReadTagsAndImages {
         ps.println("");
         ps.println("Summary of GeoTIFF Elements ----------------------------");
 
-        short[] bitsPerSample = directory.getFieldValue(
+        final short[] bitsPerSample = directory.getFieldValue(
             TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE, false);
-        short[] sampleFormat = directory.getFieldValue(
+        final short[] sampleFormat = directory.getFieldValue(
             TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, false);
         String contentTypeString = null;
         if (bitsPerSample != null && sampleFormat != null) {
@@ -275,7 +274,7 @@ public class ReadTagsAndImages {
         }
         if (contentTypeString != null) {
             ps.format("%nContent Type: %s", contentTypeString);
-            String gdalNoDataString[] = directory.getFieldValue(
+            final String gdalNoDataString[] = directory.getFieldValue(
                 GdalLibraryTagConstants.EXIF_TAG_GDAL_NO_DATA, false);
             if (gdalNoDataString != null && gdalNoDataString.length > 0) {
                 ps.format("    GDAL No-Data value: %s", gdalNoDataString[0]);
@@ -284,11 +283,11 @@ public class ReadTagsAndImages {
         }
 
         // all GeoKeyDirectory elements are unsigned shorts (2 bytes).
-        // Some of which exceed the value 32767, the maximum value of 
+        // Some of which exceed the value 32767, the maximum value of
         // a signed short). Because Java does not support an unsigned short type,
-        // we need to mask in the low-order 2 bytes and obtain a 4-byte integer 
+        // we need to mask in the low-order 2 bytes and obtain a 4-byte integer
         // equivalent.
-        int[] elements = new int[geoKeyDirectory.length];
+        final int[] elements = new int[geoKeyDirectory.length];
         for (int i = 0; i < geoKeyDirectory.length; i++) {
             elements[i] = geoKeyDirectory[i] & 0xffff;
         }
@@ -298,7 +297,7 @@ public class ReadTagsAndImages {
         // European Petroleum Survey Group (EPSG) map projection ID
         // and may omit the floating-point map-projection parameters.
         // That approach is generally discouraged, but not prohibited.
-        TiffField doubleParametersField = directory.findField(
+        final TiffField doubleParametersField = directory.findField(
             GeoTiffTagConstants.EXIF_TAG_GEO_DOUBLE_PARAMS_TAG);
         double[] doubleParameters = null;
         if (doubleParametersField != null) {
@@ -307,7 +306,7 @@ public class ReadTagsAndImages {
 
         // Get the ASCII field, Tag ID=34737 (0x87B1). This field
         // is often, but not always, present.
-        TiffField asciiParametersField = directory.findField(
+        final TiffField asciiParametersField = directory.findField(
             GeoTiffTagConstants.EXIF_TAG_GEO_ASCII_PARAMS_TAG);
         String asciiParameters = null;
         if (asciiParametersField != null) {
@@ -319,10 +318,10 @@ public class ReadTagsAndImages {
         int k = 0;
         int n = elements.length / 4;
         for (int i = 0; i < n; i++) {
-            int key = elements[k];
-            int ref = elements[k + 1];
-            int len = elements[k + 2];
-            int vop = elements[k + 3];
+            final int key = elements[k];
+            final int ref = elements[k + 1];
+            final int len = elements[k + 2];
+            final int vop = elements[k + 3];
             String label = "";
             if (ref == GeoTiffTagConstants.EXIF_TAG_GEO_ASCII_PARAMS_TAG.tag) {
                 label = "(A)";
@@ -366,9 +365,9 @@ public class ReadTagsAndImages {
         //        (following the conventional graphics standards). In cases
         //        where the rows in the image or rster run from north to south,
         //        one might expect that the delta-Y between rows would be
-        //        a negative number.  But by the GeoTIFF standard, 
+        //        a negative number.  But by the GeoTIFF standard,
         //        the verical spacing is given as a postive   number.
-        TiffField pixelScaleField = directory.findField(
+        final TiffField pixelScaleField = directory.findField(
             GeoTiffTagConstants.EXIF_TAG_MODEL_PIXEL_SCALE_TAG);
         double[] pixelScale;
         if (pixelScaleField == null) {
@@ -376,19 +375,19 @@ public class ReadTagsAndImages {
         } else {
             pixelScale = pixelScaleField.getDoubleArrayValue();
             ps.format("%nModelPixelScale%n");
-            for (int i = 0; i < pixelScale.length; i++) {
-                ps.format("   %15.10e", pixelScale[i]);
+            for (final double element : pixelScale) {
+                ps.format("   %15.10e", element);
             }
             ps.format("%n");
         }
 
-        TiffField modelTiepointField = directory.findField(
+        final TiffField modelTiepointField = directory.findField(
             GeoTiffTagConstants.EXIF_TAG_MODEL_TIEPOINT_TAG);
         if (modelTiepointField != null) {
             ps.format("%nModelTiepointTag%n");
             ps.println("           Pixel                           Model");
 
-            double[] tiePoints = modelTiepointField.getDoubleArrayValue();
+            final double[] tiePoints = modelTiepointField.getDoubleArrayValue();
             n = tiePoints.length / 6;
             for (int i = 0; i < n; i++) {
                 ps.format("   ");
@@ -403,11 +402,11 @@ public class ReadTagsAndImages {
             }
         }
 
-        TiffField modelTransformField = directory.findField(
+        final TiffField modelTransformField = directory.findField(
             GeoTiffTagConstants.EXIF_TAG_MODEL_TRANSFORMATION_TAG);
         if (modelTransformField != null) {
             ps.format("%nModelTransformationTag%n");
-            double[] mtf = modelTiepointField.getDoubleArrayValue();
+            final double[] mtf = modelTiepointField.getDoubleArrayValue();
             if (mtf.length >= 16) {
                 for (int i = 0; i < 4; i++) {
                     ps.format("   ");
@@ -456,10 +455,10 @@ public class ReadTagsAndImages {
 
         int key;
 
-        CoordinateTransformationCode(int key){
+        CoordinateTransformationCode(final int key){
          this.key = key;
-        } 
-        
+        }
+
         /**
          * Gets the enumeration value associated with the specified
          * key if any.
@@ -467,8 +466,8 @@ public class ReadTagsAndImages {
          * @return if the key is matched, a value enumeration value;
          * otherwise, a null.
          */
-        static CoordinateTransformationCode getValueForKey(int key){
-            for(CoordinateTransformationCode v: values()){
+        static CoordinateTransformationCode getValueForKey(final int key){
+            for(final CoordinateTransformationCode v: values()){
                 if(v.key==key){
                     return v;
                 }
@@ -495,8 +494,8 @@ public class ReadTagsAndImages {
      * more useful description is not available.
      */
     private static String interpretElements(
-        GeoKey geoKey, int ref, int len, int valueOrPosition,
-        double[] doubleParameters, String asciiParameters) {
+        final GeoKey geoKey, final int ref, final int len, final int valueOrPosition,
+        final double[] doubleParameters, final String asciiParameters) {
         switch (geoKey) {
             case GTModelTypeGeoKey:
                 switch (valueOrPosition) {
@@ -565,7 +564,7 @@ public class ReadTagsAndImages {
                 }
                 break;
             case ProjCoordTransGeoKey:
-                CoordinateTransformationCode code = 
+                final CoordinateTransformationCode code =
                     CoordinateTransformationCode.getValueForKey(valueOrPosition);
                 if(code!=null){
                     return code.name();
@@ -595,7 +594,7 @@ public class ReadTagsAndImages {
             case ProjCenterLongGeoKey:
             case ProjCenterLatGeoKey:
                 return String.format("%13.4f", doubleParameters[valueOrPosition]);
-                
+
             default:
                 break;
         }
@@ -613,7 +612,7 @@ public class ReadTagsAndImages {
      * @param len the length of the sub-string.
      * @return a valid string.
      */
-    private static String extractAscii(String asciiParameters, int pos, int len) {
+    private static String extractAscii(final String asciiParameters, final int pos, final int len) {
         if (asciiParameters != null && len > 0 && pos + len <= asciiParameters.length()) {
             return asciiParameters.substring(pos, pos + len - 1);
         }
@@ -632,9 +631,9 @@ public class ReadTagsAndImages {
      * @param len the number of values for the GeoKey
      * @return a formatted string.
      */
-    private static String extractDouble(double[] doubleParameters, int pos, int len) {
+    private static String extractDouble(final double[] doubleParameters, final int pos, final int len) {
         if (doubleParameters != null && doubleParameters.length >= pos + len) {
-            StringBuilder sb = new StringBuilder();
+            final StringBuilder sb = new StringBuilder();
             for (int i = 0; i < len && i < 3; i++) {
                 if (i > 0) {
                     sb.append(" | ");

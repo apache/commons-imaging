@@ -107,7 +107,7 @@ public final class DataReaderTiled extends ImageDataReader {
                 final int rowOffset = row * tileWidth;
                 for (int j = j0; j < j1; j++) {
                     final int column = j - startX;
-                    int k = (rowOffset + column) * samplesPerPixel;
+                    final int k = (rowOffset + column) * samplesPerPixel;
                     samples[0] = b[k];
                     photometricInterpreter.interpretPixel(
                         imageBuilder, samples, j, i);
@@ -313,7 +313,7 @@ public final class DataReaderTiled extends ImageDataReader {
             rasterWidth = width;
             rasterHeight = height;
         }
-        float[] rasterDataFloat = new float[rasterWidth * rasterHeight * samplesPerPixel];
+        final float[] rasterDataFloat = new float[rasterWidth * rasterHeight * samplesPerPixel];
 
         // tileWidth is the width of the tile
         // tileLength is the height of the tile
@@ -365,7 +365,7 @@ public final class DataReaderTiled extends ImageDataReader {
             rasterWidth = width;
             rasterHeight = height;
         }
-        int[] rasterDataInt = new int[rasterWidth * rasterHeight];
+        final int[] rasterDataInt = new int[rasterWidth * rasterHeight];
 
         // tileWidth is the width of the tile
         // tileLength is the height of the tile

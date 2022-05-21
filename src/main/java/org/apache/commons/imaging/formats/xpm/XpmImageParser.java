@@ -379,10 +379,7 @@ public class XpmImageParser extends ImageParser<XpmImagingParameters> {
         } else if ("g".equals(key)) {
             paletteEntry.grayArgb = parseColor(color);
             paletteEntry.haveGray = true;
-        } else if ("s".equals(key)) {
-            paletteEntry.colorArgb = parseColor(color);
-            paletteEntry.haveColor = true;
-        } else if ("c".equals(key)) {
+        } else if ("s".equals(key) || "c".equals(key)) {
             paletteEntry.colorArgb = parseColor(color);
             paletteEntry.haveColor = true;
         }
@@ -647,7 +644,7 @@ public class XpmImageParser extends ImageParser<XpmImagingParameters> {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, XpmImagingParameters params)
+    public void writeImage(final BufferedImage src, final OutputStream os, final XpmImagingParameters params)
             throws ImageWriteException, IOException {
         final PaletteFactory paletteFactory = new PaletteFactory();
         final boolean hasTransparency = paletteFactory.hasTransparency(src, 1);

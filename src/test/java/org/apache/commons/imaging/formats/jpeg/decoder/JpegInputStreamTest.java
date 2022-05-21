@@ -39,7 +39,7 @@ public class JpegInputStreamTest {
 
   @Test
   public void testNextBitThrowsImageReadExceptionTwo() {
-    final int[] byteArray = new int[0];
+    final int[] byteArray = {};
     final JpegInputStream jpegInputStream = new JpegInputStream(byteArray);
 
     Assertions.assertThrows(IllegalStateException.class, jpegInputStream::nextBit);

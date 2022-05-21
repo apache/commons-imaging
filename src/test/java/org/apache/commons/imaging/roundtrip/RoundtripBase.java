@@ -42,7 +42,7 @@ public class RoundtripBase {
                 + formatInfo.format.getDefaultExtension());
         Debug.debug("tempFile: " + temp1.getName());
 
-        ImageParser imageParser = Util.getImageParser(formatInfo.format);
+        final ImageParser imageParser = Util.getImageParser(formatInfo.format);
 
         final ImagingParameters params = Util.getImageParser(formatInfo.format).getDefaultParameters();
         try (FileOutputStream fos = new FileOutputStream(temp1)) {

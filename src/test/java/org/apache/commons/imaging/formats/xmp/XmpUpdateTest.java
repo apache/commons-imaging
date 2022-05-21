@@ -69,8 +69,8 @@ public class XmpUpdateTest extends ImagingTest {
 
             // ----
 
-            ImageParser parser = Util.getImageParser("." + imageFormat.getDefaultExtension());
-            ImagingParameters params = parser.getDefaultParameters();
+            final ImageParser parser = Util.getImageParser("." + imageFormat.getDefaultExtension());
+            final ImagingParameters params = parser.getDefaultParameters();
             ((XmpImagingParameters) params).setXmpXml(xmpXml);
             try (FileOutputStream fos = new FileOutputStream(tempFile)) {
                 parser.writeImage(image, fos, params);

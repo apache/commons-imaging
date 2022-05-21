@@ -55,7 +55,7 @@ public abstract class TiffRasterData {
      * @param height a value of 1 or greater
      * @param samplesPerPixel a value of 1 or greater
      */
-    public TiffRasterData(final int width, final int height, int samplesPerPixel) {
+    public TiffRasterData(final int width, final int height, final int samplesPerPixel) {
         if (width <= 0 || height <= 0) {
             throw new IllegalArgumentException(
                     "Raster dimensions less than or equal to zero are not supported");
@@ -71,7 +71,7 @@ public abstract class TiffRasterData {
         planarOffset = width * height;
     }
 
-    protected final int checkCoordinatesAndComputeIndex(final int x, final int y, int i) {
+    protected final int checkCoordinatesAndComputeIndex(final int x, final int y, final int i) {
         if (x < 0 || x >= width || y < 0 || y >= height) {
             throw new IllegalArgumentException(
                     "Coordinates out of range (" + x + ", " + y + ")");

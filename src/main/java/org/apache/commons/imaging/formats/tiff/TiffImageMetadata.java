@@ -242,14 +242,9 @@ public class TiffImageMetadata extends GenericImageMetadata {
             }
             for (final ImageMetadataItem directory1 : directories) {
                 final Directory directory = (Directory) directory1;
-                if (tagInfo.directoryType.isImageDirectory()
-                        && directory.type >= 0) {
-                    final TiffField field = directory.findField(tagInfo);
-                    if (field != null) {
-                        return field;
-                    }
-                } else if (!tagInfo.directoryType.isImageDirectory()
-                        && directory.type < 0) {
+                if ((tagInfo.directoryType.isImageDirectory()
+                        && directory.type >= 0) || (!tagInfo.directoryType.isImageDirectory()
+                        && directory.type < 0)) {
                     final TiffField field = directory.findField(tagInfo);
                     if (field != null) {
                         return field;

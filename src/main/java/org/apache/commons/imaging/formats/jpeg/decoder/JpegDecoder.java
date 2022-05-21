@@ -115,7 +115,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             switch (sofnSegment.numberOfComponents) {
             case 4:
                 colorModel = new DirectColorModel(24, 0x00ff0000, 0x0000ff00, 0x000000ff);
-                final int[] bandMasks = new int[] { 0x00ff0000, 0x0000ff00, 0x000000ff };
+                final int[] bandMasks = { 0x00ff0000, 0x0000ff00, 0x000000ff };
                 raster = Raster.createPackedRaster(DataBuffer.TYPE_INT, sofnSegment.width, sofnSegment.height, bandMasks, null);
                 break;
             case 3:

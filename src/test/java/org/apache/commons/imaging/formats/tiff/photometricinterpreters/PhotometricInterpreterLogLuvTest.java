@@ -32,7 +32,7 @@ public class PhotometricInterpreterLogLuvTest {
     private PhotometricInterpreterLogLuv p;
 
     private final int samplesPerPixel = 8;
-    private final int[] bitsPerSample = new int[] {1, 2, 3};
+    private final int[] bitsPerSample = {1, 2, 3};
     private final int predictor = 1;
     private final int width = 800;
     private final int height = 600;

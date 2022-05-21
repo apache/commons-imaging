@@ -110,15 +110,12 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
                 final long lastElementByte = element.offset + element.length;
                 if (start == null) {
                     start = element;
-                    index = lastElementByte;
                 } else if (element.offset - index > TOLERANCE) {
                     rewritableElements.add(new TiffElement.Stub(start.offset,
                             (int) (index - start.offset)));
                     start = element;
-                    index = lastElementByte;
-                } else {
-                    index = lastElementByte;
                 }
+                index = lastElementByte;
             }
             if (null != start) {
                 rewritableElements.add(new TiffElement.Stub(start.offset,

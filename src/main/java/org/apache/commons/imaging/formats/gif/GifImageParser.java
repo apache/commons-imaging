@@ -852,7 +852,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
             params = new GifImagingParameters();
         }
 
-        String xmpXml = params.getXmpXml();
+        final String xmpXml = params.getXmpXml();
 
         final int width = src.getWidth();
         final int height = src.getHeight();

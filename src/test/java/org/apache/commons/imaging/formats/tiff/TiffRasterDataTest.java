@@ -165,7 +165,7 @@ public class TiffRasterDataTest {
     public void testGetData() {
         final float[] result = raster.getData();
         assertArrayEquals(data, result);
-        int samplesPerPixel = raster.getSamplesPerPixel();
+        final int samplesPerPixel = raster.getSamplesPerPixel();
         assertEquals(1, samplesPerPixel, "Incorrect number of samples per pixel");
     }
 
@@ -190,7 +190,7 @@ public class TiffRasterDataTest {
      */
     @Test
     public void testGetDataType() {
-        TiffRasterDataType dataType = raster.getDataType();
+        final TiffRasterDataType dataType = raster.getDataType();
         assertTrue(dataType == TiffRasterDataType.FLOAT, "Unexpected data type "+dataType.name());
     }
 

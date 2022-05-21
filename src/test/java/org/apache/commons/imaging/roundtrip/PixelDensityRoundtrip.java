@@ -48,7 +48,7 @@ public class PixelDensityRoundtrip extends RoundtripBase {
         final TiffImagingParameters params = new TiffImagingParameters();
         final PixelDensity pixelDensity = PixelDensity.createFromPixelsPerInch(75, 150);
         params.setPixelDensity(pixelDensity);
-        TiffImageParser tiffImageParser = new TiffImageParser();
+        final TiffImageParser tiffImageParser = new TiffImageParser();
         tiffImageParser.writeImage(testImage, new ByteArrayOutputStream(), params);
 
         final ImageInfo imageInfo = Imaging.getImageInfo(temp1);

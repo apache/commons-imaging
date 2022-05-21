@@ -218,7 +218,7 @@ public class WbmpImageParser extends ImageParser<WbmpImagingParameters> {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, WbmpImagingParameters params)
+    public void writeImage(final BufferedImage src, final OutputStream os, final WbmpImagingParameters params)
             throws ImageWriteException, IOException {
         writeMultiByteInteger(os, 0); // typeField
         os.write(0); // fixHeaderField

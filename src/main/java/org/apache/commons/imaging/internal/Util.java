@@ -35,17 +35,17 @@ public class Util {
 
     private Util() {}
 
-    public static ImageParser<?> getImageParser(ImageFormat format) {
-        return getImageParser((parser) -> parser.canAcceptType(format), () -> new IllegalArgumentException("Unknown Format: " + format));
+    public static ImageParser<?> getImageParser(final ImageFormat format) {
+        return getImageParser(parser -> parser.canAcceptType(format), () -> new IllegalArgumentException("Unknown Format: " + format));
     }
 
-    public static ImageParser<?> getImageParser(String fileExtension) {
-        return getImageParser((parser) -> parser.canAcceptExtension(fileExtension), () -> new IllegalArgumentException("Unknown Extension: " + fileExtension));
+    public static ImageParser<?> getImageParser(final String fileExtension) {
+        return getImageParser(parser -> parser.canAcceptExtension(fileExtension), () -> new IllegalArgumentException("Unknown Extension: " + fileExtension));
     }
 
     // This generics suppression is as good as the predicate given. If the predicate violates a generics design,
     // then there will be an error during runtime.
-    private static ImageParser<?> getImageParser(Predicate<ImageParser<?>> pred, Supplier<? extends RuntimeException> supplier) {
+    private static ImageParser<?> getImageParser(final Predicate<ImageParser<?>> pred, final Supplier<? extends RuntimeException> supplier) {
         return (ImageParser<?>) ImageParser
                 .getAllImageParsers()
                 .stream()

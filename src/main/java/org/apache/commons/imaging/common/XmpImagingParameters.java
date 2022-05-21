@@ -31,7 +31,7 @@ public class XmpImagingParameters extends ImagingParameters {
         return xmpXml;
     }
 
-    public void setXmpXml(String xmpXml) {
+    public void setXmpXml(final String xmpXml) {
         this.xmpXml = xmpXml;
     }
 

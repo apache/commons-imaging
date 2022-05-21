@@ -300,11 +300,11 @@ public abstract class TiffImageWriterBase {
         }
     }
 
-    public void writeImage(final BufferedImage src, final OutputStream os, TiffImagingParameters params)
+    public void writeImage(final BufferedImage src, final OutputStream os, final TiffImagingParameters params)
             throws ImageWriteException, IOException {
-        TiffOutputSet userExif = params.getOutputSet();
+        final TiffOutputSet userExif = params.getOutputSet();
 
-        String xmpXml = params.getXmpXml();
+        final String xmpXml = params.getXmpXml();
 
         PixelDensity pixelDensity = params.getPixelDensity();
         if (pixelDensity == null) {
@@ -339,7 +339,7 @@ public abstract class TiffImageWriterBase {
         short predictor = TiffTagConstants.PREDICTOR_VALUE_NONE;
 
         int stripSizeInBits = 64000; // the default from legacy implementation
-        Integer compressionParameter = params.getCompression();
+        final Integer compressionParameter = params.getCompression();
         if (compressionParameter != null) {
             compression = compressionParameter;
             final Integer stripSizeInBytes = params.getLzwCompressionBlockSize();

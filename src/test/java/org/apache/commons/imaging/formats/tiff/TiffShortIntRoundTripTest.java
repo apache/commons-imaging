@@ -82,8 +82,8 @@ public class TiffShortIntRoundTripTest extends TiffBaseTest {
                 true, // indicates that application should read image data, if present
                 FormatCompliance.getDefault());
             final TiffDirectory directory = contents.directories.get(0);
-            TiffRasterData rdInt = directory.getRasterData(null);
-            int []test = rdInt.getIntData();
+            final TiffRasterData rdInt = directory.getRasterData(null);
+            final int []test = rdInt.getIntData();
             for(int j=0; j<sample.length; j++){
                   assertEquals(sample[j], test[j],
                 "Extracted data does not match original, test "+name+": "
@@ -91,7 +91,7 @@ public class TiffShortIntRoundTripTest extends TiffBaseTest {
             }
             final TiffImagingParameters params = new TiffImagingParameters();
             params.setSubImage(2, 2, width-4, height-4);
-            TiffRasterData rdSub = directory.getRasterData(params);
+            final TiffRasterData rdSub = directory.getRasterData(params);
             assertEquals(width-4, rdSub.getWidth(), "Invalid sub-image width");
             assertEquals(height-4, rdSub.getHeight(), "Invalid sub-image height");
             for(int x = 2; x<width-2; x++){

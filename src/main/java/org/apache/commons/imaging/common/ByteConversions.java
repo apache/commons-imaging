@@ -392,7 +392,7 @@ public final class ByteConversions {
     public static RationalNumber[] toRationals(
             final byte[] bytes,
             final ByteOrder byteOrder,
-            boolean unsignedType) {
+            final boolean unsignedType) {
         return toRationals(bytes, 0, bytes.length, byteOrder, unsignedType);
     }
 
@@ -401,7 +401,7 @@ public final class ByteConversions {
             final int offset,
             final int length,
             final ByteOrder byteOrder,
-            boolean unsignedType) {
+            final boolean unsignedType) {
         final RationalNumber[] result = new RationalNumber[length / 8];
         for (int i = 0; i < result.length; i++) {
             result[i] = toRational(bytes, offset + 8 * i, byteOrder, unsignedType);

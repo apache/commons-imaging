@@ -116,7 +116,7 @@ class PamFileInfo extends FileInfo {
         return tupleReader.getRGB(is);
     }
 
-    private abstract class TupleReader {
+    private abstract static class TupleReader {
         public abstract ImageInfo.ColorType getColorType();
         public abstract int getRGB(InputStream is) throws IOException;
     }

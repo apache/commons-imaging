@@ -26,7 +26,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class LimitedColorRoundtripTest extends RoundtripBase {
 
-    public static BufferedImage[] images = new BufferedImage[] {
+    public static BufferedImage[] images = {
             TestImages.createLimitedColorImage(1, 1), // minimal
             TestImages.createLimitedColorImage(2, 2), //
             TestImages.createLimitedColorImage(10, 10), // larger than 8

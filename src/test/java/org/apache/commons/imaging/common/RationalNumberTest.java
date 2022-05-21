@@ -126,7 +126,7 @@ public class RationalNumberTest extends ImagingTest {
 
     @Test
     public void testSpecialRationalNumber(){
-        RationalNumber test = new RationalNumber(0xF5937B1F, 70_000_000, true);
+        final RationalNumber test = new RationalNumber(0xF5937B1F, 70_000_000, true);
         assertEquals(58.858331871428570, test.doubleValue(), 1.0e-14, "Unsigned integer support failed for double conversion");
         assertEquals(58.858334f, test.floatValue(), 1.0e-6f, "Float conversion failed");
         assertEquals(58L, test.longValue(), "Long value conversion failed");

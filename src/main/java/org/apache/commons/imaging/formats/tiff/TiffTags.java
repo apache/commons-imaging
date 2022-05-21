@@ -54,8 +54,7 @@ final class TiffTags {
     private static final Map<Integer, Integer> TAG_COUNTS = countTags(TiffTags.ALL_TAGS);
 
     private static List<TagInfo> makeMergedTagList() {
-        final ArrayList<TagInfo> result = new ArrayList<>();
-        result.addAll(AdobePageMaker6TagConstants.ALL_ADOBE_PAGEMAKER_6_TAGS);
+        final ArrayList<TagInfo> result = new ArrayList<>(AdobePageMaker6TagConstants.ALL_ADOBE_PAGEMAKER_6_TAGS);
         result.addAll(AdobePhotoshopTagConstants.ALL_ADOBE_PHOTOSHOP_TAGS);
         result.addAll(AliasSketchbookProTagConstants.ALL_ALIAS_SKETCHBOOK_PRO_TAGS);
         result.addAll(DcfTagConstants.ALL_DCF_TAGS);
@@ -84,7 +83,7 @@ final class TiffTags {
         final Map<Integer, List<TagInfo>> map = new HashMap<>();
 
         for (final TagInfo tag : tags) {
-            List<TagInfo> tagList = map.computeIfAbsent(tag.tag, k -> new ArrayList<>());
+            final List<TagInfo> tagList = map.computeIfAbsent(tag.tag, k -> new ArrayList<>());
             tagList.add(tag);
         }
 

@@ -205,7 +205,7 @@ public class PngWriteReadTest extends ImagingTest {
         final PngImagingParameters writeParams = new PngImagingParameters();
         writeParams.setTextChunks(textChunks);
 
-        PngImageParser pngImageParser = new PngImageParser();
+        final PngImageParser pngImageParser = new PngImageParser();
         final byte[] bytes;
         try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
             pngImageParser.writeImage(srcImage, os, writeParams);

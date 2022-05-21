@@ -572,7 +572,7 @@ public abstract class ImageParser<T extends ImagingParameters> extends BinaryFil
      * @throws IOException         In the event of an write error from
      *                             the output stream.
      */
-    public void writeImage(final BufferedImage src, final OutputStream os, T params)
+    public void writeImage(final BufferedImage src, final OutputStream os, final T params)
             throws ImageWriteException, IOException {
         os.close(); // we are obligated to close stream.
 

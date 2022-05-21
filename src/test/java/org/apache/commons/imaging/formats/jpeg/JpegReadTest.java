@@ -45,7 +45,7 @@ public class JpegReadTest extends JpegBaseTest {
     @ParameterizedTest
     @MethodSource("data")
     public void test(final File imageFile) throws Exception {
-        JpegImageParser jpegImageParser = new JpegImageParser();
+        final JpegImageParser jpegImageParser = new JpegImageParser();
         final ImageMetadata metadata = jpegImageParser.getExifMetadata(new ByteSourceFile(imageFile), new TiffImagingParameters());
         // TODO only run this tests with images that have metadata...
         //assertNotNull(metadata);

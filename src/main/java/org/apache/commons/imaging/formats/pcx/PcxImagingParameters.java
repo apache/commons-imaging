@@ -31,7 +31,7 @@ public class PcxImagingParameters extends ImagingParameters {
         return planes;
     }
 
-    public void setPlanes(int planes) {
+    public void setPlanes(final int planes) {
         this.planes = planes;
     }
 
@@ -39,7 +39,7 @@ public class PcxImagingParameters extends ImagingParameters {
         return bitDepth;
     }
 
-    public void setBitDepth(int bitDepth) {
+    public void setBitDepth(final int bitDepth) {
         this.bitDepth = bitDepth;
     }
 
@@ -47,7 +47,7 @@ public class PcxImagingParameters extends ImagingParameters {
         return compression;
     }
 
-    public void setCompression(int compression) {
+    public void setCompression(final int compression) {
         this.compression = compression;
     }
 

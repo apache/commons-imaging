@@ -32,7 +32,7 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 
 class RgbeInfo implements Closeable {
     // #?RADIANCE
-    private static final byte[] HEADER = new byte[] {
+    private static final byte[] HEADER = {
         0x23, 0x3F, 0x52, 0x41, 0x44, 0x49, 0x41, 0x4E, 0x43, 0x45
     };
     private static final Pattern RESOLUTION_STRING = Pattern.compile("-Y (\\d+) \\+X (\\d+)");
@@ -41,7 +41,7 @@ class RgbeInfo implements Closeable {
     private GenericImageMetadata metadata;
     private int width = -1;
     private int height = -1;
-    private static final byte[] TWO_TWO = new byte[] { 0x2, 0x2 };
+    private static final byte[] TWO_TWO = { 0x2, 0x2 };
 
     RgbeInfo(final ByteSource byteSource) throws IOException {
         this.in = byteSource.getInputStream();

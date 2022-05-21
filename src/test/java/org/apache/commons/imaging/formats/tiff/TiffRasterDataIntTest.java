@@ -109,9 +109,9 @@ public class TiffRasterDataIntTest {
      */
     @Test
     public void testGetValue2() {
-        int []data = new int[width*height*2];
+        final int []data = new int[width*height*2];
         data[width*height] = 77;
-        TiffRasterDataInt instance = new TiffRasterDataInt(width, height, 2, data);
+        final TiffRasterDataInt instance = new TiffRasterDataInt(width, height, 2, data);
         int test = instance.getIntValue(0, 0, 1);
         assertEquals(77, test, "Get into source data test failed at (0, 0, 1)");
 
@@ -183,7 +183,7 @@ public class TiffRasterDataIntTest {
      */
     @Test
     public void testGetDataType() {
-        TiffRasterDataType dataType = raster.getDataType();
+        final TiffRasterDataType dataType = raster.getDataType();
         assertTrue(dataType == TiffRasterDataType.INTEGER, "Unexpected data type "+dataType.name());
     }
 

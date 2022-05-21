@@ -23,7 +23,7 @@ package org.apache.commons.imaging.formats.psd;
  */
 class ImageResourceType {
 
-    private static final ImageResourceType[] TYPES = new ImageResourceType[]{
+    private static final ImageResourceType[] TYPES = {
             new ImageResourceType(1000, "Number of channels, rows, columns, depth, and mode."),
             new ImageResourceType(1001, "Optional. Macintosh print manager print info record"),
             new ImageResourceType(1003, "Indexed color table."),

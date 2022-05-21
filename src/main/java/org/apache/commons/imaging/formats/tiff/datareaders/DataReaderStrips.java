@@ -373,7 +373,7 @@ public final class DataReaderStrips extends ImageDataReader {
             rasterHeight = height;
         }
 
-        float[] rasterDataFloat = new float[rasterWidth * rasterHeight * samplesPerPixel];
+        final float[] rasterDataFloat = new float[rasterWidth * rasterHeight * samplesPerPixel];
 
         // the legacy code is optimized to the reading of whole
         // strips (except for the last strip in the image, which can
@@ -426,7 +426,7 @@ public final class DataReaderStrips extends ImageDataReader {
             rasterHeight = height;
         }
 
-        int[] rasterDataInt = new int[rasterWidth * rasterHeight];
+        final int[] rasterDataInt = new int[rasterWidth * rasterHeight];
 
         // the legacy code is optimized to the reading of whole
         // strips (except for the last strip in the image, which can

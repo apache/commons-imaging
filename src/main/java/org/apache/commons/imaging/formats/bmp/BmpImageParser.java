@@ -654,7 +654,7 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
         if (params == null) {
             params = new BmpImagingParameters();
         }
-        PixelDensity pixelDensity = params.getPixelDensity();
+        final PixelDensity pixelDensity = params.getPixelDensity();
 
         final SimplePalette palette = new PaletteFactory().makeExactRgbPaletteSimple(
                 src, 256);

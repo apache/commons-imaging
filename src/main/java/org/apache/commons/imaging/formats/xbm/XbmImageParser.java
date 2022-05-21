@@ -342,7 +342,7 @@ public class XbmImageParser extends ImageParser<XbmImagingParameters> {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, XbmImagingParameters params)
+    public void writeImage(final BufferedImage src, final OutputStream os, final XbmImagingParameters params)
             throws ImageWriteException, IOException {
         final String name = randomName();
 

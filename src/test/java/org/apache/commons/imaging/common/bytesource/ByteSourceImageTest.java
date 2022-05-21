@@ -172,7 +172,7 @@ public class ByteSourceImageTest extends ByteSourceTest {
             params = new JpegImagingParameters();
         }
 
-        ImageParser imageParser = Util.getImageParser(imageFormat);
+        final ImageParser imageParser = Util.getImageParser(imageFormat);
 
         final ImageInfo imageInfoFile = imageParser.getImageInfo(imageFile, params);
 

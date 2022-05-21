@@ -431,7 +431,7 @@ public class IptcParser extends BinaryFileParser {
                 bos.write(IptcConstants.IPTC_RECORD_TAG_MARKER);
                 bos.write(IptcConstants.IPTC_ENVELOPE_RECORD_NUMBER);
                 bos.write(ENV_TAG_CODED_CHARACTER_SET);
-                byte[] codedCharset = CHARACTER_ESCAPE_SEQUENCE;
+                final byte[] codedCharset = CHARACTER_ESCAPE_SEQUENCE;
                 bos.write2Bytes(codedCharset.length);
                 bos.write(codedCharset);
             }
@@ -485,20 +485,20 @@ public class IptcParser extends BinaryFileParser {
         return blockData;
     }
 
-    private Charset findCharset(byte[] codedCharset) {
-        String codedCharsetString = new String(codedCharset, StandardCharsets.ISO_8859_1);
+    private Charset findCharset(final byte[] codedCharset) {
+        final String codedCharsetString = new String(codedCharset, StandardCharsets.ISO_8859_1);
         try {
             if (Charset.isSupported(codedCharsetString)) {
                 return Charset.forName(codedCharsetString);
             }
-        } catch (IllegalArgumentException e) { }
+        } catch (final IllegalArgumentException e) { }
         // check if encoding is a escape sequence
         // normalize encoding byte sequence
-        byte[] codedCharsetNormalized = new byte[codedCharset.length];
+        final byte[] codedCharsetNormalized = new byte[codedCharset.length];
         int j = 0;
-        for (int i = 0; i < codedCharset.length; i++) {
-            if (codedCharset[i] != ' ') {
-                codedCharsetNormalized[j++] = codedCharset[i];
+        for (final byte element : codedCharset) {
+            if (element != ' ') {
+                codedCharsetNormalized[j++] = element;
             }
         }
 

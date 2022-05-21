@@ -317,7 +317,7 @@ public class PnmImageParser extends ImageParser<PnmImagingParameters> {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, PnmImagingParameters params)
+    public void writeImage(final BufferedImage src, final OutputStream os, final PnmImagingParameters params)
             throws ImageWriteException, IOException {
         PnmWriter writer = null;
         boolean useRawbits = true;

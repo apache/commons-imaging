@@ -63,7 +63,7 @@ public class TiffRasterDataFloat extends TiffRasterData {
      * @param height a value of 1 or greater
      * @param samplesPerPixel a value of 1 or greater
      */
-    public TiffRasterDataFloat(final int width, final int height, int samplesPerPixel) {
+    public TiffRasterDataFloat(final int width, final int height, final int samplesPerPixel) {
         super(width, height, samplesPerPixel);
         data = new float[nCells];
     }
@@ -93,7 +93,7 @@ public class TiffRasterDataFloat extends TiffRasterData {
      * @param samplesPerCell the number of samples per pixel
      * @param data the data to be stored in the raster.
      */
-    public TiffRasterDataFloat(final int width, final int height, int samplesPerCell, final float[] data) {
+    public TiffRasterDataFloat(final int width, final int height, final int samplesPerCell, final float[] data) {
         super(width, height, samplesPerCell);
 
         if (data == null || data.length < nCells) {
@@ -123,7 +123,7 @@ public class TiffRasterDataFloat extends TiffRasterData {
      */
     @Override
     public void setValue(final int x, final int y, final float value) {
-        int index = checkCoordinatesAndComputeIndex(x, y, 0);
+        final int index = checkCoordinatesAndComputeIndex(x, y, 0);
         data[index] = value;
     }
 
@@ -138,8 +138,8 @@ public class TiffRasterDataFloat extends TiffRasterData {
      * potentially a Float&#46;NaN.
      */
     @Override
-    public void setValue(final int x, final int y, int i, final float value) {
-        int index = checkCoordinatesAndComputeIndex(x, y, i);
+    public void setValue(final int x, final int y, final int i, final float value) {
+        final int index = checkCoordinatesAndComputeIndex(x, y, i);
         data[index] = value;
     }
 
@@ -153,7 +153,7 @@ public class TiffRasterDataFloat extends TiffRasterData {
      */
     @Override
     public float getValue(final int x, final int y) {
-        int index = checkCoordinatesAndComputeIndex(x, y, 0);
+        final int index = checkCoordinatesAndComputeIndex(x, y, 0);
         return data[index];
     }
 
@@ -168,8 +168,8 @@ public class TiffRasterDataFloat extends TiffRasterData {
      * Float&#46;NaN.
      */
     @Override
-    public float getValue(final int x, final int y, int i) {
-        int index = checkCoordinatesAndComputeIndex(x, y, i);
+    public float getValue(final int x, final int y, final int i) {
+        final int index = checkCoordinatesAndComputeIndex(x, y, i);
         return data[index];
     }
 
@@ -182,7 +182,7 @@ public class TiffRasterDataFloat extends TiffRasterData {
      */
     @Override
     public void setIntValue(final int x, final int y, final int value) {
-        int index = checkCoordinatesAndComputeIndex(x, y, 0);
+        final int index = checkCoordinatesAndComputeIndex(x, y, 0);
         data[index] = value;
     }
 
@@ -196,8 +196,8 @@ public class TiffRasterDataFloat extends TiffRasterData {
      * @param value the value to be stored at the specified location
      */
     @Override
-    public void setIntValue(final int x, final int y, int i, final int value) {
-        int index = checkCoordinatesAndComputeIndex(x, y, 0);
+    public void setIntValue(final int x, final int y, final int i, final int value) {
+        final int index = checkCoordinatesAndComputeIndex(x, y, 0);
         data[index] = value;
     }
 
@@ -210,7 +210,7 @@ public class TiffRasterDataFloat extends TiffRasterData {
      */
     @Override
     public int getIntValue(final int x, final int y) {
-        int index = checkCoordinatesAndComputeIndex(x, y, 0);
+        final int index = checkCoordinatesAndComputeIndex(x, y, 0);
         return (int) data[index];
     }
 
@@ -224,8 +224,8 @@ public class TiffRasterDataFloat extends TiffRasterData {
      * @return the value stored at the specified location
      */
     @Override
-    public int getIntValue(final int x, final int y, int i) {
-        int index = checkCoordinatesAndComputeIndex(x, y, 0);
+    public int getIntValue(final int x, final int y, final int i) {
+        final int index = checkCoordinatesAndComputeIndex(x, y, 0);
         return (int) data[index];
     }
 
