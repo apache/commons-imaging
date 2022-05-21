@@ -21,7 +21,6 @@ import java.io.OutputStream;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 
-import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.palette.PaletteFactory;
@@ -34,7 +33,7 @@ class PcxWriter {
     private PixelDensity pixelDensity;
     private final RleWriter rleWriter;
 
-    PcxWriter(PcxImagingParameters params) throws ImageWriteException {
+    PcxWriter(PcxImagingParameters params) {
         // uncompressed PCX files are not even documented in ZSoft's spec,
         // let alone supported by most image viewers
         if (params == null) {

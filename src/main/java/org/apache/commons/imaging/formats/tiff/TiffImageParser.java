@@ -502,8 +502,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
     }
 
     private Rectangle checkForSubImage(
-            final TiffImagingParameters params)
-            throws ImageReadException {
+            final TiffImagingParameters params) {
         // the params class enforces a correct specification for the
         // sub-image, but does not have knowledge of the actual
         // dimensions of the image that is being read.  This method
@@ -515,9 +514,8 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
             final int iwidth = params.getSubImageWidth();
             final int iheight = params.getSubImageHeight();
             return new Rectangle(ix0, iy0, iwidth, iheight);
-        } else {
-            return null;
         }
+        return null;
     }
 
     protected BufferedImage getBufferedImage(final TiffDirectory directory,
