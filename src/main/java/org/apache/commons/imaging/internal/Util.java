@@ -46,7 +46,7 @@ public class Util {
     // This generics suppression is as good as the predicate given. If the predicate violates a generics design,
     // then there will be an error during runtime.
     private static ImageParser<?> getImageParser(final Predicate<ImageParser<?>> pred, final Supplier<? extends RuntimeException> supplier) {
-        return (ImageParser<?>) ImageParser
+        return ImageParser
                 .getAllImageParsers()
                 .stream()
                 .filter(pred)

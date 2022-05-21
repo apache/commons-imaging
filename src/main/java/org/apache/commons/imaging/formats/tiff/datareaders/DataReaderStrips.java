@@ -402,7 +402,7 @@ public final class DataReaderStrips extends ImageDataReader {
                     width,
                     decompressed,
                     bitsPerPixel, byteOrder);
-            transferBlockToRaster(0, yStrip, width, (int) rowsInThisStrip, blockData,
+            transferBlockToRaster(0, yStrip, width, rowsInThisStrip, blockData,
                     xRaster, yRaster, rasterWidth, rasterHeight, samplesPerPixel, rasterDataFloat);
         }
         return new TiffRasterDataFloat(rasterWidth, rasterHeight, samplesPerPixel, rasterDataFloat);

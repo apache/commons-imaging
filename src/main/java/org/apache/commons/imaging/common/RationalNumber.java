@@ -286,10 +286,8 @@ public class RationalNumber extends Number {
         for (int count = 0; bestOption.error > TOLERANCE
                 && count < maxIterations; count++) {
             final RationalNumber mediant = RationalNumber.factoryMethod(
-                    (long) low.rationalNumber.numerator
-                            + (long) high.rationalNumber.numerator,
-                    (long) low.rationalNumber.divisor
-                            + (long) high.rationalNumber.divisor);
+                    low.rationalNumber.numerator + high.rationalNumber.numerator,
+                    low.rationalNumber.divisor + high.rationalNumber.divisor);
             final Option mediantOption = Option.factory(mediant, value);
 
             if (value < mediant.doubleValue()) {

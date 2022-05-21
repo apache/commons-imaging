@@ -280,7 +280,7 @@ public class TiffRasterDataInt extends TiffRasterData {
     public float[] getData() {
         final float[] result = new float[nCells];
         for (int i = 0; i < nCells; i++) {
-            result[i] = (int) data[i];
+            result[i] = data[i];
         }
         return result;
     }
