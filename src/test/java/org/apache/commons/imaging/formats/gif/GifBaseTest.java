@@ -33,8 +33,7 @@ public abstract class GifBaseTest extends ImagingTest {
 
     private final static String SINGLE_IMAGE_FOLDER_NAME = "single";
 
-    private static boolean isGif(final File file) throws IOException,
-            ImageReadException {
+    private static boolean isGif(final File file) throws IOException {
         final ImageFormat format = Imaging.guessFormat(file);
         return format == ImageFormats.GIF;
     }

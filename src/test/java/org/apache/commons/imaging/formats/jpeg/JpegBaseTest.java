@@ -29,8 +29,7 @@ import org.apache.commons.imaging.ImagingTest;
 
 public abstract class JpegBaseTest extends ImagingTest {
 
-    protected static boolean isJpeg(final File file) throws IOException,
-            ImageReadException {
+    protected static boolean isJpeg(final File file) throws IOException {
         final ImageFormat format = Imaging.guessFormat(file);
         return format == ImageFormats.JPEG;
     }

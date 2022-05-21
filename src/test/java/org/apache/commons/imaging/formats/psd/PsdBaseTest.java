@@ -27,8 +27,7 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
 
 public abstract class PsdBaseTest extends ImagingTest {
-    private static boolean isPsd(final File file) throws IOException,
-            ImageReadException {
+    private static boolean isPsd(final File file) throws IOException {
         final ImageFormat format = Imaging.guessFormat(file);
         return format == ImageFormats.PSD;
     }

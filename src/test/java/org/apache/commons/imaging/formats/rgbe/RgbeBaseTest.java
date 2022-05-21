@@ -27,8 +27,8 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
 
 public abstract class RgbeBaseTest extends ImagingTest {
-    private static boolean isRgbe(final File file) throws IOException,
-            ImageReadException {
+
+    private static boolean isRgbe(final File file) throws IOException {
         final ImageFormat format = Imaging.guessFormat(file);
         return format == ImageFormats.RGBE;
     }

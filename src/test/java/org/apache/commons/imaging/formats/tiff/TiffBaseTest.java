@@ -29,8 +29,7 @@ import org.apache.commons.imaging.ImagingTest;
 
 public abstract class TiffBaseTest extends ImagingTest {
 
-    private static boolean isTiff(final File file) throws IOException,
-            ImageReadException {
+    private static boolean isTiff(final File file) throws IOException {
         final ImageFormat format = Imaging.guessFormat(file);
         return format == ImageFormats.TIFF;
     }

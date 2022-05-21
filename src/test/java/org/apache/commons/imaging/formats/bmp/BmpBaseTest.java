@@ -28,8 +28,7 @@ import org.apache.commons.imaging.ImagingTest;
 
 public abstract class BmpBaseTest extends ImagingTest {
 
-    private static boolean isBmp(final File file) throws IOException,
-            ImageReadException {
+    private static boolean isBmp(final File file) throws IOException {
         final ImageFormat format = Imaging.guessFormat(file);
         return format == ImageFormats.BMP;
     }

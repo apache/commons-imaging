@@ -79,7 +79,7 @@ public class BmpReadTest extends BmpBaseTest {
     }
 
     @Test
-    public void testNegativePaletteLength() throws ImageReadException, IOException {
+    public void testNegativePaletteLength() {
         final String input = "/images/bmp/IMAGING-325/crash-3afb569de74522535ef65922233e1920455cdc14.bmp";
         final String location = BmpReadTest.class.getResource(input).getFile();
         final File inputFile = new File(location);

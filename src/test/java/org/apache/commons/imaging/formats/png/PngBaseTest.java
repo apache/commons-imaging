@@ -29,8 +29,7 @@ import org.apache.commons.imaging.ImagingTest;
 
 public abstract class PngBaseTest extends ImagingTest {
 
-    private static boolean isPng(final File file) throws IOException,
-            ImageReadException {
+    private static boolean isPng(final File file) throws IOException {
         final ImageFormat format = Imaging.guessFormat(file);
         return format == ImageFormats.PNG;
     }

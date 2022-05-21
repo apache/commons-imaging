@@ -29,8 +29,7 @@ import org.apache.commons.imaging.ImagingTest;
 
 public abstract class IcnsBaseTest extends ImagingTest {
 
-    private static boolean isIcns(final File file) throws IOException,
-            ImageReadException {
+    private static boolean isIcns(final File file) throws IOException {
         final ImageFormat format = Imaging.guessFormat(file);
         return format == ImageFormats.ICNS;
     }
