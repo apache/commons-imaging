@@ -56,116 +56,109 @@ public class SurveyTiffFile {
         }
 
         final StringBuilder sb = new StringBuilder();
-        final Formatter fmt = new Formatter(sb);
+        try (final Formatter fmt = new Formatter(sb)) {
 
-        // Establish a TiffReader. This is just a simple constructor that
-        // does not actually access the file.  So the application cannot
-        // obtain the byteOrder, or other details, until the contents have
-        // been read.  Then read the directories associated with the
-        // file by passing in the byte source and options.
-        final ByteSourceFile byteSource = new ByteSourceFile(file);
-        final TiffReader tiffReader = new TiffReader(true);
-        final TiffContents contents = tiffReader.readDirectories(
-            byteSource,
-            false, // read image data, if present
-            FormatCompliance.getDefault());
+            // Establish a TiffReader. This is just a simple constructor that
+            // does not actually access the file. So the application cannot
+            // obtain the byteOrder, or other details, until the contents have
+            // been read. Then read the directories associated with the
+            // file by passing in the byte source and options.
+            final ByteSourceFile byteSource = new ByteSourceFile(file);
+            final TiffReader tiffReader = new TiffReader(true);
+            final TiffContents contents = tiffReader.readDirectories(byteSource, false, // read image data, if present
+                    FormatCompliance.getDefault());
 
-        if (contents.directories.isEmpty()) {
-            throw new ImageReadException("No Image File Directory (IFD) found");
-        }
-        final TiffDirectory directory = contents.directories.get(0);
+            if (contents.directories.isEmpty()) {
+                throw new ImageReadException("No Image File Directory (IFD) found");
+            }
+            final TiffDirectory directory = contents.directories.get(0);
 
-        // Get the metadata (Tags) and write them to standard output
-        final boolean hasTiffImageData = directory.hasTiffImageData();
-        if (!hasTiffImageData) {
-            throw new ImageReadException("No image data in file");
-        }
+            // Get the metadata (Tags) and write them to standard output
+            final boolean hasTiffImageData = directory.hasTiffImageData();
+            if (!hasTiffImageData) {
+                throw new ImageReadException("No image data in file");
+            }
 
-        final int width = directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH);
-        final int height = directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH);
+            final int width = directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH);
+            final int height = directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH);
 
-        int samplesPerPixel = 1;
-        final TiffField samplesPerPixelField = directory.findField(
-            TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL);
-        if (samplesPerPixelField != null) {
-            samplesPerPixel = samplesPerPixelField.getIntValue();
-        }
-        int[] bitsPerSample = {1};
-        int bitsPerPixel = samplesPerPixel;
-        final TiffField bitsPerSampleField = directory.findField(
-            TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE);
-        if (bitsPerSampleField != null) {
-            bitsPerSample = bitsPerSampleField.getIntArrayValue();
-            bitsPerPixel = bitsPerSampleField.getIntValueOrArraySum();
-        }
-        if (samplesPerPixel != bitsPerSample.length) {
-            throw new ImageReadException("Tiff: samplesPerPixel ("
-                + samplesPerPixel + ")!=fBitsPerSample.length ("
-                + bitsPerSample.length + ")");
-        }
+            int samplesPerPixel = 1;
+            final TiffField samplesPerPixelField = directory.findField(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL);
+            if (samplesPerPixelField != null) {
+                samplesPerPixel = samplesPerPixelField.getIntValue();
+            }
+            int[] bitsPerSample = { 1 };
+            int bitsPerPixel = samplesPerPixel;
+            final TiffField bitsPerSampleField = directory.findField(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE);
+            if (bitsPerSampleField != null) {
+                bitsPerSample = bitsPerSampleField.getIntArrayValue();
+                bitsPerPixel = bitsPerSampleField.getIntValueOrArraySum();
+            }
+            if (samplesPerPixel != bitsPerSample.length) {
+                throw new ImageReadException("Tiff: samplesPerPixel (" + samplesPerPixel + ")!=fBitsPerSample.length (" + bitsPerSample.length + ")");
+            }
 
-        int rowsPerStrip = 0;
-        int tileWidth = 0;
-        int tileHeight = 0;
+            int rowsPerStrip = 0;
+            int tileWidth = 0;
+            int tileHeight = 0;
 
-        final boolean imageDataInStrips = directory.imageDataInStrips();
-        if (imageDataInStrips) {
-            final TiffField rowsPerStripField
-                = directory.findField(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP);
-            rowsPerStrip = Integer.MAX_VALUE;
-            if (null != rowsPerStripField) {
-                rowsPerStrip = rowsPerStripField.getIntValue();
-            } else {
-                final TiffField imageHeight = directory.findField(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH);
-                /*
-                 * if rows per strip not present then rowsPerStrip is equal to
-                 * imageLength or an infinity value;
-                 */
-                if (imageHeight != null) {
-                    rowsPerStrip = imageHeight.getIntValue();
+            final boolean imageDataInStrips = directory.imageDataInStrips();
+            if (imageDataInStrips) {
+                final TiffField rowsPerStripField = directory.findField(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP);
+                rowsPerStrip = Integer.MAX_VALUE;
+                if (null != rowsPerStripField) {
+                    rowsPerStrip = rowsPerStripField.getIntValue();
+                } else {
+                    final TiffField imageHeight = directory.findField(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH);
+                    /*
+                     * if rows per strip not present then rowsPerStrip is equal to imageLength or an infinity value;
+                     */
+                    if (imageHeight != null) {
+                        rowsPerStrip = imageHeight.getIntValue();
+                    }
                 }
+            } else {
+                final TiffField tileWidthField = directory.findField(TiffTagConstants.TIFF_TAG_TILE_WIDTH);
+                if (null == tileWidthField) {
+                    throw new ImageReadException("Can't find tile width field.");
+                }
+                tileWidth = tileWidthField.getIntValue();
+                final TiffField tileLengthField = directory.findField(TiffTagConstants.TIFF_TAG_TILE_LENGTH);
+                if (null == tileLengthField) {
+                    throw new ImageReadException("Can't find tile length field.");
+                }
+                tileHeight = tileLengthField.getIntValue();
             }
-        } else {
-            final TiffField tileWidthField = directory.findField(TiffTagConstants.TIFF_TAG_TILE_WIDTH);
-            if (null == tileWidthField) {
-                throw new ImageReadException("Can't find tile width field.");
+
+            final String compressionString = getCompressionString(directory);
+            final String predictorString = getPredictorString(directory);
+            final String planarConfigurationString = getPlanarConfigurationString(directory);
+            final String bitsPerSampleString = getBitsPerSampleString(bitsPerSample);
+            final String sampleFmtString = getSampleFormatString(directory);
+            final String piString = getPhotometricInterpreterString(directory, bitsPerSample);
+            final String iccString = getIccProfileString(directory);
+
+            fmt.format("%s%4dx%-4d", delimiter, width, height);
+            if (imageDataInStrips) {
+                fmt.format("%sStrips%s%4dx%-4d", delimiter, delimiter, width, rowsPerStrip);
+            } else {
+                fmt.format("%sTiles %s%4dx%-4d", delimiter, delimiter, tileWidth, tileHeight);
             }
-            tileWidth = tileWidthField.getIntValue();
-            final TiffField tileLengthField = directory.findField(TiffTagConstants.TIFF_TAG_TILE_LENGTH);
-            if (null == tileLengthField) {
-                throw new ImageReadException("Can't find tile length field.");
+
+            fmt.format("%s%s", delimiter, planarConfigurationString);
+            fmt.format("%s%-8s", delimiter, compressionString);
+            fmt.format("%s%-7s", delimiter, predictorString);
+            fmt.format("%s%-8s", delimiter, sampleFmtString);
+            fmt.format("%s%3d", delimiter, bitsPerPixel);
+            fmt.format("%s%-7s", delimiter, bitsPerSampleString);
+            fmt.format("%s%-9s", delimiter, piString);
+            fmt.format("%s%-7s", delimiter, iccString);
+
+            if (csv) {
+                return trimForCsv(sb);
             }
-            tileHeight = tileLengthField.getIntValue();
+            return sb.toString();
         }
-
-        final String compressionString = getCompressionString(directory);
-        final String predictorString = getPredictorString(directory);
-        final String planarConfigurationString = getPlanarConfigurationString(directory);
-        final String bitsPerSampleString = getBitsPerSampleString(bitsPerSample);
-        final String sampleFmtString = getSampleFormatString(directory);
-        final String piString = getPhotometricInterpreterString(directory, bitsPerSample);
-        final String iccString = getIccProfileString(directory);
-
-        fmt.format("%s%4dx%-4d", delimiter, width, height);
-        if (imageDataInStrips) {
-            fmt.format("%sStrips%s%4dx%-4d", delimiter, delimiter, width, rowsPerStrip);
-        } else {
-            fmt.format("%sTiles %s%4dx%-4d", delimiter, delimiter, tileWidth, tileHeight);
-        }
-
-        fmt.format("%s%s", delimiter, planarConfigurationString);
-        fmt.format("%s%-8s", delimiter, compressionString);
-        fmt.format("%s%-7s", delimiter, predictorString);
-        fmt.format("%s%-8s", delimiter, sampleFmtString);
-        fmt.format("%s%3d", delimiter, bitsPerPixel);
-        fmt.format("%s%-7s", delimiter, bitsPerSampleString);
-        fmt.format("%s%-9s", delimiter, piString);
-        fmt.format("%s%-7s", delimiter, iccString);
-
-        if (csv) {
-            return trimForCsv(sb);
-        }
-        return sb.toString();
     }
 
     private String getCompressionString(final TiffDirectory directory) throws ImageReadException {
