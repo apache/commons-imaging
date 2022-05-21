@@ -254,7 +254,9 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
                                 + "].numMarkers: " + segment.numMarkers + ".");
             }
 
-            total += segment.getIccBytes().length;
+            if (segment.getIccBytes() != null) {
+                total += segment.getIccBytes().length;
+            }
         }
 
         final byte[] result = new byte[total];
