@@ -67,8 +67,6 @@ public class XmpUpdateTest extends ImagingTest {
             final File tempFile = File.createTempFile(imageFile.getName() + ".", "." + imageFormat.getDefaultExtension());
             final BufferedImage image = Imaging.getBufferedImage(imageFile);
 
-            // ----
-
             final ImageParser parser = Util.getImageParser("." + imageFormat.getDefaultExtension());
             final ImagingParameters params = parser.getDefaultParameters();
             ((XmpImagingParameters) params).setXmpXml(xmpXml);

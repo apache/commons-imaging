@@ -688,8 +688,6 @@ public final class TiffOutputDirectory extends TiffOutputItem {
 
         }
 
-        // --------------------------------------------------------------
-
         removeFieldIfPresent(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS);
         removeFieldIfPresent(TiffTagConstants.TIFF_TAG_STRIP_BYTE_COUNTS);
         removeFieldIfPresent(TiffTagConstants.TIFF_TAG_TILE_OFFSETS);
@@ -710,8 +708,6 @@ public final class TiffOutputDirectory extends TiffOutputItem {
                 byteCountsTag = TiffTagConstants.TIFF_TAG_TILE_BYTE_COUNTS;
             }
 
-            // --------
-
             final TiffElement.DataElement[] imageData = tiffImageData.getImageData();
 
             // TiffOutputField imageDataOffsetsField = null;
@@ -722,8 +718,6 @@ public final class TiffOutputDirectory extends TiffOutputItem {
                 imageDataByteCounts[i] = imageData[i].length;
             }
 
-            // --------
-
             // Append imageData-related fields to first directory
             imageDataOffsetField = new TiffOutputField(offsetTag,
                     FieldType.LONG, imageDataOffsets.length,
@@ -731,20 +725,14 @@ public final class TiffOutputDirectory extends TiffOutputItem {
                             outputSummary.byteOrder));
             add(imageDataOffsetField);
 
-            // --------
-
             final byte[] data = FieldType.LONG.writeData(imageDataByteCounts, outputSummary.byteOrder);
             final TiffOutputField byteCountsField = new TiffOutputField(
                     byteCountsTag, FieldType.LONG, imageDataByteCounts.length,
                     data);
             add(byteCountsField);
 
-            // --------
-
             imageDataInfo = new ImageDataOffsets(imageData, imageDataOffsets, imageDataOffsetField);
         }
-
-        // --------------------------------------------------------------
 
         final List<TiffOutputItem> result = new ArrayList<>();
         result.add(this);

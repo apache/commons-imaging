@@ -213,7 +213,6 @@ public final class DataReaderStrips extends ImageDataReader {
             return;
         }
 
-        // ------------------------------------------------------------
         // original code before May 2012 modification
         // this logic will handle all cases not conforming to the
         // special case handled above

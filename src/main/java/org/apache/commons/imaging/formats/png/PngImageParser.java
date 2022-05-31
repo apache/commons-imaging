@@ -520,8 +520,6 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
             pngChunkPLTE = (PngChunkPlte) PLTEs.get(0);
         }
 
-        // -----
-
         final List<PngChunk> IDATs = filterChunks(chunks, ChunkType.IDAT);
         if (IDATs.isEmpty()) {
             throw new ImageReadException("PNG missing image data");

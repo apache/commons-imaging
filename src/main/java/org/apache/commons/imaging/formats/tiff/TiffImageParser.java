@@ -178,8 +178,6 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
         final int height = heightField.getIntValue();
         final int width = widthField.getIntValue();
 
-        // -------------------
-
         final TiffField resolutionUnitField = directory.findField(
                 TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT);
         int resolutionUnit = 2; // Inch
@@ -228,8 +226,6 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
             }
         }
 
-        // -------------------
-
         final TiffField bitsPerSampleField = directory.findField(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE);
 
         int bitsPerSample = 1;
@@ -240,8 +236,6 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
 
         final int bitsPerPixel = bitsPerSample; // assume grayscale;
         // dunno if this handles colormapped images correctly.
-
-        // -------------------
 
         final List<TiffField> entries = directory.entries;
         final List<String> comments = new ArrayList<>(entries.size());
