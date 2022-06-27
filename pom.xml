@@ -57,7 +57,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <checkstyle.plugin.version>3.1.2</checkstyle.plugin.version>
     <spotbugs.plugin.version>4.7.0.0</spotbugs.plugin.version>
-    <spotbugs.impl.version>4.7.0</spotbugs.impl.version>
+    <spotbugs.impl.version>4.7.1</spotbugs.impl.version>
     <junit.version>5.8.2</junit.version>
 
     <!-- Commons Release Plugin -->
