@@ -58,7 +58,7 @@
     <checkstyle.plugin.version>3.1.2</checkstyle.plugin.version>
     <spotbugs.plugin.version>4.7.1.1</spotbugs.plugin.version>
     <spotbugs.impl.version>4.7.1</spotbugs.impl.version>
-    <junit.version>5.8.2</junit.version>
+    <junit.version>5.9.0</junit.version>
 
     <!-- Commons Release Plugin -->
     <commons.release.version>1.0-alpha3</commons.release.version>

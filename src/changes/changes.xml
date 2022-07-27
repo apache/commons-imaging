@@ -62,6 +62,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action dev="kinow" type="update" due-to="Dependabot">
         Bump actions/cache from 3.0.4 to 3.0.5 #225.
       </action>
+      <action dev="kinow" type="update" due-to="Dependabot">
+        Bump junit-jupiter from 5.8.2 to 5.9.0 #227.
+      </action>
     </release>
     <release version="1.0-alpha3" date="2022-05-13" description="Third 1.0 alpha release">
       <action issue="IMAGING-330" dev="kinow" type="fix" due-to="Gary Lucas">
