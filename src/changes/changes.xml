@@ -50,6 +50,9 @@ The <action> type attribute can be add,update,fix,remove.
         NullPointerException in App2Segment.getIccBytes when parsing a broken JPEG file.
       </action>
       <!-- UPDATE -->
+      <action dev="kinow" type="update" due-to="Dependabot, Gary Gregory">
+        Bump actions/cache from 3.0.4 to 3.0.6 #225.
+      </action>
       <action dev="kinow" type="update" due-to="Dependabot">
         Bump spotbugs-maven-plugin from 4.6.0.0 to 4.7.1.1 #221, #224, #226.
       </action>
@@ -58,9 +61,6 @@ The <action> type attribute can be add,update,fix,remove.
       </action>
       <action dev="kinow" type="update" due-to="Dependabot">
         Bump spotbugs from 4.7.0 to 4.7.1 #223.
-      </action>
-      <action dev="kinow" type="update" due-to="Dependabot">
-        Bump actions/cache from 3.0.4 to 3.0.5 #225.
       </action>
       <action dev="kinow" type="update" due-to="Dependabot">
         Bump junit-jupiter from 5.8.2 to 5.9.0 #227.
