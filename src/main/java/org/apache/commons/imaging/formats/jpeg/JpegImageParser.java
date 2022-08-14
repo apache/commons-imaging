@@ -806,7 +806,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
         final ImageFormat format = ImageFormats.JPEG;
         final String formatName = "JPEG (Joint Photographic Experts Group) Format";
         final String mimeType = "image/jpeg";
-        // we ought to count images, but don't yet.
+        // TODO: we ought to count images, but don't yet.
         final int numberOfImages = 1;
         // not accurate ... only reflects first
         final boolean progressive = fSOFNSegment.marker == JpegConstants.SOF2_MARKER;
