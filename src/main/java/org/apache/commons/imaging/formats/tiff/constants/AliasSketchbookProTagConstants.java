@@ -24,19 +24,23 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
 
 /**
- * Alias Sketchbook Pro multi-layer TIFF
- * <BR>
- * http://www.awaresystems.be/imaging/tiff/tifftags/docs/alias.html
+ * Alias Sketchbook Pro multi-layer TIFF.
+ *
+ * @see <a href="https://web.archive.org/web/20180905213310/https://awaresystems.be/imaging/tiff/tifftags/docs/alias.html">Alias Sketchbook Pro Multi-Layer TIFF File Format Specification</a>
  */
 public final class AliasSketchbookProTagConstants {
 
+    /**
+     * Identifies a file as an Alias Multi Layer TIFF file.
+     */
     public static final TagInfoAscii EXIF_TAG_ALIAS_LAYER_METADATA = new TagInfoAscii(
             "Alias Layer Metadata", 0xc660, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final List<TagInfo> ALL_ALIAS_SKETCHBOOK_PRO_TAGS =
-            Collections.unmodifiableList(Arrays.<TagInfo> asList(
-                    EXIF_TAG_ALIAS_LAYER_METADATA));
+    /**
+     * A list with all the Alias Sketchbook Pro multi-layer tags.
+     */
+    public static final List<TagInfo> ALL_ALIAS_SKETCHBOOK_PRO_TAGS = Collections.singletonList(EXIF_TAG_ALIAS_LAYER_METADATA);
 
     private AliasSketchbookProTagConstants() {
     }

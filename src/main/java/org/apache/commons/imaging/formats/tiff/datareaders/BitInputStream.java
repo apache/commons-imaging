@@ -89,10 +89,10 @@ class BitInputStream extends InputStream {
             return is.read();
         }
 
-        /**
+        /*
          * Taking default order of the Tiff to be Little Endian and reversing
          * the bytes in the end if its Big Endian.This is done because majority
-         * (may be all) of the files will be of Little Endian.
+         * (maybe all) of the files will be of Little Endian.
          */
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
             switch (count) {
