@@ -40,8 +40,6 @@ import java.util.ArrayList;
 
 /**
  * Parser for Radiance HDR images
- *
- * @author <a href="mailto:peter@electrotank.com">peter royal</a>
  */
 public class RgbeImageParser extends ImageParser<RgbeImagingParameters> {
 
