@@ -69,7 +69,7 @@ The <action> type attribute can be add,update,fix,remove.
         Bump spotbugs from 4.7.0 to 4.7.1 #223.
       </action>
       <action dev="kinow" type="update" due-to="Dependabot">
-        Bump junit-jupiter from 5.8.2 to 5.9.0 #227.
+        Bump junit-jupiter from 5.8.2 to 5.9.1 #227.
       </action>
       <action dev="kinow" type="update" due-to="Dependabot">
         Bump animal-sniffer-maven-plugin from 1.21 to 1.22 #230.
