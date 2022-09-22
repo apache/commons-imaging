@@ -57,7 +57,7 @@ The <action> type attribute can be add,update,fix,remove.
         Bump actions/checkout from 3 to 3.0.2.
       </action>
       <action dev="ggregory" type="update" due-to="Dependabot">
-        Bump commons-parent from 52 to 53.
+        Bump commons-parent from 52 to 54 #238.
       </action>
       <action dev="kinow" type="update" due-to="Dependabot">
         Bump spotbugs-maven-plugin from 4.6.0.0 to 4.7.2.0 #221, #224, #226, #236.
