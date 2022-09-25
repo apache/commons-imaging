@@ -58,7 +58,7 @@
     <checkstyle.plugin.version>3.2.0</checkstyle.plugin.version>
     <spotbugs.plugin.version>4.7.2.0</spotbugs.plugin.version>
     <spotbugs.impl.version>4.7.2</spotbugs.impl.version>
-    <junit.version>5.9.1</junit.version>
+    <commons.junit.version>5.9.1</commons.junit.version>
 
     <!-- Commons Release Plugin -->
     <commons.release.version>1.0-alpha3</commons.release.version>
@@ -231,7 +231,6 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
-      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
