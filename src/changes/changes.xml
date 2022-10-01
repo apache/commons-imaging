@@ -56,6 +56,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action dev="ggregory" type="update" due-to="Gary Gregory">
         Bump actions/checkout from 3 to 3.0.2.
       </action>
+      <action dev="ggregory" type="update" due-to="Gary Gregory">
+        Bump actions/setup-java from 3 to 3.5.1.
+      </action>
       <action dev="ggregory" type="update" due-to="Dependabot">
         Bump commons-parent from 52 to 54 #238.
       </action>
