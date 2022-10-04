@@ -40,7 +40,7 @@ jobs:
       run: |-
         git config --global core.autocrlf false
         git config --global core.eol lf
-    - uses: actions/checkout@v3.0.2
+    - uses: actions/checkout@v3.1.0
     - name: Set up JDK ${{ matrix.java }}
       uses: actions/setup-java@v3.5.1
       with:
