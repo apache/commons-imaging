@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
 import java.nio.ByteOrder;
+import java.util.Arrays;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.ByteConversions;
@@ -51,16 +52,12 @@ public class FieldTypeRational extends FieldType {
         }
         if (o instanceof Number) {
             final Number number = (Number) o;
-            final RationalNumber rationalNumber = RationalNumber.valueOf(number.doubleValue());
-            return ByteConversions.toBytes(rationalNumber, byteOrder);
+            return ByteConversions.toBytes(RationalNumber.valueOf(number.doubleValue()), byteOrder);
         }
         if (o instanceof Number[]) {
             final Number[] numbers = (Number[]) o;
             final RationalNumber[] rationalNumbers = new RationalNumber[numbers.length];
-            for (int i = 0; i < numbers.length; i++) {
-                final Number number = numbers[i];
-                rationalNumbers[i] = RationalNumber.valueOf(number.doubleValue());
-            }
+            Arrays.setAll(rationalNumbers, RationalNumber::valueOf);
             return ByteConversions.toBytes(rationalNumbers, byteOrder);
         }
         if (!(o instanceof double[])) {
@@ -68,10 +65,7 @@ public class FieldTypeRational extends FieldType {
         }
         final double[] numbers = (double[]) o;
         final RationalNumber[] rationalNumbers = new RationalNumber[numbers.length];
-        for (int i = 0; i < numbers.length; i++) {
-            final double number = numbers[i];
-            rationalNumbers[i] = RationalNumber.valueOf(number);
-        }
+        Arrays.setAll(rationalNumbers, RationalNumber::valueOf);
         return ByteConversions.toBytes(rationalNumbers, byteOrder);
     }
 }

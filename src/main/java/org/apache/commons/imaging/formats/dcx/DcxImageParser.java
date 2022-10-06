@@ -128,8 +128,7 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
             final int id = read4Bytes("Id", is, "Not a Valid DCX File", getByteOrder());
             final List<Long> pageTable = new ArrayList<>(1024);
             for (int i = 0; i < 1024; i++) {
-                final long pageOffset = 0xFFFFffffL & read4Bytes("PageTable", is,
-                        "Not a Valid DCX File", getByteOrder());
+                final long pageOffset = 0xFFFFffffL & read4Bytes("PageTable", is, "Not a Valid DCX File", getByteOrder());
                 if (pageOffset == 0) {
                     break;
                 }
@@ -137,20 +136,13 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
             }
 
             if (id != DcxHeader.DCX_ID) {
-                throw new ImageReadException(
-                        "Not a Valid DCX File: file id incorrect");
+                throw new ImageReadException("Not a Valid DCX File: file id incorrect");
             }
             if (pageTable.size() == 1024) {
-                throw new ImageReadException(
-                        "DCX page table not terminated by zero entry");
+                throw new ImageReadException("DCX page table not terminated by zero entry");
             }
 
-            final Object[] objects = pageTable.toArray();
-            final long[] pages = new long[objects.length];
-            for (int i = 0; i < objects.length; i++) {
-                pages[i] = ((Long) objects[i]);
-            }
-
+            final long[] pages = pageTable.stream().mapToLong(Long::longValue).toArray();
             return new DcxHeader(id, pages);
         }
     }
@@ -166,10 +158,7 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
     public final BufferedImage getBufferedImage(final ByteSource byteSource,
             final PcxImagingParameters params) throws ImageReadException, IOException {
         final List<BufferedImage> list = getAllBufferedImages(byteSource);
-        if (list.isEmpty()) {
-            return null;
-        }
-        return list.get(0);
+        return list.isEmpty() ? null : list.get(0);
     }
 
     @Override

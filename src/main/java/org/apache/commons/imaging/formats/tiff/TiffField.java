@@ -22,6 +22,7 @@ import java.io.StringWriter;
 import java.nio.ByteOrder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -449,17 +450,13 @@ public class TiffField {
         if (o instanceof Number[]) {
             final Number[] numbers = (Number[]) o;
             final int[] result = new int[numbers.length];
-            for (int i = 0; i < numbers.length; i++) {
-                result[i] = numbers[i].intValue();
-            }
+            Arrays.setAll(result, i -> numbers[i].intValue());
             return result;
         }
         if (o instanceof short[]) {
             final short[] numbers = (short[]) o;
             final int[] result = new int[numbers.length];
-            for (int i = 0; i < numbers.length; i++) {
-                result[i] = 0xffff & numbers[i];
-            }
+            Arrays.setAll(result, i ->  0xffff & numbers[i]);
             return result;
         }
         if (o instanceof int[]) {
@@ -485,33 +482,25 @@ public class TiffField {
         if (o instanceof Number[]) {
             final Number[] numbers = (Number[]) o;
             final double[] result = new double[numbers.length];
-            for (int i = 0; i < numbers.length; i++) {
-                result[i] = numbers[i].doubleValue();
-            }
+            Arrays.setAll(result, i -> numbers[i].doubleValue());
             return result;
         }
         if (o instanceof short[]) {
             final short[] numbers = (short[]) o;
             final double[] result = new double[numbers.length];
-            for (int i = 0; i < numbers.length; i++) {
-                result[i] = numbers[i];
-            }
+            Arrays.setAll(result, i -> numbers[i]);
             return result;
         }
         if (o instanceof int[]) {
             final int[] numbers = (int[]) o;
             final double[] result = new double[numbers.length];
-            for (int i = 0; i < numbers.length; i++) {
-                result[i] = numbers[i];
-            }
+            Arrays.setAll(result, i -> numbers[i]);
             return result;
         }
         if (o instanceof float[]) {
             final float[] numbers = (float[]) o;
             final double[] result = new double[numbers.length];
-            for (int i = 0; i < numbers.length; i++) {
-                result[i] = numbers[i];
-            }
+            Arrays.setAll(result, i -> numbers[i]);
             return result;
         }
         if (o instanceof double[]) {

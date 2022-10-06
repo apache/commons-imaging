@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.formats.tiff.photometricinterpreters;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
@@ -38,20 +39,19 @@ public class PhotometricInterpreterPalette extends PhotometricInterpreter {
         final int bitsPerPixel = getBitsPerSample(0);
         final int colormapScale = (1 << bitsPerPixel);
         indexColorMap = new int[colormapScale];
-        for (int index = 0; index < colormapScale; index++) {
-            final int red = (colorMap[index] >> 8) & 0xff;
-            final int green = (colorMap[index + (colormapScale)] >> 8) & 0xff;
-            final int blue = (colorMap[index + (2 * colormapScale)] >> 8) & 0xff;
-            indexColorMap[index] = 0xff000000 | (red << 16) | (green << 8)
-                    | blue;
-        }
+        Arrays.setAll(indexColorMap, i -> {
+            final int red = (colorMap[i] >> 8) & 0xff;
+            final int green = (colorMap[i + (colormapScale)] >> 8) & 0xff;
+            final int blue = (colorMap[i + (2 * colormapScale)] >> 8) & 0xff;
+            return 0xff000000 | (red << 16) | (green << 8) | blue;
+        });
 
-        // Fix for IMAGING-247  5/17/2020
+        // Fix for IMAGING-247 5/17/2020
         // This interpreter is used with TIFF_COMPRESSION_PACKBITS (32773).
-        // which unpacks to 8 bits per sample.  But if the bits-per-pixel
+        // which unpacks to 8 bits per sample. But if the bits-per-pixel
         // is less than 8 bits, some authoring tools do not zero-out the
-        // unused bits.  This results in cases where the decoded by index
-        // exceeds the size of the palette.  So we set up a mask to protect
+        // unused bits. This results in cases where the decoded by index
+        // exceeds the size of the palette. So we set up a mask to protect
         // the code from an array bounds exception.
         int temp = 0;
         for (int i = 0; i < bitsPerPixel; i++) {

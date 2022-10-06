@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.palette;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.logging.Logger;
 
@@ -41,9 +42,7 @@ class ColorSpaceSubset {
 
         mins = new int[PaletteFactory.COMPONENTS];
         maxs = new int[PaletteFactory.COMPONENTS];
-        for (int i = 0; i < PaletteFactory.COMPONENTS; i++) {
-            maxs[i] = precisionMask;
-        }
+        Arrays.fill(maxs, precisionMask);
 
         rgb = -1;
     }

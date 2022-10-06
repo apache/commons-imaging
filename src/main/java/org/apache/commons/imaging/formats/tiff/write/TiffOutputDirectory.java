@@ -24,6 +24,7 @@ import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TI
 import java.io.IOException;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -714,9 +715,7 @@ public final class TiffOutputDirectory extends TiffOutputItem {
 
             final int[] imageDataOffsets = new int[imageData.length];
             final int[] imageDataByteCounts = new int[imageData.length];
-            for (int i = 0; i < imageData.length; i++) {
-                imageDataByteCounts[i] = imageData[i].length;
-            }
+            Arrays.setAll(imageDataByteCounts, i -> imageData[i].length);
 
             // Append imageData-related fields to first directory
             imageDataOffsetField = new TiffOutputField(offsetTag,

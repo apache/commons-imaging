@@ -146,6 +146,7 @@ public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
     }
 
     static class IcnsElement {
+        static final IcnsElement[] EMPTY_ARRAY = {};
         public final int type;
         public final int elementSize;
         public final byte[] data;
@@ -208,12 +209,7 @@ public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
                 remainingSize -= icnsElement.elementSize;
             }
 
-            final IcnsElement[] icnsElements = new IcnsElement[icnsElementList.size()];
-            for (int i = 0; i < icnsElements.length; i++) {
-                icnsElements[i] = icnsElementList.get(i);
-            }
-
-            return new IcnsContents(icnsHeader, icnsElements);
+            return new IcnsContents(icnsHeader, icnsElementList.toArray(IcnsElement.EMPTY_ARRAY));
         }
     }
 

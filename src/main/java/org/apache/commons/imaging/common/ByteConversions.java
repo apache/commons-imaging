@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.common;
 
 import java.nio.ByteOrder;
+import java.util.Arrays;
 
 /**
  * Convenience methods for converting data types to and from
@@ -244,9 +245,7 @@ public final class ByteConversions {
     private static int[] toUInt16s(final byte[] bytes, final int offset, final int length,
             final ByteOrder byteOrder) {
         final int[] result = new int[length / 2];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = toUInt16(bytes, offset + 2 * i, byteOrder);
-        }
+        Arrays.setAll(result, i -> toUInt16(bytes, offset + 2 * i, byteOrder));
         return result;
     }
 
@@ -272,9 +271,7 @@ public final class ByteConversions {
     private static int[] toInts(final byte[] bytes, final int offset, final int length,
             final ByteOrder byteOrder) {
         final int[] result = new int[length / 4];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = toInt(bytes, offset + 4 * i, byteOrder);
-        }
+        Arrays.setAll(result, i -> toInt(bytes, offset + 4 * i, byteOrder));
         return result;
     }
 
@@ -342,9 +339,7 @@ public final class ByteConversions {
     private static double[] toDoubles(final byte[] bytes, final int offset,
             final int length, final ByteOrder byteOrder) {
         final double[] result = new double[length / 8];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = toDouble(bytes, offset + 8 * i, byteOrder);
-        }
+        Arrays.setAll(result, i -> toDouble(bytes, offset + 8 * i, byteOrder));
         return result;
     }
 
@@ -403,9 +398,7 @@ public final class ByteConversions {
             final ByteOrder byteOrder,
             final boolean unsignedType) {
         final RationalNumber[] result = new RationalNumber[length / 8];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = toRational(bytes, offset + 8 * i, byteOrder, unsignedType);
-        }
+        Arrays.setAll(result, i -> toRational(bytes, offset + 8 * i, byteOrder, unsignedType));
         return result;
     }
 }

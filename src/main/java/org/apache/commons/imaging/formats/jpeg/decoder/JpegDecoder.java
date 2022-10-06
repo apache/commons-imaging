@@ -106,9 +106,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             final int yMCUs = (sofnSegment.height + vSize - 1) / vSize;
             final Block[] mcu = allocateMCUMemory();
             final Block[] scaledMCU = new Block[mcu.length];
-            for (int i = 0; i < scaledMCU.length; i++) {
-                scaledMCU[i] = new Block(hSize, vSize);
-            }
+            Arrays.setAll(scaledMCU, i -> new Block(hSize, vSize));
             final int[] preds = new int[sofnSegment.numberOfComponents];
             ColorModel colorModel;
             WritableRaster raster;
@@ -249,10 +247,11 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                                     + table.destinationIdentifier);
                 }
                 quantizationTables[table.destinationIdentifier] = table;
-                final int[] quantizationMatrixInt = new int[64];
+                final int mSize = 64;
+                final int[] quantizationMatrixInt = new int[mSize];
                 ZigZag.zigZagToBlock(table.getElements(), quantizationMatrixInt);
-                final float[] quantizationMatrixFloat = new float[64];
-                for (int j = 0; j < 64; j++) {
+                final float[] quantizationMatrixFloat = new float[mSize];
+                for (int j = 0; j < mSize; j++) {
                     quantizationMatrixFloat[j] = quantizationMatrixInt[j];
                 }
                 Dct.scaleDequantizationMatrix(quantizationMatrixFloat);

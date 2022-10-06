@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
 import java.nio.ByteOrder;
+import java.util.Arrays;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.ByteConversions;
@@ -31,8 +32,7 @@ public class FieldTypeDouble extends FieldType {
     public Object getValue(final TiffField entry) {
         final byte[] bytes = entry.getByteArrayValue();
         if (entry.getCount() == 1) {
-            return ByteConversions.toDouble(bytes,
-                    entry.getByteOrder());
+            return ByteConversions.toDouble(bytes, entry.getByteOrder());
         }
         return ByteConversions.toDoubles(bytes, entry.getByteOrder());
     }
@@ -40,21 +40,16 @@ public class FieldTypeDouble extends FieldType {
     @Override
     public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException {
         if (o instanceof Double) {
-            return ByteConversions.toBytes(((Double) o).doubleValue(),
-                    byteOrder);
+            return ByteConversions.toBytes(((Double) o).doubleValue(), byteOrder);
         }
         if (o instanceof double[]) {
-            final double[] numbers = (double[]) o;
-            return ByteConversions.toBytes(numbers, byteOrder);
+            return ByteConversions.toBytes((double[]) o, byteOrder);
         }
         if (!(o instanceof Double[])) {
             throw new ImageWriteException("Invalid data", o);
         }
-        final Double[] numbers = (Double[]) o;
-        final double[] values = new double[numbers.length];
-        for (int i = 0; i < values.length; i++) {
-            values[i] = numbers[i].doubleValue();
-        }
+        final double[] values = new double[((Double[]) o).length];
+        Arrays.setAll(values, i -> ((Double[]) o)[i].doubleValue());
         return ByteConversions.toBytes(values, byteOrder);
     }
 

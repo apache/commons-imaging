@@ -16,6 +16,8 @@
  */
 package org.apache.commons.imaging.formats.tiff.write;
 
+import java.util.Arrays;
+
 import org.apache.commons.imaging.formats.tiff.TiffElement;
 
 class ImageDataOffsets {
@@ -23,18 +25,12 @@ class ImageDataOffsets {
     final TiffOutputField imageDataOffsetsField;
     final TiffOutputItem[] outputItems;
 
-    ImageDataOffsets(final TiffElement.DataElement[] imageData,
-            final int[] imageDataOffsets,
-            final TiffOutputField imageDataOffsetsField) {
+    ImageDataOffsets(final TiffElement.DataElement[] imageData, final int[] imageDataOffsets, final TiffOutputField imageDataOffsetsField) {
         this.imageDataOffsets = imageDataOffsets;
         this.imageDataOffsetsField = imageDataOffsetsField;
 
         outputItems = new TiffOutputItem[imageData.length];
-        for (int i = 0; i < imageData.length; i++) {
-            final TiffOutputItem item = new TiffOutputItem.Value("TIFF image data",
-                    imageData[i].getData());
-            outputItems[i] = item;
-        }
+        Arrays.setAll(outputItems, i -> new TiffOutputItem.Value("TIFF image data", imageData[i].getData()));
 
     }
 

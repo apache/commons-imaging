@@ -16,6 +16,8 @@
  */
 package org.apache.commons.imaging.formats.psd.dataparsers;
 
+import java.util.Arrays;
+
 import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
 public class DataParserIndexed extends DataParser {
@@ -23,17 +25,16 @@ public class DataParserIndexed extends DataParser {
 
     public DataParserIndexed(final byte[] colorModeData) {
         colorTable = new int[256];
-        for (int i = 0; i < 256; i++) {
+        Arrays.setAll(colorTable, i -> {
             final int red = 0xff & colorModeData[0 * 256 + i];
             final int green = 0xff & colorModeData[1 * 256 + i];
             final int blue = 0xff & colorModeData[2 * 256 + i];
             final int alpha = 0xff;
 
-            final int rgb = ((0xff & alpha) << 24) | ((0xff & red) << 16)
+            // return RGB
+            return ((0xff & alpha) << 24) | ((0xff & red) << 16)
                     | ((0xff & green) << 8) | ((0xff & blue) << 0);
-
-            colorTable[i] = rgb;
-        }
+        });
     }
 
     @Override

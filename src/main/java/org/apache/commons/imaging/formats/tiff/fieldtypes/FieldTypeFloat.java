@@ -31,8 +31,7 @@ public class FieldTypeFloat extends FieldType {
     public Object getValue(final TiffField entry) {
         final byte[] bytes = entry.getByteArrayValue();
         if (entry.getCount() == 1) {
-            return ByteConversions.toFloat(bytes,
-                    entry.getByteOrder());
+            return ByteConversions.toFloat(bytes, entry.getByteOrder());
         }
         return ByteConversions.toFloats(bytes, entry.getByteOrder());
     }

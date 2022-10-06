@@ -418,8 +418,7 @@ public class TiffReader extends BinaryFileParser {
             final ByteSourceFile bsf = (ByteSourceFile) byteSource;
             for (int i = 0; i < elements.size(); i++) {
                 final TiffDirectory.ImageDataElement element = elements.get(i);
-                data[i] = new TiffImageData.ByteSourceData(element.offset,
-                        element.length, bsf);
+                data[i] = new TiffImageData.ByteSourceData(element.offset, element.length, bsf);
             }
         } else {
             for (int i = 0; i < elements.size(); i++) {

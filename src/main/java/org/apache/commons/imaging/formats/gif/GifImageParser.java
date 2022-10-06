@@ -1106,18 +1106,18 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
                     continue;
                 }
 
-                final byte[] GIF_MAGIC_TRAILER = new byte[256];
+                final byte[] gifMagicTrailer = new byte[256];
                 for (int magic = 0; magic <= 0xff; magic++) {
-                    GIF_MAGIC_TRAILER[magic] = (byte) (0xff - magic);
+                    gifMagicTrailer[magic] = (byte) (0xff - magic);
                 }
 
                 if (blockBytes.length < XMP_APPLICATION_ID_AND_AUTH_CODE.length
-                        + GIF_MAGIC_TRAILER.length) {
+                        + gifMagicTrailer.length) {
                     continue;
                 }
                 if (!compareBytes(blockBytes, blockBytes.length
-                        - GIF_MAGIC_TRAILER.length, GIF_MAGIC_TRAILER, 0,
-                        GIF_MAGIC_TRAILER.length)) {
+                        - gifMagicTrailer.length, gifMagicTrailer, 0,
+                        gifMagicTrailer.length)) {
                     throw new ImageReadException(
                             "XMP block in GIF missing magic trailer.");
                 }
@@ -1127,7 +1127,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
                         blockBytes,
                         XMP_APPLICATION_ID_AND_AUTH_CODE.length,
                         blockBytes.length
-                                - (XMP_APPLICATION_ID_AND_AUTH_CODE.length + GIF_MAGIC_TRAILER.length),
+                                - (XMP_APPLICATION_ID_AND_AUTH_CODE.length + gifMagicTrailer.length),
                                 StandardCharsets.UTF_8);
                 result.add(xml);
             }

@@ -590,11 +590,7 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
         final FileHeader fileHeader = contents.fileHeader;
         final List<BufferedImage> result = new ArrayList<>(fileHeader.iconCount);
         for (int i = 0; i < fileHeader.iconCount; i++) {
-            final IconData iconData = contents.iconDatas[i];
-
-            final BufferedImage image = iconData.readBufferedImage();
-
-            result.add(image);
+            result.add(contents.iconDatas[i].readBufferedImage());
         }
 
         return result;

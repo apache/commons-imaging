@@ -262,12 +262,10 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
         final int hDpi = toUInt16(pcxHeaderBytes, 12, getByteOrder());
         final int vDpi = toUInt16(pcxHeaderBytes, 14, getByteOrder());
         final int[] colormap = new int[16];
-        for (int i = 0; i < 16; i++) {
-            colormap[i] = 0xff000000
+        Arrays.setAll(colormap, i -> 0xff000000
                     | ((0xff & pcxHeaderBytes[16 + 3 * i]) << 16)
                     | ((0xff & pcxHeaderBytes[16 + 3 * i + 1]) << 8)
-                    | (0xff & pcxHeaderBytes[16 + 3 * i + 2]);
-        }
+                    | (0xff & pcxHeaderBytes[16 + 3 * i + 2]));
         final int reserved = 0xff & pcxHeaderBytes[64];
         final int nPlanes = 0xff & pcxHeaderBytes[65];
         final int bytesPerLine = toUInt16(pcxHeaderBytes, 66, getByteOrder());

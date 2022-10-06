@@ -34,6 +34,7 @@ import java.io.OutputStream;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -294,7 +295,7 @@ public abstract class TiffImageWriterBase {
         final int nRows = b.length / nBytesPerRow;
         for (int iRow = 0; iRow < nRows; iRow++) {
             final int offset = iRow * nBytesPerRow;
-            for (int i = nBytesPerRow-1; i >= bytesPerSample; i--) {
+            for (int i = nBytesPerRow - 1; i >= bytesPerSample; i--) {
                 b[offset + i] -= b[offset + i - bytesPerSample];
             }
         }
@@ -383,8 +384,7 @@ public abstract class TiffImageWriterBase {
         int t6Options = 0;
         if (compression == TIFF_COMPRESSION_CCITT_1D) {
             for (int i = 0; i < strips.length; i++) {
-                strips[i] = T4AndT6Compression.compressModifiedHuffman(
-                        strips[i], width, strips[i].length / ((width + 7) / 8));
+                strips[i] = T4AndT6Compression.compressModifiedHuffman(strips[i], width, strips[i].length / ((width + 7) / 8));
             }
         } else if (compression == TIFF_COMPRESSION_CCITT_GROUP_3) {
             final Integer t4Parameter = params.getT4Options();
@@ -422,8 +422,7 @@ public abstract class TiffImageWriterBase {
                         "T.6 compression with the uncompressed mode extension is not yet supported");
             }
             for (int i = 0; i < strips.length; i++) {
-                strips[i] = T4AndT6Compression.compressT6(strips[i], width,
-                        strips[i].length / ((width + 7) / 8));
+                strips[i] = T4AndT6Compression.compressT6(strips[i], width, strips[i].length / ((width + 7) / 8));
             }
         } else if (compression == TIFF_COMPRESSION_PACKBITS) {
             for (int i = 0; i < strips.length; i++) {
@@ -455,9 +454,7 @@ public abstract class TiffImageWriterBase {
         }
 
         final TiffElement.DataElement[] imageData = new TiffElement.DataElement[strips.length];
-        for (int i = 0; i < strips.length; i++) {
-            imageData[i] = new TiffImageData.Data(0, strips[i].length, strips[i]);
-        }
+        Arrays.setAll(imageData, i -> new TiffImageData.Data(0, strips[i].length, strips[i]));
 
         final TiffOutputSet outputSet = new TiffOutputSet(byteOrder);
         final TiffOutputDirectory directory = outputSet.addRootDirectory();

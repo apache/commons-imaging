@@ -20,6 +20,7 @@ import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.png.GammaCorrection;
@@ -77,9 +78,7 @@ public class PngChunkPlte extends PngChunk {
     // }
 
     public void correct(final GammaCorrection gammaCorrection) {
-        for (int i = 0; i < rgb.length; i++) {
-            rgb[i] = gammaCorrection.correctARGB(rgb[i]);
-        }
+        Arrays.setAll(rgb, i -> gammaCorrection.correctARGB(rgb[i]));
     }
 
 }
