@@ -26,9 +26,9 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
 /**
  * GDAL library.
  * <BR>
- * http://www.awaresystems.be/imaging/tiff/tifftags/gdal_metadata.html
+ * <a href="http://www.awaresystems.be/imaging/tiff/tifftags/gdal_metadata.html">...</a>
  * <BR>
- * http://www.awaresystems.be/imaging/tiff/tifftags/gdal_nodata.html
+ * <a href="http://www.awaresystems.be/imaging/tiff/tifftags/gdal_nodata.html">...</a>
  */
 public final class GdalLibraryTagConstants {
 
