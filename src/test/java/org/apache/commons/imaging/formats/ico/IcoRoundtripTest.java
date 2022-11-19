@@ -26,6 +26,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteOrder;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -538,7 +539,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
         // File exportFile = new File("/tmp/" + description + ".ico");
         // IoUtils.writeToFile(rawData, exportFile);
 
-        final File tempFile = File.createTempFile("temp", ".ico");
+        final File tempFile = Files.createTempFile("temp", ".ico").toFile();
         FileUtils.writeByteArrayToFile(tempFile, rawData);
 
         final BufferedImage dstImage = Imaging.getBufferedImage(tempFile);

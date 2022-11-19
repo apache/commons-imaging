@@ -27,6 +27,7 @@ import org.junit.jupiter.api.Test;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -57,7 +58,7 @@ public class TiffRoundtripTest extends TiffBaseTest {
             };
             final TiffImageParser tiffImageParser = new TiffImageParser();
             for (final int compression : compressions) {
-                final File tempFile = File.createTempFile(imageFile.getName() + "-" + compression + ".", ".tif");
+                final File tempFile = Files.createTempFile(imageFile.getName() + "-" + compression + ".", ".tif").toFile();
                 final TiffImagingParameters params = new TiffImagingParameters();
                 params.setCompression(compression);
                 try (FileOutputStream fos = new FileOutputStream(tempFile)) {

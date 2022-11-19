@@ -24,6 +24,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.stream.Stream;
 
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -48,7 +49,7 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
         final String xmpXml = new JpegImageParser().getXmpXml(byteSource, params);
         assertNotNull(xmpXml);
 
-        final File noXmpFile = File.createTempFile(imageFile.getName() + ".", ".jpg");
+        final File noXmpFile = Files.createTempFile(imageFile.getName() + ".", ".jpg").toFile();
         {
             // test remove
 
@@ -69,7 +70,7 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
             // test update
 
             final String newXmpXml = "test";
-            final File updated = File.createTempFile(imageFile.getName() + ".", ".jpg");
+            final File updated = Files.createTempFile(imageFile.getName() + ".", ".jpg").toFile();
             try (FileOutputStream fos = new FileOutputStream(updated);
                     OutputStream os = new BufferedOutputStream(fos)) {
                 new JpegXmpRewriter().updateXmpXml(byteSource, os, newXmpXml);
@@ -88,7 +89,7 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
             // test insert
 
             final String newXmpXml = "test";
-            final File updated = File.createTempFile(imageFile.getName() + ".", ".jpg");
+            final File updated = Files.createTempFile(imageFile.getName() + ".", ".jpg").toFile();
             try (FileOutputStream fos = new FileOutputStream(updated);
                     OutputStream os = new BufferedOutputStream(fos)) {
                 new JpegXmpRewriter().updateXmpXml(new ByteSourceFile(

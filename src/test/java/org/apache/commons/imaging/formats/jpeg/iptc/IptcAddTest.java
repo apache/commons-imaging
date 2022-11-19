@@ -24,6 +24,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -75,7 +76,7 @@ public class IptcAddTest extends IptcBaseTest {
 
         final PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords, newBlocks);
 
-        final File updated = File.createTempFile(imageFile.getName() + ".iptc.add.", ".jpg");
+        final File updated = Files.createTempFile(imageFile.getName() + ".iptc.add.", ".jpg").toFile();
         try (FileOutputStream fos = new FileOutputStream(updated);
                 OutputStream os = new BufferedOutputStream(fos)) {
             new JpegIptcRewriter().writeIPTC(byteSource, os, newData);

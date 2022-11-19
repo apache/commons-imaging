@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Test;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -139,7 +140,7 @@ public class BmpRoundtripTest extends BmpBaseTest {
 
         final byte[] bytes = Imaging.writeImageToBytes(srcImage, ImageFormats.BMP);
 
-        final File tempFile = File.createTempFile("temp", ".bmp");
+        final File tempFile = Files.createTempFile("temp", ".bmp").toFile();
         FileUtils.writeByteArrayToFile(tempFile, bytes);
 
         final BufferedImage dstImage = Imaging.getBufferedImage(bytes);

@@ -30,6 +30,7 @@ import org.junit.jupiter.api.Test;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -64,7 +65,7 @@ public class XmpUpdateTest extends ImagingTest {
                 continue;
             }
 
-            final File tempFile = File.createTempFile(imageFile.getName() + ".", "." + imageFormat.getDefaultExtension());
+            final File tempFile = Files.createTempFile(imageFile.getName() + ".", "." + imageFormat.getDefaultExtension()).toFile();
             final BufferedImage image = Imaging.getBufferedImage(imageFile);
 
             final ImageParser parser = Util.getImageParser("." + imageFormat.getDefaultExtension());

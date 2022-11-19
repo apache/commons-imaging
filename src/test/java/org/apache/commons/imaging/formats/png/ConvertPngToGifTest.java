@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Test;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.nio.file.Files;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -44,7 +45,7 @@ public class ConvertPngToGifTest extends PngBaseTest {
             final BufferedImage image = Imaging.getBufferedImage(imageFile);
             assertNotNull(image);
 
-            final File outFile = File.createTempFile(imageFile.getName() + ".", ".gif");
+            final File outFile = Files.createTempFile(imageFile.getName() + ".", ".gif").toFile();
 
             Imaging.writeImage(image, outFile, ImageFormats.GIF);
         }

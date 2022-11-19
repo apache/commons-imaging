@@ -25,6 +25,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,7 +74,7 @@ public class PngTextTest extends PngBaseTest {
             bytes = baos.toByteArray();
         }
 
-        final File tempFile = File.createTempFile("temp", ".png");
+        final File tempFile = Files.createTempFile("temp", ".png").toFile();
         FileUtils.writeByteArrayToFile(tempFile, bytes);
 
         final PngImageInfo imageInfo = (PngImageInfo) Imaging.getImageInfo(bytes);

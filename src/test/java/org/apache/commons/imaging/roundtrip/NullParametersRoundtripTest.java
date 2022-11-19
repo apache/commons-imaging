@@ -23,6 +23,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.nio.file.Files;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -37,7 +38,7 @@ public class NullParametersRoundtripTest extends RoundtripBase {
     @MethodSource("data")
     public void testNullParametersRoundtrip(final FormatInfo formatInfo) throws Exception {
         final BufferedImage testImage = TestImages.createFullColorImage(1, 1);
-        final File temp1 = File.createTempFile("nullParameters.", "." + formatInfo.format.getDefaultExtension());
+        final File temp1 = Files.createTempFile("nullParameters.", "." + formatInfo.format.getDefaultExtension()).toFile();
         Imaging.writeImage(testImage, temp1, formatInfo.format);
         Imaging.getImageInfo(temp1);
         Imaging.getImageSize(temp1);

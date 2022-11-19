@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Test;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -49,7 +50,7 @@ public class PngWriteForceTrueColorText extends PngBaseTest {
                 final BufferedImage image = pngImageParser.getBufferedImage(imageFile, new PngImagingParameters());
                 assertNotNull(image);
 
-                final File outFile = File.createTempFile(imageFile.getName() + ".", ".gif");
+                final File outFile = Files.createTempFile(imageFile.getName() + ".", ".gif").toFile();
                 // Debug.debug("outFile", outFile);
 
                 final PngImagingParameters params = new PngImagingParameters();
