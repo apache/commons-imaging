@@ -20,6 +20,7 @@ package org.apache.commons.imaging.formats.jpeg.exif;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.util.stream.Stream;
 
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
@@ -46,7 +47,7 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest {
     public void testOddOffsets(final File imageFile) throws Exception {
         Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
-        final File tempFile = File.createTempFile("test", ".jpg");
+        final File tempFile = Files.createTempFile("test", ".jpg").toFile();
         Debug.debug("tempFile", tempFile.getAbsoluteFile());
 
         try {

@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Files;
 
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.ImagingTest;
@@ -32,7 +33,7 @@ import org.junit.jupiter.api.Test;
 
 public abstract class ByteSourceTest extends ImagingTest {
     protected File createTempFile(final byte[] src) throws IOException {
-        final File file = File.createTempFile("raw_", ".bin");
+        final File file = Files.createTempFile("raw_", ".bin").toFile();
 
         // write test bytes to file.
         try (FileOutputStream fos = new FileOutputStream(file); OutputStream os = new BufferedOutputStream(fos)) {

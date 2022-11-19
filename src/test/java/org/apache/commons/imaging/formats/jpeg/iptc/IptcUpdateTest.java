@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -71,7 +72,7 @@ public class IptcUpdateTest extends IptcBaseTest {
     }
 
     public File removeIptc(final ByteSource byteSource, final File imageFile) throws Exception {
-        final File noIptcFile = File.createTempFile(imageFile.getName() + ".iptc.remove.", ".jpg");
+        final File noIptcFile = Files.createTempFile(imageFile.getName() + ".iptc.remove.", ".jpg").toFile();
 
         try (OutputStream os = new BufferedOutputStream(new FileOutputStream(noIptcFile))) {
             new JpegIptcRewriter().removeIPTC(byteSource, os);
@@ -102,8 +103,8 @@ public class IptcUpdateTest extends IptcBaseTest {
         final PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,
                 newBlocks);
 
-        final File updated = File.createTempFile(imageFile.getName()
-                + ".iptc.insert.", ".jpg");
+        final File updated = Files.createTempFile(imageFile.getName()
+                + ".iptc.insert.", ".jpg").toFile();
         try (FileOutputStream fos = new FileOutputStream(updated);
                 OutputStream os = new BufferedOutputStream(fos)) {
             new JpegIptcRewriter().writeIPTC(new ByteSourceFile(
@@ -149,8 +150,8 @@ public class IptcUpdateTest extends IptcBaseTest {
     }
 
     public File writeIptc(final ByteSource byteSource, final PhotoshopApp13Data newData, final File imageFile) throws IOException, ImageReadException, ImageWriteException {
-        final File updated = File.createTempFile(imageFile.getName()
-                + ".iptc.update.", ".jpg");
+        final File updated = Files.createTempFile(imageFile.getName()
+                + ".iptc.update.", ".jpg").toFile();
         try (FileOutputStream fos = new FileOutputStream(updated);
                 OutputStream os = new BufferedOutputStream(fos)) {
             new JpegIptcRewriter().writeIPTC(byteSource, os, newData);

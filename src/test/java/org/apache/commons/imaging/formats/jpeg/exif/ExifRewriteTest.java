@@ -27,6 +27,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -83,7 +84,7 @@ public class ExifRewriteTest extends ExifBaseTest {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 new ExifRewriter().removeExifMetadata(byteSource, baos);
                 final byte[] bytes = baos.toByteArray();
-                final File tempFile = File.createTempFile("test", ".jpg");
+                final File tempFile = Files.createTempFile("test", ".jpg").toFile();
                 Debug.debug("tempFile", tempFile);
                 FileUtils.writeByteArrayToFile(tempFile, bytes);
 
@@ -122,7 +123,7 @@ public class ExifRewriteTest extends ExifBaseTest {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 new ExifRewriter().removeExifMetadata(byteSource, baos);
                 final byte[] bytes = baos.toByteArray();
-                final File tempFile = File.createTempFile("removed", ".jpg");
+                final File tempFile = Files.createTempFile("removed", ".jpg").toFile();
                 Debug.debug("tempFile", tempFile);
                 FileUtils.writeByteArrayToFile(tempFile, bytes);
 
@@ -143,7 +144,7 @@ public class ExifRewriteTest extends ExifBaseTest {
                         outputSet);
 
                 final byte[] bytes = baos.toByteArray();
-                final File tempFile = File.createTempFile("inserted" + "_", ".jpg");
+                final File tempFile = Files.createTempFile("inserted" + "_", ".jpg").toFile();
                 Debug.debug("tempFile", tempFile);
                 FileUtils.writeByteArrayToFile(tempFile, bytes);
 
@@ -210,7 +211,7 @@ public class ExifRewriteTest extends ExifBaseTest {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 rewriter.rewrite(byteSource, baos, outputSet);
                 final byte[] bytes = baos.toByteArray();
-                final File tempFile = File.createTempFile(name + "_", ".jpg");
+                final File tempFile = Files.createTempFile(name + "_", ".jpg").toFile();
                 Debug.debug("tempFile", tempFile);
                 FileUtils.writeByteArrayToFile(tempFile, bytes);
 

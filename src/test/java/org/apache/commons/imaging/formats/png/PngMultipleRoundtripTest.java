@@ -25,6 +25,7 @@ import org.junit.jupiter.api.Test;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.nio.file.Files;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -56,7 +57,7 @@ public class PngMultipleRoundtripTest extends PngBaseTest {
                 final BufferedImage image = Imaging.getBufferedImage(lastFile);
                 assertNotNull(image);
 
-                final File tempFile = File.createTempFile(imageFile.getName() + "." + j + ".", ".png");
+                final File tempFile = Files.createTempFile(imageFile.getName() + "." + j + ".", ".png").toFile();
                 Debug.debug("tempFile", tempFile);
 
                 Imaging.writeImage(image, tempFile, ImageFormats.PNG);

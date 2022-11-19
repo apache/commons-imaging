@@ -24,6 +24,8 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+
 import javax.imageio.ImageIO;
 import org.apache.commons.imaging.ImageWriteException;
 import org.junit.jupiter.api.BeforeEach;
@@ -86,7 +88,7 @@ public class PngWritePredictorTest {
     File tempFile = null;
 
     try {
-      tempFile = File.createTempFile("PngWritePredictorRGB", ".png");
+      tempFile = Files.createTempFile("PngWritePredictorRGB", ".png").toFile();
     } catch (final IOException ioex) {
       fail("Failed to create temporary file, " + ioex.getMessage());
     }

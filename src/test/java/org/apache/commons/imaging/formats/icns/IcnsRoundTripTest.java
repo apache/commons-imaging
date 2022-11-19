@@ -26,6 +26,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteOrder;
+import java.nio.file.Files;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
@@ -408,7 +409,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
     private void writeAndReadImageData(final String description, final byte[] rawData,
             final int foreground, final int background) throws IOException,
             ImageReadException {
-        final File exportFile = File.createTempFile(description, ".icns");
+        final File exportFile = Files.createTempFile(description, ".icns").toFile();
         FileUtils.writeByteArrayToFile(exportFile, rawData);
         final BufferedImage dstImage = Imaging.getBufferedImage(exportFile);
 

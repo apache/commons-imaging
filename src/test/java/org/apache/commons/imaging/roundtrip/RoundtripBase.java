@@ -29,6 +29,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -38,8 +39,8 @@ public class RoundtripBase {
     protected void roundtrip(final FormatInfo formatInfo, final BufferedImage testImage,
                              final String tempPrefix, final boolean imageExact) throws IOException,
             ImageReadException, ImageWriteException {
-        final File temp1 = File.createTempFile(tempPrefix + ".", "."
-                + formatInfo.format.getDefaultExtension());
+        final File temp1 = Files.createTempFile(tempPrefix + ".", "."
+                + formatInfo.format.getDefaultExtension()).toFile();
         Debug.debug("tempFile: " + temp1.getName());
 
         final ImageParser imageParser = Util.getImageParser(formatInfo.format);
@@ -61,7 +62,7 @@ public class RoundtripBase {
         }
 
         if (formatInfo.identicalSecondWrite) {
-            final File temp2 = File.createTempFile(tempPrefix + ".", "." + formatInfo.format.getDefaultExtension());
+            final File temp2 = Files.createTempFile(tempPrefix + ".", "." + formatInfo.format.getDefaultExtension()).toFile();
             try (FileOutputStream fos = new FileOutputStream(temp2)) {
                 imageParser.writeImage(image2, fos, params);
             }
