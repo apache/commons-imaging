@@ -32,9 +32,7 @@ public final class IptcTypeLookup {
     }
 
     public static IptcType getIptcType(final int type) {
-        if (!IPTC_TYPE_MAP.containsKey(type)) {
-            return IptcTypes.getUnknown(type);
-        }
-        return IPTC_TYPE_MAP.get(type);
+        final IptcType iptcType = IPTC_TYPE_MAP.get(type);
+        return iptcType != null ? iptcType : IptcTypes.getUnknown(type);
     }
 }
