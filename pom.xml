@@ -25,7 +25,7 @@
     <!-- https://issues.apache.org/jira/browse/RAT-297, fixed in 0.14, not released as of today 13/05/22 -->
     <!-- https://issues.apache.org/jira/browse/MSHARED-1049 -->
     <!-- once jdepend and rat can be used OK, we can upgrade to parent 53+ -->
-    <version>54</version>
+    <version>55</version>
   </parent>
 
   <artifactId>commons-imaging</artifactId>
