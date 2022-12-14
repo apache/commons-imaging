@@ -26,6 +26,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -99,6 +100,9 @@ public final class Imaging {
     private static final int[] MAGIC_NUMBERS_ICNS = { 0x69, 0x63, };
     private static final int[] MAGIC_NUMBERS_DCX = { 0xB1, 0x68, };
     private static final int[] MAGIC_NUMBERS_RGBE = { 0x23, 0x3F, };
+    private static final int[] MAGIC_NUMBERS_RIFF_1 = { 0x52, 0x49, };
+    private static final int[] MAGIC_NUMBERS_RIFF_2 = { 0x46, 0x46, };
+    private static final byte[] MAGIC_NUMBERS_WEBP = { 0x57, 0x45, 0x42, 0x50, };
 
     private static boolean compareBytePair(final int[] a, final int[] b) {
         if (a.length != 2 && b.length != 2) {
@@ -754,6 +758,26 @@ public final class Imaging {
                 return ImageFormats.DCX;
             } else if (compareBytePair(MAGIC_NUMBERS_RGBE, bytePair)) {
                 return ImageFormats.RGBE;
+            } else if (compareBytePair(MAGIC_NUMBERS_RIFF_1, bytePair)) {
+                final int i3 = is.read();
+                final int i4 = is.read();
+                if ((i3 < 0) || (i4 < 0)) {
+                    throw new IllegalArgumentException("Couldn't read magic numbers to guess format.");
+                }
+
+                final int b3 = i3 & 0xff;
+                final int b4 = i4 & 0xff;
+                final int[] bytePair2 = { b3, b4, };
+                if (compareBytePair(MAGIC_NUMBERS_RIFF_2, bytePair2)) {
+                    byte[] bytes = new byte[4];
+                    if (is.read(bytes) < 4) { // Skip file size
+                        throw new IllegalArgumentException("Couldn't read magic numbers to guess format.");
+                    }
+
+                    if (is.read(bytes) == 4 && Arrays.equals(MAGIC_NUMBERS_WEBP, bytes)) {
+                        return ImageFormats.WEBP;
+                    }
+                }
             }
             return Stream
                 .of(ImageFormats.values())

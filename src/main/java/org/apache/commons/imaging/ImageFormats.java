@@ -40,6 +40,7 @@ public enum ImageFormats implements ImageFormat {
     TGA(),
     TIFF("tif", "tiff"),
     WBMP("wbmp"),
+    WEBP("webp"),
     XBM("xbm"),
     XPM("xpm");
 

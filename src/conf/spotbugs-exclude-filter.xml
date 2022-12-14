@@ -181,6 +181,16 @@
     <Class name="org.apache.commons.imaging.formats.pnm.PnmImageParser" />
     <Bug pattern="UC_USELESS_CONDITION" />
   </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.webp.WebPImageMetadata" />
+    <Method name="getExif" />
+    <Bug pattern="EI_EXPOSE_REP" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.webp.WebPImageMetadata" />
+    <Method name="&lt;init&gt;" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
   <!-- Reason: false positives with JVM >= 14 - https://github.com/spotbugs/spotbugs/issues/868 -->
   <Match>
     <Bug pattern="RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE" />

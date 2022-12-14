@@ -49,6 +49,7 @@ import org.apache.commons.imaging.formats.psd.PsdImageParser;
 import org.apache.commons.imaging.formats.rgbe.RgbeImageParser;
 import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 import org.apache.commons.imaging.formats.wbmp.WbmpImageParser;
+import org.apache.commons.imaging.formats.webp.WebPImageParser;
 import org.apache.commons.imaging.formats.xbm.XbmImageParser;
 import org.apache.commons.imaging.formats.xpm.XpmImageParser;
 
@@ -112,6 +113,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
                 new PsdImageParser(),
                 new RgbeImageParser(),
                 new TiffImageParser(),
+                new WebPImageParser(),
                 new WbmpImageParser(),
                 new XbmImageParser(),
                 new XpmImageParser()
