@@ -220,16 +220,16 @@ public class ImageBuilder {
      * @throws RasterFormatException if the specified area is not contained
      *         within this ImageBuilder
      */
-    public ImageBuilder getSubset(final int x, final int y, final int w, final int h) {
-        checkBounds(x, y, w, h);
-        final ImageBuilder b = new ImageBuilder(w, h, hasAlpha, isAlphaPremultiplied);
-        for(int i=0; i<h; i++){
-            final int srcDex = (i+y)*width+x;
-            final int outDex = i*w;
-            System.arraycopy(data, srcDex, b.data, outDex, w);
-        }
-        return b;
-    }
+     public ImageBuilder getSubset(final int x, final int y, final int w, final int h) {
+         checkBounds(x, y, w, h);
+         final ImageBuilder b = new ImageBuilder(w, h, hasAlpha, isAlphaPremultiplied);
+         for (int i = 0; i < h; i++) {
+             final int srcDex = (i + y) * width + x;
+             final int outDex = i * w;
+             System.arraycopy(data, srcDex, b.data, outDex, w);
+         }
+         return b;
+     }
 
 
     /**
