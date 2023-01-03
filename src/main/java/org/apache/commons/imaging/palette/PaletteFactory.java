@@ -145,10 +145,8 @@ public class PaletteFactory {
             return null;
         }
 
-        final int[] sliceMins = new int[subset.mins.length];
-        System.arraycopy(subset.mins, 0, sliceMins, 0, subset.mins.length);
-        final int[] sliceMaxs = new int[subset.maxs.length];
-        System.arraycopy(subset.maxs, 0, sliceMaxs, 0, subset.maxs.length);
+        final int[] sliceMins = Arrays.copyOf(subset.mins, subset.mins.length);
+        final int[] sliceMaxs = Arrays.copyOf(subset.maxs, subset.maxs.length);
 
         sliceMaxs[component] = slice;
         sliceMins[component] = slice + 1;
@@ -178,10 +176,8 @@ public class PaletteFactory {
 
         final int total = subset.total;
 
-        final int[] sliceMins = new int[subset.mins.length];
-        System.arraycopy(subset.mins, 0, sliceMins, 0, subset.mins.length);
-        final int[] sliceMaxs = new int[subset.maxs.length];
-        System.arraycopy(subset.maxs, 0, sliceMaxs, 0, subset.maxs.length);
+        final int[] sliceMins = Arrays.copyOf(subset.mins, subset.mins.length);
+        final int[] sliceMaxs = Arrays.copyOf(subset.maxs, subset.maxs.length);
 
         int sum1 = 0;
         int slice1;

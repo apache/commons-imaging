@@ -18,6 +18,7 @@ package org.apache.commons.imaging.common;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 /**
  * Like ByteArrayOutputStream, but has some performance benefit,
@@ -43,9 +44,7 @@ class FastByteArrayOutputStream extends OutputStream {
 
     public byte[] toByteArray() {
         if (count < bytes.length) {
-            final byte[] result = new byte[count];
-            System.arraycopy(bytes, 0, result, 0, count);
-            return result;
+            return Arrays.copyOf(bytes, count);
         }
         return bytes;
     }

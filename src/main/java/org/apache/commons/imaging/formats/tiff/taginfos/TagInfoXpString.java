@@ -18,6 +18,7 @@ package org.apache.commons.imaging.formats.tiff.taginfos;
 
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
@@ -42,9 +43,7 @@ public class TagInfoXpString extends TagInfo {
         }
         final String s = (String) value;
         final byte[] bytes = s.getBytes(StandardCharsets.UTF_16LE);
-        final byte[] paddedBytes = new byte[bytes.length + 2];
-        System.arraycopy(bytes, 0, paddedBytes, 0, bytes.length);
-        return paddedBytes;
+        return Arrays.copyOf(bytes, bytes.length + 2);
     }
 
     @Override

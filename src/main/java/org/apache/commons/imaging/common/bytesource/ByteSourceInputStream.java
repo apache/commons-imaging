@@ -20,6 +20,7 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Objects;
 
 import org.apache.commons.imaging.common.BinaryFunctions;
@@ -71,9 +72,7 @@ public class ByteSourceInputStream extends ByteSource {
         }
         if (read < BLOCK_SIZE) {
             // return a copy.
-            final byte[] result = new byte[read];
-            System.arraycopy(readBuffer, 0, result, 0, read);
-            return new CacheBlock(result);
+            return new CacheBlock(Arrays.copyOf(readBuffer, read));
         }
         // return current buffer.
         final byte[] result = readBuffer;

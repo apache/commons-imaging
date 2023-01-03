@@ -115,8 +115,7 @@ public class SurveyTiffFolder {
                     if (i > 0) {
                         final String ext = name.substring(i).toLowerCase();
                         if (".tif".equals(ext) || ".tiff".equals(ext)) {
-                            final String[] temp = new String[depth + 1];
-                            System.arraycopy(scratch, 0, temp, 0, depth + 1);
+                            final String[] temp = Arrays.copyOf(scratch, depth + 1);
                             pathList.add(temp);
                         }
                     }

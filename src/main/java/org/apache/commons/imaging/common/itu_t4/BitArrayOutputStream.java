@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.common.itu_t4;
 
 import java.io.OutputStream;
+import java.util.Arrays;
 
 /**
  * Output stream writing to a byte array, and capable
@@ -45,9 +46,7 @@ class BitArrayOutputStream extends OutputStream {
         if (bytesWritten == buffer.length) {
             return buffer;
         }
-        final byte[] out = new byte[bytesWritten];
-        System.arraycopy(buffer, 0, out, 0, bytesWritten);
-        return out;
+        return Arrays.copyOf(buffer, bytesWritten);
     }
 
     @Override

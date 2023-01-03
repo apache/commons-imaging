@@ -461,9 +461,7 @@ public class TiffField {
         }
         if (o instanceof int[]) {
             final int[] numbers = (int[]) o;
-            final int[] result = new int[numbers.length];
-            System.arraycopy(numbers, 0, result, 0, numbers.length);
-            return result;
+            return Arrays.copyOf(numbers, numbers.length);
         }
 
         throw new ImageReadException("Unknown value: " + o + " for: "
@@ -505,9 +503,7 @@ public class TiffField {
         }
         if (o instanceof double[]) {
             final double[] numbers = (double[]) o;
-            final double[] result = new double[numbers.length];
-            System.arraycopy(numbers, 0, result, 0, numbers.length);
-            return result;
+            return Arrays.copyOf(numbers, numbers.length);
         }
 
         throw new ImageReadException("Unknown value: " + o + " for: "

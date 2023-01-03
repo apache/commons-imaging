@@ -22,6 +22,7 @@ import static org.apache.commons.imaging.common.BinaryFunctions.getStreamBytes;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.InflaterInputStream;
@@ -77,8 +78,7 @@ public class PngChunkIccp extends PngChunk {
         if (index < 0) {
             throw new ImageReadException("PngChunkIccp: No Profile Name");
         }
-        final byte[] nameBytes = new byte[index];
-        System.arraycopy(bytes, 0, nameBytes, 0, index);
+        final byte[] nameBytes = Arrays.copyOf(bytes, index);
         profileName = new String(nameBytes, StandardCharsets.ISO_8859_1);
 
         compressionMethod = bytes[index + 1];

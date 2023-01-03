@@ -19,6 +19,7 @@ package org.apache.commons.imaging.common.bytesource;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 public class ByteSourceArray extends ByteSource {
     private final byte[] bytes;
@@ -48,9 +49,7 @@ public class ByteSourceArray extends ByteSource {
                     + bytes.length + ").");
         }
 
-        final byte[] result = new byte[length];
-        System.arraycopy(bytes, start, result, 0, length);
-        return result;
+        return Arrays.copyOfRange(bytes, start, start + length);
     }
 
     @Override

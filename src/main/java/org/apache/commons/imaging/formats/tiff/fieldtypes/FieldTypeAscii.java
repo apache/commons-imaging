@@ -18,6 +18,7 @@ package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.formats.tiff.TiffField;
@@ -69,15 +70,13 @@ public class FieldTypeAscii extends FieldType {
     public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException {
         if (o instanceof byte[]) {
             final byte[] bytes = (byte[]) o;
-            final byte[] result = new byte[bytes.length + 1];
-            System.arraycopy(bytes, 0, result, 0, bytes.length);
+            final byte[] result = Arrays.copyOf(bytes, bytes.length + 1);
             result[result.length - 1] = 0;
             return result;
         }
         if (o instanceof String) {
             final byte[] bytes = ((String) o).getBytes(StandardCharsets.UTF_8);
-            final byte[] result = new byte[bytes.length + 1];
-            System.arraycopy(bytes, 0, result, 0, bytes.length);
+            final byte[] result = Arrays.copyOf(bytes, bytes.length + 1);
             result[result.length - 1] = 0;
             return result;
         }

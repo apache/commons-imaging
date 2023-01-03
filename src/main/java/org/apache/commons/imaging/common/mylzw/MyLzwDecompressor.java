@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.ByteOrder;
+import java.util.Arrays;
 
 import org.apache.commons.imaging.ImageReadException;
 
@@ -122,9 +123,7 @@ public final class MyLzwDecompressor {
     }
 
     private byte[] appendBytes(final byte[] bytes, final byte b) {
-        final byte[] result = new byte[bytes.length + 1];
-
-        System.arraycopy(bytes, 0, result, 0, bytes.length);
+        final byte[] result = Arrays.copyOf(bytes, bytes.length + 1);
         result[result.length - 1] = b;
         return result;
     }
