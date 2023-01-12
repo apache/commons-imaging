@@ -282,7 +282,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
     @Override
     public ImageMetadata getMetadata(final ByteSource byteSource, final PngImagingParameters params)
             throws ImageReadException, IOException {
-        final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] { ChunkType.tEXt, ChunkType.zTXt, }, false);
+        final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] { ChunkType.tEXt, ChunkType.zTXt, ChunkType.iTXt }, false);
 
         if (chunks.isEmpty()) {
             return null;
