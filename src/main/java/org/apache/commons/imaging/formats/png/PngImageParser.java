@@ -16,12 +16,6 @@
  */
 package org.apache.commons.imaging.formats.png;
 
-import static org.apache.commons.imaging.common.BinaryFunctions.printCharQuad;
-import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.readAndVerifyBytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.skipBytes;
-
 import java.awt.Dimension;
 import java.awt.color.ColorSpace;
 import java.awt.color.ICC_ColorSpace;
@@ -68,7 +62,16 @@ import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFi
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilterGrayscale;
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilterIndexedColor;
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilterTrueColor;
+import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
+import org.apache.commons.imaging.formats.tiff.TiffImageParser;
+import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.icc.IccProfileParser;
+
+import static org.apache.commons.imaging.common.BinaryFunctions.printCharQuad;
+import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.readAndVerifyBytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.skipBytes;
 
 public class PngImageParser extends ImageParser<PngImagingParameters>  implements XmpEmbeddable {
 
@@ -187,29 +190,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
             final int crc = read4Bytes("CRC", is, "Not a Valid PNG File", getByteOrder());
 
             if (keep) {
-                if (chunkType == ChunkType.iCCP.value) {
-                    result.add(new PngChunkIccp(length, chunkType, crc, bytes));
-                } else if (chunkType == ChunkType.tEXt.value) {
-                    result.add(new PngChunkText(length, chunkType, crc, bytes));
-                } else if (chunkType == ChunkType.zTXt.value) {
-                    result.add(new PngChunkZtxt(length, chunkType, crc, bytes));
-                } else if (chunkType == ChunkType.IHDR.value) {
-                    result.add(new PngChunkIhdr(length, chunkType, crc, bytes));
-                } else if (chunkType == ChunkType.PLTE.value) {
-                    result.add(new PngChunkPlte(length, chunkType, crc, bytes));
-                } else if (chunkType == ChunkType.pHYs.value) {
-                    result.add(new PngChunkPhys(length, chunkType, crc, bytes));
-                } else if (chunkType == ChunkType.sCAL.value) {
-                    result.add(new PngChunkScal(length, chunkType, crc, bytes));
-                } else if (chunkType == ChunkType.IDAT.value) {
-                    result.add(new PngChunkIdat(length, chunkType, crc, bytes));
-                } else if (chunkType == ChunkType.gAMA.value) {
-                    result.add(new PngChunkGama(length, chunkType, crc, bytes));
-                } else if (chunkType == ChunkType.iTXt.value) {
-                    result.add(new PngChunkItxt(length, chunkType, crc, bytes));
-                } else {
-                    result.add(new PngChunk(length, chunkType, crc, bytes));
-                }
+                result.add(ChunkType.makeChunk(length, chunkType, crc, bytes));
 
                 if (returnAfterFirst) {
                     return result;
@@ -297,6 +278,30 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
         }
 
         return result;
+    }
+
+    public TiffImageMetadata getExifMetadata(final ByteSource byteSource, TiffImagingParameters params)
+            throws ImageReadException, IOException {
+        final byte[] bytes = getExifRawData(byteSource);
+        if (null == bytes) {
+            return null;
+        }
+
+        if (params == null) {
+            params = new TiffImagingParameters();
+        }
+
+        return (TiffImageMetadata) new TiffImageParser().getMetadata(bytes, params);
+    }
+
+    public byte[] getExifRawData(final ByteSource byteSource) throws ImageReadException, IOException {
+        final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] { ChunkType.eXIf }, true);
+
+        if (chunks.isEmpty()) {
+            return null;
+        }
+
+        return chunks.get(0).getBytes();
     }
 
     private List<PngChunk> filterChunks(final List<PngChunk> chunks, final ChunkType type) {

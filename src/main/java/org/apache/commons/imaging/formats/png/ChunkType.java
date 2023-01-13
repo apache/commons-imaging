@@ -16,9 +16,22 @@
  */
 package org.apache.commons.imaging.formats.png;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFunctions;
+import org.apache.commons.imaging.formats.png.chunks.PngChunk;
+import org.apache.commons.imaging.formats.png.chunks.PngChunkGama;
+import org.apache.commons.imaging.formats.png.chunks.PngChunkIccp;
+import org.apache.commons.imaging.formats.png.chunks.PngChunkIdat;
+import org.apache.commons.imaging.formats.png.chunks.PngChunkIhdr;
+import org.apache.commons.imaging.formats.png.chunks.PngChunkItxt;
+import org.apache.commons.imaging.formats.png.chunks.PngChunkPhys;
+import org.apache.commons.imaging.formats.png.chunks.PngChunkPlte;
+import org.apache.commons.imaging.formats.png.chunks.PngChunkScal;
+import org.apache.commons.imaging.formats.png.chunks.PngChunkText;
+import org.apache.commons.imaging.formats.png.chunks.PngChunkZtxt;
 
 /**
  * Type of a PNG chunk.
@@ -28,13 +41,13 @@ import org.apache.commons.imaging.common.BinaryFunctions;
 public enum ChunkType {
 
     /** Image header */
-    IHDR,
+    IHDR(PngChunkIhdr::new),
 
     /** Palette */
-    PLTE,
+    PLTE(PngChunkPlte::new),
 
     /** Image data */
-    IDAT,
+    IDAT(PngChunkIdat::new),
 
     /** Image trailer */
     IEND,
@@ -46,10 +59,10 @@ public enum ChunkType {
     cHRM,
 
     /** Image gamma */
-    gAMA,
+    gAMA(PngChunkGama::new),
 
     /** Embedded ICC profile */
-    iCCP,
+    iCCP(PngChunkIccp::new),
 
     /** Significant bits*/
     sBIT,
@@ -58,13 +71,13 @@ public enum ChunkType {
     sRGB,
 
     /** Textual data */
-    tEXt,
+    tEXt(PngChunkText::new),
 
     /** Compressed textual data */
-    zTXt,
+    zTXt(PngChunkZtxt::new),
 
     /** International textual data */
-    iTXt,
+    iTXt(PngChunkItxt::new),
 
     /** Background colour */
     bKGD,
@@ -73,23 +86,86 @@ public enum ChunkType {
     hIST,
 
     /** Physical pixel dimensions */
-    pHYs,
-
-    /** Physical scale */
-    sCAL,
+    pHYs(PngChunkPhys::new),
 
     /** Suggested palette */
     sPLT,
 
     /** Image last-modification time */
-    tIME;
+    tIME,
+
+    /*
+     * PNGEXT
+     */
+
+    /** Image offset */
+    oFFs(Extension.PNGEXT),
+
+    /** Calibration of pixel values */
+    pCAL(Extension.PNGEXT),
+
+    /** Physical scale */
+    sCAL(Extension.PNGEXT, PngChunkScal::new),
+
+    /** GIF Graphic Control Extension */
+    gIFg(Extension.PNGEXT),
+
+    /** GIF Application Extension */
+    gIFx(Extension.PNGEXT),
+
+    /** Indicator of Stereo Image */
+    sTER(Extension.PNGEXT),
+
+    /** Exchangeable Image File (Exif) Profile */
+    eXIf(Extension.PNGEXT),
+
+    ;
+
+    @FunctionalInterface
+    private interface ChunkConstructor {
+        PngChunk make(int length, int chunkType, int crc, byte[] bytes) throws IOException, ImageReadException;
+    }
+
+    private static final ChunkType[] types = ChunkType.values();
+
+    static ChunkType findType(int chunkType) {
+        for (ChunkType type : types) {
+            if (type.value == chunkType) {
+                return type;
+            }
+        }
+        return null;
+    }
+
+    static PngChunk makeChunk(int length, int chunkType, int crc, byte[] bytes) throws IOException, ImageReadException {
+        ChunkType type = findType(chunkType);
+        return type != null && type.constructor != null
+                ? type.constructor.make(length, chunkType, crc, bytes)
+                : new PngChunk(length, chunkType, crc, bytes);
+    }
 
     final byte[] array;
     final int value;
+    final Extension extension;
+    final ChunkConstructor constructor;
 
     ChunkType() {
+        this(null, null);
+    }
+
+    ChunkType(Extension extension) {
+        this(extension, null);
+    }
+
+    ChunkType(ChunkConstructor constructor) {
+        this(null, constructor);
+    }
+
+    ChunkType(Extension extension, ChunkConstructor constructor) {
         final char[] chars = name().toCharArray();
-        array = name().getBytes(StandardCharsets.UTF_8);
-        value = BinaryFunctions.charsToQuad(chars[0], chars[1], chars[2], chars[3]);
+        this.array = name().getBytes(StandardCharsets.UTF_8);
+        this.value = BinaryFunctions.charsToQuad(chars[0], chars[1], chars[2], chars[3]);
+        this.extension = extension;
+        this.constructor = constructor;
     }
 }
