@@ -46,8 +46,11 @@ The <action> type attribute can be add,update,fix,remove.
   <body>
     <release version="1.0" date="2022-??-??" description="1.0 release">
       <!-- FIX -->
-      <action issue="IMAGING-335" dev="ggregory" type="update" due-to="Dominik Stadler, Gary Gregory">
+      <action issue="IMAGING-335" dev="ggregory" type="fix" due-to="Dominik Stadler, Gary Gregory">
         NullPointerException in App2Segment.getIccBytes when parsing a broken JPEG file.
+      </action>
+      <action issue="IMAGING-342" dev="kinow" type="fix" due-to="Glavo">
+        Read PNG metadata from iTXt chunk.
       </action>
       <!-- UPDATE -->
       <action dev="kinow" type="update" due-to="Dependabot, Gary Gregory">
