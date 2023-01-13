@@ -345,7 +345,7 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
                 }
             }
         }
-        // copy the the results back over the input byte array
+        // copy the results back over the input byte array
         System.arraycopy(b, 0, bytes, 0, bytes.length);
     }
 
