@@ -14,15 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.apache.commons.imaging.formats.png;
 
 /**
- * The PNG (Portable Network Graphics) image format.
- * <p>
- * The implementation is based on the
- * <a href="http://www.libpng.org/pub/png/spec/1.2/">PNG specification version 1.2</a>,
- * and supports the following extensions:
- * <ul>
- *     <li><a href="http://ftp-osl.osuosl.org/pub/libpng/documents/pngext-1.5.0.html">Extensions to the PNG 1.2 Specification, Version 1.5.0</a></li>
- * </ul>
+ * PNG extension types.
+ *
+ * @since 1.0-alpha6
  */
-package org.apache.commons.imaging.formats.png;
+enum Extension {
+    /**
+     * @see <a href="http://ftp-osl.osuosl.org/pub/libpng/documents/pngext-1.5.0.html">Extensions to the PNG 1.2 Specification, Version 1.5.0</a>
+     */
+    PNGEXT,
+
+    /**
+     * @see <a href="https://wiki.mozilla.org/APNG_Specification">APNG Specification</a>
+     */
+    APNG,
+}
