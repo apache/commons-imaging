@@ -16,80 +16,217 @@
  */
 package org.apache.commons.imaging.formats.png;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.imaging.common.BinaryFunctions;
+import org.apache.commons.imaging.formats.png.chunks.PngChunk;
+import org.apache.commons.imaging.formats.png.chunks.PngChunkGama;
+import org.apache.commons.imaging.formats.png.chunks.PngChunkIccp;
+import org.apache.commons.imaging.formats.png.chunks.PngChunkIdat;
+import org.apache.commons.imaging.formats.png.chunks.PngChunkIhdr;
+import org.apache.commons.imaging.formats.png.chunks.PngChunkItxt;
+import org.apache.commons.imaging.formats.png.chunks.PngChunkPhys;
+import org.apache.commons.imaging.formats.png.chunks.PngChunkPlte;
+import org.apache.commons.imaging.formats.png.chunks.PngChunkScal;
+import org.apache.commons.imaging.formats.png.chunks.PngChunkText;
+import org.apache.commons.imaging.formats.png.chunks.PngChunkZtxt;
 
 /**
- * Type of a PNG chunk.
+ * Type of PNG chunk.
  *
  * @see <a href="https://www.w3.org/TR/png/#11Chunks">Portable Network Graphics Specification - Chunk specifications</a>
  */
 public enum ChunkType {
 
-    /** Image header */
-    IHDR,
+    /**
+     * Image header
+     */
+    IHDR(PngChunkIhdr::new),
 
-    /** Palette */
-    PLTE,
+    /**
+     * Palette
+     */
+    PLTE(PngChunkPlte::new),
 
-    /** Image data */
-    IDAT,
+    /**
+     * Image data
+     */
+    IDAT(PngChunkIdat::new),
 
-    /** Image trailer */
+    /**
+     * Image trailer
+     */
     IEND,
 
-    /** Transparency */
+    /**
+     * Transparency
+     */
     tRNS,
 
-    /** Primary chromaticities and white point */
+    /**
+     * Primary chromaticities and white point
+     */
     cHRM,
 
-    /** Image gamma */
-    gAMA,
+    /**
+     * Image gamma
+     */
+    gAMA(PngChunkGama::new),
 
-    /** Embedded ICC profile */
-    iCCP,
+    /**
+     * Embedded ICC profile
+     */
+    iCCP(PngChunkIccp::new),
 
-    /** Significant bits */
+    /**
+     * Significant bits
+     */
     sBIT,
 
-    /** Standard RGB color space */
+    /**
+     * Standard RGB color space
+     */
     sRGB,
 
-    /** Textual data */
-    tEXt,
+    /**
+     * Textual data
+     */
+    tEXt(PngChunkText::new),
 
-    /** Compressed textual data */
-    zTXt,
+    /**
+     * Compressed textual data
+     */
+    zTXt(PngChunkZtxt::new),
 
-    /** International textual data */
-    iTXt,
+    /**
+     * International textual data
+     */
+    iTXt(PngChunkItxt::new),
 
-    /** Background color */
+    /**
+     * Background colour
+     */
     bKGD,
 
-    /** Image histogram */
+    /**
+     * Image histogram
+     */
     hIST,
 
-    /** Physical pixel dimensions */
-    pHYs,
+    /**
+     * Physical pixel dimensions
+     */
+    pHYs(PngChunkPhys::new),
 
-    /** Physical scale */
-    sCAL,
-
-    /** Suggested palette */
+    /**
+     * Suggested palette
+     */
     sPLT,
 
-    /** Image last-modification time */
-    tIME;
+    /**
+     * Image last-modification time
+     */
+    tIME,
+
+    /*
+     * PNGEXT
+     */
+
+    /**
+     * Image offset
+     *
+     * @since 1.0-alpha6
+     */
+    oFFs(Extension.PNGEXT),
+
+    /**
+     * Calibration of pixel values
+     *
+     * @since 1.0-alpha6
+     */
+    pCAL(Extension.PNGEXT),
+
+    /**
+     * Physical scale
+     */
+    sCAL(Extension.PNGEXT, PngChunkScal::new),
+
+    /**
+     * GIF Graphic Control Extension
+     *
+     * @since 1.0-alpha6
+     */
+    gIFg(Extension.PNGEXT),
+
+    /**
+     * GIF Application Extension
+     *
+     * @since 1.0-alpha6
+     */
+    gIFx(Extension.PNGEXT),
+
+    /**
+     * Indicator of Stereo Image
+     *
+     * @since 1.0-alpha6
+     */
+    sTER(Extension.PNGEXT),
+
+    /**
+     * Exchangeable Image File (Exif) Profile
+     *
+     * @since 1.0-alpha6
+     */
+    eXIf(Extension.PNGEXT),
+
+    ;
+
+    @FunctionalInterface
+    private interface ChunkConstructor {
+        PngChunk make(int length, int chunkType, int crc, byte[] bytes) throws IOException;
+    }
+
+    private static final ChunkType[] types = ChunkType.values();
+
+    static ChunkType findType(int chunkType) {
+        for (ChunkType type : types) {
+            if (type.value == chunkType) {
+                return type;
+            }
+        }
+        return null;
+    }
+
+    static PngChunk makeChunk(int length, int chunkType, int crc, byte[] bytes) throws IOException {
+        ChunkType type = findType(chunkType);
+        return type != null && type.constructor != null
+                ? type.constructor.make(length, chunkType, crc, bytes)
+                : new PngChunk(length, chunkType, crc, bytes);
+    }
 
     final byte[] array;
     final int value;
+    final Extension extension;
+    final ChunkConstructor constructor;
 
     ChunkType() {
+        this(null, null);
+    }
+
+    ChunkType(Extension extension) {
+        this(extension, null);
+    }
+
+    ChunkType(ChunkConstructor constructor) {
+        this(null, constructor);
+    }
+
+    ChunkType(Extension extension, ChunkConstructor constructor) {
         final char[] chars = name().toCharArray();
-        array = name().getBytes(StandardCharsets.UTF_8);
-        value = BinaryFunctions.charsToQuad(chars[0], chars[1], chars[2], chars[3]);
+        this.array = name().getBytes(StandardCharsets.UTF_8);
+        this.value = BinaryFunctions.charsToQuad(chars[0], chars[1], chars[2], chars[3]);
+        this.extension = extension;
+        this.constructor = constructor;
     }
 }

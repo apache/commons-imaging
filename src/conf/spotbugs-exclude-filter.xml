@@ -173,6 +173,16 @@
     <Method name="&lt;init&gt;" />
     <Bug pattern="EI_EXPOSE_REP2" />
   </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.png.PngImageMetadata" />
+    <Method name="getExif" />
+    <Bug pattern="EI_EXPOSE_REP" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.png.PngImageMetadata" />
+    <Method name="&lt;init&gt;" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
   <!-- Reason: We don't want to implement Serializable at all.  -->
   <Match>
     <Bug pattern="SE_COMPARATOR_SHOULD_BE_SERIALIZABLE" />

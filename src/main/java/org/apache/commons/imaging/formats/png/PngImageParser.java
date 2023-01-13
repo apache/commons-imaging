@@ -63,6 +63,9 @@ import org.apache.commons.imaging.formats.png.transparencyfilters.AbstractTransp
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilterGrayscale;
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilterIndexedColor;
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilterTrueColor;
+import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
+import org.apache.commons.imaging.formats.tiff.TiffImageParser;
+import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.icc.IccProfileParser;
 
 public class PngImageParser extends AbstractImageParser<PngImagingParameters> implements XmpEmbeddable<PngImagingParameters> {
@@ -507,21 +510,61 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
 
     @Override
     public ImageMetadata getMetadata(final ByteSource byteSource, final PngImagingParameters params) throws ImagingException, IOException {
-        final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] { ChunkType.tEXt, ChunkType.zTXt, ChunkType.iTXt }, false);
+        final ChunkType[] chunkTypes = { ChunkType.tEXt, ChunkType.zTXt, ChunkType.iTXt, ChunkType.eXIf };
+        final List<PngChunk> chunks = readChunks(byteSource, chunkTypes, false);
 
         if (chunks.isEmpty()) {
             return null;
         }
 
-        final GenericImageMetadata result = new GenericImageMetadata();
+        final GenericImageMetadata textual = new GenericImageMetadata();
+        TiffImageMetadata exif = null;
 
         for (final PngChunk chunk : chunks) {
-            final AbstractPngTextChunk textChunk = (AbstractPngTextChunk) chunk;
-
-            result.add(textChunk.getKeyword(), textChunk.getText());
+            if (chunk instanceof AbstractPngTextChunk) {
+                final AbstractPngTextChunk textChunk = (AbstractPngTextChunk) chunk;
+                textual.add(textChunk.getKeyword(), textChunk.getText());
+            } else if (chunk.getChunkType() == ChunkType.eXIf.value) {
+                if (exif != null) {
+                    throw new ImagingException("Duplicate eXIf chunk");
+                }
+                exif = (TiffImageMetadata) new TiffImageParser().getMetadata(chunk.getBytes());
+            } else {
+                throw new ImagingException("Unexpected chunk type: " + chunk.getChunkType());
+            }
         }
 
-        return result;
+        return new PngImageMetadata(textual, exif);
+    }
+
+    /**
+     * @since 1.0-alpha6
+     */
+    public TiffImageMetadata getExifMetadata(final ByteSource byteSource, TiffImagingParameters params)
+            throws ImagingException, IOException {
+        final byte[] bytes = getExifRawData(byteSource);
+        if (null == bytes) {
+            return null;
+        }
+
+        if (params == null) {
+            params = new TiffImagingParameters();
+        }
+
+        return (TiffImageMetadata) new TiffImageParser().getMetadata(bytes, params);
+    }
+
+    /**
+     * @since 1.0-alpha6
+     */
+    public byte[] getExifRawData(final ByteSource byteSource) throws ImagingException, IOException {
+        final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] { ChunkType.eXIf }, true);
+
+        if (chunks.isEmpty()) {
+            return null;
+        }
+
+        return chunks.get(0).getBytes();
     }
 
     @Override
@@ -638,29 +681,7 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
             final int crc = BinaryFunctions.read4Bytes("CRC", is, "Not a Valid PNG File", getByteOrder());
 
             if (keep) {
-                if (chunkType == ChunkType.iCCP.value) {
-                    result.add(new PngChunkIccp(length, chunkType, crc, bytes));
-                } else if (chunkType == ChunkType.tEXt.value) {
-                    result.add(new PngChunkText(length, chunkType, crc, bytes));
-                } else if (chunkType == ChunkType.zTXt.value) {
-                    result.add(new PngChunkZtxt(length, chunkType, crc, bytes));
-                } else if (chunkType == ChunkType.IHDR.value) {
-                    result.add(new PngChunkIhdr(length, chunkType, crc, bytes));
-                } else if (chunkType == ChunkType.PLTE.value) {
-                    result.add(new PngChunkPlte(length, chunkType, crc, bytes));
-                } else if (chunkType == ChunkType.pHYs.value) {
-                    result.add(new PngChunkPhys(length, chunkType, crc, bytes));
-                } else if (chunkType == ChunkType.sCAL.value) {
-                    result.add(new PngChunkScal(length, chunkType, crc, bytes));
-                } else if (chunkType == ChunkType.IDAT.value) {
-                    result.add(new PngChunkIdat(length, chunkType, crc, bytes));
-                } else if (chunkType == ChunkType.gAMA.value) {
-                    result.add(new PngChunkGama(length, chunkType, crc, bytes));
-                } else if (chunkType == ChunkType.iTXt.value) {
-                    result.add(new PngChunkItxt(length, chunkType, crc, bytes));
-                } else {
-                    result.add(new PngChunk(length, chunkType, crc, bytes));
-                }
+                result.add(ChunkType.makeChunk(length, chunkType, crc, bytes));
 
                 if (returnAfterFirst) {
                     return result;
