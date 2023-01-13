@@ -158,7 +158,6 @@
       </plugin>
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>${checkstyle.plugin.version}</version>
         <configuration>
           <configLocation>${basedir}/checkstyle.xml</configLocation>
           <suppressionsLocation>${basedir}/checkstyle-suppressions.xml</suppressionsLocation>
