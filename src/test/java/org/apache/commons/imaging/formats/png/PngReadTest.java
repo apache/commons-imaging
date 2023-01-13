@@ -130,7 +130,6 @@ public class PngReadTest extends PngBaseTest {
         assertEquals(1, items.size());
 
         GenericImageMetadata.GenericImageMetadataItem item = ((GenericImageMetadata.GenericImageMetadataItem) items.get(0));
-
         assertEquals("Comment", item.getKeyword());
         assertEquals("\u2192 UTF-8 Test", item.getText());
     }
