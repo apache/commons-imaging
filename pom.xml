@@ -158,7 +158,6 @@
       </plugin>
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>${checkstyle.plugin.version}</version>
         <configuration>
           <configLocation>${basedir}/checkstyle.xml</configLocation>
           <suppressionsLocation>${basedir}/checkstyle-suppressions.xml</suppressionsLocation>
@@ -169,7 +168,6 @@
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>${spotbugs.plugin.version}</version>
         <dependencies>
           <dependency>
             <groupId>com.github.spotbugs</groupId>
@@ -293,7 +291,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
-        <version>3.20.0</version>
         <configuration>
           <targetJdk>${maven.compiler.target}</targetJdk>
           <rulesets>

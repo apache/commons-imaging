@@ -17,9 +17,9 @@
 
 package org.apache.commons.imaging.formats.png;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -29,6 +29,7 @@ import java.util.List;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.common.GenericImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
@@ -116,6 +117,28 @@ public class PngReadTest extends PngBaseTest {
     }
 
     /**
+     * Test reading metadata from PNG file with UTF-8 characters in the text chunks.
+     *
+     * @see <a href="https://issues.apache.org/jira/browse/IMAGING-342">IMAGING-342</a>
+     * @throws IOException if it fails to read the test image
+     * @throws ImageReadException if it fails to read the test image
+     */
+    @Test
+    public void testReadMetadataFromItxtChunk() throws IOException, ImageReadException {
+        final String input = "/images/png/IMAGING-342/utf8-comment.png";
+        final String file = PngReadTest.class.getResource(input).getFile();
+        final PngImageParser parser = new PngImageParser();
+
+        ImageMetadata metadata = parser.getMetadata(new File(file));
+        List<?> items = metadata.getItems();
+        assertEquals(1, items.size());
+
+        GenericImageMetadata.GenericImageMetadataItem item = ((GenericImageMetadata.GenericImageMetadataItem) items.get(0));
+        assertEquals("Comment", item.getKeyword());
+        assertEquals("\u2192 UTF-8 Test", item.getText());
+    }
+
+    /**
      * Test reading EXIF from the 'eXIf' chunk in PNG file.
      *
      * @throws IOException if it fails to read the test image
@@ -129,8 +152,6 @@ public class PngReadTest extends PngBaseTest {
 
         TiffImageMetadata exifMetadata = parser.getExifMetadata(new ByteSourceFile(new File(file)), null);
         assertNotNull(exifMetadata);
-
-        System.out.println(exifMetadata);
 
         TiffDirectory root = exifMetadata.findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT);
         assertNotNull(root);
