@@ -19,6 +19,7 @@ package org.apache.commons.imaging.formats.png;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -30,6 +31,10 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.formats.tiff.TiffDirectory;
+import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
+import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
+import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -108,5 +113,27 @@ public class PngReadTest extends PngBaseTest {
         final String file = PngReadTest.class.getResource(input).getFile();
         final PngImageParser parser = new PngImageParser();
         assertThrows(ImageReadException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), new PngImagingParameters()));
+    }
+
+    /**
+     * Test reading EXIF from the 'eXIf' chunk in PNG file.
+     *
+     * @throws IOException if it fails to read the test image
+     * @throws ImageReadException if it fails to read the test image
+     */
+    @Test
+    public void testReadExif() throws IOException, ImageReadException {
+        final String input = "/images/png/IMAGING-340/image-with-exif.png";
+        final String file = PngReadTest.class.getResource(input).getFile();
+        final PngImageParser parser = new PngImageParser();
+
+        TiffImageMetadata exifMetadata = parser.getExifMetadata(new ByteSourceFile(new File(file)), null);
+        assertNotNull(exifMetadata);
+
+        System.out.println(exifMetadata);
+
+        TiffDirectory root = exifMetadata.findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT);
+        assertNotNull(root);
+        assertEquals("Glavo", root.getFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION));
     }
 }
