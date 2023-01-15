@@ -18,6 +18,8 @@ package org.apache.commons.imaging.formats.png;
 
 /**
  * PNG extension types.
+ *
+ * @since 1.0-alpha4
  */
 enum Extension {
     /**
