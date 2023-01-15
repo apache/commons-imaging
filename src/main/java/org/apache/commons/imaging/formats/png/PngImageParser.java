@@ -263,21 +263,29 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
     @Override
     public ImageMetadata getMetadata(final ByteSource byteSource, final PngImagingParameters params)
             throws ImageReadException, IOException {
-        final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] { ChunkType.tEXt, ChunkType.zTXt, }, false);
+        final ChunkType[] chunkTypes = { ChunkType.tEXt, ChunkType.zTXt, ChunkType.iTXt, ChunkType.eXIf };
+        final List<PngChunk> chunks = readChunks(byteSource, chunkTypes, false);
 
         if (chunks.isEmpty()) {
             return null;
         }
 
-        final GenericImageMetadata result = new GenericImageMetadata();
+        final GenericImageMetadata textual = new GenericImageMetadata();
+        TiffImageMetadata exif = null;
 
         for (final PngChunk chunk : chunks) {
-            final PngTextChunk textChunk = (PngTextChunk) chunk;
-
-            result.add(textChunk.getKeyword(), textChunk.getText());
+            if (chunk instanceof PngTextChunk) {
+                final PngTextChunk textChunk = (PngTextChunk) chunk;
+                textual.add(textChunk.getKeyword(), textChunk.getText());
+            } else if (chunk.chunkType == ChunkType.eXIf.value) {
+                if (exif != null) {
+                    throw new ImageReadException("Duplicate eXIf chunk");
+                }
+                exif = (TiffImageMetadata) new TiffImageParser().getMetadata(chunk.getBytes());
+            }
         }
 
-        return result;
+        return new PngImageMetadata(textual, exif);
     }
 
     public TiffImageMetadata getExifMetadata(final ByteSource byteSource, TiffImagingParameters params)
