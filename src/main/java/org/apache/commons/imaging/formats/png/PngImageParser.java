@@ -16,6 +16,12 @@
  */
 package org.apache.commons.imaging.formats.png;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.printCharQuad;
+import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.readAndVerifyBytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.skipBytes;
+
 import java.awt.Dimension;
 import java.awt.color.ColorSpace;
 import java.awt.color.ICC_ColorSpace;
@@ -66,12 +72,6 @@ import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.icc.IccProfileParser;
-
-import static org.apache.commons.imaging.common.BinaryFunctions.printCharQuad;
-import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.readAndVerifyBytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.skipBytes;
 
 public class PngImageParser extends ImageParser<PngImagingParameters>  implements XmpEmbeddable {
 
