@@ -556,7 +556,7 @@ The <action> type attribute can be add,update,fix,remove.
         Fixed issue "FieldTypeASCII does not conform to the EXIF specification," identified by Libor Nenadál.
       </action>
       <action issue="IMAGING-31" dev="cmchen" type="fix">
-        Fixed a bug in which gifs have incorrect size information in the the Logical Screen Descriptor.
+        Fixed a bug in which gifs have incorrect size information in the Logical Screen Descriptor.
         This appears to be a bug in how Microsoft Office writes gifs. The Image Descriptor has the correct value.
       </action>
       <action issue="IMAGING-13" dev="cmchen" type="fix">

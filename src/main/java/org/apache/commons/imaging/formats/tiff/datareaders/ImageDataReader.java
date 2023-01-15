@@ -405,7 +405,7 @@ public abstract class ImageDataReader {
      * @param bitsPerPixel the number of bits per sample, 32 or 64.
      * @param byteOrder the byte order for the source data
      * @return a valid array of integers in row major order, dimensions
-     * scan-size wide and height height.
+     * scan-size wide and height.
      * @throws ImageReadException in the event of an invalid format.
      */
     protected int[] unpackFloatingPointSamples(
@@ -609,7 +609,7 @@ public abstract class ImageDataReader {
      * @param bitsPerSample the number of bits per sample, 32 or 64.
      * @param byteOrder the byte order for the source data
      * @return a valid array of integers in row major order, dimensions
-     * scan-size wide and height height.
+     * scan-size wide and height.
      */
     protected int[] unpackIntSamples(
         final int width,

@@ -117,7 +117,7 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
      * <p>
      * Although there is no prohibition against using palette entries with overlapping ranges,
      * the behavior of such specifications is undefined and subject to change in the future.
-     * Therefore, it is not recommended.  The exception in in the use of single-value
+     * Therefore, it is not recommended.  The exception in the use of single-value
      * palette entries which may be used to override the specifications for ranges.
      *
      * @param paletteEntries a valid, non-empty list of palette entries
