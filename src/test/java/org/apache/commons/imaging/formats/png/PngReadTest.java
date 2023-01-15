@@ -20,6 +20,7 @@ package org.apache.commons.imaging.formats.png;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -151,10 +152,15 @@ public class PngReadTest extends PngBaseTest {
         final PngImageParser parser = new PngImageParser();
 
         TiffImageMetadata exifMetadata = parser.getExifMetadata(new ByteSourceFile(new File(file)), null);
-        assertNotNull(exifMetadata);
+        assertEquals("Glavo",
+                exifMetadata.findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT)
+                        .getFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION));
 
-        TiffDirectory root = exifMetadata.findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT);
-        assertNotNull(root);
-        assertEquals("Glavo", root.getFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION));
+        PngImageMetadata metadata = (PngImageMetadata) parser.getMetadata(new ByteSourceFile(new File(file)), null);
+        assertTrue(metadata.getTextualInformation().getItems().isEmpty());
+        assertEquals("Glavo",
+                metadata.getExif()
+                        .findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT)
+                        .getFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION));
     }
 }
