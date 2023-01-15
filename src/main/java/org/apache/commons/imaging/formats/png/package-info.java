@@ -18,12 +18,12 @@
 /**
  * The PNG (Portable Network Graphics) image format.
  * <p>
- * The implementation is based on PNG specification version 1.2, and supports the following extensions:
+ * The implementation is based on the
+ * <a href="http://www.libpng.org/pub/png/spec/1.2/">PNG specification version 1.2</a>,
+ * and supports the following extensions:
  * <ul>
  *     <li><a href="http://ftp-osl.osuosl.org/pub/libpng/documents/pngext-1.5.0.html">Extensions to the PNG 1.2 Specification, Version 1.5.0</a></li>
  * </ul>
- *
- * @see <a href="http://www.libpng.org/pub/png/spec/1.2/">Portable Network Graphics (PNG) Specification, version 1.2</a>.
  */
 package org.apache.commons.imaging.formats.png;
 
