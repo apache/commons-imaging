@@ -40,83 +40,145 @@ import org.apache.commons.imaging.formats.png.chunks.PngChunkZtxt;
  */
 public enum ChunkType {
 
-    /** Image header */
+    /**
+     * Image header
+     */
     IHDR(PngChunkIhdr::new),
 
-    /** Palette */
+    /**
+     * Palette
+     */
     PLTE(PngChunkPlte::new),
 
-    /** Image data */
+    /**
+     * Image data
+     */
     IDAT(PngChunkIdat::new),
 
-    /** Image trailer */
+    /**
+     * Image trailer
+     */
     IEND,
 
-    /** Transparency */
+    /**
+     * Transparency
+     */
     tRNS,
 
-    /** Primary chromaticities and white point */
+    /**
+     * Primary chromaticities and white point
+     */
     cHRM,
 
-    /** Image gamma */
+    /**
+     * Image gamma
+     */
     gAMA(PngChunkGama::new),
 
-    /** Embedded ICC profile */
+    /**
+     * Embedded ICC profile
+     */
     iCCP(PngChunkIccp::new),
 
-    /** Significant bits*/
+    /**
+     * Significant bits
+     */
     sBIT,
 
-    /** Standard RGB colour space */
+    /**
+     * Standard RGB colour space
+     */
     sRGB,
 
-    /** Textual data */
+    /**
+     * Textual data
+     */
     tEXt(PngChunkText::new),
 
-    /** Compressed textual data */
+    /**
+     * Compressed textual data
+     */
     zTXt(PngChunkZtxt::new),
 
-    /** International textual data */
+    /**
+     * International textual data
+     */
     iTXt(PngChunkItxt::new),
 
-    /** Background colour */
+    /**
+     * Background colour
+     */
     bKGD,
 
-    /** Image histogram */
+    /**
+     * Image histogram
+     */
     hIST,
 
-    /** Physical pixel dimensions */
+    /**
+     * Physical pixel dimensions
+     */
     pHYs(PngChunkPhys::new),
 
-    /** Suggested palette */
+    /**
+     * Suggested palette
+     */
     sPLT,
 
-    /** Image last-modification time */
+    /**
+     * Image last-modification time
+     */
     tIME,
 
     /*
      * PNGEXT
      */
 
-    /** Image offset */
+    /**
+     * Image offset
+     *
+     * @since 1.0-alpha4
+     */
     oFFs(Extension.PNGEXT),
 
-    /** Calibration of pixel values */
+    /**
+     * Calibration of pixel values
+     *
+     * @since 1.0-alpha4
+     */
     pCAL(Extension.PNGEXT),
 
-    /** Physical scale */
+    /**
+     * Physical scale
+     */
     sCAL(Extension.PNGEXT, PngChunkScal::new),
 
-    /** GIF Graphic Control Extension */
+    /**
+     * GIF Graphic Control Extension
+     *
+     * @since 1.0-alpha4
+     */
     gIFg(Extension.PNGEXT),
 
-    /** GIF Application Extension */
+    /**
+     * GIF Application Extension
+     *
+     * @since 1.0-alpha4
+     */
     gIFx(Extension.PNGEXT),
 
-    /** Indicator of Stereo Image */
+    /**
+     * Indicator of Stereo Image
+     *
+     * @since 1.0-alpha4
+     */
     sTER(Extension.PNGEXT),
 
-    /** Exchangeable Image File (Exif) Profile */
+    /**
+     * Exchangeable Image File (Exif) Profile
+     *
+     * @since 1.0-alpha4
+     */
     eXIf(Extension.PNGEXT),
 
     ;
