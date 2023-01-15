@@ -27,8 +27,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.nio.file.Files;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -44,15 +42,14 @@ public class PixelDensityRoundtrip extends RoundtripBase {
     public void testPixelDensityRoundtrip(final FormatInfo formatInfo) throws Exception {
         final BufferedImage testImage = TestImages.createFullColorImage(2, 2);
 
-        final File temp1 = Files.createTempFile("pixeldensity.", "." + formatInfo.format.getDefaultExtension()).toFile();
-
         final TiffImagingParameters params = new TiffImagingParameters();
         final PixelDensity pixelDensity = PixelDensity.createFromPixelsPerInch(75, 150);
         params.setPixelDensity(pixelDensity);
         final TiffImageParser tiffImageParser = new TiffImageParser();
-        tiffImageParser.writeImage(testImage, new ByteArrayOutputStream(), params);
+        final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        tiffImageParser.writeImage(testImage, byteArrayOutputStream, params);
 
-        final ImageInfo imageInfo = Imaging.getImageInfo(temp1);
+        final ImageInfo imageInfo = Imaging.getImageInfo(byteArrayOutputStream.toByteArray());
         if (imageInfo != null) {
             final int xReadDPI = imageInfo.getPhysicalWidthDpi();
             final int yReadDPI = imageInfo.getPhysicalHeightDpi();
