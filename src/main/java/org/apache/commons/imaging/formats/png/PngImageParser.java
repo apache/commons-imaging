@@ -282,12 +282,17 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
                     throw new ImageReadException("Duplicate eXIf chunk");
                 }
                 exif = (TiffImageMetadata) new TiffImageParser().getMetadata(chunk.getBytes());
+            } else {
+                throw new ImageReadException("Unexpected chunk type: " + chunk.chunkType);
             }
         }
 
         return new PngImageMetadata(textual, exif);
     }
 
+    /**
+     * @since 1.0-alpha4
+     */
     public TiffImageMetadata getExifMetadata(final ByteSource byteSource, TiffImagingParameters params)
             throws ImageReadException, IOException {
         final byte[] bytes = getExifRawData(byteSource);
@@ -302,6 +307,9 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
         return (TiffImageMetadata) new TiffImageParser().getMetadata(bytes, params);
     }
 
+    /**
+     * @since 1.0-alpha4
+     */
     public byte[] getExifRawData(final ByteSource byteSource) throws ImageReadException, IOException {
         final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] { ChunkType.eXIf }, true);
 

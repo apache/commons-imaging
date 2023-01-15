@@ -24,6 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * @since 1.0-alpha4
+ */
 public class PngImageMetadata implements ImageMetadata {
 
     private static final String NEWLINE = System.getProperty("line.separator");
