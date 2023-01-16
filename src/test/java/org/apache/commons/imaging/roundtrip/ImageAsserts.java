@@ -99,4 +99,18 @@ final class ImageAsserts {
             Assertions.assertEquals(aByte, bByte);
         }
     }
+
+    static void assertEquals(byte[] aData, byte[] bData) {
+        for (int i = 0; i < aData.length; i++) {
+            final int aByte = 0xff & aData[i];
+            final int bByte = 0xff & bData[i];
+
+            if (aByte != bByte) {
+                Debug.debug("i: " + i);
+                Debug.debug("aByte: " + aByte + " (0x" + Integer.toHexString(aByte) + ')');
+                Debug.debug("bByte: " + bByte + " (0x" + Integer.toHexString(bByte) + ')');
+            }
+            Assertions.assertEquals(aByte, bByte);
+        }
+    }
 }

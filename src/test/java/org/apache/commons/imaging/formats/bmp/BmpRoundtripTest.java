@@ -22,13 +22,12 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.internal.Debug;
-import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -140,17 +139,21 @@ public class BmpRoundtripTest extends BmpBaseTest {
 
         final byte[] bytes = Imaging.writeImageToBytes(srcImage, ImageFormats.BMP);
 
-        final File tempFile = Files.createTempFile("temp", ".bmp").toFile();
-        FileUtils.writeByteArrayToFile(tempFile, bytes);
-
         final BufferedImage dstImage = Imaging.getBufferedImage(bytes);
 
-        assertNotNull(dstImage);
-        assertEquals(srcImage.getWidth(), dstImage.getWidth());
-        assertEquals(srcImage.getHeight(), dstImage.getHeight());
+        try {
+            assertNotNull(dstImage);
+            assertEquals(srcImage.getWidth(), dstImage.getWidth());
+            assertEquals(srcImage.getHeight(), dstImage.getHeight());
 
-        final int[][] dstData = bufferedImageToImageData(dstImage);
-        compare(rawData, dstData);
+            final int[][] dstData = bufferedImageToImageData(dstImage);
+            compare(rawData, dstData);
+        } catch (final Throwable e) {
+            final Path tempFile = Files.createTempFile("temp", ".bmp");
+            Files.write(tempFile, bytes);
+            System.err.println("Failed tempFile " + tempFile);
+            throw e;
+        }
     }
 
     private void compare(final int[][] a, final int[][] b) {

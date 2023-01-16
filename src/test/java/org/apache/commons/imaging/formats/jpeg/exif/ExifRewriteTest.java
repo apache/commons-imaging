@@ -23,11 +23,13 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -84,14 +86,17 @@ public class ExifRewriteTest extends ExifBaseTest {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 new ExifRewriter().removeExifMetadata(byteSource, baos);
                 final byte[] bytes = baos.toByteArray();
-                final File tempFile = Files.createTempFile("test", ".jpg").toFile();
-                Debug.debug("tempFile", tempFile);
-                FileUtils.writeByteArrayToFile(tempFile, bytes);
-
                 Debug.debug("Output Segments:");
-                new JpegUtils().dumpJFIF(new ByteSourceArray(bytes));
+                try {
+                    new JpegUtils().dumpJFIF(new ByteSourceArray(bytes));
 
-                assertFalse(hasExifData(tempFile));
+                    assertFalse(hasExifData("test.jpg", bytes));
+                } catch (final Throwable e) {
+                    final Path tempFile = Files.createTempFile("test", ".jpg");
+                    Files.write(tempFile, bytes);
+                    System.err.println("Failed tempFile " + tempFile);
+                    throw e;
+                }
             }
         }
     }
@@ -123,15 +128,19 @@ public class ExifRewriteTest extends ExifBaseTest {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 new ExifRewriter().removeExifMetadata(byteSource, baos);
                 final byte[] bytes = baos.toByteArray();
-                final File tempFile = Files.createTempFile("removed", ".jpg").toFile();
-                Debug.debug("tempFile", tempFile);
-                FileUtils.writeByteArrayToFile(tempFile, bytes);
 
                 Debug.debug("Output Segments:");
-                stripped = new ByteSourceArray(bytes);
-                new JpegUtils().dumpJFIF(stripped);
+                try {
+                    stripped = new ByteSourceArray(bytes);
+                    new JpegUtils().dumpJFIF(stripped);
 
-                assertFalse(hasExifData(tempFile));
+                    assertFalse(hasExifData("removed.jpg", bytes));
+                } catch (final Throwable e) {
+                    final Path tempFile = Files.createTempFile("removed", ".jpg");
+                    Files.write(tempFile, bytes);
+                    System.err.println("Failed tempFile " + tempFile);
+                    throw e;
+                }
             }
 
             {
@@ -142,24 +151,27 @@ public class ExifRewriteTest extends ExifBaseTest {
 
                 new ExifRewriter().updateExifMetadataLossy(stripped, baos,
                         outputSet);
-
                 final byte[] bytes = baos.toByteArray();
-                final File tempFile = Files.createTempFile("inserted" + "_", ".jpg").toFile();
-                Debug.debug("tempFile", tempFile);
-                FileUtils.writeByteArrayToFile(tempFile, bytes);
 
                 Debug.debug("Output Segments:");
-                new JpegUtils().dumpJFIF(new ByteSourceArray(bytes));
+                try {
+                    new JpegUtils().dumpJFIF(new ByteSourceArray(bytes));
 
-                // assertTrue(!hasExifData(tempFile));
+                    // assertTrue(!hasExifData(tempFile));
 
-                final JpegImageMetadata newMetadata = (JpegImageMetadata) Imaging.getMetadata(tempFile);
-                assertNotNull(newMetadata);
-                final TiffImageMetadata newExifMetadata = newMetadata.getExif();
-                assertNotNull(newExifMetadata);
-                // newMetadata.dump();
+                    final JpegImageMetadata newMetadata = (JpegImageMetadata) Imaging.getMetadata(new ByteArrayInputStream(bytes), "inserted.jpg");
+                    assertNotNull(newMetadata);
+                    final TiffImageMetadata newExifMetadata = newMetadata.getExif();
+                    assertNotNull(newExifMetadata);
+                    // newMetadata.dump();
 
-                compare(imageFile, oldExifMetadata, newExifMetadata);
+                    compare(imageFile, oldExifMetadata, newExifMetadata);
+                } catch (final Throwable e) {
+                    final File tempFile = Files.createTempFile("inserted_", ".jpg").toFile();
+                    Debug.debug("tempFile", tempFile);
+                    FileUtils.writeByteArrayToFile(tempFile, bytes);
+                    throw e;
+                }
             }
 
         }
@@ -211,22 +223,25 @@ public class ExifRewriteTest extends ExifBaseTest {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 rewriter.rewrite(byteSource, baos, outputSet);
                 final byte[] bytes = baos.toByteArray();
-                final File tempFile = Files.createTempFile(name + "_", ".jpg").toFile();
-                Debug.debug("tempFile", tempFile);
-                FileUtils.writeByteArrayToFile(tempFile, bytes);
-
                 Debug.debug("Output Segments:");
-                new JpegUtils().dumpJFIF(new ByteSourceArray(bytes));
+                try {
+                    new JpegUtils().dumpJFIF(new ByteSourceArray(bytes));
 
-                // assertTrue(!hasExifData(tempFile));
+                    // assertTrue(!hasExifData(tempFile));
 
-                final JpegImageMetadata newMetadata = (JpegImageMetadata) Imaging.getMetadata(tempFile);
-                assertNotNull(newMetadata);
-                final TiffImageMetadata newExifMetadata = newMetadata.getExif();
-                assertNotNull(newExifMetadata);
-                // newMetadata.dump();
+                    final JpegImageMetadata newMetadata = (JpegImageMetadata) Imaging.getMetadata(new ByteArrayInputStream(bytes), name + ".jpg");
+                    assertNotNull(newMetadata);
+                    final TiffImageMetadata newExifMetadata = newMetadata.getExif();
+                    assertNotNull(newExifMetadata);
+                    // newMetadata.dump();
 
-                compare(imageFile, oldExifMetadata, newExifMetadata);
+                    compare(imageFile, oldExifMetadata, newExifMetadata);
+                } catch (final Throwable e) {
+                    final File tempFile = Files.createTempFile(name + '_', ".jpg").toFile();
+                    Debug.debug("tempFile", tempFile);
+                    FileUtils.writeByteArrayToFile(tempFile, bytes);
+                    throw e;
+                }
             } catch (final IOException | ImageReadException e) {
                 Debug.debug("imageFile", imageFile.getAbsoluteFile());
                 Debug.debug(e);

@@ -21,15 +21,14 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.common.RgbBufferedImageFactory;
-import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.imaging.internal.Util;
 import org.junit.jupiter.params.provider.Arguments;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -39,35 +38,52 @@ public class RoundtripBase {
     protected void roundtrip(final FormatInfo formatInfo, final BufferedImage testImage,
                              final String tempPrefix, final boolean imageExact) throws IOException,
             ImageReadException, ImageWriteException {
-        final File temp1 = Files.createTempFile(tempPrefix + ".", "."
-                + formatInfo.format.getDefaultExtension()).toFile();
-        Debug.debug("tempFile: " + temp1.getName());
 
         final ImageParser imageParser = Util.getImageParser(formatInfo.format);
 
+        byte[] temp1;
         final ImagingParameters params = Util.getImageParser(formatInfo.format).getDefaultParameters();
-        try (FileOutputStream fos = new FileOutputStream(temp1)) {
-            imageParser.writeImage(testImage, fos, params);
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream(1000000)) {
+            imageParser.writeImage(testImage, bos, params);
+            temp1 = bos.toByteArray();
         }
 
-        final ImagingParameters readParams = Util.getImageParser(formatInfo.format).getDefaultParameters();
-        readParams.setBufferedImageFactory(new RgbBufferedImageFactory());
-        final BufferedImage image2 = imageParser.getBufferedImage(temp1, readParams);
-        assertNotNull(image2);
+        final BufferedImage image2;
+        try {
+            final ImagingParameters readParams = Util.getImageParser(formatInfo.format).getDefaultParameters();
+            readParams.setBufferedImageFactory(new RgbBufferedImageFactory());
+            image2 = imageParser.getBufferedImage(temp1, readParams);
+            assertNotNull(image2);
 
-        if (imageExact) {
-            // note tolerance when comparing grayscale images
-            // BufferedImages of
-            ImageAsserts.assertEquals(testImage, image2);
+            if (imageExact) {
+                // note tolerance when comparing grayscale images
+                // BufferedImages of
+                ImageAsserts.assertEquals(testImage, image2);
+            }
+        } catch (final Throwable e) {
+            final Path tempFile = Files.createTempFile("test", ".jpg");
+            Files.write(tempFile, temp1);
+            System.err.println("Failed tempFile " + tempFile);
+            throw e;
         }
 
         if (formatInfo.identicalSecondWrite) {
-            final File temp2 = Files.createTempFile(tempPrefix + ".", "." + formatInfo.format.getDefaultExtension()).toFile();
-            try (FileOutputStream fos = new FileOutputStream(temp2)) {
-                imageParser.writeImage(image2, fos, params);
+            byte[] temp2;
+            try (ByteArrayOutputStream bos = new ByteArrayOutputStream(1000000)) {
+                imageParser.writeImage(image2, bos, params);
+                temp2 = bos.toByteArray();
             }
-
-            ImageAsserts.assertEquals(temp1, temp2);
+            try {
+                ImageAsserts.assertEquals(temp1, temp2);
+            } catch (final Throwable e) {
+                final Path tempFile = Files.createTempFile(tempPrefix + ".", "." + formatInfo.format.getDefaultExtension());
+                Files.write(tempFile, temp1);
+                final Path tempFile2 = Files.createTempFile(tempPrefix + ".", "." + formatInfo.format.getDefaultExtension());
+                Files.write(tempFile2, temp2);
+                System.err.println("Failed tempFile1 " + tempFile);
+                System.err.println("Failed tempFile2 " + tempFile2);
+                throw e;
+            }
         }
     }
 

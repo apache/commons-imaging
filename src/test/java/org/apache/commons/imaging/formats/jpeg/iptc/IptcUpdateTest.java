@@ -21,12 +21,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -34,6 +33,7 @@ import java.util.stream.Stream;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
+import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
@@ -61,23 +61,28 @@ public class IptcUpdateTest extends IptcBaseTest {
                 byteSource, params);
         assertNotNull(metadata);
 
-        final File noIptcFile = removeIptc(byteSource, imageFile);
+        final byte[] noIptcFile = removeIptc(byteSource, imageFile);
 
-        final JpegPhotoshopMetadata outMetadata = new JpegImageParser().getPhotoshopMetadata(
-                new ByteSourceFile(noIptcFile), params);
+        try {
+            final JpegPhotoshopMetadata outMetadata = new JpegImageParser().getPhotoshopMetadata(
+                    new ByteSourceArray("test.jpg", noIptcFile), params);
 
-        // FIXME should either be null or empty
-        assertTrue(outMetadata == null
-                || outMetadata.getItems().isEmpty());
+            // FIXME should either be null or empty
+            assertTrue(outMetadata == null
+                    || outMetadata.getItems().isEmpty());
+        } catch (final Throwable e) {
+            final Path tempFile = Files.createTempFile(imageFile.getName() + ".iptc.remove.", ".jpg");
+            Files.write(tempFile, noIptcFile);
+            System.err.println("Failed tempFile " + tempFile);
+            throw e;
+        }
     }
 
-    public File removeIptc(final ByteSource byteSource, final File imageFile) throws Exception {
-        final File noIptcFile = Files.createTempFile(imageFile.getName() + ".iptc.remove.", ".jpg").toFile();
-
-        try (OutputStream os = new BufferedOutputStream(new FileOutputStream(noIptcFile))) {
+    public byte[] removeIptc(final ByteSource byteSource, final File imageFile) throws Exception {
+        try (ByteArrayOutputStream os = new ByteArrayOutputStream(100000)) {
             new JpegIptcRewriter().removeIPTC(byteSource, os);
+            return os.toByteArray();
         }
-        return noIptcFile;
     }
 
     @ParameterizedTest
@@ -91,32 +96,38 @@ public class IptcUpdateTest extends IptcBaseTest {
                 byteSource, params);
         assertNotNull(metadata);
 
-        final File noIptcFile = removeIptc(byteSource, imageFile);
+        final byte[] noIptcFile = removeIptc(byteSource, imageFile);
 
-        final List<IptcBlock> newBlocks = new ArrayList<>();
-        final List<IptcRecord> newRecords = new ArrayList<>();
+        try {
+            final List<IptcBlock> newBlocks = new ArrayList<>();
+            final List<IptcRecord> newRecords = new ArrayList<>();
 
-        newRecords.add(new IptcRecord(IptcTypes.CITY, "Albany, NY"));
-        newRecords.add(new IptcRecord(IptcTypes.CREDIT,
-                "William Sorensen"));
+            newRecords.add(new IptcRecord(IptcTypes.CITY, "Albany, NY"));
+            newRecords.add(new IptcRecord(IptcTypes.CREDIT,
+                    "William Sorensen"));
 
-        final PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,
-                newBlocks);
+            final PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,
+                    newBlocks);
 
-        final File updated = Files.createTempFile(imageFile.getName()
-                + ".iptc.insert.", ".jpg").toFile();
-        try (FileOutputStream fos = new FileOutputStream(updated);
-                OutputStream os = new BufferedOutputStream(fos)) {
-            new JpegIptcRewriter().writeIPTC(new ByteSourceFile(
+            byte[] updated;
+            try (ByteArrayOutputStream os = new ByteArrayOutputStream(100000)) {
+                new JpegIptcRewriter().writeIPTC(new ByteSourceArray("test.jpg",
                     noIptcFile), os, newData);
+                updated = os.toByteArray();
+            }
+
+            final ByteSource updateByteSource = new ByteSourceArray("test.jpg", updated);
+            final JpegPhotoshopMetadata outMetadata = new JpegImageParser().getPhotoshopMetadata(
+                    updateByteSource, params);
+
+            assertNotNull(outMetadata);
+            assertEquals(2, outMetadata.getItems().size());
+        } catch (final Throwable e) {
+            final Path tempFile = Files.createTempFile(imageFile.getName() + ".iptc.insert.", ".jpg");
+            Files.write(tempFile, noIptcFile);
+            System.err.println("Failed tempFile " + tempFile);
+            throw e;
         }
-
-        final ByteSource updateByteSource = new ByteSourceFile(updated);
-        final JpegPhotoshopMetadata outMetadata = new JpegImageParser().getPhotoshopMetadata(
-                updateByteSource, params);
-
-        assertNotNull(outMetadata);
-        assertEquals(2, outMetadata.getItems().size());
     }
 
     @ParameterizedTest
@@ -139,24 +150,28 @@ public class IptcUpdateTest extends IptcBaseTest {
         final PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,
                 newBlocks);
 
-        final File updated = writeIptc(byteSource, newData, imageFile);
+        final byte[] updated = writeIptc(byteSource, newData, imageFile);
 
-        final ByteSource updateByteSource = new ByteSourceFile(updated);
-        final JpegPhotoshopMetadata outMetadata = new JpegImageParser().getPhotoshopMetadata(
-                updateByteSource, params);
+        try {
+            final ByteSource updateByteSource = new ByteSourceArray("test.jpg", updated);
+            final JpegPhotoshopMetadata outMetadata = new JpegImageParser().getPhotoshopMetadata(
+                    updateByteSource, params);
 
-        assertNotNull(outMetadata);
-        assertEquals(2, outMetadata.getItems().size());
+            assertNotNull(outMetadata);
+            assertEquals(2, outMetadata.getItems().size());
+        } catch (final Throwable e) {
+            final Path tempFile = Files.createTempFile(imageFile.getName() + ".iptc.update.", ".jpg");
+            Files.write(tempFile, updated);
+            System.err.println("Failed tempFile " + tempFile);
+            throw e;
+        }
     }
 
-    public File writeIptc(final ByteSource byteSource, final PhotoshopApp13Data newData, final File imageFile) throws IOException, ImageReadException, ImageWriteException {
-        final File updated = Files.createTempFile(imageFile.getName()
-                + ".iptc.update.", ".jpg").toFile();
-        try (FileOutputStream fos = new FileOutputStream(updated);
-                OutputStream os = new BufferedOutputStream(fos)) {
+    public byte[] writeIptc(final ByteSource byteSource, final PhotoshopApp13Data newData, final File imageFile) throws IOException, ImageReadException, ImageWriteException {
+        try (ByteArrayOutputStream os = new ByteArrayOutputStream(100000)) {
             new JpegIptcRewriter().writeIPTC(byteSource, os, newData);
+            return os.toByteArray();
         }
-        return updated;
     }
 
     @ParameterizedTest
@@ -184,13 +199,20 @@ public class IptcUpdateTest extends IptcBaseTest {
 
         final PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords, newBlocks);
 
-        final File updated = writeIptc(byteSource, newData, imageFile);
+        final byte[] updated = writeIptc(byteSource, newData, imageFile);
 
-        final ByteSource updateByteSource = new ByteSourceFile(updated);
-        final JpegPhotoshopMetadata outMetadata = new JpegImageParser().getPhotoshopMetadata(updateByteSource, params);
+        try {
+            final ByteSource updateByteSource = new ByteSourceArray("test.jpg", updated);
+            final JpegPhotoshopMetadata outMetadata = new JpegImageParser().getPhotoshopMetadata(updateByteSource, params);
 
-        assertNotNull(outMetadata);
-        assertEquals(outMetadata.getItems().size(), newRecords.size());
+            assertNotNull(outMetadata);
+            assertEquals(outMetadata.getItems().size(), newRecords.size());
+        } catch (final Throwable e) {
+            final Path tempFile = Files.createTempFile(imageFile.getName() + ".iptc.update.", ".jpg");
+            Files.write(tempFile, updated);
+            System.err.println("Failed tempFile " + tempFile);
+            throw e;
+        }
     }
 
 }

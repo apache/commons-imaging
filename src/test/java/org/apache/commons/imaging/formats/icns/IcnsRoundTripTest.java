@@ -22,17 +22,17 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.nio.ByteOrder;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.internal.Debug;
-import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 
 public class IcnsRoundTripTest extends IcnsBaseTest {
@@ -89,7 +89,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                 }
             }
             bos.flush();
-            writeAndReadImageData("1bpp-image-mask-versus-8bpp-mask", baos.toByteArray(), foreground, background);
+            readImageData("1bpp-image-mask-versus-8bpp-mask", baos.toByteArray(), foreground, background);
         }
     }
 
@@ -126,7 +126,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                 }
             }
             bos.flush();
-            writeAndReadImageData("8bpp-image-8bpp-mask", baos.toByteArray(), foreground, background);
+            readImageData("8bpp-image-8bpp-mask", baos.toByteArray(), foreground, background);
         }
     }
 
@@ -183,7 +183,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                 bos.write(0xff);
             }
             bos.flush();
-            writeAndReadImageData("8bpp-image-8bpp-mask-vs-1bpp-mask", baos.toByteArray(), foreground, background);
+            readImageData("8bpp-image-8bpp-mask-vs-1bpp-mask", baos.toByteArray(), foreground, background);
         }
     }
 
@@ -240,7 +240,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                 }
             }
             bos.flush();
-            writeAndReadImageData("8bpp-image-1bpp-mask-vs-8bpp-mask", baos.toByteArray(), foreground, background);
+            readImageData("8bpp-image-1bpp-mask-vs-8bpp-mask", baos.toByteArray(), foreground, background);
         }
     }
 
@@ -265,7 +265,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                 }
             }
             bos.flush();
-            writeAndReadImageData("8bpp-image-no-mask", baos.toByteArray(), foreground, background);
+            readImageData("8bpp-image-no-mask", baos.toByteArray(), foreground, background);
         }}
 
     @Test
@@ -320,7 +320,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                 }
             }
             bos.flush();
-            writeAndReadImageData("32bpp-image-1bpp-mask", baos.toByteArray(), foreground, background);
+            readImageData("32bpp-image-1bpp-mask", baos.toByteArray(), foreground, background);
         }
     }
 
@@ -368,7 +368,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
 
             boolean threw = false;
             try {
-                writeAndReadImageData("32bpp-half-masked-CORRUPT", baos.toByteArray(), foreground, background);
+                readImageData("32bpp-half-masked-CORRUPT", baos.toByteArray(), foreground, background);
             } catch (final ImageReadException imageReadException) {
                 threw = true;
             }
@@ -402,22 +402,27 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                 }
             }
             bos.flush();
-            writeAndReadImageData("32bpp-mask-missing", baos.toByteArray(), foreground, background);
+            readImageData("32bpp-mask-missing", baos.toByteArray(), foreground, background);
         }
     }
 
-    private void writeAndReadImageData(final String description, final byte[] rawData,
+    private void readImageData(final String description, final byte[] rawData,
             final int foreground, final int background) throws IOException,
             ImageReadException {
-        final File exportFile = Files.createTempFile(description, ".icns").toFile();
-        FileUtils.writeByteArrayToFile(exportFile, rawData);
-        final BufferedImage dstImage = Imaging.getBufferedImage(exportFile);
+        try {
+            final BufferedImage dstImage = Imaging.getBufferedImage(new ByteArrayInputStream(rawData), "description.icns");
 
-        assertNotNull(dstImage);
-        assertEquals(dstImage.getWidth(), IMAGE[0].length);
-        assertEquals(dstImage.getHeight(), IMAGE.length);
+            assertNotNull(dstImage);
+            assertEquals(dstImage.getWidth(), IMAGE[0].length);
+            assertEquals(dstImage.getHeight(), IMAGE.length);
 
-        verify(dstImage, foreground, background);
+            verify(dstImage, foreground, background);
+        } catch (final Throwable e) {
+            final Path tempFile = Files.createTempFile("description", ".icns");
+            Files.write(tempFile, rawData);
+            System.err.println("Failed tempFile " + tempFile);
+            throw e;
+        }
     }
 
     private void verify(final BufferedImage data, final int foreground, final int background) {

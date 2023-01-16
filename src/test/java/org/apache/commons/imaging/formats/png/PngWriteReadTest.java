@@ -24,14 +24,13 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.common.GenericImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
-import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -183,17 +182,21 @@ public class PngWriteReadTest extends ImagingTest {
 
         final byte[] bytes = Imaging.writeImageToBytes(srcImage, ImageFormats.PNG);
 
-        final File tempFile = Files.createTempFile("temp", ".png").toFile();
-        FileUtils.writeByteArrayToFile(tempFile, bytes);
+        try {
+            final BufferedImage dstImage = Imaging.getBufferedImage(bytes);
 
-        final BufferedImage dstImage = Imaging.getBufferedImage(bytes);
+            assertNotNull(dstImage);
+            assertEquals(srcImage.getWidth(), dstImage.getWidth());
+            assertEquals(srcImage.getHeight(), dstImage.getHeight());
 
-        assertNotNull(dstImage);
-        assertEquals(srcImage.getWidth(), dstImage.getWidth());
-        assertEquals(srcImage.getHeight(), dstImage.getHeight());
-
-        final int[][] dstData = bufferedImageToImageData(dstImage);
-        assertArrayEquals(rawData, dstData);
+            final int[][] dstData = bufferedImageToImageData(dstImage);
+            assertArrayEquals(rawData, dstData);
+        } catch (final Throwable e) {
+            final Path tempFile = Files.createTempFile("temp", ".png");
+            Files.write(tempFile, bytes);
+            System.err.println("Failed tempFile " + tempFile);
+            throw e;
+        }
     }
 
     private void writeAndReadMultipleEXt(final int[][] rawData) throws IOException,
@@ -213,27 +216,31 @@ public class PngWriteReadTest extends ImagingTest {
             bytes = os.toByteArray();
         }
 
-        final File tempFile = Files.createTempFile("temp", ".png").toFile();
-        FileUtils.writeByteArrayToFile(tempFile, bytes);
+        try {
+            final BufferedImage dstImage = Imaging.getBufferedImage(bytes);
 
-        final BufferedImage dstImage = Imaging.getBufferedImage(bytes);
+            assertNotNull(dstImage);
+            assertEquals(srcImage.getWidth(), dstImage.getWidth());
+            assertEquals(srcImage.getHeight(), dstImage.getHeight());
 
-        assertNotNull(dstImage);
-        assertEquals(srcImage.getWidth(), dstImage.getWidth());
-        assertEquals(srcImage.getHeight(), dstImage.getHeight());
+            final int[][] dstData = bufferedImageToImageData(dstImage);
+            assertArrayEquals(rawData, dstData);
 
-        final int[][] dstData = bufferedImageToImageData(dstImage);
-        assertArrayEquals(rawData, dstData);
-
-        final ImageMetadata imageMetadata = Imaging.getMetadata(bytes);
-        assertEquals(imageMetadata.getItems().size(), 2);
-        final GenericImageMetadata.GenericImageMetadataItem item0
-           = (GenericImageMetadata.GenericImageMetadataItem)imageMetadata.getItems().get(0);
-        assertEquals(item0.getKeyword(), "a");
-        assertEquals(item0.getText(), "b");
-        final GenericImageMetadata.GenericImageMetadataItem item1
-           = (GenericImageMetadata.GenericImageMetadataItem)imageMetadata.getItems().get(1);
-        assertEquals(item1.getKeyword(), "c");
-        assertEquals(item1.getText(), "d");
+            final ImageMetadata imageMetadata = Imaging.getMetadata(bytes);
+            assertEquals(imageMetadata.getItems().size(), 2);
+            final GenericImageMetadata.GenericImageMetadataItem item0
+               = (GenericImageMetadata.GenericImageMetadataItem)imageMetadata.getItems().get(0);
+            assertEquals(item0.getKeyword(), "a");
+            assertEquals(item0.getText(), "b");
+            final GenericImageMetadata.GenericImageMetadataItem item1
+               = (GenericImageMetadata.GenericImageMetadataItem)imageMetadata.getItems().get(1);
+            assertEquals(item1.getKeyword(), "c");
+            assertEquals(item1.getText(), "d");
+        } catch (final Throwable e) {
+            final Path tempFile = Files.createTempFile("temp", ".png");
+            Files.write(tempFile, bytes);
+            System.err.println("Failed tempFile " + tempFile);
+            throw e;
+        }
     }
 }

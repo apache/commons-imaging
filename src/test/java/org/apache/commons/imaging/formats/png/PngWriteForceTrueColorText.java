@@ -21,9 +21,10 @@ import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -36,6 +37,7 @@ public class PngWriteForceTrueColorText extends PngBaseTest {
         final List<File> images = getPngImages();
         for (final File imageFile : images) {
 
+            byte[] outFile = null;
             try {
                 if (isInvalidPNGTestFile(imageFile)) {
                     continue;
@@ -50,19 +52,25 @@ public class PngWriteForceTrueColorText extends PngBaseTest {
                 final BufferedImage image = pngImageParser.getBufferedImage(imageFile, new PngImagingParameters());
                 assertNotNull(image);
 
-                final File outFile = Files.createTempFile(imageFile.getName() + ".", ".png").toFile();
                 // Debug.debug("outFile", outFile);
 
                 final PngImagingParameters params = new PngImagingParameters();
-                params.setForceTrueColor(Boolean.TRUE);
-                try (FileOutputStream fos = new FileOutputStream(outFile)) {
-                    pngImageParser.writeImage(image, fos, params);
+
+                try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
+                    params.setForceTrueColor(Boolean.TRUE);
+                    pngImageParser.writeImage(image, os, params);
+                    outFile = os.toByteArray();
                 }
 
                 final BufferedImage image2 = pngImageParser.getBufferedImage(outFile, new PngImagingParameters());
                 assertNotNull(image2);
-            } catch (final Exception e) {
+            } catch (final Throwable e) {
                 Debug.debug("imageFile", imageFile);
+                if (outFile != null) {
+                    final Path tempFile = Files.createTempFile(imageFile.getName() + ".", ".jpg");
+                    Files.write(tempFile, outFile);
+                    System.err.println("Failed tempFile " + tempFile);
+                }
                 throw e;
             }
         }

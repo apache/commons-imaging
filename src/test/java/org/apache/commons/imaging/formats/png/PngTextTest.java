@@ -74,24 +74,26 @@ public class PngTextTest extends PngBaseTest {
             bytes = baos.toByteArray();
         }
 
-        final File tempFile = Files.createTempFile("temp", ".png").toFile();
-        FileUtils.writeByteArrayToFile(tempFile, bytes);
+        try {
+            final PngImageInfo imageInfo = (PngImageInfo) Imaging.getImageInfo(bytes);
+            assertNotNull(imageInfo);
 
-        final PngImageInfo imageInfo = (PngImageInfo) Imaging.getImageInfo(bytes);
-        assertNotNull(imageInfo);
-
-        final List<PngText> readTexts = imageInfo.getTextChunks();
-        assertEquals(readTexts.size(), 3);
-        for (final PngText text : readTexts) {
-            if (text.keyword.equals("a")) {
-                assertEquals(text.text, "b");
-            } else if (text.keyword.equals("c")) {
-                assertEquals(text.text, "d");
-            } else if (text.keyword.equals("e")) {
-                assertEquals(text.text, "f");
-            } else {
-                fail("unknown text chunk.");
+            final List<PngText> readTexts = imageInfo.getTextChunks();
+            assertEquals(readTexts.size(), 3);
+            for (final PngText text : readTexts) {
+                if (text.keyword.equals("a")) {
+                    assertEquals(text.text, "b");
+                } else if (text.keyword.equals("c")) {
+                    assertEquals(text.text, "d");
+                } else if (text.keyword.equals("e")) {
+                    assertEquals(text.text, "f");
+                } else {
+                    fail("unknown text chunk.");
+                }
             }
+        } catch (final Throwable e) {
+            final File tempFile = Files.createTempFile("temp", ".png").toFile();
+            FileUtils.writeByteArrayToFile(tempFile, bytes);
         }
     }
 
