@@ -24,14 +24,11 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.common.GenericImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
-import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -183,9 +180,6 @@ public class PngWriteReadTest extends ImagingTest {
 
         final byte[] bytes = Imaging.writeImageToBytes(srcImage, ImageFormats.PNG);
 
-        final File tempFile = Files.createTempFile("temp", ".png").toFile();
-        FileUtils.writeByteArrayToFile(tempFile, bytes);
-
         final BufferedImage dstImage = Imaging.getBufferedImage(bytes);
 
         assertNotNull(dstImage);
@@ -212,9 +206,6 @@ public class PngWriteReadTest extends ImagingTest {
             pngImageParser.writeImage(srcImage, os, writeParams);
             bytes = os.toByteArray();
         }
-
-        final File tempFile = Files.createTempFile("temp", ".png").toFile();
-        FileUtils.writeByteArrayToFile(tempFile, bytes);
 
         final BufferedImage dstImage = Imaging.getBufferedImage(bytes);
 

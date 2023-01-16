@@ -25,9 +25,8 @@ import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.nio.file.Files;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -58,11 +57,12 @@ public class TiffRoundtripTest extends TiffBaseTest {
             };
             final TiffImageParser tiffImageParser = new TiffImageParser();
             for (final int compression : compressions) {
-                final File tempFile = Files.createTempFile(imageFile.getName() + "-" + compression + ".", ".tif").toFile();
+                final byte[] tempFile;
                 final TiffImagingParameters params = new TiffImagingParameters();
                 params.setCompression(compression);
-                try (FileOutputStream fos = new FileOutputStream(tempFile)) {
-                    tiffImageParser.writeImage(image, fos, params);
+                try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+                    tiffImageParser.writeImage(image, bos, params);
+                    tempFile = bos.toByteArray();
                 }
                 final BufferedImage image2 = Imaging.getBufferedImage(tempFile);
                 assertNotNull(image2);

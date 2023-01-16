@@ -22,16 +22,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.internal.Debug;
-import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 
 public class IcnsRoundTripTest extends IcnsBaseTest {
@@ -408,9 +406,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
     private void writeAndReadImageData(final String description, final byte[] rawData,
             final int foreground, final int background) throws IOException,
             ImageReadException {
-        final File exportFile = Files.createTempFile(description, ".icns").toFile();
-        FileUtils.writeByteArrayToFile(exportFile, rawData);
-        final BufferedImage dstImage = Imaging.getBufferedImage(exportFile);
+        final BufferedImage dstImage = Imaging.getBufferedImage(new ByteArrayInputStream(rawData), "description.icns");
 
         assertNotNull(dstImage);
         assertEquals(dstImage.getWidth(), IMAGE[0].length);

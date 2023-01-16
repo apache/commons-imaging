@@ -29,7 +29,6 @@ import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.common.XmpImagingParameters;
 import org.apache.commons.imaging.internal.Debug;
