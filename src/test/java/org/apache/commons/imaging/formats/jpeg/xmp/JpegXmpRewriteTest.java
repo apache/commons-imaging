@@ -20,14 +20,12 @@ package org.apache.commons.imaging.formats.jpeg.xmp;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
 import java.util.stream.Stream;
 
 import org.apache.commons.imaging.common.bytesource.ByteSource;
+import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
@@ -49,20 +47,20 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
         final String xmpXml = new JpegImageParser().getXmpXml(byteSource, params);
         assertNotNull(xmpXml);
 
-        final File noXmpFile = Files.createTempFile(imageFile.getName() + ".", ".jpg").toFile();
+        byte[] noXmpFile;
         {
             // test remove
 
-            try (FileOutputStream fos = new FileOutputStream(noXmpFile);
-                    OutputStream os = new BufferedOutputStream(fos)) {
+            try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
                 new JpegXmpRewriter().removeXmpXml(byteSource, os);
+                noXmpFile = os.toByteArray();
             }
 
             // Debug.debug("Source Segments:");
             // new JpegUtils().dumpJFIF(new ByteSourceFile(noXmpFile));
 
             final String outXmp = new JpegImageParser().getXmpXml(
-                    new ByteSourceFile(noXmpFile), params);
+                    new ByteSourceArray("test.jpg", noXmpFile), params);
             Assertions.assertNull(outXmp);
         }
 
@@ -70,17 +68,17 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
             // test update
 
             final String newXmpXml = "test";
-            final File updated = Files.createTempFile(imageFile.getName() + ".", ".jpg").toFile();
-            try (FileOutputStream fos = new FileOutputStream(updated);
-                    OutputStream os = new BufferedOutputStream(fos)) {
+            byte[] updated;
+            try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
                 new JpegXmpRewriter().updateXmpXml(byteSource, os, newXmpXml);
+                updated = os.toByteArray();
             }
 
             // Debug.debug("Source Segments:");
             // new JpegUtils().dumpJFIF(new ByteSourceFile(updated));
 
             final String outXmp = new JpegImageParser().getXmpXml(
-                    new ByteSourceFile(updated), params);
+                    new ByteSourceArray("test.jpg", updated), params);
             assertNotNull(outXmp);
             assertEquals(outXmp, newXmpXml);
         }
@@ -89,18 +87,18 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
             // test insert
 
             final String newXmpXml = "test";
-            final File updated = Files.createTempFile(imageFile.getName() + ".", ".jpg").toFile();
-            try (FileOutputStream fos = new FileOutputStream(updated);
-                    OutputStream os = new BufferedOutputStream(fos)) {
-                new JpegXmpRewriter().updateXmpXml(new ByteSourceFile(
+            final byte[] updated;
+            try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
+                new JpegXmpRewriter().updateXmpXml(new ByteSourceArray("test.jpg",
                         noXmpFile), os, newXmpXml);
+                updated = os.toByteArray();
             }
 
             // Debug.debug("Source Segments:");
             // new JpegUtils().dumpJFIF(new ByteSourceFile(updated));
 
             final String outXmp = new JpegImageParser().getXmpXml(
-                    new ByteSourceFile(updated), params);
+                    new ByteSourceArray("test.jpg", updated), params);
             assertNotNull(outXmp);
             assertEquals(outXmp, newXmpXml);
         }
