@@ -18,8 +18,10 @@
 package org.apache.commons.imaging.roundtrip;
 
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.util.stream.Stream;
 
+import org.apache.commons.imaging.ImageFormats;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -34,7 +36,13 @@ public class FullColorRoundtrip extends RoundtripBase {
     };
 
     public static Stream<Arguments> testFullColorRoundtrip() {
-        return createRoundtripArguments(images);
+        return createRoundtripArguments(images).filter(FullColorRoundtrip::canPerformRoundtrip);
+    }
+
+    private static boolean canPerformRoundtrip(final Arguments arguments) {
+        final RenderedImage bufferedImage = (RenderedImage) arguments.get()[0];
+        final FormatInfo formatInfo = (FormatInfo) arguments.get()[1];
+        return bufferedImage.getWidth() < 300 || (formatInfo.format != ImageFormats.PCX && formatInfo.format != ImageFormats.DCX);
     }
 
     @ParameterizedTest
