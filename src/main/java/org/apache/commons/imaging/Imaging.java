@@ -30,14 +30,19 @@ import java.awt.Dimension;
 import java.awt.color.ICC_Profile;
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -81,6 +86,22 @@ import java.util.stream.Stream;
  * @see <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a>
  */
 public final class Imaging {
+
+    private static Map<String,String> methodCov = new HashMap<String,String>();
+
+    public static void writeCov(String methodName, Boolean[] coverageArray) {
+        methodCov.put(methodName, Arrays.toString(coverageArray));
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("target/coverage.txt"));
+            writer.write(methodCov.toString());
+            
+            writer.close();
+        }
+        catch (IOException e) {
+            System.out.println("Error!");
+        }
+    }
+
 
     private static final int[] MAGIC_NUMBERS_GIF = { 0x47, 0x49, };
     private static final int[] MAGIC_NUMBERS_PNG = { 0x89, 0x50, };
