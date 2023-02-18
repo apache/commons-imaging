@@ -24,6 +24,7 @@ import java.io.PushbackInputStream;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.Imaging;
 
 /**
  * A rudimentary preprocessor and parser for the C programming
@@ -308,32 +309,70 @@ public class BasicCParser {
         return liveTokens;
     }
 
+    private static Boolean[] coverage = new Boolean[32];
+
     public static void unescapeString(final StringBuilder stringBuilder, final String string)
             throws ImageReadException {
+        if (coverage[0] == null) {
+            for (int i = 0; i < 32; i++) {coverage[i] = false;}
+        }
         if (string.length() < 2) {
+            //0
+            coverage[0] = true;
+            Imaging.writeCov("unescapeString", coverage); 
             throw new ImageReadException("Parsing XPM file failed, "
                     + "string is too short");
         }
+        else {
+            //1
+            coverage[1] = true;
+        }
         if (string.charAt(0) != '"'
                 || string.charAt(string.length() - 1) != '"') {
+            //2
+            coverage[2] = true;
+            Imaging.writeCov("unescapeString", coverage);
             throw new ImageReadException("Parsing XPM file failed, "
                     + "string not surrounded by '\"'");
         }
+        else {
+            //3
+            coverage[3] = true;
+        }
         boolean hadBackSlash = false;
         for (int i = 1; i < (string.length() - 1); i++) {
+            //4
+            coverage[4] = true;
             final char c = string.charAt(i);
             if (hadBackSlash) {
+                //5
+                coverage[5] = true;
                 if (c == '\\') {
+                    //6
+                    coverage[6] = true;
                     stringBuilder.append('\\');
                 } else if (c == '"') {
+                    //7
+                    coverage[7] = true;
                     stringBuilder.append('"');
                 } else if (c == '\'') {
+                    //8
+                    coverage[8] = true;
                     stringBuilder.append('\'');
                 } else if (c == 'x') {
+                    //9
+                    coverage[9] = true;
                     if (i + 2 >= string.length()) {
+                        //10
+                        coverage[10] = true;
+                        Imaging.writeCov("unescapeString", coverage);
                         throw new ImageReadException(
                                 "Parsing XPM file failed, "
                                         + "hex constant in string too short");
+                    }
+                    else {
+                        //11
+                        coverage[11] = true;
                     }
                     final char hex1 = string.charAt(i + 1);
                     final char hex2 = string.charAt(i + 2);
@@ -342,12 +381,17 @@ public class BasicCParser {
                     try {
                         constant = Integer.parseInt(hex1 + Character.toString(hex2), 16);
                     } catch (final NumberFormatException nfe) {
+                        //12
+                        coverage[12] = true;
+                        Imaging.writeCov("unescapeString", coverage);
                         throw new ImageReadException(
                                 "Parsing XPM file failed, "
                                         + "hex constant invalid", nfe);
                     }
                     stringBuilder.append((char) constant);
                 } else {
+                    //13
+                    coverage[13] = true;
                     switch (c) {
                     case '0':
                     case '1':
@@ -357,17 +401,25 @@ public class BasicCParser {
                     case '5':
                     case '6':
                     case '7':
+                        //14
+                        coverage[14] = true;
                         int length = 1;
                         if (i + 1 < string.length() && '0' <= string.charAt(i + 1)
                                 && string.charAt(i + 1) <= '7') {
+                            //15
+                            coverage[15] = true;
                             ++length;
                         }
                         if (i + 2 < string.length() && '0' <= string.charAt(i + 2)
                                 && string.charAt(i + 2) <= '7') {
+                            //16
+                            coverage[16] = true;
                             ++length;
                         }
                         int constant = 0;
                         for (int j = 0; j < length; j++) {
+                            //17
+                            coverage[17] = true;
                             constant *= 8;
                             constant += (string.charAt(i + j) - '0');
                         }
@@ -375,46 +427,80 @@ public class BasicCParser {
                         stringBuilder.append((char) constant);
                         break;
                     case 'a':
+                        //18
+                        coverage[18] = true;
                         stringBuilder.append((char) 0x07);
                         break;
                     case 'b':
+                        //19
+                        coverage[19] = true;
                         stringBuilder.append((char) 0x08);
                         break;
                     case 'f':
+                        //20
+                        coverage[20] = true;
                         stringBuilder.append((char) 0x0c);
                         break;
                     case 'n':
+                        //21
+                        coverage[21] = true;
                         stringBuilder.append((char) 0x0a);
                         break;
                     case 'r':
+                        //22
+                        coverage[22] = true;
                         stringBuilder.append((char) 0x0d);
                         break;
                     case 't':
+                        //23
+                        coverage[23] = true;
                         stringBuilder.append((char) 0x09);
                         break;
                     case 'v':
+                        //24
+                        coverage[24] = true;
                         stringBuilder.append((char) 0x0b);
                         break;
                     default:
+                        //25
+                        coverage[25] = true;
+                        Imaging.writeCov("unescapeString", coverage);
                         throw new ImageReadException("Parsing XPM file failed, "
                                 + "invalid escape sequence");
                     }
                 }
                 hadBackSlash = false;
             } else {
+                //26
+                coverage[26] = true;
                 if (c == '\\') {
+                    //27
+                    coverage[27] = true;
                     hadBackSlash = true;
                 } else if (c == '"') {
+                    //28
+                    coverage[28] = true;
+                    Imaging.writeCov("unescapeString", coverage);
                     throw new ImageReadException("Parsing XPM file failed, "
                             + "extra '\"' found in string");
                 } else {
+                    //29
+                    coverage[29] = true;
                     stringBuilder.append(c);
                 }
             }
         }
         if (hadBackSlash) {
+            //30
+            coverage[30] = true;
+            Imaging.writeCov("unescapeString", coverage);
             throw new ImageReadException("Parsing XPM file failed, "
                     + "unterminated escape sequence found in string");
         }
+        else {
+            //31
+            coverage[31] = true;
+        }
+        Imaging.writeCov("unescapeString", coverage);
     }
 }
