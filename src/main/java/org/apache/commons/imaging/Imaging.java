@@ -87,14 +87,22 @@ import java.util.stream.Stream;
  */
 public final class Imaging {
 
-    private static Map<String,String> methodCov = new HashMap<String,String>();
+    private static Map<String,Boolean[]> methodCov = new HashMap<String,Boolean[]>();
 
     public static void writeCov(String methodName, Boolean[] coverageArray) {
-        methodCov.put(methodName, Arrays.toString(coverageArray));
+        methodCov.put(methodName, coverageArray);
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("target/coverage.txt"));
-            writer.write(methodCov.toString());
-            
+            for (String key : methodCov.keySet()) {
+                Boolean[] arr = methodCov.get(key);
+                writer.write(key+"\n");
+                writer.write(Arrays.toString(arr)+"\n");
+                int numOfTrues = 0;
+                for (Boolean b : arr) {
+                    if (b) numOfTrues++;
+                }
+                writer.write(String.valueOf(numOfTrues/(double)arr.length)+"\n");
+            }
             writer.close();
         }
         catch (IOException e) {
