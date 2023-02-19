@@ -29,6 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
@@ -40,6 +41,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
  */
 public class TiffField {
 
+    private static final Boolean[] coverage = new Boolean[48];
     private static final Logger LOGGER = Logger.getLogger(TiffField.class.getName());
 
     private final TagInfo tagInfo;
@@ -174,32 +176,80 @@ public class TiffField {
     }
 
     private String getValueDescription(final Object o) {
+
+        if (coverage[0] == null) {
+            Arrays.fill(coverage, false);
+        }
+
         if (o == null) {
+            // 0
+            coverage[0] = true;
+            Imaging.writeCov("TiffField::getValueDescription", coverage);
             return null;
+        }else{
+            // 1
+            coverage[1] = true;
+            Imaging.writeCov("TiffField::getValueDescription", coverage);
         }
 
         if (o instanceof Number) {
+            // 2
+            coverage[2] = true;
+            Imaging.writeCov("TiffField::getValueDescription", coverage);
             return o.toString();
+        }else{
+            // 3
+            coverage[3] = true;
+            Imaging.writeCov("TiffField::getValueDescription", coverage);
         }
+
         if (o instanceof String) {
+            // 4
+            coverage[4] = true;
+            Imaging.writeCov("TiffField::getValueDescription", coverage);
             return "'" + o.toString().trim() + "'";
+        }else{
+            // 5
+            coverage[5] = true;
+            Imaging.writeCov("TiffField::getValueDescription", coverage);
         }
+
         if (o instanceof Date) {
+            // 6
+            coverage[6] = true;
+            Imaging.writeCov("TiffField::getValueDescription", coverage);
             final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.ENGLISH);
             return df.format((Date) o);
+        }else{
+            // 7
+            coverage[7] = true;
+            Imaging.writeCov("TiffField::getValueDescription", coverage);
         }
+
         if (o instanceof Object[]) {
+            // 8
+            coverage[8] = true;
+            Imaging.writeCov("TiffField::getValueDescription", coverage);
             final Object[] objects = (Object[]) o;
             final StringBuilder result = new StringBuilder();
 
             for (int i = 0; i < objects.length; i++) {
+                // 9
+                coverage[9] = true;
+                Imaging.writeCov("TiffField::getValueDescription", coverage);
                 final Object object = objects[i];
 
                 if (i > 50) {
+                    // 10
+                    coverage[10] = true;
+                    Imaging.writeCov("TiffField::getValueDescription", coverage);
                     result.append("... (").append(objects.length).append(")");
                     break;
                 }
                 if (i > 0) {
+                    // 11
+                    coverage[11] = true;
+                    Imaging.writeCov("TiffField::getValueDescription", coverage);
                     result.append(", ");
                 }
                 result.append(object.toString());
@@ -220,133 +270,257 @@ public class TiffField {
         // }
         // return result.toString();
         // }
+        }else{
+            // 12
+            coverage[12] = true;
+            Imaging.writeCov("TiffField::getValueDescription", coverage);
         }
+
         if (o instanceof short[]) {
+            // 13
+            coverage[13] = true;
+            Imaging.writeCov("TiffField::getValueDescription", coverage);
             final short[] values = (short[]) o;
             final StringBuilder result = new StringBuilder();
 
             for (int i = 0; i < values.length; i++) {
+                // 14
+                coverage[14] = true;
+                Imaging.writeCov("TiffField::getValueDescription", coverage);
                 final short sVal = values[i];
 
                 if (i > 50) {
+                    // 15
+                    coverage[15] = true;
+                    Imaging.writeCov("TiffField::getValueDescription", coverage);
                     result.append("... (").append(values.length).append(")");
                     break;
                 }
                 if (i > 0) {
+                    // 16
+                    coverage[16] = true;
+                    Imaging.writeCov("TiffField::getValueDescription", coverage);
                     result.append(", ");
                 }
                 result.append(sVal);
             }
             return result.toString();
+        }else{
+            // 17
+            coverage[17] = true;
+            Imaging.writeCov("TiffField::getValueDescription", coverage);
         }
+
         if (o instanceof int[]) {
+            // 18
+            coverage[18] = true;
+            Imaging.writeCov("TiffField::getValueDescription", coverage);
             final int[] values = (int[]) o;
             final StringBuilder result = new StringBuilder();
 
             for (int i = 0; i < values.length; i++) {
+                // 19
+                coverage[19] = true;
+                Imaging.writeCov("TiffField::getValueDescription", coverage);
                 final int iVal = values[i];
 
                 if (i > 50) {
+                    // 20
+                    coverage[20] = true;
+                    Imaging.writeCov("TiffField::getValueDescription", coverage);
                     result.append("... (").append(values.length).append(")");
                     break;
                 }
                 if (i > 0) {
+                    // 21
+                    coverage[21] = true;
+                    Imaging.writeCov("TiffField::getValueDescription", coverage);
                     result.append(", ");
                 }
                 result.append(iVal);
             }
             return result.toString();
+        }else{
+            // 22
+            coverage[22] = true;
+            Imaging.writeCov("TiffField::getValueDescription", coverage);
         }
+
         if (o instanceof long[]) {
+            // 23
+            coverage[23] = true;
+            Imaging.writeCov("TiffField::getValueDescription", coverage);
             final long[] values = (long[]) o;
             final StringBuilder result = new StringBuilder();
 
             for (int i = 0; i < values.length; i++) {
+                // 24
+                coverage[24] = true;
+                Imaging.writeCov("TiffField::getValueDescription", coverage);
                 final long lVal = values[i];
 
                 if (i > 50) {
+                    // 25
+                    coverage[25] = true;
+                    Imaging.writeCov("TiffField::getValueDescription", coverage);
                     result.append("... (").append(values.length).append(")");
                     break;
                 }
                 if (i > 0) {
+                    // 26
+                    coverage[26] = true;
+                    Imaging.writeCov("TiffField::getValueDescription", coverage);
                     result.append(", ");
                 }
                 result.append(lVal);
             }
             return result.toString();
+        }else{
+            // 27
+            coverage[27] = true;
+            Imaging.writeCov("TiffField::getValueDescription", coverage);
         }
+
         if (o instanceof double[]) {
+            // 28
+            coverage[28] = true;
+            Imaging.writeCov("TiffField::getValueDescription", coverage);
             final double[] values = (double[]) o;
             final StringBuilder result = new StringBuilder();
 
             for (int i = 0; i < values.length; i++) {
+                // 29
+                coverage[29] = true;
+                Imaging.writeCov("TiffField::getValueDescription", coverage);
                 final double dVal = values[i];
 
                 if (i > 50) {
+                    // 30
+                    coverage[30] = true;
+                    Imaging.writeCov("TiffField::getValueDescription", coverage);
                     result.append("... (").append(values.length).append(")");
                     break;
                 }
                 if (i > 0) {
+                    // 31
+                    coverage[31] = true;
+                    Imaging.writeCov("TiffField::getValueDescription", coverage);
                     result.append(", ");
                 }
                 result.append(dVal);
             }
             return result.toString();
+        }else{
+            // 32
+            coverage[32] = true;
+            Imaging.writeCov("TiffField::getValueDescription", coverage);
         }
+
         if (o instanceof byte[]) {
+            // 33
+            coverage[33] = true;
+            Imaging.writeCov("TiffField::getValueDescription", coverage);
             final byte[] values = (byte[]) o;
             final StringBuilder result = new StringBuilder();
 
             for (int i = 0; i < values.length; i++) {
+                // 34
+                coverage[34] = true;
+                Imaging.writeCov("TiffField::getValueDescription", coverage);
                 final byte bVal = values[i];
 
                 if (i > 50) {
+                    // 35
+                    coverage[35] = true;
+                    Imaging.writeCov("TiffField::getValueDescription", coverage);
                     result.append("... (").append(values.length).append(")");
                     break;
                 }
                 if (i > 0) {
+                    // 36
+                    coverage[36] = true;
+                    Imaging.writeCov("TiffField::getValueDescription", coverage);
                     result.append(", ");
                 }
                 result.append(bVal);
             }
             return result.toString();
+        }else{
+            // 37
+            coverage[37] = true;
+            Imaging.writeCov("TiffField::getValueDescription", coverage);
         }
+
         if (o instanceof char[]) {
+            // 38
+            coverage[38] = true;
+            Imaging.writeCov("TiffField::getValueDescription", coverage);
             final char[] values = (char[]) o;
             final StringBuilder result = new StringBuilder();
 
             for (int i = 0; i < values.length; i++) {
+                // 39
+                coverage[39] = true;
+                Imaging.writeCov("TiffField::getValueDescription", coverage);
                 final char cVal = values[i];
 
                 if (i > 50) {
+                    // 40
+                    coverage[40] = true;
+                    Imaging.writeCov("TiffField::getValueDescription", coverage);
                     result.append("... (").append(values.length).append(")");
                     break;
                 }
                 if (i > 0) {
+                    // 41
+                    coverage[41] = true;
+                    Imaging.writeCov("TiffField::getValueDescription", coverage);
                     result.append(", ");
                 }
                 result.append(cVal);
             }
             return result.toString();
+        }else{
+            // 42
+            coverage[42] = true;
+            Imaging.writeCov("TiffField::getValueDescription", coverage);
         }
+
         if (o instanceof float[]) {
+            // 43
+            coverage[43] = true;
+            Imaging.writeCov("TiffField::getValueDescription", coverage);
             final float[] values = (float[]) o;
             final StringBuilder result = new StringBuilder();
 
             for (int i = 0; i < values.length; i++) {
+                // 44
+                coverage[44] = true;
+                Imaging.writeCov("TiffField::getValueDescription", coverage);
                 final float fVal = values[i];
 
                 if (i > 50) {
+                    // 45
+                    coverage[45] = true;
+                    Imaging.writeCov("TiffField::getValueDescription", coverage);
                     result.append("... (").append(values.length).append(")");
                     break;
                 }
                 if (i > 0) {
+                    // 46
+                    coverage[46] = true;
+                    Imaging.writeCov("TiffField::getValueDescription", coverage);
                     result.append(", ");
                 }
                 result.append(fVal);
             }
             return result.toString();
+        }else{
+            // 47
+            coverage[47] = true;
+            Imaging.writeCov("TiffField::getValueDescription", coverage);
         }
+
         // else if (o instanceof short[])
         // {
         // short numbers[] = (short[]) o;
