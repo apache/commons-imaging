@@ -49,6 +49,8 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 
+import org.apache.commons.imaging.Imaging;
+
 public class PcxImageParser extends ImageParser<PcxImagingParameters> {
     // ZSoft's official spec is at http://www.qzx.com/pc-gpe/pcx.txt
     // (among other places) but it's pretty thin. The fileformat.fine document
@@ -322,25 +324,58 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
         }
     }
 
+
+    private static Boolean[] coverage = new Boolean[31];
+
     private BufferedImage readImage(final PcxHeader pcxHeader, final InputStream is,
             final ByteSource byteSource) throws ImageReadException, IOException {
+
+        if (coverage[0] == null) {
+            for (int i = 0; i < 31; i++) {coverage[i] = false;}
+        }
+
         final int xSize = pcxHeader.xMax - pcxHeader.xMin + 1;
         if (xSize < 0) {
+            // 0
+            coverage[0] = true;
+            Imaging.writeCov("PcxImageParser::readImage", coverage);
             throw new ImageReadException("Image width is negative");
+        } else{
+            // 1
+            coverage[1] = true;
         }
         final int ySize = pcxHeader.yMax - pcxHeader.yMin + 1;
         if (ySize < 0) {
+            // 2
+            coverage[2] = true;
+            Imaging.writeCov("PcxImageParser::readImage", coverage);
             throw new ImageReadException("Image height is negative");
+        } else{
+            // 3
+            coverage[3] = true;
         }
         if (pcxHeader.nPlanes <= 0 || 4 < pcxHeader.nPlanes) {
+            // 4
+            coverage[4] = true;
+            Imaging.writeCov("PcxImageParser::readImage", coverage);
             throw new ImageReadException("Unsupported/invalid image with " + pcxHeader.nPlanes + " planes");
+        } else{
+            // 5
+            coverage[5] = true;
         }
         final RleReader rleReader;
         if (pcxHeader.encoding == PcxHeader.ENCODING_UNCOMPRESSED) {
+            // 6
+            coverage[6] = true;
             rleReader = new RleReader(false);
         } else if (pcxHeader.encoding == PcxHeader.ENCODING_RLE) {
+            // 7
+            coverage[7] = true;
             rleReader = new RleReader(true);
         } else {
+            // 8
+            coverage[8] = true;
+            Imaging.writeCov("PcxImageParser::readImage", coverage);
             throw new ImageReadException("Unsupported/invalid image encoding " + pcxHeader.encoding);
         }
         final int scanlineLength = pcxHeader.bytesPerLine * pcxHeader.nPlanes;
@@ -348,9 +383,13 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
         if ((pcxHeader.bitsPerPixel == 1 || pcxHeader.bitsPerPixel == 2
                 || pcxHeader.bitsPerPixel == 4 || pcxHeader.bitsPerPixel == 8)
                 && pcxHeader.nPlanes == 1) {
+            // 9
+            coverage[9] = true;
             final int bytesPerImageRow = (xSize * pcxHeader.bitsPerPixel + 7) / 8;
             final byte[] image = new byte[ySize * bytesPerImageRow];
             for (int y = 0; y < ySize; y++) {
+                // 10
+                coverage[10] = true;
                 rleReader.read(is, scanline);
                 System.arraycopy(scanline, 0, image, y * bytesPerImageRow,
                         bytesPerImageRow);
@@ -358,8 +397,12 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
             final DataBufferByte dataBuffer = new DataBufferByte(image, image.length);
             int[] palette;
             if (pcxHeader.bitsPerPixel == 1) {
+                // 11
+                coverage[11] = true;
                 palette = new int[] { 0x000000, 0xffffff };
             } else if (pcxHeader.bitsPerPixel == 8) {
+                // 12
+                coverage[12] = true;
                 // Normally the palette is read 769 bytes from the end of the
                 // file.
                 // However DCX files have multiple PCX images in one file, so
@@ -368,32 +411,49 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
                 // immediately after the image data first.
                 palette = read256ColorPalette(is);
                 if (palette == null) {
+                    // 13
+                    coverage[13] = true;
                     palette = read256ColorPaletteFromEndOfFile(byteSource);
                 }
                 if (palette == null) {
+                    // 14
+                    coverage[14] = true;
+                    Imaging.writeCov("PcxImageParser::readImage", coverage);
                     throw new ImageReadException(
                             "No 256 color palette found in image that needs it");
+                } else{
+                    // 15
+                    coverage[15] = true;
                 }
             } else {
+                // 16
+                coverage[16] = true;
                 palette = pcxHeader.colormap;
             }
             WritableRaster raster;
             if (pcxHeader.bitsPerPixel == 8) {
+                // 17
+                coverage[17] = true;
                 raster = Raster.createInterleavedRaster(dataBuffer,
                         xSize, ySize, bytesPerImageRow, 1, new int[] { 0 },
                         null);
             } else {
+                // 18
+                coverage[18] = true;
                 raster = Raster.createPackedRaster(dataBuffer, xSize,
                         ySize, pcxHeader.bitsPerPixel, null);
             }
             final IndexColorModel colorModel = new IndexColorModel(
                     pcxHeader.bitsPerPixel, 1 << pcxHeader.bitsPerPixel,
                     palette, 0, false, -1, DataBuffer.TYPE_BYTE);
+            Imaging.writeCov("PcxImageParser::readImage", coverage);
             return new BufferedImage(colorModel, raster,
                     colorModel.isAlphaPremultiplied(), new Properties());
         }
         if (pcxHeader.bitsPerPixel == 1 && 2 <= pcxHeader.nPlanes
                 && pcxHeader.nPlanes <= 4) {
+            // 19
+            coverage[19] = true;
             final IndexColorModel colorModel = new IndexColorModel(pcxHeader.nPlanes,
                     1 << pcxHeader.nPlanes, pcxHeader.colormap, 0, false, -1,
                     DataBuffer.TYPE_BYTE);
@@ -401,27 +461,40 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
                     BufferedImage.TYPE_BYTE_BINARY, colorModel);
             final byte[] unpacked = new byte[xSize];
             for (int y = 0; y < ySize; y++) {
+                // 20
+                coverage[20] = true;
                 rleReader.read(is, scanline);
                 int nextByte = 0;
                 Arrays.fill(unpacked, (byte) 0);
                 for (int plane = 0; plane < pcxHeader.nPlanes; plane++) {
+                    // 21
+                    coverage[21] = true;
                     for (int i = 0; i < pcxHeader.bytesPerLine; i++) {
+                        // 22
+                        coverage[22] = true;
                         final int b = 0xff & scanline[nextByte++];
                         for (int j = 0; j < 8 && 8 * i + j < unpacked.length; j++) {
+                            // 23
+                            coverage[23] = true;
                             unpacked[8 * i + j] |= (byte) (((b >> (7 - j)) & 0x1) << plane);
                         }
                     }
                 }
                 image.getRaster().setDataElements(0, y, xSize, 1, unpacked);
             }
+            Imaging.writeCov("PcxImageParser::readImage", coverage);
             return image;
         }
         if (pcxHeader.bitsPerPixel == 8 && pcxHeader.nPlanes == 3) {
+            // 24
+            coverage[24] = true;
             final byte[][] image = new byte[3][];
             image[0] = new byte[xSize * ySize];
             image[1] = new byte[xSize * ySize];
             image[2] = new byte[xSize * ySize];
             for (int y = 0; y < ySize; y++) {
+                // 25
+                coverage[25] = true;
                 rleReader.read(is, scanline);
                 System.arraycopy(scanline, 0, image[0], y * xSize, xSize);
                 System.arraycopy(scanline, pcxHeader.bytesPerLine, image[1], y
@@ -437,10 +510,14 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
             final ColorModel colorModel = new ComponentColorModel(
                     ColorSpace.getInstance(ColorSpace.CS_sRGB), false, false,
                     Transparency.OPAQUE, DataBuffer.TYPE_BYTE);
+            Imaging.writeCov("PcxImageParser::readImage", coverage);
             return new BufferedImage(colorModel, raster,
                     colorModel.isAlphaPremultiplied(), new Properties());
         }
         if (((pcxHeader.bitsPerPixel != 24) || (pcxHeader.nPlanes != 1)) && ((pcxHeader.bitsPerPixel != 32) || (pcxHeader.nPlanes != 1))) {
+            // 26
+            coverage[26] = true;
+            Imaging.writeCov("PcxImageParser::readImage", coverage);
             throw new ImageReadException(
                     "Invalid/unsupported image with bitsPerPixel "
                             + pcxHeader.bitsPerPixel + " and planes "
@@ -449,12 +526,20 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
         final int rowLength = 3 * xSize;
         final byte[] image = new byte[rowLength * ySize];
         for (int y = 0; y < ySize; y++) {
+            // 27
+            coverage[27] = true;
             rleReader.read(is, scanline);
             if (pcxHeader.bitsPerPixel == 24) {
+                 // 28
+                coverage[28] = true;
                 System.arraycopy(scanline, 0, image, y * rowLength,
                         rowLength);
             } else {
+                // 29
+                coverage[29] = true;
                 for (int x = 0; x < xSize; x++) {
+                     // 30
+                    coverage[30] = true;
                     image[y * rowLength + 3 * x] = scanline[4 * x];
                     image[y * rowLength + 3 * x + 1] = scanline[4 * x + 1];
                     image[y * rowLength + 3 * x + 2] = scanline[4 * x + 2];
@@ -468,6 +553,7 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
         final ColorModel colorModel = new ComponentColorModel(
                 ColorSpace.getInstance(ColorSpace.CS_sRGB), false, false,
                 Transparency.OPAQUE, DataBuffer.TYPE_BYTE);
+        Imaging.writeCov("PcxImageParser::readImage", coverage);
         return new BufferedImage(colorModel, raster,
                 colorModel.isAlphaPremultiplied(), new Properties());
     }
