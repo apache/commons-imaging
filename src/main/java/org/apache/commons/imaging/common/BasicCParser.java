@@ -323,83 +323,7 @@ public class BasicCParser {
         for (int i = 1; i < (string.length() - 1); i++) {
             final char c = string.charAt(i);
             if (hadBackSlash) {
-                if (c == '\\') {
-                    stringBuilder.append('\\');
-                } else if (c == '"') {
-                    stringBuilder.append('"');
-                } else if (c == '\'') {
-                    stringBuilder.append('\'');
-                } else if (c == 'x') {
-                    if (i + 2 >= string.length()) {
-                        throw new ImageReadException(
-                                "Parsing XPM file failed, "
-                                        + "hex constant in string too short");
-                    }
-                    final char hex1 = string.charAt(i + 1);
-                    final char hex2 = string.charAt(i + 2);
-                    i += 2;
-                    int constant;
-                    try {
-                        constant = Integer.parseInt(hex1 + Character.toString(hex2), 16);
-                    } catch (final NumberFormatException nfe) {
-                        throw new ImageReadException(
-                                "Parsing XPM file failed, "
-                                        + "hex constant invalid", nfe);
-                    }
-                    stringBuilder.append((char) constant);
-                } else {
-                    switch (c) {
-                    case '0':
-                    case '1':
-                    case '2':
-                    case '3':
-                    case '4':
-                    case '5':
-                    case '6':
-                    case '7':
-                        int length = 1;
-                        if (i + 1 < string.length() && '0' <= string.charAt(i + 1)
-                                && string.charAt(i + 1) <= '7') {
-                            ++length;
-                        }
-                        if (i + 2 < string.length() && '0' <= string.charAt(i + 2)
-                                && string.charAt(i + 2) <= '7') {
-                            ++length;
-                        }
-                        int constant = 0;
-                        for (int j = 0; j < length; j++) {
-                            constant *= 8;
-                            constant += (string.charAt(i + j) - '0');
-                        }
-                        i += length - 1;
-                        stringBuilder.append((char) constant);
-                        break;
-                    case 'a':
-                        stringBuilder.append((char) 0x07);
-                        break;
-                    case 'b':
-                        stringBuilder.append((char) 0x08);
-                        break;
-                    case 'f':
-                        stringBuilder.append((char) 0x0c);
-                        break;
-                    case 'n':
-                        stringBuilder.append((char) 0x0a);
-                        break;
-                    case 'r':
-                        stringBuilder.append((char) 0x0d);
-                        break;
-                    case 't':
-                        stringBuilder.append((char) 0x09);
-                        break;
-                    case 'v':
-                        stringBuilder.append((char) 0x0b);
-                        break;
-                    default:
-                        throw new ImageReadException("Parsing XPM file failed, "
-                                + "invalid escape sequence");
-                    }
-                }
+                i = parseEscape(i, stringBuilder, string);
                 hadBackSlash = false;
             } else {
                 if (c == '\\') {
@@ -417,4 +341,103 @@ public class BasicCParser {
                     + "unterminated escape sequence found in string");
         }
     }
+
+    private static int appendHex(int i, final StringBuilder stringBuilder, final String string)
+        throws ImageReadException {
+        if (i + 2 >= string.length()) {
+            throw new ImageReadException(
+                    "Parsing XPM file failed, "
+                            + "hex constant in string too short");
+        }
+        final char hex1 = string.charAt(i + 1);
+        final char hex2 = string.charAt(i + 2);
+        i += 2;
+        int constant;
+        try {
+            constant = Integer.parseInt(hex1 + Character.toString(hex2), 16);
+        } catch (final NumberFormatException nfe) {
+            throw new ImageReadException(
+                    "Parsing XPM file failed, "
+                            + "hex constant invalid", nfe);
+        }
+        stringBuilder.append((char) constant);
+        return i;
+    }
+
+    private static int appendOct(int i, final StringBuilder stringBuilder, final String string)
+        throws ImageReadException {
+        int length = 1;
+        if (i + 1 < string.length() && '0' <= string.charAt(i + 1)
+                && string.charAt(i + 1) <= '7') {
+            ++length;
+        }
+        if (i + 2 < string.length() && '0' <= string.charAt(i + 2)
+                && string.charAt(i + 2) <= '7') {
+            ++length;
+        }
+        int constant = 0;
+        for (int j = 0; j < length; j++) {
+            constant *= 8;
+            constant += (string.charAt(i + j) - '0');
+        }
+        i += length - 1;
+        stringBuilder.append((char) constant);
+        return i;
+    }
+
+    private static int parseEscape(int i, final StringBuilder stringBuilder, final String string)
+        throws ImageReadException {
+        final char c = string.charAt(i);
+        switch (c) {
+        case '\\':
+            stringBuilder.append('\\');
+            break;
+        case '"':
+            stringBuilder.append('"');
+            break;
+        case '\'':
+            stringBuilder.append('\'');
+            break;
+        case 'x':
+            i = appendHex(i, stringBuilder, string);
+            break;
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+            i = appendOct(i, stringBuilder, string);
+            break;
+        case 'a':
+            stringBuilder.append((char) 0x07);
+            break;
+        case 'b':
+            stringBuilder.append((char) 0x08);
+            break;
+        case 'f':
+            stringBuilder.append((char) 0x0c);
+            break;
+        case 'n':
+            stringBuilder.append((char) 0x0a);
+            break;
+        case 'r':
+            stringBuilder.append((char) 0x0d);
+            break;
+        case 't':
+            stringBuilder.append((char) 0x09);
+            break;
+        case 'v':
+            stringBuilder.append((char) 0x0b);
+            break;
+        default:
+            throw new ImageReadException("Parsing XPM file failed, "
+                    + "invalid escape sequence");
+        }
+        return i;
+
+    }
+
 }
