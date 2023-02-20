@@ -342,6 +342,14 @@ public class BasicCParser {
         }
     }
 
+    /**
+    * Parses the hexadecimal-base escape-sequence found at index i of string.
+    * Helper-function for unescapeString()
+    * @param  i  the index of the escape-sequence in the string
+    * @param  stringBuilder the stringBuilder to append the escape-char to
+    * @param  string the string whose chars are parsed
+    * @return the new index i
+    */
     private static int appendHex(int i, final StringBuilder stringBuilder, final String string)
         throws ImageReadException {
         if (i + 2 >= string.length()) {
@@ -364,6 +372,14 @@ public class BasicCParser {
         return i;
     }
 
+    /**
+    * Parses the octal-base escape-sequence found at index i of string.
+    * Helper-function for unescapeString()
+    * @param  i  the index of the escape-sequence in the string
+    * @param  stringBuilder the stringBuilder to append the escape-char to
+    * @param  string the string whose chars are parsed
+    * @return the new index i
+    */
     private static int appendOct(int i, final StringBuilder stringBuilder, final String string)
         throws ImageReadException {
         int length = 1;
@@ -385,6 +401,15 @@ public class BasicCParser {
         return i;
     }
 
+
+    /**
+    * Parses the i:th escape-char in the input string and appends it to stringBuilder.
+    * Helper-function for unescapeString()
+    * @param  i  the index of the escape-char in the string
+    * @param  stringBuilder the stringBuilder to append the escape-char to
+    * @param  string the string whose chars are parsed
+    * @return the new index i
+    */
     private static int parseEscape(int i, final StringBuilder stringBuilder, final String string)
         throws ImageReadException {
         final char c = string.charAt(i);
