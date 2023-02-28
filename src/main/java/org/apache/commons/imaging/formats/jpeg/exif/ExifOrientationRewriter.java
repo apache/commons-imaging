@@ -20,6 +20,11 @@ package org.apache.commons.imaging.formats.jpeg.exif;
 import java.io.File;
 import java.io.OutputStream;
 
+import org.apache.commons.imaging.common.bytesource.ByteSource;
+import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
+import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+
+
 public class ExifOrientationRewriter {
 
     public static enum ORIENTATION{
@@ -33,11 +38,16 @@ public class ExifOrientationRewriter {
         ROTATE_270,
     }
 
-    /**
-     Constructor
-     */
-    public ExifOrientationRewriter(){
+    private ByteSource fileSrc;
 
+    public ExifOrientationRewriter(File imageFile) {
+        fileSrc = new ByteSourceFile(imageFile);
+    }
+    public ExifOrientationRewriter(byte[] byteArray) {
+        fileSrc = new ByteSourceArray(byteArray);
+    }
+    public ExifOrientationRewriter(ByteSource byteSource) {
+        fileSrc = byteSource;
     }
 
     public int GetExifOrientation(final File src)
