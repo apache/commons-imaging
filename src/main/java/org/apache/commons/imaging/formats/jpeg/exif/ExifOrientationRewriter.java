@@ -27,15 +27,25 @@ import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 
 public class ExifOrientationRewriter {
 
-    public static enum ORIENTATION{
-        HORIZONTAL,
-        MIRROR_HORIZONTAL,
-        ROTATE_180,
-        MIRROR_VERTICAL,
-        MIRROR_HORIZONTAL_AND_ROTATE_270,
-        ROTATE_90,
-        MIRROR_HORIZONTAL_AND_ROTATE_90,
-        ROTATE_270,
+    public static enum Orientation {
+        HORIZONTAL((short)1),
+        MIRROR_HORIZONTAL((short)2),
+        ROTATE_180((short)3),
+        MIRROR_VERTICAL((short)4),
+        MIRROR_HORIZONTAL_AND_ROTATE_270((short)5),
+        ROTATE_90((short)6),
+        MIRROR_HORIZONTAL_AND_ROTATE_90((short)7),
+        ROTATE_270((short)8);
+
+        private short val;
+ 
+        Orientation(short orVal) {
+            this.val = orVal;
+        }
+     
+        public short getVal() {
+            return val;
+        }
     }
 
     private ByteSource fileSrc;
@@ -50,13 +60,11 @@ public class ExifOrientationRewriter {
         fileSrc = byteSource;
     }
 
-    public int GetExifOrientation(final File src)
-    {
-        return 0;
+    public Orientation GetExifOrientation() {
+        return Orientation.HORIZONTAL;
     }
 
-    public void SetExifOrientation(final File src, final OutputStream os, ORIENTATION orientation)
-    {
+    public void SetExifOrientation(Orientation orientation) {
 
     }
 
