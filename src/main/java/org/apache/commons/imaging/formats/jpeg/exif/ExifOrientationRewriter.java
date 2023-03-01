@@ -78,18 +78,26 @@ public class ExifOrientationRewriter {
     public Orientation getExifOrientation() throws IOException, ImageReadException, ImageWriteException {
 
         final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(this.fileSrc.getAll());
+
+        if (metadata == null) {
+            return Orientation.HORIZONTAL;      // default
+        }
+
         final TiffImageMetadata exifMetadata = metadata.getExif();
+
+        if (exifMetadata == null) {
+            return Orientation.HORIZONTAL;      // default
+        }
+
         final TiffOutputSet outputSet = exifMetadata.getOutputSet();
 
         TiffOutputDirectory tod = outputSet.getRootDirectory();
-        if (tod == null)
-        {
+        if (tod == null) {
             return Orientation.HORIZONTAL;      // default
         }
 
         TiffOutputField tof = tod.findField(TiffTagConstants.TIFF_TAG_ORIENTATION);
-        if (tof == null)
-        {
+        if (tof == null) {
             return Orientation.HORIZONTAL;      // default
         }
 
