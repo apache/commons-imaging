@@ -39,7 +39,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SetExifOrientationTest extends ExifBaseTest {
     @Test
     void testSetExifOrientation1() throws IOException, ImageReadException, ImageWriteException {
-        final File imageFile = getTestImageByName("Canon Powershot SD750 - 2007.12.26.n.IMG_3704");
+        final File imageFile = getTestImageByName("Canon Powershot SD750 - 2007.12.26.n.IMG_3704.JPG");
         ExifOrientationRewriter eor = new ExifOrientationRewriter(imageFile);
         ExifOrientationRewriter.Orientation eo = ExifOrientationRewriter.Orientation.ROTATE_180;
         eor.SetExifOrientation(eo);
@@ -48,10 +48,7 @@ public class SetExifOrientationTest extends ExifBaseTest {
         final JpegImageMetadata newMetadata = (JpegImageMetadata) Imaging.getMetadata(bs.getAll());
         final TiffImageMetadata newExifMetadata = newMetadata.getExif();
 
-        //assertNotNull(newExifMetadata);
         assertNotNull(newExifMetadata, "The new EXIF metadata is null");
-
-        //assertEquals(newExifMetadata.getFieldValue(TiffTagConstants.TIFF_TAG_ORIENTATION), eo.getVal());
         assertEquals(newExifMetadata.getFieldValue(TiffTagConstants.TIFF_TAG_ORIENTATION), Short.valueOf(eo.getVal()), "The orientation field in the EXIF metadata is not set correctly");
 
     }
