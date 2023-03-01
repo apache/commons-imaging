@@ -74,9 +74,9 @@ public class ExifOrientationRewriter {
     /**
      * A method that sets a new value to the orientation field in the EXIF metadata of a JPEG file.
      * @param orientation the value as a enum of the direction to set as the new EXIF orientation
-     * @param os An output stream to write the image with modified EXIF data to
+     *
      */
-    public void SetExifOrientation(Orientation orientation, OutputStream os) throws ImageWriteException, IOException, ImageReadException {
+    public void SetExifOrientation(Orientation orientation) throws ImageWriteException, IOException, ImageReadException {
 
         final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(this.fileSrc.getAll());
         final TiffImageMetadata exifMetadata = metadata.getExif();
@@ -88,8 +88,12 @@ public class ExifOrientationRewriter {
         tod.removeField(TiffTagConstants.TIFF_TAG_ORIENTATION);
         tod.add(TiffTagConstants.TIFF_TAG_ORIENTATION, orientation.getVal());
 
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        new ExifRewriter().updateExifMetadataLossy(this.fileSrc, baos, outputSet);
 
-        new ExifRewriter().updateExifMetadataLossy(this.fileSrc, os, outputSet);
+        this.fileSrc = new ByteSourceArray(baos.toByteArray());
+
+
 
     }
 
