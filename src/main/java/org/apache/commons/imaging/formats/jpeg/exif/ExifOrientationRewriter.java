@@ -17,13 +17,20 @@
 
 package org.apache.commons.imaging.formats.jpeg.exif;
 
-import java.io.File;
-import java.io.OutputStream;
+import java.io.*;
 
+import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
-
+import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
+import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
+import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
+import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
+import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
+import org.apache.commons.imaging.formats.jpeg.JpegUtils;
 
 public class ExifOrientationRewriter {
 
@@ -64,7 +71,25 @@ public class ExifOrientationRewriter {
         return Orientation.HORIZONTAL;
     }
 
-    public void SetExifOrientation(Orientation orientation) {
+    /**
+     * A method that sets a new value to the orientation field in the EXIF metadata of a JPEG file.
+     * @param orientation the value as a enum of the direction to set as the new EXIF orientation
+     * @param os An output stream to write the image with modified EXIF data to
+     */
+    public void SetExifOrientation(Orientation orientation, OutputStream os) throws ImageWriteException, IOException, ImageReadException {
+
+        final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(this.fileSrc.getAll());
+        final TiffImageMetadata exifMetadata = metadata.getExif();
+
+
+        final TiffOutputSet outputSet = exifMetadata.getOutputSet();
+
+        TiffOutputDirectory tod =  outputSet.getOrCreateRootDirectory();
+        tod.removeField(TiffTagConstants.TIFF_TAG_ORIENTATION);
+        tod.add(TiffTagConstants.TIFF_TAG_ORIENTATION, orientation.getVal());
+
+
+        new ExifRewriter().updateExifMetadataLossy(this.fileSrc, os, outputSet);
 
     }
 
