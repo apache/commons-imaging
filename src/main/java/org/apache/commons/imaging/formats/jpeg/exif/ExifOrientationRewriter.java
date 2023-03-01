@@ -67,7 +67,7 @@ public class ExifOrientationRewriter {
         fileSrc = byteSource;
     }
 
-    public Orientation GetExifOrientation() {
+    public Orientation getExifOrientation() {
         return Orientation.HORIZONTAL;
     }
 
@@ -92,9 +92,36 @@ public class ExifOrientationRewriter {
         new ExifRewriter().updateExifMetadataLossy(this.fileSrc, baos, outputSet);
 
         this.fileSrc = new ByteSourceArray(baos.toByteArray());
+    }
 
+    /**
+     * @return the ByteSource of the current file
+     */
+    public ByteSource getOutput() {
+        return fileSrc;
+    }
 
+    /**
+     * Assigns the ByteSource of the current file in the form of a byte array 
+     * @param byteArrayIn byteArray which is assigned the source of the file
+     * @throws IOException
+     */
+    public void getOutput(byte[] byteArrayIn) 
+        throws IOException {
+        byteArrayIn = fileSrc.getAll();
+    }
 
+    /**
+     *  Writes Bytesource to file with given path
+     * @param path String of the path in which the file is written
+     * @throws IOException
+     */
+    public void getOutput(String path) 
+        throws IOException {
+        final File tempFile =  new File(path);
+        try (FileOutputStream outputStream = new FileOutputStream(tempFile)) {
+            outputStream.write(fileSrc.getAll());
+        }
     }
 
 }
