@@ -29,6 +29,7 @@ import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
+import org.apache.commons.imaging.formats.tiff.write.TiffOutputField;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.imaging.formats.jpeg.JpegUtils;
 
@@ -67,7 +68,39 @@ public class ExifOrientationRewriter {
         fileSrc = byteSource;
     }
 
-    public Orientation getExifOrientation() {
+    /***
+     * Get the orientation (enum) of the current image
+     * @return Orientation enum
+     * @throws IOException
+     * @throws ImageReadException
+     * @throws ImageWriteException
+     */
+    public Orientation getExifOrientation() throws IOException, ImageReadException, ImageWriteException {
+
+        final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(this.fileSrc.getAll());
+        final TiffImageMetadata exifMetadata = metadata.getExif();
+        final TiffOutputSet outputSet = exifMetadata.getOutputSet();
+
+        TiffOutputDirectory tod = outputSet.getRootDirectory();
+        if (tod == null)
+        {
+            return Orientation.HORIZONTAL;      // default
+        }
+
+        TiffOutputField tof = tod.findField(TiffTagConstants.TIFF_TAG_ORIENTATION);
+        if (tof == null)
+        {
+            return Orientation.HORIZONTAL;      // default
+        }
+
+        // cast int to short
+        short imageOrientationVal = (short) exifMetadata.getFieldValue(TiffTagConstants.TIFF_TAG_ORIENTATION);
+
+        for (Orientation orientation : Orientation.values()) {
+            if(orientation.getVal() == imageOrientationVal)
+                return orientation;
+        }
+
         return Orientation.HORIZONTAL;
     }
 
