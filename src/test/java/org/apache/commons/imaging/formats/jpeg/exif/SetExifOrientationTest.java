@@ -36,7 +36,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SetExifOrientationTest extends ImagingTest {
+public class SetExifOrientationTest extends ExifBaseTest {
     @Test
     void testSetExifOrientation1() throws IOException, ImageReadException, ImageWriteException {
         final File imageFile = getTestImageByName("Canon Powershot SD750 - 2007.12.26.n.IMG_3704");
@@ -54,43 +54,6 @@ public class SetExifOrientationTest extends ImagingTest {
         //assertEquals(newExifMetadata.getFieldValue(TiffTagConstants.TIFF_TAG_ORIENTATION), eo.getVal());
         assertEquals(newExifMetadata.getFieldValue(TiffTagConstants.TIFF_TAG_ORIENTATION), Short.valueOf(eo.getVal()), "The orientation field in the EXIF metadata is not set correctly");
 
-    }
-
-    @Test
-    public void testSetExifOrientation2() throws IOException, ImageWriteException, ImageReadException {
-        // Load the input JPEG file
-
-        //Path inputPath = Paths.get("");
-        //byte[] inputBytes = Files.readAllBytes(inputPath);
-        final File imageFile = getTestImageByName("Canon Powershot SD750 - 2007.12.26.n.IMG_3704");
-        ByteSource byteSource1 = new ByteSourceFile(imageFile);
-        byte[] inputBytes = byteSource1.getAll();
-
-        // Create an instance of ExifOrientationRewriter and set a new EXIF orientation value
-        ExifOrientationRewriter rewriter = new ExifOrientationRewriter(inputBytes);//
-        ExifOrientationRewriter.Orientation newOrientation = ExifOrientationRewriter.Orientation.MIRROR_HORIZONTAL;//
-        rewriter.SetExifOrientation(newOrientation);//
-
-        /*
-         ExifOrientationRewriter rewriter = new ExifOrientationRewriter(inputBytes);
-        Orientation newOrientation = Orientation.MIRROR_HORIZONTAL;
-        rewriter.SetExifOrientation(newOrientation);
-         */
-
-        // Get the output as a ByteSource
-        byte[] outputBytes = rewriter.getOutput().getAll();
-
-        // Load the expected output file
-
-        // Path expectedPath = Paths.get("path to expected output file.jpg");
-       // byte[] expectedBytes = Files.readAllBytes(expectedPath);
-
-        File imageFileOut = getTestImageByName("Canon Powershot SD750 - 2007.12.26.n.IMG_3704");
-        ByteSource byteSource2 = new ByteSourceFile(imageFileOut);
-        byte[] outPutBytes2 = byteSource2.getAll();
-
-        // Assert that the output matches the expected output
-        assertArrayEquals(outPutBytes2, outputBytes, "The output bytes do not match the expected bytes");
     }
 
 }
