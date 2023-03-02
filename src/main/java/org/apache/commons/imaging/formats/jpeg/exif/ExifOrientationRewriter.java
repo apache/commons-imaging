@@ -17,7 +17,10 @@
 
 package org.apache.commons.imaging.formats.jpeg.exif;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
@@ -31,11 +34,10 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputField;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
-import org.apache.commons.imaging.formats.jpeg.JpegUtils;
 
 public class ExifOrientationRewriter {
 
-    public static enum Orientation {
+    public enum Orientation {
         HORIZONTAL((short)1),
         MIRROR_HORIZONTAL((short)2),
         ROTATE_180((short)3),
@@ -46,11 +48,11 @@ public class ExifOrientationRewriter {
         ROTATE_270((short)8);
 
         private short val;
- 
+
         Orientation(short orVal) {
             this.val = orVal;
         }
-     
+
         public short getVal() {
             return val;
         }
@@ -70,6 +72,7 @@ public class ExifOrientationRewriter {
 
     /***
      * Get the orientation (enum) of the current image
+     * Returns horizontal by default
      * @return Orientation enum
      * @throws IOException
      * @throws ImageReadException
@@ -78,27 +81,35 @@ public class ExifOrientationRewriter {
     public Orientation getExifOrientation() throws IOException, ImageReadException, ImageWriteException {
 
         final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(this.fileSrc.getAll());
+
+        if (metadata == null) {
+            return Orientation.HORIZONTAL;
+        }
+
         final TiffImageMetadata exifMetadata = metadata.getExif();
+
+        if (exifMetadata == null) {
+            return Orientation.HORIZONTAL;
+        }
+
         final TiffOutputSet outputSet = exifMetadata.getOutputSet();
 
         TiffOutputDirectory tod = outputSet.getRootDirectory();
-        if (tod == null)
-        {
-            return Orientation.HORIZONTAL;      // default
+        if (tod == null) {
+            return Orientation.HORIZONTAL;
         }
 
         TiffOutputField tof = tod.findField(TiffTagConstants.TIFF_TAG_ORIENTATION);
-        if (tof == null)
-        {
-            return Orientation.HORIZONTAL;      // default
+        if (tof == null) {
+            return Orientation.HORIZONTAL;
         }
 
-        // cast int to short
         short imageOrientationVal = (short) exifMetadata.getFieldValue(TiffTagConstants.TIFF_TAG_ORIENTATION);
 
         for (Orientation orientation : Orientation.values()) {
-            if(orientation.getVal() == imageOrientationVal)
+            if(orientation.getVal() == imageOrientationVal) {
                 return orientation;
+            }
         }
 
         return Orientation.HORIZONTAL;
@@ -109,7 +120,7 @@ public class ExifOrientationRewriter {
      * @param orientation the value as a enum of the direction to set as the new EXIF orientation
      *
      */
-    public void SetExifOrientation(Orientation orientation) throws ImageWriteException, IOException, ImageReadException {
+    public void setExifOrientation(Orientation orientation) throws ImageWriteException, IOException, ImageReadException {
 
         final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(this.fileSrc.getAll());
         final TiffImageMetadata exifMetadata = metadata.getExif();
@@ -135,21 +146,11 @@ public class ExifOrientationRewriter {
     }
 
     /**
-     * Assigns the ByteSource of the current file in the form of a byte array 
-     * @param byteArrayIn byteArray which is assigned the source of the file
-     * @throws IOException
-     */
-    public void getOutput(byte[] byteArrayIn) 
-        throws IOException {
-        byteArrayIn = fileSrc.getAll();
-    }
-
-    /**
      *  Writes Bytesource to file with given path
      * @param path String of the path in which the file is written
      * @throws IOException
      */
-    public void getOutput(String path) 
+    public void getOutput(String path)
         throws IOException {
         final File tempFile =  new File(path);
         try (FileOutputStream outputStream = new FileOutputStream(tempFile)) {
