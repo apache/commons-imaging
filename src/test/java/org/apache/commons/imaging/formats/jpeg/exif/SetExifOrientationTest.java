@@ -42,7 +42,7 @@ public class SetExifOrientationTest extends ExifBaseTest {
         final File imageFile = getTestImageByName("Canon Powershot SD750 - 2007.12.26.n.IMG_3704.JPG");
         ExifOrientationRewriter eor = new ExifOrientationRewriter(imageFile);
         ExifOrientationRewriter.Orientation eo = ExifOrientationRewriter.Orientation.ROTATE_180;
-        eor.SetExifOrientation(eo);
+        eor.setExifOrientation(eo);
 
         ByteSource bs = eor.getOutput();
         final JpegImageMetadata newMetadata = (JpegImageMetadata) Imaging.getMetadata(bs.getAll());
