@@ -21,6 +21,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.ByteOrder;
+import java.util.ArrayList;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
@@ -29,6 +31,8 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
+import org.apache.commons.imaging.formats.tiff.TiffContents;
+import org.apache.commons.imaging.formats.tiff.TiffHeader;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
@@ -122,9 +126,17 @@ public class ExifOrientationRewriter {
      */
     public void setExifOrientation(Orientation orientation) throws ImageWriteException, IOException, ImageReadException {
 
-        final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(this.fileSrc.getAll());
-        final TiffImageMetadata exifMetadata = metadata.getExif();
+        JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(this.fileSrc.getAll());
 
+        if (metadata == null) {
+            metadata = new JpegImageMetadata(null, new TiffImageMetadata(new TiffContents(new TiffHeader(ByteOrder.BIG_ENDIAN, 0, 0), new ArrayList<>(), new ArrayList<>())));
+        }
+
+        TiffImageMetadata exifMetadata = metadata.getExif();
+
+        if (exifMetadata == null) {
+            exifMetadata = new TiffImageMetadata(new TiffContents(new TiffHeader(ByteOrder.BIG_ENDIAN, 0, 0), new ArrayList<>(), new ArrayList<>()));
+        }
 
         final TiffOutputSet outputSet = exifMetadata.getOutputSet();
 
