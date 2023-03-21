@@ -23,7 +23,7 @@ import org.apache.commons.imaging.ImagingParameters;
  * Pnm format parameters.
  * @since 1.0-alpha3
  */
-public class PnmImagingParameters extends ImagingParameters {
+public class PnmImagingParameters extends ImagingParameters<PnmImagingParameters> {
 
     private boolean rawBits = true;
     /**
@@ -31,19 +31,21 @@ public class PnmImagingParameters extends ImagingParameters {
      */
     private ImageFormats subtype = null;
 
-    public boolean isRawBits() {
-        return rawBits;
-    }
-
-    public void setRawBits(final boolean rawBits) {
-        this.rawBits = rawBits;
-    }
-
     public ImageFormats getSubtype() {
         return subtype;
     }
 
-    public void setSubtype(final ImageFormats subtype) {
+    public boolean isRawBits() {
+        return rawBits;
+    }
+
+    public PnmImagingParameters setRawBits(final boolean rawBits) {
+        this.rawBits = rawBits;
+        return asThis();
+    }
+
+    public PnmImagingParameters setSubtype(final ImageFormats subtype) {
         this.subtype = subtype;
+        return asThis();
     }
 }

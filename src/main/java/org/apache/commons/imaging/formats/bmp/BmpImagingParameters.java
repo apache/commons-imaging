@@ -21,6 +21,8 @@ import org.apache.commons.imaging.ImagingParameters;
 
 /**
  * Bmp format parameters.
+ *
  * @since 1.0-alpha3
  */
-public class BmpImagingParameters extends ImagingParameters {}
+public class BmpImagingParameters extends ImagingParameters<BmpImagingParameters> {
+}

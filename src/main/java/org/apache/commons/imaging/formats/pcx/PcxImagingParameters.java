@@ -21,34 +21,37 @@ import org.apache.commons.imaging.ImagingParameters;
  * Parameters used by the Pcx format.
  * @since 1.0-alpha3
  */
-public class PcxImagingParameters extends ImagingParameters {
+public class PcxImagingParameters extends ImagingParameters<PcxImagingParameters> {
 
     private int planes = -1;
     private int bitDepth = -1;
     private int compression = PcxConstants.PCX_COMPRESSION_UNCOMPRESSED;
 
-    public int getPlanes() {
-        return planes;
-    }
-
-    public void setPlanes(final int planes) {
-        this.planes = planes;
-    }
-
     public int getBitDepth() {
         return bitDepth;
-    }
-
-    public void setBitDepth(final int bitDepth) {
-        this.bitDepth = bitDepth;
     }
 
     public int getCompression() {
         return compression;
     }
 
-    public void setCompression(final int compression) {
+    public int getPlanes() {
+        return planes;
+    }
+
+    public PcxImagingParameters setBitDepth(final int bitDepth) {
+        this.bitDepth = bitDepth;
+        return asThis();
+    }
+
+    public PcxImagingParameters setCompression(final int compression) {
         this.compression = compression;
+        return asThis();
+    }
+
+    public PcxImagingParameters setPlanes(final int planes) {
+        this.planes = planes;
+        return asThis();
     }
 
 }

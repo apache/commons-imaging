@@ -19,6 +19,8 @@ import org.apache.commons.imaging.ImagingParameters;
 
 /**
  * Rgbe format parameters.
+ *
  * @since 1.0-alpha3
  */
-public class RgbeImagingParameters extends ImagingParameters {}
+public class RgbeImagingParameters extends ImagingParameters<RgbeImagingParameters> {
+}

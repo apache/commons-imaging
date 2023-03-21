@@ -19,6 +19,8 @@ import org.apache.commons.imaging.ImagingParameters;
 
 /**
  * Icns format parameters.
+ *
  * @since 1.0-alpha3
  */
-public class IcnsImagingParameters extends ImagingParameters {}
+public class IcnsImagingParameters extends ImagingParameters<IcnsImagingParameters> {
+}

@@ -24,7 +24,7 @@ import org.apache.commons.imaging.common.XmpImagingParameters;
  * Png format parameters.
  * @since 1.0-alpha3
  */
-public class PngImagingParameters extends XmpImagingParameters {
+public class PngImagingParameters extends XmpImagingParameters<PngImagingParameters> {
 
     public static final byte DEFAULT_BIT_DEPTH = 8;
 
@@ -59,40 +59,20 @@ public class PngImagingParameters extends XmpImagingParameters {
         return bitDepth;
     }
 
-    public void setBitDepth(final byte bitDepth) {
-        this.bitDepth = bitDepth;
-    }
-
-    public boolean isForceIndexedColor() {
-        return forceIndexedColor;
-    }
-
-    public void setForceIndexedColor(final boolean forceIndexedColor) {
-        this.forceIndexedColor = forceIndexedColor;
-    }
-
-    public boolean isForceTrueColor() {
-        return forceTrueColor;
-    }
-
-    public void setForceTrueColor(final boolean forceTrueColor) {
-        this.forceTrueColor = forceTrueColor;
-    }
-
     public PhysicalScale getPhysicalScale() {
         return physicalScale;
-    }
-
-    public void setPhysicalScale(final PhysicalScale physicalScale) {
-        this.physicalScale = physicalScale;
     }
 
     public List<? extends PngText> getTextChunks() {
         return textChunks != null ? Collections.unmodifiableList(textChunks) : null;
     }
 
-    public void setTextChunks(final List<? extends PngText> textChunks) {
-        this.textChunks = Collections.unmodifiableList(textChunks);
+    public boolean isForceIndexedColor() {
+        return forceIndexedColor;
+    }
+
+    public boolean isForceTrueColor() {
+        return forceTrueColor;
     }
 
     /**
@@ -104,6 +84,26 @@ public class PngImagingParameters extends XmpImagingParameters {
         return predictorEnabled;
     }
 
+    public PngImagingParameters setBitDepth(final byte bitDepth) {
+        this.bitDepth = bitDepth;
+        return asThis();
+    }
+
+    public PngImagingParameters setForceIndexedColor(final boolean forceIndexedColor) {
+        this.forceIndexedColor = forceIndexedColor;
+        return asThis();
+    }
+
+    public PngImagingParameters setForceTrueColor(final boolean forceTrueColor) {
+        this.forceTrueColor = forceTrueColor;
+        return asThis();
+    }
+
+    public PngImagingParameters setPhysicalScale(final PhysicalScale physicalScale) {
+        this.physicalScale = physicalScale;
+        return asThis();
+    }
+
     /**
      * Sets the enabled status of the predictor. When performing
      * data compression on an image, a PNG predictor often results in a
@@ -112,9 +112,17 @@ public class PngImagingParameters extends XmpImagingParameters {
      * The specification of a predictor may result in an increased
      * processing time when writing an image, but will not affect the
      * time required to read an image.
+     *
      * @param predictorEnabled true if a predictor is enabled; otherwise, false.
+     * @return this
      */
-    public void setPredictorEnabled(final boolean predictorEnabled){
+    public PngImagingParameters setPredictorEnabled(final boolean predictorEnabled){
         this.predictorEnabled = predictorEnabled;
+        return asThis();
+    }
+
+    public PngImagingParameters setTextChunks(final List<? extends PngText> textChunks) {
+        this.textChunks = Collections.unmodifiableList(textChunks);
+        return asThis();
     }
 }

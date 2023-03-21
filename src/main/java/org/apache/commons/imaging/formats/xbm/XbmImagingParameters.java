@@ -19,6 +19,8 @@ import org.apache.commons.imaging.ImagingParameters;
 
 /**
  * Xbm format parameters.
+ *
  * @since 1.0-alpha3
  */
-public class XbmImagingParameters extends ImagingParameters {}
+public class XbmImagingParameters extends ImagingParameters<XbmImagingParameters> {
+}

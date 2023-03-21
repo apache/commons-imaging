@@ -21,9 +21,10 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 
 /**
  * Tiff format parameters.
+ *
  * @since 1.0-alpha3
  */
-public class TiffImagingParameters extends XmpImagingParameters {
+public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParameters> {
 
     /**
      * Indicates whether to read embedded thumbnails or not. Only applies to read EXIF metadata from JPEG/JFIF files.
@@ -99,12 +100,25 @@ public class TiffImagingParameters extends XmpImagingParameters {
      */
     private Integer t6Options = null;
 
-    public boolean isReadThumbnails() {
-        return readThumbnails;
+    /**
+     * Clears settings for sub-image. Subsequent read operations will retrieve
+     * the entire image.
+     */
+    public void clearSubImage() {
+        subImageWidth = 0;
+        subImageHeight = 0;
     }
 
-    public void setReadThumbnails(final boolean readThumbnails) {
-        this.readThumbnails = readThumbnails;
+    public Integer getCompression() {
+        return compression;
+    }
+
+    public PhotometricInterpreter getCustomPhotometricInterpreter() {
+        return customPhotometricInterpreter;
+    }
+
+    public Integer getLzwCompressionBlockSize() {
+        return lzwCompressionBlockSize;
     }
 
     /**
@@ -116,64 +130,25 @@ public class TiffImagingParameters extends XmpImagingParameters {
     }
 
     /**
-     * Set the TIFF output set for writing TIFF files.  An output set
-     * may contain various types of TiffDirectories including image directories,
-     * EXIF directories, GPS-related directories, etc.
+     * Gets the height for a sub-image setting. For a sub-image setting to be
+     * meaningful, both the width and height must be set.
      *
-     * @param tiffOutputSet A valid instance.
+     * @return if the sub-image feature is enabled, a value greater than zero;
+     * otherwise, zero.
      */
-    public void setOutputSet(final TiffOutputSet tiffOutputSet) {
-        this.tiffOutputSet = tiffOutputSet;
+    public int getSubImageHeight() {
+        return subImageHeight;
     }
 
     /**
-     * Sets parameters for performing a partial read operation on an image. This
-     * method is useful for reducing memory and run-time overhead when accessing
-     * large source images.
-     * <p>
-     * Note that the corner x and y coordinates must be positive integers (zero
-     * or greater). The width and height must be greater than zero.
+     * Gets the width for a sub-image setting. For a sub-image setting to be
+     * meaningful, both the width and height must be set.
      *
-     * @param x pixel coordinate of the upper-left corner of the source image,
-     * must be zero or greater.
-     * @param y pixel coordinate of the upper-left corner of the source image,
-     * must be zero or greater.
-     * @param width width of the image subset to be read, must be greater than
-     * zero.
-     * @param height height of the image subset to be read, must be greater than
-     * zero.
+     * @return if the sub-image feature is enabled, a value greater than zero;
+     * otherwise, zero.
      */
-    public void setSubImage(final int x, final int y, final int width, final int height) {
-        if (x < 0 || y < 0) {
-            throw new IllegalArgumentException(
-                    "Invalid sub-image specification: negative x and y values not allowed");
-        }
-        if (width <= 0 || height <= 0) {
-            throw new IllegalArgumentException(
-                    "Invalid sub-image specification width and height must be greater than zero");
-        }
-        subImageX = x;
-        subImageY = y;
-        subImageWidth = width;
-        subImageHeight = height;
-    }
-
-    /**
-     * Clears settings for sub-image. Subsequent read operations will retrieve
-     * the entire image.
-     */
-    public void clearSubImage() {
-        subImageWidth = 0;
-        subImageHeight = 0;
-    }
-
-    /**
-     * Indicates whether the application has set sub-image parameters.
-     *
-     * @return true if the sub-image parameters are set; otherwise, false.
-     */
-    public boolean isSubImageSet() {
-        return subImageWidth > 0 && subImageHeight > 0;
+    public int getSubImageWidth() {
+        return subImageWidth;
     }
 
     /**
@@ -196,66 +171,102 @@ public class TiffImagingParameters extends XmpImagingParameters {
         return subImageY;
     }
 
-    /**
-     * Gets the width for a sub-image setting. For a sub-image setting to be
-     * meaningful, both the width and height must be set.
-     *
-     * @return if the sub-image feature is enabled, a value greater than zero;
-     * otherwise, zero.
-     */
-    public int getSubImageWidth() {
-        return subImageWidth;
-    }
-
-    /**
-     * Gets the height for a sub-image setting. For a sub-image setting to be
-     * meaningful, both the width and height must be set.
-     *
-     * @return if the sub-image feature is enabled, a value greater than zero;
-     * otherwise, zero.
-     */
-    public int getSubImageHeight() {
-        return subImageHeight;
-    }
-
-    public PhotometricInterpreter getCustomPhotometricInterpreter() {
-        return customPhotometricInterpreter;
-    }
-
-    public void setCustomPhotometricInterpreter(final PhotometricInterpreter customPhotometricInterpreter) {
-        this.customPhotometricInterpreter = customPhotometricInterpreter;
-    }
-
-    public Integer getCompression() {
-        return compression;
-    }
-
-    public void setCompression(final Integer compression) {
-        this.compression = compression;
-    }
-
-    public Integer getLzwCompressionBlockSize() {
-        return lzwCompressionBlockSize;
-    }
-
-    public void setLzwCompressionBlockSize(final Integer lzwCompressionBlockSize) {
-        this.lzwCompressionBlockSize = lzwCompressionBlockSize;
-    }
-
     public Integer getT4Options() {
         return t4Options;
-    }
-
-    public void setT4Options(final Integer t4Options) {
-        this.t4Options = t4Options;
     }
 
     public Integer getT6Options() {
         return t6Options;
     }
 
-    public void setT6Options(final Integer t6Options) {
+    public boolean isReadThumbnails() {
+        return readThumbnails;
+    }
+
+    /**
+     * Indicates whether the application has set sub-image parameters.
+     *
+     * @return true if the sub-image parameters are set; otherwise, false.
+     */
+    public boolean isSubImageSet() {
+        return subImageWidth > 0 && subImageHeight > 0;
+    }
+
+    public TiffImagingParameters setCompression(final Integer compression) {
+        this.compression = compression;
+        return asThis();
+    }
+
+    public TiffImagingParameters setCustomPhotometricInterpreter(final PhotometricInterpreter customPhotometricInterpreter) {
+        this.customPhotometricInterpreter = customPhotometricInterpreter;
+        return asThis();
+    }
+
+    public TiffImagingParameters setLzwCompressionBlockSize(final Integer lzwCompressionBlockSize) {
+        this.lzwCompressionBlockSize = lzwCompressionBlockSize;
+        return asThis();
+    }
+
+    /**
+     * Set the TIFF output set for writing TIFF files.  An output set
+     * may contain various types of TiffDirectories including image directories,
+     * EXIF directories, GPS-related directories, etc.
+     *
+     * @param tiffOutputSet A valid instance.
+     * @return this
+     */
+    public TiffImagingParameters setOutputSet(final TiffOutputSet tiffOutputSet) {
+        this.tiffOutputSet = tiffOutputSet;
+        return asThis();
+    }
+
+    public TiffImagingParameters setReadThumbnails(final boolean readThumbnails) {
+        this.readThumbnails = readThumbnails;
+        return asThis();
+    }
+
+    /**
+     * Sets parameters for performing a partial read operation on an image. This
+     * method is useful for reducing memory and run-time overhead when accessing
+     * large source images.
+     * <p>
+     * Note that the corner x and y coordinates must be positive integers (zero
+     * or greater). The width and height must be greater than zero.
+     *
+     * @param x pixel coordinate of the upper-left corner of the source image,
+     * must be zero or greater.
+     * @param y pixel coordinate of the upper-left corner of the source image,
+     * must be zero or greater.
+     * @param width width of the image subset to be read, must be greater than
+     * zero.
+     * @param height height of the image subset to be read, must be greater than
+     * zero.
+     * @return this
+     */
+    public TiffImagingParameters setSubImage(final int x, final int y, final int width, final int height) {
+        if (x < 0 || y < 0) {
+            throw new IllegalArgumentException(
+                    "Invalid sub-image specification: negative x and y values not allowed");
+        }
+        if (width <= 0 || height <= 0) {
+            throw new IllegalArgumentException(
+                    "Invalid sub-image specification width and height must be greater than zero");
+        }
+        subImageX = x;
+        subImageY = y;
+        subImageWidth = width;
+        subImageHeight = height;
+        return asThis();
+    }
+
+    public TiffImagingParameters setT4Options(final Integer t4Options) {
+        this.t4Options = t4Options;
+        return asThis();
+    }
+
+    public TiffImagingParameters setT6Options(final Integer t6Options) {
         this.t6Options = t6Options;
+        return asThis();
     }
 
 }

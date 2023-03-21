@@ -19,6 +19,8 @@ import org.apache.commons.imaging.ImagingParameters;
 
 /**
  * Ico format parameters.
+ *
  * @since 1.0-alpha3
  */
-public class IcoImagingParameters extends ImagingParameters {}
+public class IcoImagingParameters extends ImagingParameters<IcoImagingParameters> {
+}

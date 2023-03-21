@@ -18,6 +18,8 @@ import org.apache.commons.imaging.ImagingParameters;
 
 /**
  * Xpm format parameters.
+ *
  * @since 1.0-alpha3
  */
-public class XpmImagingParameters extends ImagingParameters {}
+public class XpmImagingParameters extends ImagingParameters<XpmImagingParameters> {
+}

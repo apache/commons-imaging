@@ -24,9 +24,10 @@ import org.apache.commons.imaging.common.BufferedImageFactory;
  * <p>Contains parameters that are common to all formats. Implementations must include
  * the specific parameters for each image format.</p>
  *
+ * @param <E> This type
  * @since 1.0-alpha3
  */
-public class ImagingParameters {
+public class ImagingParameters<E extends ImagingParameters<E>> {
 
     /**
      * Whether to throw an exception when any issue occurs during reading
@@ -54,35 +55,44 @@ public class ImagingParameters {
 
     // getters and setters
 
-    public boolean isStrict() {
-        return strict;
-    }
-
-    public void setStrict(final boolean strict) {
-        this.strict = strict;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(final String fileName) {
-        this.fileName = fileName;
+    @SuppressWarnings("unchecked")
+    public E asThis() {
+        return (E) this;
     }
 
     public BufferedImageFactory getBufferedImageFactory() {
         return bufferedImageFactory;
     }
 
-    public void setBufferedImageFactory(final BufferedImageFactory bufferedImageFactory) {
-        this.bufferedImageFactory = bufferedImageFactory;
+    public String getFileName() {
+        return fileName;
     }
 
     public PixelDensity getPixelDensity() {
         return pixelDensity;
     }
 
-    public void setPixelDensity(final PixelDensity pixelDensity) {
+    public boolean isStrict() {
+        return strict;
+    }
+
+    public E setBufferedImageFactory(final BufferedImageFactory bufferedImageFactory) {
+        this.bufferedImageFactory = bufferedImageFactory;
+        return asThis();
+    }
+
+    public E setFileName(final String fileName) {
+        this.fileName = fileName;
+        return asThis();
+    }
+
+    public E setPixelDensity(final PixelDensity pixelDensity) {
         this.pixelDensity = pixelDensity;
+        return asThis();
+    }
+
+    public E setStrict(final boolean strict) {
+        this.strict = strict;
+        return asThis();
     }
 }

@@ -21,6 +21,8 @@ import org.apache.commons.imaging.ImagingParameters;
 
 /**
  * Psd format parameters.
+ *
  * @since 1.0-alpha3
  */
-public class PsdImagingParameters extends ImagingParameters {}
+public class PsdImagingParameters extends ImagingParameters<PsdImagingParameters> {
+}

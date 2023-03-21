@@ -21,6 +21,8 @@ import org.apache.commons.imaging.common.XmpImagingParameters;
 
 /**
  * Gif format parameters.
+ *
  * @since 1.0-alpha3
  */
-public class GifImagingParameters extends XmpImagingParameters {}
+public class GifImagingParameters extends XmpImagingParameters<GifImagingParameters> {
+}
