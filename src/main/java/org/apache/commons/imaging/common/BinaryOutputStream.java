@@ -16,23 +16,23 @@
  */
 package org.apache.commons.imaging.common;
 
+import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteOrder;
 
-public class BinaryOutputStream extends OutputStream {
-    private final OutputStream os;
-    // default byte order for Java, many file formats.
+public class BinaryOutputStream extends FilterOutputStream {
+
+    /** Default byte order for Java, many file formats. */
     private ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
-    private int count;
 
     public BinaryOutputStream(final OutputStream os, final ByteOrder byteOrder) {
+        super(os);
         this.byteOrder = byteOrder;
-        this.os = os;
     }
 
     public BinaryOutputStream(final OutputStream os) {
-        this.os = os;
+        super(os);
     }
 
     protected void setByteOrder(final ByteOrder byteOrder) {
@@ -45,34 +45,17 @@ public class BinaryOutputStream extends OutputStream {
 
     @Override
     public void write(final int i) throws IOException {
-        os.write(i);
-        count++;
+        super.write(i);
     }
 
     @Override
     public final void write(final byte[] bytes) throws IOException {
-        os.write(bytes, 0, bytes.length);
-        count += bytes.length;
+        super.write(bytes, 0, bytes.length);
     }
 
     @Override
     public final void write(final byte[] bytes, final int offset, final int length) throws IOException {
-        os.write(bytes, offset, length);
-        count += length;
-    }
-
-    @Override
-    public void flush() throws IOException {
-        os.flush();
-    }
-
-    @Override
-    public void close() throws IOException {
-        os.close();
-    }
-
-    public int getByteCount() {
-        return count;
+        super.write(bytes, offset, length);
     }
 
     public final void write4Bytes(final int value) throws IOException {
