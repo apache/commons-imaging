@@ -901,18 +901,18 @@ public final class Imaging {
      * provide this data.</p>
      *
      * @param src a valid BufferedImage object
-     * @param os the OutputStream to which the output image is to be written
+     * @param outputStream the OutputStream to which the output image is to be written
      * @param format the format in which the output image is to be written
      * @throws ImageWriteException in the event of a format violation, unsupported image format, etc.
      * @throws IOException in the event of an unrecoverable I/O exception.
      * @see ImagingConstants
      */
-    public static void writeImage(final BufferedImage src, final OutputStream os, final ImageFormat format) throws ImageWriteException, IOException {
-        Objects.requireNonNull(src, "src must not be null");
-        Objects.requireNonNull(os, "os must not be null");
-        Objects.requireNonNull(format, "format must not be null");
+    public static void writeImage(final BufferedImage src, final OutputStream outputStream, final ImageFormat format) throws ImageWriteException, IOException {
+        Objects.requireNonNull(src, "src");
+        Objects.requireNonNull(outputStream, "outputStream");
+        Objects.requireNonNull(format, "format");
 
         final ImageParser<?> imageParser = Util.getImageParser(format);
-        imageParser.writeImage(src, os, null);
+        imageParser.writeImage(src, outputStream, null);
     }
 }
