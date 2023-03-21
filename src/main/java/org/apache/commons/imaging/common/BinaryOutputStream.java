@@ -52,21 +52,6 @@ public abstract class BinaryOutputStream extends FilterOutputStream {
         super(outputStream);
     }
 
-//    @Override
-//    public final void write(final byte[] bytes) throws IOException {
-//        super.write(bytes, 0, bytes.length);
-//    }
-//
-//    @Override
-//    public final void write(final byte[] bytes, final int offset, final int length) throws IOException {
-//        super.write(bytes, offset, length);
-//    }
-//
-//    @Override
-//    public void write(final int i) throws IOException {
-//        super.write(i);
-//    }
-//
     public abstract void write2Bytes(int value) throws IOException;
 
     public abstract void write3Bytes(int value) throws IOException;
