@@ -157,6 +157,7 @@
           <suppressionsLocation>${basedir}/checkstyle-suppressions.xml</suppressionsLocation>
           <includeTestSourceDirectory>false</includeTestSourceDirectory>
           <enableRulesSummary>false</enableRulesSummary>
+          <excludes>target/**</excludes>
         </configuration>
       </plugin>
       <plugin>
