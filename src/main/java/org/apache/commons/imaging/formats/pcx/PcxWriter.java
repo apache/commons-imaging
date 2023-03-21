@@ -18,7 +18,6 @@ package org.apache.commons.imaging.formats.pcx;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.ByteOrder;
 import java.util.Arrays;
 
 import org.apache.commons.imaging.PixelDensity;
@@ -63,8 +62,7 @@ class PcxWriter {
             throws IOException {
         final PaletteFactory paletteFactory = new PaletteFactory();
         final SimplePalette palette = paletteFactory.makeExactRgbPaletteSimple(src, 256);
-        final BinaryOutputStream bos = new BinaryOutputStream(os,
-                ByteOrder.LITTLE_ENDIAN);
+        final BinaryOutputStream bos = BinaryOutputStream.littleEndian(os);
         final int bitDepth;
         final int planes;
         if (palette == null || bitDepthWanted == 24 || bitDepthWanted == 32) {

@@ -432,7 +432,7 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
         final int bitmapSize = 14 + 56 + restOfFile.length;
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream(bitmapSize);
-        try (BinaryOutputStream bos = new BinaryOutputStream(baos, ByteOrder.LITTLE_ENDIAN)) {
+        try (BinaryOutputStream bos = BinaryOutputStream.littleEndian(baos)) {
             bos.write('B');
             bos.write('M');
             bos.write4Bytes(bitmapSize);
@@ -647,7 +647,7 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
             bitCount = 8;
         }
 
-        final BinaryOutputStream bos = new BinaryOutputStream(os, ByteOrder.LITTLE_ENDIAN);
+        final BinaryOutputStream bos = BinaryOutputStream.littleEndian(os);
 
         int scanline_size = (bitCount * src.getWidth() + 7) / 8;
         if ((scanline_size % 4) != 0) {

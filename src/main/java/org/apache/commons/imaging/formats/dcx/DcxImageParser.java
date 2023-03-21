@@ -184,8 +184,7 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
             throws ImageWriteException, IOException {
         final int headerSize = 4 + 1024 * 4;
 
-        final BinaryOutputStream bos = new BinaryOutputStream(os,
-                ByteOrder.LITTLE_ENDIAN);
+        final BinaryOutputStream bos = BinaryOutputStream.littleEndian(os);
         bos.write4Bytes(DcxHeader.DCX_ID);
         // Some apps may need a full 1024 entry table
         bos.write4Bytes(headerSize);

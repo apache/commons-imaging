@@ -47,7 +47,7 @@ public class TiffImageWriterLossy extends TiffImageWriterBase {
 
         outputSummary.updateOffsets(byteOrder);
 
-        final BinaryOutputStream bos = new BinaryOutputStream(os, byteOrder);
+        final BinaryOutputStream bos = BinaryOutputStream.create(os, byteOrder);
 
         // NB: resource is intentionally left open
         writeStep(bos, outputItems);

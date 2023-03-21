@@ -879,7 +879,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
         }
         final int paletteSize = palette2.length() + (hasAlpha ? 1 : 0);
 
-        final BinaryOutputStream bos = new BinaryOutputStream(os, ByteOrder.LITTLE_ENDIAN);
+        final BinaryOutputStream bos = BinaryOutputStream.littleEndian(os);
 
         // write Header
         os.write(0x47); // G magic numbers

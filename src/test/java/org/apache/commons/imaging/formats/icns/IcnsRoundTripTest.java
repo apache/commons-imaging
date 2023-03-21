@@ -25,7 +25,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.nio.ByteOrder;
 import java.nio.file.Files;
 
 import org.apache.commons.imaging.ImageReadException;
@@ -61,7 +60,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         final int foreground = 0xff000000;
         final int background = 0xff000000;
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                final BinaryOutputStream bos = new BinaryOutputStream(baos, ByteOrder.BIG_ENDIAN)) {
+                final BinaryOutputStream bos = BinaryOutputStream.bigEndian(baos)) {
             bos.write4Bytes(IcnsImageParser.ICNS_MAGIC);
             bos.write4Bytes(4 + 4 + 4 + 4 + 2 * 16 * 16 / 8 + 4 + 4 + 16 * 16);
             bos.write4Bytes(IcnsType.ICNS_16x16_1BIT_IMAGE_AND_MASK.getType());
@@ -98,7 +97,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         final int foreground = 0xff000000;
         final int background = 0x00cccccc;
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                final BinaryOutputStream bos = new BinaryOutputStream(baos, ByteOrder.BIG_ENDIAN)) {
+                final BinaryOutputStream bos = BinaryOutputStream.bigEndian(baos)) {
             bos.write4Bytes(IcnsImageParser.ICNS_MAGIC);
             bos.write4Bytes(4 + 4 + 4 + 4 + 16 * 16 + 4 + 4 + 16 * 16);
             bos.write4Bytes(IcnsType.ICNS_16x16_8BIT_IMAGE.getType());
@@ -135,7 +134,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         final int foreground = 0xff000000;
         final int background = 0x00cccccc;
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                final BinaryOutputStream bos = new BinaryOutputStream(baos, ByteOrder.BIG_ENDIAN)) {
+                final BinaryOutputStream bos = BinaryOutputStream.bigEndian(baos)) {
             bos.write4Bytes(IcnsImageParser.ICNS_MAGIC);
             bos.write4Bytes(4 + 4 + 4 + 4 + 16 * 16 + 4 + 4 + 16 * 16 + 4 + 4 + 2 * 16 * 16 / 8);
             bos.write4Bytes(IcnsType.ICNS_16x16_8BIT_IMAGE.getType());
@@ -192,7 +191,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         final int foreground = 0xff000000;
         final int background = 0x00cccccc;
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                final BinaryOutputStream bos = new BinaryOutputStream(baos, ByteOrder.BIG_ENDIAN)) {
+                final BinaryOutputStream bos = BinaryOutputStream.bigEndian(baos)) {
             bos.write4Bytes(IcnsImageParser.ICNS_MAGIC);
             bos.write4Bytes(4 + 4 + 4 + 4 + 16 * 16 + 4 + 4 + 16 * 16 + 4 + 4 + 2 * 16 * 16 / 8);
             bos.write4Bytes(IcnsType.ICNS_16x16_8BIT_IMAGE.getType());
@@ -249,7 +248,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         final int foreground = 0xff000000;
         final int background = 0xffcccccc;
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                final BinaryOutputStream bos = new BinaryOutputStream(baos, ByteOrder.BIG_ENDIAN)) {
+                final BinaryOutputStream bos = BinaryOutputStream.bigEndian(baos)) {
             bos.write4Bytes(IcnsImageParser.ICNS_MAGIC);
             bos.write4Bytes(4 + 4 + 4 + 4 + 16 * 16);
             bos.write4Bytes(IcnsType.ICNS_16x16_8BIT_IMAGE.getType());
@@ -273,7 +272,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         final int foreground = 0xff000000;
         final int background = 0x000000ff;
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                final BinaryOutputStream bos = new BinaryOutputStream(baos, ByteOrder.BIG_ENDIAN)) {
+                final BinaryOutputStream bos = BinaryOutputStream.bigEndian(baos)) {
             bos.write4Bytes(IcnsImageParser.ICNS_MAGIC);
             bos.write4Bytes(4 + 4 + 4 + 4 + 4 * 16 * 16 + 4 + 4 + 2 * 16 * 16 / 8);
             bos.write4Bytes(IcnsType.ICNS_16x16_32BIT_IMAGE.getType());
@@ -329,7 +328,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         final int foreground = 0xff000000;
         final int background = 0xff0000ff;
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                final BinaryOutputStream bos = new BinaryOutputStream(baos, ByteOrder.BIG_ENDIAN)) {
+                final BinaryOutputStream bos = BinaryOutputStream.bigEndian(baos)) {
             bos.write4Bytes(IcnsImageParser.ICNS_MAGIC);
             bos.write4Bytes(4 + 4 + 4 + 4 + 4 * 16 * 16 + 4 + 4 + 16 * 16 / 8);
             bos.write4Bytes(IcnsType.ICNS_16x16_32BIT_IMAGE.getType());
@@ -381,7 +380,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         final int foreground = 0xff000000;
         final int background = 0xff0000ff;
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                final BinaryOutputStream bos = new BinaryOutputStream(baos, ByteOrder.BIG_ENDIAN)) {
+                final BinaryOutputStream bos = BinaryOutputStream.bigEndian(baos)) {
             bos.write4Bytes(IcnsImageParser.ICNS_MAGIC);
             bos.write4Bytes(4 + 4 + 4 + 4 + 4 * 16 * 16);
             bos.write4Bytes(IcnsType.ICNS_16x16_32BIT_IMAGE.getType());
