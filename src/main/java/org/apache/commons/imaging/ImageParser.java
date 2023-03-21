@@ -90,7 +90,7 @@ import org.apache.commons.imaging.formats.xpm.XpmImageParser;
  *
  * @param <T> type of parameters used by this image parser
  */
-public abstract class ImageParser<T extends ImagingParameters> extends BinaryFileParser {
+public abstract class ImageParser<T extends ImagingParameters<T>> extends BinaryFileParser {
 
     private static final Logger LOGGER = Logger.getLogger(ImageParser.class.getName());
 
@@ -574,8 +574,6 @@ public abstract class ImageParser<T extends ImagingParameters> extends BinaryFil
      */
     public void writeImage(final BufferedImage src, final OutputStream os, final T params)
             throws ImageWriteException, IOException {
-        os.close(); // we are obligated to close stream.
-
         throw new ImageWriteException("This image format (" + getName() + ") cannot be written.");
     }
 

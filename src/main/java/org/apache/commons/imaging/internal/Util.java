@@ -16,15 +16,16 @@
  */
 package org.apache.commons.imaging.internal;
 
+import java.io.IOException;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
-
-import java.io.IOException;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 /**
  * Internal utilities.
@@ -35,18 +36,19 @@ public class Util {
 
     private Util() {}
 
-    public static ImageParser<?> getImageParser(final ImageFormat format) {
+    public static <T extends ImagingParameters<T>> ImageParser<T> getImageParser(final ImageFormat format) {
         return getImageParser(parser -> parser.canAcceptType(format), () -> new IllegalArgumentException("Unknown Format: " + format));
     }
 
-    public static ImageParser<?> getImageParser(final String fileExtension) {
+    public static <T extends ImagingParameters<T>> ImageParser<T> getImageParser(final String fileExtension) {
         return getImageParser(parser -> parser.canAcceptExtension(fileExtension), () -> new IllegalArgumentException("Unknown Extension: " + fileExtension));
     }
 
     // This generics suppression is as good as the predicate given. If the predicate violates a generics design,
     // then there will be an error during runtime.
-    private static ImageParser<?> getImageParser(final Predicate<ImageParser<?>> pred, final Supplier<? extends RuntimeException> supplier) {
-        return ImageParser
+    @SuppressWarnings("unchecked")
+    private static <T extends ImagingParameters<T>> ImageParser<T> getImageParser(final Predicate<ImageParser<?>> pred, final Supplier<? extends RuntimeException> supplier) {
+        return (ImageParser<T>) ImageParser
                 .getAllImageParsers()
                 .stream()
                 .filter(pred)
@@ -54,7 +56,7 @@ public class Util {
                 .orElseThrow(supplier);
     }
 
-    public static ImageParser<?> getImageParser(final ByteSource byteSource) throws IOException {
+    public static <T extends ImagingParameters<T>> ImageParser<T> getImageParser(final ByteSource byteSource) throws IOException {
         // TODO: circular dependency between Imaging and internal Util class below.
         final ImageFormat format = Imaging.guessFormat(byteSource);
         if (!format.equals(ImageFormats.UNKNOWN)) {

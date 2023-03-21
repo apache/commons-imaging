@@ -22,6 +22,7 @@ import org.apache.commons.imaging.ImagingParameters;
 /**
  * Parameters for formats that support Xmp.
  *
+ * @param <E> this type
  * @since 1.0-alpha3
  */
 public class XmpImagingParameters<E extends XmpImagingParameters<E>> extends ImagingParameters<E> {

@@ -16,6 +16,15 @@
  */
 package org.apache.commons.imaging.formats.xmp;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.util.List;
+
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageParser;
@@ -27,16 +36,7 @@ import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.imaging.internal.Util;
 import org.junit.jupiter.api.Test;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.nio.file.Files;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-public class XmpUpdateTest extends ImagingTest {
+public class XmpUpdateTest<E extends XmpImagingParameters<E>> extends ImagingTest {
 
     @Test
     public void test() throws Exception {
@@ -68,9 +68,9 @@ public class XmpUpdateTest extends ImagingTest {
             final File tempFile = Files.createTempFile(imageFile.getName() + ".", "." + imageFormat.getDefaultExtension()).toFile();
             final BufferedImage image = Imaging.getBufferedImage(imageFile);
 
-            final ImageParser parser = Util.getImageParser("." + imageFormat.getDefaultExtension());
-            final ImagingParameters params = parser.getDefaultParameters();
-            ((XmpImagingParameters) params).setXmpXml(xmpXml);
+            final ImageParser<E> parser = Util.getImageParser("." + imageFormat.getDefaultExtension());
+            final E params = parser.getDefaultParameters();
+            params.setXmpXml(xmpXml);
             try (FileOutputStream fos = new FileOutputStream(tempFile)) {
                 parser.writeImage(image, fos, params);
             }
