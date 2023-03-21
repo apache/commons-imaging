@@ -89,8 +89,7 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormats.BMP, //
-        };
+        return new ImageFormat[] { ImageFormats.BMP };
     }
 
     private BmpHeaderInfo readBmpHeaderInfo(final InputStream is,
