@@ -386,8 +386,7 @@ public class BasicCParser {
      * @return the new index i
      * @since 1.0-alpha3
      */
-    private static int appendOct(int i, final StringBuilder stringBuilder, final String string)
-        throws ImageReadException {
+    private static int appendOct(int i, final StringBuilder stringBuilder, final String string) {
         int length = 1;
         if (i + 1 < string.length() && '0' <= string.charAt(i + 1)
                 && string.charAt(i + 1) <= '7') {
