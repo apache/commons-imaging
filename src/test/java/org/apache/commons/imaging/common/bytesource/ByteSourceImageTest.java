@@ -27,7 +27,7 @@ import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.internal.Debug;
-import org.apache.commons.imaging.internal.Util;
+import org.apache.commons.imaging.internal.ImageParserFactory;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -172,7 +172,7 @@ public class ByteSourceImageTest extends ByteSourceTest {
             params = new JpegImagingParameters();
         }
 
-        final ImageParser imageParser = Util.getImageParser(imageFormat);
+        final ImageParser imageParser = ImageParserFactory.getImageParser(imageFormat);
 
         final ImageInfo imageInfoFile = imageParser.getImageInfo(imageFile, params);
 

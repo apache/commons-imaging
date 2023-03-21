@@ -32,9 +32,9 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
  *
  * @since 1.0-alpha3
  */
-public class Util {
+public class ImageParserFactory {
 
-    private Util() {}
+    private ImageParserFactory() {}
 
     public static <T extends ImagingParameters<T>> ImageParser<T> getImageParser(final ImageFormat format) {
         return getImageParser(parser -> parser.canAcceptType(format), () -> new IllegalArgumentException("Unknown Format: " + format));
@@ -60,12 +60,12 @@ public class Util {
         // TODO: circular dependency between Imaging and internal Util class below.
         final ImageFormat format = Imaging.guessFormat(byteSource);
         if (!format.equals(ImageFormats.UNKNOWN)) {
-            return Util.getImageParser(format);
+            return ImageParserFactory.getImageParser(format);
         }
 
         final String fileName = byteSource.getFileName();
         if (fileName != null) {
-            return Util.getImageParser(fileName);
+            return ImageParserFactory.getImageParser(fileName);
         }
 
         throw new IllegalArgumentException("Can't parse this format.");

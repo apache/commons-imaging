@@ -22,7 +22,7 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.common.RgbBufferedImageFactory;
 import org.apache.commons.imaging.internal.Debug;
-import org.apache.commons.imaging.internal.Util;
+import org.apache.commons.imaging.internal.ImageParserFactory;
 import org.junit.jupiter.params.provider.Arguments;
 
 import java.awt.image.BufferedImage;
@@ -43,14 +43,14 @@ public class RoundtripBase {
                 + formatInfo.format.getDefaultExtension()).toFile();
         Debug.debug("tempFile: " + temp1.getName());
 
-        final ImageParser imageParser = Util.getImageParser(formatInfo.format);
+        final ImageParser imageParser = ImageParserFactory.getImageParser(formatInfo.format);
 
-        final ImagingParameters params = Util.getImageParser(formatInfo.format).getDefaultParameters();
+        final ImagingParameters params = ImageParserFactory.getImageParser(formatInfo.format).getDefaultParameters();
         try (FileOutputStream fos = new FileOutputStream(temp1)) {
             imageParser.writeImage(testImage, fos, params);
         }
 
-        final ImagingParameters readParams = Util.getImageParser(formatInfo.format).getDefaultParameters();
+        final ImagingParameters readParams = ImageParserFactory.getImageParser(formatInfo.format).getDefaultParameters();
         readParams.setBufferedImageFactory(new RgbBufferedImageFactory());
         final BufferedImage image2 = imageParser.getBufferedImage(temp1, readParams);
         assertNotNull(image2);

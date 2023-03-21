@@ -33,7 +33,7 @@ import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.common.XmpImagingParameters;
 import org.apache.commons.imaging.internal.Debug;
-import org.apache.commons.imaging.internal.Util;
+import org.apache.commons.imaging.internal.ImageParserFactory;
 import org.junit.jupiter.api.Test;
 
 public class XmpUpdateTest<E extends XmpImagingParameters<E>> extends ImagingTest {
@@ -68,7 +68,7 @@ public class XmpUpdateTest<E extends XmpImagingParameters<E>> extends ImagingTes
             final File tempFile = Files.createTempFile(imageFile.getName() + ".", "." + imageFormat.getDefaultExtension()).toFile();
             final BufferedImage image = Imaging.getBufferedImage(imageFile);
 
-            final ImageParser<E> parser = Util.getImageParser("." + imageFormat.getDefaultExtension());
+            final ImageParser<E> parser = ImageParserFactory.getImageParser("." + imageFormat.getDefaultExtension());
             final E params = parser.getDefaultParameters();
             params.setXmpXml(xmpXml);
             try (FileOutputStream fos = new FileOutputStream(tempFile)) {
