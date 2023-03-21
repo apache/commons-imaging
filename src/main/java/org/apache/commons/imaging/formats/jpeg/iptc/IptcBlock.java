@@ -29,8 +29,8 @@ public class IptcBlock {
     private final byte[] blockData;
 
     public IptcBlock(final int blockType, final byte[] blockNameBytes, final byte[] blockData) {
-        Objects.requireNonNull(blockNameBytes, "Block name bytes must not be null.");
-        Objects.requireNonNull(blockNameBytes, "Block data bytes must not be null.");
+        Objects.requireNonNull(blockNameBytes, "blockNameBytes");
+        Objects.requireNonNull(blockData, "blockData");
         this.blockData = blockData;
         this.blockNameBytes = blockNameBytes;
         this.blockType = blockType;
@@ -47,7 +47,6 @@ public class IptcBlock {
     public byte[] getBlockData() {
         return blockData.clone();
     }
-
 
     public boolean isIPTCBlock() {
         return blockType == IptcConstants.IMAGE_RESOURCE_BLOCK_IPTC_DATA;
