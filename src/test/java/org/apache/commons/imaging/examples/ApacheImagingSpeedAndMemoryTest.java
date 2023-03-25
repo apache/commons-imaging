@@ -150,7 +150,6 @@
  * well for you.
  *                Gary Lucas --  May 2012.
  * ---------------------------------------------------------------
- *
  */
 package org.apache.commons.imaging.examples;
 import java.awt.image.BufferedImage;

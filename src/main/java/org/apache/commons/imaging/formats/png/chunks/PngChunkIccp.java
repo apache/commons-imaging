@@ -34,7 +34,6 @@ import org.apache.commons.imaging.ImageReadException;
  * profile as defined by the International Color Consortium".
  *
  * @see <a href="http://www.libpng.org/pub/png/spec/1.2/PNG-Chunks.html">PNG Specification</a>
- *
  */
 public class PngChunkIccp extends PngChunk {
 

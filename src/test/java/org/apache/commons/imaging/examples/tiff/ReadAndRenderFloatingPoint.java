@@ -37,7 +37,6 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingp
  * floating-point data and renders it using a gray-scale palette. TIFF files are
  * sometimes used to store non-image information for scientific and geophysical
  * data products, including terrestrial elevation and ocean depth data.
- *
  */
 public class ReadAndRenderFloatingPoint {
 

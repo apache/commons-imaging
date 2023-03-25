@@ -49,7 +49,6 @@ import java.util.Properties;
  * improve performance, leading me to speculate that the Java JIT compiler
  * might have inlined the method at run time.  Further investigation
  * is required.
- *
  */
 
 /**

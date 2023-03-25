@@ -44,7 +44,6 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingp
  * A simple example application that reads the content of a TIFF file containing
  * floating-point data and extracts its content. TIFF files are * sometimes used to store non-image information for scientific and geophysical
  * data products, including terrestrial elevation and ocean depth data.
- *
  */
 public class ExampleReadFloatingPointData {
 
