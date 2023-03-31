@@ -20,16 +20,14 @@ package org.apache.commons.imaging.formats.jpeg.iptc;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
 import org.apache.commons.imaging.common.bytesource.ByteSource;
+import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
@@ -76,13 +74,13 @@ public class IptcAddTest extends IptcBaseTest {
 
         final PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords, newBlocks);
 
-        final File updated = Files.createTempFile(imageFile.getName() + ".iptc.add.", ".jpg").toFile();
-        try (FileOutputStream fos = new FileOutputStream(updated);
-                OutputStream os = new BufferedOutputStream(fos)) {
+        byte[] bytes;
+        try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
             new JpegIptcRewriter().writeIPTC(byteSource, os, newData);
+            bytes = os.toByteArray();
         }
 
-        final ByteSource updateByteSource = new ByteSourceFile(updated);
+        final ByteSource updateByteSource = new ByteSourceArray("test.jpg", bytes);
         final JpegPhotoshopMetadata outMetadata = new JpegImageParser().getPhotoshopMetadata(
                 updateByteSource, params);
 

@@ -130,4 +130,16 @@ class FormatInfo {
         this.identicalSecondWrite = identicalSecondWrite;
         this.preservesResolution = preservesResolution;
     }
+
+    @Override
+    public String toString() {
+        return "FormatInfo{" +
+            "format=" + format +
+            ", canRead=" + canRead +
+            ", canWrite=" + canWrite +
+            ", colorSupport=" + colorSupport +
+            ", identicalSecondWrite=" + identicalSecondWrite +
+            ", preservesResolution=" + preservesResolution +
+            '}';
+    }
 }

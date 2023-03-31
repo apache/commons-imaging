@@ -20,11 +20,9 @@
 package org.apache.commons.imaging.formats.png;
 
 import java.awt.image.BufferedImage;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 
 import javax.imageio.ImageIO;
 import org.apache.commons.imaging.ImageWriteException;
@@ -85,26 +83,21 @@ public class PngWritePredictorTest {
     BufferedImage bImage = new BufferedImage(256, 256, BufferedImage.TYPE_INT_RGB);
     bImage.setRGB(0, 0, 256, 256, argb, 0, 256);
 
-    File tempFile = null;
+    byte[] tempFile = null;
 
-    try {
-      tempFile = Files.createTempFile("PngWritePredictorRGB", ".png").toFile();
-    } catch (final IOException ioex) {
-      fail("Failed to create temporary file, " + ioex.getMessage());
-    }
     final PngImagingParameters params = new PngImagingParameters();
     params.setPredictorEnabled(true);
     final PngImageParser parser = new PngImageParser();
-    try ( FileOutputStream fos = new FileOutputStream(tempFile);  BufferedOutputStream bos = new BufferedOutputStream(fos)) {
+    try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
       parser.writeImage(bImage, bos, params);
-      bos.flush();
+      tempFile = bos.toByteArray();
     } catch (IOException | ImageWriteException ex) {
       fail("Failed writing RGB with exception " + ex.getMessage());
     }
 
     try {
       final int[] brgb = new int[256 * 256];
-      bImage = ImageIO.read(tempFile);
+      bImage = ImageIO.read(new ByteArrayInputStream(tempFile));
       bImage.getRGB(0, 0, 256, 256, brgb, 0, 256);
       assertArrayEquals(argb, brgb, "Round trip for RGB failed");
     } catch (final IOException ex) {
@@ -117,15 +110,15 @@ public class PngWritePredictorTest {
     }
     bImage = new BufferedImage(256, 256, BufferedImage.TYPE_INT_ARGB);
     bImage.setRGB(0, 0, 256, 256, argb, 0, 256);
-    try ( FileOutputStream fos = new FileOutputStream(tempFile);  BufferedOutputStream bos = new BufferedOutputStream(fos)) {
+    try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
       parser.writeImage(bImage, bos, params);
-      bos.flush();
+      tempFile = bos.toByteArray();
     } catch (IOException | ImageWriteException ex) {
       fail("Failed writing ARGB with exception " + ex.getMessage());
     }
     try {
       final int[] brgb = new int[256 * 256];
-      bImage = ImageIO.read(tempFile);
+      bImage = ImageIO.read(new ByteArrayInputStream(tempFile));
       bImage.getRGB(0, 0, 256, 256, brgb, 0, 256);
       assertArrayEquals(argb, brgb, "Round trip for ARGB failed");
     } catch (final IOException ex) {
