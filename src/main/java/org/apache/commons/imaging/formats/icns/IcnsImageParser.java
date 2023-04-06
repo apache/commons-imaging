@@ -70,7 +70,7 @@ public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormats.ICNS };
+        return new ImageFormat[]{ImageFormats.ICNS};
     }
 
     // FIXME should throw UOE
@@ -203,7 +203,7 @@ public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
             final IcnsHeader icnsHeader = readIcnsHeader(is);
 
             final List<IcnsElement> icnsElementList = new ArrayList<>();
-            for (int remainingSize = icnsHeader.fileSize - 8; remainingSize > 0;) {
+            for (int remainingSize = icnsHeader.fileSize - 8; remainingSize > 0; ) {
                 final IcnsElement icnsElement = readIcnsElement(is, remainingSize);
                 icnsElementList.add(icnsElement);
                 remainingSize -= icnsElement.elementSize;
@@ -226,7 +226,7 @@ public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
 
     @Override
     public final BufferedImage getBufferedImage(final ByteSource byteSource,
-            final IcnsImagingParameters params) throws ImageReadException, IOException {
+                                                final IcnsImagingParameters params) throws ImageReadException, IOException {
         final IcnsContents icnsContents = readImage(byteSource);
         final List<BufferedImage> result = IcnsDecoder.decodeAllImages(icnsContents.icnsElements);
         if (!result.isEmpty()) {
@@ -241,11 +241,23 @@ public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
         final IcnsContents icnsContents = readImage(byteSource);
         return IcnsDecoder.decodeAllImages(icnsContents.icnsElements);
     }
-
+    //Divided complex method into smaller components
     @Override
     public void writeImage(final BufferedImage src, final OutputStream os, final IcnsImagingParameters params)
             throws ImageWriteException, IOException {
+        IcnsType imageType = getImageType(src);
+
+        try (BinaryOutputStream bos = BinaryOutputStream.bigEndian(os)) {
+            writeHeader(bos, imageType);
+            writeImageData(bos, src, imageType);
+            writeMaskData(bos, src, imageType);
+        }
+    }
+
+
+    private IcnsType getImageType(final BufferedImage src) throws ImageWriteException {
         IcnsType imageType;
+
         if (src.getWidth() == 16 && src.getHeight() == 16) {
             imageType = IcnsType.ICNS_16x16_32BIT_IMAGE;
         } else if (src.getWidth() == 32 && src.getHeight() == 32) {
@@ -255,37 +267,40 @@ public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
         } else if (src.getWidth() == 128 && src.getHeight() == 128) {
             imageType = IcnsType.ICNS_128x128_32BIT_IMAGE;
         } else {
-            throw new ImageWriteException("Invalid/unsupported source width "
-                    + src.getWidth() + " and height " + src.getHeight());
+            throw new ImageWriteException("Invalid/unsupported source width " + src.getWidth() + " and height " + src.getHeight());
         }
 
-        try (BinaryOutputStream bos = BinaryOutputStream.bigEndian(os)) {
-            bos.write4Bytes(ICNS_MAGIC);
-            bos.write4Bytes(4 + 4 + 4 + 4 + 4 * imageType.getWidth()
-            * imageType.getHeight() + 4 + 4 + imageType.getWidth()
-            * imageType.getHeight());
+        return imageType;
+    }
 
-            bos.write4Bytes(imageType.getType());
-            bos.write4Bytes(4 + 4 + 4 * imageType.getWidth()
-            * imageType.getHeight());
-            for (int y = 0; y < src.getHeight(); y++) {
-                for (int x = 0; x < src.getWidth(); x++) {
-                    final int argb = src.getRGB(x, y);
-                    bos.write(0);
-                    bos.write(argb >> 16);
-                    bos.write(argb >> 8);
-                    bos.write(argb);
-                }
+
+    private void writeHeader(BinaryOutputStream bos, IcnsType imageType) throws IOException {
+        bos.write4Bytes(ICNS_MAGIC);
+        bos.write4Bytes(4 + 4 + 4 + 4 + 4 * imageType.getWidth() * imageType.getHeight() + 4 + 4 + imageType.getWidth() * imageType.getHeight());
+        bos.write4Bytes(imageType.getType());
+        bos.write4Bytes(4 + 4 + 4 * imageType.getWidth() * imageType.getHeight());
+    }
+
+    private void writeImageData(BinaryOutputStream bos, BufferedImage src, IcnsType imageType) throws IOException {
+        for (int y = 0; y < src.getHeight(); y++) {
+            for (int x = 0; x < src.getWidth(); x++) {
+                final int argb = src.getRGB(x, y);
+                bos.write(0);
+                bos.write(argb >> 16);
+                bos.write(argb >> 8);
+                bos.write(argb);
             }
+        }
+    }
 
-            final IcnsType maskType = IcnsType.find8BPPMaskType(imageType);
-            bos.write4Bytes(maskType.getType());
-            bos.write4Bytes(4 + 4 + imageType.getWidth() * imageType.getWidth());
-            for (int y = 0; y < src.getHeight(); y++) {
-                for (int x = 0; x < src.getWidth(); x++) {
-                    final int argb = src.getRGB(x, y);
-                    bos.write(argb >> 24);
-                }
+    private void writeMaskData(BinaryOutputStream bos, BufferedImage src, IcnsType imageType) throws IOException {
+        final IcnsType maskType = IcnsType.find8BPPMaskType(imageType);
+        bos.write4Bytes(maskType.getType());
+        bos.write4Bytes(4 + 4 + imageType.getWidth() * imageType.getHeight());
+        for (int y = 0; y < src.getHeight(); y++) {
+            for (int x = 0; x < src.getWidth(); x++) {
+                final int argb = src.getRGB(x, y);
+                bos.write(argb >> 24);
             }
         }
     }

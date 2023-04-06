@@ -668,6 +668,7 @@ public final class T4AndT6Compression {
         return entries[first];
     }
 
+
     private static int readTotalRunLength(final BitInputStreamFlexible bitStream,
             final int color) throws ImageReadException {
         try {

@@ -105,6 +105,7 @@ public final class Debug {
         return result.toString();
     }
 
+
     private static String getDebug(final String message, final char[] v) {
         final StringBuilder result = new StringBuilder();
 

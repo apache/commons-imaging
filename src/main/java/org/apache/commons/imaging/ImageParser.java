@@ -926,17 +926,19 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
      * @param params optional parameters.
      * @return A valid instance of an implementation of a IBufferedImageFactory.
      */
-    protected BufferedImageFactory getBufferedImageFactory(final T params) {
-        if (params == null) {
-            return new SimpleBufferedImageFactory();
-        }
+//    protected BufferedImageFactory getBufferedImageFactory(final T params) {
+//        if (params == null) {
+//            return new SimpleBufferedImageFactory();
+//        }
+//
+//        final BufferedImageFactory result = params.getBufferedImageFactory();
+//
+//        if (null != result) {
+//            return result;
+//        }
+//
+//        return new SimpleBufferedImageFactory();
+//    }
 
-        final BufferedImageFactory result = params.getBufferedImageFactory();
 
-        if (null != result) {
-            return result;
-        }
-
-        return new SimpleBufferedImageFactory();
-    }
 }

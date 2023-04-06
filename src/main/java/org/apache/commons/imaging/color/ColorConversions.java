@@ -29,12 +29,6 @@ public final class ColorConversions {
     /** see: https://en.wikipedia.org/wiki/CIELAB_color_space#From_CIEXYZ_to_CIELAB[10] */
     private static final double REF_Z = 108.883;
 
-    /** see: https://en.wikipedia.org/wiki/CIELAB_color_space#From_CIEXYZ_to_CIELAB[10] */
-    private static final double XYZ_m = 7.787037; // match in slope. Note commonly seen 7.787 gives worse results
-
-    /** see: https://en.wikipedia.org/wiki/CIELAB_color_space#From_CIEXYZ_to_CIELAB[10] */
-    private static final double XYZ_t0 = 0.008856;
-
     private ColorConversions() {
     }
 
@@ -49,9 +43,9 @@ public final class ColorConversions {
         double var_Z = Z / REF_Z; // REF_Z = 108.883
 
         // Pivot XÝZ:
-        var_X = pivotXYZ(var_X);
-        var_Y = pivotXYZ(var_Y);
-        var_Z = pivotXYZ(var_Z);
+        var_X = pivotProcessor.pivotXYZ(var_X);
+        var_Y = pivotProcessor.pivotXYZ(var_Y);
+        var_Z = pivotProcessor.pivotXYZ(var_Z);
 
         // Math.max added from https://github.com/muak/ColorMinePortable/blob/master/ColorMinePortable/ColorSpaces/Conversions/LabConverter.cs
         final double L = Math.max(0, 116 * var_Y - 16);
@@ -69,9 +63,9 @@ public final class ColorConversions {
         double var_X = a / 500 + var_Y;
         double var_Z = var_Y - b / 200.0;
 
-        var_Y = unPivotXYZ(var_Y);
-        var_X = unPivotXYZ(var_X);
-        var_Z = unPivotXYZ(var_Z);
+        var_Y = pivotProcessor.unPivotXYZ(var_Y);
+        var_X = pivotProcessor.unPivotXYZ(var_X);
+        var_Z = pivotProcessor.unPivotXYZ(var_Z);
 
         final double X = REF_X * var_X; // REF_X = 95.047 Observer= 2°, Illuminant=
         // D65
@@ -132,9 +126,9 @@ public final class ColorConversions {
         // double var_G = var_X * -0.9689 + var_Y * 1.8758 + var_Z * 0.0415;
         // double var_B = var_X * 0.0557 + var_Y * -0.2040 + var_Z * 1.0570;
 
-        var_R = pivotRGB(var_R);
-        var_G = pivotRGB(var_G);
-        var_B = pivotRGB(var_B);
+        var_R = pivotProcessor.pivotRGB(var_R);
+        var_G = pivotProcessor.pivotRGB(var_G);
+        var_B = pivotProcessor.pivotRGB(var_B);
 
         final double R = (var_R * 255);
         final double G = (var_G * 255);
@@ -154,9 +148,9 @@ public final class ColorConversions {
         double var_B = b / 255.0; // Where B = 0 ÷ 255
 
         // Pivot RGB:
-        var_R = unPivotRGB(var_R);
-        var_G = unPivotRGB(var_G);
-        var_B = unPivotRGB(var_B);
+        var_R = pivotProcessor.unPivotRGB(var_R);
+        var_G = pivotProcessor.unPivotRGB(var_G);
+        var_B = pivotProcessor.unPivotRGB(var_B);
 
         var_R *= 100;
         var_G *= 100;
@@ -337,6 +331,25 @@ public final class ColorConversions {
         return new ColorHsl(H, S, L);
     }
 
+    public static double convertHuetoRGB(final double v1, final double v2, double vH) {
+        if (vH < 0) {
+            vH += 1;
+        }
+        if (vH > 1) {
+            vH -= 1;
+        }
+        if ((6 * vH) < 1) {
+            return (v1 + (v2 - v1) * 6 * vH);
+        }
+        if ((2 * vH) < 1) {
+            return (v2);
+        }
+        if ((3 * vH) < 2) {
+            return (v1 + (v2 - v1) * ((2 / 3.0) - vH) * 6);
+        }
+        return (v1);
+    }
+
     public static int convertHSLtoRGB(final ColorHsl hsl) {
         return convertHSLtoRGB(hsl.H, hsl.S, hsl.L);
     }
@@ -368,24 +381,7 @@ public final class ColorConversions {
         return convertRGBtoRGB(R, G, B);
     }
 
-    private static double convertHuetoRGB(final double v1, final double v2, double vH) {
-        if (vH < 0) {
-            vH += 1;
-        }
-        if (vH > 1) {
-            vH -= 1;
-        }
-        if ((6 * vH) < 1) {
-            return (v1 + (v2 - v1) * 6 * vH);
-        }
-        if ((2 * vH) < 1) {
-            return (v2);
-        }
-        if ((3 * vH) < 2) {
-            return (v1 + (v2 - v1) * ((2 / 3.0) - vH) * 6);
-        }
-        return (v1);
-    }
+
 
     public static ColorHsv convertRGBtoHSV(final int rgb) {
         final int R = 0xff & (rgb >> 16);
@@ -525,9 +521,9 @@ public final class ColorConversions {
             double var_X = cieA / 500.0 + var_Y;
             double var_Z = var_Y - cieB / 200.0;
 
-            var_X = unPivotXYZ(var_X);
-            var_Y = unPivotXYZ(var_Y);
-            var_Z = unPivotXYZ(var_Z);
+            var_X = pivotProcessor.unPivotXYZ(var_X);
+            var_Y = pivotProcessor.unPivotXYZ(var_Y);
+            var_Z = pivotProcessor.unPivotXYZ(var_Z);
 
             X = REF_X * var_X; // REF_X = 95.047 Observer= 2°, Illuminant= D65
             Y = REF_Y * var_Y; // REF_Y = 100.000
@@ -545,9 +541,9 @@ public final class ColorConversions {
             double var_G = var_X * -0.9689 + var_Y * 1.8758 + var_Z * 0.0415;
             double var_B = var_X * 0.0557 + var_Y * -0.2040 + var_Z * 1.0570;
 
-            var_R = pivotRGB(var_R);
-            var_G = pivotRGB(var_G);
-            var_B = pivotRGB(var_B);
+            var_R = pivotProcessor.pivotRGB(var_R);
+            var_G = pivotProcessor.pivotRGB(var_G);
+            var_B = pivotProcessor.pivotRGB(var_B);
 
             R = (var_R * 255);
             G = (var_G * 255);
@@ -637,7 +633,7 @@ public final class ColorConversions {
         double var_Y = Y / 100.0;
         // Debug.debug("var_Y", var_Y);
 
-        var_Y = pivotXYZ(var_Y);
+        var_Y = pivotProcessor.pivotXYZ(var_Y);
 
         // Debug.debug("var_Y", var_Y);
 
@@ -662,7 +658,7 @@ public final class ColorConversions {
         // problems here with div by zero
 
         double var_Y = (L + 16) / 116.0;
-        var_Y = unPivotXYZ(var_Y);
+        var_Y = pivotProcessor.unPivotXYZ(var_Y);
 
         final double ref_U = (4 * REF_X) / (REF_X + (15 * REF_Y) + (3 * REF_Z));
         final double ref_V = (9 * REF_Y) / (REF_X + (15 * REF_Y) + (3 * REF_Z));
@@ -807,43 +803,6 @@ public final class ColorConversions {
         final double b = e * Math.sin(ang) + f / 0.83 * Math.cos(ang); // rotation by 26 degrees
 
         return new ColorCieLab(L, a, b);
-    }
-
-    private static double pivotRGB(double n) {
-        if (n > 0.0031308) {
-            n = 1.055 * Math.pow(n, 1 / 2.4) - 0.055;
-        } else {
-            n = 12.92 * n;
-        }
-        return n;
-    }
-
-    private static double unPivotRGB(double n) {
-        if (n > 0.04045) {
-            n = Math.pow((n + 0.055) / 1.055, 2.4);
-        } else {
-            n = n / 12.92;
-        }
-        return n;
-    }
-
-    private static double pivotXYZ(double n) {
-        if (n > XYZ_t0) {
-            n = Math.pow(n, 1 / 3.0);
-        } else {
-            n = XYZ_m * n + 16 / 116.0;
-        }
-        return n;
-    }
-
-    private static double unPivotXYZ(double n) {
-        final double nCube = Math.pow(n, 3);
-        if (nCube > XYZ_t0) {
-            n = nCube;
-        } else {
-            n = (n - 16 / 116.0) / XYZ_m;
-        }
-        return n;
     }
 
 }

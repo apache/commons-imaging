@@ -42,8 +42,8 @@ public class ByteSourceArray extends ByteSource {
     public byte[] getBlock(final long startLong, final int length) throws IOException {
         final int start = (int) startLong;
         // We include a separate check for int overflow.
-        if ((start < 0) || (length < 0) || (start + length < 0)
-                || (start + length > bytes.length)) {
+
+        if (blockLengthCheck(start, length)) {
             throw new IOException("Could not read block (block start: " + start
                     + ", block length: " + length + ", data length: "
                     + bytes.length + ").");
@@ -51,7 +51,11 @@ public class ByteSourceArray extends ByteSource {
 
         return Arrays.copyOfRange(bytes, start, start + length);
     }
-
+    //Refactored complex if condition into a seperate method.
+    public boolean blockLengthCheck(int start, int length){
+        return ((start < 0) || (length < 0) || (start + length < 0)
+                || (start + length > bytes.length));
+    }
     @Override
     public long getLength() {
         return bytes.length;

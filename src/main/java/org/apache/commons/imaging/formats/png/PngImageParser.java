@@ -47,10 +47,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.GenericImageMetadata;
-import org.apache.commons.imaging.common.ImageMetadata;
-import org.apache.commons.imaging.common.XmpEmbeddable;
-import org.apache.commons.imaging.common.XmpImagingParameters;
+import org.apache.commons.imaging.common.*;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.png.chunks.PngChunk;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkGama;
@@ -484,6 +481,23 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
                 usesPalette, colorType, compressionAlgorithm, textChunks,
                 physicalScale);
     }
+
+
+
+    protected BufferedImageFactory getBufferedImageFactory(final PngImagingParameters params) {
+        if (params == null) {
+            return new SimpleBufferedImageFactory();
+        }
+
+        final BufferedImageFactory result = params.getBufferedImageFactory();
+
+        if (null != result) {
+            return result;
+        }
+
+        return new SimpleBufferedImageFactory();
+    }
+
 
     @Override
     public BufferedImage getBufferedImage(final ByteSource byteSource, final PngImagingParameters params)

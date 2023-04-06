@@ -464,7 +464,9 @@ public class TiffImageMetadata extends GenericImageMetadata {
         final String longitudeRef = longitudeRefField.getStringValue();
         final RationalNumber[] longitude = (RationalNumber[]) longitudeField.getValue();
 
-        if (latitude.length != 3 || longitude.length != 3) {
+        // Assigned name for Magic number
+        int expected_long_lat_length = 3;
+        if (latitude.length != expected_long_lat_length || longitude.length != expected_long_lat_length) {
             throw new ImageReadException("Expected three values for latitude and longitude.");
         }
 

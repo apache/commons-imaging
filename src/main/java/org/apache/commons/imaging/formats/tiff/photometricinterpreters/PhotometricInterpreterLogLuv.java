@@ -55,7 +55,9 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
     @Override
     public void interpretPixel(final ImageBuilder imageBuilder, final int[] samples, final int x,
             final int y) throws ImageReadException, IOException {
-        if (samples == null || samples.length != 3) {
+        //Introduced variable name for magic number
+        int expected_bit_per_sample = 3;
+        if (samples == null || samples.length != expected_bit_per_sample) {
             throw new ImageReadException("Invalid length of bits per sample (expected 3).");
         }
 

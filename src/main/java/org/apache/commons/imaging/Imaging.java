@@ -22,6 +22,21 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.common.bytesource.ByteSourceInputStream;
+import org.apache.commons.imaging.formats.bmp.BmpImageParser;
+import org.apache.commons.imaging.formats.dcx.DcxImageParser;
+import org.apache.commons.imaging.formats.gif.GifImageParser;
+import org.apache.commons.imaging.formats.icns.IcnsImageParser;
+import org.apache.commons.imaging.formats.ico.IcoImageParser;
+import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
+import org.apache.commons.imaging.formats.pcx.PcxImageParser;
+import org.apache.commons.imaging.formats.png.PngImageParser;
+import org.apache.commons.imaging.formats.pnm.PnmImageParser;
+import org.apache.commons.imaging.formats.psd.PsdImageParser;
+import org.apache.commons.imaging.formats.rgbe.RgbeImageParser;
+import org.apache.commons.imaging.formats.tiff.TiffImageParser;
+import org.apache.commons.imaging.formats.wbmp.WbmpImageParser;
+import org.apache.commons.imaging.formats.xbm.XbmImageParser;
+import org.apache.commons.imaging.formats.xpm.XpmImageParser;
 import org.apache.commons.imaging.icc.IccProfileInfo;
 import org.apache.commons.imaging.icc.IccProfileParser;
 import org.apache.commons.imaging.internal.ImageParserFactory;
@@ -36,6 +51,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -120,6 +136,12 @@ public final class Imaging {
         }
         return hasImageFileExtension(file.getName());
     }
+
+
+
+
+
+
 
     /**
      * Attempts to determine if a file contains an image recorded in

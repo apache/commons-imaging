@@ -158,7 +158,7 @@ class PcxWriter {
         bos.write(new byte[54]);
 
         if (bitDepth == 32) {
-            writePixels32(src, bytesPerLine, bos);
+            rleWriter.writePixels32(src, bytesPerLine, bos);
         } else {
             writePixels(src, bitDepth, planes, bytesPerLine, palette, bos);
         }
@@ -258,24 +258,6 @@ class PcxWriter {
             for (int i = 0; i < planes; i++) {
                 rleWriter.write(bos, allPlanes[i]);
             }
-        }
-        rleWriter.flush(bos);
-    }
-
-    private void writePixels32(final BufferedImage src, final int bytesPerLine,
-            final BinaryOutputStream bos) throws IOException {
-
-        final int[] rgbs = new int[src.getWidth()];
-        final byte[] plane = new byte[4 * bytesPerLine];
-        for (int y = 0; y < src.getHeight(); y++) {
-            src.getRGB(0, y, src.getWidth(), 1, rgbs, 0, src.getWidth());
-            for (int x = 0; x < rgbs.length; x++) {
-                plane[4 * x + 0] = (byte) rgbs[x];
-                plane[4 * x + 1] = (byte) (rgbs[x] >> 8);
-                plane[4 * x + 2] = (byte) (rgbs[x] >> 16);
-                plane[4 * x + 3] = 0;
-            }
-            rleWriter.write(bos, plane);
         }
         rleWriter.flush(bos);
     }

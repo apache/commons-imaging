@@ -15,6 +15,7 @@
 
 package org.apache.commons.imaging.formats.pcx;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import org.apache.commons.imaging.common.BinaryOutputStream;
@@ -63,5 +64,24 @@ class RleWriter {
                 bos.write(previousByte);
             }
         }
+    }
+
+    //move method
+    public void writePixels32(final BufferedImage src, final int bytesPerLine,
+                               final BinaryOutputStream bos) throws IOException {
+
+        final int[] rgbs = new int[src.getWidth()];
+        final byte[] plane = new byte[4 * bytesPerLine];
+        for (int y = 0; y < src.getHeight(); y++) {
+            src.getRGB(0, y, src.getWidth(), 1, rgbs, 0, src.getWidth());
+            for (int x = 0; x < rgbs.length; x++) {
+                plane[4 * x + 0] = (byte) rgbs[x];
+                plane[4 * x + 1] = (byte) (rgbs[x] >> 8);
+                plane[4 * x + 2] = (byte) (rgbs[x] >> 16);
+                plane[4 * x + 3] = 0;
+            }
+            write(bos, plane);
+        }
+        flush(bos);
     }
 }

@@ -39,9 +39,7 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.ImageMetadata;
-import org.apache.commons.imaging.common.XmpEmbeddable;
-import org.apache.commons.imaging.common.XmpImagingParameters;
+import org.apache.commons.imaging.common.*;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
 import org.apache.commons.imaging.formats.psd.dataparsers.DataParserBitmap;
@@ -546,6 +544,20 @@ public class PsdImageParser extends ImageParser<PsdImagingParameters> implements
         pw.println("");
 
         return true;
+    }
+
+    protected BufferedImageFactory getBufferedImageFactory(final PsdImagingParameters params) {
+        if (params == null) {
+            return new SimpleBufferedImageFactory();
+        }
+
+        final BufferedImageFactory result = params.getBufferedImageFactory();
+
+        if (null != result) {
+            return result;
+        }
+
+        return new SimpleBufferedImageFactory();
     }
 
     @Override
