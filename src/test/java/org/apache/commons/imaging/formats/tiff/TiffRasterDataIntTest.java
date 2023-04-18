@@ -213,7 +213,7 @@ public class TiffRasterDataIntTest {
             final TiffRasterData raster = new TiffRasterDataInt(10, 10, sample);
             raster.getIntValue(11, 11);
             fail("Access method getValue() did not detect bad coordinates");
-        }catch(final IllegalArgumentException illArgEx){
+        }catch (final IllegalArgumentException illArgEx){
             // success!
         }
         try{
@@ -221,7 +221,7 @@ public class TiffRasterDataIntTest {
             final TiffRasterData raster = new TiffRasterDataInt(10, 10, sample);
             raster.setValue(11, 11, 5.0f);
             fail("Access method setValue() did not detect bad coordinates");
-        }catch(final IllegalArgumentException illArgEx){
+        }catch (final IllegalArgumentException illArgEx){
             // success!
         }
     }

@@ -84,7 +84,7 @@ public class TiffSubImageTest extends TiffBaseTest {
             params.setSubImage(x, y, width, height);
             tiffImageParser.getBufferedImage(target, params);
             fail("Reading TIFF sub-image failed to detect bad parameter: "+comment);
-        }catch(final ImageReadException | IllegalArgumentException ire){
+        }catch (final ImageReadException | IllegalArgumentException ire){
             // the test passed
         }
     }

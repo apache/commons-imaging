@@ -28,7 +28,7 @@ public class FieldTypeTest{
       try {
         FieldType.getFieldType((-748));
         fail("Expecting exception: Exception");
-      } catch(final Exception e) {
+      } catch (final Exception e) {
          assertEquals("Field type -748 is unsupported",e.getMessage());
          assertEquals(FieldType.class.getName(), e.getStackTrace()[0].getClassName());
       }

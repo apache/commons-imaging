@@ -32,7 +32,7 @@ public class TransparencyFilterIndexedColorTest{
         try {
             transparencyFilterIndexedColor.filter((-416), (-398));
             fail("Expecting exception: Exception");
-        } catch(final Exception e) {
+        } catch (final Exception e) {
             assertEquals("TransparencyFilterIndexedColor index: -398, bytes.length: 0",e.getMessage());
             assertEquals(TransparencyFilterIndexedColor.class.getName(), e.getStackTrace()[0].getClassName());
         }

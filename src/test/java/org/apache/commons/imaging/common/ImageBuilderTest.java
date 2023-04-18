@@ -116,7 +116,7 @@ public class ImageBuilderTest {
         try{
             final ImageBuilder sub = imageBuilder.getSubset(x, y, w, h);
             fail("Failed to detect bad bounds "+x+", "+y+", "+w+", "+h);
-        }catch(final RasterFormatException rfe){
+        }catch (final RasterFormatException rfe){
             // success, no action required
         }
     }
@@ -125,7 +125,7 @@ public class ImageBuilderTest {
         try{
             final ImageBuilder iBuilder = new ImageBuilder(w, h, true);
             fail("Failed to detect bad constructor "+w+", "+h);
-        }catch(final RasterFormatException rfe){
+        }catch (final RasterFormatException rfe){
             // success, no action required
         }
     }

@@ -32,7 +32,7 @@ public class RgbBufferedImageFactoryTest{
         try {
             rgbBufferedImageFactory.getColorBufferedImage(0, 0, true);
             fail("Expecting exception: IllegalArgumentException");
-        } catch(final IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             assertEquals("Width (0) and height (0) cannot be <= 0",e.getMessage());
             assertEquals(DirectColorModel.class.getName(), e.getStackTrace()[0].getClassName());
         }

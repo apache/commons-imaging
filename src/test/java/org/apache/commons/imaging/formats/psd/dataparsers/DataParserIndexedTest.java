@@ -30,7 +30,7 @@ public class DataParserIndexedTest{
       try {
         new DataParserIndexed(byteArray);
         fail("Expecting exception: ArrayIndexOutOfBoundsException");
-      } catch(final ArrayIndexOutOfBoundsException e) {
+      } catch (final ArrayIndexOutOfBoundsException e) {
          assertTrue(e.getMessage().contains("256"));
          assertEquals(DataParserIndexed.class.getName(), e.getStackTrace()[0].getClassName());
       }
