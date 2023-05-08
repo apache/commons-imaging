@@ -45,6 +45,20 @@ public class ColorConversionsTest {
     }
 
     @Test
+    public void testCMYKtoCMYtoRGBtoCMYtoCMYK() {
+        int magentaRGB = ColorConversions.convertCMYtoRGB(ColorConversions.convertCMYKtoCMY(ColorCmyk.MAGENTA));
+        assertEquals(ColorCmyk.MAGENTA, ColorConversions.convertCMYtoCMYK(ColorConversions.convertRGBtoCMY(magentaRGB)));
+    }
+
+    @Test
+    public void testCMYtoCMYKtoCMY() {
+        for(int i = 0; i<5; i++){
+            ColorCmy cmy1 = new ColorCmy(10 + 12 * i, 15*i, 60/(i+1));
+            assertEquals(cmy1, ColorConversions.convertCMYKtoCMY(ColorConversions.convertCMYtoCMYK(cmy1)));
+        }
+    }
+ 
+    @Test
     public void testRGBtoHSL() {
         for (final int rgb : SAMPLE_RGBS) {
             final ColorHsl hsl = ColorConversions.convertRGBtoHSL(rgb);
@@ -58,16 +72,25 @@ public class ColorConversionsTest {
     }
 
     @Test
+    public void testHSLtoRGBtoHSL() {
+        assertEquals(ColorHsl.BLACK, ColorConversions.convertRGBtoHSL(ColorConversions.convertHSLtoRGB(ColorHsl.BLACK)));
+    }
+
+    @Test
     public void testRGBtoHSV() {
         for (final int rgb : SAMPLE_RGBS) {
             final ColorHsv hsv = ColorConversions.convertRGBtoHSV(rgb);
             final int hsv_rgb = ColorConversions.convertHSVtoRGB(hsv);
-
             Debug.debug("hsv: " + hsv);
             Debug.debug("hsv_rgb: " + hsv_rgb + " (" + Integer.toHexString(hsv_rgb) + ")");
 
             assertEquals(toHexString(0xffffff & rgb), toHexString(0xffffff & hsv_rgb));
         }
+    }
+
+    @Test
+    public void testHSVtoRGBtoHSV() {
+        assertEquals(ColorHsv.BLUE, ColorConversions.convertRGBtoHSV(ColorConversions.convertHSVtoRGB(ColorHsv.BLUE)));
     }
 
     @Test
@@ -119,6 +142,32 @@ public class ColorConversionsTest {
     }
 
     @Test
+    public void testCIELabtoXYZtoRGBtoXYZtoCIELab() {
+        int greenRGB = ColorConversions.convertXYZtoRGB(ColorConversions.convertCIELabtoXYZ(ColorCieLab.GREEN));
+        ColorCieLab greehCIELab = ColorConversions.convertXYZtoCIELab(ColorConversions.convertRGBtoXYZ(greenRGB));
+        assertEquals(ColorCieLab.GREEN.L, greehCIELab.L, 0.3);
+        assertEquals(ColorCieLab.GREEN.a, greehCIELab.a, 0.3);
+        assertEquals(ColorCieLab.GREEN.b, greehCIELab.b, 0.3);
+    }
+
+    @Test
+    public void testCIELUVtoXYZtoRGBtoXYZtoCIELUV() {
+        int whiteRGB = ColorConversions.convertXYZtoRGB(ColorConversions.convertCIELuvtoXYZ(ColorCieLuv.WHITE));
+        ColorCieLuv whiteCIELuv = ColorConversions.convertXYZtoCIELuv(ColorConversions.convertRGBtoXYZ(whiteRGB));
+        assertEquals(ColorCieLuv.WHITE.L, whiteCIELuv.L,  0.1);
+        assertEquals(ColorCieLuv.WHITE.u, whiteCIELuv.u,  0.1);
+        assertEquals(ColorCieLuv.WHITE.v, whiteCIELuv.v,  0.1);
+    }
+
+    @Test
+    public void testCIELchtoCIELabtoCIELch() {
+        ColorCieLch redCIELch = ColorConversions.convertCIELabtoCIELCH(ColorConversions.convertCIELCHtoCIELab(ColorCieLch.RED));
+        assertEquals(ColorCieLch.RED.L, redCIELch.L, 0.1);
+        assertEquals(ColorCieLch.RED.C, redCIELch.C, 0.1);
+        assertEquals(ColorCieLch.RED.h, redCIELch.h, 0.1);
+    }
+
+    @Test
     public void testRGBtoDin99b() {
         for (final int rgb : SAMPLE_RGBS) {
 
@@ -148,5 +197,32 @@ public class ColorConversionsTest {
 
             assertEquals(toHexString(0xffffff & rgb), toHexString(0xffffff & din99_cielab_xyz_rgb));
         }
+    }
+
+    @Test
+    public void testCIELabToDIN99bLab() {
+        ColorDin99Lab din99bLabColor = new ColorDin99Lab(61.43d, 28.64d, 11.11d);
+        ColorDin99Lab compareColor = ColorConversions.convertCIELabToDIN99bLab(ColorConversions.convertDIN99bLabToCIELab(din99bLabColor));
+        assertEquals(din99bLabColor.L99, compareColor.L99, 0.01);
+        assertEquals(din99bLabColor.a99, compareColor.a99, 0.01);
+        assertEquals(din99bLabColor.b99, compareColor.b99, 0.01);
+    }
+
+    @Test
+    public void testCIELabToDIN99oLab() {
+        ColorDin99Lab din99oLabColor = new ColorDin99Lab(54.098d, 31.237d, 28.076d);
+        ColorDin99Lab compareColor = ColorConversions.convertCIELabToDIN99oLab(ColorConversions.convertDIN99oLabToCIELab(din99oLabColor));
+        assertEquals(din99oLabColor.L99, compareColor.L99, 0.001);
+        assertEquals(din99oLabColor.a99, compareColor.a99, 0.001);
+        assertEquals(din99oLabColor.b99, compareColor.b99, 0.001);
+    }
+
+    @Test
+    public void testHunterLabtoXYZtoRGBtoXYZtoHunterLab() {
+        int greenRGB = ColorConversions.convertXYZtoRGB(ColorConversions.convertHunterLabtoXYZ(ColorHunterLab.GREEN));
+        ColorHunterLab greenHunterLab = ColorConversions.convertXYZtoHunterLab(ColorConversions.convertRGBtoXYZ(greenRGB));
+        assertEquals(ColorHunterLab.GREEN.L, greenHunterLab.L, 0.01);
+        assertEquals(ColorHunterLab.GREEN.a, greenHunterLab.a, 0.01);
+        assertEquals(ColorHunterLab.GREEN.b, greenHunterLab.b, 0.01);
     }
 }

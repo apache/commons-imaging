@@ -177,16 +177,16 @@ public final class ColorConversions {
     }
 
     public static ColorCmy convertRGBtoCMY(final int rgb) {
+        // CMY values = 0 ÷ 100
+        // RGB values = 0 ÷ 255
+        
         final int R = 0xff & (rgb >> 16);
         final int G = 0xff & (rgb >> 8);
         final int B = 0xff & (rgb >> 0);
 
-        // RGB values = 0 ÷ 255
-        // CMY values = 0 ÷ 1
-
-        final double C = 1 - (R / 255.0);
-        final double M = 1 - (G / 255.0);
-        final double Y = 1 - (B / 255.0);
+        final double C = (1 - (R / 255.0))*100.0;
+        final double M = (1 - (G / 255.0))*100.0;
+        final double Y = (1 - (B / 255.0))*100.0;
 
         return new ColorCmy(C, M, Y);
     }
@@ -198,24 +198,23 @@ public final class ColorConversions {
         // and similarly for G and B.
         // This is Ghostscript's formula with K = 0.
 
-        // CMY values = 0 ÷ 1
+        // CMY values = 0 ÷ 100
         // RGB values = 0 ÷ 255
 
-        final double R = (1 - cmy.C) * 255.0;
-        final double G = (1 - cmy.M) * 255.0;
-        final double B = (1 - cmy.Y) * 255.0;
-
+        final double R = (1 - cmy.C / 100) * 255.0;
+        final double G = (1 - cmy.M / 100) * 255.0;
+        final double B = (1 - cmy.Y / 100) * 255.0;
+        
         return convertRGBtoRGB(R, G, B);
     }
 
     public static ColorCmyk convertCMYtoCMYK(final ColorCmy cmy) {
-        // Where CMYK and CMY values = 0 ÷ 1
+        // Where CMYK and CMY values = 0 ÷ 100
 
         double C = cmy.C;
         double M = cmy.M;
         double Y = cmy.Y;
-
-        double var_K = 1.0;
+        double var_K = 100.0;
 
         if (C < var_K) {
             var_K = C;
@@ -226,15 +225,16 @@ public final class ColorConversions {
         if (Y < var_K) {
             var_K = Y;
         }
-        if (var_K == 1) { // Black
+        if (var_K == 100.0) { // Black
             C = 0;
             M = 0;
             Y = 0;
         } else {
-            C = (C - var_K) / (1 - var_K);
-            M = (M - var_K) / (1 - var_K);
-            Y = (Y - var_K) / (1 - var_K);
+            C = (C - var_K) / (1 - var_K / 100.0);
+            M = (M - var_K) / (1 - var_K / 100.0);
+            Y = (Y - var_K) / (1 - var_K / 100.0);
         }
+
         return new ColorCmyk(C, M, Y, var_K);
     }
 
@@ -244,21 +244,15 @@ public final class ColorConversions {
 
     public static ColorCmy convertCMYKtoCMY(double C, double M, double Y,
             final double K) {
-        // Where CMYK and CMY values = 0 ÷ 1
+        // Where CMYK and CMY values = 0 ÷ 100
 
-        C = (C * (1 - K) + K);
-        M = (M * (1 - K) + K);
-        Y = (Y * (1 - K) + K);
-
+        C = C * (1 - K / 100.0) + K;
+        M = M * (1 - K / 100.0) + K;
+        Y = Y * (1 - K / 100.0) + K;
         return new ColorCmy(C, M, Y);
     }
 
-    public static int convertCMYKtoRGB(final int c, final int m, final int y, final int k) {
-        final double C = c / 255.0;
-        final double M = m / 255.0;
-        final double Y = y / 255.0;
-        final double K = k / 255.0;
-
+    public static int convertCMYKtoRGB(final double C, final double M, final double Y, final double K) {
         return convertCMYtoRGB(convertCMYKtoCMY(C, M, Y, K));
     }
 
@@ -271,6 +265,7 @@ public final class ColorConversions {
         final double var_R = (R / 255.0); // Where RGB values = 0 ÷ 255
         final double var_G = (G / 255.0);
         final double var_B = (B / 255.0);
+
 
         final double var_Min = Math.min(var_R, Math.min(var_G, var_B)); // Min. value
                                                                   // of RGB
@@ -334,7 +329,7 @@ public final class ColorConversions {
             // Debug.debug("H2", H);
         }
 
-        return new ColorHsl(H, S, L);
+        return new ColorHsl(H, S*100, L*100);
     }
 
     public static int convertHSLtoRGB(final ColorHsl hsl) {
@@ -346,19 +341,19 @@ public final class ColorConversions {
 
         if (S == 0) {
             // HSL values = 0 ÷ 1
-            R = L * 255; // RGB results = 0 ÷ 255
-            G = L * 255;
-            B = L * 255;
+            R = L * 2.55; // RGB results = 0 ÷ 255
+            G = L * 2.55;
+            B = L * 2.55;
         } else {
             double var_2;
 
             if (L < 0.5) {
-                var_2 = L * (1 + S);
+                var_2 = L/100 * (1 + S/100);
             } else {
-                var_2 = (L + S) - (S * L);
+                var_2 = (L/100 + S/100) - (S/100 * L/100);
             }
 
-            final double var_1 = 2 * L - var_2;
+            final double var_1 = 2 * L/100 - var_2;
 
             R = 255 * convertHuetoRGB(var_1, var_2, H + (1 / 3.0));
             G = 255 * convertHuetoRGB(var_1, var_2, H);
@@ -388,60 +383,39 @@ public final class ColorConversions {
     }
 
     public static ColorHsv convertRGBtoHSV(final int rgb) {
+        double H = 0;
+        double S = 0;
+        double V = 0;
+
         final int R = 0xff & (rgb >> 16);
         final int G = 0xff & (rgb >> 8);
         final int B = 0xff & (rgb >> 0);
 
-        final double var_R = (R / 255.0); // RGB values = 0 ÷ 255
-        final double var_G = (G / 255.0);
-        final double var_B = (B / 255.0);
+        final double R1 = (R / 255.0); // RGB values = 0 ÷ 255
+        final double G1 = (G / 255.0);
+        final double B1 = (B / 255.0);
 
-        final double var_Min = Math.min(var_R, Math.min(var_G, var_B)); // Min. value
-                                                                  // of RGB
-        boolean maxIsR = false;
-        boolean maxIsG = false;
-        double var_Max;
-        if (var_R >= var_G && var_R >= var_B) {
-            var_Max = var_R;
-            maxIsR = true;
-        } else if (var_G > var_B) {
-            var_Max = var_G;
-            maxIsG = true;
-        } else {
-            var_Max = var_B;
+        double Cmax = Math.max(R1, Math.max(G1, B1));
+        double Cmin = Math.min(R1, Math.min(G1, B1));
+        double delta = Cmax - Cmin;
+
+        if(delta == 0){
+          H = 0;
+        }else if(Cmax == B1){
+          H = Math.abs(60 * (((R1-G1)/delta) + 4));
+        }else if(Cmax == G1){
+          H = Math.abs(60 * (((B1-R1)/delta) + 2));
+        }else if(Cmax == R1){
+          H = Math.abs(60 * (((G1-B1)/delta) % 6));
         }
-        final double del_Max = var_Max - var_Min; // Delta RGB value
 
-        final double V = var_Max;
-
-        double H, S;
-        if (del_Max == 0) {
-            // This is a gray, no chroma...
-            H = 0; // HSV results = 0 ÷ 1
-            S = 0;
-        } else {
-        // Chromatic data...
-            S = del_Max / var_Max;
-
-            final double del_R = (((var_Max - var_R) / 6) + (del_Max / 2)) / del_Max;
-            final double del_G = (((var_Max - var_G) / 6) + (del_Max / 2)) / del_Max;
-            final double del_B = (((var_Max - var_B) / 6) + (del_Max / 2)) / del_Max;
-
-            if (maxIsR) {
-                H = del_B - del_G;
-            } else if (maxIsG) {
-                H = (1 / 3.0) + del_R - del_B;
-            } else {
-                H = (2 / 3.0) + del_G - del_R;
-            }
-
-            if (H < 0) {
-                H += 1;
-            }
-            if (H > 1) {
-                H -= 1;
-            }
+        if(Cmax == 0){
+          S = 0;
+        } else{
+          S = (delta / Cmax)*100;
         }
+
+        V = Cmax*100;
 
         return new ColorHsv(H, S, V);
     }
@@ -453,54 +427,46 @@ public final class ColorConversions {
     public static int convertHSVtoRGB(final double H, final double S, final double V) {
         double R, G, B;
 
-        if (S == 0) {
-            // HSV values = 0 ÷ 1
-            R = V * 255;
-            G = V * 255;
-            B = V * 255;
-        } else {
-            double var_h = H * 6;
-            if (var_h == 6) {
-                var_h = 0; // H must be < 1
-            }
-            final double var_i = Math.floor(var_h); // Or ... var_i = floor( var_h )
-            final double var_1 = V * (1 - S);
-            final double var_2 = V * (1 - S * (var_h - var_i));
-            final double var_3 = V * (1 - S * (1 - (var_h - var_i)));
+        double s = S/100;
+        double v = V/100;
 
-            double var_r, var_g, var_b;
+        double C = (v * s);
+        double X = C * (1 - Math.abs((H/60) % 2 - 1));
+        double m = v - C;
 
-            if (var_i == 0) {
-                var_r = V;
-                var_g = var_3;
-                var_b = var_1;
-            } else if (var_i == 1) {
-                var_r = var_2;
-                var_g = V;
-                var_b = var_1;
-            } else if (var_i == 2) {
-                var_r = var_1;
-                var_g = V;
-                var_b = var_3;
-            } else if (var_i == 3) {
-                var_r = var_1;
-                var_g = var_2;
-                var_b = V;
-            } else if (var_i == 4) {
-                var_r = var_3;
-                var_g = var_1;
-                var_b = V;
-            } else {
-                var_r = V;
-                var_g = var_1;
-                var_b = var_2;
-            }
+        double R1 = 0;
+        double G1 = 0;
+        double B1 = 0;
 
-            R = var_r * 255; // RGB results = 0 ÷ 255
-            G = var_g * 255;
-            B = var_b * 255;
+        if(0 <= H && H < 60){
+          R1 = C;
+          G1 = X;
+          B1 = 0;
+        }else if(60 <= H && H < 120){
+          R1 = X;
+          G1 = C;
+          B1 = 0;
+        }else if(120 <= H && H < 180){
+          R1 = 0;
+          G1 = C;
+          B1 = X;
+        }else if(180 <= H && H < 240){
+          R1 = 0;
+          G1 = X;
+          B1 = C;
+        }else if(240 <= H && H < 300){
+          R1 = X;
+          G1 = 0;
+          B1 = C;
+        }else if(300 <= H && H < 360){
+          R1 = C;
+          G1 = 0;
+          B1 = X;
         }
 
+        R = (R1+m)*255;
+        G = (G1+m)*255;
+        B = (B1+m)*255;
         return convertRGBtoRGB(R, G, B);
     }
 
