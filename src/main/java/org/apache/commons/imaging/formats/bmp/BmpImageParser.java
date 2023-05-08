@@ -246,8 +246,6 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
     private byte[] getRLEBytes(final InputStream is, final int rleSamplesPerByte) throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-        // this.setDebug(true);
-
         boolean done = false;
         while (!done) {
             final int a = 0xff & readByte("RLE a", is, "BMP: Bad RLE");
@@ -332,7 +330,7 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
                 LOGGER.fine("Compression: BI_RGB");
             }
             if (bhi.bitsPerPixel <= 8) {
-                paletteLength = 4 * colorTableSize;
+                paletteLength = Math.multiplyExact(4, colorTableSize);
             } else {
                 paletteLength = 0;
             }
@@ -346,7 +344,7 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.fine("Compression: BI_RLE4");
             }
-            paletteLength = 4 * colorTableSize;
+            paletteLength = Math.multiplyExact(4, colorTableSize);
             rleSamplesPerByte = 2;
             // ExtraBitsPerPixel = 4;
             rle = true;
@@ -358,7 +356,7 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.fine("Compression: BI_RLE8");
             }
-            paletteLength = 4 * colorTableSize;
+            paletteLength = Math.multiplyExact(4, colorTableSize);
             rleSamplesPerByte = 1;
             // ExtraBitsPerPixel = 8;
             rle = true;
@@ -371,7 +369,7 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
                 LOGGER.fine("Compression: BI_BITFIELDS");
             }
             if (bhi.bitsPerPixel <= 8) {
-                paletteLength = 4 * colorTableSize;
+                paletteLength = Math.multiplyExact(4, colorTableSize);
             } else {
                 paletteLength = 0;
             }
@@ -400,10 +398,10 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
                     + ((colorTable == null) ? "null" : Integer.toString(colorTable.length)));
         }
 
-        int imageLineLength = (((bhi.bitsPerPixel) * bhi.width) + 7) / 8;
+        int imageLineLength = Math.addExact(Math.multiplyExact(bhi.bitsPerPixel, bhi.width), 7) / 8;
 
         if (LOGGER.isLoggable(Level.FINE)) {
-            final int pixelCount = bhi.width * bhi.height;
+            final int pixelCount = Math.multiplyExact(bhi.width, bhi.height);
             // this.debugNumber("Total BitsPerPixel",
             // (ExtraBitsPerPixel + bhi.BitsPerPixel), 4);
             // this.debugNumber("Total Bit Per Line",
@@ -420,17 +418,15 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
             imageLineLength++;
         }
 
-        final int headerSize = BITMAP_FILE_HEADER_SIZE
-                + bhi.bitmapHeaderSize
-                + (bhi.bitmapHeaderSize == 40
-                        && bhi.compression == BI_BITFIELDS ? 3 * 4 : 0);
-        final int expectedDataOffset = headerSize + paletteLength;
+        final int headerSize = Math.addExact(Math.addExact(BITMAP_FILE_HEADER_SIZE, bhi.bitmapHeaderSize),
+                bhi.bitmapHeaderSize) == 40 && bhi.compression == BI_BITFIELDS ? 3 * 4 : 0;
+        final int expectedDataOffset = Math.addExact(headerSize, paletteLength);
 
         if (LOGGER.isLoggable(Level.FINE)) {
             debugNumber("bhi.BitmapDataOffset", bhi.bitmapDataOffset, 4);
             debugNumber("expectedDataOffset", expectedDataOffset, 4);
         }
-        final int extraBytes = bhi.bitmapDataOffset - expectedDataOffset;
+        final int extraBytes = Math.subtractExact(bhi.bitmapDataOffset, expectedDataOffset);
         if (extraBytes < 0) {
             throw new ImageReadException("BMP has invalid image data offset: "
                     + bhi.bitmapDataOffset + " (expected: "
@@ -441,7 +437,7 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
             readBytes("BitmapDataOffset", is, extraBytes, "Not a Valid BMP File");
         }
 
-        final int imageDataSize = bhi.height * imageLineLength;
+        final int imageDataSize = Math.multiplyExact(bhi.height, imageLineLength);
 
         if (LOGGER.isLoggable(Level.FINE)) {
             debugNumber("imageDataSize", imageDataSize, 4);
@@ -672,14 +668,15 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
         os.write(0x42); // B, Windows 3.1x, 95, NT, Bitmap
         os.write(0x4d); // M
 
-        final int filesize = BITMAP_FILE_HEADER_SIZE + BITMAP_INFO_HEADER_SIZE + // header size
-                4 * writer.getPaletteSize() + // palette size in bytes
-                imageData.length;
+        final int headerSize = BITMAP_FILE_HEADER_SIZE + BITMAP_INFO_HEADER_SIZE;
+        final int paletteSizeBytes = Math.multiplyExact(4, writer.getPaletteSize());
+        final int headerAndPaletteSize = Math.addExact(headerSize, paletteSizeBytes);
+
+        final int filesize = Math.addExact(headerAndPaletteSize, imageData.length);
         bos.write4Bytes(filesize);
 
         bos.write4Bytes(0); // reserved
-        bos.write4Bytes(BITMAP_FILE_HEADER_SIZE + BITMAP_INFO_HEADER_SIZE
-                + 4 * writer.getPaletteSize()); // Bitmap Data Offset
+        bos.write4Bytes(headerAndPaletteSize); // Bitmap Data Offset
 
         final int width = src.getWidth();
         final int height = src.getHeight();
