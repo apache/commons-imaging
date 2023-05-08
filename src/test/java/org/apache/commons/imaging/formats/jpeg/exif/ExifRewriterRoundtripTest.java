@@ -16,6 +16,15 @@
  */
 package org.apache.commons.imaging.formats.jpeg.exif;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.security.SecureRandom;
+import java.util.List;
+import java.util.stream.Stream;
+
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
@@ -32,21 +41,88 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.opentest4j.TestSkippedException;
 
-import java.io.*;
-import java.security.SecureRandom;
-import java.util.List;
-import java.util.stream.Stream;
-
 /**
  * Read and write EXIF data, and verify that it's identical, and no data corruption occurred.
  */
 @Disabled
 public class ExifRewriterRoundtripTest extends ExifBaseTest {
-    private final SecureRandom random = new SecureRandom();
-    private File duplicateFile;
 
     public static Stream<File> data() throws Exception {
         return getImagesWithExifData().stream();
+    }
+
+    private final SecureRandom random = new SecureRandom();
+
+    private File duplicateFile;
+
+    private void assertEquals(final TiffOutputSet tiffOutputSet, final TiffOutputSet tiffOutputSet1) {
+        final List<TiffOutputDirectory> directories = tiffOutputSet.getDirectories();
+        final List<TiffOutputDirectory> directories1 = tiffOutputSet1.getDirectories();
+        Assertions.assertEquals(directories.size(), directories1.size(),
+                "The TiffOutputSets have different numbers of directories.");
+
+        for (int i = 0; i < directories.size(); i++) {
+            final List<TiffOutputField> fields = directories.get(i).getFields();
+            final List<TiffOutputField> fields1 = directories1.get(i).getFields();
+            Assertions.assertEquals(fields.size(), fields1.size(),
+                    "The TiffOutputDirectories have different numbers of fields.");
+
+            for (int j = 0; j < fields.size(); j++) {
+                final TiffOutputField field = fields.get(j);
+                final TiffOutputField field1 = fields1.get(j);
+                Assertions.assertEquals(field.tag, field1.tag, "TiffOutputField tag mismatch.");
+                Assertions.assertEquals(field.tagInfo, field1.tagInfo, "TiffOutputField tagInfo mismatch.");
+                Assertions.assertEquals(field.fieldType, field1.fieldType, "TiffOutputField fieldType mismatch.");
+                Assertions.assertEquals(field.count, field1.count, "TiffOutputField count mismatch.");
+            }
+        }
+    }
+
+    private void copyToDuplicateFile(final File sourceFile, final TiffOutputSet duplicateTiffOutputSet) throws IOException,
+            ImageReadException, ImageWriteException {
+        final ExifRewriter exifRewriter = new ExifRewriter();
+        duplicateFile = createTempFile();
+        try (OutputStream duplicateOutputStream = new BufferedOutputStream(new FileOutputStream(duplicateFile))) {
+            exifRewriter.updateExifMetadataLossless(sourceFile, duplicateOutputStream, duplicateTiffOutputSet);
+        }
+    }
+
+    private File createTempFile() {
+        final String temp_dir = System.getProperty("java.io.tmpdir");
+        final String temp_filename = this.getClass().getName() + "-" + random.nextLong() + ".tmp";
+        return new File(temp_dir, temp_filename);
+    }
+
+    private TiffOutputSet duplicateTiffOutputSet(final TiffOutputSet sourceTiffOutputSet) throws ImageWriteException {
+        final TiffOutputSet duplicateTiffOutputSet = new TiffOutputSet();
+        for (final TiffOutputDirectory tiffOutputDirectory : sourceTiffOutputSet.getDirectories()) {
+            duplicateTiffOutputSet.addDirectory(tiffOutputDirectory);
+        }
+        return duplicateTiffOutputSet;
+    }
+
+    private JpegImageMetadata getJpegImageMetadata(final File sourceFile) throws ImageReadException, IOException {
+        final JpegImageMetadata jpegImageMetadata = (JpegImageMetadata) Imaging.getMetadata(sourceFile);
+        if (null == jpegImageMetadata) {
+            throw new TestSkippedException();
+        }
+        return jpegImageMetadata;
+    }
+
+    private TiffImageMetadata getTiffImageMetadata(final JpegImageMetadata sourceJpegImageMetadata) {
+        final TiffImageMetadata tiffImageMetadata = sourceJpegImageMetadata.getExif();
+        if (null == tiffImageMetadata) {
+            throw new TestSkippedException();
+        }
+        return tiffImageMetadata;
+    }
+
+    private TiffOutputSet getTiffOutputSet(final TiffImageMetadata sourceTiffImageMetadata) throws ImageWriteException {
+        final TiffOutputSet tiffOutputSet = sourceTiffImageMetadata.getOutputSet();
+        if (tiffOutputSet == null) {
+            throw new TestSkippedException();
+        }
+        return tiffOutputSet;
     }
 
     @AfterEach
@@ -57,68 +133,21 @@ public class ExifRewriterRoundtripTest extends ExifBaseTest {
         }
     }
 
-    private File createTempFile() {
-        String temp_dir = System.getProperty("java.io.tmpdir");
-        String temp_filename = this.getClass().getName() + "-" + random.nextLong() + ".tmp";
-        return new File(temp_dir, temp_filename);
-    }
-
-    private JpegImageMetadata getJpegImageMetadata(File sourceFile) throws ImageReadException, IOException {
-        JpegImageMetadata jpegImageMetadata = (JpegImageMetadata) Imaging.getMetadata(sourceFile);
-        if (null == jpegImageMetadata) {
-            throw new TestSkippedException();
-        }
-        return jpegImageMetadata;
-    }
-
-    private TiffImageMetadata getTiffImageMetadata(JpegImageMetadata sourceJpegImageMetadata) {
-        TiffImageMetadata tiffImageMetadata = sourceJpegImageMetadata.getExif();
-        if (null == tiffImageMetadata) {
-            throw new TestSkippedException();
-        }
-        return tiffImageMetadata;
-    }
-
-    private TiffOutputSet getTiffOutputSet(TiffImageMetadata sourceTiffImageMetadata) throws ImageWriteException {
-        TiffOutputSet tiffOutputSet = sourceTiffImageMetadata.getOutputSet();
-        if (tiffOutputSet == null) {
-            throw new TestSkippedException();
-        }
-        return tiffOutputSet;
-    }
-
-    private TiffOutputSet duplicateTiffOutputSet(TiffOutputSet sourceTiffOutputSet) throws ImageWriteException {
-        TiffOutputSet duplicateTiffOutputSet = new TiffOutputSet();
-        for (TiffOutputDirectory tiffOutputDirectory : sourceTiffOutputSet.getDirectories()) {
-            duplicateTiffOutputSet.addDirectory(tiffOutputDirectory);
-        }
-        return duplicateTiffOutputSet;
-    }
-
-    private void copyToDuplicateFile(File sourceFile, TiffOutputSet duplicateTiffOutputSet) throws IOException,
-            ImageReadException, ImageWriteException {
-        ExifRewriter exifRewriter = new ExifRewriter();
-        duplicateFile = createTempFile();
-        try (OutputStream duplicateOutputStream = new BufferedOutputStream(new FileOutputStream(duplicateFile))) {
-            exifRewriter.updateExifMetadataLossless(sourceFile, duplicateOutputStream, duplicateTiffOutputSet);
-        }
-    }
-
     @ParameterizedTest
     @MethodSource("data")
-    public void updateExifMetadataLossless_copyWithoutChanges_TiffImageMetadataIsIdentical(File sourceFile)
+    public void updateExifMetadataLossless_copyWithoutChanges_TiffImageMetadataIsIdentical(final File sourceFile)
             throws Exception {
         /*
          * Load EXIF data from source file, skipping over any test images without any EXIF data
          */
-        JpegImageMetadata sourceJpegImageMetadata = getJpegImageMetadata(sourceFile);
-        TiffImageMetadata sourceTiffImageMetadata = getTiffImageMetadata(sourceJpegImageMetadata);
-        TiffOutputSet sourceTiffOutputSet = getTiffOutputSet(sourceTiffImageMetadata);
+        final JpegImageMetadata sourceJpegImageMetadata = getJpegImageMetadata(sourceFile);
+        final TiffImageMetadata sourceTiffImageMetadata = getTiffImageMetadata(sourceJpegImageMetadata);
+        final TiffOutputSet sourceTiffOutputSet = getTiffOutputSet(sourceTiffImageMetadata);
 
         /*
          * Copy the TiffOutputSet to a duplicate TiffOutputSet
          */
-        TiffOutputSet duplicateTiffOutputSet = duplicateTiffOutputSet(sourceTiffOutputSet);
+        final TiffOutputSet duplicateTiffOutputSet = duplicateTiffOutputSet(sourceTiffOutputSet);
 
         /*
          * Copy the file to a duplicate file, using updateExifMetadataLossless and the duplicate TiffOutputSet
@@ -128,58 +157,35 @@ public class ExifRewriterRoundtripTest extends ExifBaseTest {
         /*
          * Load EXIF data from duplicate file
          */
-        JpegImageMetadata duplicateJpegImageMetadata = getJpegImageMetadata(duplicateFile);
-        TiffImageMetadata duplicateTiffImageMetadata = getTiffImageMetadata(duplicateJpegImageMetadata);
+        final JpegImageMetadata duplicateJpegImageMetadata = getJpegImageMetadata(duplicateFile);
+        final TiffImageMetadata duplicateTiffImageMetadata = getTiffImageMetadata(duplicateJpegImageMetadata);
 
         /*
          * Compare the source TiffImageMetadata to the one loaded from the duplicate file. This fails!
          */
-        List<? extends ImageMetadata.ImageMetadataItem> imageMetadataItems = sourceTiffImageMetadata.getItems();
-        List<? extends ImageMetadata.ImageMetadataItem> imageMetadataItems1 = duplicateTiffImageMetadata.getItems();
+        final List<? extends ImageMetadata.ImageMetadataItem> imageMetadataItems = sourceTiffImageMetadata.getItems();
+        final List<? extends ImageMetadata.ImageMetadataItem> imageMetadataItems1 = duplicateTiffImageMetadata.getItems();
         Assertions.assertEquals(imageMetadataItems.size(), imageMetadataItems1.size(),
                 "The TiffImageMetadata have different numbers of imageMetadataItems.");
 
         for (int i = 0; i < imageMetadataItems.size(); i++) {
-            ImageMetadata.ImageMetadataItem imageMetadataItem = imageMetadataItems.get(i);
-            ImageMetadata.ImageMetadataItem imageMetadataItem1 = imageMetadataItems1.get(i);
+            final ImageMetadata.ImageMetadataItem imageMetadataItem = imageMetadataItems.get(i);
+            final ImageMetadata.ImageMetadataItem imageMetadataItem1 = imageMetadataItems1.get(i);
             Assertions.assertEquals(imageMetadataItem.toString(), imageMetadataItem1.toString(),
                     "ImageMetadataItem toString mismatch.");
         }
     }
 
-    private void assertEquals(TiffOutputSet tiffOutputSet, TiffOutputSet tiffOutputSet1) {
-        List<TiffOutputDirectory> directories = tiffOutputSet.getDirectories();
-        List<TiffOutputDirectory> directories1 = tiffOutputSet1.getDirectories();
-        Assertions.assertEquals(directories.size(), directories1.size(),
-                "The TiffOutputSets have different numbers of directories.");
-
-        for (int i = 0; i < directories.size(); i++) {
-            List<TiffOutputField> fields = directories.get(i).getFields();
-            List<TiffOutputField> fields1 = directories1.get(i).getFields();
-            Assertions.assertEquals(fields.size(), fields1.size(),
-                    "The TiffOutputDirectories have different numbers of fields.");
-
-            for (int j = 0; j < fields.size(); j++) {
-                TiffOutputField field = fields.get(j);
-                TiffOutputField field1 = fields1.get(j);
-                Assertions.assertEquals(field.tag, field1.tag, "TiffOutputField tag mismatch.");
-                Assertions.assertEquals(field.tagInfo, field1.tagInfo, "TiffOutputField tagInfo mismatch.");
-                Assertions.assertEquals(field.fieldType, field1.fieldType, "TiffOutputField fieldType mismatch.");
-                Assertions.assertEquals(field.count, field1.count, "TiffOutputField count mismatch.");
-            }
-        }
-    }
-
     @ParameterizedTest
     @MethodSource("data")
-    public void updateExifMetadataLossless_copyWithoutChanges_TiffOutputSetsAreIdentical(File sourceFile)
+    public void updateExifMetadataLossless_copyWithoutChanges_TiffOutputSetsAreIdentical(final File sourceFile)
             throws Exception {
         /*
          * Load EXIF data from source file, skipping over any test images without any EXIF data
          */
-        JpegImageMetadata sourceJpegImageMetadata = getJpegImageMetadata(sourceFile);
-        TiffImageMetadata sourceTiffImageMetadata = getTiffImageMetadata(sourceJpegImageMetadata);
-        TiffOutputSet sourceTiffOutputSet = getTiffOutputSet(sourceTiffImageMetadata);
+        final JpegImageMetadata sourceJpegImageMetadata = getJpegImageMetadata(sourceFile);
+        final TiffImageMetadata sourceTiffImageMetadata = getTiffImageMetadata(sourceJpegImageMetadata);
+        final TiffOutputSet sourceTiffOutputSet = getTiffOutputSet(sourceTiffImageMetadata);
 
         /*
          * Copy the TiffOutputSet to a duplicate TiffOutputSet
@@ -199,8 +205,8 @@ public class ExifRewriterRoundtripTest extends ExifBaseTest {
         /*
          * Load EXIF data from duplicate file
          */
-        JpegImageMetadata duplicateJpegImageMetadata = getJpegImageMetadata(duplicateFile);
-        TiffImageMetadata duplicateTiffImageMetadata = getTiffImageMetadata(duplicateJpegImageMetadata);
+        final JpegImageMetadata duplicateJpegImageMetadata = getJpegImageMetadata(duplicateFile);
+        final TiffImageMetadata duplicateTiffImageMetadata = getTiffImageMetadata(duplicateJpegImageMetadata);
         duplicateTiffOutputSet = duplicateTiffImageMetadata.getOutputSet();
 
         /*
