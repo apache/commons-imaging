@@ -42,11 +42,11 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUnknowns;
 
 /**
  * References:
- * http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/EXIF.html
- * http://tiki-lounge.com/~raf/tiff/fields.html
- * http://www.awaresystems.be/imaging/tiff/tifftags.html
+ * <a href="http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/EXIF.html">...</a>
+ * <a href="http://tiki-lounge.com/~raf/tiff/fields.html">...</a>
+ * <a href="http://www.awaresystems.be/imaging/tiff/tifftags.html">...</a>
  *
- * "Stonits": http://www.anyhere.com/gward/pixformat/tiffluv.html
+ * "Stonits": <a href="http://www.anyhere.com/gward/pixformat/tiffluv.html">...</a>
  */
 public final class ExifTagConstants {
 

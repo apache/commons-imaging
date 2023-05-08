@@ -42,7 +42,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUndefineds;
 /**
  * Digital Negative (DNG) Specification
  * <BR>
- * http://www.adobe.com/products/dng/pdfs/dng_spec_1_3_0_0.pdf
+ * <a href="http://www.adobe.com/products/dng/pdfs/dng_spec_1_3_0_0.pdf">...</a>
  */
 public final class DngTagConstants {
 

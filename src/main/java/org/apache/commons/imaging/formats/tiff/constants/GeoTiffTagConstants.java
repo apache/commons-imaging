@@ -28,7 +28,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShorts;
 /**
  * Geo Tiff.
  * <BR>
- * http://www.remotesensing.org/geotiff/spec/contents.html
+ * <a href="http://www.remotesensing.org/geotiff/spec/contents.html">...</a>
  */
 public final class GeoTiffTagConstants {
 

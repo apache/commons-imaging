@@ -24,22 +24,34 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUndefineds;
 
 /**
- * TIFF specification supplement 2
- * <BR>
- * Adobe Photoshop (R) TIFF Technical Notes
- * <BR>
- * http://partners.adobe.com/public/developer/en/tiff/TIFFphotoshop.pdf
+ * TIFF specification supplement 2.
+ *
+ * See <a href="https://web.archive.org/web/20180810205806/https://www.adobe.io/content/udp/en/open/standards/TIFF/_jcr_content/contentbody/download_1370394226/file.res/TIFFphotoshop.pdf">Adobe Photoshop (R) TIFF Technical Notes</a>
  */
 public final class AdobePhotoshopTagConstants {
 
+    /**
+     * JPEGTables.
+     *
+     * <p>JPEGTables provides default JPEG quantization and/or Huffman tables which are used whenever
+     * a segment data stream does not contain its own tables, as specified below.</p>
+     */
     public static final TagInfoUndefineds EXIF_TAG_JPEGTABLES = new TagInfoUndefineds(
             "JPEGTables", 0x015b, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
+    /**
+     * ImageSourceData.
+     *
+     * <p>Image source data bytes.</p>
+     */
     public static final TagInfoUndefineds EXIF_TAG_IMAGE_SOURCE_DATA = new TagInfoUndefineds(
             "ImageSourceData", 0x935c, -1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
+    /**
+     * A list with all the Adobe Photoshop tags.
+     */
     public static final List<TagInfo> ALL_ADOBE_PHOTOSHOP_TAGS =
             Collections.unmodifiableList(Arrays.<TagInfo> asList(
                     EXIF_TAG_JPEGTABLES,

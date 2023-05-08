@@ -244,8 +244,8 @@ public abstract class ImageDataReader {
      *
      * @param bis the stream to read from
      * @param result the samples array to populate, must be the same length as
-     * bitsPerSample.length
-     * @throws IOException
+     * {@code bitsPerSample.length}
+     * @throws IOException if it fails to read bits from the stream
      */
     void getSamplesAsBytes(final BitInputStream bis, final int[] result) throws IOException {
         for (int i = 0; i < bitsPerSample.length; i++) {

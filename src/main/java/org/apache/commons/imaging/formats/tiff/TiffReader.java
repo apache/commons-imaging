@@ -440,7 +440,7 @@ public class TiffReader extends BinaryFileParser {
                 rowsPerStrip = rowsPerStripField.getIntValue();
             } else {
                 final TiffField imageHeight = directory.findField(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH);
-                /**
+                /*
                  * if rows per strip not present then rowsPerStrip is equal to
                  * imageLength or an infinity value;
                  */

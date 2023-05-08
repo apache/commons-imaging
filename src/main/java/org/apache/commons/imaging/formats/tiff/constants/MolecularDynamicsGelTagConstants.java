@@ -29,7 +29,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShorts;
 /**
  * Molecular Dynamics GEL file format
  * <BR>
- * http://www.awaresystems.be/imaging/tiff/tifftags/docs/gel.html
+ * <a href="http://www.awaresystems.be/imaging/tiff/tifftags/docs/gel.html">...</a>
  */
 public final class MolecularDynamicsGelTagConstants {
 

@@ -36,8 +36,8 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUnknowns;
 
 /**
  * Tags from the TIFF6 specification.
- * <BR>
- * http://partners.adobe.com/public/developer/en/tiff/TIFF6.pdf
+ *
+ * @see <a href="https://web.archive.org/web/20090126205823/http://partners.adobe.com/public/developer/en/tiff/TIFF6.pdf">TIFF Revision 6.0</a>
  */
 public final class TiffTagConstants {
 

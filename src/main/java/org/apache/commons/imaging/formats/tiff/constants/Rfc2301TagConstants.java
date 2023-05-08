@@ -33,12 +33,11 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShorts;
 
 /**
  * RFC 2301: File Format for Internet Fax
- * <BR>
- * www.ietf.org/rfc/rfc2301.txt
- * <BR>
- * Also subsumes  "The spirit of TIFF class F"
- * <BR>
- * http://cool.conservation-us.org/bytopic/imaging/std/tiff-f.html
+ *
+ * <p>Also subsumes  "The spirit of TIFF class F"</p>
+ *
+ * @see <a href="www.ietf.org/rfc/rfc2301.txt">RFC-2301 File Format for Internet Fax</a>
+ * @see <a href="https://web.archive.org/web/20191223140908/http://cool.conservation-us.org/bytopic/imaging/std/tiff-f.html">TIFF-F Revised Specification</a>
  */
 public final class Rfc2301TagConstants {
 

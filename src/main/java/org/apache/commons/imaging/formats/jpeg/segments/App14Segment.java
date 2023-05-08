@@ -24,7 +24,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 /**
- * http://www.aiim.org/documents/standards/PDF-Ref/References/Adobe/5116.DCT_Filter.pdf
+ * @see <a href="https://web.archive.org/web/20220122061015/http://www.lprng.com/RESOURCES/ADOBE/5116.DCT_Filter.pdf">Supporting the DCT Filters in PostScript Level 2</a>
  */
 public class App14Segment extends AppnSegment {
     private static final byte[] ADOBE_PREFIX;
