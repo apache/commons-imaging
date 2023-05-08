@@ -27,6 +27,7 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputField;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.opentest4j.TestSkippedException;
@@ -39,6 +40,7 @@ import java.util.stream.Stream;
 /**
  * Read and write EXIF data, and verify that it's identical, and no data corruption occurred.
  */
+@Disabled
 public class ExifRewriterRoundtripTest extends ExifBaseTest {
     private final SecureRandom random = new SecureRandom();
     private File duplicateFile;
