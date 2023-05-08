@@ -175,6 +175,7 @@ public final class MyLzwDecompressor {
                     writeToResult(baos, outString);
                     addStringToTable(outString);
                 }
+                oldCode = code;
             }
             oldCode = code;
 
