@@ -37,7 +37,7 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
      * User provided {@code TiffOutputSet} used to write into
      * the image's metadata including standard directory and EXIF tags.
      */
-    private TiffOutputSet tiffOutputSet = null;
+    private TiffOutputSet tiffOutputSet;
 
     /**
      * X-coordinate of a sub-image.
@@ -67,19 +67,19 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
      * <p>The value supplied with this key should be a valid instance of
      * a class that implements PhotometricInterpreter.</p>
      */
-    private PhotometricInterpreter customPhotometricInterpreter = null;
+    private PhotometricInterpreter customPhotometricInterpreter;
 
     /**
      * TIFF compression algorithm, if any.
      */
-    private Integer compression = null;
+    private Integer compression;
 
     /**
      * Specifies the amount of memory in bytes to be used for a strip
      * or tile size when employing LZW compression.  The default is
      * 8000 (roughly 8K). Minimum value is 8000.
      */
-    private Integer lzwCompressionBlockSize = null;
+    private Integer lzwCompressionBlockSize;
 
     /**
      * Used in write operations to indicate the desired T.4 options to
@@ -89,7 +89,7 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
      * TIFF_FLAG_T4_OPTIONS_2D, TIFF_FLAG_T4_OPTIONS_UNCOMPRESSED_MODE,
      * and TIFF_FLAG_T4_OPTIONS_FILL flags.</p>
      */
-    private Integer t4Options = null;
+    private Integer t4Options;
 
     /**
      * Used in write operations to indicate the desired T.6 options to
@@ -98,7 +98,7 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
      * <p>Valid values: any Integer containing either zero or
      * TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE.</p>
      */
-    private Integer t6Options = null;
+    private Integer t6Options;
 
     /**
      * Clears settings for sub-image. Subsequent read operations will retrieve

@@ -46,14 +46,14 @@ public class PngImagingParameters extends XmpImagingParameters<PngImagingParamet
      *
      * @see org.apache.commons.imaging.formats.png.PhysicalScale
      */
-    private PhysicalScale physicalScale = null;
+    private PhysicalScale physicalScale;
 
     /**
      * <p>Only used when writing Png images.</p>
      *
      * <p>Valid values: a list of WriteTexts.</p>
      */
-    private List<? extends PngText> textChunks = null;
+    private List<? extends PngText> textChunks;
 
     public byte getBitDepth() {
         return bitDepth;

@@ -51,7 +51,7 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 public class TiffImageMetadata extends GenericImageMetadata {
     public static class Directory extends GenericImageMetadata implements
             ImageMetadataItem {
-        // private BufferedImage thumbnail = null;
+        // private BufferedImage thumbnail;
 
         public final int type;
 

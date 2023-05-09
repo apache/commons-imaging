@@ -29,7 +29,7 @@ public class PnmImagingParameters extends ImagingParameters<PnmImagingParameters
     /**
      * Pnm format subtype (e.g. pam, pbm, etc).
      */
-    private ImageFormats subtype = null;
+    private ImageFormats subtype;
 
     public ImageFormats getSubtype() {
         return subtype;
