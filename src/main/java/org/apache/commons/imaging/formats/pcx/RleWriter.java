@@ -22,7 +22,7 @@ import org.apache.commons.imaging.common.BinaryOutputStream;
 class RleWriter {
     private final boolean isCompressed;
     private int previousByte = -1;
-    private int repeatCount = 0;
+    private int repeatCount;
 
     RleWriter(final boolean isCompressed) {
         this.isCompressed = isCompressed;

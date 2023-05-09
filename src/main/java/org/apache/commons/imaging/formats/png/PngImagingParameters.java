@@ -33,11 +33,11 @@ public class PngImagingParameters extends XmpImagingParameters<PngImagingParamet
      */
     private byte bitDepth = DEFAULT_BIT_DEPTH;
 
-    private boolean forceIndexedColor = false;
+    private boolean forceIndexedColor;
 
-    private boolean forceTrueColor = false;
+    private boolean forceTrueColor;
 
-    private boolean predictorEnabled = false;
+    private boolean predictorEnabled;
 
     /**
      * Used in write operations to indicate the Physical Scale - sCAL.
