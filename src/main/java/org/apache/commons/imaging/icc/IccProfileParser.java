@@ -50,21 +50,16 @@ public class IccProfileParser extends BinaryFileParser {
     }
 
     public IccProfileInfo getICCProfileInfo(final ByteSource byteSource) {
-
-        InputStream is = null;
-
+        // TODO Throw instead of logging?
+        final IccProfileInfo result;
+        try (InputStream is = byteSource.getInputStream()) {
+            result = readICCProfileInfo(is);
+        } catch (final Exception e) {
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+            return null;
+        }
+        //
         try {
-
-            is = byteSource.getInputStream();
-            final IccProfileInfo result = readICCProfileInfo(is);
-
-            if (result == null) {
-                return null;
-            }
-
-            is.close();
-            is = null;
-
             for (final IccTag tag : result.getTags()) {
                 final byte[] bytes = byteSource.getBlock(tag.offset, tag.length);
                 // Debug.debug("bytes: " + bytes.length);
@@ -72,22 +67,11 @@ public class IccProfileParser extends BinaryFileParser {
                 // tag.dump("\t" + i + ": ");
             }
             // result.fillInTagData(byteSource);
-
             return result;
         } catch (final Exception e) {
             // Debug.debug("Error: " + file.getAbsolutePath());
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
-        } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (final Exception e) {
-                LOGGER.log(Level.SEVERE, e.getMessage(), e);
-            }
-
         }
-
         return null;
     }
 
