@@ -17,18 +17,18 @@
 
 package org.apache.commons.imaging.common;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.internal.Debug;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import org.junit.jupiter.api.Test;
 
 public class RationalNumberTest extends ImagingTest {
 

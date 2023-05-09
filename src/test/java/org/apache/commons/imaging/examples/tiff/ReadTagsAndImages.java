@@ -22,7 +22,9 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.List;
+
 import javax.imageio.ImageIO;
+
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;

@@ -17,14 +17,10 @@
 
 package org.apache.commons.imaging.formats.png;
 
-import org.apache.commons.imaging.ImageFormats;
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingTest;
-import org.apache.commons.imaging.common.GenericImageMetadata;
-import org.apache.commons.imaging.common.ImageMetadata;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -33,10 +29,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.apache.commons.imaging.ImageFormats;
+import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.common.GenericImageMetadata;
+import org.apache.commons.imaging.common.ImageMetadata;
+import org.junit.jupiter.api.Test;
 
 public class PngWriteReadTest extends ImagingTest {
 

@@ -17,15 +17,15 @@
 
 package org.apache.commons.imaging.formats.jpeg;
 
-import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingTest;
-import org.apache.commons.imaging.common.ImageMetadata;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.common.ImageMetadata;
+import org.junit.jupiter.api.Test;
 
 public class JpegWithJpegThumbnailTest extends ImagingTest {
 

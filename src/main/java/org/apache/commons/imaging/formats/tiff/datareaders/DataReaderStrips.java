@@ -23,9 +23,9 @@ import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
-import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
+import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.TiffRasterDataFloat;
 import org.apache.commons.imaging.formats.tiff.TiffRasterDataInt;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;

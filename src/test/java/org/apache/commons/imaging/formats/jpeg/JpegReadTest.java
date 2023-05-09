@@ -17,6 +17,14 @@
 
 package org.apache.commons.imaging.formats.jpeg;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.stream.Stream;
+
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
@@ -27,14 +35,6 @@ import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.stream.Stream;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class JpegReadTest extends JpegBaseTest {
 

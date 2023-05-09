@@ -17,6 +17,11 @@
 
 package org.apache.commons.imaging.formats.jpeg.exif;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Stream;
+
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
@@ -27,11 +32,6 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.stream.Stream;
 
 public abstract class SpecificExifTagTest extends ExifBaseTest {
 

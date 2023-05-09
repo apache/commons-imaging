@@ -17,18 +17,18 @@
 
 package org.apache.commons.imaging.formats.png;
 
-import org.apache.commons.imaging.ImageFormats;
-import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.internal.Debug;
-import org.apache.commons.io.FilenameUtils;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Files;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.apache.commons.imaging.ImageFormats;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.internal.Debug;
+import org.apache.commons.io.FilenameUtils;
+import org.junit.jupiter.api.Test;
 
 public class PngMultipleRoundtripTest extends PngBaseTest {
 

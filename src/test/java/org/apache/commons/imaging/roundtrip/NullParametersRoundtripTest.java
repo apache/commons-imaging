@@ -17,16 +17,16 @@
 
 package org.apache.commons.imaging.roundtrip;
 
-import org.apache.commons.imaging.Imaging;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.apache.commons.imaging.Imaging;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class NullParametersRoundtripTest extends RoundtripBase {
 

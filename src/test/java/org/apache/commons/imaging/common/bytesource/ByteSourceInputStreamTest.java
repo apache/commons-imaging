@@ -16,11 +16,7 @@
  */
 package org.apache.commons.imaging.common.bytesource;
 
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingTestConstants;
-import org.apache.commons.io.FilenameUtils;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
@@ -28,7 +24,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingTestConstants;
+import org.apache.commons.io.FilenameUtils;
+import org.junit.jupiter.api.Test;
 
 class ByteSourceInputStreamTest {
 

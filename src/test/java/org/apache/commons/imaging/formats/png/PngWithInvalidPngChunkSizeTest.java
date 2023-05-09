@@ -17,13 +17,13 @@
 
 package org.apache.commons.imaging.formats.png;
 
+import java.io.File;
+
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.examples.ImageReadExample.ManagedImageBufferedImageFactory;
 import org.apache.commons.imaging.formats.jpeg.JpegWithInvalidDhtSegmentTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.io.File;
 
 /**
  * Tests for PNG files with invalid chunk sizes.

@@ -16,11 +16,6 @@
  */
 package org.apache.commons.imaging.examples;
 
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.BufferedImageFactory;
-import org.apache.commons.imaging.formats.tiff.TiffImageParser;
-import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
-
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -28,6 +23,11 @@ import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
+import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.common.BufferedImageFactory;
+import org.apache.commons.imaging.formats.tiff.TiffImageParser;
+import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 
 public class ImageReadExample {
     public static BufferedImage imageReadExample(final File file)

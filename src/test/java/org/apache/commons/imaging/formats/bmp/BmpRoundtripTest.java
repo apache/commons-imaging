@@ -17,19 +17,19 @@
 
 package org.apache.commons.imaging.formats.bmp;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Random;
+
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
-
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Random;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class BmpRoundtripTest extends BmpBaseTest {
 

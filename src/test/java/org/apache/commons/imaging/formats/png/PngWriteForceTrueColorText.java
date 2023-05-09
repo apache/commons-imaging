@@ -17,15 +17,15 @@
 
 package org.apache.commons.imaging.formats.png;
 
-import org.apache.commons.imaging.internal.Debug;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.apache.commons.imaging.internal.Debug;
+import org.junit.jupiter.api.Test;
 
 public class PngWriteForceTrueColorText extends PngBaseTest {
 

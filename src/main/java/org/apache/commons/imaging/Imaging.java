@@ -16,16 +16,6 @@
  */
 package org.apache.commons.imaging;
 
-import org.apache.commons.imaging.common.ImageMetadata;
-import org.apache.commons.imaging.common.XmpEmbeddable;
-import org.apache.commons.imaging.common.bytesource.ByteSource;
-import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
-import org.apache.commons.imaging.common.bytesource.ByteSourceInputStream;
-import org.apache.commons.imaging.icc.IccProfileInfo;
-import org.apache.commons.imaging.icc.IccProfileParser;
-import org.apache.commons.imaging.internal.ImageParserFactory;
-
 import java.awt.Dimension;
 import java.awt.color.ICC_Profile;
 import java.awt.image.BufferedImage;
@@ -40,6 +30,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Stream;
+
+import org.apache.commons.imaging.common.ImageMetadata;
+import org.apache.commons.imaging.common.XmpEmbeddable;
+import org.apache.commons.imaging.common.bytesource.ByteSource;
+import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
+import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.common.bytesource.ByteSourceInputStream;
+import org.apache.commons.imaging.icc.IccProfileInfo;
+import org.apache.commons.imaging.icc.IccProfileParser;
+import org.apache.commons.imaging.internal.ImageParserFactory;
 
 /**
  * The primary application programming interface (API) to the Imaging library.

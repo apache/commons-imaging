@@ -17,18 +17,18 @@
 
 package org.apache.commons.imaging.formats.jpeg.iptc;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.io.File;
+import java.util.List;
+import java.util.stream.Stream;
+
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegPhotoshopMetadata;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import java.io.File;
-import java.util.List;
-import java.util.stream.Stream;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class IptcDumpTest extends IptcBaseTest {
 

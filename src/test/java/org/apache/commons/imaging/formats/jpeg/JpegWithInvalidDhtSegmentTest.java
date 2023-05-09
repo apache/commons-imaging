@@ -17,12 +17,12 @@
 
 package org.apache.commons.imaging.formats.jpeg;
 
+import java.io.File;
+
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.io.File;
 
 /**
  * Test that an invalid segment will not cause an ArrayIndexOutOfBoundsException
