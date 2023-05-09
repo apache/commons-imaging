@@ -20,6 +20,7 @@ package org.apache.commons.imaging.formats.png;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -32,6 +33,10 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.GenericImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.formats.tiff.TiffDirectory;
+import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
+import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
+import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -132,5 +137,30 @@ public class PngReadTest extends PngBaseTest {
         GenericImageMetadata.GenericImageMetadataItem item = ((GenericImageMetadata.GenericImageMetadataItem) items.get(0));
         assertEquals("Comment", item.getKeyword());
         assertEquals("\u2192 UTF-8 Test", item.getText());
+    }
+
+    /**
+     * Test reading EXIF from the 'eXIf' chunk in PNG file.
+     *
+     * @throws IOException if it fails to read the test image
+     * @throws ImageReadException if it fails to read the test image
+     */
+    @Test
+    public void testReadExif() throws IOException, ImageReadException {
+        final String input = "/images/png/IMAGING-340/image-with-exif.png";
+        final String file = PngReadTest.class.getResource(input).getFile();
+        final PngImageParser parser = new PngImageParser();
+
+        TiffImageMetadata exifMetadata = parser.getExifMetadata(new ByteSourceFile(new File(file)), null);
+        assertEquals("Glavo",
+                exifMetadata.findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT)
+                        .getFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION));
+
+        PngImageMetadata metadata = (PngImageMetadata) parser.getMetadata(new ByteSourceFile(new File(file)), null);
+        assertTrue(metadata.getTextualInformation().getItems().isEmpty());
+        assertEquals("Glavo",
+                metadata.getExif()
+                        .findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT)
+                        .getFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION));
     }
 }
