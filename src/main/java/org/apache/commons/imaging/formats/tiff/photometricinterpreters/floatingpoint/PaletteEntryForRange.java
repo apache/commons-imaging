@@ -42,39 +42,6 @@ public class PaletteEntryForRange implements PaletteEntry {
     private final float a1;
 
     /**
-     * Constructs a palette entry for the range of values v0 &le; f &lt; v1. The
-     * return color value will be interpolated between the two specified colors.
-     *
-     * @param v0 the lower bounds (inclusive) of the covered range of values
-     * @param v1 the upper bounds (non-inclusive) of the covered range of value
-     * @param color0 the color assigned to value v0
-     * @param color1 the color assigned to value v1
-     */
-    public PaletteEntryForRange(final float v0, final float v1, final Color color0, final Color color1) {
-        this.v0 = v0;
-        this.v1 = v1;
-        final float deltaV = v1 - v0;
-        // check for range volation
-        if (deltaV <= 0 || Float.isNaN(deltaV)) {
-            throw new IllegalArgumentException("Specified values must be v0<v1");
-        }
-        if (color0 == null || color1 == null) {
-            throw new IllegalArgumentException("Null colors not allowed");
-        }
-        final int argb0 = color0.getRGB();
-        a0 = (argb0 >> 24) & 0xff;
-        r0 = (argb0 >> 16) & 0xff;
-        g0 = (argb0 >> 8) & 0xff;
-        b0 = argb0 & 0xff;
-
-        final int argb1 = color1.getRGB();
-        a1 = (argb1 >> 24) & 0xff;
-        r1 = (argb1 >> 16) & 0xff;
-        g1 = (argb1 >> 8) & 0xff;
-        b1 = argb1 & 0xff;
-    }
-
-    /**
      * Constructs a palette entry for the range of values v0 &le; f &lt; v1. A
      * single color will be returned for all values in range
      *
@@ -107,9 +74,42 @@ public class PaletteEntryForRange implements PaletteEntry {
         b1 = argb1 & 0xff;
     }
 
+    /**
+     * Constructs a palette entry for the range of values v0 &le; f &lt; v1. The
+     * return color value will be interpolated between the two specified colors.
+     *
+     * @param v0 the lower bounds (inclusive) of the covered range of values
+     * @param v1 the upper bounds (non-inclusive) of the covered range of value
+     * @param color0 the color assigned to value v0
+     * @param color1 the color assigned to value v1
+     */
+    public PaletteEntryForRange(final float v0, final float v1, final Color color0, final Color color1) {
+        this.v0 = v0;
+        this.v1 = v1;
+        final float deltaV = v1 - v0;
+        // check for range volation
+        if (deltaV <= 0 || Float.isNaN(deltaV)) {
+            throw new IllegalArgumentException("Specified values must be v0<v1");
+        }
+        if (color0 == null || color1 == null) {
+            throw new IllegalArgumentException("Null colors not allowed");
+        }
+        final int argb0 = color0.getRGB();
+        a0 = (argb0 >> 24) & 0xff;
+        r0 = (argb0 >> 16) & 0xff;
+        g0 = (argb0 >> 8) & 0xff;
+        b0 = argb0 & 0xff;
+
+        final int argb1 = color1.getRGB();
+        a1 = (argb1 >> 24) & 0xff;
+        r1 = (argb1 >> 16) & 0xff;
+        g1 = (argb1 >> 8) & 0xff;
+        b1 = argb1 & 0xff;
+    }
+
     @Override
-    public boolean isCovered(final float f) {
-        return v0 <= f && f < v1;
+    public boolean coversSingleEntry() {
+        return false;
     }
 
     @Override
@@ -139,11 +139,6 @@ public class PaletteEntryForRange implements PaletteEntry {
     }
 
     @Override
-    public boolean coversSingleEntry() {
-        return false;
-    }
-
-    @Override
     public float getLowerBound() {
         return v0;
     }
@@ -151,6 +146,11 @@ public class PaletteEntryForRange implements PaletteEntry {
     @Override
     public float getUpperBound() {
         return v1;
+    }
+
+    @Override
+    public boolean isCovered(final float f) {
+        return v0 <= f && f < v1;
     }
 
     @Override

@@ -46,12 +46,6 @@ public class IptcFullDiscardTest {
         return byteArrayOutputStream.toByteArray();
     }
 
-    private byte[] removeMetaData(final byte[] bytes, final boolean removeApp13Segment) throws Exception {
-        final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        new JpegIptcRewriter().removeIPTC(bytes, byteArrayOutputStream, removeApp13Segment);
-        return byteArrayOutputStream.toByteArray();
-    }
-
     @Test
     public void leaveApp13Segment() throws Exception {
         final byte[] originalImage = generateImage();
@@ -66,5 +60,11 @@ public class IptcFullDiscardTest {
         final byte[] taggedImage = addMetaData(originalImage);
         final byte[] untaggedImage = removeMetaData(taggedImage, true);
         Assertions.assertEquals(originalImage.length, untaggedImage.length);
+    }
+
+    private byte[] removeMetaData(final byte[] bytes, final boolean removeApp13Segment) throws Exception {
+        final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        new JpegIptcRewriter().removeIPTC(bytes, byteArrayOutputStream, removeApp13Segment);
+        return byteArrayOutputStream.toByteArray();
     }
 }

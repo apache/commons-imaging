@@ -28,11 +28,11 @@ public class TagInfoSRational extends TagInfo {
         super(name, tag, FieldType.SRATIONAL, 1, directoryType);
     }
 
-    public RationalNumber getValue(final ByteOrder byteOrder, final byte[] bytes) {
-        return ByteConversions.toRational(bytes, byteOrder, false);
-    }
-
     public byte[] encodeValue(final ByteOrder byteOrder, final RationalNumber value) {
         return ByteConversions.toBytes(value, byteOrder);
+    }
+
+    public RationalNumber getValue(final ByteOrder byteOrder, final byte[] bytes) {
+        return ByteConversions.toRational(bytes, byteOrder, false);
     }
 }

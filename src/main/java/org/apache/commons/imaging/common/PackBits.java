@@ -23,6 +23,54 @@ import org.apache.commons.imaging.ImageReadException;
 
 public class PackBits {
 
+    public byte[] compress(final byte[] bytes) throws IOException {
+        // max length 1 extra byte for every 128
+        try (FastByteArrayOutputStream baos = new FastByteArrayOutputStream(bytes.length * 2)) {
+            int ptr = 0;
+            while (ptr < bytes.length) {
+                int dup = findNextDuplicate(bytes, ptr);
+
+                if (dup == ptr) {
+                    // write run length
+                    final int len = findRunLength(bytes, dup);
+                    final int actualLen = Math.min(len, 128);
+                    baos.write(-(actualLen - 1));
+                    baos.write(bytes[ptr]);
+                    ptr += actualLen;
+                } else {
+                    // write literals
+                    int len = dup - ptr;
+
+                    if (dup > 0) {
+                        final int runlen = findRunLength(bytes, dup);
+                        if (runlen < 3) {
+                            // may want to discard next run.
+                            final int nextptr = ptr + len + runlen;
+                            final int nextdup = findNextDuplicate(bytes, nextptr);
+                            if (nextdup != nextptr) {
+                                // discard 2-byte run
+                                dup = nextdup;
+                                len = dup - ptr;
+                            }
+                        }
+                    }
+
+                    if (dup < 0) {
+                        len = bytes.length - ptr;
+                    }
+                    final int actualLen = Math.min(len, 128);
+
+                    baos.write(actualLen - 1);
+                    for (int i = 0; i < actualLen; i++) {
+                        baos.write(bytes[ptr]);
+                        ptr++;
+                    }
+                }
+            }
+            return baos.toByteArray();
+        }
+    }
+
     public byte[] decompress(final byte[] bytes, final int expected)
             throws ImageReadException {
         int total = 0;
@@ -102,53 +150,5 @@ public class PackBits {
         }
 
         return i - start;
-    }
-
-    public byte[] compress(final byte[] bytes) throws IOException {
-        // max length 1 extra byte for every 128
-        try (FastByteArrayOutputStream baos = new FastByteArrayOutputStream(bytes.length * 2)) {
-            int ptr = 0;
-            while (ptr < bytes.length) {
-                int dup = findNextDuplicate(bytes, ptr);
-
-                if (dup == ptr) {
-                    // write run length
-                    final int len = findRunLength(bytes, dup);
-                    final int actualLen = Math.min(len, 128);
-                    baos.write(-(actualLen - 1));
-                    baos.write(bytes[ptr]);
-                    ptr += actualLen;
-                } else {
-                    // write literals
-                    int len = dup - ptr;
-
-                    if (dup > 0) {
-                        final int runlen = findRunLength(bytes, dup);
-                        if (runlen < 3) {
-                            // may want to discard next run.
-                            final int nextptr = ptr + len + runlen;
-                            final int nextdup = findNextDuplicate(bytes, nextptr);
-                            if (nextdup != nextptr) {
-                                // discard 2-byte run
-                                dup = nextdup;
-                                len = dup - ptr;
-                            }
-                        }
-                    }
-
-                    if (dup < 0) {
-                        len = bytes.length - ptr;
-                    }
-                    final int actualLen = Math.min(len, 128);
-
-                    baos.write(actualLen - 1);
-                    for (int i = 0; i < actualLen; i++) {
-                        baos.write(bytes[ptr]);
-                        ptr++;
-                    }
-                }
-            }
-            return baos.toByteArray();
-        }
     }
 }

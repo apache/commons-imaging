@@ -42,13 +42,6 @@ class ScanExpediterInterlaced extends ScanExpediter {
                 fPNGChunkPLTE, gammaCorrection, transparencyFilter);
     }
 
-    private void visit(final int x, final int y, final BufferedImage bi, final BitParser fBitParser,
-            final int pixelIndexInScanline)
-            throws ImageReadException, IOException {
-        final int rgb = getRGB(fBitParser, pixelIndexInScanline);
-        bi.setRGB(x, y, rgb);
-    }
-
     @Override
     public void drive() throws ImageReadException, IOException {
 
@@ -86,5 +79,12 @@ class ScanExpediterInterlaced extends ScanExpediter {
             }
             pass = pass + 1;
         }
+    }
+
+    private void visit(final int x, final int y, final BufferedImage bi, final BitParser fBitParser,
+            final int pixelIndexInScanline)
+            throws ImageReadException, IOException {
+        final int rgb = getRGB(fBitParser, pixelIndexInScanline);
+        bi.setRGB(x, y, rgb);
     }
 }

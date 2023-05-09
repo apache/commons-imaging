@@ -24,6 +24,11 @@ public class SimplePalette implements Palette {
     }
 
     @Override
+    public int getEntry(final int index) {
+        return palette[index];
+    }
+
+    @Override
     public int getPaletteIndex(final int rgb) {
         for (int i = 0; i < palette.length; i++) {
             if (palette[i] == rgb) {
@@ -32,11 +37,6 @@ public class SimplePalette implements Palette {
         }
 
         return -1;
-    }
-
-    @Override
-    public int getEntry(final int index) {
-        return palette[index];
     }
 
     @Override

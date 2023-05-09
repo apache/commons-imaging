@@ -29,6 +29,11 @@ public class TagInfoAscii extends TagInfo {
         super(name, tag, FieldType.ASCII, length, directoryType);
     }
 
+    public byte[] encodeValue(final ByteOrder byteOrder, final String... values)
+            throws ImageWriteException {
+        return FieldType.ASCII.writeData(values, byteOrder);
+    }
+
     public String[] getValue(final ByteOrder byteOrder, final byte[] bytes) {
         int nullCount = 0;
         for (int i = 0; i < bytes.length - 1; i++) {
@@ -58,10 +63,5 @@ public class TagInfoAscii extends TagInfo {
             strings[stringsAdded++] = string;
         }
         return strings;
-    }
-
-    public byte[] encodeValue(final ByteOrder byteOrder, final String... values)
-            throws ImageWriteException {
-        return FieldType.ASCII.writeData(values, byteOrder);
     }
 }

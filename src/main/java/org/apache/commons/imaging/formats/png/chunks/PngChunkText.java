@@ -52,6 +52,11 @@ public class PngChunkText extends PngTextChunk {
         }
     }
 
+    @Override
+    public PngText getContents() {
+        return new PngText.Text(keyword, text);
+    }
+
     /**
      * @return Returns the keyword.
      */
@@ -66,11 +71,6 @@ public class PngChunkText extends PngTextChunk {
     @Override
     public String getText() {
         return text;
-    }
-
-    @Override
-    public PngText getContents() {
-        return new PngText.Text(keyword, text);
     }
 
 }

@@ -31,62 +31,29 @@ import java.text.NumberFormat;
  */
 public class RationalNumber extends Number {
 
+    private static final class Option {
+        public static Option factory(final RationalNumber rationalNumber, final double value) {
+            return new Option(rationalNumber, Math.abs(rationalNumber .doubleValue() - value));
+        }
+        public final RationalNumber rationalNumber;
+
+        public final double error;
+
+        private Option(final RationalNumber rationalNumber, final double error) {
+            this.rationalNumber = rationalNumber;
+            this.error = error;
+        }
+
+        @Override
+        public String toString() {
+            return rationalNumber.toString();
+        }
+    }
+
     private static final long serialVersionUID = -8412262656468158691L;
 
     // int-precision tolerance
     private static final double TOLERANCE = 1E-8;
-
-    // The TIFF and EXIF specifications call for the use
-    // of 32 bit unsigned integers.  Since Java does not have an
-    // unsigned type, this class widens the type to long in order
-    // to avoid unintended negative numbers.
-    public final long numerator;
-    public final long divisor;
-    public final boolean unsignedType;
-
-    /**
-     * Constructs an instance based on signed integers
-     * @param numerator a 32-bit signed integer
-     * @param divisor a non-zero 32-bit signed integer
-     */
-    public RationalNumber(final int numerator, final int divisor) {
-        this.numerator = numerator;
-        this.divisor = divisor;
-        this.unsignedType = false;
-    }
-
-    /**
-     * Constructs an instance supports either signed or unsigned integers.
-     * @param numerator a numerator in the indicated form (signed or unsigned)
-     * @param divisor a non-zero divisor in the indicated form (signed or unsigned)
-     * @param unsignedType indicates whether the input values are to be treated
-     * as unsigned.
-     */
-    public RationalNumber(final int numerator, final int divisor, final boolean unsignedType) {
-        this.unsignedType = unsignedType;
-        if (unsignedType) {
-            this.numerator = numerator & 0xffffffffL;
-            this.divisor = divisor & 0xffffffffL;
-        } else {
-            this.numerator = numerator;
-            this.divisor = divisor;
-        }
-    }
-
-    /**
-     * A private constructor for methods such as negate() that create instances
-     * of this class using the content of the current instance.
-     * @param numerator a valid numerator
-     * @param divisor a valid denominator
-     * @param unsignedType indicates how numerator and divisor values
-     * are to be interpreted.
-     */
-    private RationalNumber(final long numerator, final long divisor, final boolean unsignedType){
-        this.numerator = numerator;
-        this.divisor   = divisor;
-        this.unsignedType = unsignedType;
-    }
-
     static RationalNumber factoryMethod(long n, long d) {
         // safer than constructor - handles values outside min/max range.
         // also does some simple finding of common denominators.
@@ -113,7 +80,6 @@ public class RationalNumber extends Number {
 
         return new RationalNumber((int) n, (int) d);
     }
-
     /**
      * Return the greatest common divisor
      */
@@ -122,113 +88,6 @@ public class RationalNumber extends Number {
             return a;
         }
         return gcd(b, a % b);
-    }
-
-    /**
-     * Negates the value of the RationalNumber. If the numerator of this
-     * instance has its high-order bit set, then its value is too large
-     * to be treated as a Java 32-bit signed integer. In such a case, the
-     * only way that a RationalNumber instance can be negated is to
-     * divide both terms by a common divisor, if a non-zero common divisor exists.
-     * However, if no such divisor exists, there is no numerically correct
-     * way to perform the negation. When a negation cannot be performed correctly,
-     * this method throws an unchecked exception.
-     * @return a valid instance with a negated value.
-     */
-    public RationalNumber negate() {
-        long n = numerator;
-        long d = divisor;
-        if (unsignedType) {
-            // An instance of an unsigned type can be negated if and only if
-            // its high-order bit (the sign bit) is clear. If the bit is set,
-            // the value will be too large to convert to a signed type.
-            // In such a case it is necessary to adjust the numerator and denominator
-            // by their greatest common divisor (gcd), if one exists.
-            // If no non-zero common divisor exists, an exception is thrown.
-            if ((n >> 31) == 1) {
-                // the unsigned value is so large that the high-order bit is set
-                // it cannot be converted to a negative number. Check to see
-                // whether there is an option to reduce its magnitude.
-                final long g = gcd(numerator, divisor);
-                if (g != 0) {
-                    n /= g;
-                    d /= g;
-                }
-                if ((n >> 31) == 1) {
-                    throw new NumberFormatException(
-                            "Unsigned numerator is too large to negate "
-                            + numerator);
-                }
-            }
-        }
-        return new RationalNumber(-n, d, false);
-    }
-
-    @Override
-    public double doubleValue() {
-        return (double) numerator / (double) divisor;
-    }
-
-    @Override
-    public float floatValue() {
-        // The computation uses double value in order to preserve
-        // as much of the precision of the source numerator and denominator
-        // as possible.  Note that the expression
-        //    return (float)numerator/(float) denominator
-        // could lose precision since a Java float only carries 24 bits
-        // of precision while an integer carries 32.
-        return (float) doubleValue();
-    }
-
-    @Override
-    public int intValue() {
-        return (int)(numerator / divisor);
-    }
-
-    @Override
-    public long longValue() {
-        return numerator / divisor;
-    }
-
-    @Override
-    public String toString() {
-        if (divisor == 0) {
-            return "Invalid rational (" + numerator + "/" + divisor + ")";
-        }
-        final NumberFormat nf = NumberFormat.getInstance();
-
-        if ((numerator % divisor) == 0) {
-            return nf.format(numerator / divisor);
-        }
-        return numerator + "/" + divisor + " (" + nf.format((double) numerator / divisor) + ")";
-    }
-
-    public String toDisplayString() {
-        if ((numerator % divisor) == 0) {
-            return Long.toString(numerator / divisor);
-        }
-        final NumberFormat nf = NumberFormat.getInstance();
-        nf.setMaximumFractionDigits(3);
-        return nf.format((double) numerator / (double) divisor);
-    }
-
-    private static final class Option {
-        public final RationalNumber rationalNumber;
-        public final double error;
-
-        private Option(final RationalNumber rationalNumber, final double error) {
-            this.rationalNumber = rationalNumber;
-            this.error = error;
-        }
-
-        public static Option factory(final RationalNumber rationalNumber, final double value) {
-            return new Option(rationalNumber, Math.abs(rationalNumber .doubleValue() - value));
-        }
-
-        @Override
-        public String toString() {
-            return rationalNumber.toString();
-        }
     }
 
     /**
@@ -311,6 +170,147 @@ public class RationalNumber extends Number {
 
         return negative ? bestOption.rationalNumber.negate()
                 : bestOption.rationalNumber;
+    }
+
+    // The TIFF and EXIF specifications call for the use
+    // of 32 bit unsigned integers.  Since Java does not have an
+    // unsigned type, this class widens the type to long in order
+    // to avoid unintended negative numbers.
+    public final long numerator;
+
+    public final long divisor;
+
+    public final boolean unsignedType;
+
+    /**
+     * Constructs an instance based on signed integers
+     * @param numerator a 32-bit signed integer
+     * @param divisor a non-zero 32-bit signed integer
+     */
+    public RationalNumber(final int numerator, final int divisor) {
+        this.numerator = numerator;
+        this.divisor = divisor;
+        this.unsignedType = false;
+    }
+
+    /**
+     * Constructs an instance supports either signed or unsigned integers.
+     * @param numerator a numerator in the indicated form (signed or unsigned)
+     * @param divisor a non-zero divisor in the indicated form (signed or unsigned)
+     * @param unsignedType indicates whether the input values are to be treated
+     * as unsigned.
+     */
+    public RationalNumber(final int numerator, final int divisor, final boolean unsignedType) {
+        this.unsignedType = unsignedType;
+        if (unsignedType) {
+            this.numerator = numerator & 0xffffffffL;
+            this.divisor = divisor & 0xffffffffL;
+        } else {
+            this.numerator = numerator;
+            this.divisor = divisor;
+        }
+    }
+
+    /**
+     * A private constructor for methods such as negate() that create instances
+     * of this class using the content of the current instance.
+     * @param numerator a valid numerator
+     * @param divisor a valid denominator
+     * @param unsignedType indicates how numerator and divisor values
+     * are to be interpreted.
+     */
+    private RationalNumber(final long numerator, final long divisor, final boolean unsignedType){
+        this.numerator = numerator;
+        this.divisor   = divisor;
+        this.unsignedType = unsignedType;
+    }
+
+    @Override
+    public double doubleValue() {
+        return (double) numerator / (double) divisor;
+    }
+
+    @Override
+    public float floatValue() {
+        // The computation uses double value in order to preserve
+        // as much of the precision of the source numerator and denominator
+        // as possible.  Note that the expression
+        //    return (float)numerator/(float) denominator
+        // could lose precision since a Java float only carries 24 bits
+        // of precision while an integer carries 32.
+        return (float) doubleValue();
+    }
+
+    @Override
+    public int intValue() {
+        return (int)(numerator / divisor);
+    }
+
+    @Override
+    public long longValue() {
+        return numerator / divisor;
+    }
+
+    /**
+     * Negates the value of the RationalNumber. If the numerator of this
+     * instance has its high-order bit set, then its value is too large
+     * to be treated as a Java 32-bit signed integer. In such a case, the
+     * only way that a RationalNumber instance can be negated is to
+     * divide both terms by a common divisor, if a non-zero common divisor exists.
+     * However, if no such divisor exists, there is no numerically correct
+     * way to perform the negation. When a negation cannot be performed correctly,
+     * this method throws an unchecked exception.
+     * @return a valid instance with a negated value.
+     */
+    public RationalNumber negate() {
+        long n = numerator;
+        long d = divisor;
+        if (unsignedType) {
+            // An instance of an unsigned type can be negated if and only if
+            // its high-order bit (the sign bit) is clear. If the bit is set,
+            // the value will be too large to convert to a signed type.
+            // In such a case it is necessary to adjust the numerator and denominator
+            // by their greatest common divisor (gcd), if one exists.
+            // If no non-zero common divisor exists, an exception is thrown.
+            if ((n >> 31) == 1) {
+                // the unsigned value is so large that the high-order bit is set
+                // it cannot be converted to a negative number. Check to see
+                // whether there is an option to reduce its magnitude.
+                final long g = gcd(numerator, divisor);
+                if (g != 0) {
+                    n /= g;
+                    d /= g;
+                }
+                if ((n >> 31) == 1) {
+                    throw new NumberFormatException(
+                            "Unsigned numerator is too large to negate "
+                            + numerator);
+                }
+            }
+        }
+        return new RationalNumber(-n, d, false);
+    }
+
+    public String toDisplayString() {
+        if ((numerator % divisor) == 0) {
+            return Long.toString(numerator / divisor);
+        }
+        final NumberFormat nf = NumberFormat.getInstance();
+        nf.setMaximumFractionDigits(3);
+        return nf.format((double) numerator / (double) divisor);
+    }
+
+    @Override
+    public String toString() {
+        if (divisor == 0) {
+            return "Invalid rational (" + numerator + "/" + divisor + ")";
+        }
+        final NumberFormat nf = NumberFormat.getInstance();
+
+        if ((numerator % divisor) == 0) {
+            return nf.format(numerator / divisor);
+        }
+        return numerator + "/" + divisor + " (" + nf.format((double) numerator / divisor) + ")";
     }
 
 }

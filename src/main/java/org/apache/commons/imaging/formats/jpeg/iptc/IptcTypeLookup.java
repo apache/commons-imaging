@@ -28,11 +28,11 @@ public final class IptcTypeLookup {
         }
     }
 
-    private IptcTypeLookup() {
-    }
-
     public static IptcType getIptcType(final int type) {
         final IptcType iptcType = IPTC_TYPE_MAP.get(type);
         return iptcType != null ? iptcType : IptcTypes.getUnknown(type);
+    }
+
+    private IptcTypeLookup() {
     }
 }

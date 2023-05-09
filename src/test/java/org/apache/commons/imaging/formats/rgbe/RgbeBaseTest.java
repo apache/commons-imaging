@@ -28,12 +28,12 @@ import org.apache.commons.imaging.ImagingTest;
 
 public abstract class RgbeBaseTest extends ImagingTest {
 
+    private static final ImageFilter IMAGE_FILTER = RgbeBaseTest::isRgbe;
+
     private static boolean isRgbe(final File file) throws IOException {
         final ImageFormat format = Imaging.guessFormat(file);
         return format == ImageFormats.RGBE;
     }
-
-    private static final ImageFilter IMAGE_FILTER = RgbeBaseTest::isRgbe;
 
     protected List<File> getRgbeImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);

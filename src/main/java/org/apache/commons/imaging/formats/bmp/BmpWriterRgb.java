@@ -31,19 +31,9 @@ class BmpWriterRgb implements BmpWriter {
     // }
 
     @Override
-    public int getPaletteSize() {
-        return 0;
-    }
-
-    @Override
     public int getBitsPerPixel() {
         // return alpha ? 32 : 24;
         return 24;
-    }
-
-    @Override
-    public void writePalette(final BinaryOutputStream bos) throws IOException {
-        // no palette
     }
 
     @Override
@@ -78,5 +68,15 @@ class BmpWriterRgb implements BmpWriter {
         }
 
         return baos.toByteArray();
+    }
+
+    @Override
+    public int getPaletteSize() {
+        return 0;
+    }
+
+    @Override
+    public void writePalette(final BinaryOutputStream bos) throws IOException {
+        // no palette
     }
 }

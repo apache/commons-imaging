@@ -44,11 +44,11 @@ public class App14Segment extends AppnSegment {
         super(marker, markerLength, is);
     }
 
-    public boolean isAdobeJpegSegment() {
-        return startsWith(getSegmentData(), ADOBE_PREFIX);
-    }
-
     public int getAdobeColorTransform() {
         return 0xff & getSegmentData(11);
+    }
+
+    public boolean isAdobeJpegSegment() {
+        return startsWith(getSegmentData(), ADOBE_PREFIX);
     }
 }

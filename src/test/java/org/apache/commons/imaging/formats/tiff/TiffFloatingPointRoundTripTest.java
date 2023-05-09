@@ -96,6 +96,122 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
     }
 
     /**
+     * Gets the bytes for output for a 32 bit floating point format. Note that
+     * this method operates over "blocks" of data which may represent either
+     * TIFF Strips or Tiles. When processing strips, there is always one column
+     * of blocks and each strip is exactly the full width of the image. When
+     * processing tiles, there may be one or more columns of blocks and the
+     * block coverage may extend beyond both the last row and last column.
+     *
+     * @param f an array of the grid of output values in row major order
+     * @param width the width of the overall image
+     * @param height the height of the overall image
+     * @param nRowsInBlock the number of rows in the Strip or Tile
+     * @param nColsInBlock the number of columns in the Strip or Tile
+     * @param byteOrder little endian or big endian
+     * @return a valid array of equally sized array.
+     */
+    private byte[][] getBytesForOutput32(
+        final float[] f, final int width, final int height,
+        final int nRowsInBlock, final int nColsInBlock,
+        final ByteOrder byteOrder) {
+        final int nColsOfBlocks = (width + nColsInBlock - 1) / nColsInBlock;
+        final int nRowsOfBlocks = (height + nRowsInBlock + 1) / nRowsInBlock;
+        final int bytesPerPixel = 4;
+        final int nBlocks = nRowsOfBlocks * nColsOfBlocks;
+        final int nBytesInBlock = bytesPerPixel * nRowsInBlock * nColsInBlock;
+        final byte[][] blocks = new byte[nBlocks][nBytesInBlock];
+        for (int i = 0; i < height; i++) {
+            final int blockRow = i / nRowsInBlock;
+            final int rowInBlock = i - blockRow * nRowsInBlock;
+            final int blockOffset = rowInBlock * nColsInBlock;
+            for (int j = 0; j < width; j++) {
+                final int sample = Float.floatToRawIntBits(f[i * width + j]);
+                final int blockCol = j / nColsInBlock;
+                final int colInBlock = j - blockCol * nColsInBlock;
+                final int index = blockOffset + colInBlock;
+                final int offset = index * bytesPerPixel;
+                final byte[] b = blocks[blockRow * nColsOfBlocks + blockCol];
+                if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
+                    b[offset] = (byte) (sample & 0xff);
+                    b[offset + 1] = (byte) ((sample >> 8) & 0xff);
+                    b[offset + 2] = (byte) ((sample >> 16) & 0xff);
+                    b[offset + 3] = (byte) ((sample >> 24) & 0xff);
+                } else {
+                    b[offset] = (byte) ((sample >> 24) & 0xff);
+                    b[offset + 1] = (byte) ((sample >> 16) & 0xff);
+                    b[offset + 2] = (byte) ((sample >> 8) & 0xff);
+                    b[offset + 3] = (byte) (sample & 0xff);
+                }
+            }
+        }
+
+        return blocks;
+    }
+
+    /**
+     * Gets the bytes for output for a 64 bit floating point format. Note that
+     * this method operates over "blocks" of data which may represent either
+     * TIFF Strips or Tiles. When processing strips, there is always one column
+     * of blocks and each strip is exactly the full width of the image. When
+     * processing tiles, there may be one or more columns of blocks and the
+     * block coverage may extend beyond both the last row and last column.
+     *
+     * @param f an array of the grid of output values in row major order
+     * @param width the width of the overall image
+     * @param height the height of the overall image
+     * @param nRowsInBlock the number of rows in the Strip or Tile
+     * @param nColsInBlock the number of columns in the Strip or Tile
+     * @param byteOrder little endian or big endian
+     * @return a valid array of equally sized array.
+     */
+    private byte[][] getBytesForOutput64(
+        final float[] f, final int width, final int height,
+        final int nRowsInBlock, final int nColsInBlock,
+        final ByteOrder byteOrder) {
+        final int nColsOfBlocks = (width + nColsInBlock - 1) / nColsInBlock;
+        final int nRowsOfBlocks = (height + nRowsInBlock + 1) / nRowsInBlock;
+        final int bytesPerPixel = 8;
+        final int nBlocks = nRowsOfBlocks * nColsOfBlocks;
+        final int nBytesInBlock = bytesPerPixel * nRowsInBlock * nColsInBlock;
+        final byte[][] blocks = new byte[nBlocks][nBytesInBlock];
+        for (int i = 0; i < height; i++) {
+            final int blockRow = i / nRowsInBlock;
+            final int rowInBlock = i - blockRow * nRowsInBlock;
+            final int blockOffset = rowInBlock * nColsInBlock;
+            for (int j = 0; j < width; j++) {
+                final long sample = Double.doubleToRawLongBits(f[i * width + j]);
+                final int blockCol = j / nColsInBlock;
+                final int colInBlock = j - blockCol * nColsInBlock;
+                final int index = blockOffset + colInBlock;
+                final int offset = index * bytesPerPixel;
+                final byte[] b = blocks[blockRow * nColsOfBlocks + blockCol];
+                if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
+                    b[offset] = (byte) (sample & 0xff);
+                    b[offset + 1] = (byte) ((sample >> 8) & 0xff);
+                    b[offset + 2] = (byte) ((sample >> 16) & 0xff);
+                    b[offset + 3] = (byte) ((sample >> 24) & 0xff);
+                    b[offset + 4] = (byte) ((sample >> 32) & 0xff);
+                    b[offset + 5] = (byte) ((sample >> 40) & 0xff);
+                    b[offset + 6] = (byte) ((sample >> 48) & 0xff);
+                    b[offset + 7] = (byte) ((sample >> 56) & 0xff);
+                } else {
+                    b[offset] = (byte) ((sample >> 56) & 0xff);
+                    b[offset + 1] = (byte) ((sample >> 48) & 0xff);
+                    b[offset + 2] = (byte) ((sample >> 40) & 0xff);
+                    b[offset + 3] = (byte) ((sample >> 32) & 0xff);
+                    b[offset + 4] = (byte) ((sample >> 24) & 0xff);
+                    b[offset + 5] = (byte) ((sample >> 16) & 0xff);
+                    b[offset + 6] = (byte) ((sample >> 8) & 0xff);
+                    b[offset + 7] = (byte) (sample & 0xff);
+                }
+            }
+        }
+
+        return blocks;
+    }
+
+    /**
      * Construct a photometric interpreter. This initialization is performed in
      * a dedicated method to ensure consistency throughout different phases of
      * the test.
@@ -240,121 +356,5 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
             bos.flush();
         }
         return outputFile;
-    }
-
-    /**
-     * Gets the bytes for output for a 32 bit floating point format. Note that
-     * this method operates over "blocks" of data which may represent either
-     * TIFF Strips or Tiles. When processing strips, there is always one column
-     * of blocks and each strip is exactly the full width of the image. When
-     * processing tiles, there may be one or more columns of blocks and the
-     * block coverage may extend beyond both the last row and last column.
-     *
-     * @param f an array of the grid of output values in row major order
-     * @param width the width of the overall image
-     * @param height the height of the overall image
-     * @param nRowsInBlock the number of rows in the Strip or Tile
-     * @param nColsInBlock the number of columns in the Strip or Tile
-     * @param byteOrder little endian or big endian
-     * @return a valid array of equally sized array.
-     */
-    private byte[][] getBytesForOutput32(
-        final float[] f, final int width, final int height,
-        final int nRowsInBlock, final int nColsInBlock,
-        final ByteOrder byteOrder) {
-        final int nColsOfBlocks = (width + nColsInBlock - 1) / nColsInBlock;
-        final int nRowsOfBlocks = (height + nRowsInBlock + 1) / nRowsInBlock;
-        final int bytesPerPixel = 4;
-        final int nBlocks = nRowsOfBlocks * nColsOfBlocks;
-        final int nBytesInBlock = bytesPerPixel * nRowsInBlock * nColsInBlock;
-        final byte[][] blocks = new byte[nBlocks][nBytesInBlock];
-        for (int i = 0; i < height; i++) {
-            final int blockRow = i / nRowsInBlock;
-            final int rowInBlock = i - blockRow * nRowsInBlock;
-            final int blockOffset = rowInBlock * nColsInBlock;
-            for (int j = 0; j < width; j++) {
-                final int sample = Float.floatToRawIntBits(f[i * width + j]);
-                final int blockCol = j / nColsInBlock;
-                final int colInBlock = j - blockCol * nColsInBlock;
-                final int index = blockOffset + colInBlock;
-                final int offset = index * bytesPerPixel;
-                final byte[] b = blocks[blockRow * nColsOfBlocks + blockCol];
-                if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
-                    b[offset] = (byte) (sample & 0xff);
-                    b[offset + 1] = (byte) ((sample >> 8) & 0xff);
-                    b[offset + 2] = (byte) ((sample >> 16) & 0xff);
-                    b[offset + 3] = (byte) ((sample >> 24) & 0xff);
-                } else {
-                    b[offset] = (byte) ((sample >> 24) & 0xff);
-                    b[offset + 1] = (byte) ((sample >> 16) & 0xff);
-                    b[offset + 2] = (byte) ((sample >> 8) & 0xff);
-                    b[offset + 3] = (byte) (sample & 0xff);
-                }
-            }
-        }
-
-        return blocks;
-    }
-
-    /**
-     * Gets the bytes for output for a 64 bit floating point format. Note that
-     * this method operates over "blocks" of data which may represent either
-     * TIFF Strips or Tiles. When processing strips, there is always one column
-     * of blocks and each strip is exactly the full width of the image. When
-     * processing tiles, there may be one or more columns of blocks and the
-     * block coverage may extend beyond both the last row and last column.
-     *
-     * @param f an array of the grid of output values in row major order
-     * @param width the width of the overall image
-     * @param height the height of the overall image
-     * @param nRowsInBlock the number of rows in the Strip or Tile
-     * @param nColsInBlock the number of columns in the Strip or Tile
-     * @param byteOrder little endian or big endian
-     * @return a valid array of equally sized array.
-     */
-    private byte[][] getBytesForOutput64(
-        final float[] f, final int width, final int height,
-        final int nRowsInBlock, final int nColsInBlock,
-        final ByteOrder byteOrder) {
-        final int nColsOfBlocks = (width + nColsInBlock - 1) / nColsInBlock;
-        final int nRowsOfBlocks = (height + nRowsInBlock + 1) / nRowsInBlock;
-        final int bytesPerPixel = 8;
-        final int nBlocks = nRowsOfBlocks * nColsOfBlocks;
-        final int nBytesInBlock = bytesPerPixel * nRowsInBlock * nColsInBlock;
-        final byte[][] blocks = new byte[nBlocks][nBytesInBlock];
-        for (int i = 0; i < height; i++) {
-            final int blockRow = i / nRowsInBlock;
-            final int rowInBlock = i - blockRow * nRowsInBlock;
-            final int blockOffset = rowInBlock * nColsInBlock;
-            for (int j = 0; j < width; j++) {
-                final long sample = Double.doubleToRawLongBits(f[i * width + j]);
-                final int blockCol = j / nColsInBlock;
-                final int colInBlock = j - blockCol * nColsInBlock;
-                final int index = blockOffset + colInBlock;
-                final int offset = index * bytesPerPixel;
-                final byte[] b = blocks[blockRow * nColsOfBlocks + blockCol];
-                if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
-                    b[offset] = (byte) (sample & 0xff);
-                    b[offset + 1] = (byte) ((sample >> 8) & 0xff);
-                    b[offset + 2] = (byte) ((sample >> 16) & 0xff);
-                    b[offset + 3] = (byte) ((sample >> 24) & 0xff);
-                    b[offset + 4] = (byte) ((sample >> 32) & 0xff);
-                    b[offset + 5] = (byte) ((sample >> 40) & 0xff);
-                    b[offset + 6] = (byte) ((sample >> 48) & 0xff);
-                    b[offset + 7] = (byte) ((sample >> 56) & 0xff);
-                } else {
-                    b[offset] = (byte) ((sample >> 56) & 0xff);
-                    b[offset + 1] = (byte) ((sample >> 48) & 0xff);
-                    b[offset + 2] = (byte) ((sample >> 40) & 0xff);
-                    b[offset + 3] = (byte) ((sample >> 32) & 0xff);
-                    b[offset + 4] = (byte) ((sample >> 24) & 0xff);
-                    b[offset + 5] = (byte) ((sample >> 16) & 0xff);
-                    b[offset + 6] = (byte) ((sample >> 8) & 0xff);
-                    b[offset + 7] = (byte) (sample & 0xff);
-                }
-            }
-        }
-
-        return blocks;
     }
 }

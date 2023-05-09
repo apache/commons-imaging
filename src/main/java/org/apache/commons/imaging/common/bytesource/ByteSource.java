@@ -28,6 +28,22 @@ public abstract class ByteSource {
         this.fileName = fileName;
     }
 
+    public abstract byte[] getAll() throws IOException;
+
+    public byte[] getBlock(final int start, final int length) throws IOException {
+        return getBlock(0xFFFFffffL & start, length);
+    }
+
+    public abstract byte[] getBlock(long start, int length) throws IOException;
+
+    public abstract String getDescription();
+
+    public final String getFileName() {
+        return fileName;
+    }
+
+    public abstract InputStream getInputStream() throws IOException;
+
     public final InputStream getInputStream(final long start) throws IOException {
         InputStream is = null;
         boolean succeeded = false;
@@ -43,16 +59,6 @@ public abstract class ByteSource {
         return is;
     }
 
-    public abstract InputStream getInputStream() throws IOException;
-
-    public byte[] getBlock(final int start, final int length) throws IOException {
-        return getBlock(0xFFFFffffL & start, length);
-    }
-
-    public abstract byte[] getBlock(long start, int length) throws IOException;
-
-    public abstract byte[] getAll() throws IOException;
-
     /**
      * This operation can be VERY expensive; for inputstream byte sources, the
      * entire stream must be drained to determine its length.
@@ -61,11 +67,5 @@ public abstract class ByteSource {
      * @throws IOException if it fails to read the byte source data
      */
     public abstract long getLength() throws IOException;
-
-    public abstract String getDescription();
-
-    public final String getFileName() {
-        return fileName;
-    }
 
 }

@@ -49,18 +49,13 @@ class PgmFileInfo extends FileInfo {
     }
 
     @Override
-    public boolean hasAlpha() {
-        return false;
-    }
-
-    @Override
-    public int getNumComponents() {
-        return 1;
-    }
-
-    @Override
     public int getBitDepth() {
         return max;
+    }
+
+    @Override
+    public ImageInfo.ColorType getColorType() {
+        return ImageInfo.ColorType.GRAYSCALE;
     }
 
     @Override
@@ -79,8 +74,8 @@ class PgmFileInfo extends FileInfo {
     }
 
     @Override
-    public ImageInfo.ColorType getColorType() {
-        return ImageInfo.ColorType.GRAYSCALE;
+    public int getNumComponents() {
+        return 1;
     }
 
     @Override
@@ -109,6 +104,11 @@ class PgmFileInfo extends FileInfo {
              | ((0xff & sample) << 16)
              | ((0xff & sample) << 8)
              | ((0xff & sample) << 0);
+    }
+
+    @Override
+    public boolean hasAlpha() {
+        return false;
     }
 
 }

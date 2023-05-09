@@ -59,20 +59,6 @@ public class IcnsReadTest extends IcnsBaseTest {
                 .stream();
     }
 
-    @Disabled(value = "RoundtripTest has to be fixed befor implementation can throw UnsupportedOperationException")
-    @ParameterizedTest
-    @MethodSource("data")
-    public void testImageMetadata(final File imageFile) {
-        Assertions.assertThrows(UnsupportedOperationException.class, () -> Imaging.getMetadata(imageFile));
-    }
-
-    @ParameterizedTest
-    @MethodSource("data")
-    public void testImageInfo(final File imageFile) throws Exception {
-        final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
-        assertNotNull(imageInfo);
-    }
-
     @ParameterizedTest
     @MethodSource("data")
     public void testBufferedImage(final File imageFile) throws Exception {
@@ -93,5 +79,19 @@ public class IcnsReadTest extends IcnsBaseTest {
         final File testFile = new File(IcnsReadTest.class.getResource(file).getFile());
         final List<BufferedImage> images = new IcnsImageParser().getAllBufferedImages(testFile);
         assertEquals(numberOfImages, images.size());
+    }
+
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testImageInfo(final File imageFile) throws Exception {
+        final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
+        assertNotNull(imageInfo);
+    }
+
+    @Disabled(value = "RoundtripTest has to be fixed befor implementation can throw UnsupportedOperationException")
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testImageMetadata(final File imageFile) {
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> Imaging.getMetadata(imageFile));
     }
 }

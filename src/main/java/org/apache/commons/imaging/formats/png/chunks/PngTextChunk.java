@@ -24,10 +24,10 @@ public abstract class PngTextChunk extends PngChunk {
         super(length, chunkType, crc, bytes);
     }
 
+    public abstract PngText getContents();
+
     public abstract String getKeyword();
 
     public abstract String getText();
-
-    public abstract PngText getContents();
 
 }

@@ -26,6 +26,11 @@ import java.util.Arrays;
 import org.apache.commons.imaging.ImageReadException;
 
 public final class MyLzwDecompressor {
+    public interface Listener {
+        void code(int code);
+
+        void init(int clearCode, int eoiCode);
+    }
     private static final int MAX_TABLE_SIZE = 1 << 12;
     private final byte[][] table;
     private int codeSize;
@@ -36,13 +41,8 @@ public final class MyLzwDecompressor {
     private final int clearCode;
     private final int eoiCode;
     private int written;
+
     private boolean tiffLZWMode;
-
-    public interface Listener {
-        void code(int code);
-
-        void init(int clearCode, int eoiCode);
-    }
 
     public MyLzwDecompressor(final int initialCodeSize, final ByteOrder byteOrder) throws ImageReadException {
         this(initialCodeSize, byteOrder, null);
@@ -66,51 +66,6 @@ public final class MyLzwDecompressor {
         initializeTable();
     }
 
-    private void initializeTable() throws ImageReadException {
-        codeSize = initialCodeSize;
-
-        final int initialEntriesCount = 1 << codeSize + 2;
-
-        if (initialEntriesCount > table.length) {
-            throw new ImageReadException(String.format("Invalid Lzw table length [%d]; entries count is [%d]", table.length, initialEntriesCount));
-        }
-
-        for (int i = 0; i < initialEntriesCount; i++) {
-            table[i] = new byte[] { (byte) i, };
-        }
-    }
-
-    private void clearTable() {
-        codes = (1 << initialCodeSize) + 2;
-        codeSize = initialCodeSize;
-        incrementCodeSize();
-    }
-
-    private int getNextCode(final MyBitInputStream is) throws IOException {
-        final int code = is.readBits(codeSize);
-
-        if (null != listener) {
-            listener.code(code);
-        }
-        return code;
-    }
-
-    private byte[] stringFromCode(final int code) throws IOException {
-        if ((code >= codes) || (code < 0)) {
-            throw new IOException("Bad Code: " + code + " codes: " + codes
-                    + " code_size: " + codeSize + ", table: " + table.length);
-        }
-        return table[code];
-    }
-
-    private boolean isInTable(final int code) {
-        return code < codes;
-    }
-
-    private byte firstChar(final byte[] bytes) {
-        return bytes[0];
-    }
-
     private void addStringToTable(final byte[] bytes) {
         if (codes < (1 << codeSize)) {
             table[codes] = bytes;
@@ -128,14 +83,21 @@ public final class MyLzwDecompressor {
         return result;
     }
 
-    private void writeToResult(final OutputStream os, final byte[] bytes)
-            throws IOException {
-        os.write(bytes);
-        written += bytes.length;
+    private void checkCodeSize() {
+        int limit = (1 << codeSize);
+        if (tiffLZWMode) {
+            limit--;
+        }
+
+        if (codes == limit) {
+            incrementCodeSize();
+        }
     }
 
-    public void setTiffLZWMode() {
-        tiffLZWMode = true;
+    private void clearTable() {
+        codes = (1 << initialCodeSize) + 2;
+        codeSize = initialCodeSize;
+        incrementCodeSize();
     }
 
     public byte[] decompress(final InputStream is, final int expectedLength) throws IOException {
@@ -186,20 +148,58 @@ public final class MyLzwDecompressor {
         return baos.toByteArray();
     }
 
-    private void checkCodeSize() {
-        int limit = (1 << codeSize);
-        if (tiffLZWMode) {
-            limit--;
-        }
+    private byte firstChar(final byte[] bytes) {
+        return bytes[0];
+    }
 
-        if (codes == limit) {
-            incrementCodeSize();
+    private int getNextCode(final MyBitInputStream is) throws IOException {
+        final int code = is.readBits(codeSize);
+
+        if (null != listener) {
+            listener.code(code);
         }
+        return code;
     }
 
     private void incrementCodeSize() {
         if (codeSize != 12) {
             codeSize++;
         }
+    }
+
+    private void initializeTable() throws ImageReadException {
+        codeSize = initialCodeSize;
+
+        final int initialEntriesCount = 1 << codeSize + 2;
+
+        if (initialEntriesCount > table.length) {
+            throw new ImageReadException(String.format("Invalid Lzw table length [%d]; entries count is [%d]", table.length, initialEntriesCount));
+        }
+
+        for (int i = 0; i < initialEntriesCount; i++) {
+            table[i] = new byte[] { (byte) i, };
+        }
+    }
+
+    private boolean isInTable(final int code) {
+        return code < codes;
+    }
+
+    public void setTiffLZWMode() {
+        tiffLZWMode = true;
+    }
+
+    private byte[] stringFromCode(final int code) throws IOException {
+        if ((code >= codes) || (code < 0)) {
+            throw new IOException("Bad Code: " + code + " codes: " + codes
+                    + " code_size: " + codeSize + ", table: " + table.length);
+        }
+        return table[code];
+    }
+
+    private void writeToResult(final OutputStream os, final byte[] bytes)
+            throws IOException {
+        os.write(bytes);
+        written += bytes.length;
     }
 }

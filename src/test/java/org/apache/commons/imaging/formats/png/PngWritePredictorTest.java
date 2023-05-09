@@ -39,15 +39,11 @@ import org.junit.jupiter.api.Test;
  */
 public class PngWritePredictorTest {
 
-  public PngWritePredictorTest() {
-  }
-
   @BeforeAll
   public static void setUpClass() {
   }
 
-  @BeforeEach
-  public void setUp() {
+  public PngWritePredictorTest() {
   }
 
   /**
@@ -76,6 +72,10 @@ public class PngWritePredictorTest {
       }
     }
     return argb;
+  }
+
+  @BeforeEach
+  public void setUp() {
   }
 
   @Test

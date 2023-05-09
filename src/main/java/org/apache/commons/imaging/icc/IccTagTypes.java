@@ -330,12 +330,12 @@ public enum IccTagTypes implements IccTagType {
     }
 
     @Override
-    public String getTypeDescription() {
-        return typeDescription;
+    public int getSignature() {
+        return signature;
     }
 
     @Override
-    public int getSignature() {
-        return signature;
+    public String getTypeDescription() {
+        return typeDescription;
     }
 }

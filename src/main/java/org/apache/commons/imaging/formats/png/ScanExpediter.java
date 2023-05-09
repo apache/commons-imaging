@@ -62,8 +62,25 @@ abstract class ScanExpediter {
         this.transparencyFilter = transparencyFilter;
     }
 
+    public abstract void drive() throws ImageReadException, IOException;
+
     final int getBitsToBytesRoundingUp(final int bits) {
         return (bits + 7) / 8;
+    }
+
+    byte[] getNextScanline(final InputStream is, final int length, final byte[] prev,
+            final int bytesPerPixel) throws ImageReadException, IOException {
+        final int filterType = is.read();
+        if (filterType < 0) {
+            throw new ImageReadException("PNG: missing filter type");
+        }
+        if (filterType >= FilterType.values().length) {
+            throw new ImageReadException("PNG: unknown filterType: " + filterType);
+        }
+
+        final byte[] scanline = readBytes("scanline", is, length, "PNG: missing image data");
+
+        return unfilterScanline(FilterType.values()[filterType], scanline, prev, bytesPerPixel);
     }
 
     final int getPixelARGB(final int alpha, final int red, final int green, final int blue) {
@@ -76,8 +93,6 @@ abstract class ScanExpediter {
     final int getPixelRGB(final int red, final int green, final int blue) {
         return getPixelARGB(0xff, red, green, blue);
     }
-
-    public abstract void drive() throws ImageReadException, IOException;
 
     int getRGB(final BitParser bitParser, final int pixelIndexInScanline)
             throws ImageReadException, IOException {
@@ -196,21 +211,6 @@ abstract class ScanExpediter {
         final byte[] dst = new byte[src.length];
         filter.unfilter(src, dst, prev);
         return dst;
-    }
-
-    byte[] getNextScanline(final InputStream is, final int length, final byte[] prev,
-            final int bytesPerPixel) throws ImageReadException, IOException {
-        final int filterType = is.read();
-        if (filterType < 0) {
-            throw new ImageReadException("PNG: missing filter type");
-        }
-        if (filterType >= FilterType.values().length) {
-            throw new ImageReadException("PNG: unknown filterType: " + filterType);
-        }
-
-        final byte[] scanline = readBytes("scanline", is, length, "PNG: missing image data");
-
-        return unfilterScanline(FilterType.values()[filterType], scanline, prev, bytesPerPixel);
     }
 
 }

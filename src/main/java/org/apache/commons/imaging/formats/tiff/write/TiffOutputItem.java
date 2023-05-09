@@ -22,25 +22,6 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 
 abstract class TiffOutputItem {
-    public static final long UNDEFINED_VALUE = -1;
-
-    private long offset = UNDEFINED_VALUE;
-
-    protected long getOffset() {
-        return offset;
-    }
-
-    protected void setOffset(final long offset) {
-        this.offset = offset;
-    }
-
-    public abstract int getItemLength();
-
-    public abstract String getItemDescription();
-
-    public abstract void writeItem(BinaryOutputStream bos) throws IOException,
-            ImageWriteException;
-
     public static class Value extends TiffOutputItem {
         private final byte[] bytes;
         private final String name;
@@ -51,13 +32,13 @@ abstract class TiffOutputItem {
         }
 
         @Override
-        public int getItemLength() {
-            return bytes.length;
+        public String getItemDescription() {
+            return name;
         }
 
         @Override
-        public String getItemDescription() {
-            return name;
+        public int getItemLength() {
+            return bytes.length;
         }
 
         public void updateValue(final byte[] bytes) throws ImageWriteException {
@@ -74,4 +55,23 @@ abstract class TiffOutputItem {
             bos.write(bytes);
         }
     }
+
+    public static final long UNDEFINED_VALUE = -1;
+
+    private long offset = UNDEFINED_VALUE;
+
+    public abstract String getItemDescription();
+
+    public abstract int getItemLength();
+
+    protected long getOffset() {
+        return offset;
+    }
+
+    protected void setOffset(final long offset) {
+        this.offset = offset;
+    }
+
+    public abstract void writeItem(BinaryOutputStream bos) throws IOException,
+            ImageWriteException;
 }

@@ -37,18 +37,6 @@ class BitArrayOutputStream extends OutputStream {
         buffer = new byte[size];
     }
 
-    public int size() {
-        return bytesWritten;
-    }
-
-    public byte[] toByteArray() {
-        flush();
-        if (bytesWritten == buffer.length) {
-            return buffer;
-        }
-        return Arrays.copyOf(buffer, bytesWritten);
-    }
-
     @Override
     public void close() {
         flush();
@@ -61,6 +49,26 @@ class BitArrayOutputStream extends OutputStream {
             cache = 0;
             cacheMask = 0x80;
         }
+    }
+
+    public int getBitsAvailableInCurrentByte() {
+        int count = 0;
+        for (int mask = cacheMask; mask != 0; mask >>>= 1) {
+            ++count;
+        }
+        return count;
+    }
+
+    public int size() {
+        return bytesWritten;
+    }
+
+    public byte[] toByteArray() {
+        flush();
+        if (bytesWritten == buffer.length) {
+            return buffer;
+        }
+        return Arrays.copyOf(buffer, bytesWritten);
     }
 
     @Override
@@ -77,14 +85,6 @@ class BitArrayOutputStream extends OutputStream {
         if (cacheMask == 0) {
             flush();
         }
-    }
-
-    public int getBitsAvailableInCurrentByte() {
-        int count = 0;
-        for (int mask = cacheMask; mask != 0; mask >>>= 1) {
-            ++count;
-        }
-        return count;
     }
 
     private void writeByte(final int b) {

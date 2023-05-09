@@ -203,71 +203,6 @@ public abstract class ImageDataReader {
 
     }
 
-    /**
-     * Read the image data from the IFD associated with this instance of
-     * ImageDataReader using the optional sub-image specification if desired.
-     *
-     * @param subImageSpecification a rectangle describing a sub-region of the
-     * image for reading, or a null if the whole image is to be read.
-     * @param hasAlpha indicates that the image has an alpha (transparency)
-     * channel (RGB color model only).
-     * @param isAlphaPremultiplied indicates that the image uses the associated
-     * alpha channel format (pre-multiplied alpha).
-     * @return a valid instance containing the pixel data from the image.
-     * @throws ImageReadException in the event of a data format error or other
-     * TIFF-specific failure.
-     * @throws IOException in the event of an unrecoverable I/O error.
-     */
-    public abstract ImageBuilder readImageData(
-            Rectangle subImageSpecification,
-            boolean hasAlpha,
-            boolean isAlphaPremultiplied)
-            throws ImageReadException, IOException;
-
-    /**
-     * Checks if all the bits per sample entries are the same size
-     *
-     * @param size the size to check
-     * @return true if all the bits per sample entries are the same
-     */
-    protected boolean isHomogenous(final int size) {
-        for (final int element : bitsPerSample) {
-            if (element != size) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Reads samples and returns them in an int array.
-     *
-     * @param bis the stream to read from
-     * @param result the samples array to populate, must be the same length as
-     * bitsPerSample.length
-     * @throws IOException
-     */
-    void getSamplesAsBytes(final BitInputStream bis, final int[] result) throws IOException {
-        for (int i = 0; i < bitsPerSample.length; i++) {
-            final int bits = bitsPerSample[i];
-            int sample = bis.readBits(bits);
-            if (bits < 8) {
-                final int sign = sample & 1;
-                sample = sample << (8 - bits); // scale to byte.
-                if (sign > 0) {
-                    sample = sample | ((1 << (8 - bits)) - 1); // extend to byte
-                }
-            } else if (bits > 8) {
-                sample = sample >> (bits - 8); // extend to byte.
-            }
-            result[i] = sample;
-        }
-    }
-
-    protected void resetPredictor() {
-        Arrays.fill(last, 0);
-    }
-
     protected int[] applyPredictor(final int[] samples) {
         if (predictor == 2) {
             // Horizontal differencing.
@@ -380,6 +315,290 @@ public abstract class ImageDataReader {
 
         default:
             throw new ImageReadException("Tiff: unknown/unsupported compression: " + compression);
+        }
+    }
+
+    /**
+     * Reads samples and returns them in an int array.
+     *
+     * @param bis the stream to read from
+     * @param result the samples array to populate, must be the same length as
+     * bitsPerSample.length
+     * @throws IOException
+     */
+    void getSamplesAsBytes(final BitInputStream bis, final int[] result) throws IOException {
+        for (int i = 0; i < bitsPerSample.length; i++) {
+            final int bits = bitsPerSample[i];
+            int sample = bis.readBits(bits);
+            if (bits < 8) {
+                final int sign = sample & 1;
+                sample = sample << (8 - bits); // scale to byte.
+                if (sign > 0) {
+                    sample = sample | ((1 << (8 - bits)) - 1); // extend to byte
+                }
+            } else if (bits > 8) {
+                sample = sample >> (bits - 8); // extend to byte.
+            }
+            result[i] = sample;
+        }
+    }
+
+    /**
+     * Checks if all the bits per sample entries are the same size
+     *
+     * @param size the size to check
+     * @return true if all the bits per sample entries are the same
+     */
+    protected boolean isHomogenous(final int size) {
+        for (final int element : bitsPerSample) {
+            if (element != size) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Read the image data from the IFD associated with this instance of
+     * ImageDataReader using the optional sub-image specification if desired.
+     *
+     * @param subImageSpecification a rectangle describing a sub-region of the
+     * image for reading, or a null if the whole image is to be read.
+     * @param hasAlpha indicates that the image has an alpha (transparency)
+     * channel (RGB color model only).
+     * @param isAlphaPremultiplied indicates that the image uses the associated
+     * alpha channel format (pre-multiplied alpha).
+     * @return a valid instance containing the pixel data from the image.
+     * @throws ImageReadException in the event of a data format error or other
+     * TIFF-specific failure.
+     * @throws IOException in the event of an unrecoverable I/O error.
+     */
+    public abstract ImageBuilder readImageData(
+            Rectangle subImageSpecification,
+            boolean hasAlpha,
+            boolean isAlphaPremultiplied)
+            throws ImageReadException, IOException;
+
+    /**
+     * Defines a method for accessing the floating-point raster data in a TIFF
+     * image. These implementations of this method in DataReaderStrips and
+     * DataReaderTiled assume that this instance is of a compatible data type
+     * (floating-point) and that all access checks have already been performed.
+     *
+     * @param subImage if non-null, instructs the access method to retrieve only
+     * a sub-section of the image data.
+     * @return a valid instance
+     * @throws ImageReadException in the event of an incompatible data form.
+     * @throws IOException in the event of I/O error.
+     */
+    public abstract TiffRasterData readRasterData(Rectangle subImage)
+        throws ImageReadException, IOException;
+
+    protected void resetPredictor() {
+        Arrays.fill(last, 0);
+    }
+
+    /**
+     * Transfer samples obtained from the TIFF file to a floating-point raster.
+     *
+     * @param xBlock coordinate of block relative to source data
+     * @param yBlock coordinate of block relative to source data
+     * @param blockWidth width of block, in pixels
+     * @param blockHeight height of block in pixels
+     * @param blockData the data for the block
+     * @param xRaster coordinate of raster relative to source data
+     * @param yRaster coordinate of raster relative to source data
+     * @param rasterWidth width of the raster (always smaller than source data)
+     * @param rasterHeight height of the raster (always smaller than source
+     * data)
+     * @param rasterData the raster data.
+     */
+    void transferBlockToRaster(final int xBlock, final int yBlock,
+            final int blockWidth, final int blockHeight, final int[] blockData,
+            final int xRaster, final int yRaster,
+            final int rasterWidth, final int rasterHeight, final int samplesPerPixel,
+            final float[] rasterData) {
+
+        // xR0, yR0 are the coordinates within the raster (upper-left corner)
+        // xR1, yR1 are ONE PAST the coordinates of the lower-right corner
+        int xR0 = xBlock - xRaster;  // xR0, yR0 coordinates relative to
+        int yR0 = yBlock - yRaster; // the raster
+        int xR1 = xR0 + blockWidth;
+        int yR1 = yR0 + blockHeight;
+        if (xR0 < 0) {
+            xR0 = 0;
+        }
+        if (yR0 < 0) {
+            yR0 = 0;
+        }
+        if (xR1 > rasterWidth) {
+            xR1 = rasterWidth;
+        }
+        if (yR1 > rasterHeight) {
+            yR1 = rasterHeight;
+        }
+
+        // Recall that the above logic may have adjusted xR0, xY0 so that
+        // they are not necessarily point to the source pixel at xRaster, yRaster
+        // we compute xSource = xR0+xRaster.
+        //            xOffset = xSource-xBlock
+        // since the block cannot be accessed with a negative offset,
+        // we check for negatives and adjust xR0, yR0 upward as necessary
+        int xB0 = xR0 + xRaster - xBlock;
+        int yB0 = yR0 + yRaster - yBlock;
+        if (xB0 < 0) {
+            xR0 -= xB0;
+            xB0 = 0;
+        }
+        if (yB0 < 0) {
+            yR0 -= yB0;
+            yB0 = 0;
+        }
+
+        int w = xR1 - xR0;
+        int h = yR1 - yR0;
+        if (w <= 0 || h <= 0) {
+            // The call to this method put the block outside the
+            // bounds of the raster.  There is nothing to do.  Ideally,
+            // this situation never arises, because it would mean that
+            // the data was read from the file unnecessarily.
+            return;
+        }
+        // see if the xR1, yR1 would extend past the limits of the block
+        if (w > blockWidth) {
+            w = blockWidth;
+        }
+        if (h > blockHeight) {
+            h = blockHeight;
+        }
+
+        // The TiffRasterData class expects data to be in the order
+        // corresponding to TiffPlanarConfiguration.PLANAR.  So for the
+        // multivariable case, we must convert CHUNKY data to PLANAR.
+        if (samplesPerPixel == 1) {
+            for (int i = 0; i < h; i++) {
+                final int yR = yR0 + i;
+                final int yB = yB0 + i;
+                final int rOffset = yR * rasterWidth + xR0;
+                final int bOffset = yB * blockWidth + xB0;
+                for (int j = 0; j < w; j++) {
+                    rasterData[rOffset + j] = Float.intBitsToFloat(blockData[bOffset + j]);
+                }
+            }
+        } else if (this.planarConfiguration == TiffPlanarConfiguration.CHUNKY) {
+            // The source data is in the interleaved (Chunky) order,
+            // but the TiffRasterData class expects non-interleaved order.
+            // So we transcribe the elements as appropriate.
+            final int pixelsPerPlane = rasterWidth * rasterHeight;
+            for (int i = 0; i < h; i++) {
+                final int yR = yR0 + i;
+                final int yB = yB0 + i;
+                final int rOffset = yR * rasterWidth + xR0;
+                final int bOffset = yB * blockWidth + xB0;
+                for (int j = 0; j < w; j++) {
+                    for (int k = 0; k < samplesPerPixel; k++) {
+                        rasterData[k * pixelsPerPlane + rOffset + j]
+                                = Float.intBitsToFloat(blockData[(bOffset + j) * samplesPerPixel + k]);
+                    }
+                }
+            }
+        } else {
+            for (int iPlane = 0; iPlane < samplesPerPixel; iPlane++) {
+                final int rPlanarOffset = iPlane * rasterWidth * rasterHeight;
+                final int bPlanarOffset = iPlane * blockWidth * blockHeight;
+                for (int i = 0; i < h; i++) {
+                    final int yR = yR0 + i;
+                    final int yB = yB0 + i;
+                    final int rOffset = rPlanarOffset + yR * rasterWidth + xR0;
+                    final int bOffset = bPlanarOffset + yB * blockWidth + xB0;
+                    for (int j = 0; j < w; j++) {
+                        rasterData[rOffset + j] = Float.intBitsToFloat(blockData[bOffset + j]);
+                    }
+                }
+            }
+        }
+
+    }
+
+    /**
+     * Transfer samples obtained from the TIFF file to an integer raster.
+     *
+     * @param xBlock coordinate of block relative to source data
+     * @param yBlock coordinate of block relative to source data
+     * @param blockWidth width of block, in pixels
+     * @param blockHeight height of block in pixels
+     * @param blockData the data for the block
+     * @param xRaster coordinate of raster relative to source data
+     * @param yRaster coordinate of raster relative to source data
+     * @param rasterWidth width of the raster (always smaller than source data)
+     * @param rasterHeight height of the raster (always smaller than source
+     * data)
+     * @param rasterData the raster data.
+     */
+    void transferBlockToRaster(final int xBlock, final int yBlock,
+        final int blockWidth, final int blockHeight, final int[] blockData,
+        final int xRaster, final int yRaster,
+        final int rasterWidth, final int rasterHeight, final int[] rasterData) {
+
+        // xR0, yR0 are the coordinates within the raster (upper-left corner)
+        // xR1, yR1 are ONE PAST the coordinates of the lower-right corner
+        int xR0 = xBlock - xRaster;  // xR0, yR0 coordinates relative to
+        int yR0 = yBlock - yRaster; // the raster
+        int xR1 = xR0 + blockWidth;
+        int yR1 = yR0 + blockHeight;
+        if (xR0 < 0) {
+            xR0 = 0;
+        }
+        if (yR0 < 0) {
+            yR0 = 0;
+        }
+        if (xR1 > rasterWidth) {
+            xR1 = rasterWidth;
+        }
+        if (yR1 > rasterHeight) {
+            yR1 = rasterHeight;
+        }
+
+        // Recall that the above logic may have adjusted xR0, xY0 so that
+        // they are not necessarily point to the source pixel at xRaster, yRaster
+        // we compute xSource = xR0+xRaster.
+        //            xOffset = xSource-xBlock
+        // since the block cannot be accessed with a negative offset,
+        // we check for negatives and adjust xR0, yR0 upward as necessary
+        int xB0 = xR0 + xRaster - xBlock;
+        int yB0 = yR0 + yRaster - yBlock;
+        if (xB0 < 0) {
+            xR0 -= xB0;
+            xB0 = 0;
+        }
+        if (yB0 < 0) {
+            yR0 -= yB0;
+            yB0 = 0;
+        }
+
+        int w = xR1 - xR0;
+        int h = yR1 - yR0;
+        if (w <= 0 || h <= 0) {
+            // The call to this method puts the block outside the
+            // bounds of the raster.  There is nothing to do.  Ideally,
+            // this situation never arises, because it would mean that
+            // the data was read from the file unnecessarily.
+            return;
+        }
+        // see if the xR1, yR1 would extend past the limits of the block
+        if (w > blockWidth) {
+            w = blockWidth;
+        }
+        if (h > blockHeight) {
+            h = blockHeight;
+        }
+
+        for (int i = 0; i < h; i++) {
+            final int yR = yR0 + i;
+            final int yB = yB0 + i;
+            final int rOffset = yR * rasterWidth + xR0;
+            final int bOffset = yB * blockWidth + xB0;
+            System.arraycopy(blockData, bOffset, rasterData, rOffset, w);
         }
     }
 
@@ -677,223 +896,4 @@ public abstract class ImageDataReader {
 
         return samples;
     }
-
-    /**
-     * Transfer samples obtained from the TIFF file to a floating-point raster.
-     *
-     * @param xBlock coordinate of block relative to source data
-     * @param yBlock coordinate of block relative to source data
-     * @param blockWidth width of block, in pixels
-     * @param blockHeight height of block in pixels
-     * @param blockData the data for the block
-     * @param xRaster coordinate of raster relative to source data
-     * @param yRaster coordinate of raster relative to source data
-     * @param rasterWidth width of the raster (always smaller than source data)
-     * @param rasterHeight height of the raster (always smaller than source
-     * data)
-     * @param rasterData the raster data.
-     */
-    void transferBlockToRaster(final int xBlock, final int yBlock,
-            final int blockWidth, final int blockHeight, final int[] blockData,
-            final int xRaster, final int yRaster,
-            final int rasterWidth, final int rasterHeight, final int samplesPerPixel,
-            final float[] rasterData) {
-
-        // xR0, yR0 are the coordinates within the raster (upper-left corner)
-        // xR1, yR1 are ONE PAST the coordinates of the lower-right corner
-        int xR0 = xBlock - xRaster;  // xR0, yR0 coordinates relative to
-        int yR0 = yBlock - yRaster; // the raster
-        int xR1 = xR0 + blockWidth;
-        int yR1 = yR0 + blockHeight;
-        if (xR0 < 0) {
-            xR0 = 0;
-        }
-        if (yR0 < 0) {
-            yR0 = 0;
-        }
-        if (xR1 > rasterWidth) {
-            xR1 = rasterWidth;
-        }
-        if (yR1 > rasterHeight) {
-            yR1 = rasterHeight;
-        }
-
-        // Recall that the above logic may have adjusted xR0, xY0 so that
-        // they are not necessarily point to the source pixel at xRaster, yRaster
-        // we compute xSource = xR0+xRaster.
-        //            xOffset = xSource-xBlock
-        // since the block cannot be accessed with a negative offset,
-        // we check for negatives and adjust xR0, yR0 upward as necessary
-        int xB0 = xR0 + xRaster - xBlock;
-        int yB0 = yR0 + yRaster - yBlock;
-        if (xB0 < 0) {
-            xR0 -= xB0;
-            xB0 = 0;
-        }
-        if (yB0 < 0) {
-            yR0 -= yB0;
-            yB0 = 0;
-        }
-
-        int w = xR1 - xR0;
-        int h = yR1 - yR0;
-        if (w <= 0 || h <= 0) {
-            // The call to this method put the block outside the
-            // bounds of the raster.  There is nothing to do.  Ideally,
-            // this situation never arises, because it would mean that
-            // the data was read from the file unnecessarily.
-            return;
-        }
-        // see if the xR1, yR1 would extend past the limits of the block
-        if (w > blockWidth) {
-            w = blockWidth;
-        }
-        if (h > blockHeight) {
-            h = blockHeight;
-        }
-
-        // The TiffRasterData class expects data to be in the order
-        // corresponding to TiffPlanarConfiguration.PLANAR.  So for the
-        // multivariable case, we must convert CHUNKY data to PLANAR.
-        if (samplesPerPixel == 1) {
-            for (int i = 0; i < h; i++) {
-                final int yR = yR0 + i;
-                final int yB = yB0 + i;
-                final int rOffset = yR * rasterWidth + xR0;
-                final int bOffset = yB * blockWidth + xB0;
-                for (int j = 0; j < w; j++) {
-                    rasterData[rOffset + j] = Float.intBitsToFloat(blockData[bOffset + j]);
-                }
-            }
-        } else if (this.planarConfiguration == TiffPlanarConfiguration.CHUNKY) {
-            // The source data is in the interleaved (Chunky) order,
-            // but the TiffRasterData class expects non-interleaved order.
-            // So we transcribe the elements as appropriate.
-            final int pixelsPerPlane = rasterWidth * rasterHeight;
-            for (int i = 0; i < h; i++) {
-                final int yR = yR0 + i;
-                final int yB = yB0 + i;
-                final int rOffset = yR * rasterWidth + xR0;
-                final int bOffset = yB * blockWidth + xB0;
-                for (int j = 0; j < w; j++) {
-                    for (int k = 0; k < samplesPerPixel; k++) {
-                        rasterData[k * pixelsPerPlane + rOffset + j]
-                                = Float.intBitsToFloat(blockData[(bOffset + j) * samplesPerPixel + k]);
-                    }
-                }
-            }
-        } else {
-            for (int iPlane = 0; iPlane < samplesPerPixel; iPlane++) {
-                final int rPlanarOffset = iPlane * rasterWidth * rasterHeight;
-                final int bPlanarOffset = iPlane * blockWidth * blockHeight;
-                for (int i = 0; i < h; i++) {
-                    final int yR = yR0 + i;
-                    final int yB = yB0 + i;
-                    final int rOffset = rPlanarOffset + yR * rasterWidth + xR0;
-                    final int bOffset = bPlanarOffset + yB * blockWidth + xB0;
-                    for (int j = 0; j < w; j++) {
-                        rasterData[rOffset + j] = Float.intBitsToFloat(blockData[bOffset + j]);
-                    }
-                }
-            }
-        }
-
-    }
-
-    /**
-     * Transfer samples obtained from the TIFF file to an integer raster.
-     *
-     * @param xBlock coordinate of block relative to source data
-     * @param yBlock coordinate of block relative to source data
-     * @param blockWidth width of block, in pixels
-     * @param blockHeight height of block in pixels
-     * @param blockData the data for the block
-     * @param xRaster coordinate of raster relative to source data
-     * @param yRaster coordinate of raster relative to source data
-     * @param rasterWidth width of the raster (always smaller than source data)
-     * @param rasterHeight height of the raster (always smaller than source
-     * data)
-     * @param rasterData the raster data.
-     */
-    void transferBlockToRaster(final int xBlock, final int yBlock,
-        final int blockWidth, final int blockHeight, final int[] blockData,
-        final int xRaster, final int yRaster,
-        final int rasterWidth, final int rasterHeight, final int[] rasterData) {
-
-        // xR0, yR0 are the coordinates within the raster (upper-left corner)
-        // xR1, yR1 are ONE PAST the coordinates of the lower-right corner
-        int xR0 = xBlock - xRaster;  // xR0, yR0 coordinates relative to
-        int yR0 = yBlock - yRaster; // the raster
-        int xR1 = xR0 + blockWidth;
-        int yR1 = yR0 + blockHeight;
-        if (xR0 < 0) {
-            xR0 = 0;
-        }
-        if (yR0 < 0) {
-            yR0 = 0;
-        }
-        if (xR1 > rasterWidth) {
-            xR1 = rasterWidth;
-        }
-        if (yR1 > rasterHeight) {
-            yR1 = rasterHeight;
-        }
-
-        // Recall that the above logic may have adjusted xR0, xY0 so that
-        // they are not necessarily point to the source pixel at xRaster, yRaster
-        // we compute xSource = xR0+xRaster.
-        //            xOffset = xSource-xBlock
-        // since the block cannot be accessed with a negative offset,
-        // we check for negatives and adjust xR0, yR0 upward as necessary
-        int xB0 = xR0 + xRaster - xBlock;
-        int yB0 = yR0 + yRaster - yBlock;
-        if (xB0 < 0) {
-            xR0 -= xB0;
-            xB0 = 0;
-        }
-        if (yB0 < 0) {
-            yR0 -= yB0;
-            yB0 = 0;
-        }
-
-        int w = xR1 - xR0;
-        int h = yR1 - yR0;
-        if (w <= 0 || h <= 0) {
-            // The call to this method puts the block outside the
-            // bounds of the raster.  There is nothing to do.  Ideally,
-            // this situation never arises, because it would mean that
-            // the data was read from the file unnecessarily.
-            return;
-        }
-        // see if the xR1, yR1 would extend past the limits of the block
-        if (w > blockWidth) {
-            w = blockWidth;
-        }
-        if (h > blockHeight) {
-            h = blockHeight;
-        }
-
-        for (int i = 0; i < h; i++) {
-            final int yR = yR0 + i;
-            final int yB = yB0 + i;
-            final int rOffset = yR * rasterWidth + xR0;
-            final int bOffset = yB * blockWidth + xB0;
-            System.arraycopy(blockData, bOffset, rasterData, rOffset, w);
-        }
-    }
-
-    /**
-     * Defines a method for accessing the floating-point raster data in a TIFF
-     * image. These implementations of this method in DataReaderStrips and
-     * DataReaderTiled assume that this instance is of a compatible data type
-     * (floating-point) and that all access checks have already been performed.
-     *
-     * @param subImage if non-null, instructs the access method to retrieve only
-     * a sub-section of the image data.
-     * @return a valid instance
-     * @throws ImageReadException in the event of an incompatible data form.
-     * @throws IOException in the event of I/O error.
-     */
-    public abstract TiffRasterData readRasterData(Rectangle subImage)
-        throws ImageReadException, IOException;
 }

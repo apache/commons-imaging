@@ -42,6 +42,27 @@ import org.junit.jupiter.api.Test;
 public class IptcParserTest {
 
     /**
+     * Tests for IptcParser encoding support. See IMAGING-168 and pull request #124 for more.
+     * @throws IOException when reading input
+     * @throws ImageReadException when parsing file
+     */
+    @Test
+    public void testEncodingSupport() throws IOException, ImageReadException {
+        // NOTE: We use the JpegParser, so it will send only the block/segment that IptcParser needs for the test image
+        final File file = new File(IptcParserTest.class.getResource("/images/jpeg/iptc/IMAGING-168/111083453-c07f1880-851e-11eb-8b61-2757f7d934bf.jpg").getFile());
+        final JpegImageParser parser = new JpegImageParser();
+        final JpegImageMetadata metadata = (JpegImageMetadata) parser.getMetadata(file);
+        final JpegPhotoshopMetadata photoshopMetadata = metadata.getPhotoshop();
+        @SuppressWarnings("unchecked")
+        final
+        List<GenericImageMetadataItem> items = (List<GenericImageMetadataItem>) photoshopMetadata.getItems();
+        final GenericImageMetadataItem thanksInMandarin = items.get(3);
+        // converted the thank-you in chinese characters to unicode for comparison here
+        assertArrayEquals("\u8c22\u8c22".getBytes(StandardCharsets.UTF_8),
+              thanksInMandarin.getText().getBytes(StandardCharsets.UTF_8));
+    }
+
+    /**
      * Some block types (or Image Resource Blocks in Photoshop specification) have a recommendation
      * to not be interpreted by parsers, as they are handled by Photoshop in a special way,
      * that varies by platform (e.g. Mac, Windows, etc).
@@ -80,26 +101,5 @@ public class IptcParserTest {
                 fail("Unexpected block type found: " + block.getBlockType());
             }
         }
-    }
-
-    /**
-     * Tests for IptcParser encoding support. See IMAGING-168 and pull request #124 for more.
-     * @throws IOException when reading input
-     * @throws ImageReadException when parsing file
-     */
-    @Test
-    public void testEncodingSupport() throws IOException, ImageReadException {
-        // NOTE: We use the JpegParser, so it will send only the block/segment that IptcParser needs for the test image
-        final File file = new File(IptcParserTest.class.getResource("/images/jpeg/iptc/IMAGING-168/111083453-c07f1880-851e-11eb-8b61-2757f7d934bf.jpg").getFile());
-        final JpegImageParser parser = new JpegImageParser();
-        final JpegImageMetadata metadata = (JpegImageMetadata) parser.getMetadata(file);
-        final JpegPhotoshopMetadata photoshopMetadata = metadata.getPhotoshop();
-        @SuppressWarnings("unchecked")
-        final
-        List<GenericImageMetadataItem> items = (List<GenericImageMetadataItem>) photoshopMetadata.getItems();
-        final GenericImageMetadataItem thanksInMandarin = items.get(3);
-        // converted the thank-you in chinese characters to unicode for comparison here
-        assertArrayEquals("\u8c22\u8c22".getBytes(StandardCharsets.UTF_8),
-              thanksInMandarin.getText().getBytes(StandardCharsets.UTF_8));
     }
 }

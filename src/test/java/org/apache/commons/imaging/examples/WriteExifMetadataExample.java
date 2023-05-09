@@ -36,14 +36,6 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.io.FileUtils;
 
 public class WriteExifMetadataExample {
-    public void removeExifMetadata(final File jpegImageFile, final File dst)
-            throws IOException, ImageReadException, ImageWriteException {
-        try (FileOutputStream fos = new FileOutputStream(dst);
-                OutputStream os = new BufferedOutputStream(fos)) {
-            new ExifRewriter().removeExifMetadata(jpegImageFile, os);
-        }
-    }
-
     /**
      * This example illustrates how to add/update EXIF metadata in a JPEG file.
      *
@@ -127,6 +119,14 @@ public class WriteExifMetadataExample {
 
             new ExifRewriter().updateExifMetadataLossless(jpegImageFile, os,
                     outputSet);
+        }
+    }
+
+    public void removeExifMetadata(final File jpegImageFile, final File dst)
+            throws IOException, ImageReadException, ImageWriteException {
+        try (FileOutputStream fos = new FileOutputStream(dst);
+                OutputStream os = new BufferedOutputStream(fos)) {
+            new ExifRewriter().removeExifMetadata(jpegImageFile, os);
         }
     }
 

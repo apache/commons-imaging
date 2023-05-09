@@ -31,14 +31,6 @@ public class PhotoshopApp13Data {
         this.records = records == null ? Collections.emptyList() : Collections.unmodifiableList(records);
     }
 
-    public List<IptcRecord> getRecords() {
-        return new ArrayList<>(records);
-    }
-
-    public List<IptcBlock> getRawBlocks() {
-        return new ArrayList<>(rawBlocks);
-    }
-
     public List<IptcBlock> getNonIptcBlocks() {
         final List<IptcBlock> result = new ArrayList<>();
         for (final IptcBlock block : rawBlocks) {
@@ -47,6 +39,14 @@ public class PhotoshopApp13Data {
             }
         }
         return result;
+    }
+
+    public List<IptcBlock> getRawBlocks() {
+        return new ArrayList<>(rawBlocks);
+    }
+
+    public List<IptcRecord> getRecords() {
+        return new ArrayList<>(records);
     }
 
 }

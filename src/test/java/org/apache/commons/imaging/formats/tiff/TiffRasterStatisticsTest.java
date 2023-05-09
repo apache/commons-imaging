@@ -57,15 +57,6 @@ public class TiffRasterStatisticsTest {
     }
 
     /**
-     * Test of getCountOfSamples method, of class TiffRasterStatistics.
-     */
-    @Test
-    public void testGetCountOfSamples() {
-        assertEquals(width * height - 1, stat0.getCountOfSamples());
-        assertEquals(width * height - 2, stat1.getCountOfSamples());
-    }
-
-    /**
      * Test of getCountOfNulls method, of class TiffRasterStatistics.
      */
     @Test
@@ -75,12 +66,21 @@ public class TiffRasterStatisticsTest {
     }
 
     /**
-     * Test of getMinValue method, of class TiffRasterStatistics.
+     * Test of getCountOfSamples method, of class TiffRasterStatistics.
      */
     @Test
-    public void testGetMinValue() {
-        assertEquals(0, stat0.getMinValue());
-        assertEquals(0, stat1.getMinValue());
+    public void testGetCountOfSamples() {
+        assertEquals(width * height - 1, stat0.getCountOfSamples());
+        assertEquals(width * height - 2, stat1.getCountOfSamples());
+    }
+
+    /**
+     * Test of getExcludedValue method, of class TiffRasterStatistics.
+     */
+    @Test
+    public void testGetExcludedValue() {
+        assertTrue(Float.isNaN(stat0.getExcludedValue()));
+        assertEquals(width * height - 1, stat1.getExcludedValue());
     }
 
     /**
@@ -108,21 +108,21 @@ public class TiffRasterStatisticsTest {
     }
 
     /**
+     * Test of getMinValue method, of class TiffRasterStatistics.
+     */
+    @Test
+    public void testGetMinValue() {
+        assertEquals(0, stat0.getMinValue());
+        assertEquals(0, stat1.getMinValue());
+    }
+
+    /**
      * Test of isAnExcludedValueSet method, of class TiffRasterStatistics.
      */
     @Test
     public void testIsAnExcludedValueSet() {
         assertFalse(stat0.isAnExcludedValueSet());
         assertTrue(stat1.isAnExcludedValueSet());
-    }
-
-    /**
-     * Test of getExcludedValue method, of class TiffRasterStatistics.
-     */
-    @Test
-    public void testGetExcludedValue() {
-        assertTrue(Float.isNaN(stat0.getExcludedValue()));
-        assertEquals(width * height - 1, stat1.getExcludedValue());
     }
 
 }

@@ -27,11 +27,11 @@ public class TagInfoSLongs extends TagInfo {
         super(name, tag, FieldType.SLONG, length, directoryType);
     }
 
-    public int[] getValue(final ByteOrder byteOrder, final byte[] bytes) {
-        return ByteConversions.toInts(bytes, byteOrder);
-    }
-
     public byte[] encodeValue(final ByteOrder byteOrder, final int... values) {
         return ByteConversions.toBytes(values, byteOrder);
+    }
+
+    public int[] getValue(final ByteOrder byteOrder, final byte[] bytes) {
+        return ByteConversions.toInts(bytes, byteOrder);
     }
 }

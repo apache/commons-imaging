@@ -38,19 +38,29 @@ import org.apache.commons.imaging.formats.jpeg.iptc.IptcParser;
  * Interface for Exif write/update/remove functionality for Jpeg/JFIF images.
  */
 public class JpegRewriter extends BinaryFileParser {
-    private static final ByteOrder JPEG_BYTE_ORDER = ByteOrder.BIG_ENDIAN;
-    private static final SegmentFilter EXIF_SEGMENT_FILTER = JFIFPieceSegment::isExifSegment;
-    private static final SegmentFilter XMP_SEGMENT_FILTER = JFIFPieceSegment::isXmpSegment;
-    private static final SegmentFilter PHOTOSHOP_APP13_SEGMENT_FILTER = JFIFPieceSegment::isPhotoshopApp13Segment;
+    protected abstract static class JFIFPiece {
+        @Override
+        public String toString() {
+            return "[" + this.getClass().getName() + "]";
+        }
 
-    /**
-     * Constructor. to guess whether a file contains an image based on its file
-     * extension.
-     */
-    public JpegRewriter() {
-        setByteOrder(JPEG_BYTE_ORDER);
+        protected abstract void write(OutputStream os) throws IOException;
     }
+    static class JFIFPieceImageData extends JFIFPiece {
+        private final byte[] markerBytes;
+        private final byte[] imageData;
 
+        JFIFPieceImageData(final byte[] markerBytes, final byte[] imageData) {
+            this.markerBytes = markerBytes;
+            this.imageData = imageData;
+        }
+
+        @Override
+        protected void write(final OutputStream os) throws IOException {
+            os.write(markerBytes);
+            os.write(imageData);
+        }
+    }
     protected static class JFIFPieces {
         public final List<JFIFPiece> pieces;
         public final List<JFIFPiece> segmentPieces;
@@ -62,16 +72,6 @@ public class JpegRewriter extends BinaryFileParser {
         }
 
     }
-
-    protected abstract static class JFIFPiece {
-        protected abstract void write(OutputStream os) throws IOException;
-
-        @Override
-        public String toString() {
-            return "[" + this.getClass().getName() + "]";
-        }
-    }
-
     protected static class JFIFPieceSegment extends JFIFPiece {
         public final int marker;
         private final byte[] markerBytes;
@@ -93,17 +93,8 @@ public class JpegRewriter extends BinaryFileParser {
             this.segmentData = segmentData.clone();
         }
 
-        @Override
-        public String toString() {
-            return "[" + this.getClass().getName() + " (0x"
-                    + Integer.toHexString(marker) + ")]";
-        }
-
-        @Override
-        protected void write(final OutputStream os) throws IOException {
-            os.write(markerBytes);
-            os.write(segmentLengthBytes);
-            os.write(segmentData);
+        public byte[] getSegmentData() {
+            return segmentData.clone();
         }
 
         public boolean isApp1Segment() {
@@ -144,26 +135,47 @@ public class JpegRewriter extends BinaryFileParser {
             return true;
         }
 
-        public byte[] getSegmentData() {
-            return segmentData.clone();
-        }
-
-    }
-
-    static class JFIFPieceImageData extends JFIFPiece {
-        private final byte[] markerBytes;
-        private final byte[] imageData;
-
-        JFIFPieceImageData(final byte[] markerBytes, final byte[] imageData) {
-            this.markerBytes = markerBytes;
-            this.imageData = imageData;
+        @Override
+        public String toString() {
+            return "[" + this.getClass().getName() + " (0x"
+                    + Integer.toHexString(marker) + ")]";
         }
 
         @Override
         protected void write(final OutputStream os) throws IOException {
             os.write(markerBytes);
-            os.write(imageData);
+            os.write(segmentLengthBytes);
+            os.write(segmentData);
         }
+
+    }
+
+    public static class JpegSegmentOverflowException extends ImageWriteException {
+        private static final long serialVersionUID = -1062145751550646846L;
+
+        public JpegSegmentOverflowException(final String message) {
+            super(message);
+        }
+    }
+
+    private interface SegmentFilter {
+        boolean filter(JFIFPieceSegment segment);
+    }
+
+    private static final ByteOrder JPEG_BYTE_ORDER = ByteOrder.BIG_ENDIAN;
+
+    private static final SegmentFilter EXIF_SEGMENT_FILTER = JFIFPieceSegment::isExifSegment;
+
+    private static final SegmentFilter XMP_SEGMENT_FILTER = JFIFPieceSegment::isXmpSegment;
+
+    private static final SegmentFilter PHOTOSHOP_APP13_SEGMENT_FILTER = JFIFPieceSegment::isPhotoshopApp13Segment;
+
+    /**
+     * Constructor. to guess whether a file contains an image based on its file
+     * extension.
+     */
+    public JpegRewriter() {
+        setByteOrder(JPEG_BYTE_ORDER);
     }
 
     protected JFIFPieces analyzeJFIF(final ByteSource byteSource) throws ImageReadException, IOException {
@@ -175,11 +187,6 @@ public class JpegRewriter extends BinaryFileParser {
             @Override
             public boolean beginSOS() {
                 return true;
-            }
-
-            @Override
-            public void visitSOS(final int marker, final byte[] markerBytes, final byte[] imageData) {
-                pieces.add(new JFIFPieceImageData(markerBytes, imageData));
             }
 
             // return false to exit traversal.
@@ -194,33 +201,16 @@ public class JpegRewriter extends BinaryFileParser {
 
                 return true;
             }
+
+            @Override
+            public void visitSOS(final int marker, final byte[] markerBytes, final byte[] imageData) {
+                pieces.add(new JFIFPieceImageData(markerBytes, imageData));
+            }
         };
 
         new JpegUtils().traverseJFIF(byteSource, visitor);
 
         return new JFIFPieces(pieces, segmentPieces);
-    }
-
-    private interface SegmentFilter {
-        boolean filter(JFIFPieceSegment segment);
-    }
-
-    protected <T extends JFIFPiece> List<T> removeXmpSegments(final List<T> segments) {
-        return filterSegments(segments, XMP_SEGMENT_FILTER);
-    }
-
-    protected <T extends JFIFPiece> List<T> removePhotoshopApp13Segments(
-            final List<T> segments) {
-        return filterSegments(segments, PHOTOSHOP_APP13_SEGMENT_FILTER);
-    }
-
-    protected <T extends JFIFPiece> List<T> findPhotoshopApp13Segments(
-            final List<T> segments) {
-        return filterSegments(segments, PHOTOSHOP_APP13_SEGMENT_FILTER, true);
-    }
-
-    protected <T extends JFIFPiece> List<T> removeExifSegments(final List<T> segments) {
-        return filterSegments(segments, EXIF_SEGMENT_FILTER);
     }
 
     protected <T extends JFIFPiece> List<T> filterSegments(final List<T> segments,
@@ -245,29 +235,9 @@ public class JpegRewriter extends BinaryFileParser {
         return result;
     }
 
-    protected <T extends JFIFPiece, U extends JFIFPiece> List<JFIFPiece> insertBeforeFirstAppSegments(
-            final List<T> segments, final List<U> newSegments) throws ImageWriteException {
-        int firstAppIndex = -1;
-        for (int i = 0; i < segments.size(); i++) {
-            final JFIFPiece piece = segments.get(i);
-            if (!(piece instanceof JFIFPieceSegment)) {
-                continue;
-            }
-
-            final JFIFPieceSegment segment = (JFIFPieceSegment) piece;
-            if (segment.isAppSegment()) {
-                if (firstAppIndex == -1) {
-                    firstAppIndex = i;
-                }
-            }
-        }
-
-        final List<JFIFPiece> result = new ArrayList<>(segments);
-        if (firstAppIndex == -1) {
-            throw new ImageWriteException("JPEG file has no APP segments.");
-        }
-        result.addAll(firstAppIndex, newSegments);
-        return result;
+    protected <T extends JFIFPiece> List<T> findPhotoshopApp13Segments(
+            final List<T> segments) {
+        return filterSegments(segments, PHOTOSHOP_APP13_SEGMENT_FILTER, true);
     }
 
     protected <T extends JFIFPiece, U extends JFIFPiece> List<JFIFPiece> insertAfterLastAppSegments(
@@ -298,15 +268,42 @@ public class JpegRewriter extends BinaryFileParser {
         return result;
     }
 
-    protected void writeSegments(final OutputStream outputStream,
-            final List<? extends JFIFPiece> segments) throws IOException {
-        try (DataOutputStream os = new DataOutputStream(outputStream)) {
-            JpegConstants.SOI.writeTo(os);
+    protected <T extends JFIFPiece, U extends JFIFPiece> List<JFIFPiece> insertBeforeFirstAppSegments(
+            final List<T> segments, final List<U> newSegments) throws ImageWriteException {
+        int firstAppIndex = -1;
+        for (int i = 0; i < segments.size(); i++) {
+            final JFIFPiece piece = segments.get(i);
+            if (!(piece instanceof JFIFPieceSegment)) {
+                continue;
+            }
 
-            for (final JFIFPiece piece : segments) {
-                piece.write(os);
+            final JFIFPieceSegment segment = (JFIFPieceSegment) piece;
+            if (segment.isAppSegment()) {
+                if (firstAppIndex == -1) {
+                    firstAppIndex = i;
+                }
             }
         }
+
+        final List<JFIFPiece> result = new ArrayList<>(segments);
+        if (firstAppIndex == -1) {
+            throw new ImageWriteException("JPEG file has no APP segments.");
+        }
+        result.addAll(firstAppIndex, newSegments);
+        return result;
+    }
+
+    protected <T extends JFIFPiece> List<T> removeExifSegments(final List<T> segments) {
+        return filterSegments(segments, EXIF_SEGMENT_FILTER);
+    }
+
+    protected <T extends JFIFPiece> List<T> removePhotoshopApp13Segments(
+            final List<T> segments) {
+        return filterSegments(segments, PHOTOSHOP_APP13_SEGMENT_FILTER);
+    }
+
+    protected <T extends JFIFPiece> List<T> removeXmpSegments(final List<T> segments) {
+        return filterSegments(segments, XMP_SEGMENT_FILTER);
     }
 
     // private void writeSegment(OutputStream os, JFIFPieceSegment piece)
@@ -326,11 +323,14 @@ public class JpegRewriter extends BinaryFileParser {
     // os.write(piece.segmentData);
     // }
 
-    public static class JpegSegmentOverflowException extends ImageWriteException {
-        private static final long serialVersionUID = -1062145751550646846L;
+    protected void writeSegments(final OutputStream outputStream,
+            final List<? extends JFIFPiece> segments) throws IOException {
+        try (DataOutputStream os = new DataOutputStream(outputStream)) {
+            JpegConstants.SOI.writeTo(os);
 
-        public JpegSegmentOverflowException(final String message) {
-            super(message);
+            for (final JFIFPiece piece : segments) {
+                piece.write(os);
+            }
         }
     }
 

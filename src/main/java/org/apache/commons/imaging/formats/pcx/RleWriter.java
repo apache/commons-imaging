@@ -28,6 +28,17 @@ class RleWriter {
         this.isCompressed = isCompressed;
     }
 
+    void flush(final BinaryOutputStream bos) throws IOException {
+        if (repeatCount > 0) {
+            if (repeatCount == 1 && (previousByte & 0xc0) != 0xc0) {
+                bos.write(previousByte);
+            } else {
+                bos.write(0xc0 | repeatCount);
+                bos.write(previousByte);
+            }
+        }
+    }
+
     void write(final BinaryOutputStream bos, final byte[] samples)
             throws IOException {
         if (isCompressed) {
@@ -51,17 +62,6 @@ class RleWriter {
             }
         } else {
             bos.write(samples);
-        }
-    }
-
-    void flush(final BinaryOutputStream bos) throws IOException {
-        if (repeatCount > 0) {
-            if (repeatCount == 1 && (previousByte & 0xc0) != 0xc0) {
-                bos.write(previousByte);
-            } else {
-                bos.write(0xc0 | repeatCount);
-                bos.write(previousByte);
-            }
         }
     }
 }

@@ -37,11 +37,6 @@ public abstract class Segment extends BinaryFileParser {
 
     public abstract String getDescription();
 
-    @Override
-    public String toString() {
-        return "[Segment: " + getDescription() + "]";
-    }
-
     public String getSegmentType() {
 
         switch (marker) {
@@ -141,6 +136,11 @@ public abstract class Segment extends BinaryFileParser {
 
         return "Unknown";
 
+    }
+
+    @Override
+    public String toString() {
+        return "[Segment: " + getDescription() + "]";
     }
 
 }

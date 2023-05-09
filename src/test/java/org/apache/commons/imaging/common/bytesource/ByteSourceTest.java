@@ -32,20 +32,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public abstract class ByteSourceTest extends ImagingTest {
-    protected File createTempFile(final byte[] src) throws IOException {
-        final File file = Files.createTempFile("raw_", ".bin").toFile();
-
-        // write test bytes to file.
-        try (FileOutputStream fos = new FileOutputStream(file); OutputStream os = new BufferedOutputStream(fos)) {
-            os.write(src);
-        }
-
-        // test that all bytes written to file.
-        assertEquals(src.length, file.length());
-
-        return file;
-    }
-
     protected static byte[][] getTestByteArrays() {
         final byte[] single = new byte[1];
         for (int i = 0; i < single.length; i++) {
@@ -67,6 +53,20 @@ public abstract class ByteSourceTest extends ImagingTest {
         final byte[] longArray = (baos.toByteArray());
 
         return new byte[][]{ImagingConstants.EMPTY_BYTE_ARRAY, single, simple, zeroes, longArray,};
+    }
+
+    protected File createTempFile(final byte[] src) throws IOException {
+        final File file = Files.createTempFile("raw_", ".bin").toFile();
+
+        // write test bytes to file.
+        try (FileOutputStream fos = new FileOutputStream(file); OutputStream os = new BufferedOutputStream(fos)) {
+            os.write(src);
+        }
+
+        // test that all bytes written to file.
+        assertEquals(src.length, file.length());
+
+        return file;
     }
 
     @Test

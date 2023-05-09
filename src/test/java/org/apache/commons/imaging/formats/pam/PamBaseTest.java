@@ -29,12 +29,12 @@ import org.apache.commons.imaging.ImagingTest;
 
 public abstract class PamBaseTest extends ImagingTest {
 
+    private static final ImageFilter IMAGE_FILTER = PamBaseTest::isPam;
+
     private static boolean isPam(final File file) throws IOException {
         final ImageFormat format = Imaging.guessFormat(file);
         return format == ImageFormats.PAM;
     }
-
-    private static final ImageFilter IMAGE_FILTER = PamBaseTest::isPam;
 
     protected List<File> getPamImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);

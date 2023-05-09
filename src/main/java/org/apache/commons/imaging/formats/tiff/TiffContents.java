@@ -35,44 +35,6 @@ public class TiffContents {
         this.tiffFields = Collections.unmodifiableList(tiffFields);
     }
 
-    public List<TiffElement> getElements() throws ImageReadException {
-        final List<TiffElement> result = new ArrayList<>();
-
-        result.add(header);
-
-        for (final TiffDirectory directory : directories) {
-            result.add(directory);
-
-            final List<TiffField> fields = directory.entries;
-            for (final TiffField field : fields) {
-                final TiffElement oversizeValue = field.getOversizeValueElement();
-                if (null != oversizeValue) {
-                    result.add(oversizeValue);
-                }
-            }
-
-            if (directory.hasTiffImageData()) {
-                result.addAll(directory.getTiffRawImageDataElements());
-            }
-            if (directory.hasJpegImageData()) {
-                result.add(directory.getJpegRawImageDataElement());
-            }
-        }
-
-        return result;
-    }
-
-    public TiffField findField(final TagInfo tag) throws ImageReadException {
-        for (final TiffDirectory directory : directories) {
-            final TiffField field = directory.findField(tag);
-            if (null != field) {
-                return field;
-            }
-        }
-
-        return null;
-    }
-
     public void dissect() throws ImageReadException {
         final List<TiffElement> elements = getElements();
 
@@ -100,6 +62,44 @@ public class TiffContents {
         }
         Debug.debug("end: " + lastEnd);
         Debug.debug();
+    }
+
+    public TiffField findField(final TagInfo tag) throws ImageReadException {
+        for (final TiffDirectory directory : directories) {
+            final TiffField field = directory.findField(tag);
+            if (null != field) {
+                return field;
+            }
+        }
+
+        return null;
+    }
+
+    public List<TiffElement> getElements() throws ImageReadException {
+        final List<TiffElement> result = new ArrayList<>();
+
+        result.add(header);
+
+        for (final TiffDirectory directory : directories) {
+            result.add(directory);
+
+            final List<TiffField> fields = directory.entries;
+            for (final TiffField field : fields) {
+                final TiffElement oversizeValue = field.getOversizeValueElement();
+                if (null != oversizeValue) {
+                    result.add(oversizeValue);
+                }
+            }
+
+            if (directory.hasTiffImageData()) {
+                result.addAll(directory.getTiffRawImageDataElements());
+            }
+            if (directory.hasJpegImageData()) {
+                result.add(directory.getJpegRawImageDataElement());
+            }
+        }
+
+        return result;
     }
 
 }

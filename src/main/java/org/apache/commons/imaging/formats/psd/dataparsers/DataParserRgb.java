@@ -20,6 +20,11 @@ import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
 public class DataParserRgb extends DataParser {
     @Override
+    public int getBasicChannelsCount() {
+        return 3;
+    }
+
+    @Override
     protected int getRGB(final int[][][] data, final int x, final int y,
             final PsdImageContents imageContents) {
         final int red = 0xff & data[0][y][x];
@@ -31,11 +36,6 @@ public class DataParserRgb extends DataParser {
              | ((0xff & red)   << 16)
              | ((0xff & green) << 8)
              | ((0xff & blue)  << 0);
-    }
-
-    @Override
-    public int getBasicChannelsCount() {
-        return 3;
     }
 
 }

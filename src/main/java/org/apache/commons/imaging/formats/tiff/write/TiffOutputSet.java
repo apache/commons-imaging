@@ -30,9 +30,9 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.internal.Debug;
 
 public final class TiffOutputSet {
+    private static final String NEWLINE = System.getProperty("line.separator");
     public final ByteOrder byteOrder;
     private final List<TiffOutputDirectory> directories = new ArrayList<>();
-    private static final String NEWLINE = System.getProperty("line.separator");
 
     public TiffOutputSet() {
         this(DEFAULT_TIFF_BYTE_ORDER);
@@ -40,17 +40,6 @@ public final class TiffOutputSet {
 
     public TiffOutputSet(final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
-    }
-
-    protected List<TiffOutputItem> getOutputItems(
-            final TiffOutputSummary outputSummary) throws ImageWriteException {
-        final List<TiffOutputItem> result = new ArrayList<>();
-
-        for (final TiffOutputDirectory directory : directories) {
-            result.addAll(directory.getOutputItems(outputSummary));
-        }
-
-        return result;
     }
 
     public void addDirectory(final TiffOutputDirectory directory)
@@ -62,25 +51,78 @@ public final class TiffOutputSet {
         directories.add(directory);
     }
 
-    public List<TiffOutputDirectory> getDirectories() {
-        return new ArrayList<>(directories);
+    public TiffOutputDirectory addExifDirectory() throws ImageWriteException {
+        final TiffOutputDirectory result = new TiffOutputDirectory(
+                TiffDirectoryConstants.DIRECTORY_TYPE_EXIF, byteOrder);
+        addDirectory(result);
+        return result;
     }
 
-    public TiffOutputDirectory getRootDirectory() {
-        return findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT);
+    public TiffOutputDirectory addGPSDirectory() throws ImageWriteException {
+        final TiffOutputDirectory result = new TiffOutputDirectory(
+                TiffDirectoryConstants.DIRECTORY_TYPE_GPS, byteOrder);
+        addDirectory(result);
+        return result;
+    }
+
+    public TiffOutputDirectory addInteroperabilityDirectory()
+            throws ImageWriteException {
+        getOrCreateExifDirectory();
+
+        final TiffOutputDirectory result = new TiffOutputDirectory(
+                TiffDirectoryConstants.DIRECTORY_TYPE_INTEROPERABILITY, byteOrder);
+        addDirectory(result);
+        return result;
+    }
+
+    public TiffOutputDirectory addRootDirectory() throws ImageWriteException {
+        final TiffOutputDirectory result = new TiffOutputDirectory(
+                TiffDirectoryConstants.DIRECTORY_TYPE_ROOT, byteOrder);
+        addDirectory(result);
+        return result;
+    }
+
+    public void dump() {
+        Debug.debug(this.toString());
+    }
+
+    public TiffOutputDirectory findDirectory(final int directoryType) {
+        for (final TiffOutputDirectory directory : directories) {
+            if (directory.type == directoryType) {
+                return directory;
+            }
+        }
+        return null;
+    }
+
+    public TiffOutputField findField(final int tag) {
+        for (final TiffOutputDirectory directory : directories) {
+            final TiffOutputField field = directory.findField(tag);
+            if (null != field) {
+                return field;
+            }
+        }
+        return null;
+    }
+
+    public TiffOutputField findField(final TagInfo tagInfo) {
+        return findField(tagInfo.tag);
+    }
+
+    public List<TiffOutputDirectory> getDirectories() {
+        return new ArrayList<>(directories);
     }
 
     public TiffOutputDirectory getExifDirectory() {
         return findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_EXIF);
     }
 
-    public TiffOutputDirectory getOrCreateRootDirectory()
-            throws ImageWriteException {
-        final TiffOutputDirectory result = findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT);
-        if (null != result) {
-            return result;
-        }
-        return addRootDirectory();
+    public TiffOutputDirectory getGPSDirectory() {
+        return findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_GPS);
+    }
+
+    public TiffOutputDirectory getInteroperabilityDirectory() {
+        return findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_INTEROPERABILITY);
     }
 
     public TiffOutputDirectory getOrCreateExifDirectory()
@@ -107,21 +149,38 @@ public final class TiffOutputSet {
         return addGPSDirectory();
     }
 
-    public TiffOutputDirectory getGPSDirectory() {
-        return findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_GPS);
-    }
-
-    public TiffOutputDirectory getInteroperabilityDirectory() {
-        return findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_INTEROPERABILITY);
-    }
-
-    public TiffOutputDirectory findDirectory(final int directoryType) {
-        for (final TiffOutputDirectory directory : directories) {
-            if (directory.type == directoryType) {
-                return directory;
-            }
+    public TiffOutputDirectory getOrCreateRootDirectory()
+            throws ImageWriteException {
+        final TiffOutputDirectory result = findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT);
+        if (null != result) {
+            return result;
         }
-        return null;
+        return addRootDirectory();
+    }
+
+    protected List<TiffOutputItem> getOutputItems(
+            final TiffOutputSummary outputSummary) throws ImageWriteException {
+        final List<TiffOutputItem> result = new ArrayList<>();
+
+        for (final TiffOutputDirectory directory : directories) {
+            result.addAll(directory.getOutputItems(outputSummary));
+        }
+
+        return result;
+    }
+
+    public TiffOutputDirectory getRootDirectory() {
+        return findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT);
+    }
+
+    public void removeField(final int tag) {
+        for (final TiffOutputDirectory directory : directories) {
+            directory.removeField(tag);
+        }
+    }
+
+    public void removeField(final TagInfo tagInfo) {
+        removeField(tagInfo.tag);
     }
 
     /**
@@ -189,61 +248,6 @@ public final class TiffOutputSet {
 
     }
 
-    public void removeField(final TagInfo tagInfo) {
-        removeField(tagInfo.tag);
-    }
-
-    public void removeField(final int tag) {
-        for (final TiffOutputDirectory directory : directories) {
-            directory.removeField(tag);
-        }
-    }
-
-    public TiffOutputField findField(final TagInfo tagInfo) {
-        return findField(tagInfo.tag);
-    }
-
-    public TiffOutputField findField(final int tag) {
-        for (final TiffOutputDirectory directory : directories) {
-            final TiffOutputField field = directory.findField(tag);
-            if (null != field) {
-                return field;
-            }
-        }
-        return null;
-    }
-
-    public TiffOutputDirectory addRootDirectory() throws ImageWriteException {
-        final TiffOutputDirectory result = new TiffOutputDirectory(
-                TiffDirectoryConstants.DIRECTORY_TYPE_ROOT, byteOrder);
-        addDirectory(result);
-        return result;
-    }
-
-    public TiffOutputDirectory addExifDirectory() throws ImageWriteException {
-        final TiffOutputDirectory result = new TiffOutputDirectory(
-                TiffDirectoryConstants.DIRECTORY_TYPE_EXIF, byteOrder);
-        addDirectory(result);
-        return result;
-    }
-
-    public TiffOutputDirectory addGPSDirectory() throws ImageWriteException {
-        final TiffOutputDirectory result = new TiffOutputDirectory(
-                TiffDirectoryConstants.DIRECTORY_TYPE_GPS, byteOrder);
-        addDirectory(result);
-        return result;
-    }
-
-    public TiffOutputDirectory addInteroperabilityDirectory()
-            throws ImageWriteException {
-        getOrCreateExifDirectory();
-
-        final TiffOutputDirectory result = new TiffOutputDirectory(
-                TiffDirectoryConstants.DIRECTORY_TYPE_INTEROPERABILITY, byteOrder);
-        addDirectory(result);
-        return result;
-    }
-
     @Override
     public String toString() {
         return toString(null);
@@ -283,10 +287,6 @@ public final class TiffOutputSet {
         result.append(NEWLINE);
 
         return result.toString();
-    }
-
-    public void dump() {
-        Debug.debug(this.toString());
     }
 
 }

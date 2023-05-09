@@ -34,6 +34,51 @@ import org.junit.jupiter.api.Test;
 
 public class TiffCcittTest extends TiffBaseTest {
 
+    /**
+     * Generates the next combination of elements in the sequence array, with
+     * each element having a maximum value of max. Initially, the sequence
+     * should be set to minimum values of each element.
+     *
+     * @param sequence
+     *            the array of elements to update
+     * @param max
+     *            the maximum value of each element in the sequence
+     * @return false if there is no more combinations (ie. nothing was done),
+     *         true otherwise
+     */
+    private static boolean nextCombination(final int[] sequence, final int max) {
+        int i;
+        for (i = 0; i < sequence.length; i++) {
+            if (sequence[i] != max) {
+                sequence[i]++;
+                break;
+            }
+            sequence[i] = 0;
+        }
+        return i < sequence.length;
+    }
+
+    private void compareImages(final BufferedImage a, final BufferedImage b) {
+        assertEquals(a.getWidth(), b.getWidth());
+        assertEquals(a.getHeight(), b.getHeight());
+
+        for (int x = 0; x < a.getWidth(); x++) {
+            for (int y = 0; y < a.getHeight(); y++) {
+                final int a_argb = a.getRGB(x, y);
+                final int b_argb = b.getRGB(x, y);
+                if (a_argb != b_argb) {
+                    Debug.debug("width: " + a.getWidth());
+                    Debug.debug("height: " + a.getHeight());
+                    Debug.debug("x: " + x);
+                    Debug.debug("y: " + y);
+                    Debug.debug("a_argb: " + a_argb + " (0x" + Integer.toHexString(a_argb) + ")");
+                    Debug.debug("b_argb: " + b_argb + " (0x" + Integer.toHexString(b_argb) + ")");
+                }
+                assertEquals(a_argb, b_argb);
+            }
+        }
+    }
+
     @Test
     public void testAll5x2Compressions() {
         final byte[] uncompressed = new byte[2];
@@ -254,50 +299,5 @@ public class TiffCcittTest extends TiffBaseTest {
                 fail();
             }
         } while (nextCombination(combinations, 1));
-    }
-
-    /**
-     * Generates the next combination of elements in the sequence array, with
-     * each element having a maximum value of max. Initially, the sequence
-     * should be set to minimum values of each element.
-     *
-     * @param sequence
-     *            the array of elements to update
-     * @param max
-     *            the maximum value of each element in the sequence
-     * @return false if there is no more combinations (ie. nothing was done),
-     *         true otherwise
-     */
-    private static boolean nextCombination(final int[] sequence, final int max) {
-        int i;
-        for (i = 0; i < sequence.length; i++) {
-            if (sequence[i] != max) {
-                sequence[i]++;
-                break;
-            }
-            sequence[i] = 0;
-        }
-        return i < sequence.length;
-    }
-
-    private void compareImages(final BufferedImage a, final BufferedImage b) {
-        assertEquals(a.getWidth(), b.getWidth());
-        assertEquals(a.getHeight(), b.getHeight());
-
-        for (int x = 0; x < a.getWidth(); x++) {
-            for (int y = 0; y < a.getHeight(); y++) {
-                final int a_argb = a.getRGB(x, y);
-                final int b_argb = b.getRGB(x, y);
-                if (a_argb != b_argb) {
-                    Debug.debug("width: " + a.getWidth());
-                    Debug.debug("height: " + a.getHeight());
-                    Debug.debug("x: " + x);
-                    Debug.debug("y: " + y);
-                    Debug.debug("a_argb: " + a_argb + " (0x" + Integer.toHexString(a_argb) + ")");
-                    Debug.debug("b_argb: " + b_argb + " (0x" + Integer.toHexString(b_argb) + ")");
-                }
-                assertEquals(a_argb, b_argb);
-            }
-        }
     }
 }

@@ -49,12 +49,6 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputField;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 
 public class TiffImageMetadata extends GenericImageMetadata {
-    public final TiffContents contents;
-
-    public TiffImageMetadata(final TiffContents contents) {
-        this.contents = contents;
-    }
-
     public static class Directory extends GenericImageMetadata implements
             ImageMetadataItem {
         // private BufferedImage thumbnail = null;
@@ -74,15 +68,6 @@ public class TiffImageMetadata extends GenericImageMetadata {
             add(new TiffMetadataItem(entry));
         }
 
-        public BufferedImage getThumbnail() throws ImageReadException,
-                IOException {
-            return directory.getTiffImage(byteOrder);
-        }
-
-        public TiffImageData getTiffImageData() {
-            return directory.getTiffImageData();
-        }
-
         public TiffField findField(final TagInfo tagInfo) throws ImageReadException {
             return directory.findField(tagInfo);
         }
@@ -93,15 +78,6 @@ public class TiffImageMetadata extends GenericImageMetadata {
 
         public JpegImageData getJpegImageData() {
             return directory.getJpegImageData();
-        }
-
-        @Override
-        public String toString(final String prefix) {
-            return (prefix != null ? prefix : "") + directory.description()
-                    + ": " //
-                    + (getTiffImageData() != null ? " (tiffImageData)" : "") //
-                    + (getJpegImageData() != null ? " (jpegImageData)" : "") //
-                    + "\n" + super.toString(prefix) + "\n";
         }
 
         public TiffOutputDirectory getOutputDirectory(final ByteOrder byteOrder)
@@ -159,23 +135,110 @@ public class TiffImageMetadata extends GenericImageMetadata {
             }
         }
 
-    }
-
-    public List<? extends ImageMetadataItem> getDirectories() {
-        return super.getItems();
-    }
-
-    @Override
-    public List<? extends ImageMetadataItem> getItems() {
-        final List<ImageMetadataItem> result = new ArrayList<>();
-
-        final List<? extends ImageMetadataItem> items = super.getItems();
-        for (final ImageMetadataItem item : items) {
-            final Directory dir = (Directory) item;
-            result.addAll(dir.getItems());
+        public BufferedImage getThumbnail() throws ImageReadException,
+                IOException {
+            return directory.getTiffImage(byteOrder);
         }
 
-        return result;
+        public TiffImageData getTiffImageData() {
+            return directory.getTiffImageData();
+        }
+
+        @Override
+        public String toString(final String prefix) {
+            return (prefix != null ? prefix : "") + directory.description()
+                    + ": " //
+                    + (getTiffImageData() != null ? " (tiffImageData)" : "") //
+                    + (getJpegImageData() != null ? " (jpegImageData)" : "") //
+                    + "\n" + super.toString(prefix) + "\n";
+        }
+
+    }
+
+    public static class GPSInfo {
+        public final String latitudeRef;
+        public final String longitudeRef;
+
+        public final RationalNumber latitudeDegrees;
+        public final RationalNumber latitudeMinutes;
+        public final RationalNumber latitudeSeconds;
+        public final RationalNumber longitudeDegrees;
+        public final RationalNumber longitudeMinutes;
+        public final RationalNumber longitudeSeconds;
+
+        public GPSInfo(final String latitudeRef, final String longitudeRef,
+                final RationalNumber latitudeDegrees,
+                final RationalNumber latitudeMinutes,
+                final RationalNumber latitudeSeconds,
+                final RationalNumber longitudeDegrees,
+                final RationalNumber longitudeMinutes,
+                final RationalNumber longitudeSeconds) {
+            this.latitudeRef = latitudeRef;
+            this.longitudeRef = longitudeRef;
+            this.latitudeDegrees = latitudeDegrees;
+            this.latitudeMinutes = latitudeMinutes;
+            this.latitudeSeconds = latitudeSeconds;
+            this.longitudeDegrees = longitudeDegrees;
+            this.longitudeMinutes = longitudeMinutes;
+            this.longitudeSeconds = longitudeSeconds;
+        }
+
+        public double getLatitudeAsDegreesNorth() throws ImageReadException {
+            final double result = latitudeDegrees.doubleValue()
+                    + (latitudeMinutes.doubleValue() / 60.0)
+                    + (latitudeSeconds.doubleValue() / 3600.0);
+
+            if (latitudeRef.trim().equalsIgnoreCase("n")) {
+                return result;
+            }
+            if (latitudeRef.trim().equalsIgnoreCase("s")) {
+                return -result;
+            }
+            throw new ImageReadException("Unknown latitude ref: \""
+                    + latitudeRef + "\"");
+        }
+
+        public double getLongitudeAsDegreesEast() throws ImageReadException {
+            final double result = longitudeDegrees.doubleValue()
+                    + (longitudeMinutes.doubleValue() / 60.0)
+                    + (longitudeSeconds.doubleValue() / 3600.0);
+
+            if (longitudeRef.trim().equalsIgnoreCase("e")) {
+                return result;
+            }
+            if (longitudeRef.trim().equalsIgnoreCase("w")) {
+                return -result;
+            }
+            throw new ImageReadException("Unknown longitude ref: \""
+                    + longitudeRef + "\"");
+        }
+
+        @Override
+        public String toString() {
+            // This will format the gps info like so:
+            //
+            // latitude: 8 degrees, 40 minutes, 42.2 seconds S
+            // longitude: 115 degrees, 26 minutes, 21.8 seconds E
+
+            return "[GPS. Latitude: " +
+                    latitudeDegrees.toDisplayString() +
+                    " degrees, " +
+                    latitudeMinutes.toDisplayString() +
+                    " minutes, " +
+                    latitudeSeconds.toDisplayString() +
+                    " seconds " +
+                    latitudeRef +
+                    ", Longitude: " +
+                    longitudeDegrees.toDisplayString() +
+                    " degrees, " +
+                    longitudeMinutes.toDisplayString() +
+                    " minutes, " +
+                    longitudeSeconds.toDisplayString() +
+                    " seconds " +
+                    longitudeRef +
+                    ']';
+        }
+
     }
 
     public static class TiffMetadataItem extends GenericImageMetadataItem {
@@ -193,26 +256,21 @@ public class TiffImageMetadata extends GenericImageMetadata {
 
     }
 
-    public TiffOutputSet getOutputSet() throws ImageWriteException {
-        final ByteOrder byteOrder = contents.header.byteOrder;
-        final TiffOutputSet result = new TiffOutputSet(byteOrder);
+    public final TiffContents contents;
 
-        final List<? extends ImageMetadataItem> srcDirs = getDirectories();
-        for (final ImageMetadataItem srcDir1 : srcDirs) {
-            final Directory srcDir = (Directory) srcDir1;
+    public TiffImageMetadata(final TiffContents contents) {
+        this.contents = contents;
+    }
 
-            if (null != result.findDirectory(srcDir.type)) {
-                // Certain cameras right directories more than once.
-                // This is a bug.
-                // Ignore second directory of a given type.
-                continue;
+    public TiffDirectory findDirectory(final int directoryType) {
+        final List<? extends ImageMetadataItem> directories = getDirectories();
+        for (final ImageMetadataItem directory1 : directories) {
+            final Directory directory = (Directory) directory1;
+            if (directory.type == directoryType) {
+                return directory.directory;
             }
-
-            final TiffOutputDirectory outputDirectory = srcDir.getOutputDirectory(byteOrder);
-            result.addDirectory(outputDirectory);
         }
-
-        return result;
+        return null;
     }
 
     public TiffField findField(final TagInfo tagInfo) throws ImageReadException {
@@ -264,23 +322,26 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return null;
     }
 
+    public List<TiffField> getAllFields() {
+        final List<TiffField> result = new ArrayList<>();
+        final List<? extends ImageMetadataItem> directories = getDirectories();
+        for (final ImageMetadataItem directory1 : directories) {
+            final Directory directory = (Directory) directory1;
+            result.addAll(directory.getAllFields());
+        }
+        return result;
+    }
+
+    public List<? extends ImageMetadataItem> getDirectories() {
+        return super.getItems();
+    }
+
     public Object getFieldValue(final TagInfo tag) throws ImageReadException {
         final TiffField field = findField(tag);
         if (field == null) {
             return null;
         }
         return field.getValue();
-    }
-
-    public byte[] getFieldValue(final TagInfoByte tag) throws ImageReadException {
-        final TiffField field = findField(tag);
-        if (field == null) {
-            return null;
-        }
-        if (!tag.dataTypes.contains(field.getFieldType())) {
-            return null;
-        }
-        return field.getByteArrayValue();
     }
 
     public String[] getFieldValue(final TagInfoAscii tag) throws ImageReadException {
@@ -295,7 +356,18 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
-    public short[] getFieldValue(final TagInfoShorts tag) throws ImageReadException {
+    public byte[] getFieldValue(final TagInfoByte tag) throws ImageReadException {
+        final TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.getFieldType())) {
+            return null;
+        }
+        return field.getByteArrayValue();
+    }
+
+    public double[] getFieldValue(final TagInfoDoubles tag) throws ImageReadException {
         final TiffField field = findField(tag);
         if (field == null) {
             return null;
@@ -305,6 +377,26 @@ public class TiffImageMetadata extends GenericImageMetadata {
         }
         final byte[] bytes = field.getByteArrayValue();
         return tag.getValue(field.getByteOrder(), bytes);
+    }
+
+    public float[] getFieldValue(final TagInfoFloats tag) throws ImageReadException {
+        final TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.getFieldType())) {
+            return null;
+        }
+        final byte[] bytes = field.getByteArrayValue();
+        return tag.getValue(field.getByteOrder(), bytes);
+    }
+
+    public String getFieldValue(final TagInfoGpsText tag) throws ImageReadException {
+        final TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        return tag.getValue(field);
     }
 
     public int[] getFieldValue(final TagInfoLongs tag) throws ImageReadException {
@@ -343,7 +435,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return field.getByteArrayValue();
     }
 
-    public short[] getFieldValue(final TagInfoSShorts tag) throws ImageReadException {
+    public short[] getFieldValue(final TagInfoShorts tag) throws ImageReadException {
         final TiffField field = findField(tag);
         if (field == null) {
             return null;
@@ -380,7 +472,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
-    public float[] getFieldValue(final TagInfoFloats tag) throws ImageReadException {
+    public short[] getFieldValue(final TagInfoSShorts tag) throws ImageReadException {
         final TiffField field = findField(tag);
         if (field == null) {
             return null;
@@ -390,26 +482,6 @@ public class TiffImageMetadata extends GenericImageMetadata {
         }
         final byte[] bytes = field.getByteArrayValue();
         return tag.getValue(field.getByteOrder(), bytes);
-    }
-
-    public double[] getFieldValue(final TagInfoDoubles tag) throws ImageReadException {
-        final TiffField field = findField(tag);
-        if (field == null) {
-            return null;
-        }
-        if (!tag.dataTypes.contains(field.getFieldType())) {
-            return null;
-        }
-        final byte[] bytes = field.getByteArrayValue();
-        return tag.getValue(field.getByteOrder(), bytes);
-    }
-
-    public String getFieldValue(final TagInfoGpsText tag) throws ImageReadException {
-        final TiffField field = findField(tag);
-        if (field == null) {
-            return null;
-        }
-        return tag.getValue(field);
     }
 
     public String getFieldValue(final TagInfoXpString tag) throws ImageReadException {
@@ -418,27 +490,6 @@ public class TiffImageMetadata extends GenericImageMetadata {
             return null;
         }
         return tag.getValue(field);
-    }
-
-    public TiffDirectory findDirectory(final int directoryType) {
-        final List<? extends ImageMetadataItem> directories = getDirectories();
-        for (final ImageMetadataItem directory1 : directories) {
-            final Directory directory = (Directory) directory1;
-            if (directory.type == directoryType) {
-                return directory.directory;
-            }
-        }
-        return null;
-    }
-
-    public List<TiffField> getAllFields() {
-        final List<TiffField> result = new ArrayList<>();
-        final List<? extends ImageMetadataItem> directories = getDirectories();
-        for (final ImageMetadataItem directory1 : directories) {
-            final Directory directory = (Directory) directory1;
-            result.addAll(directory.getAllFields());
-        }
-        return result;
     }
 
     public GPSInfo getGPS() throws ImageReadException {
@@ -481,90 +532,39 @@ public class TiffImageMetadata extends GenericImageMetadata {
                 longitudeMinutes, longitudeSeconds);
     }
 
-    public static class GPSInfo {
-        public final String latitudeRef;
-        public final String longitudeRef;
+    @Override
+    public List<? extends ImageMetadataItem> getItems() {
+        final List<ImageMetadataItem> result = new ArrayList<>();
 
-        public final RationalNumber latitudeDegrees;
-        public final RationalNumber latitudeMinutes;
-        public final RationalNumber latitudeSeconds;
-        public final RationalNumber longitudeDegrees;
-        public final RationalNumber longitudeMinutes;
-        public final RationalNumber longitudeSeconds;
-
-        public GPSInfo(final String latitudeRef, final String longitudeRef,
-                final RationalNumber latitudeDegrees,
-                final RationalNumber latitudeMinutes,
-                final RationalNumber latitudeSeconds,
-                final RationalNumber longitudeDegrees,
-                final RationalNumber longitudeMinutes,
-                final RationalNumber longitudeSeconds) {
-            this.latitudeRef = latitudeRef;
-            this.longitudeRef = longitudeRef;
-            this.latitudeDegrees = latitudeDegrees;
-            this.latitudeMinutes = latitudeMinutes;
-            this.latitudeSeconds = latitudeSeconds;
-            this.longitudeDegrees = longitudeDegrees;
-            this.longitudeMinutes = longitudeMinutes;
-            this.longitudeSeconds = longitudeSeconds;
+        final List<? extends ImageMetadataItem> items = super.getItems();
+        for (final ImageMetadataItem item : items) {
+            final Directory dir = (Directory) item;
+            result.addAll(dir.getItems());
         }
 
-        @Override
-        public String toString() {
-            // This will format the gps info like so:
-            //
-            // latitude: 8 degrees, 40 minutes, 42.2 seconds S
-            // longitude: 115 degrees, 26 minutes, 21.8 seconds E
+        return result;
+    }
 
-            return "[GPS. Latitude: " +
-                    latitudeDegrees.toDisplayString() +
-                    " degrees, " +
-                    latitudeMinutes.toDisplayString() +
-                    " minutes, " +
-                    latitudeSeconds.toDisplayString() +
-                    " seconds " +
-                    latitudeRef +
-                    ", Longitude: " +
-                    longitudeDegrees.toDisplayString() +
-                    " degrees, " +
-                    longitudeMinutes.toDisplayString() +
-                    " minutes, " +
-                    longitudeSeconds.toDisplayString() +
-                    " seconds " +
-                    longitudeRef +
-                    ']';
+    public TiffOutputSet getOutputSet() throws ImageWriteException {
+        final ByteOrder byteOrder = contents.header.byteOrder;
+        final TiffOutputSet result = new TiffOutputSet(byteOrder);
+
+        final List<? extends ImageMetadataItem> srcDirs = getDirectories();
+        for (final ImageMetadataItem srcDir1 : srcDirs) {
+            final Directory srcDir = (Directory) srcDir1;
+
+            if (null != result.findDirectory(srcDir.type)) {
+                // Certain cameras right directories more than once.
+                // This is a bug.
+                // Ignore second directory of a given type.
+                continue;
+            }
+
+            final TiffOutputDirectory outputDirectory = srcDir.getOutputDirectory(byteOrder);
+            result.addDirectory(outputDirectory);
         }
 
-        public double getLongitudeAsDegreesEast() throws ImageReadException {
-            final double result = longitudeDegrees.doubleValue()
-                    + (longitudeMinutes.doubleValue() / 60.0)
-                    + (longitudeSeconds.doubleValue() / 3600.0);
-
-            if (longitudeRef.trim().equalsIgnoreCase("e")) {
-                return result;
-            }
-            if (longitudeRef.trim().equalsIgnoreCase("w")) {
-                return -result;
-            }
-            throw new ImageReadException("Unknown longitude ref: \""
-                    + longitudeRef + "\"");
-        }
-
-        public double getLatitudeAsDegreesNorth() throws ImageReadException {
-            final double result = latitudeDegrees.doubleValue()
-                    + (latitudeMinutes.doubleValue() / 60.0)
-                    + (latitudeSeconds.doubleValue() / 3600.0);
-
-            if (latitudeRef.trim().equalsIgnoreCase("n")) {
-                return result;
-            }
-            if (latitudeRef.trim().equalsIgnoreCase("s")) {
-                return -result;
-            }
-            throw new ImageReadException("Unknown latitude ref: \""
-                    + latitudeRef + "\"");
-        }
-
+        return result;
     }
 
 }

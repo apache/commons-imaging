@@ -118,11 +118,6 @@ public final class ColorCmy {
     }
 
     @Override
-    public String toString() {
-        return "{C: " + C + ", M: " + M + ", Y: " + Y + "}";
-    }
-
-    @Override
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
@@ -156,5 +151,10 @@ public final class ColorCmy {
         temp = Double.doubleToLongBits(Y);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "{C: " + C + ", M: " + M + ", Y: " + Y + "}";
     }
 }

@@ -137,6 +137,10 @@ public class ImageInfo {
         this.compressionAlgorithm = compressionAlgorithm;
     }
 
+    public void dump() {
+        LOGGER.fine(toString());
+    }
+
     /**
      * Returns the bits per pixel of the image data.
      *
@@ -144,6 +148,15 @@ public class ImageInfo {
      */
     public int getBitsPerPixel() {
         return bitsPerPixel;
+    }
+
+    /**
+     * Returns the {@link org.apache.commons.imaging.ImageInfo.ColorType} of the image.
+     *
+     * @return image color type.
+     */
+    public ColorType getColorType() {
+        return colorType;
     }
 
     /**
@@ -158,6 +171,15 @@ public class ImageInfo {
     }
 
     /**
+     * Returns a description of the compression algorithm, if any.
+     *
+     * @return compression algorithm description.
+     */
+    public CompressionAlgorithm getCompressionAlgorithm() {
+        return compressionAlgorithm;
+    }
+
+    /**
      * Returns the image file format, ie. ImageFormat.IMAGE_FORMAT_PNG.
      *
      * <p>Returns ImageFormat.IMAGE_FORMAT_UNKNOWN if format is unknown.</p>
@@ -167,6 +189,15 @@ public class ImageInfo {
      */
     public ImageFormat getFormat() {
         return format;
+    }
+
+    /**
+     * Returns a description of the file format, ie. format version.
+     *
+     * @return file format description.
+     */
+    public String getFormatDetails() {
+        return formatDetails;
     }
 
     /**
@@ -283,16 +314,12 @@ public class ImageInfo {
     }
 
     /**
-     * Returns the {@link org.apache.commons.imaging.ImageInfo.ColorType} of the image.
+     * Returns true if the image has transparency.
      *
-     * @return image color type.
+     * @return {@code true} if the image has transparency, {@code false} otherwise.
      */
-    public ColorType getColorType() {
-        return colorType;
-    }
-
-    public void dump() {
-        LOGGER.fine(toString());
+    public boolean isTransparent() {
+        return transparent;
     }
 
     @Override
@@ -342,39 +369,12 @@ public class ImageInfo {
     }
 
     /**
-     * Returns a description of the file format, ie. format version.
-     *
-     * @return file format description.
-     */
-    public String getFormatDetails() {
-        return formatDetails;
-    }
-
-    /**
-     * Returns true if the image has transparency.
-     *
-     * @return {@code true} if the image has transparency, {@code false} otherwise.
-     */
-    public boolean isTransparent() {
-        return transparent;
-    }
-
-    /**
      * Returns true if the image uses a palette.
      *
      * @return {@code true} if the image uses a palette, {@code false} otherwise.
      */
     public boolean usesPalette() {
         return usesPalette;
-    }
-
-    /**
-     * Returns a description of the compression algorithm, if any.
-     *
-     * @return compression algorithm description.
-     */
-    public CompressionAlgorithm getCompressionAlgorithm() {
-        return compressionAlgorithm;
     }
 
 }

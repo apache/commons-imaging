@@ -35,8 +35,17 @@ public class ByteSourceFile extends ByteSource {
     }
 
     @Override
-    public InputStream getInputStream() throws IOException {
-        return new BufferedInputStream(new FileInputStream(file));
+    public byte[] getAll() throws IOException {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        try (InputStream is = getInputStream()) {
+            final byte[] buffer = new byte[1024];
+            int read;
+            while ((read = is.read(buffer)) > 0) {
+                baos.write(buffer, 0, read);
+            }
+            return baos.toByteArray();
+        }
     }
 
     @Override
@@ -56,27 +65,18 @@ public class ByteSourceFile extends ByteSource {
     }
 
     @Override
-    public long getLength() {
-        return file.length();
-    }
-
-    @Override
-    public byte[] getAll() throws IOException {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        try (InputStream is = getInputStream()) {
-            final byte[] buffer = new byte[1024];
-            int read;
-            while ((read = is.read(buffer)) > 0) {
-                baos.write(buffer, 0, read);
-            }
-            return baos.toByteArray();
-        }
-    }
-
-    @Override
     public String getDescription() {
         return "File: '" + file.getAbsolutePath() + "'";
+    }
+
+    @Override
+    public InputStream getInputStream() throws IOException {
+        return new BufferedInputStream(new FileInputStream(file));
+    }
+
+    @Override
+    public long getLength() {
+        return file.length();
     }
 
 }

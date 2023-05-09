@@ -26,16 +26,16 @@ import java.io.UnsupportedEncodingException;
 public abstract class GenericSegment extends Segment {
     private final byte[] segmentData;
 
-    public GenericSegment(final int marker, final int markerLength, final InputStream is) throws IOException {
-        super(marker, markerLength);
-
-        segmentData = readBytes("Segment Data", is, markerLength, "Invalid Segment: insufficient data");
-    }
-
     public GenericSegment(final int marker, final byte[] bytes) {
         super(marker, bytes.length);
 
         this.segmentData = bytes.clone();
+    }
+
+    public GenericSegment(final int marker, final int markerLength, final InputStream is) throws IOException {
+        super(marker, markerLength);
+
+        segmentData = readBytes("Segment Data", is, markerLength, "Invalid Segment: insufficient data");
     }
 
     @Override

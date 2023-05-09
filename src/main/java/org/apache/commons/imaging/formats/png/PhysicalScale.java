@@ -24,8 +24,16 @@ public class PhysicalScale {
    private static final int RADIAN_UNITS = 2;
    public static final PhysicalScale UNDEFINED = createFromMeters(-1.0, -1.0);
 
+   public static PhysicalScale createFromMeters(final double x, final double y) {
+      return new PhysicalScale(METER_UNITS, x, y);
+   }
+   public static PhysicalScale createFromRadians(final double x, final double y) {
+      return new PhysicalScale(RADIAN_UNITS, x, y);
+   }
    private final int units;
+
    private final double horizontalUnitsPerPixel;
+
    private final double verticalUnitsPerPixel;
 
    private PhysicalScale(final int units, final double horizontalUnitsPerPixel,
@@ -35,12 +43,12 @@ public class PhysicalScale {
       this.verticalUnitsPerPixel = verticalUnitsPerPixel;
    }
 
-   public static PhysicalScale createFromMeters(final double x, final double y) {
-      return new PhysicalScale(METER_UNITS, x, y);
+   public double getHorizontalUnitsPerPixel() {
+      return horizontalUnitsPerPixel;
    }
 
-   public static PhysicalScale createFromRadians(final double x, final double y) {
-      return new PhysicalScale(RADIAN_UNITS, x, y);
+   public double getVerticalUnitsPerPixel() {
+      return verticalUnitsPerPixel;
    }
 
    public boolean isInMeters() {
@@ -49,13 +57,5 @@ public class PhysicalScale {
 
    public boolean isInRadians() {
       return RADIAN_UNITS == units;
-   }
-
-   public double getHorizontalUnitsPerPixel() {
-      return horizontalUnitsPerPixel;
-   }
-
-   public double getVerticalUnitsPerPixel() {
-      return verticalUnitsPerPixel;
    }
 }

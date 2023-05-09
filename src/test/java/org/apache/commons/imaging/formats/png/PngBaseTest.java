@@ -29,12 +29,12 @@ import org.apache.commons.imaging.ImagingTest;
 
 public abstract class PngBaseTest extends ImagingTest {
 
+    private static final ImageFilter IMAGE_FILTER = PngBaseTest::isPng;
+
     private static boolean isPng(final File file) throws IOException {
         final ImageFormat format = Imaging.guessFormat(file);
         return format == ImageFormats.PNG;
     }
-
-    private static final ImageFilter IMAGE_FILTER = PngBaseTest::isPng;
 
     protected List<File> getPngImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);

@@ -30,19 +30,6 @@ import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 
 public class ImageReadExample {
-    public static BufferedImage imageReadExample(final File file)
-            throws ImageReadException, IOException {
-        final TiffImagingParameters params = new TiffImagingParameters();
-
-        // set optional parameters if you like
-        params.setBufferedImageFactory(new ManagedImageBufferedImageFactory());
-
-        // params.setStrict(Boolean.TRUE);
-
-        // read and return the TIFF image
-        return new TiffImageParser().getBufferedImage(file, params);
-    }
-
     public static class ManagedImageBufferedImageFactory implements
             BufferedImageFactory {
 
@@ -61,6 +48,19 @@ public class ImageReadExample {
                 final boolean hasAlpha) {
             return getColorBufferedImage(width, height, hasAlpha);
         }
+    }
+
+    public static BufferedImage imageReadExample(final File file)
+            throws ImageReadException, IOException {
+        final TiffImagingParameters params = new TiffImagingParameters();
+
+        // set optional parameters if you like
+        params.setBufferedImageFactory(new ManagedImageBufferedImageFactory());
+
+        // params.setStrict(Boolean.TRUE);
+
+        // read and return the TIFF image
+        return new TiffImageParser().getBufferedImage(file, params);
     }
 
 }

@@ -30,31 +30,6 @@ public class LongestAxisMedianCut implements MedianCut {
         return cg2.maxDiff - cg1.maxDiff;
     };
 
-    @Override
-    public boolean performNextMedianCut(final List<ColorGroup> colorGroups, final boolean ignoreAlpha)
-            throws ImageWriteException {
-        colorGroups.sort(COMPARATOR);
-        final ColorGroup colorGroup = colorGroups.get(0);
-
-        if (colorGroup.maxDiff == 0) {
-            return false;
-        }
-        if (!ignoreAlpha
-                && colorGroup.alphaDiff > colorGroup.redDiff
-                && colorGroup.alphaDiff > colorGroup.greenDiff
-                && colorGroup.alphaDiff > colorGroup.blueDiff) {
-            doCut(colorGroup, ColorComponent.ALPHA, colorGroups, ignoreAlpha);
-        } else if (colorGroup.redDiff > colorGroup.greenDiff
-                && colorGroup.redDiff > colorGroup.blueDiff) {
-            doCut(colorGroup, ColorComponent.RED, colorGroups, ignoreAlpha);
-        } else if (colorGroup.greenDiff > colorGroup.blueDiff) {
-            doCut(colorGroup, ColorComponent.GREEN, colorGroups, ignoreAlpha);
-        } else {
-            doCut(colorGroup, ColorComponent.BLUE, colorGroups, ignoreAlpha);
-        }
-        return true;
-    }
-
     private void doCut(final ColorGroup colorGroup, final ColorComponent mode,
             final List<ColorGroup> colorGroups, final boolean ignoreAlpha) throws ImageWriteException {
 
@@ -116,5 +91,30 @@ public class LongestAxisMedianCut implements MedianCut {
                 throw new Error("Bad mode.");
         }
         colorGroup.cut = new ColorGroupCut(less, more, mode, limit);
+    }
+
+    @Override
+    public boolean performNextMedianCut(final List<ColorGroup> colorGroups, final boolean ignoreAlpha)
+            throws ImageWriteException {
+        colorGroups.sort(COMPARATOR);
+        final ColorGroup colorGroup = colorGroups.get(0);
+
+        if (colorGroup.maxDiff == 0) {
+            return false;
+        }
+        if (!ignoreAlpha
+                && colorGroup.alphaDiff > colorGroup.redDiff
+                && colorGroup.alphaDiff > colorGroup.greenDiff
+                && colorGroup.alphaDiff > colorGroup.blueDiff) {
+            doCut(colorGroup, ColorComponent.ALPHA, colorGroups, ignoreAlpha);
+        } else if (colorGroup.redDiff > colorGroup.greenDiff
+                && colorGroup.redDiff > colorGroup.blueDiff) {
+            doCut(colorGroup, ColorComponent.RED, colorGroups, ignoreAlpha);
+        } else if (colorGroup.greenDiff > colorGroup.blueDiff) {
+            doCut(colorGroup, ColorComponent.GREEN, colorGroups, ignoreAlpha);
+        } else {
+            doCut(colorGroup, ColorComponent.BLUE, colorGroups, ignoreAlpha);
+        }
+        return true;
     }
 }

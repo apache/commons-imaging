@@ -33,6 +33,19 @@ import org.junit.jupiter.api.Test;
 public class BmpImageParserTest {
 
     /**
+     * For https://issues.apache.org/jira/browse/IMAGING-279.
+     * @throws IOException
+     * @throws ImageReadException
+     */
+    @Test
+    public void testImageForNegativeArraySizeException() throws ImageReadException, IOException {
+        final String file = "/images/bmp/IMAGING-279/negative_array_size_exception.bmp";
+        final File bmp = new File(BmpImageParser.class.getResource(file).getFile());
+        final BmpImageParser parser = new BmpImageParser();
+        assertThrows(IOException.class, () -> parser.getImageInfo(bmp, new BmpImagingParameters()));
+    }
+
+    /**
      * For https://issues.apache.org/jira/browse/IMAGING-264.
      * @throws IOException
      * @throws ImageReadException
@@ -44,18 +57,5 @@ public class BmpImageParserTest {
         final BmpImageParser parser = new BmpImageParser();
         final ImageInfo imageInfo = parser.getImageInfo(bmp, new BmpImagingParameters());
         assertEquals(73, imageInfo.getPhysicalWidthDpi(), "Expected 72.6 resolution to be rounded to 73");
-    }
-
-    /**
-     * For https://issues.apache.org/jira/browse/IMAGING-279.
-     * @throws IOException
-     * @throws ImageReadException
-     */
-    @Test
-    public void testImageForNegativeArraySizeException() throws ImageReadException, IOException {
-        final String file = "/images/bmp/IMAGING-279/negative_array_size_exception.bmp";
-        final File bmp = new File(BmpImageParser.class.getResource(file).getFile());
-        final BmpImageParser parser = new BmpImageParser();
-        assertThrows(IOException.class, () -> parser.getImageInfo(bmp, new BmpImagingParameters()));
     }
 }

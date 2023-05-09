@@ -28,19 +28,20 @@ import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 
 public class TiffOutputField {
+    private static final String NEWLINE = System.getProperty("line.separator");
+    protected static TiffOutputField createOffsetField(final TagInfo tagInfo,
+            final ByteOrder byteOrder) throws ImageWriteException {
+        return new TiffOutputField(tagInfo, FieldType.LONG, 1,
+                FieldType.LONG.writeData(0, byteOrder));
+    }
     public final int tag;
     public final TagInfo tagInfo;
     public final FieldType fieldType;
     public final int count;
     private byte[] bytes;
     private final TiffOutputItem.Value separateValueItem;
-    private int sortHint = -1;
-    private static final String NEWLINE = System.getProperty("line.separator");
 
-    public TiffOutputField(final TagInfo tagInfo, final FieldType fieldType, final int count,
-            final byte[] bytes) {
-        this(tagInfo.tag, tagInfo, fieldType, count, bytes);
-    }
+    private int sortHint = -1;
 
     public TiffOutputField(final int tag, final TagInfo tagInfo, final FieldType fieldType,
             final int count, final byte[] bytes) {
@@ -59,51 +60,25 @@ public class TiffOutputField {
         }
     }
 
-    protected static TiffOutputField createOffsetField(final TagInfo tagInfo,
-            final ByteOrder byteOrder) throws ImageWriteException {
-        return new TiffOutputField(tagInfo, FieldType.LONG, 1,
-                FieldType.LONG.writeData(0, byteOrder));
+    public TiffOutputField(final TagInfo tagInfo, final FieldType fieldType, final int count,
+            final byte[] bytes) {
+        this(tagInfo.tag, tagInfo, fieldType, count, bytes);
     }
 
-    protected void writeField(final BinaryOutputStream bos) throws IOException,
-            ImageWriteException {
-        bos.write2Bytes(tag);
-        bos.write2Bytes(fieldType.getType());
-        bos.write4Bytes(count);
-
-        if (isLocalValue()) {
-            if (separateValueItem != null) {
-                throw new ImageWriteException("Unexpected separate value item.");
-            }
-            if (bytes.length > 4) {
-                throw new ImageWriteException(
-                        "Local value has invalid length: " + bytes.length);
-            }
-
-            bos.write(bytes);
-            final int remainder = TIFF_ENTRY_MAX_VALUE_LENGTH - bytes.length;
-            for (int i = 0; i < remainder; i++) {
-                bos.write(0);
-            }
-        } else {
-            if (separateValueItem == null) {
-                throw new ImageWriteException("Missing separate value item.");
-            }
-
-            bos.write4Bytes((int) separateValueItem.getOffset());
-        }
+    public boolean bytesEqual(final byte[] data) {
+        return Arrays.equals(bytes, data);
     }
 
     protected TiffOutputItem getSeperateValue() {
         return separateValueItem;
     }
 
-    protected final boolean isLocalValue() {
-        return bytes.length <= TIFF_ENTRY_MAX_VALUE_LENGTH;
+    public int getSortHint() {
+        return sortHint;
     }
 
-    public boolean bytesEqual(final byte[] data) {
-        return Arrays.equals(bytes, data);
+    protected final boolean isLocalValue() {
+        return bytes.length <= TIFF_ENTRY_MAX_VALUE_LENGTH;
     }
 
     protected void setData(final byte[] bytes) throws ImageWriteException {
@@ -123,6 +98,10 @@ public class TiffOutputField {
         // if (isLocalValue() != wasLocalValue)
         // throw new Error("Bug. Locality disrupted! "
         // + tagInfo.getDescription());
+    }
+
+    public void setSortHint(final int sortHint) {
+        this.sortHint = sortHint;
     }
 
     @Override
@@ -152,11 +131,32 @@ public class TiffOutputField {
         return result.toString();
     }
 
-    public int getSortHint() {
-        return sortHint;
-    }
+    protected void writeField(final BinaryOutputStream bos) throws IOException,
+            ImageWriteException {
+        bos.write2Bytes(tag);
+        bos.write2Bytes(fieldType.getType());
+        bos.write4Bytes(count);
 
-    public void setSortHint(final int sortHint) {
-        this.sortHint = sortHint;
+        if (isLocalValue()) {
+            if (separateValueItem != null) {
+                throw new ImageWriteException("Unexpected separate value item.");
+            }
+            if (bytes.length > 4) {
+                throw new ImageWriteException(
+                        "Local value has invalid length: " + bytes.length);
+            }
+
+            bos.write(bytes);
+            final int remainder = TIFF_ENTRY_MAX_VALUE_LENGTH - bytes.length;
+            for (int i = 0; i < remainder; i++) {
+                bos.write(0);
+            }
+        } else {
+            if (separateValueItem == null) {
+                throw new ImageWriteException("Missing separate value item.");
+            }
+
+            bos.write4Bytes((int) separateValueItem.getOffset());
+        }
     }
 }

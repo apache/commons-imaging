@@ -34,6 +34,10 @@ import org.junit.jupiter.params.provider.Arguments;
 
 public class RoundtripBase {
 
+    public static Stream<Arguments> createRoundtripArguments(final BufferedImage[] images) {
+        return Stream.of(images).flatMap(i -> Stream.of(FormatInfo.READ_WRITE_FORMATS).map(f -> Arguments.of(i, f)));
+    }
+
     protected void roundtrip(final FormatInfo formatInfo, final BufferedImage testImage,
                              final String tempPrefix, final boolean imageExact) throws IOException,
             ImageReadException, ImageWriteException {
@@ -67,9 +71,5 @@ public class RoundtripBase {
 
             assertArrayEquals(temp1, temp2);
         }
-    }
-
-    public static Stream<Arguments> createRoundtripArguments(final BufferedImage[] images) {
-        return Stream.of(images).flatMap(i -> Stream.of(FormatInfo.READ_WRITE_FORMATS).map(f -> Arguments.of(i, f)));
     }
 }

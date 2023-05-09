@@ -20,6 +20,11 @@ import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
 public class DataParserGrayscale extends DataParser {
     @Override
+    public int getBasicChannelsCount() {
+        return 1;
+    }
+
+    @Override
     protected int getRGB(final int[][][] data, final int x, final int y,
             final PsdImageContents imageContents) {
         final int sample = 0xff & data[0][y][x];
@@ -29,11 +34,6 @@ public class DataParserGrayscale extends DataParser {
               | ((0xff & sample) << 16)
               | ((0xff & sample) << 8)
               | ((0xff & sample) << 0);
-    }
-
-    @Override
-    public int getBasicChannelsCount() {
-        return 1;
     }
 
 }

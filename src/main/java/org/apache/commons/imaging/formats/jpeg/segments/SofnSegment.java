@@ -30,14 +30,6 @@ import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
 public class SofnSegment extends Segment {
 
-    private static final Logger LOGGER = Logger.getLogger(SofnSegment.class.getName());
-
-    public final int width;
-    public final int height;
-    public final int numberOfComponents;
-    public final int precision;
-    private final Component[] components;
-
     public static class Component {
         public final int componentIdentifier;
         public final int horizontalSamplingFactor;
@@ -52,6 +44,14 @@ public class SofnSegment extends Segment {
             this.quantTabDestSelector = quantTabDestSelector;
         }
     }
+
+    private static final Logger LOGGER = Logger.getLogger(SofnSegment.class.getName());
+    public final int width;
+    public final int height;
+    public final int numberOfComponents;
+    public final int precision;
+
+    private final Component[] components;
 
     public SofnSegment(final int marker, final byte[] segmentData) throws IOException, ImageReadException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));

@@ -88,11 +88,6 @@ public final class ColorHunterLab {
     }
 
     @Override
-    public String toString() {
-        return "{L: " + L + ", a: " + a + ", b: " + b + "}";
-    }
-
-    @Override
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
@@ -126,5 +121,10 @@ public final class ColorHunterLab {
         temp = Double.doubleToLongBits(b);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "{L: " + L + ", a: " + a + ", b: " + b + "}";
     }
 }

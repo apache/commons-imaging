@@ -37,6 +37,14 @@ class BitInputStreamFlexible extends InputStream {
         // super(is);
     }
 
+    public void flushCache() {
+        cacheBitsRemaining = 0;
+    }
+
+    public long getBytesRead() {
+        return bytesRead;
+    }
+
     @Override
     public int read() throws IOException {
         if (cacheBitsRemaining > 0) {
@@ -96,13 +104,5 @@ class BitInputStreamFlexible extends InputStream {
 
         throw new IOException("BitInputStream: unknown error");
 
-    }
-
-    public void flushCache() {
-        cacheBitsRemaining = 0;
-    }
-
-    public long getBytesRead() {
-        return bytesRead;
     }
 }

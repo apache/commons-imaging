@@ -27,18 +27,6 @@ public class BinaryConstant {
         this.value = value.clone();
     }
 
-    @Override
-    public boolean equals(final Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (!(obj instanceof BinaryConstant)) {
-            return false;
-        }
-        final BinaryConstant other = (BinaryConstant) obj;
-        return equals(other.value);
-    }
-
     public boolean equals(final byte[] bytes) {
         return Arrays.equals(value, bytes);
     }
@@ -56,12 +44,24 @@ public class BinaryConstant {
     }
 
     @Override
-    public int hashCode() {
-        return Arrays.hashCode(value);
+    public boolean equals(final Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof BinaryConstant)) {
+            return false;
+        }
+        final BinaryConstant other = (BinaryConstant) obj;
+        return equals(other.value);
     }
 
     public byte get(final int i) {
         return value[i];
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(value);
     }
 
     public int size() {

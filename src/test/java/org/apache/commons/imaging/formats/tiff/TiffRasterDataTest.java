@@ -50,71 +50,70 @@ public class TiffRasterDataTest {
     }
 
     /**
-     * Test of setValue method, of class TiffRasterData.
+     * Test of constructors with bad arguments, of class TiffRasterData.
      */
     @Test
-    public void testSetValue() {
-        final TiffRasterData instance = new TiffRasterDataFloat(width, height);
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                final int index = y * width + height;
-                instance.setValue(x, y, index);
-                final int test = (int) instance.getValue(x, y);
-                assertEquals(index, test, "Set/get value test failed at (" + x + "," + y + ")");
-                instance.setIntValue(x, y, index);
-                final int iTest = instance.getIntValue(x, y);
-                assertEquals(index, iTest, "Get/set value test failed at (" + x + "," + y + ")");
-            }
-        }
+    public void testBadConstructor() {
+        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataFloat(-1, 10), "Constructor did not detect bad width");
+        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataFloat(10, -1), "Constructor did not detect bad height");
+        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataFloat(1, 1, 0), "Constructor did not detect bad samplesPerPixel");
+
+        final float []f = new float[10];
+        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataFloat(2, 10, f), "Constructor did not detect insufficient input array size");
+        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataFloat(2, 3, 2, f), "Constructor did not detect insufficient input array size");
     }
 
     /**
-     * Test of getValue method, of class TiffRasterData.
+     * Test of access with bad coordinates, of class TiffRasterData.
      */
     @Test
-    public void testGetValue() {
+    public void testBadCoordinates() {
+        final float []f = new float[100];
+        final TiffRasterData instance = new TiffRasterDataFloat(10, 10, 1, f);
+        assertThrows(IllegalArgumentException.class, ()->instance.getValue(11, 11),       "Access method getValue() did not detect bad coordinates");
+        assertThrows(IllegalArgumentException.class, ()->instance.setValue(11, 11, 5.0f), "Access method setValue() did not detect bad coordinates");
+        assertThrows(IllegalArgumentException.class, ()->instance.getValue(1, 1, 2),  "Access method setValue() did not detect bad sample index");
+    }
+
+    /**
+     * Test of getData method, of class TiffRasterData.
+     */
+    @Test
+    public void testGetData() {
+        final float[] result = raster.getData();
+        assertArrayEquals(data, result);
+        final int samplesPerPixel = raster.getSamplesPerPixel();
+        assertEquals(1, samplesPerPixel, "Incorrect number of samples per pixel");
+    }
+
+    /**
+     * Test of getData method, of class TiffRasterData.
+     */
+    @Test
+    public void testGetDataType() {
+        final TiffRasterDataType dataType = raster.getDataType();
+        assertTrue(dataType == TiffRasterDataType.FLOAT, "Unexpected data type "+dataType.name());
+    }
+
+    /**
+     * Test of getHeight method, of class TiffRasterData.
+     */
+    @Test
+    public void testGetHeight() {
+        assertEquals(width, raster.getWidth(), "Improper height stored");
+    }
+
+    /**
+     * Test of getData method, of class TiffRasterData.
+     */
+    @Test
+    public void testGetIntData() {
+        final int[] result = raster.getIntData();
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 final int index = y * width + x;
-                final int test = (int) raster.getValue(x, y);
-                assertEquals(index, test, "Get into source data test failed at (" + x + "," + y + ")");
-                final int iTest = raster.getIntValue(x, y);
-                assertEquals(index, iTest, "Get into source data test failed at (" + x + "," + y + ")");
-            }
-        }
-    }
-
-    /**
-     * Test of setValue method, of class TiffRasterData.
-     */
-    @Test
-    public void testSetValue2() {
-        final TiffRasterData instance = new TiffRasterDataFloat(width, height, 2);
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                final int index = y * width + height;
-                instance.setValue(x, y, 1, index);
-                final int test = (int) instance.getValue(x, y, 1);
-                assertEquals(index, test, "Set/get value test failed at (" + x + "," + y + ")");
-                instance.setIntValue(x, y, 1, index);
-                final int iTest = instance.getIntValue(x, y, 1);
-                assertEquals(index, iTest, "Get/set value test failed at (" + x + "," + y + ")");
-            }
-        }
-    }
-
-    /**
-     * Test of getValue method, of class TiffRasterData.
-     */
-    @Test
-    public void testGetValue2() {
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                final int index = y * width + x;
-                final int test = (int) raster.getValue(x, y, 0);
-                assertEquals(index, test, "Get into source data test failed at (" + x + "," + y + ")");
-                final int iTest = raster.getIntValue(x, y, 0);
-                assertEquals(index, iTest, "Get into source data test failed at (" + x + "," + y + ")");
+                final int test = (int) data[index];
+                assertEquals(index, test, "Integer array access test failed at (" + x + "," + y + ")");
             }
         }
     }
@@ -143,6 +142,39 @@ public class TiffRasterDataTest {
     }
 
     /**
+     * Test of getValue method, of class TiffRasterData.
+     */
+    @Test
+    public void testGetValue() {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                final int index = y * width + x;
+                final int test = (int) raster.getValue(x, y);
+                assertEquals(index, test, "Get into source data test failed at (" + x + "," + y + ")");
+                final int iTest = raster.getIntValue(x, y);
+                assertEquals(index, iTest, "Get into source data test failed at (" + x + "," + y + ")");
+            }
+        }
+    }
+
+    /**
+     * Test of getValue method, of class TiffRasterData.
+     */
+    @Test
+    public void testGetValue2() {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                final int index = y * width + x;
+                final int test = (int) raster.getValue(x, y, 0);
+                assertEquals(index, test, "Get into source data test failed at (" + x + "," + y + ")");
+                final int iTest = raster.getIntValue(x, y, 0);
+                assertEquals(index, iTest, "Get into source data test failed at (" + x + "," + y + ")");
+            }
+        }
+    }
+
+
+    /**
      * Test of getWidth method, of class TiffRasterData.
      */
     @Test
@@ -150,75 +182,43 @@ public class TiffRasterDataTest {
         assertEquals(width, raster.getWidth(), "Improper width stored");
     }
 
-    /**
-     * Test of getHeight method, of class TiffRasterData.
-     */
-    @Test
-    public void testGetHeight() {
-        assertEquals(width, raster.getWidth(), "Improper height stored");
-    }
 
     /**
-     * Test of getData method, of class TiffRasterData.
+     * Test of setValue method, of class TiffRasterData.
      */
     @Test
-    public void testGetData() {
-        final float[] result = raster.getData();
-        assertArrayEquals(data, result);
-        final int samplesPerPixel = raster.getSamplesPerPixel();
-        assertEquals(1, samplesPerPixel, "Incorrect number of samples per pixel");
-    }
-
-    /**
-     * Test of getData method, of class TiffRasterData.
-     */
-    @Test
-    public void testGetIntData() {
-        final int[] result = raster.getIntData();
+    public void testSetValue() {
+        final TiffRasterData instance = new TiffRasterDataFloat(width, height);
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                final int index = y * width + x;
-                final int test = (int) data[index];
-                assertEquals(index, test, "Integer array access test failed at (" + x + "," + y + ")");
+                final int index = y * width + height;
+                instance.setValue(x, y, index);
+                final int test = (int) instance.getValue(x, y);
+                assertEquals(index, test, "Set/get value test failed at (" + x + "," + y + ")");
+                instance.setIntValue(x, y, index);
+                final int iTest = instance.getIntValue(x, y);
+                assertEquals(index, iTest, "Get/set value test failed at (" + x + "," + y + ")");
             }
         }
     }
 
-
     /**
-     * Test of getData method, of class TiffRasterData.
+     * Test of setValue method, of class TiffRasterData.
      */
     @Test
-    public void testGetDataType() {
-        final TiffRasterDataType dataType = raster.getDataType();
-        assertTrue(dataType == TiffRasterDataType.FLOAT, "Unexpected data type "+dataType.name());
-    }
-
-
-    /**
-     * Test of constructors with bad arguments, of class TiffRasterData.
-     */
-    @Test
-    public void testBadConstructor() {
-        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataFloat(-1, 10), "Constructor did not detect bad width");
-        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataFloat(10, -1), "Constructor did not detect bad height");
-        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataFloat(1, 1, 0), "Constructor did not detect bad samplesPerPixel");
-
-        final float []f = new float[10];
-        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataFloat(2, 10, f), "Constructor did not detect insufficient input array size");
-        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataFloat(2, 3, 2, f), "Constructor did not detect insufficient input array size");
-    }
-
-    /**
-     * Test of access with bad coordinates, of class TiffRasterData.
-     */
-    @Test
-    public void testBadCoordinates() {
-        final float []f = new float[100];
-        final TiffRasterData instance = new TiffRasterDataFloat(10, 10, 1, f);
-        assertThrows(IllegalArgumentException.class, ()->instance.getValue(11, 11),       "Access method getValue() did not detect bad coordinates");
-        assertThrows(IllegalArgumentException.class, ()->instance.setValue(11, 11, 5.0f), "Access method setValue() did not detect bad coordinates");
-        assertThrows(IllegalArgumentException.class, ()->instance.getValue(1, 1, 2),  "Access method setValue() did not detect bad sample index");
+    public void testSetValue2() {
+        final TiffRasterData instance = new TiffRasterDataFloat(width, height, 2);
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                final int index = y * width + height;
+                instance.setValue(x, y, 1, index);
+                final int test = (int) instance.getValue(x, y, 1);
+                assertEquals(index, test, "Set/get value test failed at (" + x + "," + y + ")");
+                instance.setIntValue(x, y, 1, index);
+                final int iTest = instance.getIntValue(x, y, 1);
+                assertEquals(index, iTest, "Get/set value test failed at (" + x + "," + y + ")");
+            }
+        }
     }
 
 }

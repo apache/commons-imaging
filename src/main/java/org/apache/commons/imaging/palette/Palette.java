@@ -23,6 +23,13 @@ import org.apache.commons.imaging.ImageWriteException;
  */
 public interface Palette {
 
+    /**
+     * Looks up the color for a given palette index.
+     * @param index the palette index to look up
+     * @return the color in ARGB format
+     */
+    int getEntry(int index);
+
     // TODO: shouldn't it be an ImageReadException for getPaletteIndex?
     /**
      * Looks up the palette index for a given color.
@@ -31,13 +38,6 @@ public interface Palette {
      * @throws ImageWriteException if it fails to read the palette index
      */
     int getPaletteIndex(int rgb) throws ImageWriteException;
-
-    /**
-     * Looks up the color for a given palette index.
-     * @param index the palette index to look up
-     * @return the color in ARGB format
-     */
-    int getEntry(int index);
 
     /**
      * The number of entries in the palette.

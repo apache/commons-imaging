@@ -48,21 +48,6 @@ public class RgbeImageParser extends ImageParser<RgbeImagingParameters> {
     }
 
     @Override
-    public RgbeImagingParameters getDefaultParameters() {
-        return new RgbeImagingParameters();
-    }
-
-    @Override
-    public String getName() {
-        return "Radiance HDR";
-    }
-
-    @Override
-    public String getDefaultExtension() {
-        return ImageFormats.RGBE.getDefaultExtension();
-    }
-
-    @Override
     protected String[] getAcceptedExtensions() {
         return ImageFormats.RGBE.getExtensions();
     }
@@ -70,28 +55,6 @@ public class RgbeImageParser extends ImageParser<RgbeImagingParameters> {
     @Override
     protected ImageFormat[] getAcceptedTypes() {
         return new ImageFormat[] { ImageFormats.RGBE };
-    }
-
-    @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final RgbeImagingParameters params)
-            throws ImageReadException, IOException {
-        try (RgbeInfo info = new RgbeInfo(byteSource)) {
-            return info.getMetadata();
-        }
-    }
-
-    @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final RgbeImagingParameters params)
-            throws ImageReadException, IOException {
-        try (RgbeInfo info = new RgbeInfo(byteSource)) {
-            return new ImageInfo(
-                    getName(),
-                    32, // todo may be 64 if double?
-                    new ArrayList<>(), ImageFormats.RGBE, getName(),
-                    info.getHeight(), "image/vnd.radiance", 1, -1, -1, -1, -1,
-                    info.getWidth(), false, false, false,
-                    ImageInfo.ColorType.RGB, ImageInfo.CompressionAlgorithm.ADAPTIVE_RLE);
-        }
     }
 
     @Override
@@ -116,6 +79,36 @@ public class RgbeImageParser extends ImageParser<RgbeImagingParameters> {
     }
 
     @Override
+    public String getDefaultExtension() {
+        return ImageFormats.RGBE.getDefaultExtension();
+    }
+
+    @Override
+    public RgbeImagingParameters getDefaultParameters() {
+        return new RgbeImagingParameters();
+    }
+
+    @Override
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final RgbeImagingParameters params)
+            throws ImageReadException, IOException {
+        return null;
+    }
+
+    @Override
+    public ImageInfo getImageInfo(final ByteSource byteSource, final RgbeImagingParameters params)
+            throws ImageReadException, IOException {
+        try (RgbeInfo info = new RgbeInfo(byteSource)) {
+            return new ImageInfo(
+                    getName(),
+                    32, // todo may be 64 if double?
+                    new ArrayList<>(), ImageFormats.RGBE, getName(),
+                    info.getHeight(), "image/vnd.radiance", 1, -1, -1, -1, -1,
+                    info.getWidth(), false, false, false,
+                    ImageInfo.ColorType.RGB, ImageInfo.CompressionAlgorithm.ADAPTIVE_RLE);
+        }
+    }
+
+    @Override
     public Dimension getImageSize(final ByteSource byteSource, final RgbeImagingParameters params)
             throws ImageReadException, IOException {
         try (RgbeInfo info = new RgbeInfo(byteSource)) {
@@ -124,8 +117,15 @@ public class RgbeImageParser extends ImageParser<RgbeImagingParameters> {
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final RgbeImagingParameters params)
+    public ImageMetadata getMetadata(final ByteSource byteSource, final RgbeImagingParameters params)
             throws ImageReadException, IOException {
-        return null;
+        try (RgbeInfo info = new RgbeInfo(byteSource)) {
+            return info.getMetadata();
+        }
+    }
+
+    @Override
+    public String getName() {
+        return "Radiance HDR";
     }
 }

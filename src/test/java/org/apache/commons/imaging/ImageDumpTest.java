@@ -26,21 +26,21 @@ import org.junit.jupiter.api.Test;
 public class ImageDumpTest {
 
     @Test
-    public void testDumpColorSpace() {
-        final ImageDump imageDump = new ImageDump();
-        final ColorSpace colorSpace = ColorSpace.getInstance(1004);
-        imageDump.dumpColorSpace("Ku&]N>!4'C#Jzn+", colorSpace);
-
-        assertEquals(3, colorSpace.getNumComponents());
-    }
-
-    @Test
     public void testDump() {
         final ImageDump imageDump = new ImageDump();
         final BufferedImage bufferedImage = new BufferedImage(10, 10, 10);
         imageDump.dump(bufferedImage);
 
         assertEquals(10, bufferedImage.getHeight());
+    }
+
+    @Test
+    public void testDumpColorSpace() {
+        final ImageDump imageDump = new ImageDump();
+        final ColorSpace colorSpace = ColorSpace.getInstance(1004);
+        imageDump.dumpColorSpace("Ku&]N>!4'C#Jzn+", colorSpace);
+
+        assertEquals(3, colorSpace.getNumComponents());
     }
 
 }

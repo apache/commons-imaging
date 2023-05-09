@@ -71,21 +71,72 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShorts;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoXpString;
 
 public final class TiffOutputDirectory extends TiffOutputItem {
+    public static final Comparator<TiffOutputDirectory> COMPARATOR = Comparator.comparingInt(o -> o.type);
     public final int type;
     private final List<TiffOutputField> fields = new ArrayList<>();
     private final ByteOrder byteOrder;
     private TiffOutputDirectory nextDirectory;
-    public static final Comparator<TiffOutputDirectory> COMPARATOR = Comparator.comparingInt(o -> o.type);
     private JpegImageData jpegImageData;
     private TiffImageData tiffImageData;
-
-    public void setNextDirectory(final TiffOutputDirectory nextDirectory) {
-        this.nextDirectory = nextDirectory;
-    }
 
     public TiffOutputDirectory(final int type, final ByteOrder byteOrder) {
         this.type = type;
         this.byteOrder = byteOrder;
+    }
+
+    public void add(final TagInfoAscii tagInfo, final String... values)
+            throws ImageWriteException {
+        final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
+        if (tagInfo.length > 0 && tagInfo.length != bytes.length) {
+            throw new ImageWriteException("Tag expects " + tagInfo.length
+                    + " byte(s), not " + values.length);
+        }
+        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
+                tagInfo, FieldType.ASCII, bytes.length,
+                bytes);
+        add(tiffOutputField);
+    }
+
+    public void add(final TagInfoAsciiOrByte tagInfo, final String... values)
+            throws ImageWriteException {
+        final byte[] bytes = tagInfo.encodeValue(
+                FieldType.ASCII, values, byteOrder);
+        if (tagInfo.length > 0 && tagInfo.length != bytes.length) {
+            throw new ImageWriteException("Tag expects " + tagInfo.length
+                    + " byte(s), not " + values.length);
+        }
+        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
+                tagInfo, FieldType.ASCII, bytes.length,
+                bytes);
+        add(tiffOutputField);
+    }
+
+    public void add(final TagInfoAsciiOrRational tagInfo, final RationalNumber... values)
+            throws ImageWriteException {
+        if (tagInfo.length > 0 && tagInfo.length != values.length) {
+            throw new ImageWriteException("Tag expects " + tagInfo.length
+                    + " value(s), not " + values.length);
+        }
+        final byte[] bytes = tagInfo.encodeValue(
+                FieldType.RATIONAL, values, byteOrder);
+        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
+                tagInfo, FieldType.RATIONAL,
+                bytes.length, bytes);
+        add(tiffOutputField);
+    }
+
+    public void add(final TagInfoAsciiOrRational tagInfo, final String... values)
+            throws ImageWriteException {
+        final byte[] bytes = tagInfo.encodeValue(
+                FieldType.ASCII, values, byteOrder);
+        if (tagInfo.length > 0 && tagInfo.length != bytes.length) {
+            throw new ImageWriteException("Tag expects " + tagInfo.length
+                    + " byte(s), not " + values.length);
+        }
+        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
+                tagInfo, FieldType.ASCII, bytes.length,
+                bytes);
+        add(tiffOutputField);
     }
 
     public void add(final TagInfoByte tagInfo, final byte value)
@@ -97,6 +148,32 @@ public final class TiffOutputDirectory extends TiffOutputItem {
         final byte[] bytes = tagInfo.encodeValue(byteOrder, value);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
                 tagInfo, FieldType.BYTE, bytes.length, bytes);
+        add(tiffOutputField);
+    }
+
+    public void add(final TagInfoByteOrShort tagInfo, final byte... values)
+            throws ImageWriteException {
+        if (tagInfo.length > 0 && tagInfo.length != values.length) {
+            throw new ImageWriteException("Tag expects " + tagInfo.length
+                    + " value(s), not " + values.length);
+        }
+        final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
+        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
+                tagInfo, FieldType.BYTE, values.length,
+                bytes);
+        add(tiffOutputField);
+    }
+
+    public void add(final TagInfoByteOrShort tagInfo, final short... values)
+            throws ImageWriteException {
+        if (tagInfo.length > 0 && tagInfo.length != values.length) {
+            throw new ImageWriteException("Tag expects " + tagInfo.length
+                    + " value(s), not " + values.length);
+        }
+        final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
+        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
+                tagInfo, FieldType.SHORT,
+                values.length, bytes);
         add(tiffOutputField);
     }
 
@@ -113,20 +190,7 @@ public final class TiffOutputDirectory extends TiffOutputItem {
         add(tiffOutputField);
     }
 
-    public void add(final TagInfoAscii tagInfo, final String... values)
-            throws ImageWriteException {
-        final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
-        if (tagInfo.length > 0 && tagInfo.length != bytes.length) {
-            throw new ImageWriteException("Tag expects " + tagInfo.length
-                    + " byte(s), not " + values.length);
-        }
-        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.ASCII, bytes.length,
-                bytes);
-        add(tiffOutputField);
-    }
-
-    public void add(final TagInfoShort tagInfo, final short value)
+    public void add(final TagInfoDouble tagInfo, final double value)
             throws ImageWriteException {
         if (tagInfo.length != 1) {
             throw new ImageWriteException("Tag expects " + tagInfo.length
@@ -134,11 +198,11 @@ public final class TiffOutputDirectory extends TiffOutputItem {
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, value);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.SHORT, 1, bytes);
+                tagInfo, FieldType.DOUBLE, 1, bytes);
         add(tiffOutputField);
     }
 
-    public void add(final TagInfoShorts tagInfo, final short... values)
+    public void add(final TagInfoDoubles tagInfo, final double... values)
             throws ImageWriteException {
         if (tagInfo.length > 0 && tagInfo.length != values.length) {
             throw new ImageWriteException("Tag expects " + tagInfo.length
@@ -146,8 +210,42 @@ public final class TiffOutputDirectory extends TiffOutputItem {
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.SHORT,
+                tagInfo, FieldType.DOUBLE,
                 values.length, bytes);
+        add(tiffOutputField);
+    }
+
+    public void add(final TagInfoFloat tagInfo, final float value)
+            throws ImageWriteException {
+        if (tagInfo.length != 1) {
+            throw new ImageWriteException("Tag expects " + tagInfo.length
+                    + " value(s), not 1");
+        }
+        final byte[] bytes = tagInfo.encodeValue(byteOrder, value);
+        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
+                tagInfo, FieldType.FLOAT, 1, bytes);
+        add(tiffOutputField);
+    }
+
+    public void add(final TagInfoFloats tagInfo, final float... values)
+            throws ImageWriteException {
+        if (tagInfo.length > 0 && tagInfo.length != values.length) {
+            throw new ImageWriteException("Tag expects " + tagInfo.length
+                    + " value(s), not " + values.length);
+        }
+        final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
+        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
+                tagInfo, FieldType.FLOAT,
+                values.length, bytes);
+        add(tiffOutputField);
+    }
+
+    public void add(final TagInfoGpsText tagInfo, final String value)
+            throws ImageWriteException {
+        final byte[] bytes = tagInfo.encodeValue(
+                FieldType.UNDEFINED, value, byteOrder);
+        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
+                tagInfo, tagInfo.dataTypes.get(0), bytes.length, bytes);
         add(tiffOutputField);
     }
 
@@ -226,7 +324,7 @@ public final class TiffOutputDirectory extends TiffOutputItem {
         add(tiffOutputField);
     }
 
-    public void add(final TagInfoSShort tagInfo, final short value)
+    public void add(final TagInfoShort tagInfo, final short value)
             throws ImageWriteException {
         if (tagInfo.length != 1) {
             throw new ImageWriteException("Tag expects " + tagInfo.length
@@ -234,11 +332,11 @@ public final class TiffOutputDirectory extends TiffOutputItem {
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, value);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.SSHORT, 1, bytes);
+                tagInfo, FieldType.SHORT, 1, bytes);
         add(tiffOutputField);
     }
 
-    public void add(final TagInfoSShorts tagInfo, final short... values)
+    public void add(final TagInfoShortOrLong tagInfo, final int... values)
             throws ImageWriteException {
         if (tagInfo.length > 0 && tagInfo.length != values.length) {
             throw new ImageWriteException("Tag expects " + tagInfo.length
@@ -246,7 +344,98 @@ public final class TiffOutputDirectory extends TiffOutputItem {
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.SSHORT,
+                tagInfo, FieldType.LONG, values.length,
+                bytes);
+        add(tiffOutputField);
+    }
+
+    public void add(final TagInfoShortOrLong tagInfo, final short... values)
+            throws ImageWriteException {
+        if (tagInfo.length > 0 && tagInfo.length != values.length) {
+            throw new ImageWriteException("Tag expects " + tagInfo.length
+                    + " value(s), not " + values.length);
+        }
+        final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
+        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
+                tagInfo, FieldType.SHORT,
+                values.length, bytes);
+        add(tiffOutputField);
+    }
+
+    public void add(final TagInfoShortOrLongOrRational tagInfo, final int... values)
+            throws ImageWriteException {
+        if (tagInfo.length > 0 && tagInfo.length != values.length) {
+            throw new ImageWriteException("Tag expects " + tagInfo.length
+                    + " value(s), not " + values.length);
+        }
+        final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
+        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
+                tagInfo, FieldType.LONG, values.length,
+                bytes);
+        add(tiffOutputField);
+    }
+
+    public void add(final TagInfoShortOrLongOrRational tagInfo,
+            final RationalNumber... values) throws ImageWriteException {
+        if (tagInfo.length > 0 && tagInfo.length != values.length) {
+            throw new ImageWriteException("Tag expects " + tagInfo.length
+                    + " value(s), not " + values.length);
+        }
+        final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
+        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
+                tagInfo, FieldType.RATIONAL,
+                values.length, bytes);
+        add(tiffOutputField);
+    }
+
+    public void add(final TagInfoShortOrLongOrRational tagInfo, final short... values)
+            throws ImageWriteException {
+        if (tagInfo.length > 0 && tagInfo.length != values.length) {
+            throw new ImageWriteException("Tag expects " + tagInfo.length
+                    + " value(s), not " + values.length);
+        }
+        final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
+        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
+                tagInfo, FieldType.SHORT,
+                values.length, bytes);
+        add(tiffOutputField);
+    }
+
+    public void add(final TagInfoShortOrRational tagInfo, final RationalNumber... values)
+            throws ImageWriteException {
+        if (tagInfo.length > 0 && tagInfo.length != values.length) {
+            throw new ImageWriteException("Tag expects " + tagInfo.length
+                    + " value(s), not " + values.length);
+        }
+        final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
+        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
+                tagInfo, FieldType.RATIONAL,
+                values.length, bytes);
+        add(tiffOutputField);
+    }
+
+    public void add(final TagInfoShortOrRational tagInfo, final short... values)
+            throws ImageWriteException {
+        if (tagInfo.length > 0 && tagInfo.length != values.length) {
+            throw new ImageWriteException("Tag expects " + tagInfo.length
+                    + " value(s), not " + values.length);
+        }
+        final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
+        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
+                tagInfo, FieldType.SHORT,
+                values.length, bytes);
+        add(tiffOutputField);
+    }
+
+    public void add(final TagInfoShorts tagInfo, final short... values)
+            throws ImageWriteException {
+        if (tagInfo.length > 0 && tagInfo.length != values.length) {
+            throw new ImageWriteException("Tag expects " + tagInfo.length
+                    + " value(s), not " + values.length);
+        }
+        final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
+        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
+                tagInfo, FieldType.SHORT,
                 values.length, bytes);
         add(tiffOutputField);
     }
@@ -301,7 +490,7 @@ public final class TiffOutputDirectory extends TiffOutputItem {
         add(tiffOutputField);
     }
 
-    public void add(final TagInfoFloat tagInfo, final float value)
+    public void add(final TagInfoSShort tagInfo, final short value)
             throws ImageWriteException {
         if (tagInfo.length != 1) {
             throw new ImageWriteException("Tag expects " + tagInfo.length
@@ -309,11 +498,11 @@ public final class TiffOutputDirectory extends TiffOutputItem {
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, value);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.FLOAT, 1, bytes);
+                tagInfo, FieldType.SSHORT, 1, bytes);
         add(tiffOutputField);
     }
 
-    public void add(final TagInfoFloats tagInfo, final float... values)
+    public void add(final TagInfoSShorts tagInfo, final short... values)
             throws ImageWriteException {
         if (tagInfo.length > 0 && tagInfo.length != values.length) {
             throw new ImageWriteException("Tag expects " + tagInfo.length
@@ -321,159 +510,8 @@ public final class TiffOutputDirectory extends TiffOutputItem {
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.FLOAT,
+                tagInfo, FieldType.SSHORT,
                 values.length, bytes);
-        add(tiffOutputField);
-    }
-
-    public void add(final TagInfoDouble tagInfo, final double value)
-            throws ImageWriteException {
-        if (tagInfo.length != 1) {
-            throw new ImageWriteException("Tag expects " + tagInfo.length
-                    + " value(s), not 1");
-        }
-        final byte[] bytes = tagInfo.encodeValue(byteOrder, value);
-        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.DOUBLE, 1, bytes);
-        add(tiffOutputField);
-    }
-
-    public void add(final TagInfoDoubles tagInfo, final double... values)
-            throws ImageWriteException {
-        if (tagInfo.length > 0 && tagInfo.length != values.length) {
-            throw new ImageWriteException("Tag expects " + tagInfo.length
-                    + " value(s), not " + values.length);
-        }
-        final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
-        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.DOUBLE,
-                values.length, bytes);
-        add(tiffOutputField);
-    }
-
-    public void add(final TagInfoByteOrShort tagInfo, final byte... values)
-            throws ImageWriteException {
-        if (tagInfo.length > 0 && tagInfo.length != values.length) {
-            throw new ImageWriteException("Tag expects " + tagInfo.length
-                    + " value(s), not " + values.length);
-        }
-        final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
-        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.BYTE, values.length,
-                bytes);
-        add(tiffOutputField);
-    }
-
-    public void add(final TagInfoByteOrShort tagInfo, final short... values)
-            throws ImageWriteException {
-        if (tagInfo.length > 0 && tagInfo.length != values.length) {
-            throw new ImageWriteException("Tag expects " + tagInfo.length
-                    + " value(s), not " + values.length);
-        }
-        final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
-        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.SHORT,
-                values.length, bytes);
-        add(tiffOutputField);
-    }
-
-    public void add(final TagInfoShortOrLong tagInfo, final short... values)
-            throws ImageWriteException {
-        if (tagInfo.length > 0 && tagInfo.length != values.length) {
-            throw new ImageWriteException("Tag expects " + tagInfo.length
-                    + " value(s), not " + values.length);
-        }
-        final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
-        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.SHORT,
-                values.length, bytes);
-        add(tiffOutputField);
-    }
-
-    public void add(final TagInfoShortOrLong tagInfo, final int... values)
-            throws ImageWriteException {
-        if (tagInfo.length > 0 && tagInfo.length != values.length) {
-            throw new ImageWriteException("Tag expects " + tagInfo.length
-                    + " value(s), not " + values.length);
-        }
-        final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
-        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.LONG, values.length,
-                bytes);
-        add(tiffOutputField);
-    }
-
-    public void add(final TagInfoShortOrLongOrRational tagInfo, final short... values)
-            throws ImageWriteException {
-        if (tagInfo.length > 0 && tagInfo.length != values.length) {
-            throw new ImageWriteException("Tag expects " + tagInfo.length
-                    + " value(s), not " + values.length);
-        }
-        final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
-        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.SHORT,
-                values.length, bytes);
-        add(tiffOutputField);
-    }
-
-    public void add(final TagInfoShortOrLongOrRational tagInfo, final int... values)
-            throws ImageWriteException {
-        if (tagInfo.length > 0 && tagInfo.length != values.length) {
-            throw new ImageWriteException("Tag expects " + tagInfo.length
-                    + " value(s), not " + values.length);
-        }
-        final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
-        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.LONG, values.length,
-                bytes);
-        add(tiffOutputField);
-    }
-
-    public void add(final TagInfoShortOrLongOrRational tagInfo,
-            final RationalNumber... values) throws ImageWriteException {
-        if (tagInfo.length > 0 && tagInfo.length != values.length) {
-            throw new ImageWriteException("Tag expects " + tagInfo.length
-                    + " value(s), not " + values.length);
-        }
-        final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
-        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.RATIONAL,
-                values.length, bytes);
-        add(tiffOutputField);
-    }
-
-    public void add(final TagInfoShortOrRational tagInfo, final short... values)
-            throws ImageWriteException {
-        if (tagInfo.length > 0 && tagInfo.length != values.length) {
-            throw new ImageWriteException("Tag expects " + tagInfo.length
-                    + " value(s), not " + values.length);
-        }
-        final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
-        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.SHORT,
-                values.length, bytes);
-        add(tiffOutputField);
-    }
-
-    public void add(final TagInfoShortOrRational tagInfo, final RationalNumber... values)
-            throws ImageWriteException {
-        if (tagInfo.length > 0 && tagInfo.length != values.length) {
-            throw new ImageWriteException("Tag expects " + tagInfo.length
-                    + " value(s), not " + values.length);
-        }
-        final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
-        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.RATIONAL,
-                values.length, bytes);
-        add(tiffOutputField);
-    }
-
-    public void add(final TagInfoGpsText tagInfo, final String value)
-            throws ImageWriteException {
-        final byte[] bytes = tagInfo.encodeValue(
-                FieldType.UNDEFINED, value, byteOrder);
-        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, tagInfo.dataTypes.get(0), bytes.length, bytes);
         add(tiffOutputField);
     }
 
@@ -487,83 +525,12 @@ public final class TiffOutputDirectory extends TiffOutputItem {
         add(tiffOutputField);
     }
 
-    public void add(final TagInfoAsciiOrByte tagInfo, final String... values)
-            throws ImageWriteException {
-        final byte[] bytes = tagInfo.encodeValue(
-                FieldType.ASCII, values, byteOrder);
-        if (tagInfo.length > 0 && tagInfo.length != bytes.length) {
-            throw new ImageWriteException("Tag expects " + tagInfo.length
-                    + " byte(s), not " + values.length);
-        }
-        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.ASCII, bytes.length,
-                bytes);
-        add(tiffOutputField);
-    }
-
-    public void add(final TagInfoAsciiOrRational tagInfo, final String... values)
-            throws ImageWriteException {
-        final byte[] bytes = tagInfo.encodeValue(
-                FieldType.ASCII, values, byteOrder);
-        if (tagInfo.length > 0 && tagInfo.length != bytes.length) {
-            throw new ImageWriteException("Tag expects " + tagInfo.length
-                    + " byte(s), not " + values.length);
-        }
-        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.ASCII, bytes.length,
-                bytes);
-        add(tiffOutputField);
-    }
-
-    public void add(final TagInfoAsciiOrRational tagInfo, final RationalNumber... values)
-            throws ImageWriteException {
-        if (tagInfo.length > 0 && tagInfo.length != values.length) {
-            throw new ImageWriteException("Tag expects " + tagInfo.length
-                    + " value(s), not " + values.length);
-        }
-        final byte[] bytes = tagInfo.encodeValue(
-                FieldType.RATIONAL, values, byteOrder);
-        final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.RATIONAL,
-                bytes.length, bytes);
-        add(tiffOutputField);
-    }
-
     public void add(final TiffOutputField field) {
         fields.add(field);
     }
 
-    public List<TiffOutputField> getFields() {
-        return new ArrayList<>(fields);
-    }
-
-    public void removeField(final TagInfo tagInfo) {
-        removeField(tagInfo.tag);
-    }
-
-    public void removeField(final int tag) {
-        final List<TiffOutputField> matches = new ArrayList<>();
-        for (final TiffOutputField field : fields) {
-            if (field.tag == tag) {
-                matches.add(field);
-            }
-        }
-        fields.removeAll(matches);
-    }
-
-    /**
-     * Finds the TiffOutputField for the given TagInfo from this TiffOutputDirectory.
-     *
-     * <p>
-     * If there is no field matching the given TagInfo, null will be returned.
-     * </p>
-     *
-     * @param tagInfo the TagInfo specifying the field
-     * @return the field matching tagInfo or null, if the field isn't present
-     * @see #findField(int)
-     */
-    public TiffOutputField findField(final TagInfo tagInfo) {
-        return findField(tagInfo.tag);
+    public String description() {
+        return TiffDirectory.description(type);
     }
 
     /**
@@ -586,69 +553,23 @@ public final class TiffOutputDirectory extends TiffOutputItem {
         return null;
     }
 
-    public void sortFields() {
-        final Comparator<TiffOutputField> comparator = (e1, e2) -> {
-            if (e1.tag != e2.tag) {
-                return e1.tag - e2.tag;
-            }
-            return e1.getSortHint() - e2.getSortHint();
-        };
-        fields.sort(comparator);
+    /**
+     * Finds the TiffOutputField for the given TagInfo from this TiffOutputDirectory.
+     *
+     * <p>
+     * If there is no field matching the given TagInfo, null will be returned.
+     * </p>
+     *
+     * @param tagInfo the TagInfo specifying the field
+     * @return the field matching tagInfo or null, if the field isn't present
+     * @see #findField(int)
+     */
+    public TiffOutputField findField(final TagInfo tagInfo) {
+        return findField(tagInfo.tag);
     }
 
-    public String description() {
-        return TiffDirectory.description(type);
-    }
-
-    @Override
-    public void writeItem(final BinaryOutputStream bos) throws IOException,
-            ImageWriteException {
-        // Write Directory Field Count
-        bos.write2Bytes(fields.size()); // DirectoryFieldCount
-
-        // Write Fields
-        for (final TiffOutputField field : fields) {
-            field.writeField(bos);
-
-            // Debug.debug("\t" + "writing field (" + field.tag + ", 0x" +
-            // Integer.toHexString(field.tag) + ")", field.tagInfo);
-            // if(field.tagInfo.isOffset())
-            // Debug.debug("\t\tOFFSET!", field.bytes);
-        }
-
-        long nextDirectoryOffset = 0;
-        if (nextDirectory != null) {
-            nextDirectoryOffset = nextDirectory.getOffset();
-        }
-
-        // Write nextDirectoryOffset
-        if (nextDirectoryOffset == UNDEFINED_VALUE) {
-            bos.write4Bytes(0);
-        } else {
-            bos.write4Bytes((int) nextDirectoryOffset);
-        }
-    }
-
-    public void setJpegImageData(final JpegImageData rawJpegImageData) {
-        this.jpegImageData = rawJpegImageData;
-    }
-
-    public JpegImageData getRawJpegImageData() {
-        return jpegImageData;
-    }
-
-    public void setTiffImageData(final TiffImageData rawTiffImageData) {
-        this.tiffImageData = rawTiffImageData;
-    }
-
-    public TiffImageData getRawTiffImageData() {
-        return tiffImageData;
-    }
-
-    @Override
-    public int getItemLength() {
-        return TIFF_ENTRY_LENGTH * fields.size() + TIFF_DIRECTORY_HEADER_LENGTH
-                + TIFF_DIRECTORY_FOOTER_LENGTH;
+    public List<TiffOutputField> getFields() {
+        return new ArrayList<>(fields);
     }
 
     @Override
@@ -657,11 +578,10 @@ public final class TiffOutputDirectory extends TiffOutputItem {
         return "Directory: " + dirType.name + " (" + type + ")";
     }
 
-    private void removeFieldIfPresent(final TagInfo tagInfo) {
-        final TiffOutputField field = findField(tagInfo);
-        if (null != field) {
-            fields.remove(field);
-        }
+    @Override
+    public int getItemLength() {
+        return TIFF_ENTRY_LENGTH * fields.size() + TIFF_DIRECTORY_HEADER_LENGTH
+                + TIFF_DIRECTORY_FOOTER_LENGTH;
     }
 
     protected List<TiffOutputItem> getOutputItems(
@@ -761,5 +681,85 @@ public final class TiffOutputDirectory extends TiffOutputItem {
         }
 
         return result;
+    }
+
+    public JpegImageData getRawJpegImageData() {
+        return jpegImageData;
+    }
+
+    public TiffImageData getRawTiffImageData() {
+        return tiffImageData;
+    }
+
+    public void removeField(final int tag) {
+        final List<TiffOutputField> matches = new ArrayList<>();
+        for (final TiffOutputField field : fields) {
+            if (field.tag == tag) {
+                matches.add(field);
+            }
+        }
+        fields.removeAll(matches);
+    }
+
+    public void removeField(final TagInfo tagInfo) {
+        removeField(tagInfo.tag);
+    }
+
+    private void removeFieldIfPresent(final TagInfo tagInfo) {
+        final TiffOutputField field = findField(tagInfo);
+        if (null != field) {
+            fields.remove(field);
+        }
+    }
+
+    public void setJpegImageData(final JpegImageData rawJpegImageData) {
+        this.jpegImageData = rawJpegImageData;
+    }
+
+    public void setNextDirectory(final TiffOutputDirectory nextDirectory) {
+        this.nextDirectory = nextDirectory;
+    }
+
+    public void setTiffImageData(final TiffImageData rawTiffImageData) {
+        this.tiffImageData = rawTiffImageData;
+    }
+
+    public void sortFields() {
+        final Comparator<TiffOutputField> comparator = (e1, e2) -> {
+            if (e1.tag != e2.tag) {
+                return e1.tag - e2.tag;
+            }
+            return e1.getSortHint() - e2.getSortHint();
+        };
+        fields.sort(comparator);
+    }
+
+    @Override
+    public void writeItem(final BinaryOutputStream bos) throws IOException,
+            ImageWriteException {
+        // Write Directory Field Count
+        bos.write2Bytes(fields.size()); // DirectoryFieldCount
+
+        // Write Fields
+        for (final TiffOutputField field : fields) {
+            field.writeField(bos);
+
+            // Debug.debug("\t" + "writing field (" + field.tag + ", 0x" +
+            // Integer.toHexString(field.tag) + ")", field.tagInfo);
+            // if(field.tagInfo.isOffset())
+            // Debug.debug("\t\tOFFSET!", field.bytes);
+        }
+
+        long nextDirectoryOffset = 0;
+        if (nextDirectory != null) {
+            nextDirectoryOffset = nextDirectory.getOffset();
+        }
+
+        // Write nextDirectoryOffset
+        if (nextDirectoryOffset == UNDEFINED_VALUE) {
+            bos.write4Bytes(0);
+        } else {
+            bos.write4Bytes((int) nextDirectoryOffset);
+        }
     }
 }

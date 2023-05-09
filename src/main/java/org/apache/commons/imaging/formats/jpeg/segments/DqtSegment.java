@@ -27,8 +27,6 @@ import java.util.List;
 import org.apache.commons.imaging.ImageReadException;
 
 public class DqtSegment extends Segment {
-    public final List<QuantizationTable> quantizationTables = new ArrayList<>();
-
     public static class QuantizationTable {
         public final int precision;
         public final int destinationIdentifier;
@@ -48,6 +46,8 @@ public class DqtSegment extends Segment {
             return elements;
         }
     }
+
+    public final List<QuantizationTable> quantizationTables = new ArrayList<>();
 
     public DqtSegment(final int marker, final byte[] segmentData)
             throws ImageReadException, IOException {

@@ -41,28 +41,12 @@ public class IccProfileParser extends BinaryFileParser {
         this.setByteOrder(ByteOrder.BIG_ENDIAN);
     }
 
-    public IccProfileInfo getICCProfileInfo(final ICC_Profile iccProfile) {
-        if (iccProfile == null) {
-            return null;
-        }
-
-        return getICCProfileInfo(new ByteSourceArray(iccProfile.getData()));
-    }
-
     public IccProfileInfo getICCProfileInfo(final byte[] bytes) {
         if (bytes == null) {
             return null;
         }
 
         return getICCProfileInfo(new ByteSourceArray(bytes));
-    }
-
-    public IccProfileInfo getICCProfileInfo(final File file) {
-        if (file == null) {
-            return null;
-        }
-
-        return getICCProfileInfo(new ByteSourceFile(file));
     }
 
     public IccProfileInfo getICCProfileInfo(final ByteSource byteSource) {
@@ -105,6 +89,78 @@ public class IccProfileParser extends BinaryFileParser {
         }
 
         return null;
+    }
+
+    public IccProfileInfo getICCProfileInfo(final File file) {
+        if (file == null) {
+            return null;
+        }
+
+        return getICCProfileInfo(new ByteSourceFile(file));
+    }
+
+    public IccProfileInfo getICCProfileInfo(final ICC_Profile iccProfile) {
+        if (iccProfile == null) {
+            return null;
+        }
+
+        return getICCProfileInfo(new ByteSourceArray(iccProfile.getData()));
+    }
+
+    private IccTagType getIccTagType(final int quad) {
+        for (final IccTagType iccTagType : IccTagTypes.values()) {
+            if (iccTagType.getSignature() == quad) {
+                return iccTagType;
+            }
+        }
+
+        return null;
+    }
+
+    public boolean issRGB(final byte[] bytes) throws IOException {
+        return issRGB(new ByteSourceArray(bytes));
+    }
+
+    public boolean issRGB(final ByteSource byteSource) throws IOException {
+        // setDebug(true);
+
+        // long length = byteSource.getLength();
+        //
+        // if (LOGGER.isLoggable(Level.FINEST))
+        // Debug.debug("length: " + length);
+
+        try (InputStream is = byteSource.getInputStream()) {
+            read4Bytes("ProfileSize", is, "Not a Valid ICC Profile", getByteOrder());
+
+            // if (length != ProfileSize)
+            // return null;
+
+            skipBytes(is, 4 * 5);
+
+            skipBytes(is, 12, "Not a Valid ICC Profile");
+
+            skipBytes(is, 4 * 3);
+
+            final int deviceManufacturer = read4Bytes("ProfileFileSignature", is, "Not a Valid ICC Profile", getByteOrder());
+            if (LOGGER.isLoggable(Level.FINEST)) {
+                printCharQuad("DeviceManufacturer", deviceManufacturer);
+            }
+
+            final int deviceModel = read4Bytes("DeviceModel", is, "Not a Valid ICC Profile", getByteOrder());
+            if (LOGGER.isLoggable(Level.FINEST)) {
+                printCharQuad("DeviceModel", deviceModel);
+            }
+
+            return deviceManufacturer == IccConstants.IEC && deviceModel == IccConstants.sRGB;
+        }
+    }
+
+    public boolean issRGB(final File file) throws IOException {
+        return issRGB(new ByteSourceFile(file));
+    }
+
+    public boolean issRGB(final ICC_Profile iccProfile) throws IOException {
+        return issRGB(new ByteSourceArray(iccProfile.getData()));
     }
 
     private IccProfileInfo readICCProfileInfo(InputStream is) {
@@ -269,62 +325,6 @@ public class IccProfileParser extends BinaryFileParser {
         }
 
         return null;
-    }
-
-    private IccTagType getIccTagType(final int quad) {
-        for (final IccTagType iccTagType : IccTagTypes.values()) {
-            if (iccTagType.getSignature() == quad) {
-                return iccTagType;
-            }
-        }
-
-        return null;
-    }
-
-    public boolean issRGB(final ICC_Profile iccProfile) throws IOException {
-        return issRGB(new ByteSourceArray(iccProfile.getData()));
-    }
-
-    public boolean issRGB(final byte[] bytes) throws IOException {
-        return issRGB(new ByteSourceArray(bytes));
-    }
-
-    public boolean issRGB(final File file) throws IOException {
-        return issRGB(new ByteSourceFile(file));
-    }
-
-    public boolean issRGB(final ByteSource byteSource) throws IOException {
-        // setDebug(true);
-
-        // long length = byteSource.getLength();
-        //
-        // if (LOGGER.isLoggable(Level.FINEST))
-        // Debug.debug("length: " + length);
-
-        try (InputStream is = byteSource.getInputStream()) {
-            read4Bytes("ProfileSize", is, "Not a Valid ICC Profile", getByteOrder());
-
-            // if (length != ProfileSize)
-            // return null;
-
-            skipBytes(is, 4 * 5);
-
-            skipBytes(is, 12, "Not a Valid ICC Profile");
-
-            skipBytes(is, 4 * 3);
-
-            final int deviceManufacturer = read4Bytes("ProfileFileSignature", is, "Not a Valid ICC Profile", getByteOrder());
-            if (LOGGER.isLoggable(Level.FINEST)) {
-                printCharQuad("DeviceManufacturer", deviceManufacturer);
-            }
-
-            final int deviceModel = read4Bytes("DeviceModel", is, "Not a Valid ICC Profile", getByteOrder());
-            if (LOGGER.isLoggable(Level.FINEST)) {
-                printCharQuad("DeviceModel", deviceModel);
-            }
-
-            return deviceManufacturer == IccConstants.IEC && deviceModel == IccConstants.sRGB;
-        }
     }
 
 }

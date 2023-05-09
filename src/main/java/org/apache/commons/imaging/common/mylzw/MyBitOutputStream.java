@@ -32,6 +32,34 @@ public class MyBitOutputStream extends OutputStream {
         this.os = os;
     }
 
+    private void actualWrite(final int value) throws IOException {
+        os.write(value);
+        bytesWritten++;
+    }
+
+    public void flushCache() throws IOException {
+        if (bitsInCache > 0) {
+            final int bitMask = (1 << bitsInCache) - 1;
+            int b = bitMask & bitCache;
+
+            if (byteOrder == ByteOrder.BIG_ENDIAN) {
+                // MSB, so write from left
+                b <<= 8 - bitsInCache; // left align fragment.
+                os.write(b);
+            } else {
+                // LSB, so write from right
+                os.write(b);
+            }
+        }
+
+        bitsInCache = 0;
+        bitCache = 0;
+    }
+
+    public int getBytesWritten() {
+        return bytesWritten + ((bitsInCache > 0) ? 1 : 0);
+    }
+
     @Override
     public void write(final int value) throws IOException {
         writeBits(value, 8);
@@ -71,34 +99,6 @@ public class MyBitOutputStream extends OutputStream {
             bitCache &= remainderMask; // unnecessary
         }
 
-    }
-
-    private void actualWrite(final int value) throws IOException {
-        os.write(value);
-        bytesWritten++;
-    }
-
-    public void flushCache() throws IOException {
-        if (bitsInCache > 0) {
-            final int bitMask = (1 << bitsInCache) - 1;
-            int b = bitMask & bitCache;
-
-            if (byteOrder == ByteOrder.BIG_ENDIAN) {
-                // MSB, so write from left
-                b <<= 8 - bitsInCache; // left align fragment.
-                os.write(b);
-            } else {
-                // LSB, so write from right
-                os.write(b);
-            }
-        }
-
-        bitsInCache = 0;
-        bitCache = 0;
-    }
-
-    public int getBytesWritten() {
-        return bytesWritten + ((bitsInCache > 0) ? 1 : 0);
     }
 
 }

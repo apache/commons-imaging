@@ -58,209 +58,10 @@ public class ExifRewriteTest extends ExifBaseTest {
     // super(name);
     // }
 
-    @Test
-    public void testRemove() throws Exception {
-        final List<File> images = getImagesWithExifData();
-        for (final File imageFile : images) {
-
-            Debug.debug("imageFile", imageFile);
-
-            final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-            if (ignoreImageData) {
-                continue;
-            }
-
-            final ByteSource byteSource = new ByteSourceFile(imageFile);
-            Debug.debug("Source Segments:");
-            new JpegUtils().dumpJFIF(byteSource);
-
-            {
-                final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(imageFile);
-                Assertions.assertNotNull(metadata);
-            }
-
-            {
-                final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                new ExifRewriter().removeExifMetadata(byteSource, baos);
-                final byte[] bytes = baos.toByteArray();
-
-                Debug.debug("Output Segments:");
-                new JpegUtils().dumpJFIF(new ByteSourceArray(bytes));
-
-                assertFalse(hasExifData("test.jpg", bytes));
-            }
-        }
-    }
-
-    @Test
-    public void testInsert() throws Exception {
-        final List<File> images = getImagesWithExifData();
-        for (final File imageFile : images) {
-
-            Debug.debug("imageFile", imageFile);
-
-            final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-            if (ignoreImageData) {
-                continue;
-            }
-
-            final ByteSource byteSource = new ByteSourceFile(imageFile);
-            Debug.debug("Source Segments:");
-            new JpegUtils().dumpJFIF(byteSource);
-
-            final JpegImageMetadata originalMetadata = (JpegImageMetadata) Imaging.getMetadata(imageFile);
-            assertNotNull(originalMetadata);
-
-            final TiffImageMetadata oldExifMetadata = originalMetadata.getExif();
-            assertNotNull(oldExifMetadata);
-
-            ByteSource stripped;
-            {
-                final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                new ExifRewriter().removeExifMetadata(byteSource, baos);
-                final byte[] bytes = baos.toByteArray();
-
-                Debug.debug("Output Segments:");
-                stripped = new ByteSourceArray(bytes);
-                new JpegUtils().dumpJFIF(stripped);
-
-                assertFalse(hasExifData("removed.jpg", bytes));
-            }
-
-            {
-                final TiffOutputSet outputSet = oldExifMetadata.getOutputSet();
-                // outputSet.dump();
-
-                final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-                new ExifRewriter().updateExifMetadataLossy(stripped, baos,
-                        outputSet);
-
-                final byte[] bytes = baos.toByteArray();
-
-                Debug.debug("Output Segments:");
-                new JpegUtils().dumpJFIF(new ByteSourceArray(bytes));
-
-                // assertTrue(!hasExifData(tempFile));
-
-                final JpegImageMetadata newMetadata = (JpegImageMetadata) Imaging.getMetadata(new ByteArrayInputStream(bytes), "inserted.jpg");
-                assertNotNull(newMetadata);
-                final TiffImageMetadata newExifMetadata = newMetadata.getExif();
-                assertNotNull(newExifMetadata);
-                // newMetadata.dump();
-
-                compare(imageFile, oldExifMetadata, newExifMetadata);
-            }
-
-        }
-    }
-
     private interface Rewriter {
         void rewrite(ByteSource byteSource, OutputStream os,
                 TiffOutputSet outputSet) throws ImageReadException,
                 IOException, ImageWriteException;
-    }
-
-    private void rewrite(final Rewriter rewriter, final String name) throws IOException,
-            ImageReadException {
-        final List<File> images = getImagesWithExifData();
-        for (final File imageFile : images) {
-
-            try {
-
-                Debug.debug("imageFile", imageFile);
-
-                final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-                if (ignoreImageData) {
-                    continue;
-                }
-
-                final ByteSource byteSource = new ByteSourceFile(imageFile);
-                Debug.debug("Source Segments:");
-                new JpegUtils().dumpJFIF(byteSource);
-
-                final JpegImageMetadata oldMetadata = (JpegImageMetadata) Imaging.getMetadata(imageFile);
-                if (null == oldMetadata) {
-                    continue;
-                }
-                assertNotNull(oldMetadata);
-
-                final TiffImageMetadata oldExifMetadata = oldMetadata.getExif();
-                if (null == oldExifMetadata) {
-                    continue;
-                }
-                assertNotNull(oldExifMetadata);
-                oldMetadata.dump();
-
-                // TiffImageMetadata tiffImageMetadata = metadata.getExif();
-                // Photoshop photoshop = metadata.getPhotoshop();
-
-                final TiffOutputSet outputSet = oldExifMetadata.getOutputSet();
-                // outputSet.dump();
-
-                final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                rewriter.rewrite(byteSource, baos, outputSet);
-                final byte[] bytes = baos.toByteArray();
-
-                Debug.debug("Output Segments:");
-                new JpegUtils().dumpJFIF(new ByteSourceArray(bytes));
-
-                // assertTrue(!hasExifData(tempFile));
-
-                final JpegImageMetadata newMetadata = (JpegImageMetadata) Imaging.getMetadata(new ByteArrayInputStream(bytes), name + ".jpg");
-                assertNotNull(newMetadata);
-                final TiffImageMetadata newExifMetadata = newMetadata.getExif();
-                assertNotNull(newExifMetadata);
-                // newMetadata.dump();
-
-                compare(imageFile, oldExifMetadata, newExifMetadata);
-            } catch (final IOException | ImageReadException e) {
-                Debug.debug("imageFile", imageFile.getAbsoluteFile());
-                Debug.debug(e);
-                throw e;
-            } catch (final ImageWriteException e) {
-                Debug.debug("imageFile", imageFile.getAbsoluteFile());
-                Debug.debug(e);
-            }
-
-        }
-    }
-
-    @Test
-    public void testRewriteLossy() throws Exception {
-        final Rewriter rewriter = (byteSource, os, outputSet) -> new ExifRewriter().updateExifMetadataLossy(byteSource, os,
-                outputSet);
-
-        rewrite(rewriter, "lossy");
-    }
-
-    @Test
-    public void testRewriteLossless() throws Exception {
-        final Rewriter rewriter = (byteSource, os, outputSet) -> new ExifRewriter().updateExifMetadataLossless(byteSource, os,
-                outputSet);
-
-        rewrite(rewriter, "lossless");
-    }
-
-    private Map<Integer,TiffImageMetadata.Directory> makeDirectoryMap(final List<? extends ImageMetadataItem> directories) {
-        final Map<Integer,TiffImageMetadata.Directory> directoryMap = new HashMap<>();
-        for (final ImageMetadataItem element : directories) {
-            final TiffImageMetadata.Directory directory = (TiffImageMetadata.Directory) element;
-            directoryMap.put(directory.type, directory);
-        }
-        return directoryMap;
-    }
-
-    private Map<Integer,TiffField> makeFieldMap(final List<? extends ImageMetadataItem> items) {
-        final Map<Integer,TiffField> fieldMap = new HashMap<>();
-        for (final ImageMetadataItem item2 : items) {
-            final TiffImageMetadata.TiffMetadataItem item = (TiffImageMetadata.TiffMetadataItem) item2;
-            final TiffField field = item.getTiffField();
-            if (!fieldMap.containsKey(field.getTag())) {
-                fieldMap.put(field.getTag(), field);
-            }
-        }
-        return fieldMap;
     }
 
     private void compare(final File imageFile, final TiffImageMetadata oldExifMetadata,
@@ -372,6 +173,205 @@ public class ExifRewriteTest extends ExifBaseTest {
                 }
             }
         }
+    }
+
+    private Map<Integer,TiffImageMetadata.Directory> makeDirectoryMap(final List<? extends ImageMetadataItem> directories) {
+        final Map<Integer,TiffImageMetadata.Directory> directoryMap = new HashMap<>();
+        for (final ImageMetadataItem element : directories) {
+            final TiffImageMetadata.Directory directory = (TiffImageMetadata.Directory) element;
+            directoryMap.put(directory.type, directory);
+        }
+        return directoryMap;
+    }
+
+    private Map<Integer,TiffField> makeFieldMap(final List<? extends ImageMetadataItem> items) {
+        final Map<Integer,TiffField> fieldMap = new HashMap<>();
+        for (final ImageMetadataItem item2 : items) {
+            final TiffImageMetadata.TiffMetadataItem item = (TiffImageMetadata.TiffMetadataItem) item2;
+            final TiffField field = item.getTiffField();
+            if (!fieldMap.containsKey(field.getTag())) {
+                fieldMap.put(field.getTag(), field);
+            }
+        }
+        return fieldMap;
+    }
+
+    private void rewrite(final Rewriter rewriter, final String name) throws IOException,
+            ImageReadException {
+        final List<File> images = getImagesWithExifData();
+        for (final File imageFile : images) {
+
+            try {
+
+                Debug.debug("imageFile", imageFile);
+
+                final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+                if (ignoreImageData) {
+                    continue;
+                }
+
+                final ByteSource byteSource = new ByteSourceFile(imageFile);
+                Debug.debug("Source Segments:");
+                new JpegUtils().dumpJFIF(byteSource);
+
+                final JpegImageMetadata oldMetadata = (JpegImageMetadata) Imaging.getMetadata(imageFile);
+                if (null == oldMetadata) {
+                    continue;
+                }
+                assertNotNull(oldMetadata);
+
+                final TiffImageMetadata oldExifMetadata = oldMetadata.getExif();
+                if (null == oldExifMetadata) {
+                    continue;
+                }
+                assertNotNull(oldExifMetadata);
+                oldMetadata.dump();
+
+                // TiffImageMetadata tiffImageMetadata = metadata.getExif();
+                // Photoshop photoshop = metadata.getPhotoshop();
+
+                final TiffOutputSet outputSet = oldExifMetadata.getOutputSet();
+                // outputSet.dump();
+
+                final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                rewriter.rewrite(byteSource, baos, outputSet);
+                final byte[] bytes = baos.toByteArray();
+
+                Debug.debug("Output Segments:");
+                new JpegUtils().dumpJFIF(new ByteSourceArray(bytes));
+
+                // assertTrue(!hasExifData(tempFile));
+
+                final JpegImageMetadata newMetadata = (JpegImageMetadata) Imaging.getMetadata(new ByteArrayInputStream(bytes), name + ".jpg");
+                assertNotNull(newMetadata);
+                final TiffImageMetadata newExifMetadata = newMetadata.getExif();
+                assertNotNull(newExifMetadata);
+                // newMetadata.dump();
+
+                compare(imageFile, oldExifMetadata, newExifMetadata);
+            } catch (final IOException | ImageReadException e) {
+                Debug.debug("imageFile", imageFile.getAbsoluteFile());
+                Debug.debug(e);
+                throw e;
+            } catch (final ImageWriteException e) {
+                Debug.debug("imageFile", imageFile.getAbsoluteFile());
+                Debug.debug(e);
+            }
+
+        }
+    }
+
+    @Test
+    public void testInsert() throws Exception {
+        final List<File> images = getImagesWithExifData();
+        for (final File imageFile : images) {
+
+            Debug.debug("imageFile", imageFile);
+
+            final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+            if (ignoreImageData) {
+                continue;
+            }
+
+            final ByteSource byteSource = new ByteSourceFile(imageFile);
+            Debug.debug("Source Segments:");
+            new JpegUtils().dumpJFIF(byteSource);
+
+            final JpegImageMetadata originalMetadata = (JpegImageMetadata) Imaging.getMetadata(imageFile);
+            assertNotNull(originalMetadata);
+
+            final TiffImageMetadata oldExifMetadata = originalMetadata.getExif();
+            assertNotNull(oldExifMetadata);
+
+            ByteSource stripped;
+            {
+                final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                new ExifRewriter().removeExifMetadata(byteSource, baos);
+                final byte[] bytes = baos.toByteArray();
+
+                Debug.debug("Output Segments:");
+                stripped = new ByteSourceArray(bytes);
+                new JpegUtils().dumpJFIF(stripped);
+
+                assertFalse(hasExifData("removed.jpg", bytes));
+            }
+
+            {
+                final TiffOutputSet outputSet = oldExifMetadata.getOutputSet();
+                // outputSet.dump();
+
+                final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+                new ExifRewriter().updateExifMetadataLossy(stripped, baos,
+                        outputSet);
+
+                final byte[] bytes = baos.toByteArray();
+
+                Debug.debug("Output Segments:");
+                new JpegUtils().dumpJFIF(new ByteSourceArray(bytes));
+
+                // assertTrue(!hasExifData(tempFile));
+
+                final JpegImageMetadata newMetadata = (JpegImageMetadata) Imaging.getMetadata(new ByteArrayInputStream(bytes), "inserted.jpg");
+                assertNotNull(newMetadata);
+                final TiffImageMetadata newExifMetadata = newMetadata.getExif();
+                assertNotNull(newExifMetadata);
+                // newMetadata.dump();
+
+                compare(imageFile, oldExifMetadata, newExifMetadata);
+            }
+
+        }
+    }
+
+    @Test
+    public void testRemove() throws Exception {
+        final List<File> images = getImagesWithExifData();
+        for (final File imageFile : images) {
+
+            Debug.debug("imageFile", imageFile);
+
+            final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+            if (ignoreImageData) {
+                continue;
+            }
+
+            final ByteSource byteSource = new ByteSourceFile(imageFile);
+            Debug.debug("Source Segments:");
+            new JpegUtils().dumpJFIF(byteSource);
+
+            {
+                final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(imageFile);
+                Assertions.assertNotNull(metadata);
+            }
+
+            {
+                final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                new ExifRewriter().removeExifMetadata(byteSource, baos);
+                final byte[] bytes = baos.toByteArray();
+
+                Debug.debug("Output Segments:");
+                new JpegUtils().dumpJFIF(new ByteSourceArray(bytes));
+
+                assertFalse(hasExifData("test.jpg", bytes));
+            }
+        }
+    }
+
+    @Test
+    public void testRewriteLossless() throws Exception {
+        final Rewriter rewriter = (byteSource, os, outputSet) -> new ExifRewriter().updateExifMetadataLossless(byteSource, os,
+                outputSet);
+
+        rewrite(rewriter, "lossless");
+    }
+
+    @Test
+    public void testRewriteLossy() throws Exception {
+        final Rewriter rewriter = (byteSource, os, outputSet) -> new ExifRewriter().updateExifMetadataLossy(byteSource, os,
+                outputSet);
+
+        rewrite(rewriter, "lossy");
     }
 
 }

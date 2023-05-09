@@ -98,47 +98,34 @@ enum IcnsType {
             ICNS_48x48_8BIT_MASK,
             ICNS_128x128_8BIT_MASK};
 
-    private final int type;
-    private final int width;
-    private final int height;
-    private final int bitsPerPixel;
-    private final boolean hasMask;
-
-    IcnsType(final String type, final int width, final int height, final int bitsPerPixel, final boolean hasMask) {
-        this.type = typeAsInt(type);
-        this.width = width;
-        this.height = height;
-        this.bitsPerPixel = bitsPerPixel;
-        this.hasMask = hasMask;
+    public static String describeType(final int type) {
+        final byte[] bytes = new byte[4];
+        bytes[0] = (byte) (0xff & (type >> 24));
+        bytes[1] = (byte) (0xff & (type >> 16));
+        bytes[2] = (byte) (0xff & (type >> 8));
+        bytes[3] = (byte) (0xff & type);
+        return new String(bytes, StandardCharsets.US_ASCII);
     }
-
-    public int getType() {
-        return type;
+    public static IcnsType find1BPPMaskType(final IcnsType imageType) {
+        for (final IcnsType allMaskType : ALL_MASK_TYPES) {
+            if (allMaskType.getBitsPerPixel() == 1
+                    && allMaskType.getWidth() == imageType.getWidth()
+                    && allMaskType.getHeight() == imageType.getHeight()) {
+                return allMaskType;
+            }
+        }
+        return null;
     }
-
-    public int getWidth() {
-        return width;
+    public static IcnsType find8BPPMaskType(final IcnsType imageType) {
+        for (final IcnsType allMaskType : ALL_MASK_TYPES) {
+            if (allMaskType.getBitsPerPixel() == 8
+                    && allMaskType.getWidth() == imageType.getWidth()
+                    && allMaskType.getHeight() == imageType.getHeight()) {
+                return allMaskType;
+            }
+        }
+        return null;
     }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public int getBitsPerPixel() {
-        return bitsPerPixel;
-    }
-
-    public boolean hasMask() {
-        return hasMask;
-    }
-
-    @Override
-    public String toString() {
-        return getClass().getName() + "[" + "width=" + width + "," + "height="
-                + height + "," + "bpp=" + bitsPerPixel + "," + "hasMask="
-                + hasMask + "]";
-    }
-
     public static IcnsType findAnyType(final int type) {
         for (final IcnsType allImageType : ALL_IMAGE_TYPES) {
             if (allImageType.getType() == type) {
@@ -152,33 +139,10 @@ enum IcnsType {
         }
         return null;
     }
-
     public static IcnsType findImageType(final int type) {
         for (final IcnsType allImageType : ALL_IMAGE_TYPES) {
             if (allImageType.getType() == type) {
                 return allImageType;
-            }
-        }
-        return null;
-    }
-
-    public static IcnsType find8BPPMaskType(final IcnsType imageType) {
-        for (final IcnsType allMaskType : ALL_MASK_TYPES) {
-            if (allMaskType.getBitsPerPixel() == 8
-                    && allMaskType.getWidth() == imageType.getWidth()
-                    && allMaskType.getHeight() == imageType.getHeight()) {
-                return allMaskType;
-            }
-        }
-        return null;
-    }
-
-    public static IcnsType find1BPPMaskType(final IcnsType imageType) {
-        for (final IcnsType allMaskType : ALL_MASK_TYPES) {
-            if (allMaskType.getBitsPerPixel() == 1
-                    && allMaskType.getWidth() == imageType.getWidth()
-                    && allMaskType.getHeight() == imageType.getHeight()) {
-                return allMaskType;
             }
         }
         return null;
@@ -195,12 +159,48 @@ enum IcnsType {
              | (0xff & bytes[3]);
     }
 
-    public static String describeType(final int type) {
-        final byte[] bytes = new byte[4];
-        bytes[0] = (byte) (0xff & (type >> 24));
-        bytes[1] = (byte) (0xff & (type >> 16));
-        bytes[2] = (byte) (0xff & (type >> 8));
-        bytes[3] = (byte) (0xff & type);
-        return new String(bytes, StandardCharsets.US_ASCII);
+    private final int type;
+
+    private final int width;
+
+    private final int height;
+
+    private final int bitsPerPixel;
+
+    private final boolean hasMask;
+
+    IcnsType(final String type, final int width, final int height, final int bitsPerPixel, final boolean hasMask) {
+        this.type = typeAsInt(type);
+        this.width = width;
+        this.height = height;
+        this.bitsPerPixel = bitsPerPixel;
+        this.hasMask = hasMask;
+    }
+
+    public int getBitsPerPixel() {
+        return bitsPerPixel;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public boolean hasMask() {
+        return hasMask;
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getName() + "[" + "width=" + width + "," + "height="
+                + height + "," + "bpp=" + bitsPerPixel + "," + "hasMask="
+                + hasMask + "]";
     }
 }

@@ -17,6 +17,26 @@
 package org.apache.commons.imaging.common.itu_t4;
 
 class T4_T6_Tables {
+    public static class Entry {
+        final String bitString;
+        final Integer value;
+
+        Entry(final String bitString, final int value) {
+            this.bitString = bitString;
+            this.value = value;
+        }
+
+        public void writeBits(final BitArrayOutputStream outputStream) {
+            for (int i = 0; i < bitString.length(); i++) {
+                if (bitString.charAt(i) == '0') {
+                    outputStream.writeBit(0);
+                } else {
+                    outputStream.writeBit(1);
+                }
+            }
+        }
+    }
+
     public static final Entry[] WHITE_TERMINATING_CODES = {
             new Entry("00110101", 0),
             new Entry("000111", 1),
@@ -221,7 +241,6 @@ class T4_T6_Tables {
             new Entry("000000011101", 2432),
             new Entry("000000011110", 2496),
             new Entry("000000011111", 2560), };
-
     public static final Entry EOL = new Entry("000000000001", 0);
     public static final Entry EOL13 = new Entry("0000000000001", 0);
     public static final Entry EOL14 = new Entry("00000000000001", 0);
@@ -238,25 +257,6 @@ class T4_T6_Tables {
     public static final Entry VR3 = new Entry("0000011", 0);
     public static final Entry VL1 = new Entry("010", 0);
     public static final Entry VL2 = new Entry("000010", 0);
+
     public static final Entry VL3 = new Entry("0000010", 0);
-
-    public static class Entry {
-        final String bitString;
-        final Integer value;
-
-        Entry(final String bitString, final int value) {
-            this.bitString = bitString;
-            this.value = value;
-        }
-
-        public void writeBits(final BitArrayOutputStream outputStream) {
-            for (int i = 0; i < bitString.length(); i++) {
-                if (bitString.charAt(i) == '0') {
-                    outputStream.writeBit(0);
-                } else {
-                    outputStream.writeBit(1);
-                }
-            }
-        }
-    }
 }

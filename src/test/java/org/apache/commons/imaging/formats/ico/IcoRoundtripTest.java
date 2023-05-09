@@ -38,40 +38,46 @@ import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 
 public class IcoRoundtripTest extends IcoBaseTest {
-    // 16x16 test image
-    private static final int[][] IMAGE = {
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0},
-        {0,0,0,1,1,0,0,0,0,1,0,0,1,0,0,0},
-        {0,0,1,0,1,0,0,0,1,0,0,0,0,1,0,0},
-        {0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0},
-        {0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0},
-        {0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0},
-        {0,0,0,0,1,0,0,0,1,0,1,1,1,0,0,0},
-        {0,0,0,0,1,0,0,0,1,1,0,0,0,1,0,0},
-        {0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0},
-        {0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0},
-        {0,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0},
-        {0,0,0,0,1,0,0,0,0,0,1,1,1,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
-    };
-
-    private final Map<Integer,BitmapGenerator> generatorMap = new HashMap<>();
-
-    public IcoRoundtripTest() {
-        generatorMap.put(1, new GeneratorFor1BitBitmaps());
-        generatorMap.put(4, new GeneratorFor4BitBitmaps());
-        generatorMap.put(8, new GeneratorFor8BitBitmaps());
-        generatorMap.put(16, new GeneratorFor16BitBitmaps());
-        generatorMap.put(24, new GeneratorFor24BitBitmaps());
-        generatorMap.put(32, new GeneratorFor32BitBitmaps());
-    }
-
     private interface BitmapGenerator {
         byte[] generateBitmap(int foreground, int background, int paletteSize)
                 throws IOException, ImageWriteException;
+    }
+
+    private static class GeneratorFor16BitBitmaps implements BitmapGenerator {
+        @Override
+        public byte[] generateBitmap(final int foreground, final int background,
+ final int paletteSize)
+                throws IOException, ImageWriteException {
+            try (final ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
+                    final BinaryOutputStream bos = BinaryOutputStream.littleEndian(byteArrayStream)) {
+                // Palette
+                for (int i = 0; i < paletteSize; i++) {
+                    bos.write4Bytes(0);
+                }
+                // Image
+                for (int y = 15; y >= 0; y--) {
+                    for (int x = 0; x < 16; x++) {
+                        if (IMAGE[y][x] == 1) {
+                            bos.write2Bytes((0x1f & (foreground >> 3)) | ((0x1f & (foreground >> 11)) << 5)
+                                    | ((0x1f & (foreground >> 19)) << 10));
+                        } else {
+                            bos.write2Bytes((0x1f & (background >> 3)) | ((0x1f & (background >> 11)) << 5)
+                                    | ((0x1f & (background >> 19)) << 10));
+                        }
+                    }
+                }
+                // Mask
+                for (int y = IMAGE.length - 1; y >= 0; y--) {
+                    bos.write(0);
+                    bos.write(0);
+                    // Pad to 4 bytes:
+                    bos.write(0);
+                    bos.write(0);
+                }
+                bos.flush();
+                return byteArrayStream.toByteArray();
+            }
+        }
     }
 
     private static class GeneratorFor1BitBitmaps implements BitmapGenerator {
@@ -112,6 +118,82 @@ public class IcoRoundtripTest extends IcoBaseTest {
                 bos.flush();
                 return byteArrayStream.toByteArray();
             }
+        }
+    }
+
+    private static class GeneratorFor24BitBitmaps implements BitmapGenerator {
+        @Override
+        public byte[] generateBitmap(final int foreground, final int background, final int paletteSize)
+                throws IOException, ImageWriteException {
+            try (final ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
+                    final BinaryOutputStream bos = BinaryOutputStream.littleEndian(byteArrayStream)) {
+                // Palette
+                for (int i = 0; i < paletteSize; i++) {
+                    bos.write4Bytes(0);
+                }
+                // Image
+                for (int y = 15; y >= 0; y--) {
+                    for (int x = 0; x < 16; x++) {
+                        if (IMAGE[y][x] == 1) {
+                            bos.write3Bytes(0xffffff & foreground);
+                        } else {
+                            bos.write3Bytes(0xffffff & background);
+                        }
+                    }
+                }
+                // Mask
+                for (int y = IMAGE.length - 1; y >= 0; y--) {
+                    bos.write(0);
+                    bos.write(0);
+                    // Pad to 4 bytes:
+                    bos.write(0);
+                    bos.write(0);
+                }
+                bos.flush();
+                return byteArrayStream.toByteArray();
+            }
+        }
+    }
+
+    private static class GeneratorFor32BitBitmaps implements BitmapGenerator {
+        public byte[] generate32bitRGBABitmap(final int foreground, final int background, final int paletteSize,
+                final boolean writeMask) throws IOException {
+            try (final ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
+                    final BinaryOutputStream bos = BinaryOutputStream.littleEndian(byteArrayStream)) {
+                // Palette
+                for (int i = 0; i < paletteSize; i++) {
+                    bos.write4Bytes(0);
+                }
+                // Image
+                for (int y = 15; y >= 0; y--) {
+                    for (int x = 0; x < 16; x++) {
+                        if (IMAGE[y][x] == 1) {
+                            bos.write4Bytes(foreground);
+                        } else {
+                            bos.write4Bytes(background);
+                        }
+                    }
+                }
+                // Mask
+                if (writeMask) {
+                    for (int y = IMAGE.length - 1; y >= 0; y--) {
+                        bos.write(0);
+                        bos.write(0);
+                        // Pad to 4 bytes:
+                        bos.write(0);
+                        bos.write(0);
+                    }
+                }
+                bos.flush();
+                return byteArrayStream.toByteArray();
+            }
+        }
+
+        @Override
+        public byte[] generateBitmap(final int foreground, final int background,
+                final int paletteSize) throws IOException, ImageWriteException {
+            return generate32bitRGBABitmap(foreground, background, paletteSize,
+                    true);
         }
     }
 
@@ -183,175 +265,68 @@ public class IcoRoundtripTest extends IcoBaseTest {
         }
     }
 
-    private static class GeneratorFor16BitBitmaps implements BitmapGenerator {
-        @Override
-        public byte[] generateBitmap(final int foreground, final int background,
- final int paletteSize)
-                throws IOException, ImageWriteException {
-            try (final ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
-                    final BinaryOutputStream bos = BinaryOutputStream.littleEndian(byteArrayStream)) {
-                // Palette
-                for (int i = 0; i < paletteSize; i++) {
-                    bos.write4Bytes(0);
-                }
-                // Image
-                for (int y = 15; y >= 0; y--) {
-                    for (int x = 0; x < 16; x++) {
-                        if (IMAGE[y][x] == 1) {
-                            bos.write2Bytes((0x1f & (foreground >> 3)) | ((0x1f & (foreground >> 11)) << 5)
-                                    | ((0x1f & (foreground >> 19)) << 10));
-                        } else {
-                            bos.write2Bytes((0x1f & (background >> 3)) | ((0x1f & (background >> 11)) << 5)
-                                    | ((0x1f & (background >> 19)) << 10));
-                        }
-                    }
-                }
-                // Mask
-                for (int y = IMAGE.length - 1; y >= 0; y--) {
-                    bos.write(0);
-                    bos.write(0);
-                    // Pad to 4 bytes:
-                    bos.write(0);
-                    bos.write(0);
-                }
-                bos.flush();
-                return byteArrayStream.toByteArray();
-            }
-        }
-    }
+    // 16x16 test image
+    private static final int[][] IMAGE = {
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0},
+        {0,0,0,1,1,0,0,0,0,1,0,0,1,0,0,0},
+        {0,0,1,0,1,0,0,0,1,0,0,0,0,1,0,0},
+        {0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0},
+        {0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0},
+        {0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0},
+        {0,0,0,0,1,0,0,0,1,0,1,1,1,0,0,0},
+        {0,0,0,0,1,0,0,0,1,1,0,0,0,1,0,0},
+        {0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0},
+        {0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0},
+        {0,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0},
+        {0,0,0,0,1,0,0,0,0,0,1,1,1,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+    };
 
-    private static class GeneratorFor24BitBitmaps implements BitmapGenerator {
-        @Override
-        public byte[] generateBitmap(final int foreground, final int background, final int paletteSize)
-                throws IOException, ImageWriteException {
-            try (final ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
-                    final BinaryOutputStream bos = BinaryOutputStream.littleEndian(byteArrayStream)) {
-                // Palette
-                for (int i = 0; i < paletteSize; i++) {
-                    bos.write4Bytes(0);
-                }
-                // Image
-                for (int y = 15; y >= 0; y--) {
-                    for (int x = 0; x < 16; x++) {
-                        if (IMAGE[y][x] == 1) {
-                            bos.write3Bytes(0xffffff & foreground);
-                        } else {
-                            bos.write3Bytes(0xffffff & background);
-                        }
-                    }
-                }
-                // Mask
-                for (int y = IMAGE.length - 1; y >= 0; y--) {
-                    bos.write(0);
-                    bos.write(0);
-                    // Pad to 4 bytes:
-                    bos.write(0);
-                    bos.write(0);
-                }
-                bos.flush();
-                return byteArrayStream.toByteArray();
-            }
-        }
-    }
+    private final Map<Integer,BitmapGenerator> generatorMap = new HashMap<>();
 
-    private static class GeneratorFor32BitBitmaps implements BitmapGenerator {
-        @Override
-        public byte[] generateBitmap(final int foreground, final int background,
-                final int paletteSize) throws IOException, ImageWriteException {
-            return generate32bitRGBABitmap(foreground, background, paletteSize,
-                    true);
-        }
-
-        public byte[] generate32bitRGBABitmap(final int foreground, final int background, final int paletteSize,
-                final boolean writeMask) throws IOException {
-            try (final ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
-                    final BinaryOutputStream bos = BinaryOutputStream.littleEndian(byteArrayStream)) {
-                // Palette
-                for (int i = 0; i < paletteSize; i++) {
-                    bos.write4Bytes(0);
-                }
-                // Image
-                for (int y = 15; y >= 0; y--) {
-                    for (int x = 0; x < 16; x++) {
-                        if (IMAGE[y][x] == 1) {
-                            bos.write4Bytes(foreground);
-                        } else {
-                            bos.write4Bytes(background);
-                        }
-                    }
-                }
-                // Mask
-                if (writeMask) {
-                    for (int y = IMAGE.length - 1; y >= 0; y--) {
-                        bos.write(0);
-                        bos.write(0);
-                        // Pad to 4 bytes:
-                        bos.write(0);
-                        bos.write(0);
-                    }
-                }
-                bos.flush();
-                return byteArrayStream.toByteArray();
-            }
-        }
-    }
-
-    private void writeICONDIR(final BinaryOutputStream bos, final int reserved, final int type,
-            final int count) throws IOException {
-        bos.write2Bytes(reserved);
-        bos.write2Bytes(type);
-        bos.write2Bytes(count);
-    }
-
-    private void writeICONDIRENTRY(final BinaryOutputStream bos, final int width,
-            final int height, final int colorCount, final int reserved, final int planes, final int bitCount,
-            final int bytesInRes) throws IOException {
-        bos.write(width);
-        bos.write(height);
-        bos.write(colorCount);
-        bos.write(reserved);
-        bos.write2Bytes(planes);
-        bos.write2Bytes(bitCount);
-        bos.write4Bytes(bytesInRes);
-        bos.write4Bytes(22); // image comes immediately after this
-    }
-
-    private void writeBITMAPINFOHEADER(final BinaryOutputStream bos, final int width,
-            final int height, final int colorPlanes, final int bitCount, final int compression,
-            final int colorsUsed, final int colorsImportant) throws IOException {
-        // BITMAPINFOHEADER
-        bos.write4Bytes(40); // biSize, always 40 for BITMAPINFOHEADER
-        bos.write4Bytes(width); // biWidth
-        bos.write4Bytes(height); // biHeight
-        bos.write2Bytes(colorPlanes); // biPlanes
-        bos.write2Bytes(bitCount); // bitCount
-        bos.write4Bytes(compression); // biCompression
-        bos.write4Bytes(0); // biSizeImage, can be 0 for uncompressed
-        bos.write4Bytes(0); // X pixels per metre
-        bos.write4Bytes(0); // Y pixels per metre
-        bos.write4Bytes(colorsUsed); // colors used, ignored
-        bos.write4Bytes(colorsImportant); // colors important
+    public IcoRoundtripTest() {
+        generatorMap.put(1, new GeneratorFor1BitBitmaps());
+        generatorMap.put(4, new GeneratorFor4BitBitmaps());
+        generatorMap.put(8, new GeneratorFor8BitBitmaps());
+        generatorMap.put(16, new GeneratorFor16BitBitmaps());
+        generatorMap.put(24, new GeneratorFor24BitBitmaps());
+        generatorMap.put(32, new GeneratorFor32BitBitmaps());
     }
 
     @Test
-    public void testNormalIcons() throws Exception {
+    public void test32bitMask() throws Exception {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
-        for (final Map.Entry<Integer, BitmapGenerator> entry : generatorMap.entrySet()) {
-            final int bitDepth = entry.getKey();
-            final BitmapGenerator bitmapGenerator = entry.getValue();
-
-            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            try (final BinaryOutputStream bos = BinaryOutputStream.littleEndian(baos)) {
-                final byte[] bitmap = bitmapGenerator.generateBitmap(foreground, background, (bitDepth <= 8) ? (1 << bitDepth) : 0);
-                writeICONDIR(bos, 0, 1, 1);
-                writeICONDIRENTRY(bos, 16, 16, 0, 0, 1, bitDepth, 40 + bitmap.length);
-                writeBITMAPINFOHEADER(bos, 16, 2 * 16, 1, bitDepth, 0, 0, 0);
-                bos.write(bitmap);
-                bos.flush();
-                writeAndReadImageData("16x16x" + bitDepth, baos.toByteArray(), foreground, background);
-            }
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try (final BinaryOutputStream bos = BinaryOutputStream.littleEndian(baos)) {
+            // For 32 bit RGBA, the AND mask can be missing:
+            final byte[] bitmap = new GeneratorFor32BitBitmaps().generate32bitRGBABitmap(foreground, background, 0, false);
+            writeICONDIR(bos, 0, 1, 1);
+            writeICONDIRENTRY(bos, 16, 16, 0, 0, 1, 32, 40 + bitmap.length);
+            writeBITMAPINFOHEADER(bos, 16, 2 * 16, 1, 32, 0, 0, 0);
+            bos.write(bitmap);
+            bos.flush();
         }
+        writeAndReadImageData("16x16x32-no-mask", baos.toByteArray(), foreground, background);
+    }
+
+    @Test
+    public void testAlphaVersusANDMask() throws Exception {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try (final BinaryOutputStream bos = BinaryOutputStream.littleEndian(baos)) {
+            final byte[] bitmap = new GeneratorFor32BitBitmaps().generate32bitRGBABitmap(0xFF000000, 0x00000000, 0, true);
+            writeICONDIR(bos, 0, 1, 1);
+            writeICONDIRENTRY(bos, 16, 16, 0, 0, 1, 32, 40 + bitmap.length);
+            writeBITMAPINFOHEADER(bos, 16, 2 * 16, 1, 32, 0, 0, 0);
+            bos.write(bitmap);
+            bos.flush();
+        }
+        // The AND mask is fully opaque, yet the fully transparent alpha should
+        // win:
+        writeAndReadImageData("16x16x32-alpha-vs-mask", baos.toByteArray(), 0xFF000000, 0x00000000);
     }
 
     @Test
@@ -398,6 +373,24 @@ public class IcoRoundtripTest extends IcoBaseTest {
     }
 
     @Test
+    public void testBitfieldCompression() throws Exception {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try (final BinaryOutputStream bos = BinaryOutputStream.littleEndian(baos)) {
+            final byte[] bitmap = new GeneratorFor32BitBitmaps().generate32bitRGBABitmap(0xFFFF0000, 0xFFFFFFFF, 0, true);
+            writeICONDIR(bos, 0, 1, 1);
+            writeICONDIRENTRY(bos, 16, 16, 0, 0, 1, 32, 40 + bitmap.length);
+            writeBITMAPINFOHEADER(bos, 16, 2 * 16, 1, 32, 3 /* BI_BITFIELDS */, 0, 0);
+            bos.write4Bytes(0x000000FF); // red mask
+            bos.write4Bytes(0x0000FF00); // green mask
+            bos.write4Bytes(0x00FF0000); // blue mask
+            bos.write(bitmap);
+            bos.flush();
+        }
+        writeAndReadImageData("16x16x32-bitfield-compressed",
+                baos.toByteArray(), 0xFF0000FF, 0xFFFFFFFF);
+    }
+
+    @Test
     public void testColorsUsed() throws Exception {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
@@ -415,6 +408,42 @@ public class IcoRoundtripTest extends IcoBaseTest {
                 bos.flush();
                 writeAndReadImageData("16x16x" + bitDepth + "-custom-palette", baos.toByteArray(), foreground, background);
             }}
+    }
+
+    @Test
+    public void testFullyTransparent32bitRGBA() throws Exception {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try (final BinaryOutputStream bos = BinaryOutputStream.littleEndian(baos)) {
+            final byte[] bitmap = new GeneratorFor32BitBitmaps().generate32bitRGBABitmap(0x00000000, 0x00FFFFFF, 0, true);
+            writeICONDIR(bos, 0, 1, 1);
+            writeICONDIRENTRY(bos, 16, 16, 0, 0, 1, 32, 40 + bitmap.length);
+            writeBITMAPINFOHEADER(bos, 16, 2 * 16, 1, 32, 0, 0, 0);
+            bos.write(bitmap);
+            bos.flush();
+        }
+        // Because every pixel is fully transparent, ***ALPHA GETS IGNORED***:
+        writeAndReadImageData("16x16x32-fully-transparent", baos.toByteArray(), 0xFF000000, 0xFFFFFFFF);
+    }
+
+    @Test
+    public void testNormalIcons() throws Exception {
+        final int foreground = 0xFFF000E0;
+        final int background = 0xFF102030;
+        for (final Map.Entry<Integer, BitmapGenerator> entry : generatorMap.entrySet()) {
+            final int bitDepth = entry.getKey();
+            final BitmapGenerator bitmapGenerator = entry.getValue();
+
+            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            try (final BinaryOutputStream bos = BinaryOutputStream.littleEndian(baos)) {
+                final byte[] bitmap = bitmapGenerator.generateBitmap(foreground, background, (bitDepth <= 8) ? (1 << bitDepth) : 0);
+                writeICONDIR(bos, 0, 1, 1);
+                writeICONDIRENTRY(bos, 16, 16, 0, 0, 1, bitDepth, 40 + bitmap.length);
+                writeBITMAPINFOHEADER(bos, 16, 2 * 16, 1, bitDepth, 0, 0, 0);
+                bos.write(bitmap);
+                bos.flush();
+                writeAndReadImageData("16x16x" + bitDepth, baos.toByteArray(), foreground, background);
+            }
+        }
     }
 
     @Test
@@ -445,70 +474,26 @@ public class IcoRoundtripTest extends IcoBaseTest {
         }
     }
 
-    @Test
-    public void testBitfieldCompression() throws Exception {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (final BinaryOutputStream bos = BinaryOutputStream.littleEndian(baos)) {
-            final byte[] bitmap = new GeneratorFor32BitBitmaps().generate32bitRGBABitmap(0xFFFF0000, 0xFFFFFFFF, 0, true);
-            writeICONDIR(bos, 0, 1, 1);
-            writeICONDIRENTRY(bos, 16, 16, 0, 0, 1, 32, 40 + bitmap.length);
-            writeBITMAPINFOHEADER(bos, 16, 2 * 16, 1, 32, 3 /* BI_BITFIELDS */, 0, 0);
-            bos.write4Bytes(0x000000FF); // red mask
-            bos.write4Bytes(0x0000FF00); // green mask
-            bos.write4Bytes(0x00FF0000); // blue mask
-            bos.write(bitmap);
-            bos.flush();
-        }
-        writeAndReadImageData("16x16x32-bitfield-compressed",
-                baos.toByteArray(), 0xFF0000FF, 0xFFFFFFFF);
-    }
+    private void verify(final BufferedImage data, final int foreground, final int background) {
+        assertNotNull(data);
+        assertEquals(data.getHeight(), IMAGE.length);
 
-    @Test
-    public void test32bitMask() throws Exception {
-        final int foreground = 0xFFF000E0;
-        final int background = 0xFF102030;
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (final BinaryOutputStream bos = BinaryOutputStream.littleEndian(baos)) {
-            // For 32 bit RGBA, the AND mask can be missing:
-            final byte[] bitmap = new GeneratorFor32BitBitmaps().generate32bitRGBABitmap(foreground, background, 0, false);
-            writeICONDIR(bos, 0, 1, 1);
-            writeICONDIRENTRY(bos, 16, 16, 0, 0, 1, 32, 40 + bitmap.length);
-            writeBITMAPINFOHEADER(bos, 16, 2 * 16, 1, 32, 0, 0, 0);
-            bos.write(bitmap);
-            bos.flush();
-        }
-        writeAndReadImageData("16x16x32-no-mask", baos.toByteArray(), foreground, background);
-    }
+        for (int y = 0; y < data.getHeight(); y++) {
+            assertEquals(data.getWidth(), IMAGE[y].length);
+            for (int x = 0; x < data.getWidth(); x++) {
+                final int imageARGB = (IMAGE[y][x] == 1) ? foreground : background;
+                final int dataARGB = data.getRGB(x, y);
 
-    @Test
-    public void testAlphaVersusANDMask() throws Exception {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (final BinaryOutputStream bos = BinaryOutputStream.littleEndian(baos)) {
-            final byte[] bitmap = new GeneratorFor32BitBitmaps().generate32bitRGBABitmap(0xFF000000, 0x00000000, 0, true);
-            writeICONDIR(bos, 0, 1, 1);
-            writeICONDIRENTRY(bos, 16, 16, 0, 0, 1, 32, 40 + bitmap.length);
-            writeBITMAPINFOHEADER(bos, 16, 2 * 16, 1, 32, 0, 0, 0);
-            bos.write(bitmap);
-            bos.flush();
+                if (imageARGB != dataARGB) {
+                    Debug.debug("x: " + x + ", y: " + y + ", image: "
+                            + imageARGB + " (0x"
+                            + Integer.toHexString(imageARGB) + ")" + ", data: "
+                            + dataARGB + " (0x" + Integer.toHexString(dataARGB)
+                            + ")");
+                }
+                assertEquals(imageARGB, dataARGB);
+            }
         }
-        // The AND mask is fully opaque, yet the fully transparent alpha should
-        // win:
-        writeAndReadImageData("16x16x32-alpha-vs-mask", baos.toByteArray(), 0xFF000000, 0x00000000);
-    }
-
-    @Test
-    public void testFullyTransparent32bitRGBA() throws Exception {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (final BinaryOutputStream bos = BinaryOutputStream.littleEndian(baos)) {
-            final byte[] bitmap = new GeneratorFor32BitBitmaps().generate32bitRGBABitmap(0x00000000, 0x00FFFFFF, 0, true);
-            writeICONDIR(bos, 0, 1, 1);
-            writeICONDIRENTRY(bos, 16, 16, 0, 0, 1, 32, 40 + bitmap.length);
-            writeBITMAPINFOHEADER(bos, 16, 2 * 16, 1, 32, 0, 0, 0);
-            bos.write(bitmap);
-            bos.flush();
-        }
-        // Because every pixel is fully transparent, ***ALPHA GETS IGNORED***:
-        writeAndReadImageData("16x16x32-fully-transparent", baos.toByteArray(), 0xFF000000, 0xFFFFFFFF);
     }
 
     private void writeAndReadImageData(final String description, final byte[] rawData,
@@ -530,26 +515,41 @@ public class IcoRoundtripTest extends IcoBaseTest {
         verify(dstImage, foreground, background);
     }
 
-    private void verify(final BufferedImage data, final int foreground, final int background) {
-        assertNotNull(data);
-        assertEquals(data.getHeight(), IMAGE.length);
+    private void writeBITMAPINFOHEADER(final BinaryOutputStream bos, final int width,
+            final int height, final int colorPlanes, final int bitCount, final int compression,
+            final int colorsUsed, final int colorsImportant) throws IOException {
+        // BITMAPINFOHEADER
+        bos.write4Bytes(40); // biSize, always 40 for BITMAPINFOHEADER
+        bos.write4Bytes(width); // biWidth
+        bos.write4Bytes(height); // biHeight
+        bos.write2Bytes(colorPlanes); // biPlanes
+        bos.write2Bytes(bitCount); // bitCount
+        bos.write4Bytes(compression); // biCompression
+        bos.write4Bytes(0); // biSizeImage, can be 0 for uncompressed
+        bos.write4Bytes(0); // X pixels per metre
+        bos.write4Bytes(0); // Y pixels per metre
+        bos.write4Bytes(colorsUsed); // colors used, ignored
+        bos.write4Bytes(colorsImportant); // colors important
+    }
 
-        for (int y = 0; y < data.getHeight(); y++) {
-            assertEquals(data.getWidth(), IMAGE[y].length);
-            for (int x = 0; x < data.getWidth(); x++) {
-                final int imageARGB = (IMAGE[y][x] == 1) ? foreground : background;
-                final int dataARGB = data.getRGB(x, y);
+    private void writeICONDIR(final BinaryOutputStream bos, final int reserved, final int type,
+            final int count) throws IOException {
+        bos.write2Bytes(reserved);
+        bos.write2Bytes(type);
+        bos.write2Bytes(count);
+    }
 
-                if (imageARGB != dataARGB) {
-                    Debug.debug("x: " + x + ", y: " + y + ", image: "
-                            + imageARGB + " (0x"
-                            + Integer.toHexString(imageARGB) + ")" + ", data: "
-                            + dataARGB + " (0x" + Integer.toHexString(dataARGB)
-                            + ")");
-                }
-                assertEquals(imageARGB, dataARGB);
-            }
-        }
+    private void writeICONDIRENTRY(final BinaryOutputStream bos, final int width,
+            final int height, final int colorCount, final int reserved, final int planes, final int bitCount,
+            final int bytesInRes) throws IOException {
+        bos.write(width);
+        bos.write(height);
+        bos.write(colorCount);
+        bos.write(reserved);
+        bos.write2Bytes(planes);
+        bos.write2Bytes(bitCount);
+        bos.write4Bytes(bytesInRes);
+        bos.write4Bytes(22); // image comes immediately after this
     }
 
 }

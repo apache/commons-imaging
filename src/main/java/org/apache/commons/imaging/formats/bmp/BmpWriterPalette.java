@@ -41,29 +41,8 @@ class BmpWriterPalette implements BmpWriter {
     }
 
     @Override
-    public int getPaletteSize() {
-        return palette.length();
-    }
-
-    @Override
     public int getBitsPerPixel() {
         return bitsPerSample;
-    }
-
-    @Override
-    public void writePalette(final BinaryOutputStream bos) throws IOException {
-        for (int i = 0; i < palette.length(); i++) {
-            final int rgb = palette.getEntry(i);
-
-            final int red = 0xff & (rgb >> 16);
-            final int green = 0xff & (rgb >> 8);
-            final int blue = 0xff & (rgb >> 0);
-
-            bos.write(blue);
-            bos.write(green);
-            bos.write(red);
-            bos.write(0);
-        }
     }
 
     @Override
@@ -116,5 +95,26 @@ class BmpWriterPalette implements BmpWriter {
         }
 
         return baos.toByteArray();
+    }
+
+    @Override
+    public int getPaletteSize() {
+        return palette.length();
+    }
+
+    @Override
+    public void writePalette(final BinaryOutputStream bos) throws IOException {
+        for (int i = 0; i < palette.length(); i++) {
+            final int rgb = palette.getEntry(i);
+
+            final int red = 0xff & (rgb >> 16);
+            final int green = 0xff & (rgb >> 8);
+            final int blue = 0xff & (rgb >> 0);
+
+            bos.write(blue);
+            bos.write(green);
+            bos.write(red);
+            bos.write(0);
+        }
     }
 }

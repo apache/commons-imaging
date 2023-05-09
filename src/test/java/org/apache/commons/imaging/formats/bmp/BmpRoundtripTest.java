@@ -33,92 +33,6 @@ import org.junit.jupiter.api.Test;
 
 public class BmpRoundtripTest extends BmpBaseTest {
 
-    private int[][] getSimpleRawData(final int width, final int height, final int value) {
-        final int[][] result = new int[height][width];
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                result[y][x] = value;
-            }
-        }
-        return result;
-    }
-
-    private int[][] getAscendingRawData(final int width, final int height) {
-        final int[][] result = new int[height][width];
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                final int alpha = (x + y) % 256;
-                final int value = (x + y) % 256;
-                final int argb = (0xff & alpha) << 24 | (0xff & value) << 16
-                        | (0xff & value) << 8 | (0xff & value) << 0;
-
-                result[y][x] = argb;
-            }
-        }
-        return result;
-    }
-
-    private int[][] randomRawData(final int width, final int height) {
-        final Random random = new Random();
-        final int[][] result = new int[height][width];
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                final int argb = random.nextInt();
-                result[y][x] = argb;
-            }
-        }
-        return result;
-    }
-
-    @Test
-    public void testSmallBlackPixels() throws Exception {
-        final int[][] smallBlackPixels = getSimpleRawData(256, 256, 0);
-        writeAndReadImageData(smallBlackPixels);
-    }
-
-    @Test
-    public void testSingleBlackPixel() throws Exception {
-        final int[][] singleBlackPixel = getSimpleRawData(1, 1, 0);
-        writeAndReadImageData(singleBlackPixel);
-    }
-
-    @Test
-    public void testSmallRedPixels() throws Exception {
-        final int[][] smallRedPixels = getSimpleRawData(256, 256, 0xffff0000);
-        writeAndReadImageData(smallRedPixels);
-    }
-
-    @Test
-    public void testSingleRedPixel() throws Exception {
-        final int[][] singleRedPixel = getSimpleRawData(1, 1, 0xffff0000);
-        writeAndReadImageData(singleRedPixel);
-    }
-
-    @Test
-    public void testSmallAscendingPixels() throws Exception {
-        final int[][] smallAscendingPixels = getAscendingRawData(256, 256);
-        writeAndReadImageData(smallAscendingPixels);
-    }
-
-    @Test
-    public void testSmallRandomPixels() throws Exception {
-        final int[][] smallRandomPixels = randomRawData(256, 256);
-        writeAndReadImageData(smallRandomPixels);
-    }
-
-    private BufferedImage imageDataToBufferedImage(final int[][] rawData) {
-        final int width = rawData[0].length;
-        final int height = rawData.length;
-        final BufferedImage image = new BufferedImage(width, height,
-                BufferedImage.TYPE_INT_ARGB);
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                image.setRGB(x, y, rawData[y][x]);
-            }
-        }
-        return image;
-    }
-
     private int[][] bufferedImageToImageData(final BufferedImage image) {
         final int width = image.getWidth();
         final int height = image.getHeight();
@@ -130,21 +44,6 @@ public class BmpRoundtripTest extends BmpBaseTest {
             }
         }
         return result;
-    }
-
-    private void writeAndReadImageData(final int[][] rawData) throws IOException, ImageReadException, ImageWriteException {
-        final BufferedImage srcImage = imageDataToBufferedImage(rawData);
-
-        final byte[] bytes = Imaging.writeImageToBytes(srcImage, ImageFormats.BMP);
-
-        final BufferedImage dstImage = Imaging.getBufferedImage(bytes);
-
-        assertNotNull(dstImage);
-        assertEquals(srcImage.getWidth(), dstImage.getWidth());
-        assertEquals(srcImage.getHeight(), dstImage.getHeight());
-
-        final int[][] dstData = bufferedImageToImageData(dstImage);
-        compare(rawData, dstData);
     }
 
     private void compare(final int[][] a, final int[][] b) {
@@ -170,6 +69,107 @@ public class BmpRoundtripTest extends BmpBaseTest {
                 assertEquals(rgbA, rgbB);
             }
         }
+    }
+
+    private int[][] getAscendingRawData(final int width, final int height) {
+        final int[][] result = new int[height][width];
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                final int alpha = (x + y) % 256;
+                final int value = (x + y) % 256;
+                final int argb = (0xff & alpha) << 24 | (0xff & value) << 16
+                        | (0xff & value) << 8 | (0xff & value) << 0;
+
+                result[y][x] = argb;
+            }
+        }
+        return result;
+    }
+
+    private int[][] getSimpleRawData(final int width, final int height, final int value) {
+        final int[][] result = new int[height][width];
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                result[y][x] = value;
+            }
+        }
+        return result;
+    }
+
+    private BufferedImage imageDataToBufferedImage(final int[][] rawData) {
+        final int width = rawData[0].length;
+        final int height = rawData.length;
+        final BufferedImage image = new BufferedImage(width, height,
+                BufferedImage.TYPE_INT_ARGB);
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                image.setRGB(x, y, rawData[y][x]);
+            }
+        }
+        return image;
+    }
+
+    private int[][] randomRawData(final int width, final int height) {
+        final Random random = new Random();
+        final int[][] result = new int[height][width];
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                final int argb = random.nextInt();
+                result[y][x] = argb;
+            }
+        }
+        return result;
+    }
+
+    @Test
+    public void testSingleBlackPixel() throws Exception {
+        final int[][] singleBlackPixel = getSimpleRawData(1, 1, 0);
+        writeAndReadImageData(singleBlackPixel);
+    }
+
+    @Test
+    public void testSingleRedPixel() throws Exception {
+        final int[][] singleRedPixel = getSimpleRawData(1, 1, 0xffff0000);
+        writeAndReadImageData(singleRedPixel);
+    }
+
+    @Test
+    public void testSmallAscendingPixels() throws Exception {
+        final int[][] smallAscendingPixels = getAscendingRawData(256, 256);
+        writeAndReadImageData(smallAscendingPixels);
+    }
+
+    @Test
+    public void testSmallBlackPixels() throws Exception {
+        final int[][] smallBlackPixels = getSimpleRawData(256, 256, 0);
+        writeAndReadImageData(smallBlackPixels);
+    }
+
+    @Test
+    public void testSmallRandomPixels() throws Exception {
+        final int[][] smallRandomPixels = randomRawData(256, 256);
+        writeAndReadImageData(smallRandomPixels);
+    }
+
+    @Test
+    public void testSmallRedPixels() throws Exception {
+        final int[][] smallRedPixels = getSimpleRawData(256, 256, 0xffff0000);
+        writeAndReadImageData(smallRedPixels);
+    }
+
+    private void writeAndReadImageData(final int[][] rawData) throws IOException, ImageReadException, ImageWriteException {
+        final BufferedImage srcImage = imageDataToBufferedImage(rawData);
+
+        final byte[] bytes = Imaging.writeImageToBytes(srcImage, ImageFormats.BMP);
+
+        final BufferedImage dstImage = Imaging.getBufferedImage(bytes);
+
+        assertNotNull(dstImage);
+        assertEquals(srcImage.getWidth(), dstImage.getWidth());
+        assertEquals(srcImage.getHeight(), dstImage.getHeight());
+
+        final int[][] dstData = bufferedImageToImageData(dstImage);
+        compare(rawData, dstData);
     }
 
 }

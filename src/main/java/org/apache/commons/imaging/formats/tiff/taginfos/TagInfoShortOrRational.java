@@ -28,11 +28,11 @@ public class TagInfoShortOrRational extends TagInfo {
         super(name, tag, FieldType.SHORT_OR_RATIONAL, length, directoryType, false);
     }
 
-    public byte[] encodeValue(final ByteOrder byteOrder, final short... values) {
+    public byte[] encodeValue(final ByteOrder byteOrder, final RationalNumber... values) {
         return ByteConversions.toBytes(values, byteOrder);
     }
 
-    public byte[] encodeValue(final ByteOrder byteOrder, final RationalNumber... values) {
+    public byte[] encodeValue(final ByteOrder byteOrder, final short... values) {
         return ByteConversions.toBytes(values, byteOrder);
     }
 }

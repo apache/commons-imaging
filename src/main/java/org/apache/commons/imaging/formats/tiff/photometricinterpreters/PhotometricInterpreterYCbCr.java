@@ -23,16 +23,6 @@ import org.apache.commons.imaging.common.ImageBuilder;
 
 public class PhotometricInterpreterYCbCr extends PhotometricInterpreter {
 
-    public PhotometricInterpreterYCbCr(final int samplesPerPixel,
-            final int[] bitsPerSample, final int predictor,
-            final int width, final int height) {
-        super(samplesPerPixel, bitsPerSample, predictor, width, height);
-    }
-
-    public static int limit(final int value, final int min, final int max) {
-        return Math.min(max, Math.max(min, value));
-    }
-
     /**
      * This method converts a YUV (aka YCbCr) colorspace to a RGB colorspace.
      * This is handy when trying to reconstruct an image in Java from YCbCr
@@ -61,6 +51,16 @@ public class PhotometricInterpreterYCbCr extends PhotometricInterpreter {
 
         final int alpha = 0xff;
         return (alpha << 24) | (r << 16) | (g << 8) | (b << 0);
+    }
+
+    public static int limit(final int value, final int min, final int max) {
+        return Math.min(max, Math.max(min, value));
+    }
+
+    public PhotometricInterpreterYCbCr(final int samplesPerPixel,
+            final int[] bitsPerSample, final int predictor,
+            final int width, final int height) {
+        super(samplesPerPixel, bitsPerSample, predictor, width, height);
     }
 
     @Override

@@ -19,14 +19,14 @@ package org.apache.commons.imaging.common;
 import java.util.List;
 
 public interface ImageMetadata {
-    String toString(String prefix);
+    interface ImageMetadataItem {
+        @Override
+        String toString();
+
+        String toString(String prefix);
+    }
 
     List<? extends ImageMetadataItem> getItems();
 
-    interface ImageMetadataItem {
-        String toString(String prefix);
-
-        @Override
-        String toString();
-    }
+    String toString(String prefix);
 }

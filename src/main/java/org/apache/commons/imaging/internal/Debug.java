@@ -43,10 +43,31 @@ public final class Debug {
     private static final String NEWLINE = "\r\n";
     private static long counter;
 
-    public static void debug(final String message) {
-        if (LOGGER.isLoggable(Level.FINEST)) {
-            LOGGER.finest(message);
-        }
+    private static String byteQuadToString(final int byteQuad) {
+        final byte b1 = (byte) ((byteQuad >> 24) & 0xff);
+        final byte b2 = (byte) ((byteQuad >> 16) & 0xff);
+        final byte b3 = (byte) ((byteQuad >> 8) & 0xff);
+        final byte b4 = (byte) ((byteQuad >> 0) & 0xff);
+
+        final char c1 = (char) b1;
+        final char c2 = (char) b2;
+        final char c3 = (char) b3;
+        final char c4 = (char) b4;
+        // return new String(new char[] { c1, c2, c3, c4 });
+        final StringBuilder buffer = new StringBuilder(31);
+        buffer.append(new String(new char[]{c1, c2, c3, c4}));
+        buffer.append(" byteQuad: ");
+        buffer.append(byteQuad);
+        buffer.append(" b1: ");
+        buffer.append(b1);
+        buffer.append(" b2: ");
+        buffer.append(b2);
+        buffer.append(" b3: ");
+        buffer.append(b3);
+        buffer.append(" b4: ");
+        buffer.append(b4);
+
+        return buffer.toString();
     }
 
     public static void debug() {
@@ -55,19 +76,99 @@ public final class Debug {
         }
     }
 
-    private static String getDebug(final String message, final int[] v) {
-        final StringBuilder result = new StringBuilder();
-
-        if (v == null) {
-            result.append(message + " (" + null + ")" + NEWLINE);
-        } else {
-            result.append(message + " (" + v.length + ")" + NEWLINE);
-            for (final int element : v) {
-                result.append("\t" + element + NEWLINE);
-            }
-            result.append(NEWLINE);
+    public static void debug(final String message) {
+        if (LOGGER.isLoggable(Level.FINEST)) {
+            LOGGER.finest(message);
         }
-        return result.toString();
+    }
+
+    private static void debug(final String message, final byte[] v) {
+        debug(getDebug(message, v));
+    }
+
+    private static void debug(final String message, final Calendar value) {
+        final DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.ENGLISH);
+        debug(message, (value == null) ? "null" : df.format(value.getTime()));
+    }
+
+    private static void debug(final String message, final char[] v) {
+        debug(getDebug(message, v));
+    }
+
+    private static void debug(final String message, final Date value) {
+        final DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.ENGLISH);
+        debug(message, (value == null) ? "null" : df.format(value));
+    }
+
+    private static void debug(final String message, final File file) {
+        debug(message + ": " + ((file == null) ? "null" : file.getPath()));
+    }
+
+    private static void debug(final String message, final ICC_Profile value) {
+        debug("ICC_Profile " + message + ": " + ((value == null) ? "null" : value.toString()));
+        if (value != null) {
+            debug("\t getProfileClass: " + byteQuadToString(value.getProfileClass()));
+            debug("\t getPCSType: " + byteQuadToString(value.getPCSType()));
+            debug("\t getColorSpaceType() : " + byteQuadToString(value.getColorSpaceType()));
+        }
+    }
+
+    private static void debug(final String message, final int[] v) {
+        debug(getDebug(message, v));
+    }
+
+    private static void debug(final String message, final List<?> v) {
+        final String suffix = " [" + counter++ + "]";
+
+        debug(message + " (" + v.size() + ")" + suffix);
+        for (final Object aV : v) {
+            debug("\t" + aV.toString() + suffix);
+        }
+        debug();
+    }
+
+    private static void debug(final String message, final Map<?, ?> map) {
+        debug(getDebug(message, map));
+    }
+
+    public static void debug(final String message, final Object value) {
+        if (value == null) {
+            debug(message, "null");
+        } else if (value instanceof char[]) {
+            debug(message, (char[]) value);
+        } else if (value instanceof byte[]) {
+            debug(message, (byte[]) value);
+        } else if (value instanceof int[]) {
+            debug(message, (int[]) value);
+        } else if (value instanceof String) {
+            debug(message, (String) value);
+        } else if (value instanceof List) {
+            debug(message, (List<?>) value);
+        } else if (value instanceof Map) {
+            debug(message, (Map<?, ?>) value);
+        } else if (value instanceof ICC_Profile) {
+            debug(message, (ICC_Profile) value);
+        } else if (value instanceof File) {
+            debug(message, (File) value);
+        } else if (value instanceof Date) {
+            debug(message, (Date) value);
+        } else if (value instanceof Calendar) {
+            debug(message, (Calendar) value);
+        } else {
+            debug(message, value.toString());
+        }
+    }
+
+    private static void debug(final String message, final String value) {
+        debug(message + " " + value);
+    }
+
+    public static void debug(final Throwable e) {
+        debug(getDebug(e));
+    }
+
+    public static void debug(final Throwable e, final int value) {
+        debug(getDebug(e, value));
     }
 
     private static String getDebug(final String message, final byte[] v) {
@@ -120,8 +221,19 @@ public final class Debug {
         return result.toString();
     }
 
-    private static void debug(final String message, final Map<?, ?> map) {
-        debug(getDebug(message, map));
+    private static String getDebug(final String message, final int[] v) {
+        final StringBuilder result = new StringBuilder();
+
+        if (v == null) {
+            result.append(message + " (" + null + ")" + NEWLINE);
+        } else {
+            result.append(message + " (" + v.length + ")" + NEWLINE);
+            for (final int element : v) {
+                result.append("\t" + element + NEWLINE);
+            }
+            result.append(NEWLINE);
+        }
+        return result.toString();
     }
 
     private static String getDebug(final String message, final Map<?, ?> map) {
@@ -142,118 +254,6 @@ public final class Debug {
         result.append(NEWLINE);
 
         return result.toString();
-    }
-
-    private static String byteQuadToString(final int byteQuad) {
-        final byte b1 = (byte) ((byteQuad >> 24) & 0xff);
-        final byte b2 = (byte) ((byteQuad >> 16) & 0xff);
-        final byte b3 = (byte) ((byteQuad >> 8) & 0xff);
-        final byte b4 = (byte) ((byteQuad >> 0) & 0xff);
-
-        final char c1 = (char) b1;
-        final char c2 = (char) b2;
-        final char c3 = (char) b3;
-        final char c4 = (char) b4;
-        // return new String(new char[] { c1, c2, c3, c4 });
-        final StringBuilder buffer = new StringBuilder(31);
-        buffer.append(new String(new char[]{c1, c2, c3, c4}));
-        buffer.append(" byteQuad: ");
-        buffer.append(byteQuad);
-        buffer.append(" b1: ");
-        buffer.append(b1);
-        buffer.append(" b2: ");
-        buffer.append(b2);
-        buffer.append(" b3: ");
-        buffer.append(b3);
-        buffer.append(" b4: ");
-        buffer.append(b4);
-
-        return buffer.toString();
-    }
-
-    public static void debug(final String message, final Object value) {
-        if (value == null) {
-            debug(message, "null");
-        } else if (value instanceof char[]) {
-            debug(message, (char[]) value);
-        } else if (value instanceof byte[]) {
-            debug(message, (byte[]) value);
-        } else if (value instanceof int[]) {
-            debug(message, (int[]) value);
-        } else if (value instanceof String) {
-            debug(message, (String) value);
-        } else if (value instanceof List) {
-            debug(message, (List<?>) value);
-        } else if (value instanceof Map) {
-            debug(message, (Map<?, ?>) value);
-        } else if (value instanceof ICC_Profile) {
-            debug(message, (ICC_Profile) value);
-        } else if (value instanceof File) {
-            debug(message, (File) value);
-        } else if (value instanceof Date) {
-            debug(message, (Date) value);
-        } else if (value instanceof Calendar) {
-            debug(message, (Calendar) value);
-        } else {
-            debug(message, value.toString());
-        }
-    }
-
-    private static void debug(final String message, final byte[] v) {
-        debug(getDebug(message, v));
-    }
-
-    private static void debug(final String message, final char[] v) {
-        debug(getDebug(message, v));
-    }
-
-    private static void debug(final String message, final Calendar value) {
-        final DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.ENGLISH);
-        debug(message, (value == null) ? "null" : df.format(value.getTime()));
-    }
-
-    private static void debug(final String message, final Date value) {
-        final DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.ENGLISH);
-        debug(message, (value == null) ? "null" : df.format(value));
-    }
-
-    private static void debug(final String message, final File file) {
-        debug(message + ": " + ((file == null) ? "null" : file.getPath()));
-    }
-
-    private static void debug(final String message, final ICC_Profile value) {
-        debug("ICC_Profile " + message + ": " + ((value == null) ? "null" : value.toString()));
-        if (value != null) {
-            debug("\t getProfileClass: " + byteQuadToString(value.getProfileClass()));
-            debug("\t getPCSType: " + byteQuadToString(value.getPCSType()));
-            debug("\t getColorSpaceType() : " + byteQuadToString(value.getColorSpaceType()));
-        }
-    }
-
-    private static void debug(final String message, final int[] v) {
-        debug(getDebug(message, v));
-    }
-
-    private static void debug(final String message, final List<?> v) {
-        final String suffix = " [" + counter++ + "]";
-
-        debug(message + " (" + v.size() + ")" + suffix);
-        for (final Object aV : v) {
-            debug("\t" + aV.toString() + suffix);
-        }
-        debug();
-    }
-
-    private static void debug(final String message, final String value) {
-        debug(message + " " + value);
-    }
-
-    public static void debug(final Throwable e) {
-        debug(getDebug(e));
-    }
-
-    public static void debug(final Throwable e, final int value) {
-        debug(getDebug(e, value));
     }
 
     private static String getDebug(final Throwable e) {

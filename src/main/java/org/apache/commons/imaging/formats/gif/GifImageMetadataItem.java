@@ -36,16 +36,16 @@ public class GifImageMetadataItem implements ImageMetadata.ImageMetadataItem {
         return delay;
     }
 
+    public DisposalMethod getDisposalMethod() {
+        return disposalMethod;
+    }
+
     public int getLeftPosition() {
         return leftPosition;
     }
 
     public int getTopPosition() {
         return topPosition;
-    }
-
-    public DisposalMethod getDisposalMethod() {
-        return disposalMethod;
     }
 
     @Override

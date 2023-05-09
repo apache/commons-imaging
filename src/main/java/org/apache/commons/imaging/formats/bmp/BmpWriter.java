@@ -23,11 +23,11 @@ import org.apache.commons.imaging.common.BinaryOutputStream;
 
 interface BmpWriter {
 
-    int getPaletteSize();
-
     int getBitsPerPixel();
 
-    void writePalette(BinaryOutputStream bos) throws IOException;
-
     byte[] getImageData(BufferedImage src);
+
+    int getPaletteSize();
+
+    void writePalette(BinaryOutputStream bos) throws IOException;
 }

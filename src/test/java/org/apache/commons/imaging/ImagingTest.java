@@ -30,40 +30,8 @@ import org.apache.commons.imaging.test.util.FileSystemTraversal;
 
 public abstract class ImagingTest {
 
-    protected boolean isPhilHarveyTestImage(final File file) {
-        return file.getAbsolutePath().startsWith(
-                ImagingTestConstants.PHIL_HARVEY_TEST_IMAGE_FOLDER.getAbsolutePath());
-    }
-
     public interface ImageFilter {
         boolean accept(File file) throws IOException, ImageReadException;
-    }
-
-    protected File getTestImage() throws IOException, ImageReadException {
-        return getTestImage(null);
-    }
-
-    protected File getTestImageByName(final String fileName)
-            throws IOException, ImageReadException {
-        return getTestImage(file -> file.getName().equals(fileName));
-    }
-
-    protected File getTestImage(final ImageFilter filter) throws IOException,
-            ImageReadException {
-        final List<File> images = getTestImages(filter, 1);
-
-        assertFalse(images.isEmpty());
-
-        return images.get(0);
-    }
-
-    protected static List<File> getTestImages() throws IOException, ImageReadException {
-        return getTestImages(null, -1);
-    }
-
-    protected static List<File> getTestImages(final ImageFilter filter) throws IOException,
-            ImageReadException {
-        return getTestImages(filter, -1);
     }
 
     private static final List<File> ALL_IMAGES = new ArrayList<>();
@@ -84,6 +52,15 @@ public abstract class ImagingTest {
             return true;
         };
         new FileSystemTraversal().traverseFiles(imagesFolder, visitor);
+    }
+
+    protected static List<File> getTestImages() throws IOException, ImageReadException {
+        return getTestImages(null, -1);
+    }
+
+    protected static List<File> getTestImages(final ImageFilter filter) throws IOException,
+            ImageReadException {
+        return getTestImages(filter, -1);
     }
 
     protected static List<File> getTestImages(final ImageFilter filter, final int max)
@@ -115,8 +92,31 @@ public abstract class ImagingTest {
         return images;
     }
 
+    protected File getTestImage() throws IOException, ImageReadException {
+        return getTestImage(null);
+    }
+
+    protected File getTestImage(final ImageFilter filter) throws IOException,
+            ImageReadException {
+        final List<File> images = getTestImages(filter, 1);
+
+        assertFalse(images.isEmpty());
+
+        return images.get(0);
+    }
+
+    protected File getTestImageByName(final String fileName)
+            throws IOException, ImageReadException {
+        return getTestImage(file -> file.getName().equals(fileName));
+    }
+
     protected boolean isInvalidPNGTestFile(final File file) {
         return (file.getParentFile().getName().equalsIgnoreCase("pngsuite") &&
                 file.getName().toLowerCase().startsWith("x"));
+    }
+
+    protected boolean isPhilHarveyTestImage(final File file) {
+        return file.getAbsolutePath().startsWith(
+                ImagingTestConstants.PHIL_HARVEY_TEST_IMAGE_FOLDER.getAbsolutePath());
     }
 }

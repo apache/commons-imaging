@@ -32,8 +32,12 @@ public class FormatCompliance {
 
     private static final Logger LOGGER = Logger.getLogger(FormatCompliance.class.getName());
 
+    public static FormatCompliance getDefault() {
+        return new FormatCompliance("ignore", false);
+    }
     private final boolean failOnError;
     private final String description;
+
     private final List<String> comments = new ArrayList<>();
 
     public FormatCompliance(final String description) {
@@ -46,10 +50,6 @@ public class FormatCompliance {
         this.failOnError = failOnError;
     }
 
-    public static FormatCompliance getDefault() {
-        return new FormatCompliance("ignore", false);
-    }
-
     public void addComment(final String comment) throws ImageReadException {
         comments.add(comment);
         if (failOnError) {
@@ -59,67 +59,6 @@ public class FormatCompliance {
 
     public void addComment(final String comment, final int value) throws ImageReadException {
         addComment(comment + ": " + getValueDescription(value));
-    }
-
-    @Override
-    public String toString() {
-        final StringWriter sw = new StringWriter();
-        final PrintWriter pw = new PrintWriter(sw);
-
-        dump(pw);
-
-        return sw.getBuffer().toString();
-    }
-
-    public void dump() {
-        try (StringWriter sw = new StringWriter(); PrintWriter pw = new PrintWriter(sw)) {
-            dump(pw);
-            pw.flush();
-            sw.flush();
-            LOGGER.fine(sw.toString());
-        } catch (final IOException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage(), e);
-        }
-    }
-
-    public void dump(final PrintWriter pw) {
-        pw.println("Format Compliance: " + description);
-
-        if (comments.isEmpty()) {
-            pw.println("\t" + "No comments.");
-        } else {
-            for (int i = 0; i < comments.size(); i++) {
-                pw.println("\t" + (i + 1) + ": " + comments.get(i));
-            }
-        }
-        pw.println("");
-        pw.flush();
-    }
-
-    private String getValueDescription(final int value) {
-        return value + " (" + Integer.toHexString(value) + ")";
-    }
-
-    public boolean compareBytes(final String name, final byte[] expected, final byte[] actual)
-            throws ImageReadException {
-        if (expected.length != actual.length) {
-            addComment(name + ": " + "Unexpected length: (expected: "
-                    + expected.length + ", actual: " + actual.length + ")");
-            return false;
-        }
-        for (int i = 0; i < expected.length; i++) {
-            // System.out.println("expected: "
-            // + getValueDescription(expected[i]) + ", actual: "
-            // + getValueDescription(actual[i]) + ")");
-            if (expected[i] != actual[i]) {
-                addComment(name + ": " + "Unexpected value: (expected: "
-                        + getValueDescription(expected[i]) + ", actual: "
-                        + getValueDescription(actual[i]) + ")");
-                return false;
-            }
-        }
-
-        return true;
     }
 
     public boolean checkBounds(final String name, final int min, final int max, final int actual)
@@ -164,5 +103,66 @@ public class FormatCompliance {
         result.append(", actual: ").append(getValueDescription(actual)).append(")");
         addComment(result.toString());
         return false;
+    }
+
+    public boolean compareBytes(final String name, final byte[] expected, final byte[] actual)
+            throws ImageReadException {
+        if (expected.length != actual.length) {
+            addComment(name + ": " + "Unexpected length: (expected: "
+                    + expected.length + ", actual: " + actual.length + ")");
+            return false;
+        }
+        for (int i = 0; i < expected.length; i++) {
+            // System.out.println("expected: "
+            // + getValueDescription(expected[i]) + ", actual: "
+            // + getValueDescription(actual[i]) + ")");
+            if (expected[i] != actual[i]) {
+                addComment(name + ": " + "Unexpected value: (expected: "
+                        + getValueDescription(expected[i]) + ", actual: "
+                        + getValueDescription(actual[i]) + ")");
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public void dump() {
+        try (StringWriter sw = new StringWriter(); PrintWriter pw = new PrintWriter(sw)) {
+            dump(pw);
+            pw.flush();
+            sw.flush();
+            LOGGER.fine(sw.toString());
+        } catch (final IOException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+        }
+    }
+
+    public void dump(final PrintWriter pw) {
+        pw.println("Format Compliance: " + description);
+
+        if (comments.isEmpty()) {
+            pw.println("\t" + "No comments.");
+        } else {
+            for (int i = 0; i < comments.size(); i++) {
+                pw.println("\t" + (i + 1) + ": " + comments.get(i));
+            }
+        }
+        pw.println("");
+        pw.flush();
+    }
+
+    private String getValueDescription(final int value) {
+        return value + " (" + Integer.toHexString(value) + ")";
+    }
+
+    @Override
+    public String toString() {
+        final StringWriter sw = new StringWriter();
+        final PrintWriter pw = new PrintWriter(sw);
+
+        dump(pw);
+
+        return sw.getBuffer().toString();
     }
 }

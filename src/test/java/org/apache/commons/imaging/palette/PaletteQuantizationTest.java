@@ -26,43 +26,6 @@ import org.junit.jupiter.api.Test;
 
 public class PaletteQuantizationTest extends ImagingTest {
 
-    @Test
-    public void testPaletteQuantization() throws ImageWriteException {
-        final BufferedImage whiteImage = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
-        for (int y = 0; y < whiteImage.getHeight(); y++) {
-            for (int x = 0; x < whiteImage.getWidth(); x++) {
-                whiteImage.setRGB(x, y, 0xFFFFFF);
-            }
-        }
-        checkPaletteDetails(whiteImage, 10, 1);
-
-        final BufferedImage whiteAndBlackImage = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
-        for (int y = 0; y < whiteImage.getHeight(); y++) {
-            for (int x = 0; x < 5; x++) {
-                whiteAndBlackImage.setRGB(x, y, 0xFFFFFF);
-            }
-            for (int x = 5; x < 10; x++) {
-                whiteAndBlackImage.setRGB(x, y, 0x000000);
-            }
-        }
-        checkPaletteDetails(whiteAndBlackImage, 10, 2);
-
-        final BufferedImage rainbowImage = new BufferedImage(9, 10, BufferedImage.TYPE_INT_RGB);
-        for (int y = 0; y < whiteImage.getHeight(); y++) {
-            for (int x = 0; x < 3; x++) {
-                rainbowImage.setRGB(x, y, 0xFF0000);
-            }
-            for (int x = 3; x < 6; x++) {
-                rainbowImage.setRGB(x, y, 0x00FF00);
-            }
-            for (int x = 6; x < 9; x++) {
-                rainbowImage.setRGB(x, y, 0x0000FF);
-            }
-        }
-        checkPaletteDetails(rainbowImage, 10, 3);
-        checkPaletteDetails(rainbowImage, 2, 2);
-    }
-
     private void checkPaletteDetails(final BufferedImage image, final int limit, final int expectedSize) throws ImageWriteException {
         final PaletteFactory paletteFactory = new PaletteFactory();
         Palette palette;
@@ -103,14 +66,6 @@ public class PaletteQuantizationTest extends ImagingTest {
         }
     }
 
-    private void checkUniqueColors(final BufferedImage src, final Palette palette) throws ImageWriteException {
-        final BufferedImage dst = new BufferedImage(src.getWidth(), src.getHeight(), BufferedImage.TYPE_INT_RGB);
-        dst.getGraphics().drawImage(src, 0, 0, src.getWidth(), src.getHeight(), null);
-        Dithering.applyFloydSteinbergDithering(dst, palette);
-        final Palette ditheredPalette = new PaletteFactory().makeExactRgbPaletteSimple(dst, palette.length() * 2);
-        assertEquals(palette.length(), ditheredPalette.length());
-    }
-
     private void checkPixelsAreIdentical(final BufferedImage src, final Palette palette) throws ImageWriteException {
         final BufferedImage dst = new BufferedImage(src.getWidth(), src.getHeight(), BufferedImage.TYPE_INT_RGB);
         dst.getGraphics().drawImage(src, 0, 0, src.getWidth(), src.getHeight(), null);
@@ -120,5 +75,50 @@ public class PaletteQuantizationTest extends ImagingTest {
                 assertEquals(src.getRGB(x, y), dst.getRGB(x, y));
             }
         }
+    }
+
+    private void checkUniqueColors(final BufferedImage src, final Palette palette) throws ImageWriteException {
+        final BufferedImage dst = new BufferedImage(src.getWidth(), src.getHeight(), BufferedImage.TYPE_INT_RGB);
+        dst.getGraphics().drawImage(src, 0, 0, src.getWidth(), src.getHeight(), null);
+        Dithering.applyFloydSteinbergDithering(dst, palette);
+        final Palette ditheredPalette = new PaletteFactory().makeExactRgbPaletteSimple(dst, palette.length() * 2);
+        assertEquals(palette.length(), ditheredPalette.length());
+    }
+
+    @Test
+    public void testPaletteQuantization() throws ImageWriteException {
+        final BufferedImage whiteImage = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
+        for (int y = 0; y < whiteImage.getHeight(); y++) {
+            for (int x = 0; x < whiteImage.getWidth(); x++) {
+                whiteImage.setRGB(x, y, 0xFFFFFF);
+            }
+        }
+        checkPaletteDetails(whiteImage, 10, 1);
+
+        final BufferedImage whiteAndBlackImage = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
+        for (int y = 0; y < whiteImage.getHeight(); y++) {
+            for (int x = 0; x < 5; x++) {
+                whiteAndBlackImage.setRGB(x, y, 0xFFFFFF);
+            }
+            for (int x = 5; x < 10; x++) {
+                whiteAndBlackImage.setRGB(x, y, 0x000000);
+            }
+        }
+        checkPaletteDetails(whiteAndBlackImage, 10, 2);
+
+        final BufferedImage rainbowImage = new BufferedImage(9, 10, BufferedImage.TYPE_INT_RGB);
+        for (int y = 0; y < whiteImage.getHeight(); y++) {
+            for (int x = 0; x < 3; x++) {
+                rainbowImage.setRGB(x, y, 0xFF0000);
+            }
+            for (int x = 3; x < 6; x++) {
+                rainbowImage.setRGB(x, y, 0x00FF00);
+            }
+            for (int x = 6; x < 9; x++) {
+                rainbowImage.setRGB(x, y, 0x0000FF);
+            }
+        }
+        checkPaletteDetails(rainbowImage, 10, 3);
+        checkPaletteDetails(rainbowImage, 2, 2);
     }
 }

@@ -89,11 +89,6 @@ public final class ColorXyz {
     }
 
     @Override
-    public String toString() {
-        return "{X: " + X + ", Y: " + Y + ", Z: " + Z + "}";
-    }
-
-    @Override
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
@@ -127,5 +122,10 @@ public final class ColorXyz {
         temp = Double.doubleToLongBits(Z);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "{X: " + X + ", Y: " + Y + ", Z: " + Z + "}";
     }
 }

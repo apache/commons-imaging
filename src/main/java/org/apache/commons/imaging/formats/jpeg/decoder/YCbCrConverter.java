@@ -99,7 +99,12 @@ final class YCbCrConverter {
         }
     }
 
-    private YCbCrConverter() {
+    public static int convertYCbCrToRGB(final int Y, final int Cb, final int Cr) {
+        final int r = REDS[(Cr << 8) | Y];
+        final int g1 = GREENS1[(Cb << 8) | Cr];
+        final int g = GREENS2[(g1 << 8) | Y];
+        final int b = BLUES[(Cb << 8) | Y];
+        return r | g | b;
     }
 
     private static int fastRound(final float x) {
@@ -107,11 +112,6 @@ final class YCbCrConverter {
         return (int) (x + 0.5f);
     }
 
-    public static int convertYCbCrToRGB(final int Y, final int Cb, final int Cr) {
-        final int r = REDS[(Cr << 8) | Y];
-        final int g1 = GREENS1[(Cb << 8) | Cr];
-        final int g = GREENS2[(g1 << 8) | Y];
-        final int b = BLUES[(Cb << 8) | Y];
-        return r | g | b;
+    private YCbCrConverter() {
     }
 }

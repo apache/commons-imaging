@@ -47,18 +47,13 @@ class PpmFileInfo extends FileInfo {
     }
 
     @Override
-    public boolean hasAlpha() {
-        return false;
-    }
-
-    @Override
-    public int getNumComponents() {
-        return 3;
-    }
-
-    @Override
     public int getBitDepth() {
         return max;
+    }
+
+    @Override
+    public ImageInfo.ColorType getColorType() {
+        return ImageInfo.ColorType.RGB;
     }
 
     @Override
@@ -77,8 +72,8 @@ class PpmFileInfo extends FileInfo {
     }
 
     @Override
-    public ImageInfo.ColorType getColorType() {
-        return ImageInfo.ColorType.RGB;
+    public int getNumComponents() {
+        return 3;
     }
 
     @Override
@@ -113,5 +108,10 @@ class PpmFileInfo extends FileInfo {
               | ((0xff & red)   << 16)
               | ((0xff & green) << 8)
               | ((0xff & blue)  << 0);
+    }
+
+    @Override
+    public boolean hasAlpha() {
+        return false;
     }
 }

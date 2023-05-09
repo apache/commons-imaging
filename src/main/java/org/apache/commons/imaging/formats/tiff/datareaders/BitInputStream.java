@@ -37,6 +37,14 @@ class BitInputStream extends InputStream {
         this.byteOrder = byteOrder;
     }
 
+    public void flushCache() {
+        cacheBitsRemaining = 0;
+    }
+
+    public long getBytesRead() {
+        return bytesRead;
+    }
+
     @Override
     public int read() throws IOException {
         if (cacheBitsRemaining > 0) {
@@ -126,13 +134,5 @@ class BitInputStream extends InputStream {
         }
 
         throw new IOException("BitInputStream: unknown error");
-    }
-
-    public void flushCache() {
-        cacheBitsRemaining = 0;
-    }
-
-    public long getBytesRead() {
-        return bytesRead;
     }
 }

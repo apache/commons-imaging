@@ -51,11 +51,8 @@ public class PaletteEntryForValue implements PaletteEntry {
     }
 
     @Override
-    public boolean isCovered(final float f) {
-        if (isNull) {
-            return Float.isNaN(f);
-        }
-        return f == value;
+    public boolean coversSingleEntry() {
+        return true;
     }
 
     @Override
@@ -81,11 +78,6 @@ public class PaletteEntryForValue implements PaletteEntry {
     }
 
     @Override
-    public boolean coversSingleEntry() {
-        return true;
-    }
-
-    @Override
     public float getLowerBound() {
         return value;
     }
@@ -93,6 +85,14 @@ public class PaletteEntryForValue implements PaletteEntry {
     @Override
     public float getUpperBound() {
         return value;
+    }
+
+    @Override
+    public boolean isCovered(final float f) {
+        if (isNull) {
+            return Float.isNaN(f);
+        }
+        return f == value;
     }
 
     @Override

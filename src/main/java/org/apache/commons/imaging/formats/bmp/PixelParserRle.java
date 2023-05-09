@@ -31,17 +31,6 @@ class PixelParserRle extends PixelParser {
         super(bhi, colorTable, imageData);
     }
 
-    private int getSamplesPerByte() throws ImageReadException {
-        if (bhi.bitsPerPixel == 8) {
-            return 1;
-        }
-        if (bhi.bitsPerPixel == 4) {
-            return 2;
-        }
-        throw new ImageReadException("BMP RLE: bad BitsPerPixel: "
-                + bhi.bitsPerPixel);
-    }
-
     private int[] convertDataToSamples(final int data) throws ImageReadException {
         int[] rgbs;
         if (bhi.bitsPerPixel == 8) {
@@ -61,6 +50,17 @@ class PixelParserRle extends PixelParser {
         }
 
         return rgbs;
+    }
+
+    private int getSamplesPerByte() throws ImageReadException {
+        if (bhi.bitsPerPixel == 8) {
+            return 1;
+        }
+        if (bhi.bitsPerPixel == 4) {
+            return 2;
+        }
+        throw new ImageReadException("BMP RLE: bad BitsPerPixel: "
+                + bhi.bitsPerPixel);
     }
 
     private int processByteOfData(final int[] rgbs, final int repeat, int x, final int y,

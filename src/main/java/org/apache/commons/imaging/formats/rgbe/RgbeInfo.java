@@ -37,30 +37,45 @@ class RgbeInfo implements Closeable {
     };
     private static final Pattern RESOLUTION_STRING = Pattern.compile("-Y (\\d+) \\+X (\\d+)");
 
+    private static final byte[] TWO_TWO = { 0x2, 0x2 };
+    private static void decompress(final InputStream in, final byte[] out)
+            throws IOException,ImageReadException {
+        int position = 0;
+        final int total = out.length;
+
+        while (position < total) {
+            final int n = in.read();
+
+            if (n < 0) {
+                throw new ImageReadException("Error decompressing RGBE file");
+            }
+
+            if (n > 128) {
+                final int value = in.read();
+
+                for (int i = 0; i < (n & 0x7f); i++) {
+                    out[position++] = (byte) value;
+                }
+            } else {
+                for (int i = 0; i < n; i++) {
+                    out[position++] = (byte) in.read();
+                }
+            }
+        }
+    }
     private final InputStream in;
     private GenericImageMetadata metadata;
     private int width = -1;
+
     private int height = -1;
-    private static final byte[] TWO_TWO = { 0x2, 0x2 };
 
     RgbeInfo(final ByteSource byteSource) throws IOException {
         this.in = byteSource.getInputStream();
     }
 
-    ImageMetadata getMetadata() throws IOException, ImageReadException {
-        if (null == metadata) {
-            readMetadata();
-        }
-
-        return metadata;
-    }
-
-    int getWidth() throws IOException, ImageReadException {
-        if (-1 == width) {
-            readDimensions();
-        }
-
-        return width;
+    @Override
+    public void close() throws IOException {
+        in.close();
     }
 
     int getHeight() throws IOException, ImageReadException {
@@ -71,9 +86,62 @@ class RgbeInfo implements Closeable {
         return height;
     }
 
-    @Override
-    public void close() throws IOException {
-        in.close();
+    ImageMetadata getMetadata() throws IOException, ImageReadException {
+        if (null == metadata) {
+            readMetadata();
+        }
+
+        return metadata;
+    }
+
+    public float[][] getPixelData() throws IOException, ImageReadException {
+        // Read into local variables to ensure that we have seeked into the file
+        // far enough
+        final int ht = getHeight();
+        final int wd = getWidth();
+
+        if (wd >= 32768) {
+            throw new ImageReadException("Scan lines must be less than 32768 bytes long");
+        }
+
+        final byte[] scanLineBytes = ByteConversions.toBytes((short) wd,
+                ByteOrder.BIG_ENDIAN);
+        final byte[] rgbe = new byte[wd * 4];
+        final float[][] out = new float[3][wd * ht];
+
+        for (int i = 0; i < ht; i++) {
+            BinaryFunctions.readAndVerifyBytes(in, TWO_TWO, "Scan line " + i + " expected to start with 0x2 0x2");
+            BinaryFunctions.readAndVerifyBytes(in, scanLineBytes, "Scan line " + i + " length expected");
+
+            decompress(in, rgbe);
+
+            for (int channel = 0; channel < 3; channel++) {
+                final int channelOffset = channel * wd;
+                final int eOffset = 3 * wd;
+
+                for (int p = 0; p < wd; p++) {
+                    final int mantissa = rgbe[p + eOffset] & 0xff;
+                    final int pos = p + i * wd;
+
+                    if (0 == mantissa) {
+                        out[channel][pos] = 0;
+                    } else {
+                        final float mult = (float) Math.pow(2, mantissa - (128 + 8));
+                        out[channel][pos] = ((rgbe[p + channelOffset] & 0xff) + 0.5f) * mult;
+                    }
+                }
+            }
+        }
+
+        return out;
+    }
+
+    int getWidth() throws IOException, ImageReadException {
+        if (-1 == width) {
+            readDimensions();
+        }
+
+        return width;
     }
 
     private void readDimensions() throws IOException, ImageReadException {
@@ -123,74 +191,6 @@ class RgbeInfo implements Closeable {
             }
 
             info = reader.readNextLine();
-        }
-    }
-
-    public float[][] getPixelData() throws IOException, ImageReadException {
-        // Read into local variables to ensure that we have seeked into the file
-        // far enough
-        final int ht = getHeight();
-        final int wd = getWidth();
-
-        if (wd >= 32768) {
-            throw new ImageReadException("Scan lines must be less than 32768 bytes long");
-        }
-
-        final byte[] scanLineBytes = ByteConversions.toBytes((short) wd,
-                ByteOrder.BIG_ENDIAN);
-        final byte[] rgbe = new byte[wd * 4];
-        final float[][] out = new float[3][wd * ht];
-
-        for (int i = 0; i < ht; i++) {
-            BinaryFunctions.readAndVerifyBytes(in, TWO_TWO, "Scan line " + i + " expected to start with 0x2 0x2");
-            BinaryFunctions.readAndVerifyBytes(in, scanLineBytes, "Scan line " + i + " length expected");
-
-            decompress(in, rgbe);
-
-            for (int channel = 0; channel < 3; channel++) {
-                final int channelOffset = channel * wd;
-                final int eOffset = 3 * wd;
-
-                for (int p = 0; p < wd; p++) {
-                    final int mantissa = rgbe[p + eOffset] & 0xff;
-                    final int pos = p + i * wd;
-
-                    if (0 == mantissa) {
-                        out[channel][pos] = 0;
-                    } else {
-                        final float mult = (float) Math.pow(2, mantissa - (128 + 8));
-                        out[channel][pos] = ((rgbe[p + channelOffset] & 0xff) + 0.5f) * mult;
-                    }
-                }
-            }
-        }
-
-        return out;
-    }
-
-    private static void decompress(final InputStream in, final byte[] out)
-            throws IOException,ImageReadException {
-        int position = 0;
-        final int total = out.length;
-
-        while (position < total) {
-            final int n = in.read();
-
-            if (n < 0) {
-                throw new ImageReadException("Error decompressing RGBE file");
-            }
-
-            if (n > 128) {
-                final int value = in.read();
-
-                for (int i = 0; i < (n & 0x7f); i++) {
-                    out[position++] = (byte) value;
-                }
-            } else {
-                for (int i = 0; i < n; i++) {
-                    out[position++] = (byte) in.read();
-                }
-            }
         }
     }
 }

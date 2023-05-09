@@ -103,71 +103,6 @@ public class ImageBuilder {
     }
 
     /**
-     * @param width image width (must be greater than zero)
-     * @param height image height (must be greater than zero)
-     * @throws RasterFormatException if {@code width} or {@code height} are equal or less than zero
-     */
-    private void checkDimensions(final int width, final int height) {
-        if (width <= 0) {
-            throw new RasterFormatException("zero or negative width value");
-        }
-        if (height <= 0) {
-            throw new RasterFormatException("zero or negative height value");
-        }
-
-    }
-
-    /**
-     * Get the width of the ImageBuilder pixel field
-     * @return a positive integer
-     */
-    public int getWidth() {
-        return width;
-    }
-
-    /**
-     * Get the height of the ImageBuilder pixel field
-     * @return  a positive integer
-     */
-    public int getHeight() {
-        return height;
-    }
-
-    /**
-     * Get the RGB or ARGB value for the pixel at the position (x,y)
-     * within the image builder pixel field. For performance reasons
-     * no bounds checking is applied.
-     * @param x the X coordinate of the pixel to be read
-     * @param y the Y coordinate of the pixel to be read
-     * @return the RGB or ARGB pixel value
-     */
-    public int getRGB(final int x, final int y) {
-        final int rowOffset = y * width;
-        return data[rowOffset + x];
-    }
-
-    /**
-     * Set the RGB or ARGB value for the pixel at position (x,y)
-     * within the image builder pixel field. For performance reasons,
-     * no bounds checking is applied.
-     * @param x the X coordinate of the pixel to be set
-     * @param y the Y coordinate of the pixel to be set
-     * @param argb the RGB or ARGB value to be stored.
-     */
-    public void setRGB(final int x, final int y, final int argb) {
-        final int rowOffset = y * width;
-        data[rowOffset + x] = argb;
-    }
-
-    /**
-     * Create a BufferedImage using the data stored in the ImageBuilder.
-     * @return a valid BufferedImage.
-     */
-    public BufferedImage getBufferedImage() {
-        return makeBufferedImage(data, width, height, hasAlpha);
-    }
-
-    /**
      * Performs a check on the specified sub-region to verify
      * that it is within the constraints of the ImageBuilder bounds.
      *
@@ -202,34 +137,49 @@ public class ImageBuilder {
         }
     }
 
-     /**
-     * Gets a subset of the ImageBuilder content using the specified parameters
-     * to indicate an area of interest. If the parameters specify a rectangular
-     * region that is not entirely contained within the bounds defined
-     * by the ImageBuilder, this method will throw a RasterFormatException.
-     * This run- time exception is consistent with the behavior of the
-     * getSubimage method provided by BufferedImage.
-     * @param x the X coordinate of the upper-left corner of the
-     *          specified rectangular region
-     * @param y the Y coordinate of the upper-left corner of the
-     *          specified rectangular region
-     * @param w the width of the specified rectangular region
-     * @param h the height of the specified rectangular region
-     * @return a valid instance of the specified width and height.
-     * @throws RasterFormatException if the specified area is not contained
-     *         within this ImageBuilder
+    /**
+     * @param width image width (must be greater than zero)
+     * @param height image height (must be greater than zero)
+     * @throws RasterFormatException if {@code width} or {@code height} are equal or less than zero
      */
-     public ImageBuilder getSubset(final int x, final int y, final int w, final int h) {
-         checkBounds(x, y, w, h);
-         final ImageBuilder b = new ImageBuilder(w, h, hasAlpha, isAlphaPremultiplied);
-         for (int i = 0; i < h; i++) {
-             final int srcDex = (i + y) * width + x;
-             final int outDex = i * w;
-             System.arraycopy(data, srcDex, b.data, outDex, w);
-         }
-         return b;
-     }
+    private void checkDimensions(final int width, final int height) {
+        if (width <= 0) {
+            throw new RasterFormatException("zero or negative width value");
+        }
+        if (height <= 0) {
+            throw new RasterFormatException("zero or negative height value");
+        }
 
+    }
+
+    /**
+     * Create a BufferedImage using the data stored in the ImageBuilder.
+     * @return a valid BufferedImage.
+     */
+    public BufferedImage getBufferedImage() {
+        return makeBufferedImage(data, width, height, hasAlpha);
+    }
+
+    /**
+     * Get the height of the ImageBuilder pixel field
+     * @return  a positive integer
+     */
+    public int getHeight() {
+        return height;
+    }
+
+    /**
+     * Get the RGB or ARGB value for the pixel at the position (x,y)
+     * within the image builder pixel field. For performance reasons
+     * no bounds checking is applied.
+     * @param x the X coordinate of the pixel to be read
+     * @param y the Y coordinate of the pixel to be read
+     * @return the RGB or ARGB pixel value
+     */
+    public int getRGB(final int x, final int y) {
+        final int rowOffset = y * width;
+        return data[rowOffset + x];
+    }
 
     /**
      * Gets a subimage from the ImageBuilder using the specified parameters.
@@ -266,6 +216,43 @@ public class ImageBuilder {
 
     }
 
+    /**
+     * Gets a subset of the ImageBuilder content using the specified parameters
+     * to indicate an area of interest. If the parameters specify a rectangular
+     * region that is not entirely contained within the bounds defined
+     * by the ImageBuilder, this method will throw a RasterFormatException.
+     * This run- time exception is consistent with the behavior of the
+     * getSubimage method provided by BufferedImage.
+     * @param x the X coordinate of the upper-left corner of the
+     *          specified rectangular region
+     * @param y the Y coordinate of the upper-left corner of the
+     *          specified rectangular region
+     * @param w the width of the specified rectangular region
+     * @param h the height of the specified rectangular region
+     * @return a valid instance of the specified width and height.
+     * @throws RasterFormatException if the specified area is not contained
+     *         within this ImageBuilder
+     */
+     public ImageBuilder getSubset(final int x, final int y, final int w, final int h) {
+         checkBounds(x, y, w, h);
+         final ImageBuilder b = new ImageBuilder(w, h, hasAlpha, isAlphaPremultiplied);
+         for (int i = 0; i < h; i++) {
+             final int srcDex = (i + y) * width + x;
+             final int outDex = i * w;
+             System.arraycopy(data, srcDex, b.data, outDex, w);
+         }
+         return b;
+     }
+
+     /**
+     * Get the width of the ImageBuilder pixel field
+     * @return a positive integer
+     */
+    public int getWidth() {
+        return width;
+    }
+
+
     private BufferedImage makeBufferedImage(
             final int[] argb, final int w, final int h, final boolean useAlpha) {
         ColorModel colorModel;
@@ -299,5 +286,18 @@ public class ImageBuilder {
         }
         return new BufferedImage(colorModel, raster,
                 colorModel.isAlphaPremultiplied(), new Properties());
+    }
+
+    /**
+     * Set the RGB or ARGB value for the pixel at position (x,y)
+     * within the image builder pixel field. For performance reasons,
+     * no bounds checking is applied.
+     * @param x the X coordinate of the pixel to be set
+     * @param y the Y coordinate of the pixel to be set
+     * @param argb the RGB or ARGB value to be stored.
+     */
+    public void setRGB(final int x, final int y, final int argb) {
+        final int rowOffset = y * width;
+        data[rowOffset + x] = argb;
     }
 }

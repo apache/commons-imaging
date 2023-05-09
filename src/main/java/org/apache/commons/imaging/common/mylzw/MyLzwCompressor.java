@@ -23,70 +23,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MyLzwCompressor {
-    private int codeSize;
-    private final int initialCodeSize;
-    private int codes = -1;
-
-    private final ByteOrder byteOrder;
-    private final boolean earlyLimit;
-    private final int clearCode;
-    private final int eoiCode;
-    private final Listener listener;
-    private final Map<ByteArray, Integer> map = new HashMap<>();
-
-    public MyLzwCompressor(final int initialCodeSize, final ByteOrder byteOrder,
-            final boolean earlyLimit) {
-        this(initialCodeSize, byteOrder, earlyLimit, null);
-    }
-
-    public MyLzwCompressor(final int initialCodeSize, final ByteOrder byteOrder,
-            final boolean earlyLimit, final Listener listener) {
-        this.listener = listener;
-        this.byteOrder = byteOrder;
-        this.earlyLimit = earlyLimit;
-
-        this.initialCodeSize = initialCodeSize;
-
-        clearCode = 1 << initialCodeSize;
-        eoiCode = clearCode + 1;
-
-        if (null != listener) {
-            listener.init(clearCode, eoiCode);
-        }
-
-        initializeStringTable();
-    }
-
-    private void initializeStringTable() {
-        codeSize = initialCodeSize;
-
-        final int initialEntriesCount = (1 << codeSize) + 2;
-
-        map.clear();
-        for (codes = 0; codes < initialEntriesCount; codes++) {
-            if ((codes != clearCode) && (codes != eoiCode)) {
-                final ByteArray key = arrayToKey((byte) codes);
-
-                map.put(key, codes);
-            }
-        }
-    }
-
-    private void clearTable() {
-        initializeStringTable();
-        incrementCodeSize();
-    }
-
-    private void incrementCodeSize() {
-        if (codeSize != 12) {
-            codeSize++;
-        }
-    }
-
-    private ByteArray arrayToKey(final byte b) {
-        return arrayToKey(new byte[] { b, }, 0, 1);
-    }
-
     private static final class ByteArray {
         private final byte[] bytes;
         private final int start;
@@ -106,11 +42,6 @@ public class MyLzwCompressor {
             }
 
             hash = tempHash;
-        }
-
-        @Override
-        public int hashCode() {
-            return hash;
         }
 
         @Override
@@ -134,53 +65,55 @@ public class MyLzwCompressor {
             }
             return false;
         }
+
+        @Override
+        public int hashCode() {
+            return hash;
+        }
+    }
+    public interface Listener {
+        void clearCode(int code);
+
+        void dataCode(int code);
+
+        void eoiCode(int code);
+
+        void init(int clearCode, int eoiCode);
+    }
+    private int codeSize;
+
+    private final int initialCodeSize;
+    private int codes = -1;
+    private final ByteOrder byteOrder;
+    private final boolean earlyLimit;
+    private final int clearCode;
+    private final int eoiCode;
+
+    private final Listener listener;
+
+    private final Map<ByteArray, Integer> map = new HashMap<>();
+
+    public MyLzwCompressor(final int initialCodeSize, final ByteOrder byteOrder,
+            final boolean earlyLimit) {
+        this(initialCodeSize, byteOrder, earlyLimit, null);
     }
 
-    private ByteArray arrayToKey(final byte[] bytes, final int start, final int length) {
-        return new ByteArray(bytes, start, length);
-    }
+    public MyLzwCompressor(final int initialCodeSize, final ByteOrder byteOrder,
+            final boolean earlyLimit, final Listener listener) {
+        this.listener = listener;
+        this.byteOrder = byteOrder;
+        this.earlyLimit = earlyLimit;
 
-    private void writeDataCode(final MyBitOutputStream bos, final int code)
-            throws IOException {
+        this.initialCodeSize = initialCodeSize;
+
+        clearCode = 1 << initialCodeSize;
+        eoiCode = clearCode + 1;
+
         if (null != listener) {
-            listener.dataCode(code);
+            listener.init(clearCode, eoiCode);
         }
-        writeCode(bos, code);
-    }
 
-    private void writeClearCode(final MyBitOutputStream bos) throws IOException {
-        if (null != listener) {
-            listener.dataCode(clearCode);
-        }
-        writeCode(bos, clearCode);
-    }
-
-    private void writeEoiCode(final MyBitOutputStream bos) throws IOException {
-        if (null != listener) {
-            listener.eoiCode(eoiCode);
-        }
-        writeCode(bos, eoiCode);
-    }
-
-    private void writeCode(final MyBitOutputStream bos, final int code)
-            throws IOException {
-        bos.writeBits(code, codeSize);
-    }
-
-    private boolean isInTable(final byte[] bytes, final int start, final int length) {
-        final ByteArray key = arrayToKey(bytes, start, length);
-
-        return map.containsKey(key);
-    }
-
-    private int codeFromString(final byte[] bytes, final int start, final int length)
-            throws IOException {
-        final ByteArray key = arrayToKey(bytes, start, length);
-        final Integer code = map.get(key);
-        if (code == null) {
-            throw new IOException("CodeFromString");
-        }
-        return code;
+        initializeStringTable();
     }
 
     private boolean addTableEntry(final MyBitOutputStream bos, final byte[] bytes,
@@ -216,14 +149,27 @@ public class MyLzwCompressor {
         return cleared;
     }
 
-    public interface Listener {
-        void dataCode(int code);
+    private ByteArray arrayToKey(final byte b) {
+        return arrayToKey(new byte[] { b, }, 0, 1);
+    }
 
-        void eoiCode(int code);
+    private ByteArray arrayToKey(final byte[] bytes, final int start, final int length) {
+        return new ByteArray(bytes, start, length);
+    }
 
-        void clearCode(int code);
+    private void clearTable() {
+        initializeStringTable();
+        incrementCodeSize();
+    }
 
-        void init(int clearCode, int eoiCode);
+    private int codeFromString(final byte[] bytes, final int start, final int length)
+            throws IOException {
+        final ByteArray key = arrayToKey(bytes, start, length);
+        final Integer code = map.get(key);
+        if (code == null) {
+            throw new IOException("CodeFromString");
+        }
+        return code;
     }
 
     public byte[] compress(final byte[] bytes) throws IOException {
@@ -258,5 +204,59 @@ public class MyLzwCompressor {
         bos.flushCache();
 
         return baos.toByteArray();
+    }
+
+    private void incrementCodeSize() {
+        if (codeSize != 12) {
+            codeSize++;
+        }
+    }
+
+    private void initializeStringTable() {
+        codeSize = initialCodeSize;
+
+        final int initialEntriesCount = (1 << codeSize) + 2;
+
+        map.clear();
+        for (codes = 0; codes < initialEntriesCount; codes++) {
+            if ((codes != clearCode) && (codes != eoiCode)) {
+                final ByteArray key = arrayToKey((byte) codes);
+
+                map.put(key, codes);
+            }
+        }
+    }
+
+    private boolean isInTable(final byte[] bytes, final int start, final int length) {
+        final ByteArray key = arrayToKey(bytes, start, length);
+
+        return map.containsKey(key);
+    }
+
+    private void writeClearCode(final MyBitOutputStream bos) throws IOException {
+        if (null != listener) {
+            listener.dataCode(clearCode);
+        }
+        writeCode(bos, clearCode);
+    }
+
+    private void writeCode(final MyBitOutputStream bos, final int code)
+            throws IOException {
+        bos.writeBits(code, codeSize);
+    }
+
+    private void writeDataCode(final MyBitOutputStream bos, final int code)
+            throws IOException {
+        if (null != listener) {
+            listener.dataCode(code);
+        }
+        writeCode(bos, code);
+    }
+
+    private void writeEoiCode(final MyBitOutputStream bos) throws IOException {
+        if (null != listener) {
+            listener.eoiCode(eoiCode);
+        }
+        writeCode(bos, eoiCode);
     }
 }

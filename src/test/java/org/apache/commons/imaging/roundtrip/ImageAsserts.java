@@ -29,9 +29,6 @@ import org.junit.jupiter.api.Assertions;
 
 final class ImageAsserts {
 
-    private ImageAsserts() {
-    }
-
     static void assertEquals(final BufferedImage a, final BufferedImage b) {
         assertEquals(a, b, 0);
     }
@@ -63,20 +60,6 @@ final class ImageAsserts {
         }
     }
 
-    static int calculateARGBDistance(final int a, final int b) {
-        final int aAlpha = 0xff & (a >> 24);
-        final int aRed = 0xff & (a >> 16);
-        final int aGreen = 0xff & (a >> 8);
-        final int aBlue = 0xff & (a >> 0);
-        final int bAlpha = 0xff & (b >> 24);
-        final int bRed = 0xff & (b >> 16);
-        final int bGreen = 0xff & (b >> 8);
-        final int bBlue = 0xff & (b >> 0);
-        return Math.abs(aAlpha - bAlpha) + Math.abs(aRed - bRed)
-                + Math.abs(aGreen - bGreen) + Math.abs(aBlue - bBlue);
-
-    }
-
     static void assertEquals(final File a, final File b) throws IOException {
         assertTrue(a.exists() && a.isFile());
         assertTrue(b.exists() && b.isFile());
@@ -98,5 +81,22 @@ final class ImageAsserts {
             }
             Assertions.assertEquals(aByte, bByte);
         }
+    }
+
+    static int calculateARGBDistance(final int a, final int b) {
+        final int aAlpha = 0xff & (a >> 24);
+        final int aRed = 0xff & (a >> 16);
+        final int aGreen = 0xff & (a >> 8);
+        final int aBlue = 0xff & (a >> 0);
+        final int bAlpha = 0xff & (b >> 24);
+        final int bRed = 0xff & (b >> 16);
+        final int bGreen = 0xff & (b >> 8);
+        final int bBlue = 0xff & (b >> 0);
+        return Math.abs(aAlpha - bAlpha) + Math.abs(aRed - bRed)
+                + Math.abs(aGreen - bGreen) + Math.abs(aBlue - bBlue);
+
+    }
+
+    private ImageAsserts() {
     }
 }

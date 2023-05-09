@@ -41,10 +41,6 @@ public class GammaCorrection {
         }
     }
 
-    public int correctSample(final int sample) {
-        return lookupTable[sample];
-    }
-
     public int correctARGB(final int pixel) {
         final int alpha = (0xff000000) & pixel;
         int red = (pixel >> 16) & 0xff;
@@ -56,6 +52,10 @@ public class GammaCorrection {
         blue = correctSample(blue);
 
         return alpha | ((0xff & red) << 16) | ((0xff & green) << 8) | ((0xff & blue) << 0);
+    }
+
+    public int correctSample(final int sample) {
+        return lookupTable[sample];
     }
 
     private int correctSample(final int sample, final double srcGamma, final double dstGamma) {

@@ -31,11 +31,11 @@ public class TagInfoLongs extends TagInfo {
         super(name, tag, FieldType.LONG, length, directoryType, isOffset);
     }
 
-    public int[] getValue(final ByteOrder byteOrder, final byte[] bytes) {
-        return ByteConversions.toInts(bytes, byteOrder);
-    }
-
     public byte[] encodeValue(final ByteOrder byteOrder, final int... values) {
         return ByteConversions.toBytes(values, byteOrder);
+    }
+
+    public int[] getValue(final ByteOrder byteOrder, final byte[] bytes) {
+        return ByteConversions.toInts(bytes, byteOrder);
     }
 }

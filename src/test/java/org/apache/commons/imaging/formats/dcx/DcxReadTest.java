@@ -35,11 +35,12 @@ public class DcxReadTest extends DcxBaseTest {
         return getDcxImages().stream();
     }
 
-    @Disabled(value = "RoundtripTest has to be fixed before implementation can throw UnsupportedOperationException")
     @ParameterizedTest
     @MethodSource("data")
-    public void testImageMetadata(final File imageFile) {
-        Assertions.assertThrows(UnsupportedOperationException.class, () -> Imaging.getMetadata(imageFile));
+    public void testBufferedImage(final File imageFile) throws Exception {
+        final BufferedImage image = Imaging.getBufferedImage(imageFile);
+        assertNotNull(image);
+        // TODO assert more
     }
 
     @Disabled(value = "RoundtripTest has to be fixed before implementation can throw UnsupportedOperationException")
@@ -49,12 +50,11 @@ public class DcxReadTest extends DcxBaseTest {
         Imaging.getImageInfo(imageFile);
     }
 
+    @Disabled(value = "RoundtripTest has to be fixed before implementation can throw UnsupportedOperationException")
     @ParameterizedTest
     @MethodSource("data")
-    public void testBufferedImage(final File imageFile) throws Exception {
-        final BufferedImage image = Imaging.getBufferedImage(imageFile);
-        assertNotNull(image);
-        // TODO assert more
+    public void testImageMetadata(final File imageFile) {
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> Imaging.getMetadata(imageFile));
     }
 
 }

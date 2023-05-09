@@ -27,11 +27,11 @@ public class TagInfoShorts extends TagInfo {
         super(name, tag, FieldType.SHORT, length, directoryType);
     }
 
-    public short[] getValue(final ByteOrder byteOrder, final byte[] bytes) {
-        return ByteConversions.toShorts(bytes, byteOrder);
-    }
-
     public byte[] encodeValue(final ByteOrder byteOrder, final short... values) {
         return ByteConversions.toBytes(values, byteOrder);
+    }
+
+    public short[] getValue(final ByteOrder byteOrder, final byte[] bytes) {
+        return ByteConversions.toShorts(bytes, byteOrder);
     }
 }

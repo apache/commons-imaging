@@ -29,15 +29,15 @@ import org.apache.commons.imaging.ImagingTest;
 
 public abstract class JpegBaseTest extends ImagingTest {
 
-    protected static boolean isJpeg(final File file) throws IOException {
-        final ImageFormat format = Imaging.guessFormat(file);
-        return format == ImageFormats.JPEG;
-    }
-
     public static final ImageFilter imageFilter = JpegBaseTest::isJpeg;
 
     protected static List<File> getJpegImages() throws IOException, ImageReadException {
         return getTestImages(imageFilter);
+    }
+
+    protected static boolean isJpeg(final File file) throws IOException {
+        final ImageFormat format = Imaging.guessFormat(file);
+        return format == ImageFormats.JPEG;
     }
 
 }

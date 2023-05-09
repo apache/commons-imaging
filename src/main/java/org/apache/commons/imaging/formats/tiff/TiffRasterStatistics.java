@@ -75,6 +75,15 @@ public class TiffRasterStatistics {
     }
 
     /**
+     * Get the count of the number of null samples in the collection.
+     *
+     * @return the a positive number, potentially zero
+     */
+    public int getCountOfNulls() {
+        return nNull;
+    }
+
+    /**
      * Get the count of the number of non-null and non-excluded samples in the
      * collection.
      *
@@ -85,21 +94,13 @@ public class TiffRasterStatistics {
     }
 
     /**
-     * Get the count of the number of null samples in the collection.
+     * Get the value that was set for exclusion, or a Float&#46;NaN if not was
+     * set.
      *
-     * @return the a positive number, potentially zero
+     * @return the excluded value (if any).
      */
-    public int getCountOfNulls() {
-        return nNull;
-    }
-
-    /**
-     * Get the minimum value found in the source data
-     *
-     * @return the minimum value found in the source data
-     */
-    public float getMinValue() {
-        return minValue;
+    public float getExcludedValue() {
+        return excludedValue;
     }
 
     /**
@@ -122,6 +123,15 @@ public class TiffRasterStatistics {
     }
 
     /**
+     * Get the minimum value found in the source data
+     *
+     * @return the minimum value found in the source data
+     */
+    public float getMinValue() {
+        return minValue;
+    }
+
+    /**
      * Indicates if a sample value was set to be deliberately excluded from the
      * statistics.
      *
@@ -129,15 +139,5 @@ public class TiffRasterStatistics {
      */
     public boolean isAnExcludedValueSet() {
         return !Float.isNaN(excludedValue);
-    }
-
-    /**
-     * Get the value that was set for exclusion, or a Float&#46;NaN if not was
-     * set.
-     *
-     * @return the excluded value (if any).
-     */
-    public float getExcludedValue() {
-        return excludedValue;
     }
 }

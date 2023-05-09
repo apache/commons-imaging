@@ -33,13 +33,18 @@ public class MyBitInputStream extends InputStream {
         this.is = is;
     }
 
+    public void flushCache() {
+        bitsInCache = 0;
+        bitCache = 0;
+    }
+
+    public long getBytesRead() {
+        return bytesRead;
+    }
+
     @Override
     public int read() throws IOException {
         return readBits(8);
-    }
-
-    public void setTiffLZWMode() {
-        tiffLZWMode = true;
     }
 
     public int readBits(final int sampleBits) throws IOException {
@@ -85,13 +90,8 @@ public class MyBitInputStream extends InputStream {
         return result;
     }
 
-    public void flushCache() {
-        bitsInCache = 0;
-        bitCache = 0;
-    }
-
-    public long getBytesRead() {
-        return bytesRead;
+    public void setTiffLZWMode() {
+        tiffLZWMode = true;
     }
 
 }

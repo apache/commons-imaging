@@ -35,18 +35,19 @@ public class PaletteEntryForValueTest {
     public PaletteEntryForValueTest() {
     }
 
-    /**
-     * Test of isCovered method, of class PaletteEntryForValue.
-     */
     @Test
-    public void testIsCovered() {
+    public void testFaultyConstructors() {
         final Color c0 = new Color(0xff0000ff);
-        PaletteEntryForValue instance = new PaletteEntryForValue(0.0f, c0);
-        assertTrue(instance.isCovered(0.0f), "Zero value must be covered");
-        assertFalse(instance.isCovered(1.0f), "Value 1.0 must not be covered");
-        instance = new PaletteEntryForValue(Float.NaN, c0);
-        assertTrue(instance.isCovered(Float.NaN), "NaN value must be covered");
-        assertFalse(instance.isCovered(1.0f), "Value 1.0 must not be covered");
+        final Color c1 = new Color(0xff00ff00);
+        PaletteEntryForValue pTest;
+
+
+        try {
+            pTest = new PaletteEntryForValue(0.0f, null);
+            fail("Constructor failed to detect null color");
+        } catch (final IllegalArgumentException iex) {
+            // successful test
+        }
 
     }
 
@@ -93,19 +94,18 @@ public class PaletteEntryForValueTest {
     }
 
 
+    /**
+     * Test of isCovered method, of class PaletteEntryForValue.
+     */
     @Test
-    public void testFaultyConstructors() {
+    public void testIsCovered() {
         final Color c0 = new Color(0xff0000ff);
-        final Color c1 = new Color(0xff00ff00);
-        PaletteEntryForValue pTest;
-
-
-        try {
-            pTest = new PaletteEntryForValue(0.0f, null);
-            fail("Constructor failed to detect null color");
-        } catch (final IllegalArgumentException iex) {
-            // successful test
-        }
+        PaletteEntryForValue instance = new PaletteEntryForValue(0.0f, c0);
+        assertTrue(instance.isCovered(0.0f), "Zero value must be covered");
+        assertFalse(instance.isCovered(1.0f), "Value 1.0 must not be covered");
+        instance = new PaletteEntryForValue(Float.NaN, c0);
+        assertTrue(instance.isCovered(Float.NaN), "NaN value must be covered");
+        assertFalse(instance.isCovered(1.0f), "Value 1.0 must not be covered");
 
     }
 }

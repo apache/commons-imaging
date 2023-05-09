@@ -27,12 +27,12 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
 
 public abstract class PsdBaseTest extends ImagingTest {
+    private static final ImageFilter IMAGE_FILTER = PsdBaseTest::isPsd;
+
     private static boolean isPsd(final File file) throws IOException {
         final ImageFormat format = Imaging.guessFormat(file);
         return format == ImageFormats.PSD;
     }
-
-    private static final ImageFilter IMAGE_FILTER = PsdBaseTest::isPsd;
 
     protected List<File> getPsdImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);

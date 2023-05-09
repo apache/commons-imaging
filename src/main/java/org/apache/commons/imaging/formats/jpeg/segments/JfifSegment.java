@@ -39,11 +39,6 @@ public class JfifSegment extends Segment {
     public final int yThumbnail;
     public final int thumbnailSize;
 
-    @Override
-    public String getDescription() {
-        return "JFIF (" + getSegmentType() + ")";
-    }
-
     public JfifSegment(final int marker, final byte[] segmentData)
             throws ImageReadException, IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
@@ -76,6 +71,11 @@ public class JfifSegment extends Segment {
                     "Not a Valid JPEG File: missing thumbnail");
 
         }
+    }
+
+    @Override
+    public String getDescription() {
+        return "JFIF (" + getSegmentType() + ")";
     }
 
 }

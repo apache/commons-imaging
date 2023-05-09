@@ -65,6 +65,11 @@ public class App2Segment extends AppnSegment implements Comparable<App2Segment> 
     }
 
     @Override
+    public int compareTo(final App2Segment other) {
+        return curMarker - other.curMarker;
+    }
+
+    @Override
     public boolean equals(final Object obj) {
         if (obj instanceof App2Segment) {
             final App2Segment other = (App2Segment) obj;
@@ -73,20 +78,15 @@ public class App2Segment extends AppnSegment implements Comparable<App2Segment> 
         return false;
     }
 
-    @Override
-    public int hashCode() {
-        return curMarker;
-    }
-
-    @Override
-    public int compareTo(final App2Segment other) {
-        return curMarker - other.curMarker;
-    }
-
     /**
      * @return the iccBytes
      */
     public byte[] getIccBytes() {
         return iccBytes != null ? iccBytes.clone() : null;
+    }
+
+    @Override
+    public int hashCode() {
+        return curMarker;
     }
 }

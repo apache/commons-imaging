@@ -45,10 +45,6 @@ public class PsdHeaderInfo {
 
     }
 
-    public byte[] getReserved() {
-        return reserved.clone();
-    }
-
     public void dump() {
         try (StringWriter sw = new StringWriter(); PrintWriter pw = new PrintWriter(sw)) {
             dump(pw);
@@ -72,6 +68,10 @@ public class PsdHeaderInfo {
         pw.println("Reserved: " + reserved.length);
         pw.println("");
         pw.flush();
+    }
+
+    public byte[] getReserved() {
+        return reserved.clone();
     }
 
 }

@@ -63,65 +63,16 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoXpString;
  * images, images are always stored in a Directory.
  */
 public class TiffDirectory extends TiffElement {
-    public final int type;
-    public final List<TiffField> entries;
-    public final long nextDirectoryOffset;
-    private TiffImageData tiffImageData;
-    private JpegImageData jpegImageData;
-
-    // Preservers the byte order derived from the TIFF file header.
-    // Some of the legacy methods in this class require byte order as an
-    // argument, though that use could be phased out eventually.
-    private final ByteOrder headerByteOrder;
-
-
-    public TiffDirectory(
-        final int type,
-        final List<TiffField> entries,
-        final long offset,
-        final long nextDirectoryOffset,
-        final ByteOrder byteOrder) {
-        super(offset, TiffConstants.TIFF_DIRECTORY_HEADER_LENGTH
-                + entries.size() * TiffConstants.TIFF_ENTRY_LENGTH
-                + TiffConstants.TIFF_DIRECTORY_FOOTER_LENGTH);
-
-        this.type = type;
-        this.entries = Collections.unmodifiableList(entries);
-        this.nextDirectoryOffset = nextDirectoryOffset;
-        this.headerByteOrder = byteOrder;
-    }
-
-    /**
-     * Gets the byte order used by the source file for storing this directory
-     * and its content.
-     *
-     * @return A valid byte order instance.
-     */
-    public ByteOrder getByteOrder() {
-        return headerByteOrder;
-    }
-
-    public String description() {
-        return TiffDirectory.description(type);
-    }
-
-    @Override
-    public String getElementDescription() {
-        long entryOffset = offset + TiffConstants.TIFF_DIRECTORY_HEADER_LENGTH;
-
-        final StringBuilder result = new StringBuilder();
-        for (final TiffField entry : entries) {
-            result.append(String.format("\t[%d]: %s (%d, 0x%x), %s, %d: %s%n",
-                    entryOffset, entry.getTagInfo().name,
-                    entry.getTag(), entry.getTag(),
-                    entry.getFieldType().getName(), entry.getBytesLength(),
-                    entry.getValueDescription()));
-
-            entryOffset += TiffConstants.TIFF_ENTRY_LENGTH;
+    public static final class ImageDataElement extends TiffElement {
+        public ImageDataElement(final long offset, final int length) {
+            super(offset, length);
         }
-        return result.toString();
-    }
 
+        @Override
+        public String getElementDescription() {
+            return "ImageDataElement";
+        }
+    }
     public static String description(final int type) {
         switch (type) {
         case TiffDirectoryConstants.DIRECTORY_TYPE_UNKNOWN:
@@ -142,10 +93,38 @@ public class TiffDirectory extends TiffElement {
             return "Bad Type";
         }
     }
+    public final int type;
+    public final List<TiffField> entries;
+    public final long nextDirectoryOffset;
+
+    private TiffImageData tiffImageData;
 
 
-    public List<TiffField> getDirectoryEntries() {
-        return new ArrayList<>(entries);
+    private JpegImageData jpegImageData;
+
+    // Preservers the byte order derived from the TIFF file header.
+    // Some of the legacy methods in this class require byte order as an
+    // argument, though that use could be phased out eventually.
+    private final ByteOrder headerByteOrder;
+
+    public TiffDirectory(
+        final int type,
+        final List<TiffField> entries,
+        final long offset,
+        final long nextDirectoryOffset,
+        final ByteOrder byteOrder) {
+        super(offset, TiffConstants.TIFF_DIRECTORY_HEADER_LENGTH
+                + entries.size() * TiffConstants.TIFF_ENTRY_LENGTH
+                + TiffConstants.TIFF_DIRECTORY_FOOTER_LENGTH);
+
+        this.type = type;
+        this.entries = Collections.unmodifiableList(entries);
+        this.nextDirectoryOffset = nextDirectoryOffset;
+        this.headerByteOrder = byteOrder;
+    }
+
+    public String description() {
+        return TiffDirectory.description(type);
     }
 
     public void dump() {
@@ -154,106 +133,6 @@ public class TiffDirectory extends TiffElement {
         }
 
     }
-
-    public boolean hasJpegImageData() throws ImageReadException {
-        return null != findField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT);
-    }
-
-    public boolean hasTiffImageData() throws ImageReadException {
-        if (null != findField(TiffTagConstants.TIFF_TAG_TILE_OFFSETS)) {
-            return true;
-        }
-
-        return null != findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS);
-    }
-
-    /**
-     * Gets the image associated with the directory, if any. Note that not all
-     * directories contain images.
-     *
-     * @return if successful, a valid BufferedImage instance.
-     * @throws ImageReadException in the event of an invalid or incompatible
-     * data format.
-     * @throws IOException in the event of an I/O error.
-     */
-    public BufferedImage getTiffImage() throws ImageReadException, IOException {
-        if (null == tiffImageData) {
-            return null;
-        }
-
-        return new TiffImageParser().getBufferedImage(this, headerByteOrder, null);
-    }
-
-    /**
-     * Gets the image associated with the directory, if any. Note that not all
-     * directories contain images.
-     * <p>
-     * The optional parameters object can be used to specify image access or
-     * rendering options such as reading only a part of the overall image (i.e.
-     * reading a sub-image) or applying a custom photometric interpreter.
-     *
-     * @param params an object containing optional parameters to be applied to the
-     * read operation.
-     * @return if successful, a valid BufferedImage instance.
-     * @throws ImageReadException in the event of an invalid or incompatible
-     * data format.
-     * @throws IOException in the event of an I/O error.
-     */
-    public BufferedImage getTiffImage(final TiffImagingParameters params)
-        throws ImageReadException, IOException {
-        if (null == tiffImageData) {
-            return null;
-        }
-
-        return new TiffImageParser().getBufferedImage(this, headerByteOrder, params);
-    }
-
-    /**
-     * Gets the image associated with the directory, if any. Note that not all
-     * directories contain images.
-     * <p>
-     * This method comes from an older version of this class in which byte order
-     * was required from an external source. Developers are encouraged to use
-     * the simpler version of getTiffImage that does not require the byte-order
-     * argument.
-     *
-     * @param byteOrder byte-order obtained from the containing TIFF file
-     * @return if successful, a valid BufferedImage instance.
-     * @throws ImageReadException in the event of an invalid or incompatible
-     * data format.
-     * @throws IOException in the event of an I/O error.
-     */
-    public BufferedImage getTiffImage(final ByteOrder byteOrder) throws ImageReadException,
-            IOException {
-        return getTiffImage(byteOrder, new TiffImagingParameters());
-    }
-
-    /**
-     * Gets the image associated with the directory, if any. Note that not all
-     * directories contain images.
-     * <p>
-     * This method comes from an older version of this class in which byte order
-     * was required from an external source. Developers are encouraged to use
-     * the simpler version of getTiffImage that does not require the byte-order
-     * argument.
-     *
-     * @param byteOrder byte-order obtained from the containing TIFF file
-     * @param params an object containing optional parameters to be applied to the
-     * read operation.
-     * @return if successful, a valid BufferedImage instance.
-     * @throws ImageReadException in the event of an invalid or incompatible
-     * data format.
-     * @throws IOException in the event of an I/O error.
-     */
-    public BufferedImage getTiffImage(final ByteOrder byteOrder, final TiffImagingParameters params)
-            throws ImageReadException, IOException {
-        if (null == tiffImageData) {
-            return null;
-        }
-
-        return new TiffImageParser().getBufferedImage(this, byteOrder, params);
-    }
-
 
 
     public TiffField findField(final TagInfo tag) throws ImageReadException {
@@ -281,68 +160,43 @@ public class TiffDirectory extends TiffElement {
         return null;
     }
 
+    /**
+     * Gets the byte order used by the source file for storing this directory
+     * and its content.
+     *
+     * @return A valid byte order instance.
+     */
+    public ByteOrder getByteOrder() {
+        return headerByteOrder;
+    }
+
+    public List<TiffField> getDirectoryEntries() {
+        return new ArrayList<>(entries);
+    }
+
+    @Override
+    public String getElementDescription() {
+        long entryOffset = offset + TiffConstants.TIFF_DIRECTORY_HEADER_LENGTH;
+
+        final StringBuilder result = new StringBuilder();
+        for (final TiffField entry : entries) {
+            result.append(String.format("\t[%d]: %s (%d, 0x%x), %s, %d: %s%n",
+                    entryOffset, entry.getTagInfo().name,
+                    entry.getTag(), entry.getTag(),
+                    entry.getFieldType().getName(), entry.getBytesLength(),
+                    entry.getValueDescription()));
+
+            entryOffset += TiffConstants.TIFF_ENTRY_LENGTH;
+        }
+        return result.toString();
+    }
+
     public Object getFieldValue(final TagInfo tag) throws ImageReadException {
         final TiffField field = findField(tag);
         if (field == null) {
             return null;
         }
         return field.getValue();
-    }
-
-    public String getSingleFieldValue(final TagInfoAscii tag)
-            throws ImageReadException {
-        final String[] result = getFieldValue(tag, true);
-        if (result.length != 1) {
-            throw new ImageReadException("Field \"" + tag.name
-                    + "\" has incorrect length " + result.length);
-        }
-        return result[0];
-    }
-
-    public int getSingleFieldValue(final TagInfoShortOrLong tag) throws ImageReadException {
-        final int[] result = getFieldValue(tag, true);
-        if (result.length != 1) {
-            throw new ImageReadException("Field \"" + tag.name
-                    + "\" has incorrect length " + result.length);
-        }
-        return result[0];
-    }
-
-    public byte getFieldValue(final TagInfoByte tag)
-            throws ImageReadException {
-        final TiffField field = findField(tag);
-        if (field == null) {
-            throw new ImageReadException("Required field \"" + tag.name
-                    + "\" is missing");
-        }
-        if (!tag.dataTypes.contains(field.getFieldType())) {
-            throw new ImageReadException("Required field \"" + tag.name
-                    + "\" has incorrect type " + field.getFieldType().getName());
-        }
-        if (field.getCount() != 1) {
-            throw new ImageReadException("Field \"" + tag.name + "\" has wrong count " + field.getCount());
-        }
-        return field.getByteArrayValue()[0];
-    }
-
-    public byte[] getFieldValue(final TagInfoBytes tag, final boolean mustExist)
-            throws ImageReadException {
-        final TiffField field = findField(tag);
-        if (field == null) {
-            if (mustExist) {
-                throw new ImageReadException("Required field \"" + tag.name
-                        + "\" is missing");
-            }
-            return null;
-        }
-        if (!tag.dataTypes.contains(field.getFieldType())) {
-            if (mustExist) {
-                throw new ImageReadException("Required field \"" + tag.name
-                        + "\" has incorrect type " + field.getFieldType().getName());
-            }
-            return null;
-        }
-        return field.getByteArrayValue();
     }
 
     public String[] getFieldValue(final TagInfoAscii tag, final boolean mustExist)
@@ -366,7 +220,46 @@ public class TiffDirectory extends TiffElement {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
-    public short getFieldValue(final TagInfoShort tag)
+    public byte getFieldValue(final TagInfoByte tag)
+            throws ImageReadException {
+        final TiffField field = findField(tag);
+        if (field == null) {
+            throw new ImageReadException("Required field \"" + tag.name
+                    + "\" is missing");
+        }
+        if (!tag.dataTypes.contains(field.getFieldType())) {
+            throw new ImageReadException("Required field \"" + tag.name
+                    + "\" has incorrect type " + field.getFieldType().getName());
+        }
+        if (field.getCount() != 1) {
+            throw new ImageReadException("Field \"" + tag.name + "\" has wrong count " + field.getCount());
+        }
+        return field.getByteArrayValue()[0];
+    }
+
+
+
+    public byte[] getFieldValue(final TagInfoBytes tag, final boolean mustExist)
+            throws ImageReadException {
+        final TiffField field = findField(tag);
+        if (field == null) {
+            if (mustExist) {
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" is missing");
+            }
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.getFieldType())) {
+            if (mustExist) {
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" has incorrect type " + field.getFieldType().getName());
+            }
+            return null;
+        }
+        return field.getByteArrayValue();
+    }
+
+    public double getFieldValue(final TagInfoDouble tag)
             throws ImageReadException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -384,7 +277,7 @@ public class TiffDirectory extends TiffElement {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
-    public short[] getFieldValue(final TagInfoShorts tag, final boolean mustExist)
+    public double[] getFieldValue(final TagInfoDoubles tag, final boolean mustExist)
             throws ImageReadException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -403,6 +296,58 @@ public class TiffDirectory extends TiffElement {
         }
         final byte[] bytes = field.getByteArrayValue();
         return tag.getValue(field.getByteOrder(), bytes);
+    }
+
+    public float getFieldValue(final TagInfoFloat tag)
+            throws ImageReadException {
+        final TiffField field = findField(tag);
+        if (field == null) {
+            throw new ImageReadException("Required field \"" + tag.name
+                    + "\" is missing");
+        }
+        if (!tag.dataTypes.contains(field.getFieldType())) {
+            throw new ImageReadException("Required field \"" + tag.name
+                    + "\" has incorrect type " + field.getFieldType().getName());
+        }
+        if (field.getCount() != 1) {
+            throw new ImageReadException("Field \"" + tag.name + "\" has wrong count " + field.getCount());
+        }
+        final byte[] bytes = field.getByteArrayValue();
+        return tag.getValue(field.getByteOrder(), bytes);
+    }
+
+    public float[] getFieldValue(final TagInfoFloats tag, final boolean mustExist)
+            throws ImageReadException {
+        final TiffField field = findField(tag);
+        if (field == null) {
+            if (mustExist) {
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" is missing");
+            }
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.getFieldType())) {
+            if (mustExist) {
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" has incorrect type " + field.getFieldType().getName());
+            }
+            return null;
+        }
+        final byte[] bytes = field.getByteArrayValue();
+        return tag.getValue(field.getByteOrder(), bytes);
+    }
+
+    public String getFieldValue(final TagInfoGpsText tag, final boolean mustExist)
+            throws ImageReadException {
+        final TiffField field = findField(tag);
+        if (field == null) {
+            if (mustExist) {
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" is missing");
+            }
+            return null;
+        }
+        return tag.getValue(field);
     }
 
     public int getFieldValue(final TagInfoLong tag)
@@ -442,30 +387,6 @@ public class TiffDirectory extends TiffElement {
         }
         final byte[] bytes = field.getByteArrayValue();
         return tag.getValue(field.getByteOrder(), bytes);
-    }
-
-    public int[] getFieldValue(final TagInfoShortOrLong tag, final boolean mustExist)
-            throws ImageReadException {
-        final TiffField field = findField(tag);
-        if (field == null) {
-            if (mustExist) {
-                throw new ImageReadException("Required field \"" + tag.name
-                        + "\" is missing");
-            }
-            return null;
-        }
-        if (!tag.dataTypes.contains(field.getFieldType())) {
-            if (mustExist) {
-                throw new ImageReadException("Required field \"" + tag.name
-                        + "\" has incorrect type " + field.getFieldType().getName());
-            }
-            return null;
-        }
-        final byte[] bytes = field.getByteArrayValue();
-        if (field.getFieldType() == FieldType.SHORT) {
-            return ByteConversions.toUInt16s(bytes, field.getByteOrder());
-        }
-        return ByteConversions.toInts(bytes, field.getByteOrder());
     }
 
     public RationalNumber getFieldValue(final TagInfoRational tag)
@@ -544,7 +465,7 @@ public class TiffDirectory extends TiffElement {
         return field.getByteArrayValue();
     }
 
-    public short getFieldValue(final TagInfoSShort tag)
+    public short getFieldValue(final TagInfoShort tag)
             throws ImageReadException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -562,7 +483,31 @@ public class TiffDirectory extends TiffElement {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
-    public short[] getFieldValue(final TagInfoSShorts tag, final boolean mustExist)
+    public int[] getFieldValue(final TagInfoShortOrLong tag, final boolean mustExist)
+            throws ImageReadException {
+        final TiffField field = findField(tag);
+        if (field == null) {
+            if (mustExist) {
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" is missing");
+            }
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.getFieldType())) {
+            if (mustExist) {
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" has incorrect type " + field.getFieldType().getName());
+            }
+            return null;
+        }
+        final byte[] bytes = field.getByteArrayValue();
+        if (field.getFieldType() == FieldType.SHORT) {
+            return ByteConversions.toUInt16s(bytes, field.getByteOrder());
+        }
+        return ByteConversions.toInts(bytes, field.getByteOrder());
+    }
+
+    public short[] getFieldValue(final TagInfoShorts tag, final boolean mustExist)
             throws ImageReadException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -660,7 +605,7 @@ public class TiffDirectory extends TiffElement {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
-    public float getFieldValue(final TagInfoFloat tag)
+    public short getFieldValue(final TagInfoSShort tag)
             throws ImageReadException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -678,7 +623,7 @@ public class TiffDirectory extends TiffElement {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
-    public float[] getFieldValue(final TagInfoFloats tag, final boolean mustExist)
+    public short[] getFieldValue(final TagInfoSShorts tag, final boolean mustExist)
             throws ImageReadException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -697,58 +642,6 @@ public class TiffDirectory extends TiffElement {
         }
         final byte[] bytes = field.getByteArrayValue();
         return tag.getValue(field.getByteOrder(), bytes);
-    }
-
-    public double getFieldValue(final TagInfoDouble tag)
-            throws ImageReadException {
-        final TiffField field = findField(tag);
-        if (field == null) {
-            throw new ImageReadException("Required field \"" + tag.name
-                    + "\" is missing");
-        }
-        if (!tag.dataTypes.contains(field.getFieldType())) {
-            throw new ImageReadException("Required field \"" + tag.name
-                    + "\" has incorrect type " + field.getFieldType().getName());
-        }
-        if (field.getCount() != 1) {
-            throw new ImageReadException("Field \"" + tag.name + "\" has wrong count " + field.getCount());
-        }
-        final byte[] bytes = field.getByteArrayValue();
-        return tag.getValue(field.getByteOrder(), bytes);
-    }
-
-    public double[] getFieldValue(final TagInfoDoubles tag, final boolean mustExist)
-            throws ImageReadException {
-        final TiffField field = findField(tag);
-        if (field == null) {
-            if (mustExist) {
-                throw new ImageReadException("Required field \"" + tag.name
-                        + "\" is missing");
-            }
-            return null;
-        }
-        if (!tag.dataTypes.contains(field.getFieldType())) {
-            if (mustExist) {
-                throw new ImageReadException("Required field \"" + tag.name
-                        + "\" has incorrect type " + field.getFieldType().getName());
-            }
-            return null;
-        }
-        final byte[] bytes = field.getByteArrayValue();
-        return tag.getValue(field.getByteOrder(), bytes);
-    }
-
-    public String getFieldValue(final TagInfoGpsText tag, final boolean mustExist)
-            throws ImageReadException {
-        final TiffField field = findField(tag);
-        if (field == null) {
-            if (mustExist) {
-                throw new ImageReadException("Required field \"" + tag.name
-                        + "\" is missing");
-            }
-            return null;
-        }
-        return tag.getValue(field);
     }
 
     public String getFieldValue(final TagInfoXpString tag, final boolean mustExist)
@@ -764,64 +657,8 @@ public class TiffDirectory extends TiffElement {
         return tag.getValue(field);
     }
 
-    public static final class ImageDataElement extends TiffElement {
-        public ImageDataElement(final long offset, final int length) {
-            super(offset, length);
-        }
-
-        @Override
-        public String getElementDescription() {
-            return "ImageDataElement";
-        }
-    }
-
-    private List<ImageDataElement> getRawImageDataElements(
-            final TiffField offsetsField, final TiffField byteCountsField)
-            throws ImageReadException {
-        final int[] offsets = offsetsField.getIntArrayValue();
-        final int[] byteCounts = byteCountsField.getIntArrayValue();
-
-        if (offsets.length != byteCounts.length) {
-            throw new ImageReadException("offsets.length(" + offsets.length
-                    + ") != byteCounts.length(" + byteCounts.length + ")");
-        }
-
-        final List<ImageDataElement> result = new ArrayList<>(offsets.length);
-        for (int i = 0; i < offsets.length; i++) {
-            result.add(new ImageDataElement(offsets[i], byteCounts[i]));
-        }
-        return result;
-    }
-
-    public List<ImageDataElement> getTiffRawImageDataElements()
-            throws ImageReadException {
-        final TiffField tileOffsets = findField(TiffTagConstants.TIFF_TAG_TILE_OFFSETS);
-        final TiffField tileByteCounts = findField(TiffTagConstants.TIFF_TAG_TILE_BYTE_COUNTS);
-        final TiffField stripOffsets = findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS);
-        final TiffField stripByteCounts = findField(TiffTagConstants.TIFF_TAG_STRIP_BYTE_COUNTS);
-
-        if ((tileOffsets != null) && (tileByteCounts != null)) {
-            return getRawImageDataElements(tileOffsets, tileByteCounts);
-        }
-        if ((stripOffsets != null) && (stripByteCounts != null)) {
-            return getRawImageDataElements(stripOffsets, stripByteCounts);
-        }
-        throw new ImageReadException("Couldn't find image data.");
-    }
-
-    public boolean imageDataInStrips() throws ImageReadException {
-        final TiffField tileOffsets = findField(TiffTagConstants.TIFF_TAG_TILE_OFFSETS);
-        final TiffField tileByteCounts = findField(TiffTagConstants.TIFF_TAG_TILE_BYTE_COUNTS);
-        final TiffField stripOffsets = findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS);
-        final TiffField stripByteCounts = findField(TiffTagConstants.TIFF_TAG_STRIP_BYTE_COUNTS);
-
-        if ((tileOffsets != null) && (tileByteCounts != null)) {
-            return false;
-        }
-        if ((stripOffsets != null) && (stripByteCounts != null)) {
-            return true;
-        }
-        throw new ImageReadException("Couldn't find image data.");
+    public JpegImageData getJpegImageData() {
+        return jpegImageData;
     }
 
     public ImageDataElement getJpegRawImageDataElement() throws ImageReadException {
@@ -835,22 +672,6 @@ public class TiffDirectory extends TiffElement {
             return new ImageDataElement(offSet, byteCount);
         }
         throw new ImageReadException("Couldn't find image data.");
-    }
-
-    public void setTiffImageData(final TiffImageData rawImageData) {
-        this.tiffImageData = rawImageData;
-    }
-
-    public TiffImageData getTiffImageData() {
-        return tiffImageData;
-    }
-
-    public void setJpegImageData(final JpegImageData value) {
-        this.jpegImageData = value;
-    }
-
-    public JpegImageData getJpegImageData() {
-        return jpegImageData;
     }
 
     /**
@@ -895,6 +716,154 @@ public class TiffDirectory extends TiffElement {
         return parser.getRasterData(this, headerByteOrder, params);
     }
 
+    private List<ImageDataElement> getRawImageDataElements(
+            final TiffField offsetsField, final TiffField byteCountsField)
+            throws ImageReadException {
+        final int[] offsets = offsetsField.getIntArrayValue();
+        final int[] byteCounts = byteCountsField.getIntArrayValue();
+
+        if (offsets.length != byteCounts.length) {
+            throw new ImageReadException("offsets.length(" + offsets.length
+                    + ") != byteCounts.length(" + byteCounts.length + ")");
+        }
+
+        final List<ImageDataElement> result = new ArrayList<>(offsets.length);
+        for (int i = 0; i < offsets.length; i++) {
+            result.add(new ImageDataElement(offsets[i], byteCounts[i]));
+        }
+        return result;
+    }
+
+    public String getSingleFieldValue(final TagInfoAscii tag)
+            throws ImageReadException {
+        final String[] result = getFieldValue(tag, true);
+        if (result.length != 1) {
+            throw new ImageReadException("Field \"" + tag.name
+                    + "\" has incorrect length " + result.length);
+        }
+        return result[0];
+    }
+
+    public int getSingleFieldValue(final TagInfoShortOrLong tag) throws ImageReadException {
+        final int[] result = getFieldValue(tag, true);
+        if (result.length != 1) {
+            throw new ImageReadException("Field \"" + tag.name
+                    + "\" has incorrect length " + result.length);
+        }
+        return result[0];
+    }
+
+    /**
+     * Gets the image associated with the directory, if any. Note that not all
+     * directories contain images.
+     *
+     * @return if successful, a valid BufferedImage instance.
+     * @throws ImageReadException in the event of an invalid or incompatible
+     * data format.
+     * @throws IOException in the event of an I/O error.
+     */
+    public BufferedImage getTiffImage() throws ImageReadException, IOException {
+        if (null == tiffImageData) {
+            return null;
+        }
+
+        return new TiffImageParser().getBufferedImage(this, headerByteOrder, null);
+    }
+
+    /**
+     * Gets the image associated with the directory, if any. Note that not all
+     * directories contain images.
+     * <p>
+     * This method comes from an older version of this class in which byte order
+     * was required from an external source. Developers are encouraged to use
+     * the simpler version of getTiffImage that does not require the byte-order
+     * argument.
+     *
+     * @param byteOrder byte-order obtained from the containing TIFF file
+     * @return if successful, a valid BufferedImage instance.
+     * @throws ImageReadException in the event of an invalid or incompatible
+     * data format.
+     * @throws IOException in the event of an I/O error.
+     */
+    public BufferedImage getTiffImage(final ByteOrder byteOrder) throws ImageReadException,
+            IOException {
+        return getTiffImage(byteOrder, new TiffImagingParameters());
+    }
+
+    /**
+     * Gets the image associated with the directory, if any. Note that not all
+     * directories contain images.
+     * <p>
+     * This method comes from an older version of this class in which byte order
+     * was required from an external source. Developers are encouraged to use
+     * the simpler version of getTiffImage that does not require the byte-order
+     * argument.
+     *
+     * @param byteOrder byte-order obtained from the containing TIFF file
+     * @param params an object containing optional parameters to be applied to the
+     * read operation.
+     * @return if successful, a valid BufferedImage instance.
+     * @throws ImageReadException in the event of an invalid or incompatible
+     * data format.
+     * @throws IOException in the event of an I/O error.
+     */
+    public BufferedImage getTiffImage(final ByteOrder byteOrder, final TiffImagingParameters params)
+            throws ImageReadException, IOException {
+        if (null == tiffImageData) {
+            return null;
+        }
+
+        return new TiffImageParser().getBufferedImage(this, byteOrder, params);
+    }
+
+    /**
+     * Gets the image associated with the directory, if any. Note that not all
+     * directories contain images.
+     * <p>
+     * The optional parameters object can be used to specify image access or
+     * rendering options such as reading only a part of the overall image (i.e.
+     * reading a sub-image) or applying a custom photometric interpreter.
+     *
+     * @param params an object containing optional parameters to be applied to the
+     * read operation.
+     * @return if successful, a valid BufferedImage instance.
+     * @throws ImageReadException in the event of an invalid or incompatible
+     * data format.
+     * @throws IOException in the event of an I/O error.
+     */
+    public BufferedImage getTiffImage(final TiffImagingParameters params)
+        throws ImageReadException, IOException {
+        if (null == tiffImageData) {
+            return null;
+        }
+
+        return new TiffImageParser().getBufferedImage(this, headerByteOrder, params);
+    }
+
+    public TiffImageData getTiffImageData() {
+        return tiffImageData;
+    }
+
+    public List<ImageDataElement> getTiffRawImageDataElements()
+            throws ImageReadException {
+        final TiffField tileOffsets = findField(TiffTagConstants.TIFF_TAG_TILE_OFFSETS);
+        final TiffField tileByteCounts = findField(TiffTagConstants.TIFF_TAG_TILE_BYTE_COUNTS);
+        final TiffField stripOffsets = findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS);
+        final TiffField stripByteCounts = findField(TiffTagConstants.TIFF_TAG_STRIP_BYTE_COUNTS);
+
+        if ((tileOffsets != null) && (tileByteCounts != null)) {
+            return getRawImageDataElements(tileOffsets, tileByteCounts);
+        }
+        if ((stripOffsets != null) && (stripByteCounts != null)) {
+            return getRawImageDataElements(stripOffsets, stripByteCounts);
+        }
+        throw new ImageReadException("Couldn't find image data.");
+    }
+
+    public boolean hasJpegImageData() throws ImageReadException {
+        return null != findField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT);
+    }
+
     /**
      * Indicates whether the directory definition specifies a float-point data
      * format.
@@ -915,6 +884,14 @@ public class TiffDirectory extends TiffElement {
                 && s.length > 0
                 && s[0] == TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT;
 
+    }
+
+    public boolean hasTiffImageData() throws ImageReadException {
+        if (null != findField(TiffTagConstants.TIFF_TAG_TILE_OFFSETS)) {
+            return true;
+        }
+
+        return null != findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS);
     }
 
     /**
@@ -938,5 +915,28 @@ public class TiffDirectory extends TiffElement {
                 && s.length > 0
                 && (s[0] == TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT
                 || s[0] == TiffTagConstants.SAMPLE_FORMAT_VALUE_TWOS_COMPLEMENT_SIGNED_INTEGER);
+    }
+
+    public boolean imageDataInStrips() throws ImageReadException {
+        final TiffField tileOffsets = findField(TiffTagConstants.TIFF_TAG_TILE_OFFSETS);
+        final TiffField tileByteCounts = findField(TiffTagConstants.TIFF_TAG_TILE_BYTE_COUNTS);
+        final TiffField stripOffsets = findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS);
+        final TiffField stripByteCounts = findField(TiffTagConstants.TIFF_TAG_STRIP_BYTE_COUNTS);
+
+        if ((tileOffsets != null) && (tileByteCounts != null)) {
+            return false;
+        }
+        if ((stripOffsets != null) && (stripByteCounts != null)) {
+            return true;
+        }
+        throw new ImageReadException("Couldn't find image data.");
+    }
+
+    public void setJpegImageData(final JpegImageData value) {
+        this.jpegImageData = value;
+    }
+
+    public void setTiffImageData(final TiffImageData rawImageData) {
+        this.tiffImageData = rawImageData;
     }
 }

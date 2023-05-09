@@ -26,11 +26,75 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 
 class PamFileInfo extends FileInfo {
+    private class ColorTupleReader extends TupleReader {
+        @Override
+        public ImageInfo.ColorType getColorType() {
+            return ImageInfo.ColorType.RGB;
+        }
+
+        @Override
+        public int getRGB(final InputStream is) throws IOException {
+            int red = readSample(is, bytesPerSample);
+            int green = readSample(is, bytesPerSample);
+            int blue = readSample(is, bytesPerSample);
+
+            red = scaleSample(red, scale, maxval);
+            green = scaleSample(green, scale, maxval);
+            blue = scaleSample(blue, scale, maxval);
+
+            int alpha =  0xff;
+            if (hasAlpha) {
+                alpha = readSample(is, bytesPerSample);
+                alpha = scaleSample(alpha, scale, maxval);
+            }
+
+            return ((0xff & alpha) << 24)
+                 | ((0xff & red)   << 16)
+                 | ((0xff & green) << 8)
+                 | ((0xff & blue)  << 0);
+        }
+    }
+    private class GrayscaleTupleReader extends TupleReader {
+        private final ImageInfo.ColorType colorType;
+
+        GrayscaleTupleReader(final ImageInfo.ColorType colorType) {
+            this.colorType = colorType;
+        }
+
+        @Override
+        public ImageInfo.ColorType getColorType() {
+            return colorType;
+        }
+
+        @Override
+        public int getRGB(final InputStream is) throws IOException {
+            int sample = readSample(is, bytesPerSample);
+            sample = scaleSample(sample, scale, maxval);
+
+            int alpha = 0xff;
+            if (hasAlpha) {
+                alpha = readSample(is, bytesPerSample);
+                alpha = scaleSample(alpha, scale, maxval);
+            }
+
+            return ((0xff & alpha)  << 24)
+                 | ((0xff & sample) << 16)
+                 | ((0xff & sample) << 8)
+                 | ((0xff & sample) << 0);
+        }
+    }
+    private abstract static class TupleReader {
+        public abstract ImageInfo.ColorType getColorType();
+        public abstract int getRGB(InputStream is) throws IOException;
+    }
     private final int depth;
     private final int maxval;
     private final float scale;
+
     private final int bytesPerSample;
+
     private final boolean hasAlpha;
+
     private final TupleReader tupleReader;
 
     PamFileInfo(final int width, final int height, final int depth, final int maxval, final String tupleType) throws ImageReadException {
@@ -72,18 +136,13 @@ class PamFileInfo extends FileInfo {
     }
 
     @Override
-    public boolean hasAlpha() {
-        return hasAlpha;
-    }
-
-    @Override
-    public int getNumComponents() {
-        return depth;
-    }
-
-    @Override
     public int getBitDepth() {
         return maxval;
+    }
+
+    @Override
+    public ImageInfo.ColorType getColorType() {
+        return tupleReader.getColorType();
     }
 
     @Override
@@ -102,8 +161,13 @@ class PamFileInfo extends FileInfo {
     }
 
     @Override
-    public ImageInfo.ColorType getColorType() {
-        return tupleReader.getColorType();
+    public int getNumComponents() {
+        return depth;
+    }
+
+    @Override
+    public int getRGB(final InputStream is) throws IOException {
+        return tupleReader.getRGB(is);
     }
 
     @Override
@@ -112,71 +176,7 @@ class PamFileInfo extends FileInfo {
     }
 
     @Override
-    public int getRGB(final InputStream is) throws IOException {
-        return tupleReader.getRGB(is);
-    }
-
-    private abstract static class TupleReader {
-        public abstract ImageInfo.ColorType getColorType();
-        public abstract int getRGB(InputStream is) throws IOException;
-    }
-
-    private class GrayscaleTupleReader extends TupleReader {
-        private final ImageInfo.ColorType colorType;
-
-        GrayscaleTupleReader(final ImageInfo.ColorType colorType) {
-            this.colorType = colorType;
-        }
-
-        @Override
-        public ImageInfo.ColorType getColorType() {
-            return colorType;
-        }
-
-        @Override
-        public int getRGB(final InputStream is) throws IOException {
-            int sample = readSample(is, bytesPerSample);
-            sample = scaleSample(sample, scale, maxval);
-
-            int alpha = 0xff;
-            if (hasAlpha) {
-                alpha = readSample(is, bytesPerSample);
-                alpha = scaleSample(alpha, scale, maxval);
-            }
-
-            return ((0xff & alpha)  << 24)
-                 | ((0xff & sample) << 16)
-                 | ((0xff & sample) << 8)
-                 | ((0xff & sample) << 0);
-        }
-    }
-
-    private class ColorTupleReader extends TupleReader {
-        @Override
-        public ImageInfo.ColorType getColorType() {
-            return ImageInfo.ColorType.RGB;
-        }
-
-        @Override
-        public int getRGB(final InputStream is) throws IOException {
-            int red = readSample(is, bytesPerSample);
-            int green = readSample(is, bytesPerSample);
-            int blue = readSample(is, bytesPerSample);
-
-            red = scaleSample(red, scale, maxval);
-            green = scaleSample(green, scale, maxval);
-            blue = scaleSample(blue, scale, maxval);
-
-            int alpha =  0xff;
-            if (hasAlpha) {
-                alpha = readSample(is, bytesPerSample);
-                alpha = scaleSample(alpha, scale, maxval);
-            }
-
-            return ((0xff & alpha) << 24)
-                 | ((0xff & red)   << 16)
-                 | ((0xff & green) << 8)
-                 | ((0xff & blue)  << 0);
-        }
+    public boolean hasAlpha() {
+        return hasAlpha;
     }
 }

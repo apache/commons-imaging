@@ -88,11 +88,6 @@ public final class ColorHsl {
     }
 
     @Override
-    public String toString() {
-        return "{H: " + H + ", S: " + S + ", L: " + L + "}";
-    }
-
-    @Override
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
@@ -126,5 +121,10 @@ public final class ColorHsl {
         temp = Double.doubleToLongBits(L);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "{H: " + H + ", S: " + S + ", L: " + L + "}";
     }
 }

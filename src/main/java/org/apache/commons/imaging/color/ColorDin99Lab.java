@@ -40,11 +40,6 @@ public final class ColorDin99Lab {
     }
 
     @Override
-    public String toString() {
-        return "{L: " + L99 + ", a: " + a99 + ", b: " + b99 + "}";
-    }
-
-    @Override
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
@@ -78,5 +73,10 @@ public final class ColorDin99Lab {
         temp = Double.doubleToLongBits(b99);
         result = 31 * result + (int) (temp ^ temp >>> 32);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "{L: " + L99 + ", a: " + a99 + ", b: " + b99 + "}";
     }
 }

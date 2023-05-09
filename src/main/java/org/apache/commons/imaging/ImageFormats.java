@@ -50,8 +50,8 @@ public enum ImageFormats implements ImageFormat {
     }
 
     @Override
-    public String getName() {
-        return name();
+    public String getDefaultExtension() {
+        return this.extensions != null ? this.extensions[0] : null;
     }
 
     @Override
@@ -60,7 +60,7 @@ public enum ImageFormats implements ImageFormat {
     }
 
     @Override
-    public String getDefaultExtension() {
-        return this.extensions != null ? this.extensions[0] : null;
+    public String getName() {
+        return name();
     }
 }

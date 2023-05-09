@@ -57,27 +57,6 @@ public class ImageDump {
         }
     }
 
-    public void dumpColorSpace(final String prefix, final ColorSpace cs) {
-        LOGGER.fine(prefix + ": " + "type: " + cs.getType() + " ("
-                + colorSpaceTypeToName(cs) + ")");
-
-        if (!(cs instanceof ICC_ColorSpace)) {
-            LOGGER.fine(prefix + ": " + "Unknown ColorSpace: "
-                    + cs.getClass().getName());
-            return;
-        }
-
-        final ICC_ColorSpace iccColorSpace = (ICC_ColorSpace) cs;
-        final ICC_Profile iccProfile = iccColorSpace.getProfile();
-
-        final byte[] bytes = iccProfile.getData();
-
-        final IccProfileParser parser = new IccProfileParser();
-
-        final IccProfileInfo info = parser.getICCProfileInfo(bytes);
-        info.dump(prefix);
-    }
-
     public void dump(final BufferedImage src) {
         dump("", src);
     }
@@ -98,6 +77,27 @@ public class ImageDump {
             LOGGER.fine(prefix + ": " + key + ": "
                     + src.getProperty(key));
         }
+    }
+
+    public void dumpColorSpace(final String prefix, final ColorSpace cs) {
+        LOGGER.fine(prefix + ": " + "type: " + cs.getType() + " ("
+                + colorSpaceTypeToName(cs) + ")");
+
+        if (!(cs instanceof ICC_ColorSpace)) {
+            LOGGER.fine(prefix + ": " + "Unknown ColorSpace: "
+                    + cs.getClass().getName());
+            return;
+        }
+
+        final ICC_ColorSpace iccColorSpace = (ICC_ColorSpace) cs;
+        final ICC_Profile iccProfile = iccColorSpace.getProfile();
+
+        final byte[] bytes = iccProfile.getData();
+
+        final IccProfileParser parser = new IccProfileParser();
+
+        final IccProfileInfo info = parser.getICCProfileInfo(bytes);
+        info.dump(prefix);
     }
 
 }

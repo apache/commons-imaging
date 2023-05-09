@@ -28,15 +28,15 @@ import org.apache.commons.imaging.ImagingTest;
 
 public abstract class BmpBaseTest extends ImagingTest {
 
-    private static boolean isBmp(final File file) throws IOException {
-        final ImageFormat format = Imaging.guessFormat(file);
-        return format == ImageFormats.BMP;
-    }
-
     private static final ImageFilter IMAGE_FILTER = BmpBaseTest::isBmp;
 
     protected static List<File> getBmpImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);
+    }
+
+    private static boolean isBmp(final File file) throws IOException {
+        final ImageFormat format = Imaging.guessFormat(file);
+        return format == ImageFormats.BMP;
     }
 
 }

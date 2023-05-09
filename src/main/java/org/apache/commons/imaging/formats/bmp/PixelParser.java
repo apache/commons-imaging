@@ -39,8 +39,6 @@ abstract class PixelParser {
         is = new ByteArrayInputStream(imageData);
     }
 
-    public abstract void processImage(ImageBuilder imageBuilder) throws ImageReadException, IOException;
-
     int getColorTableRGB(int index) {
         index *= 4;
         final int blue = 0xff & colorTable[index + 0];
@@ -53,5 +51,7 @@ abstract class PixelParser {
                 | (green << 8)
                 | (blue << 0);
     }
+
+    public abstract void processImage(ImageBuilder imageBuilder) throws ImageReadException, IOException;
 
 }

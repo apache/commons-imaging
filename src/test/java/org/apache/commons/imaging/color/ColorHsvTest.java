@@ -36,6 +36,12 @@ public class ColorHsvTest {
     }
 
     @Test
+    public void testHashCodeAndEquals() {
+        assertTrue(color.equals(colorCopy) && colorCopy.equals(color));
+        assertThat(color.hashCode(), is(colorCopy.hashCode()));
+    }
+
+    @Test
     public void testHAssignment() {
         assertEquals(1.0, color.H, 0.0);
     }
@@ -46,18 +52,12 @@ public class ColorHsvTest {
     }
 
     @Test
-    public void testVAssignment() {
-        assertEquals(3.0, color.V, 0.0);
-    }
-
-    @Test
     public void testToString() {
         assertEquals("{H: 1.0, S: 2.0, V: 3.0}", color.toString());
     }
 
     @Test
-    public void testHashCodeAndEquals() {
-        assertTrue(color.equals(colorCopy) && colorCopy.equals(color));
-        assertThat(color.hashCode(), is(colorCopy.hashCode()));
+    public void testVAssignment() {
+        assertEquals(3.0, color.V, 0.0);
     }
 }

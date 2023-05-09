@@ -24,42 +24,12 @@ import java.util.List;
  * A Huffman tree implemented as 1 array for high locality of reference.
  */
 class HuffmanTree<T> {
-    private final List<Node<T>> nodes = new ArrayList<>();
-
     private static final class Node<T> {
         boolean empty = true;
         T value;
     }
 
-    public final void insert(final String pattern, final T value) throws HuffmanTreeException {
-        int position = 0;
-        Node<T> node = growAndGetNode(position);
-        if (node.value != null) {
-            throw new HuffmanTreeException("Can't add child to a leaf");
-        }
-        for (int patternPosition = 0; patternPosition < pattern.length(); patternPosition++) {
-            final char nextChar = pattern.charAt(patternPosition);
-            if (nextChar == '0') {
-                position = (position << 1) + 1;
-            } else {
-                position = (position + 1) << 1;
-            }
-            node = growAndGetNode(position);
-            if (node.value != null) {
-                throw new HuffmanTreeException("Can't add child to a leaf");
-            }
-        }
-        node.value = value;
-    }
-
-    private Node<T> growAndGetNode(final int position) {
-        while (position >= nodes.size()) {
-            nodes.add(new Node<>());
-        }
-        final Node<T> node = nodes.get(position);
-        node.empty = false;
-        return node;
-    }
+    private final List<Node<T>> nodes = new ArrayList<>();
 
     public final T decode(final BitInputStreamFlexible bitStream) throws HuffmanTreeException {
         int position = 0;
@@ -86,5 +56,35 @@ class HuffmanTree<T> {
             }
         }
         return node.value;
+    }
+
+    private Node<T> growAndGetNode(final int position) {
+        while (position >= nodes.size()) {
+            nodes.add(new Node<>());
+        }
+        final Node<T> node = nodes.get(position);
+        node.empty = false;
+        return node;
+    }
+
+    public final void insert(final String pattern, final T value) throws HuffmanTreeException {
+        int position = 0;
+        Node<T> node = growAndGetNode(position);
+        if (node.value != null) {
+            throw new HuffmanTreeException("Can't add child to a leaf");
+        }
+        for (int patternPosition = 0; patternPosition < pattern.length(); patternPosition++) {
+            final char nextChar = pattern.charAt(patternPosition);
+            if (nextChar == '0') {
+                position = (position << 1) + 1;
+            } else {
+                position = (position + 1) << 1;
+            }
+            node = growAndGetNode(position);
+            if (node.value != null) {
+                throw new HuffmanTreeException("Can't add child to a leaf");
+            }
+        }
+        node.value = value;
     }
 }

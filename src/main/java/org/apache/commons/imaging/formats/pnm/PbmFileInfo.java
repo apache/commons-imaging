@@ -32,28 +32,18 @@ class PbmFileInfo extends FileInfo {
     }
 
     @Override
-    public boolean hasAlpha() {
-        return false;
-    }
-
-    @Override
-    public int getNumComponents() {
-        return 1;
-    }
-
-    @Override
     public int getBitDepth() {
         return 1;
     }
 
     @Override
-    public ImageFormat getImageType() {
-        return ImageFormats.PBM;
+    public ImageInfo.ColorType getColorType() {
+        return ImageInfo.ColorType.BW;
     }
 
     @Override
-    public ImageInfo.ColorType getColorType() {
-        return ImageInfo.ColorType.BW;
+    public ImageFormat getImageType() {
+        return ImageFormats.PBM;
     }
 
     @Override
@@ -67,9 +57,8 @@ class PbmFileInfo extends FileInfo {
     }
 
     @Override
-    protected void newline() {
-        bitCache = 0;
-        bitsInCache = 0;
+    public int getNumComponents() {
+        return 1;
     }
 
     @Override
@@ -106,6 +95,17 @@ class PbmFileInfo extends FileInfo {
             return 0xffffffff;
         }
         throw new IOException("PBM: bad bit: " + bit);
+    }
+
+    @Override
+    public boolean hasAlpha() {
+        return false;
+    }
+
+    @Override
+    protected void newline() {
+        bitCache = 0;
+        bitsInCache = 0;
     }
 
 }

@@ -24,18 +24,6 @@ package org.apache.commons.imaging;
 public class ImageWriteException extends ImagingException {
     private static final long serialVersionUID = -1L;
 
-    public ImageWriteException(final String message) {
-        super(message);
-    }
-
-    public ImageWriteException(final String message, final Throwable cause) {
-        super(message, cause);
-    }
-
-    public ImageWriteException(final String message, final Object data) {
-        super(message + ": " + data + " (" + getType(data) + ")");
-    }
-
     private static String getType(final Object value) {
         if (value == null) {
             return "null";
@@ -68,5 +56,17 @@ public class ImageWriteException extends ImagingException {
             return "[boolean[]: " + ((boolean[]) value).length + "]";
         }
         return value.getClass().getName();
+    }
+
+    public ImageWriteException(final String message) {
+        super(message);
+    }
+
+    public ImageWriteException(final String message, final Object data) {
+        super(message + ": " + data + " (" + getType(data) + ")");
+    }
+
+    public ImageWriteException(final String message, final Throwable cause) {
+        super(message, cause);
     }
 }

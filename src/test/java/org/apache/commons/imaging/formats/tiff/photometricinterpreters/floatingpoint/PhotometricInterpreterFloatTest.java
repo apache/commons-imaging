@@ -44,9 +44,6 @@ public class PhotometricInterpreterFloatTest {
     private static final Color orange = new Color(255, 136, 62);
     private static final Color green = new Color(22, 155, 98);
 
-    public PhotometricInterpreterFloatTest() {
-    }
-
     @BeforeAll
     public static void setUpClass() throws ImageReadException, IOException {
         // the setup is to assign color (grayscale) values to the
@@ -115,6 +112,80 @@ public class PhotometricInterpreterFloatTest {
         }
     }
 
+    public PhotometricInterpreterFloatTest() {
+    }
+
+    @Test
+    public void testConstructors() {
+        PhotometricInterpreterFloat ptest;
+        ptest = new PhotometricInterpreterFloat(0, 1);
+        ptest = new PhotometricInterpreterFloat(1, 0);
+        try {
+            ptest = new PhotometricInterpreterFloat(null);
+            fail("Constructor failed to detect null arguments");
+        } catch (final IllegalArgumentException iex) {
+
+        }
+
+        try {
+            ptest = new PhotometricInterpreterFloat(0.1f, 0.1f);
+            fail("Constructor failed to detect bad-range argument values");
+        } catch (final IllegalArgumentException iex) {
+
+        }
+
+    }
+
+    /**
+     * Test of getMaxFound method, of class PhotometricInterpreterFloat.
+     */
+    @Test
+    public void testGetMaxFound() {
+        final float expResult = 1.0F;
+        final float result = pInterp.getMinFound();
+        assertEquals(expResult, result, 1.0, "Invalid maximum value");
+    }
+
+    /**
+     * Test of getMaxXY method, of class PhotometricInterpreterFloat.
+     */
+    @Test
+    public void testGetMaxXY() {
+        final int[] expResult = {256, 256};
+        final int[] result = pInterp.getMaxXY();
+        assertArrayEquals(expResult, result);
+    }
+
+    /**
+     * Test of getMeanFound method, of class PhotometricInterpreterFloat.
+     */
+    @Test
+    public void testGetMeanFound() {
+        final float expResult = 0.5F;
+        final float result = pInterp.getMinFound();
+        assertEquals(expResult, result, 1.0, "Invalid mean value");
+    }
+
+    /**
+     * Test of getMinFound method, of class PhotometricInterpreterFloat.
+     */
+    @Test
+    public void testGetMinFound() {
+        final float expResult = 0.0F;
+        final float result = pInterp.getMinFound();
+        assertEquals(expResult, result, 0.0, "Invalid minimum value");
+    }
+
+    /**
+     * Test of getMinXY method, of class PhotometricInterpreterFloat.
+     */
+    @Test
+    public void testGetMinXY() {
+        final int[] expResult = {0, 0};
+        final int[] result = pInterp.getMinXY();
+        assertArrayEquals(expResult, result);
+    }
+
     /**
      * Test of interpretPixel method, of class PhotometricInterpreterFloat.
      */
@@ -147,56 +218,6 @@ public class PhotometricInterpreterFloatTest {
     }
 
     /**
-     * Test of getMinFound method, of class PhotometricInterpreterFloat.
-     */
-    @Test
-    public void testGetMinFound() {
-        final float expResult = 0.0F;
-        final float result = pInterp.getMinFound();
-        assertEquals(expResult, result, 0.0, "Invalid minimum value");
-    }
-
-    /**
-     * Test of getMaxXY method, of class PhotometricInterpreterFloat.
-     */
-    @Test
-    public void testGetMaxXY() {
-        final int[] expResult = {256, 256};
-        final int[] result = pInterp.getMaxXY();
-        assertArrayEquals(expResult, result);
-    }
-
-    /**
-     * Test of getMaxFound method, of class PhotometricInterpreterFloat.
-     */
-    @Test
-    public void testGetMaxFound() {
-        final float expResult = 1.0F;
-        final float result = pInterp.getMinFound();
-        assertEquals(expResult, result, 1.0, "Invalid maximum value");
-    }
-
-    /**
-     * Test of getMinXY method, of class PhotometricInterpreterFloat.
-     */
-    @Test
-    public void testGetMinXY() {
-        final int[] expResult = {0, 0};
-        final int[] result = pInterp.getMinXY();
-        assertArrayEquals(expResult, result);
-    }
-
-    /**
-     * Test of getMeanFound method, of class PhotometricInterpreterFloat.
-     */
-    @Test
-    public void testGetMeanFound() {
-        final float expResult = 0.5F;
-        final float result = pInterp.getMinFound();
-        assertEquals(expResult, result, 1.0, "Invalid mean value");
-    }
-
-    /**
      * Test of interpretPixel method, of class PhotometricInterpreterFloat.
      */
     @Test
@@ -218,27 +239,6 @@ public class PhotometricInterpreterFloatTest {
         argb = bandedInterp.mapValueToARGB(-1f);
         test = Color.gray.getRGB();
         assertEquals(test, argb, "Excluded value mapped to incorrect ARGB");
-    }
-
-    @Test
-    public void testConstructors() {
-        PhotometricInterpreterFloat ptest;
-        ptest = new PhotometricInterpreterFloat(0, 1);
-        ptest = new PhotometricInterpreterFloat(1, 0);
-        try {
-            ptest = new PhotometricInterpreterFloat(null);
-            fail("Constructor failed to detect null arguments");
-        } catch (final IllegalArgumentException iex) {
-
-        }
-
-        try {
-            ptest = new PhotometricInterpreterFloat(0.1f, 0.1f);
-            fail("Constructor failed to detect bad-range argument values");
-        } catch (final IllegalArgumentException iex) {
-
-        }
-
     }
 
      /**

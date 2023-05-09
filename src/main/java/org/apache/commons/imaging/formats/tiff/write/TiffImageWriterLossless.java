@@ -47,9 +47,37 @@ import org.apache.commons.imaging.formats.tiff.TiffReader;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 
 public class TiffImageWriterLossless extends TiffImageWriterBase {
-    private final byte[] exifBytes;
+    private static class BufferOutputStream extends OutputStream {
+        private final byte[] buffer;
+        private int index;
+
+        BufferOutputStream(final byte[] buffer, final int index) {
+            this.buffer = buffer;
+            this.index = index;
+        }
+
+        @Override
+        public void write(final byte[] b, final int off, final int len) throws IOException {
+            if (index + len > buffer.length) {
+                throw new IOException("Buffer overflow.");
+            }
+            System.arraycopy(b, off, buffer, index, len);
+            index += len;
+        }
+
+        @Override
+        public void write(final int b) throws IOException {
+            if (index >= buffer.length) {
+                throw new IOException("Buffer overflow.");
+            }
+
+            buffer[index++] = (byte) b;
+        }
+    }
     private static final Comparator<TiffElement> ELEMENT_SIZE_COMPARATOR = Comparator.comparingInt(e -> e.length);
     private static final Comparator<TiffOutputItem> ITEM_SIZE_COMPARATOR = Comparator.comparingInt(TiffOutputItem::getItemLength);
+
+    private final byte[] exifBytes;
 
     public TiffImageWriterLossless(final byte[] exifBytes) {
         this.exifBytes = exifBytes;
@@ -126,57 +154,6 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         } catch (final ImageReadException e) {
             throw new ImageWriteException(e.getMessage(), e);
         }
-    }
-
-    @Override
-    public void write(final OutputStream os, final TiffOutputSet outputSet)
-            throws IOException, ImageWriteException {
-        // There are some fields whose address in the file must not change,
-        // unless of course their value is changed.
-        final Map<Integer, TiffOutputField> frozenFields = new HashMap<>();
-        final TiffOutputField makerNoteField = outputSet.findField(ExifTagConstants.EXIF_TAG_MAKER_NOTE);
-        if (makerNoteField != null && makerNoteField.getSeperateValue() != null) {
-            frozenFields.put(ExifTagConstants.EXIF_TAG_MAKER_NOTE.tag, makerNoteField);
-        }
-        final List<TiffElement> analysis = analyzeOldTiff(frozenFields);
-        final int oldLength = exifBytes.length;
-        if (analysis.isEmpty()) {
-            throw new ImageWriteException("Couldn't analyze old tiff data.");
-        }
-        if (analysis.size() == 1) {
-            final TiffElement onlyElement = analysis.get(0);
-            if (onlyElement.offset == TIFF_HEADER_SIZE
-                    && onlyElement.offset + onlyElement.length
-                            + TIFF_HEADER_SIZE == oldLength) {
-                // no gaps in old data, safe to complete overwrite.
-                new TiffImageWriterLossy(byteOrder).write(os, outputSet);
-                return;
-            }
-        }
-        final Map<Long, TiffOutputField> frozenFieldOffsets = new HashMap<>();
-        for (final Map.Entry<Integer, TiffOutputField> entry : frozenFields.entrySet()) {
-            final TiffOutputField frozenField = entry.getValue();
-            if (frozenField.getSeperateValue().getOffset() != TiffOutputItem.UNDEFINED_VALUE) {
-                frozenFieldOffsets.put(frozenField.getSeperateValue().getOffset(), frozenField);
-            }
-        }
-
-        final TiffOutputSummary outputSummary = validateDirectories(outputSet);
-
-        final List<TiffOutputItem> allOutputItems = outputSet.getOutputItems(outputSummary);
-        final List<TiffOutputItem> outputItems = new ArrayList<>();
-        for (final TiffOutputItem outputItem : allOutputItems) {
-            if (!frozenFieldOffsets.containsKey(outputItem.getOffset())) {
-                outputItems.add(outputItem);
-            }
-        }
-
-        final long outputLength = updateOffsetsStep(analysis, outputItems);
-
-        outputSummary.updateOffsets(byteOrder);
-
-        writeStep(os, outputSet, analysis, outputItems, outputLength);
-
     }
 
     private long updateOffsetsStep(final List<TiffElement> analysis,
@@ -256,32 +233,55 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         return overflowIndex;
     }
 
-    private static class BufferOutputStream extends OutputStream {
-        private final byte[] buffer;
-        private int index;
-
-        BufferOutputStream(final byte[] buffer, final int index) {
-            this.buffer = buffer;
-            this.index = index;
+    @Override
+    public void write(final OutputStream os, final TiffOutputSet outputSet)
+            throws IOException, ImageWriteException {
+        // There are some fields whose address in the file must not change,
+        // unless of course their value is changed.
+        final Map<Integer, TiffOutputField> frozenFields = new HashMap<>();
+        final TiffOutputField makerNoteField = outputSet.findField(ExifTagConstants.EXIF_TAG_MAKER_NOTE);
+        if (makerNoteField != null && makerNoteField.getSeperateValue() != null) {
+            frozenFields.put(ExifTagConstants.EXIF_TAG_MAKER_NOTE.tag, makerNoteField);
         }
-
-        @Override
-        public void write(final int b) throws IOException {
-            if (index >= buffer.length) {
-                throw new IOException("Buffer overflow.");
+        final List<TiffElement> analysis = analyzeOldTiff(frozenFields);
+        final int oldLength = exifBytes.length;
+        if (analysis.isEmpty()) {
+            throw new ImageWriteException("Couldn't analyze old tiff data.");
+        }
+        if (analysis.size() == 1) {
+            final TiffElement onlyElement = analysis.get(0);
+            if (onlyElement.offset == TIFF_HEADER_SIZE
+                    && onlyElement.offset + onlyElement.length
+                            + TIFF_HEADER_SIZE == oldLength) {
+                // no gaps in old data, safe to complete overwrite.
+                new TiffImageWriterLossy(byteOrder).write(os, outputSet);
+                return;
             }
-
-            buffer[index++] = (byte) b;
         }
-
-        @Override
-        public void write(final byte[] b, final int off, final int len) throws IOException {
-            if (index + len > buffer.length) {
-                throw new IOException("Buffer overflow.");
+        final Map<Long, TiffOutputField> frozenFieldOffsets = new HashMap<>();
+        for (final Map.Entry<Integer, TiffOutputField> entry : frozenFields.entrySet()) {
+            final TiffOutputField frozenField = entry.getValue();
+            if (frozenField.getSeperateValue().getOffset() != TiffOutputItem.UNDEFINED_VALUE) {
+                frozenFieldOffsets.put(frozenField.getSeperateValue().getOffset(), frozenField);
             }
-            System.arraycopy(b, off, buffer, index, len);
-            index += len;
         }
+
+        final TiffOutputSummary outputSummary = validateDirectories(outputSet);
+
+        final List<TiffOutputItem> allOutputItems = outputSet.getOutputItems(outputSummary);
+        final List<TiffOutputItem> outputItems = new ArrayList<>();
+        for (final TiffOutputItem outputItem : allOutputItems) {
+            if (!frozenFieldOffsets.containsKey(outputItem.getOffset())) {
+                outputItems.add(outputItem);
+            }
+        }
+
+        final long outputLength = updateOffsetsStep(analysis, outputItems);
+
+        outputSummary.updateOffsets(byteOrder);
+
+        writeStep(os, outputSet, analysis, outputItems, outputLength);
+
     }
 
     private void writeStep(final OutputStream os, final TiffOutputSet outputSet,

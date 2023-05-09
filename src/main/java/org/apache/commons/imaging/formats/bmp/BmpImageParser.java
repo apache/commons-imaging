@@ -68,18 +68,17 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
     }
 
     @Override
-    public BmpImagingParameters getDefaultParameters() {
-        return new BmpImagingParameters();
-    }
+    public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
+            throws ImageReadException, IOException {
+        pw.println("bmp.dumpImageFile");
 
-    @Override
-    public String getName() {
-        return "Bmp-Custom";
-    }
+        final ImageInfo imageData = getImageInfo(byteSource, null);
 
-    @Override
-    public String getDefaultExtension() {
-        return DEFAULT_EXTENSION;
+        imageData.toString(pw, "");
+
+        pw.println("");
+
+        return true;
     }
 
     @Override
@@ -90,6 +89,233 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
     @Override
     protected ImageFormat[] getAcceptedTypes() {
         return new ImageFormat[] { ImageFormats.BMP };
+    }
+
+    private String getBmpTypeDescription(final int identifier1, final int identifier2) {
+        if ((identifier1 == 'B') && (identifier2 == 'M')) {
+            return "Windows 3.1x, 95, NT,";
+        }
+        if ((identifier1 == 'B') && (identifier2 == 'A')) {
+            return "OS/2 Bitmap Array";
+        }
+        if ((identifier1 == 'C') && (identifier2 == 'I')) {
+            return "OS/2 Color Icon";
+        }
+        if ((identifier1 == 'C') && (identifier2 == 'P')) {
+            return "OS/2 Color Pointer";
+        }
+        if ((identifier1 == 'I') && (identifier2 == 'C')) {
+            return "OS/2 Icon";
+        }
+        if ((identifier1 == 'P') && (identifier2 == 'T')) {
+            return "OS/2 Pointer";
+        }
+
+        return "Unknown";
+    }
+
+    @Override
+    public BufferedImage getBufferedImage(final ByteSource byteSource, final BmpImagingParameters params)
+            throws ImageReadException, IOException {
+        try (InputStream is = byteSource.getInputStream()) {
+            return getBufferedImage(is, params);
+        }
+    }
+
+    public BufferedImage getBufferedImage(final InputStream inputStream, final BmpImagingParameters params)
+            throws ImageReadException, IOException {
+        final BmpImageContents ic = readImageContents(inputStream, FormatCompliance.getDefault());
+
+        final BmpHeaderInfo bhi = ic.bhi;
+        // byte colorTable[] = ic.colorTable;
+        // byte imageData[] = ic.imageData;
+
+        final int width = bhi.width;
+        final int height = bhi.height;
+
+        if (LOGGER.isLoggable(Level.FINE)) {
+            LOGGER.fine("width: " + width);
+            LOGGER.fine("height: " + height);
+            LOGGER.fine("width*height: " + width * height);
+            LOGGER.fine("width*height*4: " + width * height * 4);
+        }
+
+        final PixelParser pixelParser = ic.pixelParser;
+        final ImageBuilder imageBuilder = new ImageBuilder(width, height, true);
+        pixelParser.processImage(imageBuilder);
+
+        return imageBuilder.getBufferedImage();
+
+    }
+
+    @Override
+    public String getDefaultExtension() {
+        return DEFAULT_EXTENSION;
+    }
+
+    @Override
+    public BmpImagingParameters getDefaultParameters() {
+        return new BmpImagingParameters();
+    }
+
+    @Override
+    public FormatCompliance getFormatCompliance(final ByteSource byteSource)
+            throws ImageReadException, IOException {
+        final FormatCompliance result = new FormatCompliance(
+                byteSource.getDescription());
+
+        try (InputStream is = byteSource.getInputStream()) {
+            readImageContents(is, result);
+        }
+
+        return result;
+    }
+
+    @Override
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final BmpImagingParameters params)
+            throws ImageReadException, IOException {
+        return null;
+    }
+
+    @Override
+    public ImageInfo getImageInfo(final ByteSource byteSource, final BmpImagingParameters params)
+            throws ImageReadException, IOException {
+        BmpImageContents ic = null;
+        try (InputStream is = byteSource.getInputStream()) {
+            ic = readImageContents(is, FormatCompliance.getDefault());
+        }
+
+        final BmpHeaderInfo bhi = ic.bhi;
+        final byte[] colorTable = ic.colorTable;
+
+        if (bhi == null) {
+            throw new ImageReadException("BMP: couldn't read header");
+        }
+
+        final int height = bhi.height;
+        final int width = bhi.width;
+
+        final List<String> comments = new ArrayList<>();
+        // TODO: comments...
+
+        final int bitsPerPixel = bhi.bitsPerPixel;
+        final ImageFormat format = ImageFormats.BMP;
+        final String name = "BMP Windows Bitmap";
+        final String mimeType = "image/x-ms-bmp";
+        // we ought to count images, but don't yet.
+        final int numberOfImages = -1;
+        // not accurate ... only reflects first
+        final boolean progressive = false;
+        // boolean progressive = (fPNGChunkIHDR.InterlaceMethod != 0);
+        //
+        // pixels per meter
+        final int physicalWidthDpi = (int) Math.round(bhi.hResolution * .0254);
+        final float physicalWidthInch = (float) ((double) width / (double) physicalWidthDpi);
+        // int physicalHeightDpi = 72;
+        final int physicalHeightDpi = (int) Math.round(bhi.vResolution * .0254);
+        final float physicalHeightInch = (float) ((double) height / (double) physicalHeightDpi);
+
+        final String formatDetails = "Bmp (" + (char) bhi.identifier1
+                + (char) bhi.identifier2 + ": "
+                + getBmpTypeDescription(bhi.identifier1, bhi.identifier2) + ")";
+
+        final boolean transparent = false;
+
+        final boolean usesPalette = colorTable != null;
+        final ImageInfo.ColorType colorType = ImageInfo.ColorType.RGB;
+        final ImageInfo.CompressionAlgorithm compressionAlgorithm = ImageInfo.CompressionAlgorithm.RLE;
+
+        return new ImageInfo(formatDetails, bitsPerPixel, comments,
+                format, name, height, mimeType, numberOfImages,
+                physicalHeightDpi, physicalHeightInch, physicalWidthDpi,
+                physicalWidthInch, width, progressive, transparent,
+                usesPalette, colorType, compressionAlgorithm);
+    }
+
+    @Override
+    public Dimension getImageSize(final ByteSource byteSource, final BmpImagingParameters params)
+            throws ImageReadException, IOException {
+        final BmpHeaderInfo bhi = readBmpHeaderInfo(byteSource);
+
+        return new Dimension(bhi.width, bhi.height);
+
+    }
+
+    @Override
+    public ImageMetadata getMetadata(final ByteSource byteSource, final BmpImagingParameters params)
+            throws ImageReadException, IOException {
+        // TODO this should throw UnsupportedOperationException, but RoundtripTest has to be refactored completely before this can be changed
+        return null;
+    }
+
+    @Override
+    public String getName() {
+        return "Bmp-Custom";
+    }
+
+    private byte[] getRLEBytes(final InputStream is, final int rleSamplesPerByte) throws IOException {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        // this.setDebug(true);
+
+        boolean done = false;
+        while (!done) {
+            final int a = 0xff & readByte("RLE a", is, "BMP: Bad RLE");
+            baos.write(a);
+            final int b = 0xff & readByte("RLE b", is, "BMP: Bad RLE");
+            baos.write(b);
+
+            if (a == 0) {
+                switch (b) {
+                case 0: // EOL
+                    break;
+                case 1: // EOF
+                    // System.out.println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+                    // );
+                    done = true;
+                    break;
+                case 2: {
+                    // System.out.println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+                    // );
+                    final int c = 0xff & readByte("RLE c", is, "BMP: Bad RLE");
+                    baos.write(c);
+                    final int d = 0xff & readByte("RLE d", is, "BMP: Bad RLE");
+                    baos.write(d);
+
+                }
+                    break;
+                default: {
+                    int size = b / rleSamplesPerByte;
+                    if ((b % rleSamplesPerByte) > 0) {
+                        size++;
+                    }
+                    if ((size % 2) != 0) {
+                        size++;
+                    }
+
+                    // System.out.println("b: " + b);
+                    // System.out.println("size: " + size);
+                    // System.out.println("RLESamplesPerByte: " +
+                    // RLESamplesPerByte);
+                    // System.out.println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+                    // );
+                    final byte[] bytes = readBytes("bytes", is, size,
+                            "RLE: Absolute Mode");
+                    baos.write(bytes);
+                }
+                    break;
+                }
+            }
+        }
+
+        return baos.toByteArray();
+    }
+
+    private BmpHeaderInfo readBmpHeaderInfo(final ByteSource byteSource) throws ImageReadException, IOException {
+        try (InputStream is = byteSource.getInputStream()) {
+            // readSignature(is);
+            return readBmpHeaderInfo(is, null);
+        }
     }
 
     private BmpHeaderInfo readBmpHeaderInfo(final InputStream is,
@@ -241,64 +467,6 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
                 greenMask, blueMask, alphaMask, colorSpaceType, colorSpace,
                 gammaRed, gammaGreen, gammaBlue, intent, profileData,
                 profileSize, reservedV5);
-    }
-
-    private byte[] getRLEBytes(final InputStream is, final int rleSamplesPerByte) throws IOException {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        // this.setDebug(true);
-
-        boolean done = false;
-        while (!done) {
-            final int a = 0xff & readByte("RLE a", is, "BMP: Bad RLE");
-            baos.write(a);
-            final int b = 0xff & readByte("RLE b", is, "BMP: Bad RLE");
-            baos.write(b);
-
-            if (a == 0) {
-                switch (b) {
-                case 0: // EOL
-                    break;
-                case 1: // EOF
-                    // System.out.println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-                    // );
-                    done = true;
-                    break;
-                case 2: {
-                    // System.out.println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-                    // );
-                    final int c = 0xff & readByte("RLE c", is, "BMP: Bad RLE");
-                    baos.write(c);
-                    final int d = 0xff & readByte("RLE d", is, "BMP: Bad RLE");
-                    baos.write(d);
-
-                }
-                    break;
-                default: {
-                    int size = b / rleSamplesPerByte;
-                    if ((b % rleSamplesPerByte) > 0) {
-                        size++;
-                    }
-                    if ((size % 2) != 0) {
-                        size++;
-                    }
-
-                    // System.out.println("b: " + b);
-                    // System.out.println("size: " + size);
-                    // System.out.println("RLESamplesPerByte: " +
-                    // RLESamplesPerByte);
-                    // System.out.println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-                    // );
-                    final byte[] bytes = readBytes("bytes", is, size,
-                            "RLE: Absolute Mode");
-                    baos.write(bytes);
-                }
-                    break;
-                }
-            }
-        }
-
-        return baos.toByteArray();
     }
 
     private BmpImageContents readImageContents(final InputStream is,
@@ -478,174 +646,6 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
         }
 
         return new BmpImageContents(bhi, colorTable, imageData, pixelParser);
-    }
-
-    private BmpHeaderInfo readBmpHeaderInfo(final ByteSource byteSource) throws ImageReadException, IOException {
-        try (InputStream is = byteSource.getInputStream()) {
-            // readSignature(is);
-            return readBmpHeaderInfo(is, null);
-        }
-    }
-
-    @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final BmpImagingParameters params)
-            throws ImageReadException, IOException {
-        return null;
-    }
-
-    @Override
-    public Dimension getImageSize(final ByteSource byteSource, final BmpImagingParameters params)
-            throws ImageReadException, IOException {
-        final BmpHeaderInfo bhi = readBmpHeaderInfo(byteSource);
-
-        return new Dimension(bhi.width, bhi.height);
-
-    }
-
-    @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final BmpImagingParameters params)
-            throws ImageReadException, IOException {
-        // TODO this should throw UnsupportedOperationException, but RoundtripTest has to be refactored completely before this can be changed
-        return null;
-    }
-
-    private String getBmpTypeDescription(final int identifier1, final int identifier2) {
-        if ((identifier1 == 'B') && (identifier2 == 'M')) {
-            return "Windows 3.1x, 95, NT,";
-        }
-        if ((identifier1 == 'B') && (identifier2 == 'A')) {
-            return "OS/2 Bitmap Array";
-        }
-        if ((identifier1 == 'C') && (identifier2 == 'I')) {
-            return "OS/2 Color Icon";
-        }
-        if ((identifier1 == 'C') && (identifier2 == 'P')) {
-            return "OS/2 Color Pointer";
-        }
-        if ((identifier1 == 'I') && (identifier2 == 'C')) {
-            return "OS/2 Icon";
-        }
-        if ((identifier1 == 'P') && (identifier2 == 'T')) {
-            return "OS/2 Pointer";
-        }
-
-        return "Unknown";
-    }
-
-    @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final BmpImagingParameters params)
-            throws ImageReadException, IOException {
-        BmpImageContents ic = null;
-        try (InputStream is = byteSource.getInputStream()) {
-            ic = readImageContents(is, FormatCompliance.getDefault());
-        }
-
-        final BmpHeaderInfo bhi = ic.bhi;
-        final byte[] colorTable = ic.colorTable;
-
-        if (bhi == null) {
-            throw new ImageReadException("BMP: couldn't read header");
-        }
-
-        final int height = bhi.height;
-        final int width = bhi.width;
-
-        final List<String> comments = new ArrayList<>();
-        // TODO: comments...
-
-        final int bitsPerPixel = bhi.bitsPerPixel;
-        final ImageFormat format = ImageFormats.BMP;
-        final String name = "BMP Windows Bitmap";
-        final String mimeType = "image/x-ms-bmp";
-        // we ought to count images, but don't yet.
-        final int numberOfImages = -1;
-        // not accurate ... only reflects first
-        final boolean progressive = false;
-        // boolean progressive = (fPNGChunkIHDR.InterlaceMethod != 0);
-        //
-        // pixels per meter
-        final int physicalWidthDpi = (int) Math.round(bhi.hResolution * .0254);
-        final float physicalWidthInch = (float) ((double) width / (double) physicalWidthDpi);
-        // int physicalHeightDpi = 72;
-        final int physicalHeightDpi = (int) Math.round(bhi.vResolution * .0254);
-        final float physicalHeightInch = (float) ((double) height / (double) physicalHeightDpi);
-
-        final String formatDetails = "Bmp (" + (char) bhi.identifier1
-                + (char) bhi.identifier2 + ": "
-                + getBmpTypeDescription(bhi.identifier1, bhi.identifier2) + ")";
-
-        final boolean transparent = false;
-
-        final boolean usesPalette = colorTable != null;
-        final ImageInfo.ColorType colorType = ImageInfo.ColorType.RGB;
-        final ImageInfo.CompressionAlgorithm compressionAlgorithm = ImageInfo.CompressionAlgorithm.RLE;
-
-        return new ImageInfo(formatDetails, bitsPerPixel, comments,
-                format, name, height, mimeType, numberOfImages,
-                physicalHeightDpi, physicalHeightInch, physicalWidthDpi,
-                physicalWidthInch, width, progressive, transparent,
-                usesPalette, colorType, compressionAlgorithm);
-    }
-
-    @Override
-    public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
-            throws ImageReadException, IOException {
-        pw.println("bmp.dumpImageFile");
-
-        final ImageInfo imageData = getImageInfo(byteSource, null);
-
-        imageData.toString(pw, "");
-
-        pw.println("");
-
-        return true;
-    }
-
-    @Override
-    public FormatCompliance getFormatCompliance(final ByteSource byteSource)
-            throws ImageReadException, IOException {
-        final FormatCompliance result = new FormatCompliance(
-                byteSource.getDescription());
-
-        try (InputStream is = byteSource.getInputStream()) {
-            readImageContents(is, result);
-        }
-
-        return result;
-    }
-
-    @Override
-    public BufferedImage getBufferedImage(final ByteSource byteSource, final BmpImagingParameters params)
-            throws ImageReadException, IOException {
-        try (InputStream is = byteSource.getInputStream()) {
-            return getBufferedImage(is, params);
-        }
-    }
-
-    public BufferedImage getBufferedImage(final InputStream inputStream, final BmpImagingParameters params)
-            throws ImageReadException, IOException {
-        final BmpImageContents ic = readImageContents(inputStream, FormatCompliance.getDefault());
-
-        final BmpHeaderInfo bhi = ic.bhi;
-        // byte colorTable[] = ic.colorTable;
-        // byte imageData[] = ic.imageData;
-
-        final int width = bhi.width;
-        final int height = bhi.height;
-
-        if (LOGGER.isLoggable(Level.FINE)) {
-            LOGGER.fine("width: " + width);
-            LOGGER.fine("height: " + height);
-            LOGGER.fine("width*height: " + width * height);
-            LOGGER.fine("width*height*4: " + width * height * 4);
-        }
-
-        final PixelParser pixelParser = ic.pixelParser;
-        final ImageBuilder imageBuilder = new ImageBuilder(width, height, true);
-        pixelParser.processImage(imageBuilder);
-
-        return imageBuilder.getBufferedImage();
-
     }
 
     @Override

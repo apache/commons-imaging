@@ -38,6 +38,16 @@ public class TagInfo {
     public final TiffDirectoryType directoryType;
     private final boolean isOffset;
 
+    public TagInfo(final String name, final int tag, final FieldType dataType) {
+        this(name, tag, dataType, LENGTH_UNKNOWN,
+                TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+    }
+
+    public TagInfo(final String name, final int tag, final FieldType dataType, final int length) {
+        this(name, tag, Arrays.asList(dataType), length,
+                TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+    }
+
     public TagInfo(final String name, final int tag, final FieldType dataType, final int length,
             final TiffDirectoryType exifDirectory) {
         this(name, tag, Arrays.asList(dataType), length, exifDirectory);
@@ -47,16 +57,6 @@ public class TagInfo {
             final TiffDirectoryType exifDirectory, final boolean isOffset) {
         this(name, tag, Arrays.asList(dataType), length, exifDirectory,
                 isOffset);
-    }
-
-    public TagInfo(final String name, final int tag, final FieldType dataType, final int length) {
-        this(name, tag, Arrays.asList(dataType), length,
-                TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    }
-
-    public TagInfo(final String name, final int tag, final FieldType dataType) {
-        this(name, tag, dataType, LENGTH_UNKNOWN,
-                TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     }
 
     public TagInfo(final String name, final int tag, final List<FieldType> dataTypes, final int length,
@@ -75,6 +75,15 @@ public class TagInfo {
         this.isOffset = isOffset;
     }
 
+    public byte[] encodeValue(final FieldType fieldType, final Object value, final ByteOrder byteOrder)
+            throws ImageWriteException {
+        return fieldType.writeData(value, byteOrder);
+    }
+
+    public String getDescription() {
+        return tag + " (0x" + Integer.toHexString(tag) + ": " + name + "): ";
+    }
+
     /**
      *
      * @param entry the TIFF field whose value to return
@@ -85,26 +94,17 @@ public class TagInfo {
         return entry.getFieldType().getValue(entry);
     }
 
-    public byte[] encodeValue(final FieldType fieldType, final Object value, final ByteOrder byteOrder)
-            throws ImageWriteException {
-        return fieldType.writeData(value, byteOrder);
-    }
-
-    public String getDescription() {
-        return tag + " (0x" + Integer.toHexString(tag) + ": " + name + "): ";
-    }
-
-    @Override
-    public String toString() {
-        return "[TagInfo. tag: " + tag + " (0x" + Integer.toHexString(tag)
-                + ", name: " + name + "]";
-    }
-
     public boolean isOffset() {
         return isOffset;
     }
 
     public boolean isText() {
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "[TagInfo. tag: " + tag + " (0x" + Integer.toHexString(tag)
+                + ", name: " + name + "]";
     }
 }

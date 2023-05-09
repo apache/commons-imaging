@@ -34,20 +34,6 @@ public enum TiffPlanarConfiguration {
     PLANAR(TiffTagConstants.PLANAR_CONFIGURATION_VALUE_PLANAR);
 
     /**
-     * The integer code values used for indicating the planar configuration
-     * in a TIFF file.
-     */
-    public final int codeValue;
-
-    /**
-     *
-     * @param codeValue format-indicator value for use in file.
-     */
-    TiffPlanarConfiguration(final int codeValue) {
-        this.codeValue = codeValue;
-    }
-
-    /**
      * Interprets an integer code value to determine the enumerated value.
      * Implements lenient rules for handling non-compliant values.
      *
@@ -63,5 +49,19 @@ public enum TiffPlanarConfiguration {
             default:
                 return CHUNKY;
         }
+    }
+
+    /**
+     * The integer code values used for indicating the planar configuration
+     * in a TIFF file.
+     */
+    public final int codeValue;
+
+    /**
+     *
+     * @param codeValue format-indicator value for use in file.
+     */
+    TiffPlanarConfiguration(final int codeValue) {
+        this.codeValue = codeValue;
     }
 }

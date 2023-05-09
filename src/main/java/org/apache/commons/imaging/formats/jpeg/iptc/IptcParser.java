@@ -74,6 +74,29 @@ public class IptcParser extends BinaryFileParser {
         setByteOrder(ByteOrder.BIG_ENDIAN);
     }
 
+    private Charset findCharset(final byte[] codedCharset) {
+        final String codedCharsetString = new String(codedCharset, StandardCharsets.ISO_8859_1);
+        try {
+            if (Charset.isSupported(codedCharsetString)) {
+                return Charset.forName(codedCharsetString);
+            }
+        } catch (final IllegalArgumentException e) { }
+        // check if encoding is a escape sequence
+        // normalize encoding byte sequence
+        final byte[] codedCharsetNormalized = new byte[codedCharset.length];
+        int j = 0;
+        for (final byte element : codedCharset) {
+            if (element != ' ') {
+                codedCharsetNormalized[j++] = element;
+            }
+        }
+
+        if (Objects.deepEquals(codedCharsetNormalized, CHARACTER_ESCAPE_SEQUENCE)) {
+            return StandardCharsets.UTF_8;
+        }
+        return DEFAULT_CHARSET;
+    }
+
     public boolean isPhotoshopJpegSegment(final byte[] segmentData) {
         if (!startsWith(segmentData,
                 JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING)) {
@@ -85,66 +108,105 @@ public class IptcParser extends BinaryFileParser {
                 && ByteConversions.toInt(segmentData, index, APP13_BYTE_ORDER) == JpegConstants.CONST_8BIM;
     }
 
-    /*
-     * In practice, App13 segments are only used for Photoshop/IPTC metadata.
-     * However, we should not treat App13 signatures without Photoshop's
-     * signature as Photoshop/IPTC segments.
-     *
-     * A Photoshop/IPTC App13 segment begins with the Photoshop Identification
-     * string.
-     *
-     * There follows 0-N blocks (Photoshop calls them "Image Resource Blocks").
-     *
-     * Each block has the following structure:
-     *
-     * 1. 4-byte type. This is always "8BIM" for blocks in a Photoshop App13
-     * segment. 2. 2-byte id. IPTC data is stored in blocks with id 0x0404, aka.
-     * IPTC_NAA_RECORD_IMAGE_RESOURCE_ID 3. Block name as a Pascal String. This
-     * is padded to have an even length. 4. 4-byte size (in bytes). 5. Block
-     * data. This is also padded to have an even length.
-     *
-     * The block data consists of a 0-N records. A record has the following
-     * structure:
-     *
-     * 1. 2-byte prefix. The value is always 0x1C02 2. 1-byte record type. The
-     * record types are documented by the IPTC. See IptcConstants. 3. 2-byte
-     * record size (in bytes). 4. Record data, "record size" bytes long.
-     *
-     * Record data (unlike block data) is NOT padded to have an even length.
-     *
-     * Record data, for IPTC record, should always be ISO-8859-1. But according
-     * to SANSELAN-33, this isn't always the case.
-     *
-     * The exception is the first record in the block, which must always be a
-     * record version record, whose value is a two-byte number; the value is
-     * 0x02.
-     *
-     * Some IPTC blocks are missing this first "record version" record, so we
-     * don't require it.
-     */
-    public PhotoshopApp13Data parsePhotoshopSegment(final byte[] bytes, final ImagingParameters params)
-            throws ImageReadException, IOException {
-        final boolean strict =  params != null && params.isStrict();
+    protected List<IptcBlock> parseAllBlocks(final byte[] bytes,
+            final boolean strict) throws ImageReadException, IOException {
+        final List<IptcBlock> blocks = new ArrayList<>();
 
-        return parsePhotoshopSegment(bytes, strict);
-    }
+        try (InputStream bis = new ByteArrayInputStream(bytes)) {
 
-    public PhotoshopApp13Data parsePhotoshopSegment(final byte[] bytes, final boolean strict) throws ImageReadException,
-            IOException {
-        final List<IptcRecord> records = new ArrayList<>();
+            // Note that these are unsigned quantities. Name is always an even
+            // number of bytes (including the 1st byte, which is the size.)
 
-        final List<IptcBlock> blocks = parseAllBlocks(bytes, strict);
-
-        for (final IptcBlock block : blocks) {
-            // Ignore everything but IPTC data.
-            if (!block.isIPTCBlock()) {
-                continue;
+            final byte[] idString = readBytes("", bis,
+                    JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.size(),
+                    "App13 Segment missing identification string");
+            if (!JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.equals(idString)) {
+                throw new ImageReadException("Not a Photoshop App13 Segment");
             }
 
-            records.addAll(parseIPTCBlock(block.getBlockData()));
-        }
+            // int index = PHOTOSHOP_IDENTIFICATION_STRING.length;
 
-        return new PhotoshopApp13Data(records, blocks);
+            while (true) {
+                final int imageResourceBlockSignature;
+                try {
+                    imageResourceBlockSignature = read4Bytes("", bis,
+                            "Image Resource Block missing identification string", APP13_BYTE_ORDER);
+                } catch (final IOException ioEx) {
+                    break;
+                }
+                if (imageResourceBlockSignature != JpegConstants.CONST_8BIM) {
+                    throw new ImageReadException(
+                            "Invalid Image Resource Block Signature");
+                }
+
+                final int blockType = read2Bytes("", bis, "Image Resource Block missing type", APP13_BYTE_ORDER);
+                Debug.debug("blockType: " + blockType + " (0x" + Integer.toHexString(blockType) + ")");
+
+                // skip blocks that the photoshop spec recommends to, see IMAGING-246
+                if (PHOTOSHOP_IGNORED_BLOCK_TYPE.contains(blockType)) {
+                    Debug.debug("Skipping blockType: " + blockType + " (0x" + Integer.toHexString(blockType) + ")");
+                    // if there is still data in this block, before the next image resource block
+                    // (8BIM), then we must consume these bytes to leave a pointer ready to read
+                    // the next block
+                    BinaryFunctions.searchQuad(JpegConstants.CONST_8BIM, bis);
+                    continue;
+                }
+
+                final int blockNameLength = readByte("Name length", bis, "Image Resource Block missing name length");
+                if (blockNameLength > 0) {
+                    Debug.debug("blockNameLength: " + blockNameLength + " (0x"
+                            + Integer.toHexString(blockNameLength) + ")");
+                }
+                byte[] blockNameBytes;
+                if (blockNameLength == 0) {
+                    readByte("Block name bytes", bis, "Image Resource Block has invalid name");
+                    blockNameBytes = ImagingConstants.EMPTY_BYTE_ARRAY;
+                } else {
+                    try {
+                        blockNameBytes = readBytes("", bis, blockNameLength,
+                                "Invalid Image Resource Block name");
+                    } catch (final IOException ioEx) {
+                        if (strict) {
+                            throw ioEx;
+                        }
+                        break;
+                    }
+
+                    if (blockNameLength % 2 == 0) {
+                        readByte("Padding byte", bis, "Image Resource Block missing padding byte");
+                    }
+                }
+
+                final int blockSize = read4Bytes("", bis, "Image Resource Block missing size", APP13_BYTE_ORDER);
+                Debug.debug("blockSize: " + blockSize + " (0x" + Integer.toHexString(blockSize) + ")");
+
+                /*
+                 * doesn't catch cases where blocksize is invalid but is still less
+                 * than bytes.length but will at least prevent OutOfMemory errors
+                 */
+                if (blockSize > bytes.length) {
+                    throw new ImageReadException("Invalid Block Size : " + blockSize + " > " + bytes.length);
+                }
+
+                final byte[] blockData;
+                try {
+                    blockData = readBytes("", bis, blockSize, "Invalid Image Resource Block data");
+                } catch (final IOException ioEx) {
+                    if (strict) {
+                        throw ioEx;
+                    }
+                    break;
+                }
+
+                blocks.add(new IptcBlock(blockType, blockNameBytes, blockData));
+
+                if ((blockSize % 2) != 0) {
+                    readByte("Padding byte", bis, "Image Resource Block missing padding byte");
+                }
+            }
+
+            return blocks;
+        }
     }
 
     protected List<IptcRecord> parseIPTCBlock(final byte[] bytes) {
@@ -270,148 +332,68 @@ public class IptcParser extends BinaryFileParser {
         return elements;
     }
 
-    protected List<IptcBlock> parseAllBlocks(final byte[] bytes,
-            final boolean strict) throws ImageReadException, IOException {
-        final List<IptcBlock> blocks = new ArrayList<>();
+    public PhotoshopApp13Data parsePhotoshopSegment(final byte[] bytes, final boolean strict) throws ImageReadException,
+            IOException {
+        final List<IptcRecord> records = new ArrayList<>();
 
-        try (InputStream bis = new ByteArrayInputStream(bytes)) {
+        final List<IptcBlock> blocks = parseAllBlocks(bytes, strict);
 
-            // Note that these are unsigned quantities. Name is always an even
-            // number of bytes (including the 1st byte, which is the size.)
-
-            final byte[] idString = readBytes("", bis,
-                    JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.size(),
-                    "App13 Segment missing identification string");
-            if (!JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.equals(idString)) {
-                throw new ImageReadException("Not a Photoshop App13 Segment");
+        for (final IptcBlock block : blocks) {
+            // Ignore everything but IPTC data.
+            if (!block.isIPTCBlock()) {
+                continue;
             }
 
-            // int index = PHOTOSHOP_IDENTIFICATION_STRING.length;
-
-            while (true) {
-                final int imageResourceBlockSignature;
-                try {
-                    imageResourceBlockSignature = read4Bytes("", bis,
-                            "Image Resource Block missing identification string", APP13_BYTE_ORDER);
-                } catch (final IOException ioEx) {
-                    break;
-                }
-                if (imageResourceBlockSignature != JpegConstants.CONST_8BIM) {
-                    throw new ImageReadException(
-                            "Invalid Image Resource Block Signature");
-                }
-
-                final int blockType = read2Bytes("", bis, "Image Resource Block missing type", APP13_BYTE_ORDER);
-                Debug.debug("blockType: " + blockType + " (0x" + Integer.toHexString(blockType) + ")");
-
-                // skip blocks that the photoshop spec recommends to, see IMAGING-246
-                if (PHOTOSHOP_IGNORED_BLOCK_TYPE.contains(blockType)) {
-                    Debug.debug("Skipping blockType: " + blockType + " (0x" + Integer.toHexString(blockType) + ")");
-                    // if there is still data in this block, before the next image resource block
-                    // (8BIM), then we must consume these bytes to leave a pointer ready to read
-                    // the next block
-                    BinaryFunctions.searchQuad(JpegConstants.CONST_8BIM, bis);
-                    continue;
-                }
-
-                final int blockNameLength = readByte("Name length", bis, "Image Resource Block missing name length");
-                if (blockNameLength > 0) {
-                    Debug.debug("blockNameLength: " + blockNameLength + " (0x"
-                            + Integer.toHexString(blockNameLength) + ")");
-                }
-                byte[] blockNameBytes;
-                if (blockNameLength == 0) {
-                    readByte("Block name bytes", bis, "Image Resource Block has invalid name");
-                    blockNameBytes = ImagingConstants.EMPTY_BYTE_ARRAY;
-                } else {
-                    try {
-                        blockNameBytes = readBytes("", bis, blockNameLength,
-                                "Invalid Image Resource Block name");
-                    } catch (final IOException ioEx) {
-                        if (strict) {
-                            throw ioEx;
-                        }
-                        break;
-                    }
-
-                    if (blockNameLength % 2 == 0) {
-                        readByte("Padding byte", bis, "Image Resource Block missing padding byte");
-                    }
-                }
-
-                final int blockSize = read4Bytes("", bis, "Image Resource Block missing size", APP13_BYTE_ORDER);
-                Debug.debug("blockSize: " + blockSize + " (0x" + Integer.toHexString(blockSize) + ")");
-
-                /*
-                 * doesn't catch cases where blocksize is invalid but is still less
-                 * than bytes.length but will at least prevent OutOfMemory errors
-                 */
-                if (blockSize > bytes.length) {
-                    throw new ImageReadException("Invalid Block Size : " + blockSize + " > " + bytes.length);
-                }
-
-                final byte[] blockData;
-                try {
-                    blockData = readBytes("", bis, blockSize, "Invalid Image Resource Block data");
-                } catch (final IOException ioEx) {
-                    if (strict) {
-                        throw ioEx;
-                    }
-                    break;
-                }
-
-                blocks.add(new IptcBlock(blockType, blockNameBytes, blockData));
-
-                if ((blockSize % 2) != 0) {
-                    readByte("Padding byte", bis, "Image Resource Block missing padding byte");
-                }
-            }
-
-            return blocks;
+            records.addAll(parseIPTCBlock(block.getBlockData()));
         }
+
+        return new PhotoshopApp13Data(records, blocks);
     }
 
     // private void writeIPTCRecord(BinaryOutputStream bos, )
 
-    public byte[] writePhotoshopApp13Segment(final PhotoshopApp13Data data)
-            throws IOException, ImageWriteException {
-        final ByteArrayOutputStream os = new ByteArrayOutputStream();
-        final BinaryOutputStream bos = BinaryOutputStream.bigEndian(os);
+    /*
+     * In practice, App13 segments are only used for Photoshop/IPTC metadata.
+     * However, we should not treat App13 signatures without Photoshop's
+     * signature as Photoshop/IPTC segments.
+     *
+     * A Photoshop/IPTC App13 segment begins with the Photoshop Identification
+     * string.
+     *
+     * There follows 0-N blocks (Photoshop calls them "Image Resource Blocks").
+     *
+     * Each block has the following structure:
+     *
+     * 1. 4-byte type. This is always "8BIM" for blocks in a Photoshop App13
+     * segment. 2. 2-byte id. IPTC data is stored in blocks with id 0x0404, aka.
+     * IPTC_NAA_RECORD_IMAGE_RESOURCE_ID 3. Block name as a Pascal String. This
+     * is padded to have an even length. 4. 4-byte size (in bytes). 5. Block
+     * data. This is also padded to have an even length.
+     *
+     * The block data consists of a 0-N records. A record has the following
+     * structure:
+     *
+     * 1. 2-byte prefix. The value is always 0x1C02 2. 1-byte record type. The
+     * record types are documented by the IPTC. See IptcConstants. 3. 2-byte
+     * record size (in bytes). 4. Record data, "record size" bytes long.
+     *
+     * Record data (unlike block data) is NOT padded to have an even length.
+     *
+     * Record data, for IPTC record, should always be ISO-8859-1. But according
+     * to SANSELAN-33, this isn't always the case.
+     *
+     * The exception is the first record in the block, which must always be a
+     * record version record, whose value is a two-byte number; the value is
+     * 0x02.
+     *
+     * Some IPTC blocks are missing this first "record version" record, so we
+     * don't require it.
+     */
+    public PhotoshopApp13Data parsePhotoshopSegment(final byte[] bytes, final ImagingParameters params)
+            throws ImageReadException, IOException {
+        final boolean strict =  params != null && params.isStrict();
 
-        JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.writeTo(bos);
-
-        final List<IptcBlock> blocks = data.getRawBlocks();
-        for (final IptcBlock block : blocks) {
-            bos.write4Bytes(JpegConstants.CONST_8BIM);
-
-            if (block.getBlockType() < 0 || block.getBlockType() > 0xffff) {
-                throw new ImageWriteException("Invalid IPTC block type.");
-            }
-            bos.write2Bytes(block.getBlockType());
-
-            final byte[] blockNameBytes = block.getBlockNameBytes();
-            if (blockNameBytes.length > 255) {
-                throw new ImageWriteException("IPTC block name is too long: " + blockNameBytes.length);
-            }
-            bos.write(blockNameBytes.length);
-            bos.write(blockNameBytes);
-            if (blockNameBytes.length % 2 == 0) {
-                bos.write(0); // pad to even size, including length byte.
-            }
-
-            final byte[] blockData = block.getBlockData();
-            if (blockData.length > IptcConstants.IPTC_NON_EXTENDED_RECORD_MAXIMUM_SIZE) {
-                throw new ImageWriteException("IPTC block data is too long: " + blockData.length);
-            }
-            bos.write4Bytes(blockData.length);
-            bos.write(blockData);
-            if (blockData.length % 2 == 1) {
-                bos.write(0); // pad to even size
-            }
-        }
-
-        bos.flush();
-        return os.toByteArray();
+        return parsePhotoshopSegment(bytes, strict);
     }
 
     public byte[] writeIPTCBlock(List<IptcRecord> elements)
@@ -485,27 +467,45 @@ public class IptcParser extends BinaryFileParser {
         return blockData;
     }
 
-    private Charset findCharset(final byte[] codedCharset) {
-        final String codedCharsetString = new String(codedCharset, StandardCharsets.ISO_8859_1);
-        try {
-            if (Charset.isSupported(codedCharsetString)) {
-                return Charset.forName(codedCharsetString);
+    public byte[] writePhotoshopApp13Segment(final PhotoshopApp13Data data)
+            throws IOException, ImageWriteException {
+        final ByteArrayOutputStream os = new ByteArrayOutputStream();
+        final BinaryOutputStream bos = BinaryOutputStream.bigEndian(os);
+
+        JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.writeTo(bos);
+
+        final List<IptcBlock> blocks = data.getRawBlocks();
+        for (final IptcBlock block : blocks) {
+            bos.write4Bytes(JpegConstants.CONST_8BIM);
+
+            if (block.getBlockType() < 0 || block.getBlockType() > 0xffff) {
+                throw new ImageWriteException("Invalid IPTC block type.");
             }
-        } catch (final IllegalArgumentException e) { }
-        // check if encoding is a escape sequence
-        // normalize encoding byte sequence
-        final byte[] codedCharsetNormalized = new byte[codedCharset.length];
-        int j = 0;
-        for (final byte element : codedCharset) {
-            if (element != ' ') {
-                codedCharsetNormalized[j++] = element;
+            bos.write2Bytes(block.getBlockType());
+
+            final byte[] blockNameBytes = block.getBlockNameBytes();
+            if (blockNameBytes.length > 255) {
+                throw new ImageWriteException("IPTC block name is too long: " + blockNameBytes.length);
+            }
+            bos.write(blockNameBytes.length);
+            bos.write(blockNameBytes);
+            if (blockNameBytes.length % 2 == 0) {
+                bos.write(0); // pad to even size, including length byte.
+            }
+
+            final byte[] blockData = block.getBlockData();
+            if (blockData.length > IptcConstants.IPTC_NON_EXTENDED_RECORD_MAXIMUM_SIZE) {
+                throw new ImageWriteException("IPTC block data is too long: " + blockData.length);
+            }
+            bos.write4Bytes(blockData.length);
+            bos.write(blockData);
+            if (blockData.length % 2 == 1) {
+                bos.write(0); // pad to even size
             }
         }
 
-        if (Objects.deepEquals(codedCharsetNormalized, CHARACTER_ESCAPE_SEQUENCE)) {
-            return StandardCharsets.UTF_8;
-        }
-        return DEFAULT_CHARSET;
+        bos.flush();
+        return os.toByteArray();
     }
 
 }

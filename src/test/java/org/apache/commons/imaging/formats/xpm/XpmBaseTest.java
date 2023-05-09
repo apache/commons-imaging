@@ -23,11 +23,11 @@ import org.apache.commons.imaging.ImagingTest;
 
 public abstract class XpmBaseTest extends ImagingTest {
 
+    private static final ImageFilter IMAGE_FILTER = XpmBaseTest::isXpm;
+
     private static boolean isXpm(final File file) {
         return file.getName().toLowerCase().endsWith(".xpm");
     }
-
-    private static final ImageFilter IMAGE_FILTER = XpmBaseTest::isXpm;
 
     protected List<File> getXpmImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);

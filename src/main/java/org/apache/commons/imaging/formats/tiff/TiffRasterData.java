@@ -86,13 +86,30 @@ public abstract class TiffRasterData {
     }
 
     /**
-     * Gets the width (number of columns) of the raster.
+     * Returns the content stored as an array in this instance. Note that in
+     * many cases, the returned array is <strong>not</strong> a safe copy of the
+     * data but a direct reference to the member element. In such cases,
+     * modifying it would directly affect the content of the instance. While
+     * this design approach carries some risk in terms of data security, it was
+     * chosen for reasons of performance and memory conservation. TIFF images
+     * that contain floating-point data are often quite large. Sizes of 100
+     * million raster cells are common. Making a redundant copy of such a large
+     * in-memory object might exceed the resources available to a Java
+     * application.
+     * <p>
+     * See the class API documentation above for notes on accessing array
+     * elements.
      *
-     * @return the width of the raster
+     * @return the data content stored in this instance.
      */
-    public final int getWidth() {
-        return width;
-    }
+    public abstract float[] getData();
+
+    /**
+     * Gets the raster data type from the instance.
+     *
+     * @return a valid enumeration value.
+     */
+    public abstract TiffRasterDataType getDataType();
 
     /**
      * Gets the height (number of rows) of the raster.
@@ -104,6 +121,45 @@ public abstract class TiffRasterData {
     }
 
     /**
+     * Returns the content stored as an array in this instance. Note that in
+     * many cases, the returned array is <strong>not</strong> a safe copy of the
+     * data but a direct reference to the member element. In such cases,
+     * modifying it would directly affect the content of the instance. While
+     * this design approach carries some risk in terms of data security, it was
+     * chosen for reasons of performance and memory conservation. TIFF images
+     * that contain floating-point data are often quite large. Sizes of 100
+     * million raster cells are common. Making a redundant copy of such a large
+     * in-memory object might exceed the resources available to a Java
+     * application.
+     * <p>
+     * See the class API documentation above for notes on accessing array
+     * elements.
+     *
+     * @return the data content stored in this instance.
+     */
+    public abstract int[] getIntData();
+
+    /**
+     * Gets the value stored at the specified raster coordinates.
+     *
+     * @param x integer coordinate in the columnar direction
+     * @param y integer coordinate in the row direction
+     * @return the value stored at the specified location
+     */
+    public abstract int getIntValue(int x, int y);
+
+    /**
+     * Gets the value stored at the specified raster coordinates.
+     *
+     * @param x integer coordinate in the columnar direction
+     * @param y integer coordinate in the row direction
+     * @param i integer sample index (for data sets giving multiple samples per
+     * raster cell).
+     * @return the value stored at the specified location
+     */
+    public abstract int getIntValue(int x, int y, int i);
+
+    /**
      * Gets the number of samples per pixel.
      *
      * @return a value of 1 or greater.
@@ -113,33 +169,22 @@ public abstract class TiffRasterData {
     }
 
     /**
-     * Gets the raster data type from the instance.
+     * Tabulates simple statistics for the raster and returns an instance
+     * containing general metadata.
      *
-     * @return a valid enumeration value.
+     * @return a valid instance containing a safe copy of the current simple
+     * statistics for the raster.
      */
-    public abstract TiffRasterDataType getDataType();
+    public abstract TiffRasterStatistics getSimpleStatistics();
 
     /**
-     * Sets the value stored at the specified raster coordinates.
+     * Tabulates simple statistics for the raster excluding the specified value
+     * and returns an instance containing general metadata.
      *
-     * @param x integer coordinate in the columnar direction
-     * @param y integer coordinate in the row direction
-     * @param value the value to be stored at the specified location;
-     * potentially a Float&#46;NaN.
+     * @param valueToExclude exclude samples with this specified value.
+     * @return a valid instance.
      */
-    public abstract void setValue(int x, int y, float value);
-
-    /**
-     * Sets the value stored at the specified raster coordinates.
-     *
-     * @param x integer coordinate in the columnar direction
-     * @param y integer coordinate in the row direction
-     * @param i integer sample index (for data sets giving multiple samples per
-     * raster cell).
-     * @param value the value to be stored at the specified location;
-     * potentially a Float&#46;NaN.
-     */
-    public abstract void setValue(int x, int y, int i, float value);
+    public abstract TiffRasterStatistics getSimpleStatistics(float valueToExclude);
 
     /**
      * Gets the value stored at the specified raster coordinates.
@@ -163,6 +208,15 @@ public abstract class TiffRasterData {
     public abstract float getValue(int x, int y, int i);
 
     /**
+     * Gets the width (number of columns) of the raster.
+     *
+     * @return the width of the raster
+     */
+    public final int getWidth() {
+        return width;
+    }
+
+    /**
      * Sets the value stored at the specified raster coordinates.
      *
      * @param x integer coordinate in the columnar direction
@@ -183,78 +237,24 @@ public abstract class TiffRasterData {
     public abstract void setIntValue(int x, int y, int i, int value);
 
     /**
-     * Gets the value stored at the specified raster coordinates.
+     * Sets the value stored at the specified raster coordinates.
      *
      * @param x integer coordinate in the columnar direction
      * @param y integer coordinate in the row direction
-     * @return the value stored at the specified location
+     * @param value the value to be stored at the specified location;
+     * potentially a Float&#46;NaN.
      */
-    public abstract int getIntValue(int x, int y);
+    public abstract void setValue(int x, int y, float value);
 
     /**
-     * Gets the value stored at the specified raster coordinates.
+     * Sets the value stored at the specified raster coordinates.
      *
      * @param x integer coordinate in the columnar direction
      * @param y integer coordinate in the row direction
      * @param i integer sample index (for data sets giving multiple samples per
      * raster cell).
-     * @return the value stored at the specified location
+     * @param value the value to be stored at the specified location;
+     * potentially a Float&#46;NaN.
      */
-    public abstract int getIntValue(int x, int y, int i);
-
-    /**
-     * Tabulates simple statistics for the raster and returns an instance
-     * containing general metadata.
-     *
-     * @return a valid instance containing a safe copy of the current simple
-     * statistics for the raster.
-     */
-    public abstract TiffRasterStatistics getSimpleStatistics();
-
-    /**
-     * Tabulates simple statistics for the raster excluding the specified value
-     * and returns an instance containing general metadata.
-     *
-     * @param valueToExclude exclude samples with this specified value.
-     * @return a valid instance.
-     */
-    public abstract TiffRasterStatistics getSimpleStatistics(float valueToExclude);
-
-    /**
-     * Returns the content stored as an array in this instance. Note that in
-     * many cases, the returned array is <strong>not</strong> a safe copy of the
-     * data but a direct reference to the member element. In such cases,
-     * modifying it would directly affect the content of the instance. While
-     * this design approach carries some risk in terms of data security, it was
-     * chosen for reasons of performance and memory conservation. TIFF images
-     * that contain floating-point data are often quite large. Sizes of 100
-     * million raster cells are common. Making a redundant copy of such a large
-     * in-memory object might exceed the resources available to a Java
-     * application.
-     * <p>
-     * See the class API documentation above for notes on accessing array
-     * elements.
-     *
-     * @return the data content stored in this instance.
-     */
-    public abstract float[] getData();
-
-    /**
-     * Returns the content stored as an array in this instance. Note that in
-     * many cases, the returned array is <strong>not</strong> a safe copy of the
-     * data but a direct reference to the member element. In such cases,
-     * modifying it would directly affect the content of the instance. While
-     * this design approach carries some risk in terms of data security, it was
-     * chosen for reasons of performance and memory conservation. TIFF images
-     * that contain floating-point data are often quite large. Sizes of 100
-     * million raster cells are common. Making a redundant copy of such a large
-     * in-memory object might exceed the resources available to a Java
-     * application.
-     * <p>
-     * See the class API documentation above for notes on accessing array
-     * elements.
-     *
-     * @return the data content stored in this instance.
-     */
-    public abstract int[] getIntData();
+    public abstract void setValue(int x, int y, int i, float value);
 }

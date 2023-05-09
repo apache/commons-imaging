@@ -42,8 +42,27 @@ import org.apache.commons.imaging.formats.pcx.PcxImageParser;
 import org.apache.commons.imaging.formats.pcx.PcxImagingParameters;
 
 public class DcxImageParser extends ImageParser<PcxImagingParameters> {
+    private static class DcxHeader {
+
+        public static final int DCX_ID = 0x3ADE68B1;
+        public final int id;
+        public final long[] pageTable;
+
+        DcxHeader(final int id, final long[] pageTable) {
+            this.id = id;
+            this.pageTable = pageTable;
+        }
+
+        public void dump(final PrintWriter pw) {
+            pw.println("DcxHeader");
+            pw.println("Id: 0x" + Integer.toHexString(id));
+            pw.println("Pages: " + pageTable.length);
+            pw.println();
+        }
+    }
     // See http://www.fileformat.fine/format/pcx/egff.htm for documentation
     private static final String DEFAULT_EXTENSION = ImageFormats.DCX.getDefaultExtension();
+
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.DCX.getExtensions();
 
     public DcxImageParser() {
@@ -51,18 +70,10 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
     }
 
     @Override
-    public PcxImagingParameters getDefaultParameters() {
-        return new PcxImagingParameters();
-    }
-
-    @Override
-    public String getName() {
-        return "Dcx-Custom";
-    }
-
-    @Override
-    public String getDefaultExtension() {
-        return DEFAULT_EXTENSION;
+    public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
+            throws ImageReadException, IOException {
+        readDcxHeader(byteSource).dump(pw);
+        return true;
     }
 
     @Override
@@ -75,9 +86,44 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
         return new ImageFormat[] { ImageFormats.DCX };
     }
 
+    @Override
+    public List<BufferedImage> getAllBufferedImages(final ByteSource byteSource)
+            throws ImageReadException, IOException {
+        final DcxHeader dcxHeader = readDcxHeader(byteSource);
+        final List<BufferedImage> images = new ArrayList<>();
+        final PcxImageParser pcxImageParser = new PcxImageParser();
+        for (final long element : dcxHeader.pageTable) {
+            try (InputStream stream = byteSource.getInputStream(element)) {
+                final ByteSourceInputStream pcxSource = new ByteSourceInputStream(
+                        stream, null);
+                final BufferedImage image = pcxImageParser.getBufferedImage(
+                        pcxSource, new PcxImagingParameters());
+                images.add(image);
+            }
+        }
+        return images;
+    }
+
+    @Override
+    public final BufferedImage getBufferedImage(final ByteSource byteSource,
+            final PcxImagingParameters params) throws ImageReadException, IOException {
+        final List<BufferedImage> list = getAllBufferedImages(byteSource);
+        return list.isEmpty() ? null : list.get(0);
+    }
+
+    @Override
+    public String getDefaultExtension() {
+        return DEFAULT_EXTENSION;
+    }
+
+    @Override
+    public PcxImagingParameters getDefaultParameters() {
+        return new PcxImagingParameters();
+    }
+
     // FIXME should throw UOE
     @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final PcxImagingParameters params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final PcxImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
@@ -98,28 +144,14 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
 
     // FIXME should throw UOE
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final PcxImagingParameters params)
+    public ImageMetadata getMetadata(final ByteSource byteSource, final PcxImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
 
-    private static class DcxHeader {
-
-        public static final int DCX_ID = 0x3ADE68B1;
-        public final int id;
-        public final long[] pageTable;
-
-        DcxHeader(final int id, final long[] pageTable) {
-            this.id = id;
-            this.pageTable = pageTable;
-        }
-
-        public void dump(final PrintWriter pw) {
-            pw.println("DcxHeader");
-            pw.println("Id: 0x" + Integer.toHexString(id));
-            pw.println("Pages: " + pageTable.length);
-            pw.println();
-        }
+    @Override
+    public String getName() {
+        return "Dcx-Custom";
     }
 
     private DcxHeader readDcxHeader(final ByteSource byteSource)
@@ -145,38 +177,6 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
             final long[] pages = pageTable.stream().mapToLong(Long::longValue).toArray();
             return new DcxHeader(id, pages);
         }
-    }
-
-    @Override
-    public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
-            throws ImageReadException, IOException {
-        readDcxHeader(byteSource).dump(pw);
-        return true;
-    }
-
-    @Override
-    public final BufferedImage getBufferedImage(final ByteSource byteSource,
-            final PcxImagingParameters params) throws ImageReadException, IOException {
-        final List<BufferedImage> list = getAllBufferedImages(byteSource);
-        return list.isEmpty() ? null : list.get(0);
-    }
-
-    @Override
-    public List<BufferedImage> getAllBufferedImages(final ByteSource byteSource)
-            throws ImageReadException, IOException {
-        final DcxHeader dcxHeader = readDcxHeader(byteSource);
-        final List<BufferedImage> images = new ArrayList<>();
-        final PcxImageParser pcxImageParser = new PcxImageParser();
-        for (final long element : dcxHeader.pageTable) {
-            try (InputStream stream = byteSource.getInputStream(element)) {
-                final ByteSourceInputStream pcxSource = new ByteSourceInputStream(
-                        stream, null);
-                final BufferedImage image = pcxImageParser.getBufferedImage(
-                        pcxSource, new PcxImagingParameters());
-                images.add(image);
-            }
-        }
-        return images;
     }
 
     @Override

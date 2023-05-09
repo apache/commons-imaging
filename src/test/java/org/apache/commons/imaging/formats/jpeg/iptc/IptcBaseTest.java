@@ -28,6 +28,19 @@ import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 
 public abstract class IptcBaseTest extends ImagingTest {
+    private static final ImageFilter HAS_IPTC_IMAGE_FILTER = IptcBaseTest::hasIptcData;
+
+    private static final ImageFilter JPEG_IMAGE_FILTER = file -> file.getName().toLowerCase().endsWith(".jpg");
+
+    protected static List<File> getImagesWithIptcData() throws IOException,
+            ImageReadException {
+        return getTestImages(HAS_IPTC_IMAGE_FILTER);
+    }
+
+    protected static List<File> getJpegImages() throws IOException, ImageReadException {
+        return getTestImages(JPEG_IMAGE_FILTER);
+    }
+
     protected static boolean hasIptcData(final File file) {
         // Debug.debug("hasIptcData file", file.getAbsoluteFile());
 
@@ -49,31 +62,18 @@ public abstract class IptcBaseTest extends ImagingTest {
         }
     }
 
-    private static final ImageFilter HAS_IPTC_IMAGE_FILTER = IptcBaseTest::hasIptcData;
-
-    private static final ImageFilter JPEG_IMAGE_FILTER = file -> file.getName().toLowerCase().endsWith(".jpg");
+    protected List<File> getImagesWithIptcData(final int max) throws IOException,
+            ImageReadException {
+        return getTestImages(HAS_IPTC_IMAGE_FILTER, max);
+    }
 
     protected File getImageWithIptcData() throws IOException,
             ImageReadException {
         return getTestImage(HAS_IPTC_IMAGE_FILTER);
     }
 
-    protected static List<File> getImagesWithIptcData() throws IOException,
-            ImageReadException {
-        return getTestImages(HAS_IPTC_IMAGE_FILTER);
-    }
-
-    protected List<File> getImagesWithIptcData(final int max) throws IOException,
-            ImageReadException {
-        return getTestImages(HAS_IPTC_IMAGE_FILTER, max);
-    }
-
     protected File getJpegImage() throws IOException, ImageReadException {
         return getTestImage(JPEG_IMAGE_FILTER);
-    }
-
-    protected static List<File> getJpegImages() throws IOException, ImageReadException {
-        return getTestImages(JPEG_IMAGE_FILTER);
     }
 
     protected List<File> getJpegImages(final int max) throws IOException,

@@ -101,6 +101,14 @@ class ColorGroup {
         return true;
     }
 
+    /**
+     * Return a copy of the list of color counts.
+     * @return a copy of the list of color counts
+     */
+    List<ColorCount> getColorCounts() {
+        return new ArrayList<>(colorCounts);
+    }
+
     int getMedianValue() {
         long countTotal = 0;
         long alphaTotal = 0;
@@ -122,14 +130,6 @@ class ColorGroup {
         final int blue = (int) Math.round((double) blueTotal / countTotal);
 
         return (alpha << 24) | (red << 16) | (green << 8) | blue;
-    }
-
-    /**
-     * Return a copy of the list of color counts.
-     * @return a copy of the list of color counts
-     */
-    List<ColorCount> getColorCounts() {
-        return new ArrayList<>(colorCounts);
     }
 
     @Override

@@ -28,6 +28,16 @@ class CachingInputStream extends InputStream {
         this.is = is;
     }
 
+    @Override
+    public int available() throws IOException {
+        return is.available();
+    }
+
+    @Override
+    public void close() throws IOException {
+        is.close();
+    }
+
     public byte[] getCache() {
         return baos.toByteArray();
     }
@@ -37,16 +47,6 @@ class CachingInputStream extends InputStream {
         final int result = is.read();
         baos.write(result);
         return result;
-    }
-
-    @Override
-    public int available() throws IOException {
-        return is.available();
-    }
-
-    @Override
-    public void close() throws IOException {
-        is.close();
     }
 
 }

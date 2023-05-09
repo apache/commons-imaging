@@ -46,10 +46,10 @@ public abstract class PhotometricInterpreter {
         this.height = height;
     }
 
-    public abstract void interpretPixel(ImageBuilder imageBuilder,
-            int[] samples, int x, int y) throws ImageReadException, IOException;
-
     protected int getBitsPerSample(final int offset) {
         return bitsPerSample[offset];
     }
+
+    public abstract void interpretPixel(ImageBuilder imageBuilder,
+            int[] samples, int x, int y) throws ImageReadException, IOException;
 }

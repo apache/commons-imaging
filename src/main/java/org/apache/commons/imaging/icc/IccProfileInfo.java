@@ -71,6 +71,10 @@ public class IccProfileInfo {
         this.tags = tags;
     }
 
+    public void dump(final String prefix) {
+        LOGGER.fine(toString());
+    }
+
     public byte[] getData() {
         return data.clone();
     }
@@ -92,10 +96,6 @@ public class IccProfileInfo {
         pw.println(msg + ": '" + (char) (0xff & (i >> 24))
                 + (char) (0xff & (i >> 16)) + (char) (0xff & (i >> 8))
                 + (char) (0xff & (i >> 0)) + "'");
-    }
-
-    public void dump(final String prefix) {
-        LOGGER.fine(toString());
     }
 
     @Override

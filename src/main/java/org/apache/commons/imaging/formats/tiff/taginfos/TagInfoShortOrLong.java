@@ -31,11 +31,11 @@ public class TagInfoShortOrLong extends TagInfo {
         super(name, tag, FieldType.SHORT_OR_LONG, length, directoryType, isOffset);
     }
 
-    public byte[] encodeValue(final ByteOrder byteOrder, final short... values) {
+    public byte[] encodeValue(final ByteOrder byteOrder, final int... values) {
         return ByteConversions.toBytes(values, byteOrder);
     }
 
-    public byte[] encodeValue(final ByteOrder byteOrder, final int... values) {
+    public byte[] encodeValue(final ByteOrder byteOrder, final short... values) {
         return ByteConversions.toBytes(values, byteOrder);
     }
 }

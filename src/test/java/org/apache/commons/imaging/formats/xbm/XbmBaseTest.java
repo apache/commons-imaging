@@ -23,11 +23,11 @@ import org.apache.commons.imaging.ImagingTest;
 
 public abstract class XbmBaseTest extends ImagingTest {
 
+    private static final ImageFilter IMAGE_FILTER = XbmBaseTest::isXbm;
+
     private static boolean isXbm(final File file) {
         return file.getName().toLowerCase().endsWith(".xbm");
     }
-
-    private static final ImageFilter IMAGE_FILTER = XbmBaseTest::isXbm;
 
     protected List<File> getXbmImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);

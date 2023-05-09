@@ -24,6 +24,25 @@ class PngCrc {
     /* Flag: has the table been computed? Initially false. */
     private boolean crc_table_computed;
 
+    public final long continue_partial_crc(final long old_crc, final byte[] buf, final int len) {
+        return update_crc(old_crc, buf);
+    }
+
+    /*
+     * Update a running CRC with the bytes buf[0..len-1]--the CRC should be
+     * initialized to all 1's, and the transmitted value is the 1's complement
+     * of the final running CRC (see the crc() routine below)).
+     */
+
+    /* Return the CRC of the bytes buf[0..len-1]. */
+    public final int crc(final byte[] buf, final int len) {
+        return (int) (update_crc(0xffffffffL, buf) ^ 0xffffffffL);
+    }
+
+    public final long finish_partial_crc(final long old_crc) {
+        return (old_crc ^ 0xffffffffL);
+    }
+
     /* Make the table for a fast CRC. */
     private void make_crc_table() {
         long c;
@@ -44,11 +63,9 @@ class PngCrc {
         crc_table_computed = true;
     }
 
-    /*
-     * Update a running CRC with the bytes buf[0..len-1]--the CRC should be
-     * initialized to all 1's, and the transmitted value is the 1's complement
-     * of the final running CRC (see the crc() routine below)).
-     */
+    public final long start_partial_crc(final byte[] buf, final int len) {
+        return update_crc(0xffffffffL, buf);
+    }
 
     private long update_crc(final long crc, final byte[] buf) {
         long c = crc;
@@ -64,22 +81,5 @@ class PngCrc {
             c = crc_table[(int) ((c ^ buf[n]) & 0xff)] ^ (c >> 8);
         }
         return c;
-    }
-
-    /* Return the CRC of the bytes buf[0..len-1]. */
-    public final int crc(final byte[] buf, final int len) {
-        return (int) (update_crc(0xffffffffL, buf) ^ 0xffffffffL);
-    }
-
-    public final long start_partial_crc(final byte[] buf, final int len) {
-        return update_crc(0xffffffffL, buf);
-    }
-
-    public final long continue_partial_crc(final long old_crc, final byte[] buf, final int len) {
-        return update_crc(old_crc, buf);
-    }
-
-    public final long finish_partial_crc(final long old_crc) {
-        return (old_crc ^ 0xffffffffL);
     }
 }

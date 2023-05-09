@@ -34,17 +34,17 @@ class ColorCount {
     }
 
     @Override
-    public int hashCode() {
-        return argb;
-    }
-
-    @Override
     public boolean equals(final Object o) {
         if (o instanceof ColorCount) {
             final ColorCount other = (ColorCount) o;
             return other.argb == this.argb;
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return argb;
     }
 
 }

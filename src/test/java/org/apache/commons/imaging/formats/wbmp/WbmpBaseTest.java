@@ -22,11 +22,11 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImagingTest;
 
 public abstract class WbmpBaseTest extends ImagingTest {
+    private static final ImageFilter IMAGE_FILTER = WbmpBaseTest::isWbmp;
+
     private static boolean isWbmp(final File file) {
         return file.getName().toLowerCase().endsWith(".wbmp");
     }
-
-    private static final ImageFilter IMAGE_FILTER = WbmpBaseTest::isWbmp;
 
     protected List<File> getWbmpImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);

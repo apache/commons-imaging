@@ -30,6 +30,19 @@ import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 
 public abstract class ExifBaseTest extends ImagingTest {
 
+    private static final ImageFilter HAS_EXIF_IMAGE_FILTER = ExifBaseTest::hasExifData;
+
+    private static final ImageFilter JPEG_IMAGE_FILTER = file -> file.getName().toLowerCase().endsWith(".jpg");
+
+    protected static List<File> getImagesWithExifData() throws IOException,
+            ImageReadException {
+        return getTestImages(HAS_EXIF_IMAGE_FILTER);
+    }
+
+    protected static List<File> getJpegImages() throws IOException, ImageReadException {
+        return getTestImages(JPEG_IMAGE_FILTER);
+    }
+
     protected static boolean hasExifData(final File file) {
         if (!file.getName().toLowerCase().endsWith(".jpg")) {
             return false;
@@ -52,22 +65,9 @@ public abstract class ExifBaseTest extends ImagingTest {
         }
     }
 
-    private static final ImageFilter HAS_EXIF_IMAGE_FILTER = ExifBaseTest::hasExifData;
-
-    private static final ImageFilter JPEG_IMAGE_FILTER = file -> file.getName().toLowerCase().endsWith(".jpg");
-
     protected File getImageWithExifData() throws IOException,
             ImageReadException {
         return getTestImage(HAS_EXIF_IMAGE_FILTER);
-    }
-
-    protected static List<File> getImagesWithExifData() throws IOException,
-            ImageReadException {
-        return getTestImages(HAS_EXIF_IMAGE_FILTER);
-    }
-
-    protected static List<File> getJpegImages() throws IOException, ImageReadException {
-        return getTestImages(JPEG_IMAGE_FILTER);
     }
 
 }

@@ -47,65 +47,6 @@ import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 
 public class XbmImageParser extends ImageParser<XbmImagingParameters> {
-    private static final String DEFAULT_EXTENSION = ImageFormats.XBM.getDefaultExtension();
-    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.XBM.getExtensions();
-
-    @Override
-    public XbmImagingParameters getDefaultParameters() {
-        return new XbmImagingParameters();
-    }
-
-    @Override
-    public String getName() {
-        return "X BitMap";
-    }
-
-    @Override
-    public String getDefaultExtension() {
-        return DEFAULT_EXTENSION;
-    }
-
-    @Override
-    protected String[] getAcceptedExtensions() {
-        return ACCEPTED_EXTENSIONS;
-    }
-
-    @Override
-    protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormats.XBM, //
-        };
-    }
-
-    @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final XbmImagingParameters params)
-            throws ImageReadException, IOException {
-        return null;
-    }
-
-    @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final XbmImagingParameters params)
-            throws ImageReadException, IOException {
-        final XbmHeader xbmHeader = readXbmHeader(byteSource);
-        return new ImageInfo("XBM", 1, new ArrayList<>(),
-                ImageFormats.XBM, "X BitMap", xbmHeader.height,
-                "image/x-xbitmap", 1, 0, 0, 0, 0, xbmHeader.width, false,
-                false, false, ImageInfo.ColorType.BW,
-                ImageInfo.CompressionAlgorithm.NONE);
-    }
-
-    @Override
-    public Dimension getImageSize(final ByteSource byteSource, final XbmImagingParameters params)
-            throws ImageReadException, IOException {
-        final XbmHeader xbmHeader = readXbmHeader(byteSource);
-        return new Dimension(xbmHeader.width, xbmHeader.height);
-    }
-
-    @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final XbmImagingParameters params)
-            throws ImageReadException, IOException {
-        return null;
-    }
-
     private static class XbmHeader {
         final int width;
         final int height;
@@ -129,15 +70,119 @@ public class XbmImageParser extends ImageParser<XbmImagingParameters> {
             }
         }
     }
-
     private static class XbmParseResult {
         XbmHeader xbmHeader;
         BasicCParser cParser;
     }
 
-    private XbmHeader readXbmHeader(final ByteSource byteSource)
+    private static final String DEFAULT_EXTENSION = ImageFormats.XBM.getDefaultExtension();
+
+    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.XBM.getExtensions();
+
+    private static int parseCIntegerLiteral(final String value) {
+        if (value.startsWith("0")) {
+            if (value.length() >= 2) {
+                if (value.charAt(1) == 'x' || value.charAt(1) == 'X') {
+                    return Integer.parseInt(value.substring(2), 16);
+                }
+                return Integer.parseInt(value.substring(1), 8);
+            }
+            return 0;
+        }
+        return Integer.parseInt(value);
+    }
+
+    private static String randomName() {
+        final UUID uuid = UUID.randomUUID();
+        final StringBuilder stringBuilder = new StringBuilder("a");
+        long bits = uuid.getMostSignificantBits();
+        // Long.toHexString() breaks for very big numbers
+        for (int i = 64 - 8; i >= 0; i -= 8) {
+            stringBuilder.append(Integer.toHexString((int) ((bits >> i) & 0xff)));
+        }
+        bits = uuid.getLeastSignificantBits();
+        for (int i = 64 - 8; i >= 0; i -= 8) {
+            stringBuilder.append(Integer.toHexString((int) ((bits >> i) & 0xff)));
+        }
+        return stringBuilder.toString();
+    }
+
+    private static String toPrettyHex(final int value) {
+        final String s = Integer.toHexString(0xff & value);
+        if (s.length() == 2) {
+            return "0x" + s;
+        }
+        return "0x0" + s;
+    }
+
+    @Override
+    public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
             throws ImageReadException, IOException {
-        return parseXbmHeader(byteSource).xbmHeader;
+        readXbmHeader(byteSource).dump(pw);
+        return true;
+    }
+
+    @Override
+    protected String[] getAcceptedExtensions() {
+        return ACCEPTED_EXTENSIONS;
+    }
+
+    @Override
+    protected ImageFormat[] getAcceptedTypes() {
+        return new ImageFormat[] { ImageFormats.XBM, //
+        };
+    }
+
+    @Override
+    public final BufferedImage getBufferedImage(final ByteSource byteSource,
+            final XbmImagingParameters params) throws ImageReadException, IOException {
+        final XbmParseResult result = parseXbmHeader(byteSource);
+        return readXbmImage(result.xbmHeader, result.cParser);
+    }
+
+    @Override
+    public String getDefaultExtension() {
+        return DEFAULT_EXTENSION;
+    }
+
+    @Override
+    public XbmImagingParameters getDefaultParameters() {
+        return new XbmImagingParameters();
+    }
+
+    @Override
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final XbmImagingParameters params)
+            throws ImageReadException, IOException {
+        return null;
+    }
+
+    @Override
+    public ImageInfo getImageInfo(final ByteSource byteSource, final XbmImagingParameters params)
+            throws ImageReadException, IOException {
+        final XbmHeader xbmHeader = readXbmHeader(byteSource);
+        return new ImageInfo("XBM", 1, new ArrayList<>(),
+                ImageFormats.XBM, "X BitMap", xbmHeader.height,
+                "image/x-xbitmap", 1, 0, 0, 0, 0, xbmHeader.width, false,
+                false, false, ImageInfo.ColorType.BW,
+                ImageInfo.CompressionAlgorithm.NONE);
+    }
+
+    @Override
+    public Dimension getImageSize(final ByteSource byteSource, final XbmImagingParameters params)
+            throws ImageReadException, IOException {
+        final XbmHeader xbmHeader = readXbmHeader(byteSource);
+        return new Dimension(xbmHeader.width, xbmHeader.height);
+    }
+
+    @Override
+    public ImageMetadata getMetadata(final ByteSource byteSource, final XbmImagingParameters params)
+            throws ImageReadException, IOException {
+        return null;
+    }
+
+    @Override
+    public String getName() {
+        return "X BitMap";
     }
 
     private XbmParseResult parseXbmHeader(final ByteSource byteSource)
@@ -177,17 +222,9 @@ public class XbmImageParser extends ImageParser<XbmImagingParameters> {
         }
     }
 
-    private static int parseCIntegerLiteral(final String value) {
-        if (value.startsWith("0")) {
-            if (value.length() >= 2) {
-                if (value.charAt(1) == 'x' || value.charAt(1) == 'X') {
-                    return Integer.parseInt(value.substring(2), 16);
-                }
-                return Integer.parseInt(value.substring(1), 8);
-            }
-            return 0;
-        }
-        return Integer.parseInt(value);
+    private XbmHeader readXbmHeader(final ByteSource byteSource)
+            throws ImageReadException, IOException {
+        return parseXbmHeader(byteSource).xbmHeader;
     }
 
     private BufferedImage readXbmImage(final XbmHeader xbmHeader, final BasicCParser cParser)
@@ -302,43 +339,6 @@ public class XbmImageParser extends ImageParser<XbmImagingParameters> {
         final WritableRaster raster = Raster.createPackedRaster(dataBuffer, xbmHeader.width, xbmHeader.height, 1, null);
 
         return new BufferedImage(colorModel, raster, colorModel.isAlphaPremultiplied(), new Properties());
-    }
-
-    @Override
-    public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
-            throws ImageReadException, IOException {
-        readXbmHeader(byteSource).dump(pw);
-        return true;
-    }
-
-    @Override
-    public final BufferedImage getBufferedImage(final ByteSource byteSource,
-            final XbmImagingParameters params) throws ImageReadException, IOException {
-        final XbmParseResult result = parseXbmHeader(byteSource);
-        return readXbmImage(result.xbmHeader, result.cParser);
-    }
-
-    private static String randomName() {
-        final UUID uuid = UUID.randomUUID();
-        final StringBuilder stringBuilder = new StringBuilder("a");
-        long bits = uuid.getMostSignificantBits();
-        // Long.toHexString() breaks for very big numbers
-        for (int i = 64 - 8; i >= 0; i -= 8) {
-            stringBuilder.append(Integer.toHexString((int) ((bits >> i) & 0xff)));
-        }
-        bits = uuid.getLeastSignificantBits();
-        for (int i = 64 - 8; i >= 0; i -= 8) {
-            stringBuilder.append(Integer.toHexString((int) ((bits >> i) & 0xff)));
-        }
-        return stringBuilder.toString();
-    }
-
-    private static String toPrettyHex(final int value) {
-        final String s = Integer.toHexString(0xff & value);
-        if (s.length() == 2) {
-            return "0x" + s;
-        }
-        return "0x0" + s;
     }
 
     @Override

@@ -75,14 +75,6 @@ public class PngChunk extends BinaryFileParser {
     }
 
     /**
-     * Return a copy of the chunk property bits.
-     * @return the chunk property bits
-     */
-    public boolean[] getPropertyBits() {
-        return propertyBits.clone();
-    }
-
-    /**
      * Create and return a {@link ByteArrayInputStream} for the chunk bytes.
      *
      * <p>The caller is responsible for closing the resource.</p>
@@ -91,6 +83,14 @@ public class PngChunk extends BinaryFileParser {
      */
     protected ByteArrayInputStream getDataStream() {
         return new ByteArrayInputStream(getBytes());
+    }
+
+    /**
+     * Return a copy of the chunk property bits.
+     * @return the chunk property bits
+     */
+    public boolean[] getPropertyBits() {
+        return propertyBits.clone();
     }
 
 }

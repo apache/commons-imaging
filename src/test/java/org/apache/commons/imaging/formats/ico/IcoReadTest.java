@@ -35,11 +35,12 @@ public class IcoReadTest extends IcoBaseTest {
         return getIcoImages().stream();
     }
 
-    @Disabled(value = "RoundtripTest has to be fixed before implementation can throw UnsupportedOperationException")
     @ParameterizedTest
     @MethodSource("data")
-    public void testMetadata(final File imageFile) {
-        Assertions.assertThrows(UnsupportedOperationException.class, () -> Imaging.getMetadata(imageFile));
+    public void testBufferedImage(final File imageFile) throws Exception {
+        final BufferedImage image = Imaging.getBufferedImage(imageFile);
+        assertNotNull(image);
+        // TODO assert more
     }
 
     @Disabled(value = "RoundtripTest has to be fixed before implementation can throw UnsupportedOperationException")
@@ -49,11 +50,10 @@ public class IcoReadTest extends IcoBaseTest {
         Assertions.assertThrows(UnsupportedOperationException.class, () -> Imaging.getImageInfo(imageFile));
     }
 
+    @Disabled(value = "RoundtripTest has to be fixed before implementation can throw UnsupportedOperationException")
     @ParameterizedTest
     @MethodSource("data")
-    public void testBufferedImage(final File imageFile) throws Exception {
-        final BufferedImage image = Imaging.getBufferedImage(imageFile);
-        assertNotNull(image);
-        // TODO assert more
+    public void testMetadata(final File imageFile) {
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> Imaging.getMetadata(imageFile));
     }
 }

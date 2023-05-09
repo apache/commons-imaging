@@ -37,23 +37,14 @@ public class ColorHslTest {
     }
 
     @Test
-    public void testHAssignment() {
-        assertEquals(1.0, color.H, 0.0);
-    }
+    public void testCreatesColorHslOne() {
+        final ColorHsl colorHsl = ColorHsl.BLUE;
+        final ColorHsl colorHslTwo = new ColorHsl(100.0, 667.226, (-687.72287636));
 
-    @Test
-    public void testSAssignment() {
-        assertEquals(2.0, color.S, 0.0);
-    }
-
-    @Test
-    public void testLAssignment() {
-        assertEquals(3.0, color.L, 0.0);
-    }
-
-    @Test
-    public void testToString() {
-        assertEquals("{H: 1.0, S: 2.0, L: 3.0}", color.toString());
+        assertEquals(667.226, colorHslTwo.S, 0.01);
+        assertEquals(100.0, colorHslTwo.H, 0.01);
+        assertEquals((-687.72287636), colorHslTwo.L, 0.01);
+        assertNotEquals(colorHsl, colorHslTwo);
     }
 
     @Test
@@ -63,14 +54,23 @@ public class ColorHslTest {
     }
 
     @Test
-    public void testCreatesColorHslOne() {
-        final ColorHsl colorHsl = ColorHsl.BLUE;
-        final ColorHsl colorHslTwo = new ColorHsl(100.0, 667.226, (-687.72287636));
+    public void testHAssignment() {
+        assertEquals(1.0, color.H, 0.0);
+    }
 
-        assertEquals(667.226, colorHslTwo.S, 0.01);
-        assertEquals(100.0, colorHslTwo.H, 0.01);
-        assertEquals((-687.72287636), colorHslTwo.L, 0.01);
-        assertNotEquals(colorHsl, colorHslTwo);
+    @Test
+    public void testLAssignment() {
+        assertEquals(3.0, color.L, 0.0);
+    }
+
+    @Test
+    public void testSAssignment() {
+        assertEquals(2.0, color.S, 0.0);
+    }
+
+    @Test
+    public void testToString() {
+        assertEquals("{H: 1.0, S: 2.0, L: 3.0}", color.toString());
     }
 
 }

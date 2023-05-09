@@ -22,28 +22,25 @@ import org.apache.commons.imaging.internal.Debug;
 
 public class FileSystemTraversal {
 
-    public static final int MODE_FILES = 1;
-    public static final int MODE_FOLDERS = 2;
-    public static final int MODE_FILES_AND_FOLDERS = 3;
-    public static final int MODE_ALL = 4;
-
     public interface Visitor {
         boolean visit(File file, double progressEstimate);
     }
+    public static final int MODE_FILES = 1;
+    public static final int MODE_FOLDERS = 2;
+    public static final int MODE_FILES_AND_FOLDERS = 3;
 
-    public boolean traverseFiles(final File file, final Visitor visitor) {
+    public static final int MODE_ALL = 4;
 
-        return traverse(file, MODE_FILES, visitor);
-    }
+    private static boolean ON_MAC_OS_X;
 
-    public boolean traverseFolders(final File file, final Visitor visitor) {
+    static {
+        try {
+            ON_MAC_OS_X = (System.getProperty("mrj.version") != null);
+        } catch (final Exception e) {
+            Debug.debug(e);
 
-        return traverse(file, MODE_FOLDERS, visitor);
-    }
-
-    public boolean traverseAll(final File file, final Visitor visitor) {
-
-        return traverse(file, MODE_FILES_AND_FOLDERS, visitor);
+            ON_MAC_OS_X = false;
+        }
     }
 
     public boolean traverse(final File file, final int mode, final Visitor visitor) {
@@ -101,35 +98,8 @@ public class FileSystemTraversal {
         return true;
     }
 
-    public boolean traverseFiles(final Visitor visitor) {
-
-        return traverse(MODE_FILES, visitor);
-    }
-
-    public boolean traverseFolders(final Visitor visitor) {
-
-        return traverse(MODE_FOLDERS, visitor);
-    }
-
-    public boolean traverseAll(final Visitor visitor) {
-
-        return traverse(MODE_FILES_AND_FOLDERS, visitor);
-    }
-
     public boolean traverse(final int mode, final Visitor visitor) {
         return traverse(mode, visitor, 0, 1);
-    }
-
-    private static boolean ON_MAC_OS_X;
-
-    static {
-        try {
-            ON_MAC_OS_X = (System.getProperty("mrj.version") != null);
-        } catch (final Exception e) {
-            Debug.debug(e);
-
-            ON_MAC_OS_X = false;
-        }
     }
 
     private boolean traverse(final int mode, final Visitor visitor, final double estimate,
@@ -161,6 +131,36 @@ public class FileSystemTraversal {
         }
 
         return true;
+    }
+
+    public boolean traverseAll(final File file, final Visitor visitor) {
+
+        return traverse(file, MODE_FILES_AND_FOLDERS, visitor);
+    }
+
+    public boolean traverseAll(final Visitor visitor) {
+
+        return traverse(MODE_FILES_AND_FOLDERS, visitor);
+    }
+
+    public boolean traverseFiles(final File file, final Visitor visitor) {
+
+        return traverse(file, MODE_FILES, visitor);
+    }
+
+    public boolean traverseFiles(final Visitor visitor) {
+
+        return traverse(MODE_FILES, visitor);
+    }
+
+    public boolean traverseFolders(final File file, final Visitor visitor) {
+
+        return traverse(file, MODE_FOLDERS, visitor);
+    }
+
+    public boolean traverseFolders(final Visitor visitor) {
+
+        return traverse(MODE_FOLDERS, visitor);
     }
 
 }

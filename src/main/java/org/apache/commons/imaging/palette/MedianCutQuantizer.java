@@ -32,6 +32,23 @@ public class MedianCutQuantizer {
         this.ignoreAlpha = ignoreAlpha;
     }
 
+    public Map<Integer, ColorCount> groupColors(final BufferedImage image, final int maxColors) {
+        final int max = Integer.MAX_VALUE;
+
+        for (int i = 0; i < 8; i++) {
+            int mask = 0xff & (0xff << i);
+            mask = mask | (mask << 8) | (mask << 16) | (mask << 24);
+
+            Debug.debug("mask(" + i + "): " + mask + " (" + Integer.toHexString(mask) + ")");
+
+            final Map<Integer, ColorCount> result = groupColors1(image, max, mask);
+            if (result != null) {
+                return result;
+            }
+        }
+        throw new Error("");
+    }
+
     private Map<Integer, ColorCount> groupColors1(final BufferedImage image, final int max,
             final int mask) {
         final Map<Integer, ColorCount> colorMap = new HashMap<>();
@@ -63,23 +80,6 @@ public class MedianCutQuantizer {
         }
 
         return colorMap;
-    }
-
-    public Map<Integer, ColorCount> groupColors(final BufferedImage image, final int maxColors) {
-        final int max = Integer.MAX_VALUE;
-
-        for (int i = 0; i < 8; i++) {
-            int mask = 0xff & (0xff << i);
-            mask = mask | (mask << 8) | (mask << 16) | (mask << 24);
-
-            Debug.debug("mask(" + i + "): " + mask + " (" + Integer.toHexString(mask) + ")");
-
-            final Map<Integer, ColorCount> result = groupColors1(image, max, mask);
-            if (result != null) {
-                return result;
-            }
-        }
-        throw new Error("");
     }
 
     public Palette process(final BufferedImage image, final int maxColors,

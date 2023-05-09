@@ -31,10 +31,10 @@ import org.junit.jupiter.api.Test;
 public class App2SegmentTest {
 
   @Test
-  public void testEqualsReturningTrue()  throws IOException, ImageReadException {
+  public void testCompareTo() throws IOException, ImageReadException {
       final App2Segment app2Segment = new App2Segment(0, 0, null);
 
-      assertEquals(app2Segment, app2Segment);
+      assertEquals(0, app2Segment.compareTo(app2Segment));
   }
 
   @Test
@@ -46,10 +46,10 @@ public class App2SegmentTest {
   }
 
   @Test
-  public void testCompareTo() throws IOException, ImageReadException {
+  public void testEqualsReturningTrue()  throws IOException, ImageReadException {
       final App2Segment app2Segment = new App2Segment(0, 0, null);
 
-      assertEquals(0, app2Segment.compareTo(app2Segment));
+      assertEquals(app2Segment, app2Segment);
   }
 
 }

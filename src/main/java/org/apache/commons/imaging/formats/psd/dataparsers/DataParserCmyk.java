@@ -21,6 +21,11 @@ import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
 public class DataParserCmyk extends DataParser {
     @Override
+    public int getBasicChannelsCount() {
+        return 4;
+    }
+
+    @Override
     protected int getRGB(final int[][][] data, final int x, final int y,
             final PsdImageContents imageContents) {
         int sc = 0xff & data[0][y][x];
@@ -35,11 +40,6 @@ public class DataParserCmyk extends DataParser {
         sk = 255 - sk;
 
         return ColorConversions.convertCMYKtoRGB(sc, sm, sy, sk);
-    }
-
-    @Override
-    public int getBasicChannelsCount() {
-        return 4;
     }
 
 }

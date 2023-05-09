@@ -33,17 +33,6 @@ public interface PaletteEntry {
     boolean coversSingleEntry();
 
     /**
-     * Indicates whether the indicated floating-point value is within the range
-     * covered by this palette entry and can be assigned a valid color by the
-     * implementation.
-     *
-     * @param f a valid floating point value, or a NaN.
-     * @return true if the entry can assign a color to the entry; otherwise,
-     * false.
-     */
-    boolean isCovered(float f);
-
-    /**
      * Gets the integer ARGB color assignment associated with the input value.
      * If the input value is not within the covered range of this instance, the
      * return value is undefined (though the value zero is often used).
@@ -77,4 +66,15 @@ public interface PaletteEntry {
      * @return if defined, a valid floating point value; otherwise, a null.
      */
     float getUpperBound();
+
+    /**
+     * Indicates whether the indicated floating-point value is within the range
+     * covered by this palette entry and can be assigned a valid color by the
+     * implementation.
+     *
+     * @param f a valid floating point value, or a NaN.
+     * @return true if the entry can assign a color to the entry; otherwise,
+     * false.
+     */
+    boolean isCovered(float f);
 }

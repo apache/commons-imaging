@@ -80,6 +80,28 @@ public class PngReadTest extends PngBaseTest {
     }
 
     /**
+     * Test reading metadata from PNG file with UTF-8 characters in the text chunks.
+     *
+     * @see <a href="https://issues.apache.org/jira/browse/IMAGING-342">IMAGING-342</a>
+     * @throws IOException if it fails to read the test image
+     * @throws ImageReadException if it fails to read the test image
+     */
+    @Test
+    public void testReadMetadataFromItxtChunk() throws IOException, ImageReadException {
+        final String input = "/images/png/IMAGING-342/utf8-comment.png";
+        final String file = PngReadTest.class.getResource(input).getFile();
+        final PngImageParser parser = new PngImageParser();
+
+        ImageMetadata metadata = parser.getMetadata(new File(file));
+        List<?> items = metadata.getItems();
+        assertEquals(1, items.size());
+
+        GenericImageMetadata.GenericImageMetadataItem item = ((GenericImageMetadata.GenericImageMetadataItem) items.get(0));
+        assertEquals("Comment", item.getKeyword());
+        assertEquals("\u2192 UTF-8 Test", item.getText());
+    }
+
+    /**
      * If the PNG image data contains an invalid ICC Profile, previous versions would
      * simply rethrow the IAE. This test verifies we are instead raising the documented
      * {@literal ImageReadException}.
@@ -110,27 +132,5 @@ public class PngReadTest extends PngBaseTest {
         final String file = PngReadTest.class.getResource(input).getFile();
         final PngImageParser parser = new PngImageParser();
         assertThrows(ImageReadException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), new PngImagingParameters()));
-    }
-
-    /**
-     * Test reading metadata from PNG file with UTF-8 characters in the text chunks.
-     *
-     * @see <a href="https://issues.apache.org/jira/browse/IMAGING-342">IMAGING-342</a>
-     * @throws IOException if it fails to read the test image
-     * @throws ImageReadException if it fails to read the test image
-     */
-    @Test
-    public void testReadMetadataFromItxtChunk() throws IOException, ImageReadException {
-        final String input = "/images/png/IMAGING-342/utf8-comment.png";
-        final String file = PngReadTest.class.getResource(input).getFile();
-        final PngImageParser parser = new PngImageParser();
-
-        ImageMetadata metadata = parser.getMetadata(new File(file));
-        List<?> items = metadata.getItems();
-        assertEquals(1, items.size());
-
-        GenericImageMetadata.GenericImageMetadataItem item = ((GenericImageMetadata.GenericImageMetadataItem) items.get(0));
-        assertEquals("Comment", item.getKeyword());
-        assertEquals("\u2192 UTF-8 Test", item.getText());
     }
 }

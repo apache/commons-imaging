@@ -48,6 +48,37 @@ public class TiffAlphaRoundTripTest {
     @TempDir
     Path tempDir;
 
+    /**
+     * Checks to see if a pixel component (A, R, G, or B) for two specified
+     * values are within a specified tolerance.
+     *
+     * @param a the first value
+     * @param b the second value
+     * @param iShift a multiple of 8 telling how far to shift values
+     * to extract components (24, 16, 8, or zero for ARGB)
+     * @param iTolerance a small positive integer
+     * @return true if the components of the values match
+     */
+    boolean componentMatch(final int a, final int b, final int iShift, final int iTolerance) {
+        int delta = ((a >> iShift) & 0xff) - ((b >> iShift) & 0xff);
+        if (delta < 0) {
+            delta = -delta;
+        }
+        return delta < iTolerance;
+    }
+
+    void doPixelsMatch(final int x, final int y, final int a, final int b) {
+        if (!componentMatch(a, b, 0, 2)
+            || !componentMatch(a, b, 8, 2)
+            || !componentMatch(a, b, 16, 2)
+            || !componentMatch(a, b, 24, 2)) {
+
+            final String complaint = String.format("Pixel mismatch at (%d,%d): 0x%08x 0x%08x",
+                x, y, a, b);
+            fail(complaint);
+        }
+    }
+
     @Test
     public void test() throws Exception {
 
@@ -104,37 +135,6 @@ public class TiffAlphaRoundTripTest {
                 doPixelsMatch(251, 251, 0xffff0000, test2);
             }
         }
-    }
-
-    void doPixelsMatch(final int x, final int y, final int a, final int b) {
-        if (!componentMatch(a, b, 0, 2)
-            || !componentMatch(a, b, 8, 2)
-            || !componentMatch(a, b, 16, 2)
-            || !componentMatch(a, b, 24, 2)) {
-
-            final String complaint = String.format("Pixel mismatch at (%d,%d): 0x%08x 0x%08x",
-                x, y, a, b);
-            fail(complaint);
-        }
-    }
-
-    /**
-     * Checks to see if a pixel component (A, R, G, or B) for two specified
-     * values are within a specified tolerance.
-     *
-     * @param a the first value
-     * @param b the second value
-     * @param iShift a multiple of 8 telling how far to shift values
-     * to extract components (24, 16, 8, or zero for ARGB)
-     * @param iTolerance a small positive integer
-     * @return true if the components of the values match
-     */
-    boolean componentMatch(final int a, final int b, final int iShift, final int iTolerance) {
-        int delta = ((a >> iShift) & 0xff) - ((b >> iShift) & 0xff);
-        if (delta < 0) {
-            delta = -delta;
-        }
-        return delta < iTolerance;
     }
 
     @Test

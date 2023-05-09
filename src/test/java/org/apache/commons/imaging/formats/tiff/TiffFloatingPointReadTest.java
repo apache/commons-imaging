@@ -44,6 +44,25 @@ import org.junit.jupiter.api.Test;
  */
 public class TiffFloatingPointReadTest {
 
+    private void checkSubImage(final File target, final TiffRasterData fullRaster, final int x0, final int y0, final int width, final int height){
+        try{
+            final TiffImagingParameters params = new TiffImagingParameters();
+            params.setSubImage(x0, y0, width, height);
+            final TiffRasterData partRaster = readRasterFromTIFF(target, params);
+            assertEquals(width, partRaster.getWidth(), "Invalid width in partial for " + target.getName());
+            assertEquals(height, partRaster.getHeight(), "Invalid height in partial for " + target.getName());
+            for (int y = y0; y < y0+height; y++) {
+                for (int x = x0; x < x0+width; x++) {
+                    final float vFull = fullRaster.getValue(x, y);
+                    final float vPart = partRaster.getValue(x - x0, y - y0);
+                    assertEquals(vFull, vPart, "Invalid value match for partial at (" + x + "," + y + ") for "+target.getName());
+                }
+            }
+        }catch (ImageReadException | IOException ex) {
+            fail("Exception during test " + ex.getMessage());
+        }
+    }
+
     /**
      * Gets a file from the TIFF test directory that contains floating-point
      * data.
@@ -120,6 +139,7 @@ public class TiffFloatingPointReadTest {
         final TiffDirectory directory = contents.directories.get(0);
         return directory.getRasterData(params);
     }
+
 
     @Test
     public void test() {
@@ -215,26 +235,6 @@ public class TiffFloatingPointReadTest {
             // now read the entire image
             checkSubImage(target, fullRaster, 0, 0, width, height);
         } catch (ImageReadException | IOException ex) {
-            fail("Exception during test " + ex.getMessage());
-        }
-    }
-
-
-    private void checkSubImage(final File target, final TiffRasterData fullRaster, final int x0, final int y0, final int width, final int height){
-        try{
-            final TiffImagingParameters params = new TiffImagingParameters();
-            params.setSubImage(x0, y0, width, height);
-            final TiffRasterData partRaster = readRasterFromTIFF(target, params);
-            assertEquals(width, partRaster.getWidth(), "Invalid width in partial for " + target.getName());
-            assertEquals(height, partRaster.getHeight(), "Invalid height in partial for " + target.getName());
-            for (int y = y0; y < y0+height; y++) {
-                for (int x = x0; x < x0+width; x++) {
-                    final float vFull = fullRaster.getValue(x, y);
-                    final float vPart = partRaster.getValue(x - x0, y - y0);
-                    assertEquals(vFull, vPart, "Invalid value match for partial at (" + x + "," + y + ") for "+target.getName());
-                }
-            }
-        }catch (ImageReadException | IOException ex) {
             fail("Exception during test " + ex.getMessage());
         }
     }

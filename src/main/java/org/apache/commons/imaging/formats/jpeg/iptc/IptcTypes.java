@@ -132,7 +132,26 @@ public enum IptcTypes implements IptcType {
     OBJECT_DATA_PREVIEW_DATA(
             202, "Object Data Preview Data");
 
+    public static IptcType getUnknown(final int type) {
+        return new IptcType() {
+            @Override
+            public String getName() {
+                return "Unknown";
+            }
+
+            @Override
+            public int getType() {
+                return type;
+            }
+
+            @Override
+            public String toString() {
+                return "Unknown (" + type + ")";
+            }
+        };
+    }
     public final int type;
+
     public final String name;
 
     IptcTypes(final int type, final String name) {
@@ -153,24 +172,5 @@ public enum IptcTypes implements IptcType {
     @Override
     public String toString() {
         return name + " (" + type + ")";
-    }
-
-    public static IptcType getUnknown(final int type) {
-        return new IptcType() {
-            @Override
-            public String getName() {
-                return "Unknown";
-            }
-
-            @Override
-            public int getType() {
-                return type;
-            }
-
-            @Override
-            public String toString() {
-                return "Unknown (" + type + ")";
-            }
-        };
     }
 }

@@ -34,6 +34,19 @@ public class GifImageMetadata implements ImageMetadata {
         this.items = Collections.unmodifiableList(new ArrayList<>(items));
     }
 
+    public int getHeight() {
+        return height;
+    }
+
+    @Override
+    public List<GifImageMetadataItem> getItems() {
+        return Collections.unmodifiableList(items);
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
     @Override
     public String toString(String prefix) {
         prefix = prefix == null ? "" : prefix;
@@ -48,18 +61,5 @@ public class GifImageMetadata implements ImageMetadata {
             result.append(item.toString(prefix));
         }
         return result.toString();
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    @Override
-    public List<GifImageMetadataItem> getItems() {
-        return Collections.unmodifiableList(items);
     }
 }

@@ -25,10 +25,20 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
 class TiffOutputSummary {
+    private static class OffsetItem {
+        public final TiffOutputItem item;
+        public final TiffOutputField itemOffsetField;
+
+        OffsetItem(final TiffOutputItem item, final TiffOutputField itemOffsetField) {
+            this.itemOffsetField = itemOffsetField;
+            this.item = item;
+        }
+    }
     public final ByteOrder byteOrder;
     public final TiffOutputDirectory rootDirectory;
     public final Map<Integer, TiffOutputDirectory> directoryTypeMap;
     private final List<OffsetItem> offsetItems = new ArrayList<>();
+
     private final List<ImageDataOffsets> imageDataItems = new ArrayList<>();
 
     TiffOutputSummary(final ByteOrder byteOrder,
@@ -39,19 +49,13 @@ class TiffOutputSummary {
         this.directoryTypeMap = directoryTypeMap;
     }
 
-    private static class OffsetItem {
-        public final TiffOutputItem item;
-        public final TiffOutputField itemOffsetField;
-
-        OffsetItem(final TiffOutputItem item, final TiffOutputField itemOffsetField) {
-            this.itemOffsetField = itemOffsetField;
-            this.item = item;
-        }
-    }
-
     public void add(final TiffOutputItem item,
             final TiffOutputField itemOffsetField) {
         offsetItems.add(new OffsetItem(item, itemOffsetField));
+    }
+
+    public void addTiffImageData(final ImageDataOffsets imageDataInfo) {
+        imageDataItems.add(imageDataInfo);
     }
 
     public void updateOffsets(final ByteOrder byteOrder) throws ImageWriteException {
@@ -70,10 +74,6 @@ class TiffOutputSummary {
             imageDataInfo.imageDataOffsetsField.setData(
                     FieldType.LONG.writeData(imageDataInfo.imageDataOffsets, byteOrder));
         }
-    }
-
-    public void addTiffImageData(final ImageDataOffsets imageDataInfo) {
-        imageDataItems.add(imageDataInfo);
     }
 
 }

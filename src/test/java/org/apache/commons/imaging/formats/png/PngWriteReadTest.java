@@ -40,11 +40,14 @@ import org.junit.jupiter.api.Test;
 
 public class PngWriteReadTest extends ImagingTest {
 
-    private int[][] getSimpleRawData(final int width, final int height, final int value) {
+    private int[][] bufferedImageToImageData(final BufferedImage image) {
+        final int width = image.getWidth();
+        final int height = image.getHeight();
         final int[][] result = new int[height][width];
+
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                result[y][x] = value;
+                result[y][x] = image.getRGB(x, y);
             }
         }
         return result;
@@ -63,6 +66,29 @@ public class PngWriteReadTest extends ImagingTest {
             }
         }
         return result;
+    }
+
+    private int[][] getSimpleRawData(final int width, final int height, final int value) {
+        final int[][] result = new int[height][width];
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                result[y][x] = value;
+            }
+        }
+        return result;
+    }
+
+    private BufferedImage imageDataToBufferedImage(final int[][] rawData) {
+        final int width = rawData[0].length;
+        final int height = rawData.length;
+        final BufferedImage image = new BufferedImage(width, height,
+                BufferedImage.TYPE_INT_ARGB);
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                image.setRGB(x, y, rawData[y][x]);
+            }
+        }
+        return image;
     }
 
     private int[][] randomRawData(final int width, final int height) {
@@ -103,14 +129,6 @@ public class PngWriteReadTest extends ImagingTest {
     }
 
     @Test
-    public void testTransparency() throws Exception {
-        // Test for https://issues.apache.org/jira/browse/SANSELAN-52
-        final int[][] smallAscendingPixels = getAscendingRawData(256, 256);
-        final byte[] pngBytes = Imaging.writeImageToBytes(imageDataToBufferedImage(smallAscendingPixels), ImageFormats.PNG);
-        assertTrue(Imaging.getImageInfo(pngBytes).isTransparent());
-    }
-
-    @Test
     public void testPhysicalScaleMeters() throws Exception {
         final PngImageParser pngImageParser = new PngImageParser();
         final PngImagingParameters optionalParams = new PngImagingParameters();
@@ -148,30 +166,12 @@ public class PngWriteReadTest extends ImagingTest {
         assertEquals(0.02, physicalScale.getVerticalUnitsPerPixel(), 0.001);
     }
 
-    private BufferedImage imageDataToBufferedImage(final int[][] rawData) {
-        final int width = rawData[0].length;
-        final int height = rawData.length;
-        final BufferedImage image = new BufferedImage(width, height,
-                BufferedImage.TYPE_INT_ARGB);
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                image.setRGB(x, y, rawData[y][x]);
-            }
-        }
-        return image;
-    }
-
-    private int[][] bufferedImageToImageData(final BufferedImage image) {
-        final int width = image.getWidth();
-        final int height = image.getHeight();
-        final int[][] result = new int[height][width];
-
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                result[y][x] = image.getRGB(x, y);
-            }
-        }
-        return result;
+    @Test
+    public void testTransparency() throws Exception {
+        // Test for https://issues.apache.org/jira/browse/SANSELAN-52
+        final int[][] smallAscendingPixels = getAscendingRawData(256, 256);
+        final byte[] pngBytes = Imaging.writeImageToBytes(imageDataToBufferedImage(smallAscendingPixels), ImageFormats.PNG);
+        assertTrue(Imaging.getImageInfo(pngBytes).isTransparent());
     }
 
     private void writeAndReadImageData(final int[][] rawData) throws IOException,

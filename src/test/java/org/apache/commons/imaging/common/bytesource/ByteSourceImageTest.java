@@ -54,53 +54,6 @@ public class ByteSourceImageTest extends ByteSourceTest {
         return getTestImages().stream();
     }
 
-    @ParameterizedTest
-    @MethodSource("data")
-    public void test(final File imageFile) throws Exception {
-        Debug.debug("imageFile", imageFile);
-        assertNotNull(imageFile);
-
-        final byte[] imageFileBytes = FileUtils.readFileToByteArray(imageFile);
-        assertNotNull(imageFileBytes);
-        assertEquals(imageFileBytes.length, imageFile.length());
-
-        if (imageFile.getName().toLowerCase().endsWith(".ico")
-                || imageFile.getName().toLowerCase().endsWith(".tga")
-                || imageFile.getName().toLowerCase().endsWith(".jb2")
-                || imageFile.getName().toLowerCase().endsWith(".pcx")
-                || imageFile.getName().toLowerCase().endsWith(".dcx")
-                || imageFile.getName().toLowerCase().endsWith(".psd")
-                || imageFile.getName().toLowerCase().endsWith(".wbmp")
-                || imageFile.getName().toLowerCase().endsWith(".xbm")
-                || imageFile.getName().toLowerCase().endsWith(".xpm")) {
-            // these formats can't be parsed without a file name hint.
-            // they have ambiguous "magic number" signatures.
-            return;
-        }
-
-        checkGuessFormat(imageFile, imageFileBytes);
-
-        if (imageFile.getName().toLowerCase().endsWith(".png")
-                && imageFile.getParentFile().getName().equalsIgnoreCase("pngsuite")
-                && imageFile.getName().toLowerCase().startsWith("x")) {
-            return;
-        }
-
-        checkGetICCProfileBytes(imageFile, imageFileBytes);
-
-        if (!imageFile.getParentFile().getName().toLowerCase().equals("@broken")) {
-            checkGetImageInfo(imageFile, imageFileBytes);
-        }
-
-        checkGetImageSize(imageFile, imageFileBytes);
-
-        final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
-        if (ImageFormats.JPEG != imageFormat
-                && ImageFormats.UNKNOWN != imageFormat) {
-            checkGetBufferedImage(imageFile, imageFileBytes);
-        }
-    }
-
     public void checkGetBufferedImage(final File file, final byte[] bytes) throws Exception {
         final BufferedImage bufferedImage = Imaging.getBufferedImage(file);
         assertNotNull(bufferedImage);
@@ -113,35 +66,6 @@ public class ByteSourceImageTest extends ByteSourceTest {
         assertNotNull(imageBytes);
         assertEquals(imageFileWidth, imageBytes.getWidth());
         assertEquals(imageFileHeight, imageBytes.getHeight());
-    }
-
-    public void checkGetImageSize(final File imageFile, final byte[] imageFileBytes)
-            throws Exception {
-        final Dimension imageSizeFile = Imaging.getImageSize(imageFile);
-        assertNotNull(imageSizeFile);
-        assertTrue(imageSizeFile.width > 0);
-        assertTrue(imageSizeFile.height > 0);
-
-        final Dimension imageSizeBytes = Imaging.getImageSize(imageFileBytes);
-        assertNotNull(imageSizeBytes);
-        assertEquals(imageSizeFile.width, imageSizeBytes.width);
-        assertEquals(imageSizeFile.height, imageSizeBytes.height);
-    }
-
-    public void checkGuessFormat(final File imageFile, final byte[] imageFileBytes)
-            throws Exception {
-        // check guessFormat()
-        final ImageFormat imageFormatFile = Imaging.guessFormat(imageFile);
-        assertNotNull(imageFormatFile);
-        assertNotSame(imageFormatFile, ImageFormats.UNKNOWN);
-        // Debug.debug("imageFormatFile", imageFormatFile);
-
-        final ImageFormat imageFormatBytes = Imaging.guessFormat(imageFileBytes);
-        assertNotNull(imageFormatBytes);
-        assertNotSame(imageFormatBytes, ImageFormats.UNKNOWN);
-        // Debug.debug("imageFormatBytes", imageFormatBytes);
-
-        assertSame(imageFormatBytes, imageFormatFile);
     }
 
     public void checkGetICCProfileBytes(final File imageFile, final byte[] imageFileBytes)
@@ -218,5 +142,81 @@ public class ByteSourceImageTest extends ByteSourceTest {
         // TODO: not all adapters count images yet.
         // assertTrue(imageInfoFile.getNumberOfImages() > 0);
 
+    }
+
+    public void checkGetImageSize(final File imageFile, final byte[] imageFileBytes)
+            throws Exception {
+        final Dimension imageSizeFile = Imaging.getImageSize(imageFile);
+        assertNotNull(imageSizeFile);
+        assertTrue(imageSizeFile.width > 0);
+        assertTrue(imageSizeFile.height > 0);
+
+        final Dimension imageSizeBytes = Imaging.getImageSize(imageFileBytes);
+        assertNotNull(imageSizeBytes);
+        assertEquals(imageSizeFile.width, imageSizeBytes.width);
+        assertEquals(imageSizeFile.height, imageSizeBytes.height);
+    }
+
+    public void checkGuessFormat(final File imageFile, final byte[] imageFileBytes)
+            throws Exception {
+        // check guessFormat()
+        final ImageFormat imageFormatFile = Imaging.guessFormat(imageFile);
+        assertNotNull(imageFormatFile);
+        assertNotSame(imageFormatFile, ImageFormats.UNKNOWN);
+        // Debug.debug("imageFormatFile", imageFormatFile);
+
+        final ImageFormat imageFormatBytes = Imaging.guessFormat(imageFileBytes);
+        assertNotNull(imageFormatBytes);
+        assertNotSame(imageFormatBytes, ImageFormats.UNKNOWN);
+        // Debug.debug("imageFormatBytes", imageFormatBytes);
+
+        assertSame(imageFormatBytes, imageFormatFile);
+    }
+
+    @ParameterizedTest
+    @MethodSource("data")
+    public void test(final File imageFile) throws Exception {
+        Debug.debug("imageFile", imageFile);
+        assertNotNull(imageFile);
+
+        final byte[] imageFileBytes = FileUtils.readFileToByteArray(imageFile);
+        assertNotNull(imageFileBytes);
+        assertEquals(imageFileBytes.length, imageFile.length());
+
+        if (imageFile.getName().toLowerCase().endsWith(".ico")
+                || imageFile.getName().toLowerCase().endsWith(".tga")
+                || imageFile.getName().toLowerCase().endsWith(".jb2")
+                || imageFile.getName().toLowerCase().endsWith(".pcx")
+                || imageFile.getName().toLowerCase().endsWith(".dcx")
+                || imageFile.getName().toLowerCase().endsWith(".psd")
+                || imageFile.getName().toLowerCase().endsWith(".wbmp")
+                || imageFile.getName().toLowerCase().endsWith(".xbm")
+                || imageFile.getName().toLowerCase().endsWith(".xpm")) {
+            // these formats can't be parsed without a file name hint.
+            // they have ambiguous "magic number" signatures.
+            return;
+        }
+
+        checkGuessFormat(imageFile, imageFileBytes);
+
+        if (imageFile.getName().toLowerCase().endsWith(".png")
+                && imageFile.getParentFile().getName().equalsIgnoreCase("pngsuite")
+                && imageFile.getName().toLowerCase().startsWith("x")) {
+            return;
+        }
+
+        checkGetICCProfileBytes(imageFile, imageFileBytes);
+
+        if (!imageFile.getParentFile().getName().toLowerCase().equals("@broken")) {
+            checkGetImageInfo(imageFile, imageFileBytes);
+        }
+
+        checkGetImageSize(imageFile, imageFileBytes);
+
+        final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
+        if (ImageFormats.JPEG != imageFormat
+                && ImageFormats.UNKNOWN != imageFormat) {
+            checkGetBufferedImage(imageFile, imageFileBytes);
+        }
     }
 }

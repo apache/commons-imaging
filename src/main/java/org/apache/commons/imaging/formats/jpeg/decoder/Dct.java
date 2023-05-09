@@ -96,39 +96,6 @@ final class Dct {
     private static final float Q = C2 - C6;
     private static final float R = C2 + C6;
 
-    private Dct() {
-    }
-
-    public static void scaleQuantizationVector(final float[] vector) {
-        for (int x = 0; x < 8; x++) {
-            vector[x] *= DCT_SCALING_FACTORS[x];
-        }
-    }
-
-    public static void scaleDequantizationVector(final float[] vector) {
-        for (int x = 0; x < 8; x++) {
-            vector[x] *= IDCT_SCALING_FACTORS[x];
-        }
-    }
-
-    public static void scaleQuantizationMatrix(final float[] matrix) {
-        for (int y = 0; y < 8; y++) {
-            for (int x = 0; x < 8; x++) {
-                matrix[8 * y + x] *= DCT_SCALING_FACTORS[y]
-                        * DCT_SCALING_FACTORS[x];
-            }
-        }
-    }
-
-    public static void scaleDequantizationMatrix(final float[] matrix) {
-        for (int y = 0; y < 8; y++) {
-            for (int x = 0; x < 8; x++) {
-                matrix[8 * y + x] *= IDCT_SCALING_FACTORS[y]
-                        * IDCT_SCALING_FACTORS[x];
-            }
-        }
-    }
-
     /**
      * Fast forward Dct using AA&N. Taken from the book
      * "JPEG still image data compression standard", by Pennebaker and Mitchell,
@@ -378,5 +345,38 @@ final class Dct {
             matrix[48 + i] = m3 - tmp3;
             matrix[56 + i] = m4 - a7;
         }
+    }
+
+    public static void scaleDequantizationMatrix(final float[] matrix) {
+        for (int y = 0; y < 8; y++) {
+            for (int x = 0; x < 8; x++) {
+                matrix[8 * y + x] *= IDCT_SCALING_FACTORS[y]
+                        * IDCT_SCALING_FACTORS[x];
+            }
+        }
+    }
+
+    public static void scaleDequantizationVector(final float[] vector) {
+        for (int x = 0; x < 8; x++) {
+            vector[x] *= IDCT_SCALING_FACTORS[x];
+        }
+    }
+
+    public static void scaleQuantizationMatrix(final float[] matrix) {
+        for (int y = 0; y < 8; y++) {
+            for (int x = 0; x < 8; x++) {
+                matrix[8 * y + x] *= DCT_SCALING_FACTORS[y]
+                        * DCT_SCALING_FACTORS[x];
+            }
+        }
+    }
+
+    public static void scaleQuantizationVector(final float[] vector) {
+        for (int x = 0; x < 8; x++) {
+            vector[x] *= DCT_SCALING_FACTORS[x];
+        }
+    }
+
+    private Dct() {
     }
 }

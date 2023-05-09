@@ -88,11 +88,6 @@ public final class ColorCieLuv {
     }
 
     @Override
-    public String toString() {
-        return "{L: " + L + ", u: " + u + ", v: " + v + "}";
-    }
-
-    @Override
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
@@ -126,5 +121,10 @@ public final class ColorCieLuv {
         temp = Double.doubleToLongBits(v);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "{L: " + L + ", u: " + u + ", v: " + v + "}";
     }
 }

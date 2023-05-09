@@ -44,17 +44,17 @@ public class PngImageInfo extends ImageInfo {
         this.physicalScale = physicalScale;
     }
 
-    public List<PngText> getTextChunks() {
-        return new ArrayList<>(textChunks);
-    }
+    /**
+        * Physical scale of Image.
+        *
+        * @return {@link PhysicalScale}. If undefined then {@link PhysicalScale#UNDEFINED}
+        * is returned.
+        */
+        public PhysicalScale getPhysicalScale() {
+            return physicalScale;
+        }
 
-   /**
-    * Physical scale of Image.
-    *
-    * @return {@link PhysicalScale}. If undefined then {@link PhysicalScale#UNDEFINED}
-    * is returned.
-    */
-    public PhysicalScale getPhysicalScale() {
-        return physicalScale;
-    }
+   public List<PngText> getTextChunks() {
+    return new ArrayList<>(textChunks);
+}
 }

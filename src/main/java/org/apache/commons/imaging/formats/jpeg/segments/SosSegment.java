@@ -26,15 +26,6 @@ import java.util.logging.Logger;
 
 public class SosSegment extends Segment {
 
-    private static final Logger LOGGER = Logger.getLogger(SosSegment.class.getName());
-
-    public final int numberOfComponents;
-    private final Component[] components;
-    public final int startOfSpectralSelection;
-    public final int endOfSpectralSelection;
-    public final int successiveApproximationBitHigh;
-    public final int successiveApproximationBitLow;
-
     public static class Component {
         public final int scanComponentSelector;
         public final int dcCodingTableSelector;
@@ -47,6 +38,15 @@ public class SosSegment extends Segment {
             this.acCodingTableSelector = acCodingTableSelector;
         }
     }
+
+    private static final Logger LOGGER = Logger.getLogger(SosSegment.class.getName());
+    public final int numberOfComponents;
+    private final Component[] components;
+    public final int startOfSpectralSelection;
+    public final int endOfSpectralSelection;
+    public final int successiveApproximationBitHigh;
+
+    public final int successiveApproximationBitLow;
 
     public SosSegment(final int marker, final byte[] segmentData) throws IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));

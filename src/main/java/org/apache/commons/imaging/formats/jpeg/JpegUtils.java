@@ -32,69 +32,17 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.internal.Debug;
 
 public class JpegUtils extends BinaryFileParser {
-    public JpegUtils() {
-        setByteOrder(ByteOrder.BIG_ENDIAN);
-    }
-
     public interface Visitor {
         // return false to exit before reading image data.
         boolean beginSOS();
-
-        void visitSOS(int marker, byte[] markerBytes, byte[] imageData);
 
         // return false to exit traversal.
         boolean visitSegment(int marker, byte[] markerBytes,
                 int segmentLength, byte[] segmentLengthBytes,
                 byte[] segmentData) throws ImageReadException,
                 IOException;
-    }
 
-    public void traverseJFIF(final ByteSource byteSource, final Visitor visitor)
-            throws ImageReadException,
-            IOException {
-        try (InputStream is = byteSource.getInputStream()) {
-            readAndVerifyBytes(is, JpegConstants.SOI,
-                    "Not a Valid JPEG File: doesn't begin with 0xffd8");
-
-            int markerCount;
-            for (markerCount = 0; true; markerCount++) {
-                final byte[] markerBytes = new byte[2];
-                do {
-                    markerBytes[0] = markerBytes[1];
-                    markerBytes[1] = readByte("marker", is,
-                            "Could not read marker");
-                } while ((0xff & markerBytes[0]) != 0xff
-                        || (0xff & markerBytes[1]) == 0xff);
-                final int marker = ((0xff & markerBytes[0]) << 8)
-                        | (0xff & markerBytes[1]);
-
-                if (marker == JpegConstants.EOI_MARKER || marker == JpegConstants.SOS_MARKER) {
-                    if (!visitor.beginSOS()) {
-                        return;
-                    }
-
-                    final byte[] imageData = getStreamBytes(is);
-                    visitor.visitSOS(marker, markerBytes, imageData);
-                    break;
-                }
-
-                final byte[] segmentLengthBytes = readBytes("segmentLengthBytes", is, 2, "segmentLengthBytes");
-                final int segmentLength = ByteConversions.toUInt16(segmentLengthBytes, getByteOrder());
-                if (segmentLength < 2) {
-                    throw new ImageReadException("Invalid segment size");
-                }
-
-                final byte[] segmentData = readBytes("Segment Data",
-                        is, segmentLength - 2,
-                        "Invalid Segment: insufficient data");
-
-                if (!visitor.visitSegment(marker, markerBytes, segmentLength, segmentLengthBytes, segmentData)) {
-                    return;
-                }
-            }
-
-            Debug.debug(markerCount + " markers");
-        }
+        void visitSOS(int marker, byte[] markerBytes, byte[] imageData);
     }
 
     public static String getMarkerName(final int marker) {
@@ -174,6 +122,10 @@ public class JpegUtils extends BinaryFileParser {
         }
     }
 
+    public JpegUtils() {
+        setByteOrder(ByteOrder.BIG_ENDIAN);
+    }
+
     public void dumpJFIF(final ByteSource byteSource) throws ImageReadException,
             IOException {
         final Visitor visitor = new Visitor() {
@@ -181,12 +133,6 @@ public class JpegUtils extends BinaryFileParser {
             @Override
             public boolean beginSOS() {
                 return true;
-            }
-
-            @Override
-            public void visitSOS(final int marker, final byte[] markerBytes, final byte[] imageData) {
-                Debug.debug("SOS marker.  " + imageData.length + " bytes of image data.");
-                Debug.debug("");
             }
 
             // return false to exit traversal.
@@ -199,8 +145,62 @@ public class JpegUtils extends BinaryFileParser {
                         + segmentData.length + " bytes of segment data.");
                 return true;
             }
+
+            @Override
+            public void visitSOS(final int marker, final byte[] markerBytes, final byte[] imageData) {
+                Debug.debug("SOS marker.  " + imageData.length + " bytes of image data.");
+                Debug.debug("");
+            }
         };
 
         traverseJFIF(byteSource, visitor);
+    }
+
+    public void traverseJFIF(final ByteSource byteSource, final Visitor visitor)
+            throws ImageReadException,
+            IOException {
+        try (InputStream is = byteSource.getInputStream()) {
+            readAndVerifyBytes(is, JpegConstants.SOI,
+                    "Not a Valid JPEG File: doesn't begin with 0xffd8");
+
+            int markerCount;
+            for (markerCount = 0; true; markerCount++) {
+                final byte[] markerBytes = new byte[2];
+                do {
+                    markerBytes[0] = markerBytes[1];
+                    markerBytes[1] = readByte("marker", is,
+                            "Could not read marker");
+                } while ((0xff & markerBytes[0]) != 0xff
+                        || (0xff & markerBytes[1]) == 0xff);
+                final int marker = ((0xff & markerBytes[0]) << 8)
+                        | (0xff & markerBytes[1]);
+
+                if (marker == JpegConstants.EOI_MARKER || marker == JpegConstants.SOS_MARKER) {
+                    if (!visitor.beginSOS()) {
+                        return;
+                    }
+
+                    final byte[] imageData = getStreamBytes(is);
+                    visitor.visitSOS(marker, markerBytes, imageData);
+                    break;
+                }
+
+                final byte[] segmentLengthBytes = readBytes("segmentLengthBytes", is, 2, "segmentLengthBytes");
+                final int segmentLength = ByteConversions.toUInt16(segmentLengthBytes, getByteOrder());
+                if (segmentLength < 2) {
+                    throw new ImageReadException("Invalid segment size");
+                }
+
+                final byte[] segmentData = readBytes("Segment Data",
+                        is, segmentLength - 2,
+                        "Invalid Segment: insufficient data");
+
+                if (!visitor.visitSegment(marker, markerBytes, segmentLength, segmentLengthBytes, segmentData)) {
+                    return;
+                }
+            }
+
+            Debug.debug(markerCount + " markers");
+        }
     }
 }

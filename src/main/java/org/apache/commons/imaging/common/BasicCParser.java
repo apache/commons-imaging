@@ -32,77 +32,134 @@ import org.apache.commons.imaging.ImageReadException;
  * FIXME replace this by a parser generated via ANTLR (if we really need it?!)
  */
 public class BasicCParser {
-    private final PushbackInputStream is;
-
-    public BasicCParser(final ByteArrayInputStream is) {
-        this.is = new PushbackInputStream(is);
+    /**
+     * Parses the hexadecimal-base escape-sequence found at index {@code i} of {@code string}.
+     *
+     * <p>Helper-function for {@code unescapeString()}.</p>
+     *
+     * @param i  the index of the escape-sequence in the string
+     * @param stringBuilder the stringBuilder to append the escape-char to
+     * @param string the string whose chars are parsed
+     * @return the new index i
+     * @since 1.0-alpha3
+     */
+    private static int appendHex(int i, final StringBuilder stringBuilder, final String string)
+        throws ImageReadException {
+        if (i + 2 >= string.length()) {
+            throw new ImageReadException(
+                    "Parsing XPM file failed, "
+                            + "hex constant in string too short");
+        }
+        final char hex1 = string.charAt(i + 1);
+        final char hex2 = string.charAt(i + 2);
+        i += 2;
+        int constant;
+        try {
+            constant = Integer.parseInt(hex1 + Character.toString(hex2), 16);
+        } catch (final NumberFormatException nfe) {
+            throw new ImageReadException(
+                    "Parsing XPM file failed, "
+                            + "hex constant invalid", nfe);
+        }
+        stringBuilder.append((char) constant);
+        return i;
     }
 
-    public String nextToken() throws IOException, ImageReadException {
-        // I don't know how complete the C parsing in an XPM file
-        // is meant to be, this is just the very basics...
+    /**
+     * Parses the octal-base escape-sequence found at index {@code i} of {@code string}.
+     *
+     * <p>Helper-function for {@code unescapeString()}.</p>
+     *
+     * @param i  the index of the escape-sequence in the string
+     * @param stringBuilder the stringBuilder to append the escape-char to
+     * @param string the string whose chars are parsed
+     * @return the new index i
+     * @since 1.0-alpha3
+     */
+    private static int appendOct(int i, final StringBuilder stringBuilder, final String string) {
+        int length = 1;
+        if (i + 1 < string.length() && '0' <= string.charAt(i + 1)
+                && string.charAt(i + 1) <= '7') {
+            ++length;
+        }
+        if (i + 2 < string.length() && '0' <= string.charAt(i + 2)
+                && string.charAt(i + 2) <= '7') {
+            ++length;
+        }
+        int constant = 0;
+        for (int j = 0; j < length; j++) {
+            constant *= 8;
+            constant += (string.charAt(i + j) - '0');
+        }
+        i += length - 1;
+        stringBuilder.append((char) constant);
+        return i;
+    }
 
-        boolean inString = false;
-        boolean inIdentifier = false;
-        boolean hadBackSlash = false;
-        final StringBuilder token = new StringBuilder();
-        for (int c = is.read(); c != -1; c = is.read()) {
-            if (inString) {
-                switch (c) {
-                case '\\':
-                    token.append('\\');
-                    hadBackSlash = !hadBackSlash;
-                    break;
-                case '"':
-                    token.append('"');
-                    if (!hadBackSlash) {
-                        return token.toString();
-                    }
-                    hadBackSlash = false;
-                    break;
-                case '\r':
-                case '\n':
-                    throw new ImageReadException(
-                            "Unterminated string in XPM file");
-                default:
-                    token.append((char) c);
-                    hadBackSlash = false;
-                    break;
-                }
-            } else if (inIdentifier) {
-                if (!Character.isLetterOrDigit(c) && (c != '_')) {
-                    is.unread(c);
-                    return token.toString();
-                }
-                token.append((char) c);
-            } else {
-                if (c == '"') {
-                    token.append('"');
-                    inString = true;
-                } else if (Character.isLetterOrDigit(c) || c == '_') {
-                    token.append((char) c);
-                    inIdentifier = true;
-                } else if (c == '{' || c == '}' || c == '[' || c == ']'
-                        || c == '*' || c == ';' || c == '=' || c == ',') {
-                    token.append((char) c);
-                    return token.toString();
-                } else if (c == ' ' || c == '\t' || c == '\r' || c == '\n') {
-                    // ignore
-                } else {
-                    throw new ImageReadException(
-                            "Unhandled/invalid character '" + ((char) c)
-                                    + "' found in XPM file");
-                }
-            }
+    /**
+     * Parses the {@code i:th} escape-char in the input {@code string} and appends it to {@code stringBuilder}.
+     *
+     * <p>Helper-function for {@code unescapeString()}.</p>
+     *
+     * @param  i  the index of the escape-char in the string
+     * @param  stringBuilder the stringBuilder to append the escape-char to
+     * @param  string the string whose chars are parsed
+     * @return the new index i
+     * @since 1.0-alpha3
+     */
+    private static int parseEscape(int i, final StringBuilder stringBuilder, final String string)
+        throws ImageReadException {
+        final char c = string.charAt(i);
+        switch (c) {
+        case '\\':
+            stringBuilder.append('\\');
+            break;
+        case '"':
+            stringBuilder.append('"');
+            break;
+        case '\'':
+            stringBuilder.append('\'');
+            break;
+        case 'x':
+            i = appendHex(i, stringBuilder, string);
+            break;
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+            i = appendOct(i, stringBuilder, string);
+            break;
+        case 'a':
+            stringBuilder.append((char) 0x07);
+            break;
+        case 'b':
+            stringBuilder.append((char) 0x08);
+            break;
+        case 'f':
+            stringBuilder.append((char) 0x0c);
+            break;
+        case 'n':
+            stringBuilder.append((char) 0x0a);
+            break;
+        case 'r':
+            stringBuilder.append((char) 0x0d);
+            break;
+        case 't':
+            stringBuilder.append((char) 0x09);
+            break;
+        case 'v':
+            stringBuilder.append((char) 0x0b);
+            break;
+        default:
+            throw new ImageReadException("Parsing XPM file failed, "
+                    + "invalid escape sequence");
         }
+        return i;
 
-        if (inIdentifier) {
-            return token.toString();
-        }
-        if (inString) {
-            throw new ImageReadException("Unterminated string ends XMP file");
-        }
-        return null;
     }
 
     public static ByteArrayOutputStream preprocess(final InputStream is,
@@ -342,135 +399,78 @@ public class BasicCParser {
         }
     }
 
-    /**
-     * Parses the hexadecimal-base escape-sequence found at index {@code i} of {@code string}.
-     *
-     * <p>Helper-function for {@code unescapeString()}.</p>
-     *
-     * @param i  the index of the escape-sequence in the string
-     * @param stringBuilder the stringBuilder to append the escape-char to
-     * @param string the string whose chars are parsed
-     * @return the new index i
-     * @since 1.0-alpha3
-     */
-    private static int appendHex(int i, final StringBuilder stringBuilder, final String string)
-        throws ImageReadException {
-        if (i + 2 >= string.length()) {
-            throw new ImageReadException(
-                    "Parsing XPM file failed, "
-                            + "hex constant in string too short");
-        }
-        final char hex1 = string.charAt(i + 1);
-        final char hex2 = string.charAt(i + 2);
-        i += 2;
-        int constant;
-        try {
-            constant = Integer.parseInt(hex1 + Character.toString(hex2), 16);
-        } catch (final NumberFormatException nfe) {
-            throw new ImageReadException(
-                    "Parsing XPM file failed, "
-                            + "hex constant invalid", nfe);
-        }
-        stringBuilder.append((char) constant);
-        return i;
-    }
+    private final PushbackInputStream is;
 
-    /**
-     * Parses the octal-base escape-sequence found at index {@code i} of {@code string}.
-     *
-     * <p>Helper-function for {@code unescapeString()}.</p>
-     *
-     * @param i  the index of the escape-sequence in the string
-     * @param stringBuilder the stringBuilder to append the escape-char to
-     * @param string the string whose chars are parsed
-     * @return the new index i
-     * @since 1.0-alpha3
-     */
-    private static int appendOct(int i, final StringBuilder stringBuilder, final String string) {
-        int length = 1;
-        if (i + 1 < string.length() && '0' <= string.charAt(i + 1)
-                && string.charAt(i + 1) <= '7') {
-            ++length;
-        }
-        if (i + 2 < string.length() && '0' <= string.charAt(i + 2)
-                && string.charAt(i + 2) <= '7') {
-            ++length;
-        }
-        int constant = 0;
-        for (int j = 0; j < length; j++) {
-            constant *= 8;
-            constant += (string.charAt(i + j) - '0');
-        }
-        i += length - 1;
-        stringBuilder.append((char) constant);
-        return i;
+    public BasicCParser(final ByteArrayInputStream is) {
+        this.is = new PushbackInputStream(is);
     }
 
 
-    /**
-     * Parses the {@code i:th} escape-char in the input {@code string} and appends it to {@code stringBuilder}.
-     *
-     * <p>Helper-function for {@code unescapeString()}.</p>
-     *
-     * @param  i  the index of the escape-char in the string
-     * @param  stringBuilder the stringBuilder to append the escape-char to
-     * @param  string the string whose chars are parsed
-     * @return the new index i
-     * @since 1.0-alpha3
-     */
-    private static int parseEscape(int i, final StringBuilder stringBuilder, final String string)
-        throws ImageReadException {
-        final char c = string.charAt(i);
-        switch (c) {
-        case '\\':
-            stringBuilder.append('\\');
-            break;
-        case '"':
-            stringBuilder.append('"');
-            break;
-        case '\'':
-            stringBuilder.append('\'');
-            break;
-        case 'x':
-            i = appendHex(i, stringBuilder, string);
-            break;
-        case '0':
-        case '1':
-        case '2':
-        case '3':
-        case '4':
-        case '5':
-        case '6':
-        case '7':
-            i = appendOct(i, stringBuilder, string);
-            break;
-        case 'a':
-            stringBuilder.append((char) 0x07);
-            break;
-        case 'b':
-            stringBuilder.append((char) 0x08);
-            break;
-        case 'f':
-            stringBuilder.append((char) 0x0c);
-            break;
-        case 'n':
-            stringBuilder.append((char) 0x0a);
-            break;
-        case 'r':
-            stringBuilder.append((char) 0x0d);
-            break;
-        case 't':
-            stringBuilder.append((char) 0x09);
-            break;
-        case 'v':
-            stringBuilder.append((char) 0x0b);
-            break;
-        default:
-            throw new ImageReadException("Parsing XPM file failed, "
-                    + "invalid escape sequence");
-        }
-        return i;
+    public String nextToken() throws IOException, ImageReadException {
+        // I don't know how complete the C parsing in an XPM file
+        // is meant to be, this is just the very basics...
 
+        boolean inString = false;
+        boolean inIdentifier = false;
+        boolean hadBackSlash = false;
+        final StringBuilder token = new StringBuilder();
+        for (int c = is.read(); c != -1; c = is.read()) {
+            if (inString) {
+                switch (c) {
+                case '\\':
+                    token.append('\\');
+                    hadBackSlash = !hadBackSlash;
+                    break;
+                case '"':
+                    token.append('"');
+                    if (!hadBackSlash) {
+                        return token.toString();
+                    }
+                    hadBackSlash = false;
+                    break;
+                case '\r':
+                case '\n':
+                    throw new ImageReadException(
+                            "Unterminated string in XPM file");
+                default:
+                    token.append((char) c);
+                    hadBackSlash = false;
+                    break;
+                }
+            } else if (inIdentifier) {
+                if (!Character.isLetterOrDigit(c) && (c != '_')) {
+                    is.unread(c);
+                    return token.toString();
+                }
+                token.append((char) c);
+            } else {
+                if (c == '"') {
+                    token.append('"');
+                    inString = true;
+                } else if (Character.isLetterOrDigit(c) || c == '_') {
+                    token.append((char) c);
+                    inIdentifier = true;
+                } else if (c == '{' || c == '}' || c == '[' || c == ']'
+                        || c == '*' || c == ';' || c == '=' || c == ',') {
+                    token.append((char) c);
+                    return token.toString();
+                } else if (c == ' ' || c == '\t' || c == '\r' || c == '\n') {
+                    // ignore
+                } else {
+                    throw new ImageReadException(
+                            "Unhandled/invalid character '" + ((char) c)
+                                    + "' found in XPM file");
+                }
+            }
+        }
+
+        if (inIdentifier) {
+            return token.toString();
+        }
+        if (inString) {
+            throw new ImageReadException("Unterminated string ends XMP file");
+        }
+        return null;
     }
 
 }

@@ -17,9 +17,9 @@
 package org.apache.commons.imaging.formats.jpeg.iptc;
 
 public interface IptcType {
-    int getType();
-
     String getName();
+
+    int getType();
 
     @Override
     String toString();

@@ -36,16 +36,16 @@ public class IptcBlock {
         this.blockType = blockType;
     }
 
-    public int getBlockType() {
-        return blockType;
+    public byte[] getBlockData() {
+        return blockData.clone();
     }
 
     public byte[] getBlockNameBytes() {
         return blockNameBytes.clone();
     }
 
-    public byte[] getBlockData() {
-        return blockData.clone();
+    public int getBlockType() {
+        return blockType;
     }
 
     public boolean isIPTCBlock() {

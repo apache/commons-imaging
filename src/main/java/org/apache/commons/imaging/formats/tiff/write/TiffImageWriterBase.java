@@ -58,6 +58,12 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 
 public abstract class TiffImageWriterBase {
 
+    private static final int MAX_PIXELS_FOR_RGB = 1024*1024;
+
+    protected static int imageDataPaddingLength(final int dataLength) {
+        return (4 - (dataLength % 4)) % 4;
+    }
+
     protected final ByteOrder byteOrder;
 
     public TiffImageWriterBase() {
@@ -68,12 +74,142 @@ public abstract class TiffImageWriterBase {
         this.byteOrder = byteOrder;
     }
 
-    protected static int imageDataPaddingLength(final int dataLength) {
-        return (4 - (dataLength % 4)) % 4;
+    private void applyPredictor(final int width, final int bytesPerSample, final byte[] b) {
+        final int nBytesPerRow = bytesPerSample * width;
+        final int nRows = b.length / nBytesPerRow;
+        for (int iRow = 0; iRow < nRows; iRow++) {
+            final int offset = iRow * nBytesPerRow;
+            for (int i = nBytesPerRow - 1; i >= bytesPerSample; i--) {
+                b[offset + i] -= b[offset + i - bytesPerSample];
+            }
+        }
     }
 
-    public abstract void write(OutputStream os, TiffOutputSet outputSet)
-            throws IOException, ImageWriteException;
+    /**
+     * Check an image to see if any of its pixels are non-opaque.
+     * @param src a valid image
+     * @return true if at least one non-opaque pixel is found.
+     */
+    private boolean checkForActualAlpha(final BufferedImage src){
+        // to conserve memory, very large images may be read
+        // in pieces.
+        final int width = src.getWidth();
+        final int height = src.getHeight();
+        int nRowsPerRead = MAX_PIXELS_FOR_RGB/width;
+        if(nRowsPerRead<1){
+            nRowsPerRead = 1;
+        }
+        final int nReads = (height+nRowsPerRead-1)/nRowsPerRead;
+        final int []argb = new int[nRowsPerRead*width];
+        for(int iRead=0; iRead<nReads; iRead++){
+            final int i0 = iRead*nRowsPerRead;
+            final int i1 = i0+nRowsPerRead>height? height: i0+nRowsPerRead;
+            src.getRGB(0, i0, width, i1-i0, argb, 0, width);
+            final int n = (i1-i0)*width;
+            for(int i=0; i<n; i++){
+                if((argb[i]&0xff000000)!=0xff000000){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    private void combineUserExifIntoFinalExif(final TiffOutputSet userExif,
+            final TiffOutputSet outputSet) throws ImageWriteException {
+        final List<TiffOutputDirectory> outputDirectories = outputSet.getDirectories();
+        outputDirectories.sort(TiffOutputDirectory.COMPARATOR);
+        for (final TiffOutputDirectory userDirectory : userExif.getDirectories()) {
+            final int location = Collections.binarySearch(outputDirectories,
+                    userDirectory, TiffOutputDirectory.COMPARATOR);
+            if (location < 0) {
+                outputSet.addDirectory(userDirectory);
+            } else {
+                final TiffOutputDirectory outputDirectory = outputDirectories.get(location);
+                for (final TiffOutputField userField : userDirectory.getFields()) {
+                    if (outputDirectory.findField(userField.tagInfo) == null) {
+                        outputDirectory.add(userField);
+                    }
+                }
+            }
+        }
+    }
+
+    private byte[][] getStrips(final BufferedImage src, final int samplesPerPixel,
+            final int bitsPerSample, final int rowsPerStrip) {
+        final int width = src.getWidth();
+        final int height = src.getHeight();
+
+        final int stripCount = (height + rowsPerStrip - 1) / rowsPerStrip;
+
+        byte[][] result;
+        { // Write Strips
+            result = new byte[stripCount][];
+
+            int remainingRows = height;
+
+            for (int i = 0; i < stripCount; i++) {
+                final int rowsInStrip = Math.min(rowsPerStrip, remainingRows);
+                remainingRows -= rowsInStrip;
+
+                final int bitsInRow = bitsPerSample * samplesPerPixel * width;
+                final int bytesPerRow = (bitsInRow + 7) / 8;
+                final int bytesInStrip = rowsInStrip * bytesPerRow;
+
+                final byte[] uncompressed = new byte[bytesInStrip];
+
+                int counter = 0;
+                int y = i * rowsPerStrip;
+                final int stop = i * rowsPerStrip + rowsPerStrip;
+
+                for (; (y < height) && (y < stop); y++) {
+                    int bitCache = 0;
+                    int bitsInCache = 0;
+                    for (int x = 0; x < width; x++) {
+                        final int rgb = src.getRGB(x, y);
+                        final int red = 0xff & (rgb >> 16);
+                        final int green = 0xff & (rgb >> 8);
+                        final int blue = 0xff & (rgb >> 0);
+
+                        if (bitsPerSample == 1) {
+                            int sample = (red + green + blue) / 3;
+                            if (sample > 127) {
+                                sample = 0;
+                            } else {
+                                sample = 1;
+                            }
+                            bitCache <<= 1;
+                            bitCache |= sample;
+                            bitsInCache++;
+                            if (bitsInCache == 8) {
+                                uncompressed[counter++] = (byte) bitCache;
+                                bitCache = 0;
+                                bitsInCache = 0;
+                            }
+                        } else if(samplesPerPixel==4){
+                            uncompressed[counter++] = (byte) red;
+                            uncompressed[counter++] = (byte) green;
+                            uncompressed[counter++] = (byte) blue;
+                            uncompressed[counter++] = (byte) (rgb>>24);
+                        }else {
+                            // samples per pixel is 3
+                            uncompressed[counter++] = (byte) red;
+                            uncompressed[counter++] = (byte) green;
+                            uncompressed[counter++] = (byte) blue;
+                        }
+                    }
+                    if (bitsInCache > 0) {
+                        bitCache <<= (8 - bitsInCache);
+                        uncompressed[counter++] = (byte) bitCache;
+                    }
+                }
+
+                result[i] = uncompressed;
+            }
+
+        }
+
+        return result;
+    }
 
     protected TiffOutputSummary validateDirectories(final TiffOutputSet outputSet)
             throws ImageWriteException {
@@ -259,47 +395,8 @@ public abstract class TiffImageWriterBase {
         // Debug.debug();
     }
 
-    private static final int MAX_PIXELS_FOR_RGB = 1024*1024;
-    /**
-     * Check an image to see if any of its pixels are non-opaque.
-     * @param src a valid image
-     * @return true if at least one non-opaque pixel is found.
-     */
-    private boolean checkForActualAlpha(final BufferedImage src){
-        // to conserve memory, very large images may be read
-        // in pieces.
-        final int width = src.getWidth();
-        final int height = src.getHeight();
-        int nRowsPerRead = MAX_PIXELS_FOR_RGB/width;
-        if(nRowsPerRead<1){
-            nRowsPerRead = 1;
-        }
-        final int nReads = (height+nRowsPerRead-1)/nRowsPerRead;
-        final int []argb = new int[nRowsPerRead*width];
-        for(int iRead=0; iRead<nReads; iRead++){
-            final int i0 = iRead*nRowsPerRead;
-            final int i1 = i0+nRowsPerRead>height? height: i0+nRowsPerRead;
-            src.getRGB(0, i0, width, i1-i0, argb, 0, width);
-            final int n = (i1-i0)*width;
-            for(int i=0; i<n; i++){
-                if((argb[i]&0xff000000)!=0xff000000){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private void applyPredictor(final int width, final int bytesPerSample, final byte[] b) {
-        final int nBytesPerRow = bytesPerSample * width;
-        final int nRows = b.length / nBytesPerRow;
-        for (int iRow = 0; iRow < nRows; iRow++) {
-            final int offset = iRow * nBytesPerRow;
-            for (int i = nBytesPerRow - 1; i >= bytesPerSample; i--) {
-                b[offset + i] -= b[offset + i - bytesPerSample];
-            }
-        }
-    }
+    public abstract void write(OutputStream os, TiffOutputSet outputSet)
+            throws IOException, ImageWriteException;
 
     public void writeImage(final BufferedImage src, final OutputStream os, final TiffImagingParameters params)
             throws ImageWriteException, IOException {
@@ -556,103 +653,6 @@ public abstract class TiffImageWriterBase {
         }
 
         write(os, outputSet);
-    }
-
-    private void combineUserExifIntoFinalExif(final TiffOutputSet userExif,
-            final TiffOutputSet outputSet) throws ImageWriteException {
-        final List<TiffOutputDirectory> outputDirectories = outputSet.getDirectories();
-        outputDirectories.sort(TiffOutputDirectory.COMPARATOR);
-        for (final TiffOutputDirectory userDirectory : userExif.getDirectories()) {
-            final int location = Collections.binarySearch(outputDirectories,
-                    userDirectory, TiffOutputDirectory.COMPARATOR);
-            if (location < 0) {
-                outputSet.addDirectory(userDirectory);
-            } else {
-                final TiffOutputDirectory outputDirectory = outputDirectories.get(location);
-                for (final TiffOutputField userField : userDirectory.getFields()) {
-                    if (outputDirectory.findField(userField.tagInfo) == null) {
-                        outputDirectory.add(userField);
-                    }
-                }
-            }
-        }
-    }
-
-    private byte[][] getStrips(final BufferedImage src, final int samplesPerPixel,
-            final int bitsPerSample, final int rowsPerStrip) {
-        final int width = src.getWidth();
-        final int height = src.getHeight();
-
-        final int stripCount = (height + rowsPerStrip - 1) / rowsPerStrip;
-
-        byte[][] result;
-        { // Write Strips
-            result = new byte[stripCount][];
-
-            int remainingRows = height;
-
-            for (int i = 0; i < stripCount; i++) {
-                final int rowsInStrip = Math.min(rowsPerStrip, remainingRows);
-                remainingRows -= rowsInStrip;
-
-                final int bitsInRow = bitsPerSample * samplesPerPixel * width;
-                final int bytesPerRow = (bitsInRow + 7) / 8;
-                final int bytesInStrip = rowsInStrip * bytesPerRow;
-
-                final byte[] uncompressed = new byte[bytesInStrip];
-
-                int counter = 0;
-                int y = i * rowsPerStrip;
-                final int stop = i * rowsPerStrip + rowsPerStrip;
-
-                for (; (y < height) && (y < stop); y++) {
-                    int bitCache = 0;
-                    int bitsInCache = 0;
-                    for (int x = 0; x < width; x++) {
-                        final int rgb = src.getRGB(x, y);
-                        final int red = 0xff & (rgb >> 16);
-                        final int green = 0xff & (rgb >> 8);
-                        final int blue = 0xff & (rgb >> 0);
-
-                        if (bitsPerSample == 1) {
-                            int sample = (red + green + blue) / 3;
-                            if (sample > 127) {
-                                sample = 0;
-                            } else {
-                                sample = 1;
-                            }
-                            bitCache <<= 1;
-                            bitCache |= sample;
-                            bitsInCache++;
-                            if (bitsInCache == 8) {
-                                uncompressed[counter++] = (byte) bitCache;
-                                bitCache = 0;
-                                bitsInCache = 0;
-                            }
-                        } else if(samplesPerPixel==4){
-                            uncompressed[counter++] = (byte) red;
-                            uncompressed[counter++] = (byte) green;
-                            uncompressed[counter++] = (byte) blue;
-                            uncompressed[counter++] = (byte) (rgb>>24);
-                        }else {
-                            // samples per pixel is 3
-                            uncompressed[counter++] = (byte) red;
-                            uncompressed[counter++] = (byte) green;
-                            uncompressed[counter++] = (byte) blue;
-                        }
-                    }
-                    if (bitsInCache > 0) {
-                        bitCache <<= (8 - bitsInCache);
-                        uncompressed[counter++] = (byte) bitCache;
-                    }
-                }
-
-                result[i] = uncompressed;
-            }
-
-        }
-
-        return result;
     }
 
     protected void writeImageFileHeader(final BinaryOutputStream bos)

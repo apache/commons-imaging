@@ -36,6 +36,19 @@ public class TiffImageWriterLossy extends TiffImageWriterBase {
         super(byteOrder);
     }
 
+    private void updateOffsetsStep(final List<TiffOutputItem> outputItems) {
+        int offset = TIFF_HEADER_SIZE;
+
+        for (final TiffOutputItem outputItem : outputItems) {
+            outputItem.setOffset(offset);
+            final int itemLength = outputItem.getItemLength();
+            offset += itemLength;
+
+            final int remainder = imageDataPaddingLength(itemLength);
+            offset += remainder;
+        }
+    }
+
     @Override
     public void write(final OutputStream os, final TiffOutputSet outputSet)
             throws IOException, ImageWriteException {
@@ -51,19 +64,6 @@ public class TiffImageWriterLossy extends TiffImageWriterBase {
 
         // NB: resource is intentionally left open
         writeStep(bos, outputItems);
-    }
-
-    private void updateOffsetsStep(final List<TiffOutputItem> outputItems) {
-        int offset = TIFF_HEADER_SIZE;
-
-        for (final TiffOutputItem outputItem : outputItems) {
-            outputItem.setOffset(offset);
-            final int itemLength = outputItem.getItemLength();
-            offset += itemLength;
-
-            final int remainder = imageDataPaddingLength(itemLength);
-            offset += remainder;
-        }
     }
 
     private void writeStep(final BinaryOutputStream bos,

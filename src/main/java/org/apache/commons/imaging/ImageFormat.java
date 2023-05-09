@@ -22,12 +22,7 @@ package org.apache.commons.imaging;
  */
 public interface ImageFormat {
 
-    /**
-     * Gets the name of this {@link ImageFormat}.
-     *
-     * @return String name
-     */
-    String getName();
+    String getDefaultExtension();
 
     /**
      * Gets the file extension associated with this {@link ImageFormat}.
@@ -36,5 +31,10 @@ public interface ImageFormat {
      */
     String[] getExtensions();
 
-    String getDefaultExtension();
+    /**
+     * Gets the name of this {@link ImageFormat}.
+     *
+     * @return String name
+     */
+    String getName();
 }

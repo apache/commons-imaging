@@ -35,6 +35,15 @@ import org.apache.commons.imaging.internal.Debug;
  * the non-null-terminated text in an unknown byte order.
  */
 public final class TagInfoGpsText extends TagInfo {
+    private static final class TextEncoding {
+        final byte[] prefix;
+        public final String encodingName;
+
+        TextEncoding(final byte[] prefix, final String encodingName) {
+            this.prefix = prefix;
+            this.encodingName = encodingName;
+        }
+    }
     private static final TagInfoGpsText.TextEncoding TEXT_ENCODING_ASCII = new TextEncoding(
             new byte[] { 0x41, 0x53, 0x43, 0x49, 0x49, 0x00, 0x00, 0x00, },
             "US-ASCII"); // ITU-T T.50 IA5
@@ -51,6 +60,7 @@ public final class TagInfoGpsText extends TagInfo {
             new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
             // Try to interpret an undefined text as ISO-8859-1 (Latin)
             "ISO-8859-1"); // Undefined
+
     private static final TagInfoGpsText.TextEncoding[] TEXT_ENCODINGS = {
             TEXT_ENCODING_ASCII, //
             TEXT_ENCODING_JIS, //
@@ -62,21 +72,6 @@ public final class TagInfoGpsText extends TagInfo {
     public TagInfoGpsText(final String name, final int tag,
             final TiffDirectoryType exifDirectory) {
         super(name, tag, FieldType.UNDEFINED, LENGTH_UNKNOWN, exifDirectory);
-    }
-
-    @Override
-    public boolean isText() {
-        return true;
-    }
-
-    private static final class TextEncoding {
-        final byte[] prefix;
-        public final String encodingName;
-
-        TextEncoding(final byte[] prefix, final String encodingName) {
-            this.prefix = prefix;
-            this.encodingName = encodingName;
-        }
     }
 
     @Override
@@ -176,5 +171,10 @@ public final class TagInfoGpsText extends TagInfo {
 
         // try ASCII, with NO prefix.
         return new String(bytes, StandardCharsets.US_ASCII);
+    }
+
+    @Override
+    public boolean isText() {
+        return true;
     }
 }

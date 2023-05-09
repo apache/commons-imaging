@@ -40,8 +40,19 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
  */
 public class TiffField {
 
-    private static final Logger LOGGER = Logger.getLogger(TiffField.class.getName());
+    public final class OversizeValueElement extends TiffElement {
+        public OversizeValueElement(final int offset, final int length) {
+            super(offset, length);
+        }
 
+        @Override
+        public String getElementDescription() {
+            return "OversizeValueElement, tag: " + getTagInfo().name
+                    + ", fieldType: " + getFieldType().getName();
+        }
+    }
+
+    private static final Logger LOGGER = Logger.getLogger(TiffField.class.getName());
     private final TagInfo tagInfo;
     private final int tag;
     private final int directoryType;
@@ -50,6 +61,7 @@ public class TiffField {
     private final long offset;
     private final byte[] value;
     private final ByteOrder byteOrder;
+
     private final int sortHint;
 
     public TiffField(final int tag, final int directoryType, final FieldType fieldType,
@@ -68,45 +80,36 @@ public class TiffField {
         tagInfo = TiffTags.getTag(directoryType, tag);
     }
 
-    public int getDirectoryType() {
-        return directoryType;
+    public void dump() {
+        try (StringWriter sw = new StringWriter(); PrintWriter pw = new PrintWriter(sw)) {
+            dump(pw);
+            pw.flush();
+            sw.flush();
+            LOGGER.fine(sw.toString());
+        } catch (final IOException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+        }
     }
 
-    public TagInfo getTagInfo() {
-        return tagInfo;
+    public void dump(final PrintWriter pw) {
+        dump(pw, null);
     }
 
-    /**
-     * Returns the field's tag, derived from bytes 0-1.
-     * @return the tag, as an {@code int} in which only the lowest 2 bytes are set
-     */
-    public int getTag() {
-        return tag;
-    }
+    public void dump(final PrintWriter pw, final String prefix) {
+        if (prefix != null) {
+            pw.print(prefix + ": ");
+        }
 
-    /**
-     * Returns the field's type, derived from bytes 2-3.
-     * @return the field's type, as a {@code FieldType} object.
-     */
-    public FieldType getFieldType() {
-        return fieldType;
-    }
-
-    /**
-     * Returns the field's count, derived from bytes 4-7.
-     * @return the count
-     */
-    public long getCount() {
-        return count;
+        pw.println(toString());
+        pw.flush();
     }
 
     /**
-     * Returns the TIFF field's offset/value field, derived from bytes 8-11.
-     * @return the field's offset in a {@code long} of 4 packed bytes,
-     * or its inlined value &lt;= 4 bytes long encoded in the field's byte order.
+     * Returns a copy of the raw value of the field.
+     * @return the value of the field, in the byte order of the field.
      */
-    public int getOffset() {
-        return (int) offset;
+    public byte[] getByteArrayValue() {
+        return BinaryFunctions.head(value, getBytesLength());
     }
 
     /**
@@ -115,18 +118,6 @@ public class TiffField {
      */
     public ByteOrder getByteOrder() {
         return byteOrder;
-    }
-
-    public int getSortHint() {
-        return sortHint;
-    }
-
-    /**
-     * Indicates whether the field's value is inlined into the offset field.
-     * @return true if the value is inlined
-     */
-    public boolean isLocalValue() {
-        return (count * fieldType.getSize()) <= TiffConstants.TIFF_ENTRY_MAX_VALUE_LENGTH;
     }
 
     /**
@@ -138,23 +129,171 @@ public class TiffField {
     }
 
     /**
-     * Returns a copy of the raw value of the field.
-     * @return the value of the field, in the byte order of the field.
+     * Returns the field's count, derived from bytes 4-7.
+     * @return the count
      */
-    public byte[] getByteArrayValue() {
-        return BinaryFunctions.head(value, getBytesLength());
+    public long getCount() {
+        return count;
     }
 
-    public final class OversizeValueElement extends TiffElement {
-        public OversizeValueElement(final int offset, final int length) {
-            super(offset, length);
+    public String getDescriptionWithoutValue() {
+        return getTag() + " (0x" + Integer.toHexString(getTag()) + ": " + getTagInfo().name
+                + "): ";
+    }
+
+    public int getDirectoryType() {
+        return directoryType;
+    }
+
+    public double[] getDoubleArrayValue() throws ImageReadException {
+        final Object o = getValue();
+        // if (o == null)
+        // return null;
+
+        if (o instanceof Number) {
+            return new double[] { ((Number) o).doubleValue() };
+        }
+        if (o instanceof Number[]) {
+            final Number[] numbers = (Number[]) o;
+            final double[] result = new double[numbers.length];
+            Arrays.setAll(result, i -> numbers[i].doubleValue());
+            return result;
+        }
+        if (o instanceof short[]) {
+            final short[] numbers = (short[]) o;
+            final double[] result = new double[numbers.length];
+            Arrays.setAll(result, i -> numbers[i]);
+            return result;
+        }
+        if (o instanceof int[]) {
+            final int[] numbers = (int[]) o;
+            final double[] result = new double[numbers.length];
+            Arrays.setAll(result, i -> numbers[i]);
+            return result;
+        }
+        if (o instanceof float[]) {
+            final float[] numbers = (float[]) o;
+            final double[] result = new double[numbers.length];
+            Arrays.setAll(result, i -> numbers[i]);
+            return result;
+        }
+        if (o instanceof double[]) {
+            final double[] numbers = (double[]) o;
+            return Arrays.copyOf(numbers, numbers.length);
         }
 
-        @Override
-        public String getElementDescription() {
-            return "OversizeValueElement, tag: " + getTagInfo().name
-                    + ", fieldType: " + getFieldType().getName();
+        throw new ImageReadException("Unknown value: " + o + " for: "
+                + getTagInfo().getDescription());
+        // return null;
+    }
+
+    public double getDoubleValue() throws ImageReadException {
+        final Object o = getValue();
+        if (o == null) {
+            throw new ImageReadException("Missing value: "
+                    + getTagInfo().getDescription());
         }
+
+        return ((Number) o).doubleValue();
+    }
+
+    /**
+     * Returns the field's type, derived from bytes 2-3.
+     * @return the field's type, as a {@code FieldType} object.
+     */
+    public FieldType getFieldType() {
+        return fieldType;
+    }
+
+    public String getFieldTypeName() {
+        return getFieldType().getName();
+    }
+
+    public int[] getIntArrayValue() throws ImageReadException {
+        final Object o = getValue();
+        // if (o == null)
+        // return null;
+
+        if (o instanceof Number) {
+            return new int[] { ((Number) o).intValue() };
+        }
+        if (o instanceof Number[]) {
+            final Number[] numbers = (Number[]) o;
+            final int[] result = new int[numbers.length];
+            Arrays.setAll(result, i -> numbers[i].intValue());
+            return result;
+        }
+        if (o instanceof short[]) {
+            final short[] numbers = (short[]) o;
+            final int[] result = new int[numbers.length];
+            Arrays.setAll(result, i ->  0xffff & numbers[i]);
+            return result;
+        }
+        if (o instanceof int[]) {
+            final int[] numbers = (int[]) o;
+            return Arrays.copyOf(numbers, numbers.length);
+        }
+
+        throw new ImageReadException("Unknown value: " + o + " for: "
+                + getTagInfo().getDescription());
+        // return null;
+    }
+
+    public int getIntValue() throws ImageReadException {
+        final Object o = getValue();
+        if (o == null) {
+            throw new ImageReadException("Missing value: "
+                    + getTagInfo().getDescription());
+        }
+
+        return ((Number) o).intValue();
+    }
+
+    public int getIntValueOrArraySum() throws ImageReadException {
+        final Object o = getValue();
+        // if (o == null)
+        // return -1;
+
+        if (o instanceof Number) {
+            return ((Number) o).intValue();
+        }
+        if (o instanceof Number[]) {
+            final Number[] numbers = (Number[]) o;
+            int sum = 0;
+            for (final Number number : numbers) {
+                sum += number.intValue();
+            }
+            return sum;
+        }
+        if (o instanceof short[]) {
+            final short[] numbers = (short[]) o;
+            int sum = 0;
+            for (final short number : numbers) {
+                sum += number;
+            }
+            return sum;
+        }
+        if (o instanceof int[]) {
+            final int[] numbers = (int[]) o;
+            int sum = 0;
+            for (final int number : numbers) {
+                sum += number;
+            }
+            return sum;
+        }
+
+        throw new ImageReadException("Unknown value: " + o + " for: "
+                + getTagInfo().getDescription());
+        // return -1;
+    }
+
+    /**
+     * Returns the TIFF field's offset/value field, derived from bytes 8-11.
+     * @return the field's offset in a {@code long} of 4 packed bytes,
+     * or its inlined value &lt;= 4 bytes long encoded in the field's byte order.
+     */
+    public int getOffset() {
+        return (int) offset;
     }
 
     public TiffElement getOversizeValueElement() {
@@ -163,6 +302,46 @@ public class TiffField {
         }
 
         return new OversizeValueElement(getOffset(), value.length);
+    }
+
+    public int getSortHint() {
+        return sortHint;
+    }
+
+    public String getStringValue() throws ImageReadException {
+        final Object o = getValue();
+        if (o == null) {
+            return null;
+        }
+        if (!(o instanceof String)) {
+            throw new ImageReadException("Expected String value("
+                    + getTagInfo().getDescription() + "): " + o);
+        }
+        return (String) o;
+    }
+
+    /**
+     * Returns the field's tag, derived from bytes 0-1.
+     * @return the tag, as an {@code int} in which only the lowest 2 bytes are set
+     */
+    public int getTag() {
+        return tag;
+    }
+
+    public TagInfo getTagInfo() {
+        return tagInfo;
+    }
+
+    public String getTagName() {
+        if (getTagInfo() == TiffTagConstants.TIFF_TAG_UNKNOWN) {
+            return getTagInfo().name + " (0x" + Integer.toHexString(getTag()) + ")";
+        }
+        return getTagInfo().name;
+    }
+
+    public Object getValue() throws ImageReadException {
+        // System.out.print("getValue");
+        return getTagInfo().getValue(this);
     }
 
     public String getValueDescription() {
@@ -366,33 +545,12 @@ public class TiffField {
         return "Unknown: " + o.getClass().getName();
     }
 
-    public void dump() {
-        try (StringWriter sw = new StringWriter(); PrintWriter pw = new PrintWriter(sw)) {
-            dump(pw);
-            pw.flush();
-            sw.flush();
-            LOGGER.fine(sw.toString());
-        } catch (final IOException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage(), e);
-        }
-    }
-
-    public void dump(final PrintWriter pw) {
-        dump(pw, null);
-    }
-
-    public void dump(final PrintWriter pw, final String prefix) {
-        if (prefix != null) {
-            pw.print(prefix + ": ");
-        }
-
-        pw.println(toString());
-        pw.flush();
-    }
-
-    public String getDescriptionWithoutValue() {
-        return getTag() + " (0x" + Integer.toHexString(getTag()) + ": " + getTagInfo().name
-                + "): ";
+    /**
+     * Indicates whether the field's value is inlined into the offset field.
+     * @return true if the value is inlined
+     */
+    public boolean isLocalValue() {
+        return (count * fieldType.getSize()) <= TiffConstants.TIFF_ENTRY_MAX_VALUE_LENGTH;
     }
 
     @Override
@@ -409,163 +567,5 @@ public class TiffField {
                 " " +
                 getFieldType().getName() +
                 ")";
-    }
-
-    public String getTagName() {
-        if (getTagInfo() == TiffTagConstants.TIFF_TAG_UNKNOWN) {
-            return getTagInfo().name + " (0x" + Integer.toHexString(getTag()) + ")";
-        }
-        return getTagInfo().name;
-    }
-
-    public String getFieldTypeName() {
-        return getFieldType().getName();
-    }
-
-    public Object getValue() throws ImageReadException {
-        // System.out.print("getValue");
-        return getTagInfo().getValue(this);
-    }
-
-    public String getStringValue() throws ImageReadException {
-        final Object o = getValue();
-        if (o == null) {
-            return null;
-        }
-        if (!(o instanceof String)) {
-            throw new ImageReadException("Expected String value("
-                    + getTagInfo().getDescription() + "): " + o);
-        }
-        return (String) o;
-    }
-
-    public int[] getIntArrayValue() throws ImageReadException {
-        final Object o = getValue();
-        // if (o == null)
-        // return null;
-
-        if (o instanceof Number) {
-            return new int[] { ((Number) o).intValue() };
-        }
-        if (o instanceof Number[]) {
-            final Number[] numbers = (Number[]) o;
-            final int[] result = new int[numbers.length];
-            Arrays.setAll(result, i -> numbers[i].intValue());
-            return result;
-        }
-        if (o instanceof short[]) {
-            final short[] numbers = (short[]) o;
-            final int[] result = new int[numbers.length];
-            Arrays.setAll(result, i ->  0xffff & numbers[i]);
-            return result;
-        }
-        if (o instanceof int[]) {
-            final int[] numbers = (int[]) o;
-            return Arrays.copyOf(numbers, numbers.length);
-        }
-
-        throw new ImageReadException("Unknown value: " + o + " for: "
-                + getTagInfo().getDescription());
-        // return null;
-    }
-
-    public double[] getDoubleArrayValue() throws ImageReadException {
-        final Object o = getValue();
-        // if (o == null)
-        // return null;
-
-        if (o instanceof Number) {
-            return new double[] { ((Number) o).doubleValue() };
-        }
-        if (o instanceof Number[]) {
-            final Number[] numbers = (Number[]) o;
-            final double[] result = new double[numbers.length];
-            Arrays.setAll(result, i -> numbers[i].doubleValue());
-            return result;
-        }
-        if (o instanceof short[]) {
-            final short[] numbers = (short[]) o;
-            final double[] result = new double[numbers.length];
-            Arrays.setAll(result, i -> numbers[i]);
-            return result;
-        }
-        if (o instanceof int[]) {
-            final int[] numbers = (int[]) o;
-            final double[] result = new double[numbers.length];
-            Arrays.setAll(result, i -> numbers[i]);
-            return result;
-        }
-        if (o instanceof float[]) {
-            final float[] numbers = (float[]) o;
-            final double[] result = new double[numbers.length];
-            Arrays.setAll(result, i -> numbers[i]);
-            return result;
-        }
-        if (o instanceof double[]) {
-            final double[] numbers = (double[]) o;
-            return Arrays.copyOf(numbers, numbers.length);
-        }
-
-        throw new ImageReadException("Unknown value: " + o + " for: "
-                + getTagInfo().getDescription());
-        // return null;
-    }
-
-    public int getIntValueOrArraySum() throws ImageReadException {
-        final Object o = getValue();
-        // if (o == null)
-        // return -1;
-
-        if (o instanceof Number) {
-            return ((Number) o).intValue();
-        }
-        if (o instanceof Number[]) {
-            final Number[] numbers = (Number[]) o;
-            int sum = 0;
-            for (final Number number : numbers) {
-                sum += number.intValue();
-            }
-            return sum;
-        }
-        if (o instanceof short[]) {
-            final short[] numbers = (short[]) o;
-            int sum = 0;
-            for (final short number : numbers) {
-                sum += number;
-            }
-            return sum;
-        }
-        if (o instanceof int[]) {
-            final int[] numbers = (int[]) o;
-            int sum = 0;
-            for (final int number : numbers) {
-                sum += number;
-            }
-            return sum;
-        }
-
-        throw new ImageReadException("Unknown value: " + o + " for: "
-                + getTagInfo().getDescription());
-        // return -1;
-    }
-
-    public int getIntValue() throws ImageReadException {
-        final Object o = getValue();
-        if (o == null) {
-            throw new ImageReadException("Missing value: "
-                    + getTagInfo().getDescription());
-        }
-
-        return ((Number) o).intValue();
-    }
-
-    public double getDoubleValue() throws ImageReadException {
-        final Object o = getValue();
-        if (o == null) {
-            throw new ImageReadException("Missing value: "
-                    + getTagInfo().getDescription());
-        }
-
-        return ((Number) o).doubleValue();
     }
 }

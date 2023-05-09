@@ -27,7 +27,10 @@ final class ZigZag {
         35, 36, 48, 49, 57, 58, 62, 63
     };
 
-    private ZigZag() {
+    public static void blockToZigZag(final int[] block, final int[] zz) {
+        for (int i = 0; i < ZIG_ZAG.length; i++) {
+            zz[ZIG_ZAG[i]] = block[i];
+        }
     }
 
     public static void zigZagToBlock(final int[] zz, final int[] block) {
@@ -36,9 +39,6 @@ final class ZigZag {
         }
     }
 
-    public static void blockToZigZag(final int[] block, final int[] zz) {
-        for (int i = 0; i < ZIG_ZAG.length; i++) {
-            zz[ZIG_ZAG[i]] = block[i];
-        }
+    private ZigZag() {
     }
 }

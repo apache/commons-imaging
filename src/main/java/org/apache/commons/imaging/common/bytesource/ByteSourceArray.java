@@ -24,18 +24,18 @@ import java.util.Arrays;
 public class ByteSourceArray extends ByteSource {
     private final byte[] bytes;
 
+    public ByteSourceArray(final byte[] bytes) {
+        this(null, bytes);
+    }
+
     public ByteSourceArray(final String fileName, final byte[] bytes) {
         super(fileName);
         this.bytes = bytes;
     }
 
-    public ByteSourceArray(final byte[] bytes) {
-        this(null, bytes);
-    }
-
     @Override
-    public InputStream getInputStream() {
-        return new ByteArrayInputStream(bytes);
+    public byte[] getAll() throws IOException {
+        return bytes;
     }
 
     @Override
@@ -53,18 +53,18 @@ public class ByteSourceArray extends ByteSource {
     }
 
     @Override
-    public long getLength() {
-        return bytes.length;
-    }
-
-    @Override
-    public byte[] getAll() throws IOException {
-        return bytes;
-    }
-
-    @Override
     public String getDescription() {
         return bytes.length + " byte array";
+    }
+
+    @Override
+    public InputStream getInputStream() {
+        return new ByteArrayInputStream(bytes);
+    }
+
+    @Override
+    public long getLength() {
+        return bytes.length;
     }
 
 }

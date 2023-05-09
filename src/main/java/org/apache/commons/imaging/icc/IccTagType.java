@@ -20,7 +20,7 @@ interface IccTagType {
 
     String getName();
 
-    String getTypeDescription();
-
     int getSignature();
+
+    String getTypeDescription();
 }

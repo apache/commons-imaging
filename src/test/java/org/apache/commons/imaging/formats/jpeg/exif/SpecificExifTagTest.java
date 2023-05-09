@@ -39,15 +39,6 @@ public abstract class SpecificExifTagTest extends ExifBaseTest {
         return getImagesWithExifData().stream();
     }
 
-    @ParameterizedTest
-    @MethodSource("data")
-    public void testAllImages(final File imageFile) throws Exception {
-        if (imageFile.getParentFile().getName().toLowerCase().equals("@broken")) {
-            return;
-        }
-        checkImage(imageFile);
-    }
-
     protected abstract void checkField(File imageFile, TiffField field)
             throws IOException, ImageReadException, ImageWriteException;
 
@@ -75,6 +66,15 @@ public abstract class SpecificExifTagTest extends ExifBaseTest {
             checkField(imageFile, field);
         }
 
+    }
+
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testAllImages(final File imageFile) throws Exception {
+        if (imageFile.getParentFile().getName().toLowerCase().equals("@broken")) {
+            return;
+        }
+        checkImage(imageFile);
     }
 
 }

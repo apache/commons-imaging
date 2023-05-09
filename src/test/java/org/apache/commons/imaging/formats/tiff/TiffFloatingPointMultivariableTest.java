@@ -72,6 +72,134 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
         }
     }
 
+    private void applyTilePredictor(final int nRowsInBlock, final int nColsInBlock, final byte[] bytes) {
+        // The floating-point horizonal predictor breaks the samples into
+        // separate sets of bytes.  The first set contains the high-order bytes.
+        // The second the second-highest order bytes, etc.  Once the bytes are
+        // separated, differencing is applied.  This treatment improves the
+        // statistical predictability of the data. By doing so, it improves
+        // its compressibility.
+        //     More extensive discussions of this technique are given in the
+        // Javadoc for the TIFF-specific ImageDataReader class.
+        final byte[] b = new byte[bytes.length];
+        final int bytesInRow = nColsInBlock * 4;
+        for (int iPlane = 0; iPlane < samplesPerPixel; iPlane++) {
+            // separate out the groups of bytes
+            final int planarByteOffset = iPlane * nRowsInBlock * nColsInBlock * 4;
+            for (int i = 0; i < nRowsInBlock; i++) {
+                final int aOffset = planarByteOffset + i * bytesInRow;
+                final int bOffset = aOffset + nColsInBlock;
+                final int cOffset = bOffset + nColsInBlock;
+                final int dOffset = cOffset + nColsInBlock;
+                for (int j = 0; j < nColsInBlock; j++) {
+                    b[aOffset + j] = bytes[aOffset + j * 4];
+                    b[bOffset + j] = bytes[aOffset + j * 4 + 1];
+                    b[cOffset + j] = bytes[aOffset + j * 4 + 2];
+                    b[dOffset + j] = bytes[aOffset + j * 4 + 3];
+                }
+                // apply differencing
+                for (int j = bytesInRow - 1; j > 0; j--) {
+                    b[aOffset + j] -= b[aOffset + j - 1];
+                }
+            }
+        }
+        // copy the results back over the input byte array
+        System.arraycopy(b, 0, bytes, 0, bytes.length);
+    }
+
+    /**
+     * Gets the bytes for output for a 32 bit floating point format. Note that
+     * this method operates over "blocks" of data which may represent either
+     * TIFF Strips or Tiles. When processing strips, there is always one column
+     * of blocks and each strip is exactly the full width of the image. When
+     * processing tiles, there may be one or more columns of blocks and the
+     * block coverage may extend beyond both the last row and last column.
+     *
+     * @param f an array of the grid of output values in row major order
+     * @param width the width of the overall image
+     * @param height the height of the overall image
+     * @param nRowsInBlock the number of rows in the Strip or Tile
+     * @param nColsInBlock the number of columns in the Strip or Tile
+     * @param byteOrder little endian or big endian
+     * @return a valid array of equally sized array.
+     */
+    private byte[][] getBytesForOutput32(
+        final int nRowsInBlock, final int nColsInBlock,
+        final ByteOrder byteOrder,
+        final boolean useTiles, final TiffPlanarConfiguration planarConfiguration ) {
+        final int nColsOfBlocks = (width + nColsInBlock - 1) / nColsInBlock;
+        final int nRowsOfBlocks = (height + nRowsInBlock + 1) / nRowsInBlock;
+        final int bytesPerPixel = 4 * samplesPerPixel;
+        final int nBlocks = nRowsOfBlocks * nColsOfBlocks;
+        final int nBytesInBlock = bytesPerPixel * nRowsInBlock * nColsInBlock;
+        final byte[][] blocks = new byte[nBlocks][nBytesInBlock];
+        if(planarConfiguration == TiffPlanarConfiguration.CHUNKY){
+            for (int i = 0; i < height; i++) {
+                final int blockRow = i / nRowsInBlock;
+                final int rowInBlock = i - blockRow * nRowsInBlock;
+                for (int j = 0; j < width; j++) {
+                    final int blockCol = j / nColsInBlock;
+                    final int colInBlock = j - blockCol * nColsInBlock;
+                    final byte[] b = blocks[blockRow * nColsOfBlocks + blockCol];  // reference to relevant block
+                    for(int k=0; k<2; k++){
+                        final float sValue = fSample[k*width*height + i * width + j];
+                        final int sample = Float.floatToRawIntBits(sValue);
+                        final int offset = (rowInBlock * nColsInBlock + colInBlock) * 8 + k * 4;
+                        if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
+                            b[offset] = (byte) (sample & 0xff);
+                            b[offset + 1] = (byte) ((sample >> 8) & 0xff);
+                            b[offset + 2] = (byte) ((sample >> 16) & 0xff);
+                            b[offset + 3] = (byte) ((sample >> 24) & 0xff);
+                        } else {
+                            b[offset] = (byte) ((sample >> 24) & 0xff);
+                            b[offset + 1] = (byte) ((sample >> 16) & 0xff);
+                            b[offset + 2] = (byte) ((sample >> 8) & 0xff);
+                            b[offset + 3] = (byte) (sample & 0xff);
+                        }
+                    }
+                }
+            }
+        }else{
+            for (int i = 0; i < height; i++) {
+                final int blockRow = i / nRowsInBlock;
+                final int rowInBlock = i - blockRow * nRowsInBlock;
+                int blockPlanarOffset = nRowsInBlock*nColsInBlock;
+                if(!useTiles && (blockRow+1)*nRowsInBlock>height){
+                    // For TIFF files using the Strip format, the convention
+                    // is to not include any extra padding in the data.  So if the
+                    // height of the image is not evenly divided by the number
+                    // of rows per strip, an adjustmnet is made to the size of the block.
+                    // However, the TIFF specification calls for tiles to always be padded.
+                     final int nRowsAdjusted = height - blockRow*nRowsInBlock;
+                     blockPlanarOffset = nRowsAdjusted * nColsInBlock;
+                }
+                for (int j = 0; j < width; j++) {
+                    final int blockCol = j / nColsInBlock;
+                    final int colInBlock = j - blockCol * nColsInBlock;
+                    final byte[] b = blocks[blockRow * nColsOfBlocks + blockCol];  // reference to relevant block
+                    for(int k=0; k<2; k++){
+                        final float sValue = fSample[k*width*height + i * width + j];
+                        final int sample = Float.floatToRawIntBits(sValue);
+                        final int offset = (k * blockPlanarOffset + rowInBlock * nColsInBlock + colInBlock)* 4;
+                        if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
+                            b[offset] = (byte) (sample & 0xff);
+                            b[offset + 1] = (byte) ((sample >> 8) & 0xff);
+                            b[offset + 2] = (byte) ((sample >> 16) & 0xff);
+                            b[offset + 3] = (byte) ((sample >> 24) & 0xff);
+                        } else {
+                            b[offset] = (byte) ((sample >> 24) & 0xff);
+                            b[offset + 1] = (byte) ((sample >> 16) & 0xff);
+                            b[offset + 2] = (byte) ((sample >> 8) & 0xff);
+                            b[offset + 3] = (byte) (sample & 0xff);
+                        }
+                    }
+                }
+            }
+        }
+
+        return blocks;
+    }
+
     @Test
     public void test() throws Exception {
         // we set up the 32 and 64 bit test cases.  At this time,
@@ -219,134 +347,6 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
             bos.flush();
         }
         return outputFile;
-    }
-
-    /**
-     * Gets the bytes for output for a 32 bit floating point format. Note that
-     * this method operates over "blocks" of data which may represent either
-     * TIFF Strips or Tiles. When processing strips, there is always one column
-     * of blocks and each strip is exactly the full width of the image. When
-     * processing tiles, there may be one or more columns of blocks and the
-     * block coverage may extend beyond both the last row and last column.
-     *
-     * @param f an array of the grid of output values in row major order
-     * @param width the width of the overall image
-     * @param height the height of the overall image
-     * @param nRowsInBlock the number of rows in the Strip or Tile
-     * @param nColsInBlock the number of columns in the Strip or Tile
-     * @param byteOrder little endian or big endian
-     * @return a valid array of equally sized array.
-     */
-    private byte[][] getBytesForOutput32(
-        final int nRowsInBlock, final int nColsInBlock,
-        final ByteOrder byteOrder,
-        final boolean useTiles, final TiffPlanarConfiguration planarConfiguration ) {
-        final int nColsOfBlocks = (width + nColsInBlock - 1) / nColsInBlock;
-        final int nRowsOfBlocks = (height + nRowsInBlock + 1) / nRowsInBlock;
-        final int bytesPerPixel = 4 * samplesPerPixel;
-        final int nBlocks = nRowsOfBlocks * nColsOfBlocks;
-        final int nBytesInBlock = bytesPerPixel * nRowsInBlock * nColsInBlock;
-        final byte[][] blocks = new byte[nBlocks][nBytesInBlock];
-        if(planarConfiguration == TiffPlanarConfiguration.CHUNKY){
-            for (int i = 0; i < height; i++) {
-                final int blockRow = i / nRowsInBlock;
-                final int rowInBlock = i - blockRow * nRowsInBlock;
-                for (int j = 0; j < width; j++) {
-                    final int blockCol = j / nColsInBlock;
-                    final int colInBlock = j - blockCol * nColsInBlock;
-                    final byte[] b = blocks[blockRow * nColsOfBlocks + blockCol];  // reference to relevant block
-                    for(int k=0; k<2; k++){
-                        final float sValue = fSample[k*width*height + i * width + j];
-                        final int sample = Float.floatToRawIntBits(sValue);
-                        final int offset = (rowInBlock * nColsInBlock + colInBlock) * 8 + k * 4;
-                        if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
-                            b[offset] = (byte) (sample & 0xff);
-                            b[offset + 1] = (byte) ((sample >> 8) & 0xff);
-                            b[offset + 2] = (byte) ((sample >> 16) & 0xff);
-                            b[offset + 3] = (byte) ((sample >> 24) & 0xff);
-                        } else {
-                            b[offset] = (byte) ((sample >> 24) & 0xff);
-                            b[offset + 1] = (byte) ((sample >> 16) & 0xff);
-                            b[offset + 2] = (byte) ((sample >> 8) & 0xff);
-                            b[offset + 3] = (byte) (sample & 0xff);
-                        }
-                    }
-                }
-            }
-        }else{
-            for (int i = 0; i < height; i++) {
-                final int blockRow = i / nRowsInBlock;
-                final int rowInBlock = i - blockRow * nRowsInBlock;
-                int blockPlanarOffset = nRowsInBlock*nColsInBlock;
-                if(!useTiles && (blockRow+1)*nRowsInBlock>height){
-                    // For TIFF files using the Strip format, the convention
-                    // is to not include any extra padding in the data.  So if the
-                    // height of the image is not evenly divided by the number
-                    // of rows per strip, an adjustmnet is made to the size of the block.
-                    // However, the TIFF specification calls for tiles to always be padded.
-                     final int nRowsAdjusted = height - blockRow*nRowsInBlock;
-                     blockPlanarOffset = nRowsAdjusted * nColsInBlock;
-                }
-                for (int j = 0; j < width; j++) {
-                    final int blockCol = j / nColsInBlock;
-                    final int colInBlock = j - blockCol * nColsInBlock;
-                    final byte[] b = blocks[blockRow * nColsOfBlocks + blockCol];  // reference to relevant block
-                    for(int k=0; k<2; k++){
-                        final float sValue = fSample[k*width*height + i * width + j];
-                        final int sample = Float.floatToRawIntBits(sValue);
-                        final int offset = (k * blockPlanarOffset + rowInBlock * nColsInBlock + colInBlock)* 4;
-                        if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
-                            b[offset] = (byte) (sample & 0xff);
-                            b[offset + 1] = (byte) ((sample >> 8) & 0xff);
-                            b[offset + 2] = (byte) ((sample >> 16) & 0xff);
-                            b[offset + 3] = (byte) ((sample >> 24) & 0xff);
-                        } else {
-                            b[offset] = (byte) ((sample >> 24) & 0xff);
-                            b[offset + 1] = (byte) ((sample >> 16) & 0xff);
-                            b[offset + 2] = (byte) ((sample >> 8) & 0xff);
-                            b[offset + 3] = (byte) (sample & 0xff);
-                        }
-                    }
-                }
-            }
-        }
-
-        return blocks;
-    }
-
-    private void applyTilePredictor(final int nRowsInBlock, final int nColsInBlock, final byte[] bytes) {
-        // The floating-point horizonal predictor breaks the samples into
-        // separate sets of bytes.  The first set contains the high-order bytes.
-        // The second the second-highest order bytes, etc.  Once the bytes are
-        // separated, differencing is applied.  This treatment improves the
-        // statistical predictability of the data. By doing so, it improves
-        // its compressibility.
-        //     More extensive discussions of this technique are given in the
-        // Javadoc for the TIFF-specific ImageDataReader class.
-        final byte[] b = new byte[bytes.length];
-        final int bytesInRow = nColsInBlock * 4;
-        for (int iPlane = 0; iPlane < samplesPerPixel; iPlane++) {
-            // separate out the groups of bytes
-            final int planarByteOffset = iPlane * nRowsInBlock * nColsInBlock * 4;
-            for (int i = 0; i < nRowsInBlock; i++) {
-                final int aOffset = planarByteOffset + i * bytesInRow;
-                final int bOffset = aOffset + nColsInBlock;
-                final int cOffset = bOffset + nColsInBlock;
-                final int dOffset = cOffset + nColsInBlock;
-                for (int j = 0; j < nColsInBlock; j++) {
-                    b[aOffset + j] = bytes[aOffset + j * 4];
-                    b[bOffset + j] = bytes[aOffset + j * 4 + 1];
-                    b[cOffset + j] = bytes[aOffset + j * 4 + 2];
-                    b[dOffset + j] = bytes[aOffset + j * 4 + 3];
-                }
-                // apply differencing
-                for (int j = bytesInRow - 1; j > 0; j--) {
-                    b[aOffset + j] -= b[aOffset + j - 1];
-                }
-            }
-        }
-        // copy the results back over the input byte array
-        System.arraycopy(b, 0, bytes, 0, bytes.length);
     }
 
 }

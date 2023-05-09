@@ -101,6 +101,11 @@ public class PngChunkItxt extends PngTextChunk {
         }
     }
 
+    @Override
+    public PngText getContents() {
+        return new PngText.Itxt(keyword, text, languageTag, translatedKeyword);
+    }
+
     /**
      * @return Returns the keyword.
      */
@@ -115,10 +120,5 @@ public class PngChunkItxt extends PngTextChunk {
     @Override
     public String getText() {
         return text;
-    }
-
-    @Override
-    public PngText getContents() {
-        return new PngText.Itxt(keyword, text, languageTag, translatedKeyword);
     }
 }

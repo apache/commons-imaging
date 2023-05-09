@@ -33,15 +33,34 @@ import org.junit.jupiter.api.Test;
 public class ImageBuilderTest {
 
 
-    /**
-     * Test of bad dimensions in constructor
-     */
-    @Test
-    public void testConstructorBounds() {
-        executeBadConstructor(0, 10);
-        executeBadConstructor(10, 0);
+    void executeBadBounds(final ImageBuilder imageBuilder, final int x, final int y, final int w, final int h){
+        try{
+            final ImageBuilder sub = imageBuilder.getSubset(x, y, w, h);
+            fail("Failed to detect bad bounds "+x+", "+y+", "+w+", "+h);
+        }catch (final RasterFormatException rfe){
+            // success, no action required
+        }
     }
 
+
+    void executeBadConstructor(final int w, final int h){
+        try{
+            final ImageBuilder iBuilder = new ImageBuilder(w, h, true);
+            fail("Failed to detect bad constructor "+w+", "+h);
+        }catch (final RasterFormatException rfe){
+            // success, no action required
+        }
+    }
+
+    void populate(final ImageBuilder imageBuilder){
+        for(int x=0; x<100; x++){
+            for(int y=0; y<100; y++){
+                final int k = y*100+x;
+                final int rgb = 0xff000000|k;
+                imageBuilder.setRGB(x, y, rgb);
+            }
+        }
+    }
 
     /**
      * Test of bad bounds in sub-image
@@ -60,34 +79,12 @@ public class ImageBuilderTest {
     }
 
     /**
-     * Test whether sub-image is consistent with source
+     * Test of bad dimensions in constructor
      */
     @Test
-    public void testSubimageAccess() {
-        final ImageBuilder imageBuilder = new ImageBuilder(100, 100, false );
-        populate(imageBuilder);
-        final BufferedImage bImage = imageBuilder.getSubimage(25, 25, 25, 25);
-        final int w = bImage.getWidth();
-        final int h = bImage.getHeight();
-        assertEquals(w, 25, "Width of subimage does not match");
-        assertEquals(h, 25, "Height of subimage does not match");
-
-        for(int x=25; x<50; x++){
-            for(int y=25; y<50; y++){
-                final int k = bImage.getRGB(x-25, y-25);
-                final int rgb = imageBuilder.getRGB(x, y);
-                assertEquals(k, rgb, "Invalid buffered image subpixel at "+x+", "+y);
-            }
-        }
-
-        final ImageBuilder testBuilder = imageBuilder.getSubset(25, 25, 25, 25);
-        for(int x=25; x<50; x++){
-            for(int y=25; y<50; y++){
-                final int k = testBuilder.getRGB(x-25, y-25);
-                final int rgb = imageBuilder.getRGB(x, y);
-                assertEquals(k, rgb, "Invalid image builder subpixel at "+x+", "+y);
-            }
-        }
+    public void testConstructorBounds() {
+        executeBadConstructor(0, 10);
+        executeBadConstructor(10, 0);
     }
 
     /**
@@ -116,31 +113,34 @@ public class ImageBuilderTest {
         assertTrue(model.isAlphaPremultiplied(), "Output image does not have alpha pre-multiplied where specified");
     }
 
-    void executeBadBounds(final ImageBuilder imageBuilder, final int x, final int y, final int w, final int h){
-        try{
-            final ImageBuilder sub = imageBuilder.getSubset(x, y, w, h);
-            fail("Failed to detect bad bounds "+x+", "+y+", "+w+", "+h);
-        }catch (final RasterFormatException rfe){
-            // success, no action required
+
+    /**
+     * Test whether sub-image is consistent with source
+     */
+    @Test
+    public void testSubimageAccess() {
+        final ImageBuilder imageBuilder = new ImageBuilder(100, 100, false );
+        populate(imageBuilder);
+        final BufferedImage bImage = imageBuilder.getSubimage(25, 25, 25, 25);
+        final int w = bImage.getWidth();
+        final int h = bImage.getHeight();
+        assertEquals(w, 25, "Width of subimage does not match");
+        assertEquals(h, 25, "Height of subimage does not match");
+
+        for(int x=25; x<50; x++){
+            for(int y=25; y<50; y++){
+                final int k = bImage.getRGB(x-25, y-25);
+                final int rgb = imageBuilder.getRGB(x, y);
+                assertEquals(k, rgb, "Invalid buffered image subpixel at "+x+", "+y);
+            }
         }
-    }
 
-    void executeBadConstructor(final int w, final int h){
-        try{
-            final ImageBuilder iBuilder = new ImageBuilder(w, h, true);
-            fail("Failed to detect bad constructor "+w+", "+h);
-        }catch (final RasterFormatException rfe){
-            // success, no action required
-        }
-    }
-
-
-    void populate(final ImageBuilder imageBuilder){
-        for(int x=0; x<100; x++){
-            for(int y=0; y<100; y++){
-                final int k = y*100+x;
-                final int rgb = 0xff000000|k;
-                imageBuilder.setRGB(x, y, rgb);
+        final ImageBuilder testBuilder = imageBuilder.getSubset(25, 25, 25, 25);
+        for(int x=25; x<50; x++){
+            for(int y=25; y<50; y++){
+                final int k = testBuilder.getRGB(x-25, y-25);
+                final int rgb = imageBuilder.getRGB(x, y);
+                assertEquals(k, rgb, "Invalid image builder subpixel at "+x+", "+y);
             }
         }
     }

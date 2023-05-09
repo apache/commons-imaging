@@ -39,6 +39,25 @@ import org.apache.commons.imaging.ImageWriteException;
 public class ZlibDeflate {
 
     /**
+     * Compress the byte[] using ZLIB deflate compression.
+     *
+     * @param bytes The bytes to compress
+     *
+     * @return The compressed bytes.
+     * @throws ImageWriteException if the bytes could not be compressed.
+     * @see DeflaterOutputStream
+     */
+    public static byte[] compress(final byte[] bytes) throws ImageWriteException {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream(bytes.length / 2);
+        try (DeflaterOutputStream compressOut = new DeflaterOutputStream(out)) {
+            compressOut.write(bytes);
+        } catch (final IOException e) {
+            throw new ImageWriteException("Unable to compress image", e);
+        }
+        return out.toByteArray();
+    }
+
+    /**
      * Compress the byte[] using ZLIB deflate decompression.
      *
      * @param bytes The bytes to decompress
@@ -58,25 +77,6 @@ public class ZlibDeflate {
         } catch (final DataFormatException e) {
             throw new ImageReadException("Unable to decompress image", e);
         }
-    }
-
-    /**
-     * Compress the byte[] using ZLIB deflate compression.
-     *
-     * @param bytes The bytes to compress
-     *
-     * @return The compressed bytes.
-     * @throws ImageWriteException if the bytes could not be compressed.
-     * @see DeflaterOutputStream
-     */
-    public static byte[] compress(final byte[] bytes) throws ImageWriteException {
-        final ByteArrayOutputStream out = new ByteArrayOutputStream(bytes.length / 2);
-        try (DeflaterOutputStream compressOut = new DeflaterOutputStream(out)) {
-            compressOut.write(bytes);
-        } catch (final IOException e) {
-            throw new ImageWriteException("Unable to compress image", e);
-        }
-        return out.toByteArray();
     }
 
 }

@@ -22,9 +22,9 @@ import org.apache.commons.imaging.ImageReadException;
 
 interface IccTagDataType {
 
+    void dump(String prefix, byte[] bytes) throws ImageReadException, IOException;
+
     String getName();
 
     int getSignature();
-
-    void dump(String prefix, byte[] bytes) throws ImageReadException, IOException;
 }

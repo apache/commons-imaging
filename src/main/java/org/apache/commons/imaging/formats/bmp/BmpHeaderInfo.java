@@ -17,6 +17,17 @@
 package org.apache.commons.imaging.formats.bmp;
 
 class BmpHeaderInfo {
+    static class ColorSpace {
+        ColorSpaceCoordinate red;
+        ColorSpaceCoordinate green;
+        ColorSpaceCoordinate blue;
+    }
+    static class ColorSpaceCoordinate {
+        int x;
+        int y;
+        int z;
+    }
+
     // BM - Windows 3.1x, 95, NT
     // BA - OS/2 Bitmap Array
     // CI - OS/2 Color Icon
@@ -25,11 +36,10 @@ class BmpHeaderInfo {
     // PT - OS/2 Pointer
     public final byte identifier1;
     public final byte identifier2;
-
     public final int fileSize;
+
     public final int reserved;
     public final int bitmapDataOffset;
-
     public final int bitmapHeaderSize;
     public final int width;
     public final int height;
@@ -39,14 +49,14 @@ class BmpHeaderInfo {
     public final int bitmapDataSize;
     public final int hResolution;
     public final int vResolution;
+
     public final int colorsUsed;
     public final int colorsImportant;
-
     public final int redMask;
     public final int greenMask;
+
     public final int blueMask;
     public final int alphaMask;
-
     public final int colorSpaceType;
     public final ColorSpace colorSpace;
     public final int gammaRed;
@@ -54,20 +64,10 @@ class BmpHeaderInfo {
     public final int gammaBlue;
     public final int intent;
     public final int profileData;
+
     public final int profileSize;
+
     public final int reservedV5;
-
-    static class ColorSpaceCoordinate {
-        int x;
-        int y;
-        int z;
-    }
-
-    static class ColorSpace {
-        ColorSpaceCoordinate red;
-        ColorSpaceCoordinate green;
-        ColorSpaceCoordinate blue;
-    }
 
     BmpHeaderInfo(final byte identifier1, final byte identifier2, final int fileSize,
             final int reserved, final int bitmapDataOffset, final int bitmapHeaderSize,

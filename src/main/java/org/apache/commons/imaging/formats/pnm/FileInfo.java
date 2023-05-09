@@ -24,38 +24,6 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.common.ImageBuilder;
 
 abstract class FileInfo {
-    final int width;
-    final int height;
-    final boolean rawBits;
-
-    FileInfo(final int width, final int height, final boolean rawBits) {
-        this.width = width;
-        this.height = height;
-        this.rawBits = rawBits;
-    }
-
-    abstract boolean hasAlpha();
-
-    abstract int getNumComponents();
-
-    abstract int getBitDepth();
-
-    abstract ImageFormat getImageType();
-
-    abstract String getImageTypeDescription();
-
-    abstract String getMIMEType();
-
-    abstract ImageInfo.ColorType getColorType();
-
-    abstract int getRGB(WhiteSpaceReader wsr) throws IOException;
-
-    abstract int getRGB(InputStream is) throws IOException;
-
-    void newline() {
-        // do nothing by default.
-    }
-
     static int readSample(final InputStream is, final int bytesPerSample) throws IOException {
         int sample = 0;
         for (int i = 0; i < bytesPerSample; i++) {
@@ -68,7 +36,6 @@ abstract class FileInfo {
         }
         return sample;
     }
-
     static int scaleSample(int sample, final float scale, final int max) throws IOException {
         if (sample < 0) {
             // Even netpbm tools break for files like this
@@ -79,6 +46,39 @@ abstract class FileInfo {
             sample = 0;
         }
         return (int) ((sample * scale / max) + 0.5f);
+    }
+    final int width;
+
+    final int height;
+
+    final boolean rawBits;
+
+    FileInfo(final int width, final int height, final boolean rawBits) {
+        this.width = width;
+        this.height = height;
+        this.rawBits = rawBits;
+    }
+
+    abstract int getBitDepth();
+
+    abstract ImageInfo.ColorType getColorType();
+
+    abstract ImageFormat getImageType();
+
+    abstract String getImageTypeDescription();
+
+    abstract String getMIMEType();
+
+    abstract int getNumComponents();
+
+    abstract int getRGB(InputStream is) throws IOException;
+
+    abstract int getRGB(WhiteSpaceReader wsr) throws IOException;
+
+    abstract boolean hasAlpha();
+
+    void newline() {
+        // do nothing by default.
     }
 
     void readImage(final ImageBuilder imageBuilder, final InputStream is)

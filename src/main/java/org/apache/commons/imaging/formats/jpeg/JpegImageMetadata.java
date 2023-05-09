@@ -37,9 +37,9 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.internal.Debug;
 
 public class JpegImageMetadata implements ImageMetadata {
+    private static final String NEWLINE = System.getProperty("line.separator");
     private final JpegPhotoshopMetadata photoshop;
     private final TiffImageMetadata exif;
-    private static final String NEWLINE = System.getProperty("line.separator");
 
     public JpegImageMetadata(final JpegPhotoshopMetadata photoshop,
             final TiffImageMetadata exif) {
@@ -47,12 +47,8 @@ public class JpegImageMetadata implements ImageMetadata {
         this.exif = exif;
     }
 
-    public TiffImageMetadata getExif() {
-        return exif;
-    }
-
-    public JpegPhotoshopMetadata getPhotoshop() {
-        return photoshop;
+    public void dump() {
+        Debug.debug(this.toString());
     }
 
     public TiffField findEXIFValue(final TagInfo tagInfo) {
@@ -71,48 +67,8 @@ public class JpegImageMetadata implements ImageMetadata {
         }
     }
 
-    /**
-     * Returns the size of the first JPEG thumbnail found in the EXIF metadata.
-     *
-     * @return Thumbnail width and height or null if no thumbnail.
-     * @throws ImageReadException if it fails to read the image
-     * @throws IOException if it fails to read the image size
-     */
-    public Dimension getEXIFThumbnailSize() throws ImageReadException,
-            IOException {
-        final byte[] data = getEXIFThumbnailData();
-
-        if (data != null) {
-            return Imaging.getImageSize(data);
-        }
-        return null;
-    }
-
-    /**
-     * Returns the data of the first JPEG thumbnail found in the EXIF metadata.
-     *
-     * @return JPEG data or null if no thumbnail.
-     */
-    public byte[] getEXIFThumbnailData() {
-        if (exif == null) {
-            return null;
-        }
-        final List<? extends ImageMetadataItem> dirs = exif.getDirectories();
-        for (final ImageMetadataItem d : dirs) {
-            final TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) d;
-
-            byte[] data = null;
-            if (dir.getJpegImageData() != null) {
-                data = dir.getJpegImageData().getData();
-            }
-            // Support other image formats here.
-
-            if (data != null) {
-                // already cloned, safe to return this copy
-                return data;
-            }
-        }
-        return null;
+    public TiffImageMetadata getExif() {
+        return exif;
     }
 
     /**
@@ -165,20 +121,47 @@ public class JpegImageMetadata implements ImageMetadata {
         return null;
     }
 
-    public TiffImageData getRawImageData() {
+    /**
+     * Returns the data of the first JPEG thumbnail found in the EXIF metadata.
+     *
+     * @return JPEG data or null if no thumbnail.
+     */
+    public byte[] getEXIFThumbnailData() {
         if (exif == null) {
             return null;
         }
         final List<? extends ImageMetadataItem> dirs = exif.getDirectories();
         for (final ImageMetadataItem d : dirs) {
             final TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) d;
-            // Debug.debug("dir", dir);
-            final TiffImageData rawImageData = dir.getTiffImageData();
-            if (null != rawImageData) {
-                return rawImageData;
+
+            byte[] data = null;
+            if (dir.getJpegImageData() != null) {
+                data = dir.getJpegImageData().getData();
+            }
+            // Support other image formats here.
+
+            if (data != null) {
+                // already cloned, safe to return this copy
+                return data;
             }
         }
+        return null;
+    }
 
+    /**
+     * Returns the size of the first JPEG thumbnail found in the EXIF metadata.
+     *
+     * @return Thumbnail width and height or null if no thumbnail.
+     * @throws ImageReadException if it fails to read the image
+     * @throws IOException if it fails to read the image size
+     */
+    public Dimension getEXIFThumbnailSize() throws ImageReadException,
+            IOException {
+        final byte[] data = getEXIFThumbnailData();
+
+        if (data != null) {
+            return Imaging.getImageSize(data);
+        }
         return null;
     }
 
@@ -195,6 +178,27 @@ public class JpegImageMetadata implements ImageMetadata {
         }
 
         return result;
+    }
+
+    public JpegPhotoshopMetadata getPhotoshop() {
+        return photoshop;
+    }
+
+    public TiffImageData getRawImageData() {
+        if (exif == null) {
+            return null;
+        }
+        final List<? extends ImageMetadataItem> dirs = exif.getDirectories();
+        for (final ImageMetadataItem d : dirs) {
+            final TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) d;
+            // Debug.debug("dir", dir);
+            final TiffImageData rawImageData = dir.getTiffImageData();
+            if (null != rawImageData) {
+                return rawImageData;
+            }
+        }
+
+        return null;
     }
 
     @Override
@@ -232,10 +236,6 @@ public class JpegImageMetadata implements ImageMetadata {
         }
 
         return result.toString();
-    }
-
-    public void dump() {
-        Debug.debug(this.toString());
     }
 
 }

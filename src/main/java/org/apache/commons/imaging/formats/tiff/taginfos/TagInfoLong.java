@@ -25,6 +25,11 @@ import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
 
 public class TagInfoLong extends TagInfo {
+    public TagInfoLong(final String name, final int tag, final List<FieldType> dataTypes, final int length,
+        final TiffDirectoryType exifDirectory, final boolean isOffset) {
+        super(name, tag, dataTypes, length, exifDirectory, isOffset);
+    }
+
     public TagInfoLong(final String name, final int tag, final TiffDirectoryType directoryType) {
         super(name, tag, FieldType.LONG, 1, directoryType);
     }
@@ -33,16 +38,11 @@ public class TagInfoLong extends TagInfo {
         super(name, tag, FieldType.LONG, 1, directoryType, isOffset);
     }
 
-    public TagInfoLong(final String name, final int tag, final List<FieldType> dataTypes, final int length,
-        final TiffDirectoryType exifDirectory, final boolean isOffset) {
-        super(name, tag, dataTypes, length, exifDirectory, isOffset);
+    public byte[] encodeValue(final ByteOrder byteOrder, final int value) {
+        return ByteConversions.toBytes(value, byteOrder);
     }
 
     public int getValue(final ByteOrder byteOrder, final byte[] bytes) {
         return ByteConversions.toInt(bytes, byteOrder);
-    }
-
-    public byte[] encodeValue(final ByteOrder byteOrder, final int value) {
-        return ByteConversions.toBytes(value, byteOrder);
     }
 }

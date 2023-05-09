@@ -32,14 +32,8 @@ class FastByteArrayOutputStream extends OutputStream {
         bytes = new byte[length];
     }
 
-    @Override
-    public void write(final int value) throws IOException {
-        if (count >= bytes.length) {
-            throw new IOException("Write exceeded expected length (" + count + ", " + bytes.length + ")");
-        }
-
-        bytes[count] = (byte) value;
-        count++;
+    public int getBytesWritten() {
+        return count;
     }
 
     public byte[] toByteArray() {
@@ -49,7 +43,13 @@ class FastByteArrayOutputStream extends OutputStream {
         return bytes;
     }
 
-    public int getBytesWritten() {
-        return count;
+    @Override
+    public void write(final int value) throws IOException {
+        if (count >= bytes.length) {
+            throw new IOException("Write exceeded expected length (" + count + ", " + bytes.length + ")");
+        }
+
+        bytes[count] = (byte) value;
+        count++;
     }
 }

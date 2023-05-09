@@ -54,16 +54,12 @@ public class PngChunkPlte extends PngChunk {
         }
     }
 
-    public int[] getRgb() {
-        return rgb.clone();
+    public void correct(final GammaCorrection gammaCorrection) {
+        Arrays.setAll(rgb, i -> gammaCorrection.correctARGB(rgb[i]));
     }
 
-    public int getRGB(final int index) throws ImageReadException {
-        if ((index < 0) || (index >= rgb.length)) {
-            throw new ImageReadException("PNG: unknown Palette reference: "
-                    + index);
-        }
-        return rgb[index];
+    public int[] getRgb() {
+        return rgb.clone();
     }
 
     // public void printPalette() {
@@ -77,8 +73,12 @@ public class PngChunkPlte extends PngChunk {
     // Debug.debug();
     // }
 
-    public void correct(final GammaCorrection gammaCorrection) {
-        Arrays.setAll(rgb, i -> gammaCorrection.correctARGB(rgb[i]));
+    public int getRGB(final int index) throws ImageReadException {
+        if ((index < 0) || (index >= rgb.length)) {
+            throw new ImageReadException("PNG: unknown Palette reference: "
+                    + index);
+        }
+        return rgb[index];
     }
 
 }

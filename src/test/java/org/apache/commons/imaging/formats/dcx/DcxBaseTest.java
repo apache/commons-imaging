@@ -29,14 +29,14 @@ import org.apache.commons.imaging.ImagingTest;
 
 public abstract class DcxBaseTest extends ImagingTest {
 
-    private static boolean isDcx(final File file) throws IOException {
-        final ImageFormat format = Imaging.guessFormat(file);
-        return format == ImageFormats.DCX;
-    }
-
     private static final ImageFilter IMAGE_FILTER = DcxBaseTest::isDcx;
 
     protected static List<File> getDcxImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);
+    }
+
+    private static boolean isDcx(final File file) throws IOException {
+        final ImageFormat format = Imaging.guessFormat(file);
+        return format == ImageFormats.DCX;
     }
 }

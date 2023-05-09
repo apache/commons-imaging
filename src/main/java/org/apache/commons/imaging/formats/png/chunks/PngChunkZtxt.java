@@ -60,6 +60,11 @@ public class PngChunkZtxt extends PngTextChunk {
         text = new String(getStreamBytes(new InflaterInputStream(new ByteArrayInputStream(compressedText))), StandardCharsets.ISO_8859_1);
     }
 
+    @Override
+    public PngText getContents() {
+        return new PngText.Ztxt(keyword, text);
+    }
+
     /**
      * @return Returns the keyword.
      */
@@ -74,11 +79,6 @@ public class PngChunkZtxt extends PngTextChunk {
     @Override
     public String getText() {
         return text;
-    }
-
-    @Override
-    public PngText getContents() {
-        return new PngText.Ztxt(keyword, text);
     }
 
 }

@@ -46,50 +46,10 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 
 final class TiffTags {
 
-    private TiffTags() {
-    }
-
     private static final List<TagInfo> ALL_TAGS = makeMergedTagList();
+
     private static final Map<Integer, List<TagInfo>> ALL_TAG_MAP = makeTagMap(TiffTags.ALL_TAGS);
     private static final Map<Integer, Integer> TAG_COUNTS = countTags(TiffTags.ALL_TAGS);
-
-    private static List<TagInfo> makeMergedTagList() {
-        final ArrayList<TagInfo> result = new ArrayList<>(AdobePageMaker6TagConstants.ALL_ADOBE_PAGEMAKER_6_TAGS);
-        result.addAll(AdobePhotoshopTagConstants.ALL_ADOBE_PHOTOSHOP_TAGS);
-        result.addAll(AliasSketchbookProTagConstants.ALL_ALIAS_SKETCHBOOK_PRO_TAGS);
-        result.addAll(DcfTagConstants.ALL_DCF_TAGS);
-        result.addAll(DngTagConstants.ALL_DNG_TAGS);
-        result.addAll(ExifTagConstants.ALL_EXIF_TAGS);
-        result.addAll(GeoTiffTagConstants.ALL_GEO_TIFF_TAGS);
-        result.addAll(GdalLibraryTagConstants.ALL_GDAL_LIBRARY_TAGS);
-        result.addAll(GpsTagConstants.ALL_GPS_TAGS);
-        result.addAll(HylaFaxTagConstants.ALL_HYLAFAX_TAGS);
-        result.addAll(MicrosoftTagConstants.ALL_MICROSOFT_TAGS);
-        result.addAll(MicrosoftHdPhotoTagConstants.ALL_MICROSOFT_HD_PHOTO_TAGS);
-        result.addAll(MolecularDynamicsGelTagConstants.ALL_MOLECULAR_DYNAMICS_GEL_TAGS);
-        result.addAll(OceScanjobTagConstants.ALL_OCE_SCANJOB_TAGS);
-        result.addAll(Rfc2301TagConstants.ALL_RFC_2301_TAGS);
-        result.addAll(Tiff4TagConstants.ALL_TIFF_4_TAGS);
-        result.addAll(TiffEpTagConstants.ALL_TIFF_EP_TAGS);
-        result.addAll(TiffTagConstants.ALL_TIFF_TAGS);
-        result.addAll(WangTagConstants.ALL_WANG_TAGS);
-
-        return Collections.unmodifiableList(result);
-    }
-
-    private static Map<Integer, List<TagInfo>> makeTagMap(
-            final List<TagInfo> tags) {
-        // make sure to use the thread-safe version; this is shared state.
-        final Map<Integer, List<TagInfo>> map = new HashMap<>();
-
-        for (final TagInfo tag : tags) {
-            final List<TagInfo> tagList = map.computeIfAbsent(tag.tag, k -> new ArrayList<>());
-            tagList.add(tag);
-        }
-
-        return map;
-    }
-
     private static Map<Integer, Integer> countTags(final List<TagInfo> tags) {
         final Map<Integer, Integer> map = new HashMap<>();
 
@@ -98,10 +58,6 @@ final class TiffTags {
         }
 
         return map;
-    }
-
-    static Integer getTagCount(final int tag) {
-        return TAG_COUNTS.get(tag);
     }
 
     static TagInfo getTag(final int directoryType, final int tag) {
@@ -156,6 +112,50 @@ final class TiffTags {
         }
 
         return TiffTagConstants.TIFF_TAG_UNKNOWN;
+    }
+
+    static Integer getTagCount(final int tag) {
+        return TAG_COUNTS.get(tag);
+    }
+
+    private static List<TagInfo> makeMergedTagList() {
+        final ArrayList<TagInfo> result = new ArrayList<>(AdobePageMaker6TagConstants.ALL_ADOBE_PAGEMAKER_6_TAGS);
+        result.addAll(AdobePhotoshopTagConstants.ALL_ADOBE_PHOTOSHOP_TAGS);
+        result.addAll(AliasSketchbookProTagConstants.ALL_ALIAS_SKETCHBOOK_PRO_TAGS);
+        result.addAll(DcfTagConstants.ALL_DCF_TAGS);
+        result.addAll(DngTagConstants.ALL_DNG_TAGS);
+        result.addAll(ExifTagConstants.ALL_EXIF_TAGS);
+        result.addAll(GeoTiffTagConstants.ALL_GEO_TIFF_TAGS);
+        result.addAll(GdalLibraryTagConstants.ALL_GDAL_LIBRARY_TAGS);
+        result.addAll(GpsTagConstants.ALL_GPS_TAGS);
+        result.addAll(HylaFaxTagConstants.ALL_HYLAFAX_TAGS);
+        result.addAll(MicrosoftTagConstants.ALL_MICROSOFT_TAGS);
+        result.addAll(MicrosoftHdPhotoTagConstants.ALL_MICROSOFT_HD_PHOTO_TAGS);
+        result.addAll(MolecularDynamicsGelTagConstants.ALL_MOLECULAR_DYNAMICS_GEL_TAGS);
+        result.addAll(OceScanjobTagConstants.ALL_OCE_SCANJOB_TAGS);
+        result.addAll(Rfc2301TagConstants.ALL_RFC_2301_TAGS);
+        result.addAll(Tiff4TagConstants.ALL_TIFF_4_TAGS);
+        result.addAll(TiffEpTagConstants.ALL_TIFF_EP_TAGS);
+        result.addAll(TiffTagConstants.ALL_TIFF_TAGS);
+        result.addAll(WangTagConstants.ALL_WANG_TAGS);
+
+        return Collections.unmodifiableList(result);
+    }
+
+    private static Map<Integer, List<TagInfo>> makeTagMap(
+            final List<TagInfo> tags) {
+        // make sure to use the thread-safe version; this is shared state.
+        final Map<Integer, List<TagInfo>> map = new HashMap<>();
+
+        for (final TagInfo tag : tags) {
+            final List<TagInfo> tagList = map.computeIfAbsent(tag.tag, k -> new ArrayList<>());
+            tagList.add(tag);
+        }
+
+        return map;
+    }
+
+    private TiffTags() {
     }
 
 }

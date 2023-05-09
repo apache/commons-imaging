@@ -36,13 +36,14 @@ public class ColorCieLchTest {
     }
 
     @Test
-    public void testLAssignment() {
-        assertEquals(1.0, color.L, 0.0);
+    public void testCAssignment() {
+        assertEquals(2.0, color.C, 0.0);
     }
 
     @Test
-    public void testCAssignment() {
-        assertEquals(2.0, color.C, 0.0);
+    public void testHashCodeAndEquals() {
+        assertTrue(color.equals(colorCopy) && colorCopy.equals(color));
+        assertThat(color.hashCode(), is(colorCopy.hashCode()));
     }
 
     @Test
@@ -51,13 +52,12 @@ public class ColorCieLchTest {
     }
 
     @Test
-    public void testToString() {
-        assertEquals("{L: 1.0, C: 2.0, h: 3.0}", color.toString());
+    public void testLAssignment() {
+        assertEquals(1.0, color.L, 0.0);
     }
 
     @Test
-    public void testHashCodeAndEquals() {
-        assertTrue(color.equals(colorCopy) && colorCopy.equals(color));
-        assertThat(color.hashCode(), is(colorCopy.hashCode()));
+    public void testToString() {
+        assertEquals("{L: 1.0, C: 2.0, h: 3.0}", color.toString());
     }
 }

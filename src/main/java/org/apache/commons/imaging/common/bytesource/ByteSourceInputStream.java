@@ -26,18 +26,6 @@ import java.util.Objects;
 import org.apache.commons.imaging.common.BinaryFunctions;
 
 public class ByteSourceInputStream extends ByteSource {
-    private static final int BLOCK_SIZE = 1024;
-
-    private final InputStream is;
-    private CacheBlock cacheHead;
-    private byte[] readBuffer;
-    private long streamLength = -1;
-
-    public ByteSourceInputStream(final InputStream is, final String fileName) {
-        super(fileName);
-        this.is = new BufferedInputStream(is);
-    }
-
     private class CacheBlock {
         public final byte[] bytes;
         private CacheBlock next;
@@ -59,32 +47,6 @@ public class ByteSourceInputStream extends ByteSource {
             return next;
         }
 
-    }
-
-    private CacheBlock readBlock() throws IOException {
-        if (null == readBuffer) {
-            readBuffer = new byte[BLOCK_SIZE];
-        }
-
-        final int read = is.read(readBuffer);
-        if (read < 1) {
-            return null;
-        }
-        if (read < BLOCK_SIZE) {
-            // return a copy.
-            return new CacheBlock(Arrays.copyOf(readBuffer, read));
-        }
-        // return current buffer.
-        final byte[] result = readBuffer;
-        readBuffer = null;
-        return new CacheBlock(result);
-    }
-
-    private CacheBlock getFirstBlock() throws IOException {
-        if (null == cacheHead) {
-            cacheHead = readBlock();
-        }
-        return cacheHead;
     }
 
     private class CacheReadingInputStream extends InputStream {
@@ -202,10 +164,29 @@ public class ByteSourceInputStream extends ByteSource {
         }
 
     }
+    private static final int BLOCK_SIZE = 1024;
+    private final InputStream is;
+    private CacheBlock cacheHead;
+
+    private byte[] readBuffer;
+
+    private long streamLength = -1;
+
+    public ByteSourceInputStream(final InputStream is, final String fileName) {
+        super(fileName);
+        this.is = new BufferedInputStream(is);
+    }
 
     @Override
-    public InputStream getInputStream() throws IOException {
-        return new CacheReadingInputStream();
+    public byte[] getAll() throws IOException {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        CacheBlock block = getFirstBlock();
+        while (block != null) {
+            baos.write(block.bytes);
+            block = block.getNext();
+        }
+        return baos.toByteArray();
     }
 
     @Override
@@ -237,6 +218,23 @@ public class ByteSourceInputStream extends ByteSource {
     }
 
     @Override
+    public String getDescription() {
+        return "Inputstream: '" + getFileName() + "'";
+    }
+
+    private CacheBlock getFirstBlock() throws IOException {
+        if (null == cacheHead) {
+            cacheHead = readBlock();
+        }
+        return cacheHead;
+    }
+
+    @Override
+    public InputStream getInputStream() throws IOException {
+        return new CacheReadingInputStream();
+    }
+
+    @Override
     public long getLength() throws IOException {
         if (streamLength >= 0) {
             return streamLength;
@@ -252,21 +250,23 @@ public class ByteSourceInputStream extends ByteSource {
         return result;
     }
 
-    @Override
-    public byte[] getAll() throws IOException {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        CacheBlock block = getFirstBlock();
-        while (block != null) {
-            baos.write(block.bytes);
-            block = block.getNext();
+    private CacheBlock readBlock() throws IOException {
+        if (null == readBuffer) {
+            readBuffer = new byte[BLOCK_SIZE];
         }
-        return baos.toByteArray();
-    }
 
-    @Override
-    public String getDescription() {
-        return "Inputstream: '" + getFileName() + "'";
+        final int read = is.read(readBuffer);
+        if (read < 1) {
+            return null;
+        }
+        if (read < BLOCK_SIZE) {
+            // return a copy.
+            return new CacheBlock(Arrays.copyOf(readBuffer, read));
+        }
+        // return current buffer.
+        final byte[] result = readBuffer;
+        readBuffer = null;
+        return new CacheBlock(result);
     }
 
 }
