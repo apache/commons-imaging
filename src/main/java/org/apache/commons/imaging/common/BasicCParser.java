@@ -187,10 +187,8 @@ public class BasicCParser {
                         hadStar = false;
                         inComment = false;
                         seenFirstComment = true;
-                    } else {
-                        if (!seenFirstComment) {
-                            firstComment.append((char) c);
-                        }
+                    } else if (!seenFirstComment) {
+                        firstComment.append((char) c);
                     }
                 } else {
                     if (hadStar && !seenFirstComment) {
@@ -382,15 +380,13 @@ public class BasicCParser {
             if (hadBackSlash) {
                 i = parseEscape(i, stringBuilder, string);
                 hadBackSlash = false;
+            } else if (c == '\\') {
+                hadBackSlash = true;
+            } else if (c == '"') {
+                throw new ImageReadException("Parsing XPM file failed, "
+                        + "extra '\"' found in string");
             } else {
-                if (c == '\\') {
-                    hadBackSlash = true;
-                } else if (c == '"') {
-                    throw new ImageReadException("Parsing XPM file failed, "
-                            + "extra '\"' found in string");
-                } else {
-                    stringBuilder.append(c);
-                }
+                stringBuilder.append(c);
             }
         }
         if (hadBackSlash) {
@@ -443,24 +439,22 @@ public class BasicCParser {
                     return token.toString();
                 }
                 token.append((char) c);
+            } else if (c == '"') {
+                token.append('"');
+                inString = true;
+            } else if (Character.isLetterOrDigit(c) || c == '_') {
+                token.append((char) c);
+                inIdentifier = true;
+            } else if (c == '{' || c == '}' || c == '[' || c == ']'
+                    || c == '*' || c == ';' || c == '=' || c == ',') {
+                token.append((char) c);
+                return token.toString();
+            } else if (c == ' ' || c == '\t' || c == '\r' || c == '\n') {
+                // ignore
             } else {
-                if (c == '"') {
-                    token.append('"');
-                    inString = true;
-                } else if (Character.isLetterOrDigit(c) || c == '_') {
-                    token.append((char) c);
-                    inIdentifier = true;
-                } else if (c == '{' || c == '}' || c == '[' || c == ']'
-                        || c == '*' || c == ';' || c == '=' || c == ',') {
-                    token.append((char) c);
-                    return token.toString();
-                } else if (c == ' ' || c == '\t' || c == '\r' || c == '\n') {
-                    // ignore
-                } else {
-                    throw new ImageReadException(
-                            "Unhandled/invalid character '" + ((char) c)
-                                    + "' found in XPM file");
-                }
+                throw new ImageReadException(
+                        "Unhandled/invalid character '" + ((char) c)
+                                + "' found in XPM file");
             }
         }
 

@@ -531,16 +531,22 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
                 boolean haveOther = false;
                 for (final SofnSegment.Component component : fSOFNSegment.getComponents()) {
                     final int id = component.componentIdentifier;
-                    if (id == 1) {
+                    switch (id) {
+                    case 1:
                         have1 = true;
-                    } else if (id == 2) {
+                        break;
+                    case 2:
                         have2 = true;
-                    } else if (id == 3) {
+                        break;
+                    case 3:
                         have3 = true;
-                    } else if (id == 4) {
+                        break;
+                    case 4:
                         have4 = true;
-                    } else {
+                        break;
+                    default:
                         haveOther = true;
+                        break;
                     }
                 }
                 if (numberOfComponents == 3 && have1 && have2 && have3 && !have4 && !haveOther) {
@@ -558,20 +564,30 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
                     boolean haveY = false;
                     for (final SofnSegment.Component component : fSOFNSegment.getComponents()) {
                         final int id = component.componentIdentifier;
-                        if (id == 'R') {
+                        switch (id) {
+                        case 'R':
                             haveR = true;
-                        } else if (id == 'G') {
+                            break;
+                        case 'G':
                             haveG = true;
-                        } else if (id == 'B') {
+                            break;
+                        case 'B':
                             haveB = true;
-                        } else if (id == 'A') {
+                            break;
+                        case 'A':
                             haveA = true;
-                        } else if (id == 'C') {
+                            break;
+                        case 'C':
                             haveC = true;
-                        } else if (id == 'c') {
+                            break;
+                        case 'c':
                             havec = true;
-                        } else if (id == 'Y') {
+                            break;
+                        case 'Y':
                             haveY = true;
+                            break;
+                        default:
+                            break;
                         }
                     }
                     if (haveR && haveG && haveB && !haveA && !haveC && !havec && !haveY) {

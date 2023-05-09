@@ -92,11 +92,11 @@ public class PngReadTest extends PngBaseTest {
         final String file = PngReadTest.class.getResource(input).getFile();
         final PngImageParser parser = new PngImageParser();
 
-        ImageMetadata metadata = parser.getMetadata(new File(file));
-        List<?> items = metadata.getItems();
+        final ImageMetadata metadata = parser.getMetadata(new File(file));
+        final List<?> items = metadata.getItems();
         assertEquals(1, items.size());
 
-        GenericImageMetadata.GenericImageMetadataItem item = ((GenericImageMetadata.GenericImageMetadataItem) items.get(0));
+        final GenericImageMetadata.GenericImageMetadataItem item = ((GenericImageMetadata.GenericImageMetadataItem) items.get(0));
         assertEquals("Comment", item.getKeyword());
         assertEquals("\u2192 UTF-8 Test", item.getText());
     }

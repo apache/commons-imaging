@@ -304,11 +304,13 @@ public class ReadTagsAndImages {
                 // in original spec was "ProjectedCSTypeGeoKey"
                 if (0 <= valueOrPosition && valueOrPosition <= 1023) {
                     return "Reserved";
-                } else if (1024 <= valueOrPosition && valueOrPosition <= 32766) {
-                    return "EPSG Code #" + valueOrPosition;
-                } else if (valueOrPosition == 32767) {
-                    return "User-Defined Projection";
                 }
+            if (1024 <= valueOrPosition && valueOrPosition <= 32766) {
+                return "EPSG Code #" + valueOrPosition;
+            }
+            if (valueOrPosition == 32767) {
+                return "User-Defined Projection";
+            }
                 break;
             case ProjectionGeoKey:
                 if(valueOrPosition==32767){

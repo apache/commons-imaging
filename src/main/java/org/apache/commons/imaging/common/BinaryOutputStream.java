@@ -34,7 +34,8 @@ public abstract class BinaryOutputStream extends FilterOutputStream {
         Objects.requireNonNull(byteOrder, "byteOrder");
         if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
             return littleEndian(outputStream);
-        } else if (byteOrder == ByteOrder.BIG_ENDIAN) {
+        }
+        if (byteOrder == ByteOrder.BIG_ENDIAN) {
             return bigEndian(outputStream);
         }
         throw new UnsupportedOperationException(byteOrder.toString());

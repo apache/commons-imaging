@@ -761,7 +761,7 @@ public final class Imaging {
                 .of(ImageFormats.values())
                 .filter(imageFormat -> Stream
                     .of(imageFormat.getExtensions())
-                    .anyMatch((extension) -> {
+                    .anyMatch(extension -> {
                         final String fileName = byteSource.getFileName();
                         if (fileName == null || fileName.trim().length() == 0) {
                             return false;

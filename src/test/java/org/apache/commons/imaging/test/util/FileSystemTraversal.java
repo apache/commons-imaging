@@ -87,11 +87,9 @@ public class FileSystemTraversal {
                     return false;
                 }
             }
-        } else {
-            if (mode == MODE_ALL) {
-                if (!visitor.visit(file, estimate)) {
-                    return false;
-                }
+        } else if (mode == MODE_ALL) {
+            if (!visitor.visit(file, estimate)) {
+                return false;
             }
         }
 

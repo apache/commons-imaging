@@ -722,23 +722,21 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
                     } else if (bitCount == 32) {
                         bos.write4Bytes(argb);
                     }
-                } else {
-                    if (bitCount < 8) {
-                        final int rgb = 0xffffff & argb;
-                        final int index = palette.getPaletteIndex(rgb);
-                        bitCache <<= bitCount;
-                        bitCache |= index;
-                        bitsInCache += bitCount;
-                        if (bitsInCache >= 8) {
-                            bos.write(0xff & bitCache);
-                            bitCache = 0;
-                            bitsInCache = 0;
-                        }
-                    } else if (bitCount == 8) {
-                        final int rgb = 0xffffff & argb;
-                        final int index = palette.getPaletteIndex(rgb);
-                        bos.write(0xff & index);
+                } else if (bitCount < 8) {
+                    final int rgb = 0xffffff & argb;
+                    final int index = palette.getPaletteIndex(rgb);
+                    bitCache <<= bitCount;
+                    bitCache |= index;
+                    bitsInCache += bitCount;
+                    if (bitsInCache >= 8) {
+                        bos.write(0xff & bitCache);
+                        bitCache = 0;
+                        bitsInCache = 0;
                     }
+                } else if (bitCount == 8) {
+                    final int rgb = 0xffffff & argb;
+                    final int index = palette.getPaletteIndex(rgb);
+                    bos.write(0xff & index);
                 }
             }
 

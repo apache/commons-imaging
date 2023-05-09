@@ -22,7 +22,7 @@ import java.io.OutputStream;
 
 final class LittleEndianBinaryOutputStream extends BinaryOutputStream {
 
-    LittleEndianBinaryOutputStream(OutputStream os) {
+    LittleEndianBinaryOutputStream(final OutputStream os) {
         super(os);
     }
 

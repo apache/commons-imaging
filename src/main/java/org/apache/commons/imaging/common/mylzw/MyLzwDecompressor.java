@@ -125,18 +125,16 @@ public final class MyLzwDecompressor {
                     break;
                 }
                 writeToResult(baos, stringFromCode(code));
-            } else {
-                if (isInTable(code)) {
-                    writeToResult(baos, stringFromCode(code));
+            } else if (isInTable(code)) {
+                writeToResult(baos, stringFromCode(code));
 
-                    addStringToTable(appendBytes(stringFromCode(oldCode),
-                            firstChar(stringFromCode(code))));
-                } else {
-                    final byte[] outString = appendBytes(stringFromCode(oldCode),
-                            firstChar(stringFromCode(oldCode)));
-                    writeToResult(baos, outString);
-                    addStringToTable(outString);
-                }
+                addStringToTable(appendBytes(stringFromCode(oldCode),
+                        firstChar(stringFromCode(code))));
+            } else {
+                final byte[] outString = appendBytes(stringFromCode(oldCode),
+                        firstChar(stringFromCode(oldCode)));
+                writeToResult(baos, outString);
+                addStringToTable(outString);
             }
             oldCode = code;
 

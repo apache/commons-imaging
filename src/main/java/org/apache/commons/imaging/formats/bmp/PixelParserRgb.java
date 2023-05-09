@@ -37,8 +37,9 @@ class PixelParserRgb extends PixelParserSimple {
     @Override
     public int getNextRGB() throws ImageReadException, IOException {
 
-        if ((bhi.bitsPerPixel == 1)
-                || (bhi.bitsPerPixel == 4)) { // always grayscale?
+        switch (bhi.bitsPerPixel) {
+        case 1:
+        case 4: {
             if (cachedBitCount < bhi.bitsPerPixel) {
                 if (cachedBitCount != 0) {
                     throw new ImageReadException("Unexpected leftover bits: "
@@ -53,55 +54,44 @@ class PixelParserRgb extends PixelParserSimple {
             final int sample = cacheMask & (cachedByte >> (8 - bhi.bitsPerPixel));
             cachedByte = 0xff & (cachedByte << bhi.bitsPerPixel);
             cachedBitCount -= bhi.bitsPerPixel;
-
             return getColorTableRGB(sample);
         }
-        if (bhi.bitsPerPixel == 8) { // always grayscale?
+        case 8: {
             final int sample = 0xff & imageData[byteCount + 0];
-
             final int rgb = getColorTableRGB(sample);
-
             byteCount += 1;
-
             return rgb;
         }
-        if (bhi.bitsPerPixel == 16) {
+        case 16: {
             final int data = read2Bytes("Pixel", is, "BMP Image Data", ByteOrder.LITTLE_ENDIAN);
-
             final int blue = (0x1f & (data >> 0)) << 3;
             final int green = (0x1f & (data >> 5)) << 3;
             final int red = (0x1f & (data >> 10)) << 3;
             final int alpha = 0xff;
-
             final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
-
             byteCount += 2;
-
             return rgb;
         }
-        if (bhi.bitsPerPixel == 24) {
+        case 24: {
             final int blue = 0xff & imageData[byteCount + 0];
             final int green = 0xff & imageData[byteCount + 1];
             final int red = 0xff & imageData[byteCount + 2];
             final int alpha = 0xff;
-
             final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
-
             byteCount += 3;
-
             return rgb;
         }
-        if (bhi.bitsPerPixel == 32) {
+        case 32: {
             final int blue = 0xff & imageData[byteCount + 0];
             final int green = 0xff & imageData[byteCount + 1];
             final int red = 0xff & imageData[byteCount + 2];
             final int alpha = 0xff;
-
             final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
-
             byteCount += 4;
-
             return rgb;
+        }
+        default:
+            break;
         }
 
         throw new ImageReadException("Unknown BitsPerPixel: "

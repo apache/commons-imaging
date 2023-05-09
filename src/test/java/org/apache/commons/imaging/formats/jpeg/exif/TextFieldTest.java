@@ -34,11 +34,9 @@ public class TextFieldTest extends SpecificExifTagTest {
     @Override
     protected void checkField(final File imageFile, final TiffField field)
             throws IOException, ImageReadException, ImageWriteException {
-        if (field.getTag() == ExifTagConstants.EXIF_TAG_USER_COMMENT.tag) {
+        if ((field.getTag() == ExifTagConstants.EXIF_TAG_USER_COMMENT.tag) || (field.getTag() == GpsTagConstants.GPS_TAG_GPS_PROCESSING_METHOD.tag
+                && field.getDirectoryType() == TiffDirectoryType.EXIF_DIRECTORY_GPS.directoryType)) {
             // do nothing
-        } else if (field.getTag() == GpsTagConstants.GPS_TAG_GPS_PROCESSING_METHOD.tag
-                && field.getDirectoryType() == TiffDirectoryType.EXIF_DIRECTORY_GPS.directoryType) {
-                // do nothing
         } else if (field.getTag() == GpsTagConstants.GPS_TAG_GPS_AREA_INFORMATION.tag
                 && field.getDirectoryType() == TiffDirectoryType.EXIF_DIRECTORY_GPS.directoryType) {
                 // do nothing

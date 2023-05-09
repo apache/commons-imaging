@@ -479,11 +479,13 @@ public abstract class TiffImageWriterBase {
 
         int t4Options = 0;
         int t6Options = 0;
-        if (compression == TIFF_COMPRESSION_CCITT_1D) {
+        switch (compression) {
+        case TIFF_COMPRESSION_CCITT_1D:
             for (int i = 0; i < strips.length; i++) {
                 strips[i] = T4AndT6Compression.compressModifiedHuffman(strips[i], width, strips[i].length / ((width + 7) / 8));
             }
-        } else if (compression == TIFF_COMPRESSION_CCITT_GROUP_3) {
+            break;
+        case TIFF_COMPRESSION_CCITT_GROUP_3: {
             final Integer t4Parameter = params.getT4Options();
             if (t4Parameter != null) {
                 t4Options = t4Parameter.intValue();
@@ -507,7 +509,9 @@ public abstract class TiffImageWriterBase {
                             hasFillBitsBeforeEOL);
                 }
             }
-        } else if (compression == TIFF_COMPRESSION_CCITT_GROUP_4) {
+            break;
+        }
+        case TIFF_COMPRESSION_CCITT_GROUP_4: {
             final Integer t6Parameter = params.getT6Options();
             if (t6Parameter != null) {
                 t6Options = t6Parameter.intValue();
@@ -521,11 +525,14 @@ public abstract class TiffImageWriterBase {
             for (int i = 0; i < strips.length; i++) {
                 strips[i] = T4AndT6Compression.compressT6(strips[i], width, strips[i].length / ((width + 7) / 8));
             }
-        } else if (compression == TIFF_COMPRESSION_PACKBITS) {
+            break;
+        }
+        case TIFF_COMPRESSION_PACKBITS:
             for (int i = 0; i < strips.length; i++) {
                 strips[i] = new PackBits().compress(strips[i]);
             }
-        } else if (compression == TIFF_COMPRESSION_LZW) {
+            break;
+        case TIFF_COMPRESSION_LZW:
             predictor =  TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING;
             for (int i = 0; i < strips.length; i++) {
                 final byte[] uncompressed = strips[i];
@@ -537,15 +544,17 @@ public abstract class TiffImageWriterBase {
                 final byte[] compressed = compressor.compress(uncompressed);
                 strips[i] = compressed;
             }
-        } else if (compression == TIFF_COMPRESSION_DEFLATE_ADOBE) {
+            break;
+        case TIFF_COMPRESSION_DEFLATE_ADOBE:
             predictor = TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING;
             for (int i = 0; i < strips.length; i++) {
                 this.applyPredictor(width, samplesPerPixel, strips[i]);
                 strips[i] = ZlibDeflate.compress(strips[i]);
             }
-        } else if (compression == TIFF_COMPRESSION_UNCOMPRESSED) {
-            // do nothing.
-        } else {
+            break;
+        case TIFF_COMPRESSION_UNCOMPRESSED:
+            break;
+        default:
             throw new ImageWriteException(
                     "Invalid compression parameter (Only CCITT 1D/Group 3/Group 4, LZW, Packbits, Zlib Deflate and uncompressed supported).");
         }

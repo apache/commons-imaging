@@ -214,27 +214,29 @@ public class PnmImageParser extends ImageParser<PnmImagingParameters> {
               throw new ImageReadException("Invalid height specified." , e);
             }
 
-            if (identifier2 == PnmConstants.PBM_TEXT_CODE) {
+            switch (identifier2) {
+            case PnmConstants.PBM_TEXT_CODE:
                 return new PbmFileInfo(width, height, false);
-            }
-            if (identifier2 == PnmConstants.PBM_RAW_CODE) {
+            case PnmConstants.PBM_RAW_CODE:
                 return new PbmFileInfo(width, height, true);
-            }
-            if (identifier2 == PnmConstants.PGM_TEXT_CODE) {
+            case PnmConstants.PGM_TEXT_CODE: {
                 final int maxgray = Integer.parseInt(wsr.readtoWhiteSpace());
                 return new PgmFileInfo(width, height, false, maxgray);
             }
-            if (identifier2 == PnmConstants.PGM_RAW_CODE) {
+            case PnmConstants.PGM_RAW_CODE: {
                 final int maxgray = Integer.parseInt(wsr.readtoWhiteSpace());
                 return new PgmFileInfo(width, height, true, maxgray);
             }
-            if (identifier2 == PnmConstants.PPM_TEXT_CODE) {
+            case PnmConstants.PPM_TEXT_CODE: {
                 final int max = Integer.parseInt(wsr.readtoWhiteSpace());
                 return new PpmFileInfo(width, height, false, max);
             }
-            if (identifier2 == PnmConstants.PPM_RAW_CODE) {
+            case PnmConstants.PPM_RAW_CODE: {
                 final int max = Integer.parseInt(wsr.readtoWhiteSpace());
                 return new PpmFileInfo(width, height, true, max);
+            }
+            default:
+                break;
             }
         } else if (identifier2 == PnmConstants.PAM_RAW_CODE) {
             int width = -1;
