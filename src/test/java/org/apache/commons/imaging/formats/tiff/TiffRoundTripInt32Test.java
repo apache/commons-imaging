@@ -132,34 +132,29 @@ public class TiffRoundTripInt32Test extends TiffBaseTest {
             final String name = testFile[i].getName();
             final ByteSourceFile byteSource = new ByteSourceFile(testFile[i]);
             final TiffReader tiffReader = new TiffReader(true);
-            final TiffContents contents = tiffReader.readDirectories(
-                byteSource,
-                true, // indicates that application should read image data, if present
-                FormatCompliance.getDefault());
+            final TiffContents contents = tiffReader.readDirectories(byteSource, true, // indicates that application should read image data, if present
+                    FormatCompliance.getDefault());
             final TiffDirectory directory = contents.directories.get(0);
             final TiffRasterData rdInt = directory.getRasterData(null);
-            final int []test = rdInt.getIntData();
-            for(int j=0; j<sample.length; j++){
-                  assertEquals(sample[j], test[j],
-                "Extracted data does not match original, test "+name+": "
-                + i + ", index " + j);
+            final int[] test = rdInt.getIntData();
+            for (int j = 0; j < sample.length; j++) {
+                assertEquals(sample[j], test[j], "Extracted data does not match original, test " + name + ": " + i + ", index " + j);
             }
             final TiffImagingParameters params = new TiffImagingParameters();
-            params.setSubImage(2, 2, width-4, height-4);
+            params.setSubImage(2, 2, width - 4, height - 4);
             final TiffRasterData rdSub = directory.getRasterData(params);
-            assertEquals(width-4, rdSub.getWidth(), "Invalid sub-image width");
-            assertEquals(height-4, rdSub.getHeight(), "Invalid sub-image height");
-            for(int x = 2; x<width-2; x++){
-                for(int y=2; y<height-2; y++){
+            assertEquals(width - 4, rdSub.getWidth(), "Invalid sub-image width");
+            assertEquals(height - 4, rdSub.getHeight(), "Invalid sub-image height");
+            for (int x = 2; x < width - 2; x++) {
+                for (int y = 2; y < height - 2; y++) {
                     final int a = rdInt.getIntValue(x, y);
-                    final int b = rdSub.getIntValue(x-2, y-2);
+                    final int b = rdSub.getIntValue(x - 2, y - 2);
                     assertEquals(a, b, "Sub Image test failed at (" + x + "," + y + ")");
                 }
             }
             final TiffImagingParameters xparams = new TiffImagingParameters();
             xparams.setSubImage(2, 2, width, height);
-            assertThrows(ImageReadException.class, ()->directory.getRasterData(xparams),
-                "Failed to catch bad subimage for test "+name);
+            assertThrows(ImageReadException.class, () -> directory.getRasterData(xparams), "Failed to catch bad subimage for test " + name);
         }
     }
 

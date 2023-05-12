@@ -56,13 +56,13 @@ public class TiffRasterDataIntTest {
 
     @Test
     public void testBadConstructor() {
-        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataInt(-1, 10), "Constructor did not detect bad width");
-        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataInt(10, -1), "Constructor did not detect bad height");
-        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataInt(1, 1, 0), "Constructor did not detect bad samplesPerPixel");
+        assertThrows(IllegalArgumentException.class, () -> new TiffRasterDataInt(-1, 10), "Constructor did not detect bad width");
+        assertThrows(IllegalArgumentException.class, () -> new TiffRasterDataInt(10, -1), "Constructor did not detect bad height");
+        assertThrows(IllegalArgumentException.class, () -> new TiffRasterDataInt(1, 1, 0), "Constructor did not detect bad samplesPerPixel");
 
-        final int []s = new int[10];
-        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataInt(2, 10, s), "Constructor did not detect insufficient input array size");
-        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataInt(2, 3, 2, s), "Constructor did not detect insufficient input array size");
+        final int[] s = new int[10];
+        assertThrows(IllegalArgumentException.class, () -> new TiffRasterDataInt(2, 10, s), "Constructor did not detect insufficient input array size");
+        assertThrows(IllegalArgumentException.class, () -> new TiffRasterDataInt(2, 3, 2, s), "Constructor did not detect insufficient input array size");
     }
 
     /**

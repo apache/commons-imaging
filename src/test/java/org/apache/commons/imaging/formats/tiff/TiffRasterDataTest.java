@@ -54,13 +54,13 @@ public class TiffRasterDataTest {
      */
     @Test
     public void testBadConstructor() {
-        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataFloat(-1, 10), "Constructor did not detect bad width");
-        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataFloat(10, -1), "Constructor did not detect bad height");
-        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataFloat(1, 1, 0), "Constructor did not detect bad samplesPerPixel");
+        assertThrows(IllegalArgumentException.class, () -> new TiffRasterDataFloat(-1, 10), "Constructor did not detect bad width");
+        assertThrows(IllegalArgumentException.class, () -> new TiffRasterDataFloat(10, -1), "Constructor did not detect bad height");
+        assertThrows(IllegalArgumentException.class, () -> new TiffRasterDataFloat(1, 1, 0), "Constructor did not detect bad samplesPerPixel");
 
-        final float []f = new float[10];
-        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataFloat(2, 10, f), "Constructor did not detect insufficient input array size");
-        assertThrows(IllegalArgumentException.class, ()-> new TiffRasterDataFloat(2, 3, 2, f), "Constructor did not detect insufficient input array size");
+        final float[] f = new float[10];
+        assertThrows(IllegalArgumentException.class, () -> new TiffRasterDataFloat(2, 10, f), "Constructor did not detect insufficient input array size");
+        assertThrows(IllegalArgumentException.class, () -> new TiffRasterDataFloat(2, 3, 2, f), "Constructor did not detect insufficient input array size");
     }
 
     /**
@@ -68,11 +68,11 @@ public class TiffRasterDataTest {
      */
     @Test
     public void testBadCoordinates() {
-        final float []f = new float[100];
+        final float[] f = new float[100];
         final TiffRasterData instance = new TiffRasterDataFloat(10, 10, 1, f);
-        assertThrows(IllegalArgumentException.class, ()->instance.getValue(11, 11),       "Access method getValue() did not detect bad coordinates");
-        assertThrows(IllegalArgumentException.class, ()->instance.setValue(11, 11, 5.0f), "Access method setValue() did not detect bad coordinates");
-        assertThrows(IllegalArgumentException.class, ()->instance.getValue(1, 1, 2),  "Access method setValue() did not detect bad sample index");
+        assertThrows(IllegalArgumentException.class, () -> instance.getValue(11, 11), "Access method getValue() did not detect bad coordinates");
+        assertThrows(IllegalArgumentException.class, () -> instance.setValue(11, 11, 5.0f), "Access method setValue() did not detect bad coordinates");
+        assertThrows(IllegalArgumentException.class, () -> instance.getValue(1, 1, 2), "Access method setValue() did not detect bad sample index");
     }
 
     /**
@@ -108,7 +108,6 @@ public class TiffRasterDataTest {
      */
     @Test
     public void testGetIntData() {
-        final int[] result = raster.getIntData();
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 final int index = y * width + x;
