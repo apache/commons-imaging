@@ -26,11 +26,14 @@ import java.util.Arrays;
 import org.apache.commons.imaging.ImageReadException;
 
 public final class MyLzwDecompressor {
+
     public interface Listener {
+
         void code(int code);
 
         void init(int clearCode, int eoiCode);
     }
+
     private static final int MAX_TABLE_SIZE = 1 << 12;
     private final byte[][] table;
     private int codeSize;
