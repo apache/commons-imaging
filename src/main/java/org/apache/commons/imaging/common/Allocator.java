@@ -17,6 +17,7 @@
 
 package org.apache.commons.imaging.common;
 
+import java.util.ArrayList;
 import java.util.function.IntFunction;
 
 /**
@@ -35,7 +36,21 @@ public class Allocator {
     }
 
     /**
-     * Allocates an Object array of type T of the requested size.
+     * Allocates an Object of type T of the requested size.
+     *
+     * @param <T> The return array type
+     * @param request The requested size.
+     * @param factory The array factory.
+     * @return a new byte array.
+     * @throws AllocationRequestException Thrown when the request exceeds the limit.
+     * @see #check(int)
+     */
+    public static <T> T apply(final int request, final IntFunction<T> factory) {
+        return factory.apply(check(request));
+    }
+
+    /**
+     * Allocates an array of type T of the requested size.
      *
      * @param <T> The return array type
      * @param request The requested size.
@@ -45,7 +60,22 @@ public class Allocator {
      * @see #check(int)
      */
     public static <T> T[] array(final int request, final IntFunction<T[]> factory) {
+        // We could pass in a shallow object byte size to multiply with the request.
+        // The shallow byte size would need to be computed and hard-coded in statics.
         return factory.apply(check(request));
+    }
+
+    /**
+     * Allocates an Object array of type T of the requested size.
+     *
+     * @param <T> The return array type
+     * @param request The requested size.
+     * @return a new byte array.
+     * @throws AllocationRequestException Thrown when the request exceeds the limit.
+     * @see #check(int)
+     */
+    public static <T> ArrayList<T> arrayList(final int request) {
+        return apply(request, ArrayList::new);
     }
 
     /**

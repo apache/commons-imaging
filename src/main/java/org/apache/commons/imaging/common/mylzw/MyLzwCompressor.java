@@ -22,6 +22,8 @@ import java.nio.ByteOrder;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.imaging.common.Allocator;
+
 public class MyLzwCompressor {
     private static final class ByteArray {
         private final byte[] bytes;
@@ -173,7 +175,7 @@ public class MyLzwCompressor {
     }
 
     public byte[] compress(final byte[] bytes) throws IOException {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream(bytes.length);
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream(Allocator.check(bytes.length));
         final MyBitOutputStream bos = new MyBitOutputStream(baos, byteOrder);
 
         initializeStringTable();

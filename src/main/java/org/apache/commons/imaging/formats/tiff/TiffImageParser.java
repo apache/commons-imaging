@@ -43,6 +43,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.XmpEmbeddable;
@@ -520,7 +521,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
         // dunno if this handles colormapped images correctly.
 
         final List<TiffField> entries = directory.entries;
-        final List<String> comments = new ArrayList<>(entries.size());
+        final List<String> comments = Allocator.arrayList(entries.size());
         for (final TiffField field : entries) {
             final String comment = field.toString();
             comments.add(comment);

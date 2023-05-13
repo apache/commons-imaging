@@ -30,7 +30,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.ByteOrder;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageFormat;
@@ -265,7 +264,7 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
         final ImageContents contents = readImage(byteSource);
 
         final FileHeader fileHeader = contents.fileHeader;
-        final List<BufferedImage> result = new ArrayList<>(fileHeader.iconCount);
+        final List<BufferedImage> result = Allocator.arrayList(fileHeader.iconCount);
         for (int i = 0; i < fileHeader.iconCount; i++) {
             result.add(contents.iconDatas[i].readBufferedImage());
         }
@@ -437,7 +436,7 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
                 : colorsUsed);
         final int bitmapSize = 14 + 56 + restOfFile.length;
 
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream(bitmapSize);
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream(Allocator.check(bitmapSize));
         try (BinaryOutputStream bos = BinaryOutputStream.littleEndian(baos)) {
             bos.write('B');
             bos.write('M');

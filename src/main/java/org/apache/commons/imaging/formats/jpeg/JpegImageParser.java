@@ -464,7 +464,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
 
         final List<Segment> commentSegments = readSegments(byteSource,
                 new int[] { JpegConstants.COM_MARKER}, false);
-        final List<String> comments = new ArrayList<>(commentSegments.size());
+        final List<String> comments = Allocator.arrayList(commentSegments.size());
         for (final Segment commentSegment : commentSegments) {
             final ComSegment comSegment = (ComSegment) commentSegment;
             comments.add(new String(comSegment.getComment(), StandardCharsets.UTF_8));

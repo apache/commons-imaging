@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
@@ -727,7 +728,7 @@ public class TiffDirectory extends TiffElement {
                     + ") != byteCounts.length(" + byteCounts.length + ")");
         }
 
-        final List<ImageDataElement> result = new ArrayList<>(offsets.length);
+        final List<ImageDataElement> result = Allocator.arrayList(offsets.length);
         for (int i = 0; i < offsets.length; i++) {
             result.add(new ImageDataElement(offsets[i], byteCounts[i]));
         }

@@ -34,6 +34,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -158,7 +159,7 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
             throws ImageReadException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             final int id = read4Bytes("Id", is, "Not a Valid DCX File", getByteOrder());
-            final List<Long> pageTable = new ArrayList<>(1024);
+            final List<Long> pageTable = Allocator.arrayList(1024);
             for (int i = 0; i < 1024; i++) {
                 final long pageOffset = 0xFFFFffffL & read4Bytes("PageTable", is, "Not a Valid DCX File", getByteOrder());
                 if (pageOffset == 0) {
