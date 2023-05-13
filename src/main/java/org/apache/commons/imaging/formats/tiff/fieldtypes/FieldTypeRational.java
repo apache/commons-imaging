@@ -20,6 +20,7 @@ import java.nio.ByteOrder;
 import java.util.Arrays;
 
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.AllocationChecker;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.TiffField;
@@ -56,7 +57,7 @@ public class FieldTypeRational extends FieldType {
         }
         if (o instanceof Number[]) {
             final Number[] numbers = (Number[]) o;
-            final RationalNumber[] rationalNumbers = new RationalNumber[numbers.length];
+            final RationalNumber[] rationalNumbers = new RationalNumber[AllocationChecker.check(numbers.length)];
             Arrays.setAll(rationalNumbers, RationalNumber::valueOf);
             return ByteConversions.toBytes(rationalNumbers, byteOrder);
         }
@@ -64,7 +65,7 @@ public class FieldTypeRational extends FieldType {
             throw new ImageWriteException("Invalid data", o);
         }
         final double[] numbers = (double[]) o;
-        final RationalNumber[] rationalNumbers = new RationalNumber[numbers.length];
+        final RationalNumber[] rationalNumbers = new RationalNumber[AllocationChecker.check(numbers.length)];
         Arrays.setAll(rationalNumbers, RationalNumber::valueOf);
         return ByteConversions.toBytes(rationalNumbers, byteOrder);
     }

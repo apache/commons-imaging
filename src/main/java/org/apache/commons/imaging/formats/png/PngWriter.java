@@ -27,6 +27,7 @@ import java.util.zip.DeflaterOutputStream;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.PixelDensity;
+import org.apache.commons.imaging.common.AllocationChecker;
 import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
@@ -182,7 +183,7 @@ class PngWriter {
     private void writeChunkPLTE(final OutputStream os, final Palette palette)
             throws IOException {
         final int length = palette.length();
-        final byte[] bytes = new byte[length * 3];
+        final byte[] bytes = new byte[AllocationChecker.check(length * 3)];
 
         // Debug.debug("length", length);
         for (int i = 0; i < length; i++) {
@@ -235,7 +236,7 @@ class PngWriter {
     }
 
     private void writeChunkTRNS(final OutputStream os, final Palette palette) throws IOException {
-        final byte[] bytes = new byte[palette.length()];
+        final byte[] bytes = new byte[AllocationChecker.check(palette.length())];
 
         for (int i = 0; i < bytes.length; i++) {
             bytes[i] = (byte) (0xff & (palette.getEntry(i) >> 24));
@@ -470,7 +471,7 @@ class PngWriter {
                 final boolean useAlpha = pngColorType == PngColorType.GREYSCALE_WITH_ALPHA
                         || pngColorType == PngColorType.TRUE_COLOR_WITH_ALPHA;
 
-                final int[] row = new int[width];
+                final int[] row = new int[AllocationChecker.check(width)];
                 for (int y = 0; y < height; y++) {
                     // Debug.debug("y", y + "/" + height);
                     src.getRGB(0, y, width, 1, row, 0, width);
@@ -521,7 +522,7 @@ class PngWriter {
                 final boolean useAlpha = pngColorType == PngColorType.GREYSCALE_WITH_ALPHA
                         || pngColorType == PngColorType.TRUE_COLOR_WITH_ALPHA;
 
-                final int[] row = new int[width];
+                final int[] row = new int[AllocationChecker.check(width)];
                 for (int y = 0; y < height; y++) {
                     // Debug.debug("y", y + "/" + height);
                     src.getRGB(0, y, width, 1, row, 0, width);

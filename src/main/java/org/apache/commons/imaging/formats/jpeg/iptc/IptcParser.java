@@ -43,6 +43,7 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.ImagingParameters;
+import org.apache.commons.imaging.common.AllocationChecker;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.BinaryOutputStream;
@@ -83,7 +84,7 @@ public class IptcParser extends BinaryFileParser {
         } catch (final IllegalArgumentException e) { }
         // check if encoding is a escape sequence
         // normalize encoding byte sequence
-        final byte[] codedCharsetNormalized = new byte[codedCharset.length];
+        final byte[] codedCharsetNormalized = new byte[AllocationChecker.check(codedCharset.length)];
         int j = 0;
         for (final byte element : codedCharset) {
             if (element != ' ') {

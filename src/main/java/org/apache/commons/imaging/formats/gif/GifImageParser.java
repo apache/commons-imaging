@@ -44,6 +44,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.AllocationChecker;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.ImageMetadata;
@@ -348,7 +349,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
         }
         final int length = bytes.length / 3;
 
-        final int[] result = new int[length];
+        final int[] result = new int[AllocationChecker.check(length)];
 
         for (int i = 0; i < length; i++) {
             final int red = 0xff & bytes[(i * 3) + 0];
@@ -757,7 +758,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
 
         if (formatCompliance != null) {
             formatCompliance.compareBytes("Signature", GIF_HEADER_SIGNATURE,
-                    new byte[]{identifier1, identifier2, identifier3,});
+                    new byte[] { identifier1, identifier2, identifier3 });
             formatCompliance.compare("version", 56, version1);
             formatCompliance.compare("version", new int[] { 55, 57, }, version2);
             formatCompliance.compare("version", 97, version3);
@@ -1106,7 +1107,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
                     lzwMinimumCodeSize, ByteOrder.LITTLE_ENDIAN, false); // GIF
             // Mode);
 
-            final byte[] imageData = new byte[width * height];
+            final byte[] imageData = new byte[AllocationChecker.check(width * height)];
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
                     final int argb = src.getRGB(x, y);

@@ -83,7 +83,7 @@ public final class BinaryFunctions {
         if (length < 0) {
             throw new IOException(String.format("%s, invalid length: %d", exception, length));
         }
-        final byte[] result = new byte[length];
+        final byte[] result = new byte[AllocationChecker.check(length)];
 
         raf.seek(pos);
 
@@ -265,7 +265,7 @@ public final class BinaryFunctions {
             throw new IOException(String.format("%s, invalid length: %d", exception, length));
         }
         AllocationChecker.check(length);
-        final byte[] result = new byte[length];
+        final byte[] result = new byte[AllocationChecker.check(length)];
         int read = 0;
         while (read < length) {
             final int count = is.read(result, read, length - read);
@@ -329,7 +329,7 @@ public final class BinaryFunctions {
     }
 
     public static byte[] slice(final byte[] bytes, final int start, final int count) {
-        final byte[] result = new byte[count];
+        final byte[] result = new byte[AllocationChecker.check(count)];
         System.arraycopy(bytes, start, result, 0, count);
         return result;
     }

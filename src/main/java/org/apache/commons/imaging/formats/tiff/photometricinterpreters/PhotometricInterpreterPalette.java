@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.common.AllocationChecker;
 import org.apache.commons.imaging.common.ImageBuilder;
 
 public class PhotometricInterpreterPalette extends PhotometricInterpreter {
@@ -38,7 +39,7 @@ public class PhotometricInterpreterPalette extends PhotometricInterpreter {
 
         final int bitsPerPixel = getBitsPerSample(0);
         final int colormapScale = (1 << bitsPerPixel);
-        indexColorMap = new int[colormapScale];
+        indexColorMap = new int[AllocationChecker.check(colormapScale)];
         Arrays.setAll(indexColorMap, i -> {
             final int red = (colorMap[i] >> 8) & 0xff;
             final int green = (colorMap[i + (colormapScale)] >> 8) & 0xff;

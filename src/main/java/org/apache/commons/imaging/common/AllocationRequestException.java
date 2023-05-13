@@ -25,7 +25,7 @@ public class AllocationRequestException extends ImagingRuntimeException {
     private static final long serialVersionUID = 1L;
 
     private final int limit;
-    private final int request;
+    private final long request;
 
     /**
      * Constructs a new instance.
@@ -34,6 +34,18 @@ public class AllocationRequestException extends ImagingRuntimeException {
      * @param request The allocation request.
      */
     public AllocationRequestException(final int limit, final int request) {
+        super(String.format("Allocation limit %,d exceeded: %,d", limit, request));
+        this.limit = limit;
+        this.request = request;
+    }
+
+    /**
+     * Constructs a new instance.
+     *
+     * @param limit The allocation limit.
+     * @param request The allocation request.
+     */
+    public AllocationRequestException(final int limit, final long request) {
         super(String.format("Allocation limit %,d exceeded: %,d", limit, request));
         this.limit = limit;
         this.request = request;
@@ -53,7 +65,7 @@ public class AllocationRequestException extends ImagingRuntimeException {
      *
      * @return the allocation request.
      */
-    public int getRequest() {
+    public long getRequest() {
         return request;
     }
 }

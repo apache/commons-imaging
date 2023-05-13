@@ -21,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.AllocationChecker;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 
 public class FieldTypeAscii extends FieldType {
@@ -39,7 +40,7 @@ public class FieldTypeAscii extends FieldType {
                 nullCount++;
             }
         }
-        final String[] strings = new String[nullCount];
+        final String[] strings = new String[AllocationChecker.check(nullCount)];
         int stringsAdded = 0;
         strings[0] = ""; // if we have a 0 length string
         int nextStringPos = 0;
@@ -89,7 +90,7 @@ public class FieldTypeAscii extends FieldType {
             final byte[] bytes = string.getBytes(StandardCharsets.UTF_8);
             totalLength += (bytes.length + 1);
         }
-        final byte[] result = new byte[totalLength];
+        final byte[] result = new byte[AllocationChecker.check(totalLength)];
         int position = 0;
         for (final String string : strings) {
             final byte[] bytes = string.getBytes(StandardCharsets.UTF_8);

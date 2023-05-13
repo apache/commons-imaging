@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.common.AllocationChecker;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
@@ -184,7 +185,7 @@ public final class DataReaderTiled extends ImageDataReader {
             int tileX = 0;
             int tileY = 0;
 
-            int[] samples = new int[bitsPerSampleLength];
+            int[] samples = new int[AllocationChecker.check(bitsPerSampleLength)];
             resetPredictor();
             for (int i = 0; i < pixelsPerTile; i++) {
 
@@ -313,7 +314,7 @@ public final class DataReaderTiled extends ImageDataReader {
             rasterWidth = width;
             rasterHeight = height;
         }
-        final float[] rasterDataFloat = new float[rasterWidth * rasterHeight * samplesPerPixel];
+        final float[] rasterDataFloat = new float[AllocationChecker.check(rasterWidth * rasterHeight * samplesPerPixel)];
 
         // tileWidth is the width of the tile
         // tileLength is the height of the tile
@@ -365,7 +366,7 @@ public final class DataReaderTiled extends ImageDataReader {
             rasterWidth = width;
             rasterHeight = height;
         }
-        final int[] rasterDataInt = new int[rasterWidth * rasterHeight];
+        final int[] rasterDataInt = new int[AllocationChecker.check(rasterWidth * rasterHeight)];
 
         // tileWidth is the width of the tile
         // tileLength is the height of the tile

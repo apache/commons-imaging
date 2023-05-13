@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.common.AllocationChecker;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkPlte;
 import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilter;
 import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilterAverage;
@@ -208,7 +209,7 @@ abstract class ScanExpediter {
             final int bytesPerPixel) throws ImageReadException, IOException {
         final ScanlineFilter filter = getScanlineFilter(filterType, bytesPerPixel);
 
-        final byte[] dst = new byte[src.length];
+        final byte[] dst = new byte[AllocationChecker.check(src.length)];
         filter.unfilter(src, dst, prev);
         return dst;
     }

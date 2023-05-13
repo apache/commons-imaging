@@ -24,6 +24,8 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.imaging.common.AllocationChecker;
+
 public class SosSegment extends Segment {
 
     public static class Component {
@@ -66,7 +68,7 @@ public class SosSegment extends Segment {
         // Debug.debug("number_of_components_in_scan",
         // numberOfComponents);
 
-        components = new Component[numberOfComponents];
+        components = new Component[AllocationChecker.check(numberOfComponents)];
         for (int i = 0; i < numberOfComponents; i++) {
             final int scanComponentSelector = readByte("scanComponentSelector", is, "Not a Valid JPEG File");
             // Debug.debug("scanComponentSelector", scanComponentSelector);

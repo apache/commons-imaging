@@ -37,6 +37,7 @@ import java.nio.ByteOrder;
 import java.util.Arrays;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.common.AllocationChecker;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.PackBits;
 import org.apache.commons.imaging.common.ZlibDeflate;
@@ -199,7 +200,7 @@ public abstract class ImageDataReader {
         this.width = width;
         this.height = height;
         this.planarConfiguration = planarConfiguration;
-        last = new int[samplesPerPixel];
+        last = new int[AllocationChecker.check(samplesPerPixel)];
 
     }
 
@@ -640,7 +641,7 @@ public abstract class ImageDataReader {
         final int bytesPerScan = scanSize * samplesPerPixel * bytesPerSample;
         final int nBytes = bytesPerScan * height;
         final int length = bytes.length < nBytes ? nBytes / bytesPerScan : height;
-        final int[] samples = new int[scanSize * samplesPerPixel * height];
+        final int[] samples = new int[AllocationChecker.check(scanSize * samplesPerPixel * height)];
         // floating-point differencing is indicated by a predictor value of 3.
         if (predictor == TiffTagConstants.PREDICTOR_VALUE_FLOATING_POINT_DIFFERENCING) {
             // at this time, this class supports the 32-bit format.  The
@@ -842,7 +843,7 @@ public abstract class ImageDataReader {
         final int nBytes = bytesPerSample * scanSize * height;
         final int length = bytes.length < nBytes ? nBytes / scanSize : height;
 
-        final int[] samples = new int[scanSize * height];
+        final int[] samples = new int[AllocationChecker.check(scanSize * height)];
         // At this time, Commons Imaging only supports two-byte
         // two's complement short integers.  It is assumed that
         // the calling module already checked the arguments for

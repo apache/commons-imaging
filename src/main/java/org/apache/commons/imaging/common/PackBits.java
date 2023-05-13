@@ -20,12 +20,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.io.output.UnsynchronizedByteArrayOutputStream;
 
 public class PackBits {
 
     public byte[] compress(final byte[] bytes) throws IOException {
         // max length 1 extra byte for every 128
-        try (FastByteArrayOutputStream baos = new FastByteArrayOutputStream(bytes.length * 2)) {
+        try (UnsynchronizedByteArrayOutputStream baos = new UnsynchronizedByteArrayOutputStream(AllocationChecker.check(bytes.length * 2))) {
             int ptr = 0;
             while (ptr < bytes.length) {
                 int dup = findNextDuplicate(bytes, ptr);

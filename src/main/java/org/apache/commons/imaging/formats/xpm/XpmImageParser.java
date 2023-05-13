@@ -45,6 +45,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.AllocationChecker;
 import org.apache.commons.imaging.common.BasicCParser;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -559,7 +560,7 @@ public class XpmImageParser extends ImageParser<XpmImagingParameters> {
         WritableRaster raster;
         int bpp;
         if (xpmHeader.palette.size() <= (1 << 8)) {
-            final int[] palette = new int[xpmHeader.palette.size()];
+            final int[] palette = new int[AllocationChecker.check(xpmHeader.palette.size())];
             for (final Entry<Object, PaletteEntry> entry : xpmHeader.palette.entrySet()) {
                 final PaletteEntry paletteEntry = entry.getValue();
                 palette[paletteEntry.index] = paletteEntry.getBestARGB();
@@ -571,7 +572,7 @@ public class XpmImageParser extends ImageParser<XpmImagingParameters> {
                     null);
             bpp = 8;
         } else if (xpmHeader.palette.size() <= (1 << 16)) {
-            final int[] palette = new int[xpmHeader.palette.size()];
+            final int[] palette = new int[AllocationChecker.check(xpmHeader.palette.size())];
             for (final Entry<Object, PaletteEntry> entry : xpmHeader.palette.entrySet()) {
                 final PaletteEntry paletteEntry = entry.getValue();
                 palette[paletteEntry.index] = paletteEntry.getBestARGB();
@@ -637,7 +638,7 @@ public class XpmImageParser extends ImageParser<XpmImagingParameters> {
     private String toColor(final int color) {
         final String hex = Integer.toHexString(color);
         if (hex.length() < 6) {
-            final char[] zeroes = new char[6 - hex.length()];
+            final char[] zeroes = new char[AllocationChecker.check(6 - hex.length())];
             Arrays.fill(zeroes, '0');
             return "#" + new String(zeroes) + hex;
         }

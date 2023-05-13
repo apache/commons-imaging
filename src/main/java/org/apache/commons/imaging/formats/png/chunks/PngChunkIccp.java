@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 import java.util.zip.InflaterInputStream;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.common.AllocationChecker;
 
 /**
  * The PNG iCCP chunk. If "present, the image samples conform to the color space represented by the embedded ICC
@@ -83,7 +84,7 @@ public class PngChunkIccp extends PngChunk {
         compressionMethod = bytes[index + 1];
 
         final int compressedProfileLength = bytes.length - (index + 1 + 1);
-        compressedProfile = new byte[compressedProfileLength];
+        compressedProfile = new byte[AllocationChecker.check(compressedProfileLength)];
         System.arraycopy(bytes, index + 1 + 1, compressedProfile, 0, compressedProfileLength);
 
         if (LOGGER.isLoggable(Level.FINEST)) {

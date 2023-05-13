@@ -353,7 +353,7 @@ public class BasicCParser {
                 ++numLiveTokens;
             }
         }
-        final String[] liveTokens = new String[numLiveTokens];
+        final String[] liveTokens = new String[AllocationChecker.check(numLiveTokens)];
         int next = 0;
         for (final String token : tokens) {
             if (token != null && !token.isEmpty()) {

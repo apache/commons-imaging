@@ -30,6 +30,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.AllocationChecker;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.JpegImageData;
@@ -633,8 +634,8 @@ public final class TiffOutputDirectory extends TiffOutputItem {
 
             // TiffOutputField imageDataOffsetsField = null;
 
-            final int[] imageDataOffsets = new int[imageData.length];
-            final int[] imageDataByteCounts = new int[imageData.length];
+            final int[] imageDataOffsets = new int[AllocationChecker.check(imageData.length)];
+            final int[] imageDataByteCounts = new int[AllocationChecker.check(imageData.length)];
             Arrays.setAll(imageDataByteCounts, i -> imageData[i].length);
 
             // Append imageData-related fields to first directory

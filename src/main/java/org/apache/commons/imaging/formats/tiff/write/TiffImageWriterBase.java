@@ -43,6 +43,7 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.PixelDensity;
+import org.apache.commons.imaging.common.AllocationChecker;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.PackBits;
 import org.apache.commons.imaging.common.RationalNumber;
@@ -90,24 +91,24 @@ public abstract class TiffImageWriterBase {
      * @param src a valid image
      * @return true if at least one non-opaque pixel is found.
      */
-    private boolean checkForActualAlpha(final BufferedImage src){
+    private boolean checkForActualAlpha(final BufferedImage src) {
         // to conserve memory, very large images may be read
         // in pieces.
         final int width = src.getWidth();
         final int height = src.getHeight();
-        int nRowsPerRead = MAX_PIXELS_FOR_RGB/width;
-        if(nRowsPerRead<1){
+        int nRowsPerRead = MAX_PIXELS_FOR_RGB / width;
+        if (nRowsPerRead < 1) {
             nRowsPerRead = 1;
         }
-        final int nReads = (height+nRowsPerRead-1)/nRowsPerRead;
-        final int []argb = new int[nRowsPerRead*width];
-        for(int iRead=0; iRead<nReads; iRead++){
-            final int i0 = iRead*nRowsPerRead;
-            final int i1 = i0+nRowsPerRead>height? height: i0+nRowsPerRead;
-            src.getRGB(0, i0, width, i1-i0, argb, 0, width);
-            final int n = (i1-i0)*width;
-            for(int i=0; i<n; i++){
-                if((argb[i]&0xff000000)!=0xff000000){
+        final int nReads = (height + nRowsPerRead - 1) / nRowsPerRead;
+        final int[] argb = new int[AllocationChecker.check(nRowsPerRead * width)];
+        for (int iRead = 0; iRead < nReads; iRead++) {
+            final int i0 = iRead * nRowsPerRead;
+            final int i1 = i0 + nRowsPerRead > height ? height : i0 + nRowsPerRead;
+            src.getRGB(0, i0, width, i1 - i0, argb, 0, width);
+            final int n = (i1 - i0) * width;
+            for (int i = 0; i < n; i++) {
+                if ((argb[i] & 0xff000000) != 0xff000000) {
                     return true;
                 }
             }
@@ -143,7 +144,7 @@ public abstract class TiffImageWriterBase {
 
         byte[][] result;
         { // Write Strips
-            result = new byte[stripCount][];
+            result = new byte[AllocationChecker.check(stripCount)][];
 
             int remainingRows = height;
 
@@ -155,7 +156,7 @@ public abstract class TiffImageWriterBase {
                 final int bytesPerRow = (bitsInRow + 7) / 8;
                 final int bytesInStrip = rowsInStrip * bytesPerRow;
 
-                final byte[] uncompressed = new byte[bytesInStrip];
+                final byte[] uncompressed = new byte[AllocationChecker.check(bytesInStrip)];
 
                 int counter = 0;
                 int y = i * rowsPerStrip;

@@ -21,6 +21,7 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.AllocationChecker;
 import org.apache.commons.imaging.common.itu_t4.T4_T6_Tables.Entry;
 
 public final class T4AndT6Compression {
@@ -204,8 +205,8 @@ public final class T4AndT6Compression {
             throws ImageWriteException {
         final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(new ByteArrayInputStream(uncompressed));
         final BitArrayOutputStream outputStream = new BitArrayOutputStream();
-        int[] referenceLine = new int[width];
-        int[] codingLine = new int[width];
+        int[] referenceLine = new int[AllocationChecker.check(width)];
+        int[] codingLine = new int[AllocationChecker.check(width)];
         int kCounter = 0;
         if (hasFill) {
             T4_T6_Tables.EOL16.writeBits(outputStream);
@@ -283,14 +284,14 @@ public final class T4AndT6Compression {
         try (ByteArrayInputStream bais = new ByteArrayInputStream(uncompressed);
                 BitInputStreamFlexible inputStream = new BitInputStreamFlexible(bais)) {
             final BitArrayOutputStream outputStream = new BitArrayOutputStream();
-            int[] referenceLine = new int[width];
-            int[] codingLine = new int[width];
+            int[] referenceLine = new int[AllocationChecker.check(width)];
+            int[] codingLine = new int[AllocationChecker.check(width)];
             for (int y = 0; y < height; y++) {
                 for (int i = 0; i < width; i++) {
                     try {
                         codingLine[i] = inputStream.readBits(1);
-                    } catch (final IOException ioException) {
-                        throw new ImageWriteException("Error reading image to compress", ioException);
+                    } catch (final IOException e) {
+                        throw new ImageWriteException("Error reading image to compress", e);
                     }
                 }
                 int codingA0Color = WHITE;
@@ -434,7 +435,7 @@ public final class T4AndT6Compression {
             final int height, final boolean hasFill) throws ImageReadException {
         final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(new ByteArrayInputStream(compressed));
         try (BitArrayOutputStream outputStream = new BitArrayOutputStream()) {
-            final int[] referenceLine = new int[width];
+            final int[] referenceLine = new int[AllocationChecker.check(width)];
             for (int y = 0; y < height; y++) {
                 int rowLength = 0;
                 try {
@@ -541,7 +542,7 @@ public final class T4AndT6Compression {
             throws ImageReadException {
         final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(new ByteArrayInputStream(compressed));
         final BitArrayOutputStream outputStream = new BitArrayOutputStream();
-        final int[] referenceLine = new int[width];
+        final int[] referenceLine = new int[AllocationChecker.check(width)];
         for (int y = 0; y < height; y++) {
             int rowLength = 0;
             try {

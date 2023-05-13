@@ -46,4 +46,21 @@ public class AllocationChecker {
         return request;
     }
 
+    /**
+     * Checks a request for meeting allocation limits.
+     * <p>
+     * The default limit is {@value #DEFAULT}, override with the system property
+     * "org.apache.commons.imaging.common.mylzw.AllocationChecker".
+     * </p>
+     *
+     * @param request an allocation request.
+     * @return the request.
+     */
+    public static int check(final long request) {
+        if (request > Integer.MAX_VALUE) {
+            throw new AllocationRequestException(DEFAULT, request);
+        }
+        return check((int) request);
+    }
+
 }

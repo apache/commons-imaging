@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.imaging.common.AllocationChecker;
+
 public class DhtSegment extends Segment {
     public static class HuffmanTable {
         // some arrays are better off one-based
@@ -73,7 +75,7 @@ public class DhtSegment extends Segment {
             k = 0;
             int code = 0;
             int si = huffSize[0];
-            huffCode = new int[lastK];
+            huffCode = new int[AllocationChecker.check(lastK)];
             while (true) {
                 if (k >= lastK) {
                     break;
@@ -156,7 +158,7 @@ public class DhtSegment extends Segment {
                 length--;
                 bitsSum += bits[i];
             }
-            final int[] huffVal = new int[bitsSum];
+            final int[] huffVal = new int[AllocationChecker.check(bitsSum)];
             for (int i = 0; i < bitsSum; i++) {
                 huffVal[i] = 0xff & readByte("Vij", is, "Not a Valid JPEG File");
                 length--;

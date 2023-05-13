@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.common.AllocationChecker;
 import org.apache.commons.imaging.formats.png.GammaCorrection;
 
 public class PngChunkPlte extends PngChunk {
@@ -40,7 +41,7 @@ public class PngChunkPlte extends PngChunk {
 
         final int count = length / 3;
 
-        rgb = new int[count];
+        rgb = new int[AllocationChecker.check(count)];
 
         for (int i = 0; i < count; i++) {
             final int red = readByte("red[" + i + "]", is,

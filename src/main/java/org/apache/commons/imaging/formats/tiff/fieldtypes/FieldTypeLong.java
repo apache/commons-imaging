@@ -19,6 +19,7 @@ package org.apache.commons.imaging.formats.tiff.fieldtypes;
 import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.AllocationChecker;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 
@@ -50,7 +51,7 @@ public class FieldTypeLong extends FieldType {
             throw new ImageWriteException("Invalid data", o);
         }
         final Integer[] numbers = (Integer[]) o;
-        final int[] values = new int[numbers.length];
+        final int[] values = new int[AllocationChecker.check(numbers.length)];
         for (int i = 0; i < values.length; i++) {
             values[i] = numbers[i];
         }

@@ -20,6 +20,7 @@ import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.AllocationChecker;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
@@ -41,7 +42,7 @@ public class TagInfoAscii extends TagInfo {
                 nullCount++;
             }
         }
-        final String[] strings = new String[nullCount + 1];
+        final String[] strings = new String[AllocationChecker.check(nullCount + 1)];
         int stringsAdded = 0;
         strings[0] = ""; // if we have a 0 length string
         int nextStringPos = 0;

@@ -19,6 +19,8 @@ package org.apache.commons.imaging.common.itu_t4;
 import java.io.OutputStream;
 import java.util.Arrays;
 
+import org.apache.commons.imaging.common.AllocationChecker;
+
 /**
  * Output stream writing to a byte array, and capable
  * of writing 1 bit at a time, starting from the most significant bit.
@@ -34,7 +36,7 @@ class BitArrayOutputStream extends OutputStream {
     }
 
     BitArrayOutputStream(final int size) {
-        buffer = new byte[size];
+        buffer = new byte[AllocationChecker.check(size)];
     }
 
     @Override
@@ -89,7 +91,7 @@ class BitArrayOutputStream extends OutputStream {
 
     private void writeByte(final int b) {
         if (bytesWritten >= buffer.length) {
-            final byte[] bigger = new byte[buffer.length * 2];
+            final byte[] bigger = new byte[AllocationChecker.check(buffer.length * 2)];
             System.arraycopy(buffer, 0, bigger, 0, bytesWritten);
             buffer = bigger;
         }

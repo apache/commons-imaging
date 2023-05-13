@@ -24,6 +24,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.common.AllocationChecker;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.GenericImageMetadata;
@@ -106,8 +107,8 @@ class RgbeInfo implements Closeable {
 
         final byte[] scanLineBytes = ByteConversions.toBytes((short) wd,
                 ByteOrder.BIG_ENDIAN);
-        final byte[] rgbe = new byte[wd * 4];
-        final float[][] out = new float[3][wd * ht];
+        final byte[] rgbe = new byte[AllocationChecker.check(wd * 4)];
+        final float[][] out = new float[3][AllocationChecker.check(wd * ht)];
 
         for (int i = 0; i < ht; i++) {
             BinaryFunctions.readAndVerifyBytes(in, TWO_TWO, "Scan line " + i + " expected to start with 0x2 0x2");

@@ -325,8 +325,7 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
         final byte identifier2 = readByte("Identifier2", is, "Not a Valid BMP File");
 
         if (formatCompliance != null) {
-            formatCompliance.compareBytes("Signature", BMP_HEADER_SIGNATURE,
-                    new byte[]{identifier1, identifier2,});
+            formatCompliance.compareBytes("Signature", BMP_HEADER_SIGNATURE, new byte[] { identifier1, identifier2 });
         }
 
         final int fileSize = read4Bytes("File Size", is, "Not a Valid BMP File", getByteOrder());

@@ -26,6 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.common.AllocationChecker;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
 public class SofnSegment extends Segment {
@@ -73,7 +74,7 @@ public class SofnSegment extends Segment {
         if (numberOfComponents < 0) {
             throw new ImageReadException("The number of components in a SOF0Segment cannot be less than 0!");
         }
-        components = new Component[numberOfComponents];
+        components = new Component[AllocationChecker.check(numberOfComponents)];
         for (int i = 0; i < numberOfComponents; i++) {
             final int componentIdentifier = readByte("ComponentIdentifier", is,
                     "Not a Valid JPEG File");

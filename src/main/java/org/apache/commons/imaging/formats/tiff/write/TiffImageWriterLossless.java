@@ -32,6 +32,7 @@ import java.util.Map;
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.AllocationChecker;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
@@ -289,7 +290,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
             final long outputLength) throws IOException, ImageWriteException {
         final TiffOutputDirectory rootDirectory = outputSet.getRootDirectory();
 
-        final byte[] output = new byte[(int) outputLength];
+        final byte[] output = new byte[AllocationChecker.check(outputLength)];
 
         // copy old data (including maker notes, etc.)
         System.arraycopy(exifBytes, 0, output, 0, Math.min(exifBytes.length, output.length));

@@ -38,7 +38,7 @@ public class FieldTypeByte extends FieldType {
     @Override
     public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException {
         if (o instanceof Byte) {
-            return new byte[] { ((Byte) o).byteValue(), };
+            return new byte[] { ((Byte) o).byteValue() };
         }
         if (o instanceof byte[]) {
             return (byte[]) o;

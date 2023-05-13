@@ -28,6 +28,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.AllocationChecker;
 
 /**
  * Factory for creating palettes.
@@ -336,7 +337,7 @@ public class PaletteFactory {
     public Palette makeExactRgbPaletteFancy(final BufferedImage src) {
         // map what rgb values have been used
 
-        final byte[] rgbmap = new byte[256 * 256 * 32];
+        final byte[] rgbmap = new byte[AllocationChecker.check(256 * 256 * 32)];
 
         final int width = src.getWidth();
         final int height = src.getHeight();
@@ -361,7 +362,7 @@ public class PaletteFactory {
             LOGGER.finest("Used colors: " + count);
         }
 
-        final int[] colormap = new int[count];
+        final int[] colormap = new int[AllocationChecker.check(count)];
         int mapsize = 0;
         for (int i = 0; i < rgbmap.length; i++) {
             final int eight = 0xff & rgbmap[i];
@@ -407,7 +408,7 @@ public class PaletteFactory {
             }
         }
 
-        final int[] result = new int[rgbs.size()];
+        final int[] result = new int[AllocationChecker.check(rgbs.size())];
         int next = 0;
         for (final int rgb : rgbs) {
             result[next++] = rgb;
@@ -447,7 +448,7 @@ public class PaletteFactory {
 
         final int tableScale = precision * COMPONENTS;
         final int tableSize = 1 << tableScale;
-        final int[] table = new int[tableSize];
+        final int[] table = new int[AllocationChecker.check(tableSize)];
 
         final int width = src.getWidth();
         final int height = src.getHeight();

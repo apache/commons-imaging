@@ -19,6 +19,7 @@ package org.apache.commons.imaging.formats.tiff.fieldtypes;
 import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.AllocationChecker;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 
@@ -49,7 +50,7 @@ public class FieldTypeShort extends FieldType {
             throw new ImageWriteException("Invalid data", o);
         }
         final Short[] numbers = (Short[]) o;
-        final short[] values = new short[numbers.length];
+        final short[] values = new short[AllocationChecker.check(numbers.length)];
         for (int i = 0; i < values.length; i++) {
             values[i] = numbers[i].shortValue();
         }

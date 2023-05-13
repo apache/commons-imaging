@@ -71,7 +71,7 @@ public class ZlibDeflate {
         try {
             final Inflater inflater = new Inflater();
             inflater.setInput(bytes);
-            final byte[] result = new byte[expectedSize];
+            final byte[] result = new byte[AllocationChecker.check(expectedSize)];
             inflater.inflate(result);
             return result;
         } catch (final DataFormatException e) {
