@@ -21,7 +21,7 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.AllocationChecker;
+import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.itu_t4.T4_T6_Tables.Entry;
 
 public final class T4AndT6Compression {
@@ -205,8 +205,8 @@ public final class T4AndT6Compression {
             throws ImageWriteException {
         final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(new ByteArrayInputStream(uncompressed));
         final BitArrayOutputStream outputStream = new BitArrayOutputStream();
-        int[] referenceLine = new int[AllocationChecker.check(width)];
-        int[] codingLine = new int[AllocationChecker.check(width)];
+        int[] referenceLine = Allocator.intArray(width);
+        int[] codingLine = Allocator.intArray(width);
         int kCounter = 0;
         if (hasFill) {
             T4_T6_Tables.EOL16.writeBits(outputStream);
@@ -284,8 +284,8 @@ public final class T4AndT6Compression {
         try (ByteArrayInputStream bais = new ByteArrayInputStream(uncompressed);
                 BitInputStreamFlexible inputStream = new BitInputStreamFlexible(bais)) {
             final BitArrayOutputStream outputStream = new BitArrayOutputStream();
-            int[] referenceLine = new int[AllocationChecker.check(width)];
-            int[] codingLine = new int[AllocationChecker.check(width)];
+            int[] referenceLine = Allocator.intArray(width);
+            int[] codingLine = Allocator.intArray(width);
             for (int y = 0; y < height; y++) {
                 for (int i = 0; i < width; i++) {
                     try {
@@ -435,7 +435,7 @@ public final class T4AndT6Compression {
             final int height, final boolean hasFill) throws ImageReadException {
         final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(new ByteArrayInputStream(compressed));
         try (BitArrayOutputStream outputStream = new BitArrayOutputStream()) {
-            final int[] referenceLine = new int[AllocationChecker.check(width)];
+            final int[] referenceLine = Allocator.intArray(width);
             for (int y = 0; y < height; y++) {
                 int rowLength = 0;
                 try {
@@ -542,7 +542,7 @@ public final class T4AndT6Compression {
             throws ImageReadException {
         final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(new ByteArrayInputStream(compressed));
         final BitArrayOutputStream outputStream = new BitArrayOutputStream();
-        final int[] referenceLine = new int[AllocationChecker.check(width)];
+        final int[] referenceLine = Allocator.intArray(width);
         for (int y = 0; y < height; y++) {
             int rowLength = 0;
             try {

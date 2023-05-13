@@ -21,7 +21,7 @@ import java.io.OutputStream;
 import java.util.Arrays;
 
 import org.apache.commons.imaging.PixelDensity;
-import org.apache.commons.imaging.common.AllocationChecker;
+import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
@@ -183,10 +183,10 @@ class PcxWriter {
 
     private void writePixels(final BufferedImage src, final int bitDepth, final int planes,
             final int bytesPerLine, final SimplePalette palette, final BinaryOutputStream bos) throws IOException {
-        final byte[] plane0 = new byte[AllocationChecker.check(bytesPerLine)];
-        final byte[] plane1 = new byte[AllocationChecker.check(bytesPerLine)];
-        final byte[] plane2 = new byte[AllocationChecker.check(bytesPerLine)];
-        final byte[] plane3 = new byte[AllocationChecker.check(bytesPerLine)];
+        final byte[] plane0 = Allocator.byteArray(bytesPerLine);
+        final byte[] plane1 = Allocator.byteArray(bytesPerLine);
+        final byte[] plane2 = Allocator.byteArray(bytesPerLine);
+        final byte[] plane3 = Allocator.byteArray(bytesPerLine);
         final byte[][] allPlanes = { plane0, plane1, plane2, plane3 };
 
         for (int y = 0; y < src.getHeight(); y++) {
@@ -266,8 +266,8 @@ class PcxWriter {
     private void writePixels32(final BufferedImage src, final int bytesPerLine,
             final BinaryOutputStream bos) throws IOException {
 
-        final int[] rgbs = new int[AllocationChecker.check(src.getWidth())];
-        final byte[] plane = new byte[AllocationChecker.check(4 * bytesPerLine)];
+        final int[] rgbs = Allocator.intArray(src.getWidth());
+        final byte[] plane = Allocator.byteArray(4 * bytesPerLine);
         for (int y = 0; y < src.getHeight(); y++) {
             src.getRGB(0, y, src.getWidth(), 1, rgbs, 0, src.getWidth());
             for (int x = 0; x < rgbs.length; x++) {

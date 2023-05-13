@@ -19,7 +19,7 @@ package org.apache.commons.imaging.common.itu_t4;
 import java.io.OutputStream;
 import java.util.Arrays;
 
-import org.apache.commons.imaging.common.AllocationChecker;
+import org.apache.commons.imaging.common.Allocator;
 
 /**
  * Output stream writing to a byte array, and capable
@@ -36,7 +36,7 @@ class BitArrayOutputStream extends OutputStream {
     }
 
     BitArrayOutputStream(final int size) {
-        buffer = new byte[AllocationChecker.check(size)];
+        buffer = Allocator.byteArray(size);
     }
 
     @Override
@@ -91,7 +91,7 @@ class BitArrayOutputStream extends OutputStream {
 
     private void writeByte(final int b) {
         if (bytesWritten >= buffer.length) {
-            final byte[] bigger = new byte[AllocationChecker.check(buffer.length * 2)];
+            final byte[] bigger = Allocator.byteArray(buffer.length * 2);
             System.arraycopy(buffer, 0, bigger, 0, bytesWritten);
             buffer = bigger;
         }

@@ -42,7 +42,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.AllocationChecker;
+import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BasicCParser;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -297,7 +297,7 @@ public class XbmImageParser extends ImageParser<XbmImagingParameters> {
         }
 
         final int rowLength = (xbmHeader.width + 7) / 8;
-        final byte[] imageData = new byte[AllocationChecker.check(rowLength * xbmHeader.height)];
+        final byte[] imageData = Allocator.byteArray(rowLength * xbmHeader.height);
         int i = 0;
         for (int y = 0; y < xbmHeader.height; y++) {
             for (int x = 0; x < xbmHeader.width; x += inputWidth) {

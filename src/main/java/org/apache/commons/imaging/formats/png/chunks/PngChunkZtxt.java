@@ -25,7 +25,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.zip.InflaterInputStream;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.AllocationChecker;
+import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.formats.png.PngConstants;
 import org.apache.commons.imaging.formats.png.PngText;
 
@@ -55,7 +55,7 @@ public class PngChunkZtxt extends PngTextChunk {
         }
 
         final int compressedTextLength = bytes.length - index;
-        final byte[] compressedText = new byte[AllocationChecker.check(compressedTextLength)];
+        final byte[] compressedText = Allocator.byteArray(compressedTextLength);
         System.arraycopy(bytes, index, compressedText, 0, compressedTextLength);
 
         text = new String(getStreamBytes(new InflaterInputStream(new ByteArrayInputStream(compressedText))), StandardCharsets.ISO_8859_1);

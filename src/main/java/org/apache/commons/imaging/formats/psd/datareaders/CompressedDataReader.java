@@ -23,7 +23,7 @@ import java.io.InputStream;
 import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.AllocationChecker;
+import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.PackBits;
@@ -51,7 +51,7 @@ public class CompressedDataReader implements DataReader {
 
         // this.setDebug(true);
         final int scanlineCount = height * header.channels;
-        final int[] scanlineByteCounts = new int[AllocationChecker.check(scanlineCount)];
+        final int[] scanlineByteCounts = Allocator.intArray(scanlineCount);
         for (int i = 0; i < scanlineCount; i++) {
             scanlineByteCounts[i] = BinaryFunctions.read2Bytes("scanline_bytecount[" + i
                     + "]", is, "PSD: bad Image Data", bfp.getByteOrder());
@@ -62,7 +62,7 @@ public class CompressedDataReader implements DataReader {
         final int depth = header.depth;
 
         final int channelCount = dataParser.getBasicChannelsCount();
-        final int[][][] data = new int[AllocationChecker.check(channelCount)][AllocationChecker.check(height)][];
+        final int[][][] data = new int[Allocator.check(channelCount)][Allocator.check(height)][];
         // channels[0] =
         for (int channel = 0; channel < channelCount; channel++) {
             for (int y = 0; y < height; y++) {

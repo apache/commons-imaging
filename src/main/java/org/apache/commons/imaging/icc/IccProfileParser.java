@@ -28,7 +28,7 @@ import java.nio.ByteOrder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.commons.imaging.common.AllocationChecker;
+import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
@@ -249,7 +249,7 @@ public class IccProfileParser extends BinaryFileParser {
             final int tagCount = read4Bytes("TagCount", is, "Not a Valid ICC Profile", getByteOrder());
 
             // List tags = new ArrayList();
-            final IccTag[] tags = new IccTag[AllocationChecker.check(tagCount)];
+            final IccTag[] tags = Allocator.array(tagCount, IccTag[]::new);
 
             for (int i = 0; i < tagCount; i++) {
                 final int tagSignature = read4Bytes("TagSignature[" + i + "]", is, "Not a Valid ICC Profile", getByteOrder());

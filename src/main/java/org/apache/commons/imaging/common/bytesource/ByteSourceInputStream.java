@@ -23,7 +23,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Objects;
 
-import org.apache.commons.imaging.common.AllocationChecker;
+import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFunctions;
 
 public class ByteSourceInputStream extends ByteSource {
@@ -204,7 +204,7 @@ public class ByteSourceInputStream extends ByteSource {
         final InputStream cis = getInputStream();
         BinaryFunctions.skipBytes(cis, blockStart);
 
-        final byte[] bytes = new byte[AllocationChecker.check(blockLength)];
+        final byte[] bytes = Allocator.byteArray(blockLength);
         int total = 0;
         while (true) {
             final int read = cis.read(bytes, total, bytes.length - total);

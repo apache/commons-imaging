@@ -41,7 +41,7 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.PixelDensity;
-import org.apache.commons.imaging.common.AllocationChecker;
+import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -581,12 +581,12 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
         try (InputStream is = byteSource.getInputStream()) {
             final FileHeader fileHeader = readFileHeader(is);
 
-            final IconInfo[] fIconInfos = new IconInfo[AllocationChecker.check(fileHeader.iconCount)];
+            final IconInfo[] fIconInfos = Allocator.array(fileHeader.iconCount, IconInfo[]::new);
             for (int i = 0; i < fileHeader.iconCount; i++) {
                 fIconInfos[i] = readIconInfo(is);
             }
 
-            final IconData[] fIconDatas = new IconData[AllocationChecker.check(fileHeader.iconCount)];
+            final IconData[] fIconDatas = Allocator.array(fileHeader.iconCount, IconData[]::new);
             for (int i = 0; i < fileHeader.iconCount; i++) {
                 final byte[] iconData = byteSource.getBlock(
                         fIconInfos[i].imageOffset, fIconInfos[i].imageSize);

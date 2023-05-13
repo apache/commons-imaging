@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.AllocationChecker;
+import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
@@ -219,7 +219,7 @@ public final class DataReaderStrips extends ImageDataReader {
         // special case handled above
         try (BitInputStream bis = new BitInputStream(new ByteArrayInputStream(bytes), byteOrder)) {
 
-            int[] samples = new int[AllocationChecker.check(bitsPerSampleLength)];
+            int[] samples = Allocator.intArray(bitsPerSampleLength);
             resetPredictor();
             for (int i = 0; i < pixelsPerStrip; i++) {
                 getSamplesAsBytes(bis, samples);
@@ -310,7 +310,7 @@ public final class DataReaderStrips extends ImageDataReader {
                 final long bytesPerStrip = rowsInThisStrip * bytesPerRow;
                 final long pixelsPerStrip = rowsInThisStrip * width;
 
-                final byte[] b = new byte[AllocationChecker.check((int) bytesPerStrip)];
+                final byte[] b = Allocator.byteArray((int) bytesPerStrip);
                 for (int iPlane = 0; iPlane < 3; iPlane++) {
                     final int planeStrip = iPlane * nStripsInPlane + strip;
                     final byte[] compressed = imageData.getImageData(planeStrip).getData();
@@ -373,7 +373,7 @@ public final class DataReaderStrips extends ImageDataReader {
             rasterHeight = height;
         }
 
-        final float[] rasterDataFloat = new float[AllocationChecker.check(rasterWidth * rasterHeight * samplesPerPixel)];
+        final float[] rasterDataFloat = Allocator.floatArray(rasterWidth * rasterHeight * samplesPerPixel);
 
         // the legacy code is optimized to the reading of whole
         // strips (except for the last strip in the image, which can
@@ -426,7 +426,7 @@ public final class DataReaderStrips extends ImageDataReader {
             rasterHeight = height;
         }
 
-        final int[] rasterDataInt = new int[AllocationChecker.check(rasterWidth * rasterHeight)];
+        final int[] rasterDataInt = Allocator.intArray(rasterWidth * rasterHeight);
 
         // the legacy code is optimized to the reading of whole
         // strips (except for the last strip in the image, which can

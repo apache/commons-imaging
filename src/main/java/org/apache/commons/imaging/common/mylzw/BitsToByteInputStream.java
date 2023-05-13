@@ -19,7 +19,7 @@ package org.apache.commons.imaging.common.mylzw;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.commons.imaging.common.AllocationChecker;
+import org.apache.commons.imaging.common.Allocator;
 
 public class BitsToByteInputStream extends InputStream {
     private final MyBitInputStream is;
@@ -47,7 +47,7 @@ public class BitsToByteInputStream extends InputStream {
     }
 
     public int[] readBitsArray(final int sampleBits, final int length) throws IOException {
-        final int[] result = new int[AllocationChecker.check(length)];
+        final int[] result = Allocator.intArray(length);
         for (int i = 0; i < length; i++) {
             result[i] = readBits(sampleBits);
         }

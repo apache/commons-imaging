@@ -73,7 +73,7 @@ public class ImageBuilder {
     public ImageBuilder(final int width, final int height, final boolean hasAlpha) {
         checkDimensions(width, height);
 
-        data = new int[AllocationChecker.check(width * height)];
+        data = Allocator.intArray(width * height);
         this.width = width;
         this.height = height;
         this.hasAlpha = hasAlpha;
@@ -95,7 +95,7 @@ public class ImageBuilder {
     public ImageBuilder(final int width, final int height,
         final boolean hasAlpha, final boolean isAlphaPremultiplied) {
         checkDimensions(width, height);
-        data = new int[AllocationChecker.check(width * height)];
+        data = Allocator.intArray(width * height);
         this.width = width;
         this.height = height;
         this.hasAlpha = hasAlpha;
@@ -203,7 +203,7 @@ public class ImageBuilder {
         checkBounds(x, y, w, h);
 
         // Transcribe the data to an output image array
-        final int[] argb = new int[AllocationChecker.check(w * h)];
+        final int[] argb = Allocator.intArray(w * h);
         int k = 0;
         for (int iRow = 0; iRow < h; iRow++) {
             final int dIndex = (iRow + y) * width + x;

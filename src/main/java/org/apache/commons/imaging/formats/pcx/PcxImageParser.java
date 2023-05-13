@@ -46,7 +46,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.AllocationChecker;
+import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 
@@ -305,12 +305,12 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
             throw new ImageReadException("Unsupported/invalid image encoding " + pcxHeader.encoding);
         }
         final int scanlineLength = pcxHeader.bytesPerLine * pcxHeader.nPlanes;
-        final byte[] scanline = new byte[AllocationChecker.check(scanlineLength)];
+        final byte[] scanline = Allocator.byteArray(scanlineLength);
         if ((pcxHeader.bitsPerPixel == 1 || pcxHeader.bitsPerPixel == 2
                 || pcxHeader.bitsPerPixel == 4 || pcxHeader.bitsPerPixel == 8)
                 && pcxHeader.nPlanes == 1) {
             final int bytesPerImageRow = (xSize * pcxHeader.bitsPerPixel + 7) / 8;
-            final byte[] image = new byte[AllocationChecker.check(ySize * bytesPerImageRow)];
+            final byte[] image = Allocator.byteArray(ySize * bytesPerImageRow);
             for (int y = 0; y < ySize; y++) {
                 rleReader.read(is, scanline);
                 System.arraycopy(scanline, 0, image, y * bytesPerImageRow,
@@ -360,7 +360,7 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
                     DataBuffer.TYPE_BYTE);
             final BufferedImage image = new BufferedImage(xSize, ySize,
                     BufferedImage.TYPE_BYTE_BINARY, colorModel);
-            final byte[] unpacked = new byte[AllocationChecker.check(xSize)];
+            final byte[] unpacked = Allocator.byteArray(xSize);
             for (int y = 0; y < ySize; y++) {
                 rleReader.read(is, scanline);
                 int nextByte = 0;
@@ -380,9 +380,9 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
         if (pcxHeader.bitsPerPixel == 8 && pcxHeader.nPlanes == 3) {
             final byte[][] image = new byte[3][];
             final int xySize = xSize * ySize;
-            image[0] = new byte[AllocationChecker.check(xySize)];
-            image[1] = new byte[AllocationChecker.check(xySize)];
-            image[2] = new byte[AllocationChecker.check(xySize)];
+            image[0] = Allocator.byteArray(xySize);
+            image[1] = Allocator.byteArray(xySize);
+            image[2] = Allocator.byteArray(xySize);
             for (int y = 0; y < ySize; y++) {
                 rleReader.read(is, scanline);
                 System.arraycopy(scanline, 0, image[0], y * xSize, xSize);
@@ -409,7 +409,7 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
                             + pcxHeader.nPlanes);
         }
         final int rowLength = 3 * xSize;
-        final byte[] image = new byte[AllocationChecker.check(rowLength * ySize)];
+        final byte[] image = Allocator.byteArray(rowLength * ySize);
         for (int y = 0; y < ySize; y++) {
             rleReader.read(is, scanline);
             if (pcxHeader.bitsPerPixel == 24) {

@@ -29,7 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.AllocationChecker;
+import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
@@ -156,25 +156,25 @@ public class TiffField {
         }
         if (o instanceof Number[]) {
             final Number[] numbers = (Number[]) o;
-            final double[] result = new double[AllocationChecker.check(numbers.length)];
+            final double[] result = Allocator.doubleArray(numbers.length);
             Arrays.setAll(result, i -> numbers[i].doubleValue());
             return result;
         }
         if (o instanceof short[]) {
             final short[] numbers = (short[]) o;
-            final double[] result = new double[AllocationChecker.check(numbers.length)];
+            final double[] result = Allocator.doubleArray(numbers.length);
             Arrays.setAll(result, i -> numbers[i]);
             return result;
         }
         if (o instanceof int[]) {
             final int[] numbers = (int[]) o;
-            final double[] result = new double[AllocationChecker.check(numbers.length)];
+            final double[] result = Allocator.doubleArray(numbers.length);
             Arrays.setAll(result, i -> numbers[i]);
             return result;
         }
         if (o instanceof float[]) {
             final float[] numbers = (float[]) o;
-            final double[] result = new double[AllocationChecker.check(numbers.length)];
+            final double[] result = Allocator.doubleArray(numbers.length);
             Arrays.setAll(result, i -> numbers[i]);
             return result;
         }
@@ -220,13 +220,13 @@ public class TiffField {
         }
         if (o instanceof Number[]) {
             final Number[] numbers = (Number[]) o;
-            final int[] result = new int[AllocationChecker.check(numbers.length)];
+            final int[] result = Allocator.intArray(numbers.length);
             Arrays.setAll(result, i -> numbers[i].intValue());
             return result;
         }
         if (o instanceof short[]) {
             final short[] numbers = (short[]) o;
-            final int[] result = new int[AllocationChecker.check(numbers.length)];
+            final int[] result = Allocator.intArray(numbers.length);
             Arrays.setAll(result, i ->  0xffff & numbers[i]);
             return result;
         }

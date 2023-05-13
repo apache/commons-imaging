@@ -59,7 +59,7 @@ public final class ByteConversions {
 
     private static byte[] toBytes(final double[] values, final int offset,
             final int length, final ByteOrder byteOrder) {
-        final byte[] result = new byte[AllocationChecker.check(length * 8)];
+        final byte[] result = Allocator.byteArray(length * 8);
         for (int i = 0; i < length; i++) {
             toBytes(values[offset + i], byteOrder, result, i * 8);
         }
@@ -92,7 +92,7 @@ public final class ByteConversions {
     }
 
     private static byte[] toBytes(final float[] values, final int offset, final int length, final ByteOrder byteOrder) {
-        final byte[] result = new byte[AllocationChecker.check(length * 4)];
+        final byte[] result = Allocator.byteArray(length * 4);
         for (int i = 0; i < length; i++) {
             toBytes(values[offset + i], byteOrder, result, i * 4);
         }
@@ -124,7 +124,7 @@ public final class ByteConversions {
     }
 
     private static byte[] toBytes(final int[] values, final int offset, final int length, final ByteOrder byteOrder) {
-        final byte[] result = new byte[AllocationChecker.check(length * 4)];
+        final byte[] result = Allocator.byteArray(length * 4);
         for (int i = 0; i < length; i++) {
             toBytes(values[offset + i], byteOrder, result, i * 4);
         }
@@ -166,7 +166,7 @@ public final class ByteConversions {
 
     private static byte[] toBytes(final RationalNumber[] values, final int offset,
             final int length, final ByteOrder byteOrder) {
-        final byte[] result = new byte[AllocationChecker.check(length * 8)];
+        final byte[] result = Allocator.byteArray(length * 8);
         for (int i = 0; i < length; i++) {
             toBytes(values[offset + i], byteOrder, result, i * 8);
         }
@@ -194,7 +194,7 @@ public final class ByteConversions {
     }
 
     private static byte[] toBytes(final short[] values, final int offset, final int length, final ByteOrder byteOrder) {
-        final byte[] result = new byte[AllocationChecker.check(length * 2)];
+        final byte[] result = Allocator.byteArray(length * 2);
         for (int i = 0; i < length; i++) {
             toBytes(values[offset + i], byteOrder, result, i * 2);
         }
@@ -233,7 +233,7 @@ public final class ByteConversions {
 
     private static double[] toDoubles(final byte[] bytes, final int offset,
             final int length, final ByteOrder byteOrder) {
-        final double[] result = new double[AllocationChecker.check(length / 8)];
+        final double[] result = Allocator.doubleArray(length / 8);
         Arrays.setAll(result, i -> toDouble(bytes, offset + 8 * i, byteOrder));
         return result;
     }
@@ -262,7 +262,7 @@ public final class ByteConversions {
 
     private static float[] toFloats(final byte[] bytes, final int offset,
             final int length, final ByteOrder byteOrder) {
-        final float[] result = new float[AllocationChecker.check(length / 4)];
+        final float[] result = Allocator.floatArray(length / 4);
         for (int i = 0; i < result.length; i++) {
             result[i] = toFloat(bytes, offset + 4 * i, byteOrder);
         }
@@ -290,7 +290,7 @@ public final class ByteConversions {
 
     private static int[] toInts(final byte[] bytes, final int offset, final int length,
             final ByteOrder byteOrder) {
-        final int[] result = new int[AllocationChecker.check(length / 4)];
+        final int[] result = Allocator.intArray(length / 4);
         Arrays.setAll(result, i -> toInt(bytes, offset + 4 * i, byteOrder));
         return result;
     }
@@ -368,7 +368,7 @@ public final class ByteConversions {
 
     private static short[] toShorts(final byte[] bytes, final int offset,
             final int length, final ByteOrder byteOrder) {
-        final short[] result = new short[AllocationChecker.check(length / 2)];
+        final short[] result = new short[Allocator.check(length / 2)];
         for (int i = 0; i < result.length; i++) {
             result[i] = toShort(bytes, offset + 2 * i, byteOrder);
         }
@@ -394,7 +394,7 @@ public final class ByteConversions {
 
     private static int[] toUInt16s(final byte[] bytes, final int offset, final int length,
             final ByteOrder byteOrder) {
-        final int[] result = new int[AllocationChecker.check(length / 2)];
+        final int[] result = Allocator.intArray(length / 2);
         Arrays.setAll(result, i -> toUInt16(bytes, offset + 2 * i, byteOrder));
         return result;
     }

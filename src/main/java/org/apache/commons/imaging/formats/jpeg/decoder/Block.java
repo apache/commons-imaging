@@ -15,7 +15,7 @@
 
 package org.apache.commons.imaging.formats.jpeg.decoder;
 
-import org.apache.commons.imaging.common.AllocationChecker;
+import org.apache.commons.imaging.common.Allocator;
 
 final class Block {
     final int[] samples;
@@ -23,7 +23,7 @@ final class Block {
     final int height;
 
     Block(final int width, final int height) {
-        this.samples = new int[AllocationChecker.check(width * height)];
+        this.samples = Allocator.intArray(width * height);
         this.width = width;
         this.height = height;
     }

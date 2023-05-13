@@ -37,7 +37,7 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.AllocationChecker;
+import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.XmpEmbeddable;
 import org.apache.commons.imaging.common.XmpImagingParameters;
@@ -128,7 +128,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
             }
         }
 
-        final byte[] result = new byte[AllocationChecker.check(total)];
+        final byte[] result = Allocator.byteArray(total);
         int progress = 0;
 
         for (final App2Segment segment : segments) {

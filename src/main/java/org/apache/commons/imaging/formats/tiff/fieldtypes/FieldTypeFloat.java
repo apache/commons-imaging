@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.tiff.fieldtypes;
 import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.AllocationChecker;
+import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 
@@ -50,7 +50,7 @@ public class FieldTypeFloat extends FieldType {
             throw new ImageWriteException("Invalid data", o);
         }
         final Float[] numbers = (Float[]) o;
-        final float[] values = new float[AllocationChecker.check(numbers.length)];
+        final float[] values = Allocator.floatArray(numbers.length);
         for (int i = 0; i < values.length; i++) {
             values[i] = numbers[i].floatValue();
         }

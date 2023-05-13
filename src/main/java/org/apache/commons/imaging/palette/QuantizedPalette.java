@@ -20,7 +20,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.AllocationChecker;
+import org.apache.commons.imaging.common.Allocator;
 
 public class QuantizedPalette implements Palette {
 
@@ -32,7 +32,7 @@ public class QuantizedPalette implements Palette {
         this.subsets = subsets == null ? Collections.emptyList() : Collections.unmodifiableList(subsets);
         this.precision = precision;
 
-        straight = new ColorSpaceSubset[AllocationChecker.check(1 << (precision * 3))];
+        straight = Allocator.array(1 << (precision * 3), ColorSpaceSubset[]::new);
 
         for (int i = 0; i < this.subsets.size(); i++) {
             final ColorSpaceSubset subset = subsets.get(i);

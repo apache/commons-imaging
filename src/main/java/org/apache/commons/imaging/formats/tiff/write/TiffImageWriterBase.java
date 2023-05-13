@@ -43,7 +43,7 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.PixelDensity;
-import org.apache.commons.imaging.common.AllocationChecker;
+import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.PackBits;
 import org.apache.commons.imaging.common.RationalNumber;
@@ -101,7 +101,7 @@ public abstract class TiffImageWriterBase {
             nRowsPerRead = 1;
         }
         final int nReads = (height + nRowsPerRead - 1) / nRowsPerRead;
-        final int[] argb = new int[AllocationChecker.check(nRowsPerRead * width)];
+        final int[] argb = Allocator.intArray(nRowsPerRead * width);
         for (int iRead = 0; iRead < nReads; iRead++) {
             final int i0 = iRead * nRowsPerRead;
             final int i1 = i0 + nRowsPerRead > height ? height : i0 + nRowsPerRead;
@@ -144,7 +144,7 @@ public abstract class TiffImageWriterBase {
 
         byte[][] result;
         { // Write Strips
-            result = new byte[AllocationChecker.check(stripCount)][];
+            result = new byte[Allocator.check(stripCount)][];
 
             int remainingRows = height;
 
@@ -156,7 +156,7 @@ public abstract class TiffImageWriterBase {
                 final int bytesPerRow = (bitsInRow + 7) / 8;
                 final int bytesInStrip = rowsInStrip * bytesPerRow;
 
-                final byte[] uncompressed = new byte[AllocationChecker.check(bytesInStrip)];
+                final byte[] uncompressed = Allocator.byteArray(bytesInStrip);
 
                 int counter = 0;
                 int y = i * rowsPerStrip;

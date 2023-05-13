@@ -24,7 +24,7 @@ import java.nio.ByteOrder;
 import java.util.Arrays;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.AllocationChecker;
+import org.apache.commons.imaging.common.Allocator;
 
 public final class MyLzwDecompressor {
 
@@ -112,7 +112,7 @@ public final class MyLzwDecompressor {
             mbis.setTiffLZWMode();
         }
 
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream(AllocationChecker.check(expectedLength));
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream(Allocator.check(expectedLength));
 
         clearTable();
 

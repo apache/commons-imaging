@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.AllocationChecker;
+import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.internal.Debug;
 
 public class MedianCutQuantizer {
@@ -57,7 +57,7 @@ public class MedianCutQuantizer {
         final int width = image.getWidth();
         final int height = image.getHeight();
 
-        final int[] row = new int[AllocationChecker.check(width)];
+        final int[] row = Allocator.intArray(width);
         for (int y = 0; y < height; y++) {
             image.getRGB(0, y, width, 1, row, 0, width);
             for (int x = 0; x < width; x++) {
@@ -92,7 +92,7 @@ public class MedianCutQuantizer {
         if (discreteColors <= maxColors) {
             Debug.debug("lossless palette: " + discreteColors);
 
-            final int[] palette = new int[AllocationChecker.check(discreteColors)];
+            final int[] palette = Allocator.intArray(discreteColors);
             final List<ColorCount> colorCounts = new ArrayList<>(
                     colorMap.values());
 
@@ -122,7 +122,7 @@ public class MedianCutQuantizer {
         final int paletteSize = colorGroups.size();
         Debug.debug("palette size: " + paletteSize);
 
-        final int[] palette = new int[AllocationChecker.check(paletteSize)];
+        final int[] palette = Allocator.intArray(paletteSize);
 
         for (int i = 0; i < colorGroups.size(); i++) {
             final ColorGroup colorGroup = colorGroups.get(i);

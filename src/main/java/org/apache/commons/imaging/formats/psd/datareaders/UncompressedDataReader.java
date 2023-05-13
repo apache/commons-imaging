@@ -22,7 +22,7 @@ import java.io.InputStream;
 import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.AllocationChecker;
+import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.mylzw.BitsToByteInputStream;
 import org.apache.commons.imaging.common.mylzw.MyBitInputStream;
@@ -51,8 +51,8 @@ public class UncompressedDataReader implements DataReader {
         final MyBitInputStream mbis = new MyBitInputStream(is, ByteOrder.BIG_ENDIAN);
         // we want all samples to be bytes
         try (BitsToByteInputStream bbis = new BitsToByteInputStream(mbis, 8)) {
-            final int[][][] data = new int[AllocationChecker.check(channelCount)][AllocationChecker
-                    .check(height)][AllocationChecker.check(width)];
+            final int[][][] data = new int[Allocator.check(channelCount)][Allocator
+                    .check(height)][Allocator.check(width)];
             for (int channel = 0; channel < channelCount; channel++) {
                 for (int y = 0; y < height; y++) {
                     for (int x = 0; x < width; x++) {

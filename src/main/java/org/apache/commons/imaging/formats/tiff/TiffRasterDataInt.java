@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.tiff;
 
-import org.apache.commons.imaging.common.AllocationChecker;
+import org.apache.commons.imaging.common.Allocator;
 
 /**
  * Provides a simple container for floating-point data. Some TIFF files are used
@@ -53,7 +53,7 @@ public class TiffRasterDataInt extends TiffRasterData {
      */
     public TiffRasterDataInt(final int width, final int height) {
         super(width, height, 1);
-        data = new int[AllocationChecker.check(nCells)];
+        data = Allocator.intArray(nCells);
     }
 
     /**
@@ -65,7 +65,7 @@ public class TiffRasterDataInt extends TiffRasterData {
      */
     public TiffRasterDataInt(final int width, final int height, final int samplesPerPixel) {
         super(width, height, samplesPerPixel);
-        data = new int[AllocationChecker.check(nCells)];
+        data = Allocator.intArray(nCells);
     }
 
     /**
@@ -113,7 +113,7 @@ public class TiffRasterDataInt extends TiffRasterData {
      */
     @Override
     public float[] getData() {
-        final float[] result = new float[AllocationChecker.check(nCells)];
+        final float[] result = Allocator.floatArray(nCells);
         for (int i = 0; i < nCells; i++) {
             result[i] = data[i];
         }

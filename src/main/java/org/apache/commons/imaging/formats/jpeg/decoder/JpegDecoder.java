@@ -33,7 +33,7 @@ import java.util.Properties;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.color.ColorConversions;
-import org.apache.commons.imaging.common.AllocationChecker;
+import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
@@ -109,7 +109,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
         final List<Integer> intervalStarts = getIntervalStartPositions(scanPayload);
         // get number of intervals in payload to init an array of appropriate length
         final int intervalCount = intervalStarts.size();
-        final JpegInputStream[] streams = new JpegInputStream[AllocationChecker.check(intervalCount)];
+        final JpegInputStream[] streams = Allocator.array(intervalCount, JpegInputStream[]::new);
         for (int i = 0; i < intervalCount; i++) {
             final int from = intervalStarts.get(i);
             int to;
@@ -142,7 +142,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
     private final float[] block = new float[64];
 
     private Block[] allocateMCUMemory() throws ImageReadException {
-        final Block[] mcu = new Block[AllocationChecker.check(sosSegment.numberOfComponents)];
+        final Block[] mcu = Allocator.array(sosSegment.numberOfComponents, Block[]::new);
         for (int i = 0; i < sosSegment.numberOfComponents; i++) {
             final SosSegment.Component scanComponent = sosSegment.getComponents(i);
             SofnSegment.Component frameComponent = null;
@@ -379,9 +379,9 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                 }
                 quantizationTables[table.destinationIdentifier] = table;
                 final int mSize = 64;
-                final int[] quantizationMatrixInt = new int[AllocationChecker.check(mSize)];
+                final int[] quantizationMatrixInt = Allocator.intArray(mSize);
                 ZigZag.zigZagToBlock(table.getElements(), quantizationMatrixInt);
-                final float[] quantizationMatrixFloat = new float[AllocationChecker.check(mSize)];
+                final float[] quantizationMatrixFloat = Allocator.floatArray(mSize);
                 for (int j = 0; j < mSize; j++) {
                     quantizationMatrixFloat[j] = quantizationMatrixInt[j];
                 }
@@ -424,7 +424,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             // the payload contains the entropy-encoded segments (or ECS) divided by RST markers
             // or only one ECS if the entropy-encoded data is not divided by RST markers
             // length of payload = length of image data - length of data already read
-            final int[] scanPayload = new int[AllocationChecker.check(imageData.length - segmentLength)];
+            final int[] scanPayload = Allocator.intArray(imageData.length - segmentLength);
             int payloadReadCount = 0;
             while (payloadReadCount < scanPayload.length) {
                 scanPayload[payloadReadCount] = is.read();
@@ -445,9 +445,9 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             final int xMCUs = (sofnSegment.width + hSize - 1) / hSize;
             final int yMCUs = (sofnSegment.height + vSize - 1) / vSize;
             final Block[] mcu = allocateMCUMemory();
-            final Block[] scaledMCU = new Block[AllocationChecker.check(mcu.length)];
+            final Block[] scaledMCU = Allocator.array(mcu.length, Block[]::new);
             Arrays.setAll(scaledMCU, i -> new Block(hSize, vSize));
-            final int[] preds = new int[AllocationChecker.check(sofnSegment.numberOfComponents)];
+            final int[] preds = Allocator.intArray(sofnSegment.numberOfComponents);
             ColorModel colorModel;
             WritableRaster raster;
             switch (sofnSegment.numberOfComponents) {

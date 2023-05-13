@@ -20,7 +20,7 @@ import java.nio.ByteOrder;
 import java.util.Arrays;
 
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.AllocationChecker;
+import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 
@@ -49,7 +49,7 @@ public class FieldTypeDouble extends FieldType {
         if (!(o instanceof Double[])) {
             throw new ImageWriteException("Invalid data", o);
         }
-        final double[] values = new double[AllocationChecker.check(((Double[]) o).length)];
+        final double[] values = new double[Allocator.check(((Double[]) o).length)];
         Arrays.setAll(values, i -> ((Double[]) o)[i].doubleValue());
         return ByteConversions.toBytes(values, byteOrder);
     }
