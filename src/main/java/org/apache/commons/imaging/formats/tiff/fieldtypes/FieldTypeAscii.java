@@ -40,7 +40,7 @@ public class FieldTypeAscii extends FieldType {
                 nullCount++;
             }
         }
-        final String[] strings = Allocator.array(nullCount, String[]::new);
+        final String[] strings = Allocator.array(nullCount, String[]::new, 24);
         int stringsAdded = 0;
         strings[0] = ""; // if we have a 0 length string
         int nextStringPos = 0;

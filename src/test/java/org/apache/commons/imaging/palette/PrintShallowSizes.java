@@ -14,25 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.formats.tiff.write;
 
-import java.util.Arrays;
+package org.apache.commons.imaging.palette;
 
-import org.apache.commons.imaging.common.Allocator;
-import org.apache.commons.imaging.formats.tiff.TiffElement;
+import org.apache.commons.imaging.test.util.PrintShallowObjectSizes;
 
-class ImageDataOffsets {
-    final int[] imageDataOffsets;
-    final TiffOutputField imageDataOffsetsField;
-    final TiffOutputItem[] outputItems;
+public class PrintShallowSizes {
 
-    ImageDataOffsets(final TiffElement.DataElement[] imageData, final int[] imageDataOffsets, final TiffOutputField imageDataOffsetsField) {
-        this.imageDataOffsets = imageDataOffsets;
-        this.imageDataOffsetsField = imageDataOffsetsField;
-
-        outputItems = Allocator.array(imageData.length, TiffOutputItem[]::new, 24);
-        Arrays.setAll(outputItems, i -> new TiffOutputItem.Value("TIFF image data", imageData[i].getData()));
-
+    public static void main(final String[] args) {
+        PrintShallowObjectSizes.print(ColorSpaceSubset.class);
     }
-
 }

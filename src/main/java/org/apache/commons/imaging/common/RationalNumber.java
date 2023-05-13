@@ -182,6 +182,8 @@ public class RationalNumber extends Number {
 
     public final boolean unsignedType;
 
+    public static final int SHALLOW_SIZE = 32;
+
     /**
      * Constructs an instance based on signed integers
      * @param numerator a 32-bit signed integer

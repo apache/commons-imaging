@@ -27,6 +27,7 @@ class JpegInputStream {
     private int nextPos;
     private int cnt;
     private int b;
+    static final int SHALLOW_SIZE = 32;
 
     JpegInputStream(final int[] interval) {
         this.interval = Arrays.copyOf(interval, interval.length);

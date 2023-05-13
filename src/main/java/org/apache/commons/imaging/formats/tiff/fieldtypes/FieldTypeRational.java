@@ -57,7 +57,8 @@ public class FieldTypeRational extends FieldType {
         }
         if (o instanceof Number[]) {
             final Number[] numbers = (Number[]) o;
-            final RationalNumber[] rationalNumbers = Allocator.array(numbers.length, RationalNumber[]::new);
+            final RationalNumber[] rationalNumbers = Allocator.array(numbers.length, RationalNumber[]::new,
+                    RationalNumber.SHALLOW_SIZE);
             Arrays.setAll(rationalNumbers, RationalNumber::valueOf);
             return ByteConversions.toBytes(rationalNumbers, byteOrder);
         }
@@ -65,7 +66,8 @@ public class FieldTypeRational extends FieldType {
             throw new ImageWriteException("Invalid data", o);
         }
         final double[] numbers = (double[]) o;
-        final RationalNumber[] rationalNumbers = Allocator.array(numbers.length, RationalNumber[]::new);
+        final RationalNumber[] rationalNumbers = Allocator.array(numbers.length, RationalNumber[]::new,
+                RationalNumber.SHALLOW_SIZE);
         Arrays.setAll(rationalNumbers, RationalNumber::valueOf);
         return ByteConversions.toBytes(rationalNumbers, byteOrder);
     }

@@ -36,6 +36,7 @@ public class SofnSegment extends Segment {
         public final int horizontalSamplingFactor;
         public final int verticalSamplingFactor;
         public final int quantTabDestSelector;
+        static final int SHALLOW_SIZE = 32;
 
         public Component(final int componentIdentifier, final int horizontalSamplingFactor,
                 final int veritcalSamplingFactor, final int quantTabDestSelector) {
@@ -74,7 +75,7 @@ public class SofnSegment extends Segment {
         if (numberOfComponents < 0) {
             throw new ImageReadException("The number of components in a SOF0Segment cannot be less than 0!");
         }
-        components = Allocator.array(numberOfComponents, Component[]::new);
+        components = Allocator.array(numberOfComponents, Component[]::new, Component.SHALLOW_SIZE);
         for (int i = 0; i < numberOfComponents; i++) {
             final int componentIdentifier = readByte("ComponentIdentifier", is,
                     "Not a Valid JPEG File");

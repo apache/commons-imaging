@@ -55,14 +55,13 @@ public class Allocator {
      * @param <T> The return array type
      * @param request The requested size.
      * @param factory The array factory.
+     * @param shallowByteSize The shallow byte size.
      * @return a new byte array.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      * @see #check(int)
      */
-    public static <T> T[] array(final int request, final IntFunction<T[]> factory) {
-        // We could pass in a shallow object byte size to multiply with the request.
-        // The shallow byte size would need to be computed and hard-coded in statics.
-        return factory.apply(check(request));
+    public static <T> T[] array(final int request, final IntFunction<T[]> factory, final int shallowByteSize) {
+        return factory.apply(check(request * shallowByteSize));
     }
 
     /**

@@ -32,6 +32,7 @@ public class SosSegment extends Segment {
         public final int scanComponentSelector;
         public final int dcCodingTableSelector;
         public final int acCodingTableSelector;
+        static final int SHALLOW_SIZE = 24;
 
         public Component(final int scanComponentSelector, final int dcCodingTableSelector,
                 final int acCodingTableSelector) {
@@ -68,7 +69,7 @@ public class SosSegment extends Segment {
         // Debug.debug("number_of_components_in_scan",
         // numberOfComponents);
 
-        components = Allocator.array(numberOfComponents, Component[]::new);
+        components = Allocator.array(numberOfComponents, Component[]::new, Component.SHALLOW_SIZE);
         for (int i = 0; i < numberOfComponents; i++) {
             final int scanComponentSelector = readByte("scanComponentSelector", is, "Not a Valid JPEG File");
             // Debug.debug("scanComponentSelector", scanComponentSelector);

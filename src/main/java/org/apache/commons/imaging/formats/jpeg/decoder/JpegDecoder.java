@@ -109,7 +109,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
         final List<Integer> intervalStarts = getIntervalStartPositions(scanPayload);
         // get number of intervals in payload to init an array of appropriate length
         final int intervalCount = intervalStarts.size();
-        final JpegInputStream[] streams = Allocator.array(intervalCount, JpegInputStream[]::new);
+        final JpegInputStream[] streams = Allocator.array(intervalCount, JpegInputStream[]::new, JpegInputStream.SHALLOW_SIZE);
         for (int i = 0; i < intervalCount; i++) {
             final int from = intervalStarts.get(i);
             int to;
@@ -142,7 +142,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
     private final float[] block = new float[64];
 
     private Block[] allocateMCUMemory() throws ImageReadException {
-        final Block[] mcu = Allocator.array(sosSegment.numberOfComponents, Block[]::new);
+        final Block[] mcu = Allocator.array(sosSegment.numberOfComponents, Block[]::new, 24);
         for (int i = 0; i < sosSegment.numberOfComponents; i++) {
             final SosSegment.Component scanComponent = sosSegment.getComponents(i);
             SofnSegment.Component frameComponent = null;
@@ -445,7 +445,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             final int xMCUs = (sofnSegment.width + hSize - 1) / hSize;
             final int yMCUs = (sofnSegment.height + vSize - 1) / vSize;
             final Block[] mcu = allocateMCUMemory();
-            final Block[] scaledMCU = Allocator.array(mcu.length, Block[]::new);
+            final Block[] scaledMCU = Allocator.array(mcu.length, Block[]::new, Block.SHALLOW_SIZE);
             Arrays.setAll(scaledMCU, i -> new Block(hSize, vSize));
             final int[] preds = Allocator.intArray(sofnSegment.numberOfComponents);
             ColorModel colorModel;

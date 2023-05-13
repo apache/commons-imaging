@@ -21,6 +21,7 @@ final class Block {
     final int[] samples;
     final int width;
     final int height;
+    static final int SHALLOW_SIZE = 24;
 
     Block(final int width, final int height) {
         this.samples = Allocator.intArray(width * height);

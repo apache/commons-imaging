@@ -161,7 +161,7 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
                 throws ImageReadException;
     }
 
-    private static class IconInfo {
+    static class IconInfo {
         public final byte width;
         public final byte height;
         public final byte colorCount;
@@ -170,6 +170,7 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
         public final int bitCount;
         public final int imageSize;
         public final int imageOffset;
+        static final int SHALLOW_SIZE = 32;
 
         IconInfo(final byte width, final byte height,
                 final byte colorCount, final byte reserved, final int planes,
@@ -580,12 +581,12 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
         try (InputStream is = byteSource.getInputStream()) {
             final FileHeader fileHeader = readFileHeader(is);
 
-            final IconInfo[] fIconInfos = Allocator.array(fileHeader.iconCount, IconInfo[]::new);
+            final IconInfo[] fIconInfos = Allocator.array(fileHeader.iconCount, IconInfo[]::new, IconInfo.SHALLOW_SIZE);
             for (int i = 0; i < fileHeader.iconCount; i++) {
                 fIconInfos[i] = readIconInfo(is);
             }
 
-            final IconData[] fIconDatas = Allocator.array(fileHeader.iconCount, IconData[]::new);
+            final IconData[] fIconDatas = Allocator.array(fileHeader.iconCount, IconData[]::new, 32);
             for (int i = 0; i < fileHeader.iconCount; i++) {
                 final byte[] iconData = byteSource.getBlock(
                         fIconInfos[i].imageOffset, fIconInfos[i].imageSize);

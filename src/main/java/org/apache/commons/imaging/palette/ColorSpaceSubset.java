@@ -43,6 +43,7 @@ class ColorSpaceSubset {
 
     // the index in the palette.
     private int index;
+    static final int SHALLOW_SIZE = 40;
 
     ColorSpaceSubset(final int total, final int precision) {
         this.total = total;
