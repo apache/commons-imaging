@@ -638,7 +638,7 @@ public class XpmImageParser extends ImageParser<XpmImagingParameters> {
     private String toColor(final int color) {
         final String hex = Integer.toHexString(color);
         if (hex.length() < 6) {
-            final char[] zeroes = new char[Allocator.check(6 - hex.length())];
+            final char[] zeroes = Allocator.charArray(6 - hex.length());
             Arrays.fill(zeroes, '0');
             return "#" + new String(zeroes) + hex;
         }

@@ -159,8 +159,9 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
             throws ImageReadException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             final int id = read4Bytes("Id", is, "Not a Valid DCX File", getByteOrder());
-            final List<Long> pageTable = Allocator.arrayList(1024);
-            for (int i = 0; i < 1024; i++) {
+            final int size = 1024;
+            final List<Long> pageTable = Allocator.arrayList(size);
+            for (int i = 0; i < size; i++) {
                 final long pageOffset = 0xFFFFffffL & read4Bytes("PageTable", is, "Not a Valid DCX File", getByteOrder());
                 if (pageOffset == 0) {
                     break;
@@ -171,7 +172,7 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
             if (id != DcxHeader.DCX_ID) {
                 throw new ImageReadException("Not a Valid DCX File: file id incorrect");
             }
-            if (pageTable.size() == 1024) {
+            if (pageTable.size() == size) {
                 throw new ImageReadException("DCX page table not terminated by zero entry");
             }
 

@@ -50,7 +50,7 @@ public class FieldTypeShort extends FieldType {
             throw new ImageWriteException("Invalid data", o);
         }
         final Short[] numbers = (Short[]) o;
-        final short[] values = new short[Allocator.check(numbers.length)];
+        final short[] values = Allocator.shortArray(numbers.length);
         for (int i = 0; i < values.length; i++) {
             values[i] = numbers[i].shortValue();
         }

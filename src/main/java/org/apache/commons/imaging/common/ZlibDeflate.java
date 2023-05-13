@@ -48,7 +48,7 @@ public class ZlibDeflate {
      * @see DeflaterOutputStream
      */
     public static byte[] compress(final byte[] bytes) throws ImageWriteException {
-        final ByteArrayOutputStream out = new ByteArrayOutputStream(Allocator.check(bytes.length / 2));
+        final ByteArrayOutputStream out = new ByteArrayOutputStream(Allocator.checkByteArray(bytes.length / 2));
         try (DeflaterOutputStream compressOut = new DeflaterOutputStream(out)) {
             compressOut.write(bytes);
         } catch (final IOException e) {

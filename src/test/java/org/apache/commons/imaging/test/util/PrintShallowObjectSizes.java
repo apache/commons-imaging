@@ -17,6 +17,8 @@
 
 package org.apache.commons.imaging.test.util;
 
+import java.util.ArrayList;
+
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.icc.IccTag;
 import org.openjdk.jol.info.ClassLayout;
@@ -31,13 +33,13 @@ public class PrintShallowObjectSizes {
         new PrintShallowObjectSizes().go(String.class,
                 org.apache.commons.imaging.formats.jpeg.segments.SofnSegment.Component.class,
                 org.apache.commons.imaging.formats.jpeg.segments.SosSegment.Component.class, RationalNumber.class,
-                IccTag.class);
+                IccTag.class, ArrayList.class);
     }
 
     public void go(final Class<?>... classes) {
         for (final Class<?> cls : classes) {
             final ClassLayout classLayout = ClassLayout.parseClass(cls);
-            // System.out.println(classLayout.toPrintable());
+            System.out.println(classLayout.toPrintable());
             System.out.printf("%s shallow size = %,d bytes%n", cls, classLayout.instanceSize());
         }
 

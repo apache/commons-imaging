@@ -437,7 +437,7 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
                 : colorsUsed);
         final int bitmapSize = 14 + 56 + restOfFile.length;
 
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream(Allocator.check(bitmapSize));
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream(Allocator.checkByteArray(bitmapSize));
         try (BinaryOutputStream bos = BinaryOutputStream.littleEndian(baos)) {
             bos.write('B');
             bos.write('M');

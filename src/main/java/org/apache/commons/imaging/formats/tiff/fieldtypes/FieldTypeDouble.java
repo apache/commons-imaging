@@ -49,7 +49,7 @@ public class FieldTypeDouble extends FieldType {
         if (!(o instanceof Double[])) {
             throw new ImageWriteException("Invalid data", o);
         }
-        final double[] values = new double[Allocator.check(((Double[]) o).length)];
+        final double[] values = Allocator.doubleArray(((Double[]) o).length);
         Arrays.setAll(values, i -> ((Double[]) o)[i].doubleValue());
         return ByteConversions.toBytes(values, byteOrder);
     }

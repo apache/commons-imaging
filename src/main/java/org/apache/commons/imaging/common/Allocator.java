@@ -38,7 +38,7 @@ public class Allocator {
     /**
      * Allocates an Object of type T of the requested size.
      *
-     * @param <T> The return array type
+     * @param <T>     The return array type
      * @param request The requested size.
      * @param factory The array factory.
      * @return a new byte array.
@@ -52,28 +52,30 @@ public class Allocator {
     /**
      * Allocates an array of type T of the requested size.
      *
-     * @param <T> The return array type
-     * @param request The requested size.
-     * @param factory The array factory.
-     * @param shallowByteSize The shallow byte size.
+     * @param <T>                The return array type
+     * @param request            The requested size.
+     * @param factory            The array factory.
+     * @param eltShallowByteSize The shallow byte size of an element.
      * @return a new byte array.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      * @see #check(int)
      */
-    public static <T> T[] array(final int request, final IntFunction<T[]> factory, final int shallowByteSize) {
-        return factory.apply(check(request * shallowByteSize));
+    public static <T> T[] array(final int request, final IntFunction<T[]> factory, final int eltShallowByteSize) {
+        check(request * eltShallowByteSize);
+        return factory.apply(request);
     }
 
     /**
      * Allocates an Object array of type T of the requested size.
      *
-     * @param <T> The return array type
+     * @param <T>     The return array type
      * @param request The requested size.
      * @return a new byte array.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      * @see #check(int)
      */
     public static <T> ArrayList<T> arrayList(final int request) {
+        check(24 + request * 4); // 4 bytes per element
         return apply(request, ArrayList::new);
     }
 
@@ -83,10 +85,10 @@ public class Allocator {
      * @param request The requested size.
      * @return a new byte array.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
-     * @see #check(int)
+     * @see #check(int, int)
      */
     public static byte[] byteArray(final int request) {
-        return new byte[check(request)];
+        return new byte[checkByteArray(request)];
     }
 
     /**
@@ -95,10 +97,22 @@ public class Allocator {
      * @param request The requested size is cast down to an int.
      * @return a new byte array.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
-     * @see #check(int)
+     * @see #check(int, int)
      */
     public static byte[] byteArray(final long request) {
-        return new byte[check(request)];
+        return new byte[check(request, Byte.BYTES)];
+    }
+
+    /**
+     * Allocates a char array of the requested size.
+     *
+     * @param request The requested size.
+     * @return a new char array.
+     * @throws AllocationRequestException Thrown when the request exceeds the limit.
+     * @see #check(int, int)
+     */
+    public static char[] charArray(final int request) {
+        return new char[check(request, Character.BYTES)];
     }
 
     /**
@@ -114,7 +128,7 @@ public class Allocator {
      */
     public static int check(final int request) {
         if (request > LIMIT) {
-            throw new AllocationRequestException(DEFAULT, request);
+            throw new AllocationRequestException(LIMIT, request);
         }
         return request;
     }
@@ -126,15 +140,48 @@ public class Allocator {
      * "org.apache.commons.imaging.common.mylzw.AllocationChecker".
      * </p>
      *
-     * @param request the allocation request is cast down to an int.
+     * @param request     an allocation request count.
+     * @param elementSize The element size.
      * @return the request.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
+     * @throws ArithmeticException        if the result overflows an int.
      */
-    public static int check(final long request) {
-        if (request > Integer.MAX_VALUE) {
-            throw new AllocationRequestException(DEFAULT, request);
+    public static int check(final int request, final int elementSize) {
+        final int multiplyExact = Math.multiplyExact(request, elementSize);
+        if (multiplyExact > LIMIT) {
+            throw new AllocationRequestException(LIMIT, request);
         }
-        return check((int) request);
+        return request;
+    }
+
+    /**
+     * Checks a request for meeting allocation limits.
+     * <p>
+     * The default limit is {@value #DEFAULT}, override with the system property
+     * "org.apache.commons.imaging.common.mylzw.AllocationChecker".
+     * </p>
+     *
+     * @param request     an allocation request count is cast down to an int.
+     * @param elementSize The element size.
+     * @return the request.
+     * @throws AllocationRequestException Thrown when the request exceeds the limit.
+     * @throws ArithmeticException        if the result overflows an int.
+     */
+    public static int check(final long request, final int elementSize) {
+        if (request > Integer.MAX_VALUE) {
+            throw new AllocationRequestException(LIMIT, request);
+        }
+        return check((int) request, elementSize);
+    }
+
+    /**
+     * Checks that allocating a byte array of the requested size is within the limit.
+     *
+     * @param request The byte array size.
+     * @return The input request.
+     */
+    public static int checkByteArray(final int request) {
+        return check(request, Byte.BYTES);
     }
 
     /**
@@ -143,10 +190,10 @@ public class Allocator {
      * @param request The requested size.
      * @return a new double array.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
-     * @see #check(int)
+     * @see #check(int, int)
      */
     public static double[] doubleArray(final int request) {
-        return new double[check(request)];
+        return new double[check(request, Double.BYTES)];
     }
 
     /**
@@ -155,10 +202,10 @@ public class Allocator {
      * @param request The requested size.
      * @return a new float array.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
-     * @see #check(int)
+     * @see #check(int, int)
      */
     public static float[] floatArray(final int request) {
-        return new float[check(request)];
+        return new float[check(request, Float.BYTES)];
     }
 
     /**
@@ -167,10 +214,34 @@ public class Allocator {
      * @param request The requested size.
      * @return a new int array.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
-     * @see #check(int)
+     * @see #check(int, int)
      */
     public static int[] intArray(final int request) {
-        return new int[check(request)];
+        return new int[check(request, Integer.BYTES)];
+    }
+
+    /**
+     * Allocates a long array of the requested size.
+     *
+     * @param request The requested size.
+     * @return a new long array.
+     * @throws AllocationRequestException Thrown when the request exceeds the limit.
+     * @see #check(int, int)
+     */
+    public static long[] longArray(final int request) {
+        return new long[check(request, Long.BYTES)];
+    }
+
+    /**
+     * Allocates a short array of the requested size.
+     *
+     * @param request The requested size.
+     * @return a new short array.
+     * @throws AllocationRequestException Thrown when the request exceeds the limit.
+     * @see #check(int, int)
+     */
+    public static short[] shortArray(final int request) {
+        return new short[check(request, Short.BYTES)];
     }
 
 }

@@ -368,7 +368,7 @@ public final class ByteConversions {
 
     private static short[] toShorts(final byte[] bytes, final int offset,
             final int length, final ByteOrder byteOrder) {
-        final short[] result = new short[Allocator.check(length / 2)];
+        final short[] result = Allocator.shortArray(length / 2);
         for (int i = 0; i < result.length; i++) {
             result[i] = toShort(bytes, offset + 2 * i, byteOrder);
         }

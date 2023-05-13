@@ -112,7 +112,7 @@ public final class MyLzwDecompressor {
             mbis.setTiffLZWMode();
         }
 
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream(Allocator.check(expectedLength));
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream(Allocator.checkByteArray(expectedLength));
 
         clearTable();
 
