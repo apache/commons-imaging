@@ -264,6 +264,7 @@ public final class BinaryFunctions {
         if (length < 0) {
             throw new IOException(String.format("%s, invalid length: %d", exception, length));
         }
+        AllocationChecker.check(length);
         final byte[] result = new byte[length];
         int read = 0;
         while (read < length) {

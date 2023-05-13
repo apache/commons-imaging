@@ -15,32 +15,33 @@
  * limitations under the License.
  */
 
-package org.apache.commons.imaging.common.mylzw;
+package org.apache.commons.imaging.common;
 
 /**
  * Checks inputs for meeting allocation limits.
  */
-class AllocationChecker {
+public class AllocationChecker {
 
     private static final String CANONICAL_NAME = AllocationChecker.class.getCanonicalName();
-    
+
     /** One GB. */
     private static final int DEFAULT = 1_073_741_824;
 
     /**
      * Checks a request for meeting allocation limits.
      * <p>
-     * The default limit is {@value #DEFAULT}, override with the system property "org.apache.commons.imaging.common.mylzw.AllocationChecker".  
+     * The default limit is {@value #DEFAULT}, override with the system property
+     * "org.apache.commons.imaging.common.mylzw.AllocationChecker".
      * </p>
      *
      * @param request an allocation request.
      * @return the request.
      */
-    static int check(final int request) {
+    public static int check(final int request) {
         // 1 GB limit
         final int limit = Integer.getInteger(CANONICAL_NAME, DEFAULT);
         if (request > limit) {
-            throw new IllegalArgumentException(String.format("Allocation limit %,d exceeded: %,d", limit, request));
+            throw new AllocationRequestException(DEFAULT, request);
         }
         return request;
     }
