@@ -20,6 +20,7 @@ import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.DE
 
 import java.nio.ByteOrder;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageWriteException;
@@ -29,7 +30,8 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.internal.Debug;
 
-public final class TiffOutputSet {
+public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
+
     private static final String NEWLINE = System.getProperty("line.separator");
     public final ByteOrder byteOrder;
     private final List<TiffOutputDirectory> directories = new ArrayList<>();
@@ -171,6 +173,15 @@ public final class TiffOutputSet {
 
     public TiffOutputDirectory getRootDirectory() {
         return findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT);
+    }
+
+    public boolean isEmpty() {
+        return directories.isEmpty();
+    }
+
+    @Override
+    public Iterator<TiffOutputDirectory> iterator() {
+        return directories.iterator();
     }
 
     public void removeField(final int tag) {

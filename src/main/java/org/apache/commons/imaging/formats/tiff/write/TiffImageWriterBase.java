@@ -214,9 +214,7 @@ public abstract class TiffImageWriterBase {
 
     protected TiffOutputSummary validateDirectories(final TiffOutputSet outputSet)
             throws ImageWriteException {
-        final List<TiffOutputDirectory> directories = outputSet.getDirectories();
-
-        if (directories.isEmpty()) {
+        if (outputSet.isEmpty()) {
             throw new ImageWriteException("No directories.");
         }
 
@@ -229,7 +227,7 @@ public abstract class TiffImageWriterBase {
 
         final List<Integer> directoryIndices = new ArrayList<>();
         final Map<Integer, TiffOutputDirectory> directoryTypeMap = new HashMap<>();
-        for (final TiffOutputDirectory directory : directories) {
+        for (final TiffOutputDirectory directory : outputSet) {
             final int dirType = directory.getType();
             directoryTypeMap.put(dirType, directory);
             // Debug.debug("validating dirType", dirType + " ("

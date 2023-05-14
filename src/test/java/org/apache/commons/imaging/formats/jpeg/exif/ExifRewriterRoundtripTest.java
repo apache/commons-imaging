@@ -95,7 +95,7 @@ public class ExifRewriterRoundtripTest extends ExifBaseTest {
 
     private TiffOutputSet duplicateTiffOutputSet(final TiffOutputSet sourceTiffOutputSet) throws ImageWriteException {
         final TiffOutputSet duplicateTiffOutputSet = new TiffOutputSet();
-        for (final TiffOutputDirectory tiffOutputDirectory : sourceTiffOutputSet.getDirectories()) {
+        for (final TiffOutputDirectory tiffOutputDirectory : sourceTiffOutputSet) {
             duplicateTiffOutputSet.addDirectory(tiffOutputDirectory);
         }
         return duplicateTiffOutputSet;
