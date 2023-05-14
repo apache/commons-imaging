@@ -26,6 +26,7 @@ import java.util.Objects;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFunctions;
+import org.apache.commons.io.IOUtils;
 
 public class ByteSourceInputStream extends ByteSource {
     private class CacheBlock {
@@ -242,14 +243,11 @@ public class ByteSourceInputStream extends ByteSource {
             return streamLength;
         }
 
-        final InputStream cis = getInputStream();
-        long result = 0;
-        long skipped;
-        while ((skipped = cis.skip(1024)) > 0) {
-            result += skipped;
+        try (InputStream cis = getInputStream()) {
+            long result = IOUtils.consume(cis);
+            streamLength = result;
+            return result;
         }
-        streamLength = result;
-        return result;
     }
 
     private CacheBlock readBlock() throws IOException {
