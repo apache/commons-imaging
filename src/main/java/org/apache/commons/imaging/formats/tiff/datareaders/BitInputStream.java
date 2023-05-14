@@ -16,24 +16,23 @@
  */
 package org.apache.commons.imaging.formats.tiff.datareaders;
 
+import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteOrder;
 
 /**
- * Input stream reading 1-8, 16, 24 or 32 bits, starting from the most
- * significant bit, but incapable of reading non-aligned and
- * < 8 bit fields across byte boundaries.
+ * Input stream reading 1-8, 16, 24 or 32 bits, starting from the most significant bit, but incapable of reading
+ * non-aligned and < 8 bit fields across byte boundaries.
  */
-class BitInputStream extends InputStream {
-    private final InputStream is;
+class BitInputStream extends FilterInputStream {
     private final ByteOrder byteOrder;
     private int cache;
     private int cacheBitsRemaining;
     private long bytesRead;
 
     BitInputStream(final InputStream is, final ByteOrder byteOrder) {
-        this.is = is;
+        super(is);
         this.byteOrder = byteOrder;
     }
 
@@ -50,20 +49,19 @@ class BitInputStream extends InputStream {
         if (cacheBitsRemaining > 0) {
             throw new IOException("BitInputStream: incomplete bit read");
         }
-        return is.read();
+        return in.read();
     }
 
     public final int readBits(final int count) throws IOException {
         if (count < 8) {
             if (cacheBitsRemaining == 0) {
                 // fill cache
-                cache = is.read();
+                cache = in.read();
                 cacheBitsRemaining = 8;
                 bytesRead++;
             }
             if (count > cacheBitsRemaining) {
-                throw new IOException(
-                        "BitInputStream: can't read bit fields across bytes");
+                throw new IOException("BitInputStream: can't read bit fields across bytes");
             }
 
             // int bits_to_shift = cache_bits_remaining - count;
@@ -94,26 +92,24 @@ class BitInputStream extends InputStream {
 
         if (count == 8) {
             bytesRead++;
-            return is.read();
+            return in.read();
         }
 
         /**
-         * Taking default order of the TIFF to be Little Endian and reversing
-         * the bytes in the end if its Big Endian.This is done because majority
-         * (may be all) of the files will be of Little Endian.
+         * Taking default order of the TIFF to be Little Endian and reversing the bytes in the end if its Big
+         * Endian.This is done because majority (may be all) of the files will be of Little Endian.
          */
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
             switch (count) {
             case 16:
                 bytesRead += 2;
-                return (is.read() << 8) | (is.read() << 0);
+                return (in.read() << 8) | (in.read() << 0);
             case 24:
                 bytesRead += 3;
-                return (is.read() << 16) | (is.read() << 8) | (is.read() << 0);
+                return (in.read() << 16) | (in.read() << 8) | (in.read() << 0);
             case 32:
                 bytesRead += 4;
-                return (is.read() << 24) | (is.read() << 16) | (is.read() << 8)
-                        | (is.read() << 0);
+                return (in.read() << 24) | (in.read() << 16) | (in.read() << 8) | (in.read() << 0);
             default:
                 break;
             }
@@ -121,13 +117,13 @@ class BitInputStream extends InputStream {
             switch (count) {
             case 16:
                 bytesRead += 2;
-                return ((is.read() << 0) | (is.read() << 8));
+                return ((in.read() << 0) | (in.read() << 8));
             case 24:
                 bytesRead += 3;
-                return ((is.read() << 0) | (is.read() << 8) | (is.read() << 16));
+                return ((in.read() << 0) | (in.read() << 8) | (in.read() << 16));
             case 32:
                 bytesRead += 4;
-                return ((is.read() << 0) | (is.read() << 8) | (is.read() << 16) | (is.read() << 24));
+                return ((in.read() << 0) | (in.read() << 8) | (in.read() << 16) | (in.read() << 24));
             default:
                 break;
             }
