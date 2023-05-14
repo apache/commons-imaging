@@ -23,6 +23,7 @@ import java.util.List;
 import org.apache.commons.imaging.common.ImageMetadata;
 
 public class GifImageMetadata implements ImageMetadata {
+    
     private static final String NEWLINE = System.getProperty("line.separator");
     private final int width;
     private final int height;

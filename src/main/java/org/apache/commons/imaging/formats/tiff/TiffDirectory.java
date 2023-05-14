@@ -108,7 +108,7 @@ public class TiffDirectory extends TiffElement implements Iterable<TiffField> {
 
     private JpegImageData jpegImageData;
 
-    public final long nextDirectoryOffset;
+    private final long nextDirectoryOffset;
 
     private TiffImageData tiffImageData;
 
@@ -674,6 +674,10 @@ public class TiffDirectory extends TiffElement implements Iterable<TiffField> {
             return new ImageDataElement(offSet, byteCount);
         }
         throw new ImageReadException("Couldn't find image data.");
+    }
+
+    public long getNextDirectoryOffset() {
+        return nextDirectoryOffset;
     }
 
     /**

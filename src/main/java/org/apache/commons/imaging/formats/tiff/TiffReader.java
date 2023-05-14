@@ -427,9 +427,9 @@ public class TiffReader extends BinaryFileParser {
                 }
             }
 
-            if (!ignoreNextDirectory && directory.nextDirectoryOffset > 0) {
+            if (!ignoreNextDirectory && directory.getNextDirectoryOffset() > 0) {
                 // Debug.debug("next dir", directory.nextDirectoryOffset );
-                readDirectory(byteSource, directory.nextDirectoryOffset,
+                readDirectory(byteSource, directory.getNextDirectoryOffset(),
                         dirType + 1, formatCompliance, listener, visited);
             }
 
