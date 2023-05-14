@@ -49,6 +49,7 @@ import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
+import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.internal.Debug;
 
 public class IptcParser extends BinaryFileParser {
@@ -390,7 +391,7 @@ public class IptcParser extends BinaryFileParser {
      * Some IPTC blocks are missing this first "record version" record, so we
      * don't require it.
      */
-    public PhotoshopApp13Data parsePhotoshopSegment(final byte[] bytes, final ImagingParameters params)
+    public PhotoshopApp13Data parsePhotoshopSegment(final byte[] bytes, final ImagingParameters<JpegImagingParameters> params)
             throws ImageReadException, IOException {
         final boolean strict =  params != null && params.isStrict();
 
