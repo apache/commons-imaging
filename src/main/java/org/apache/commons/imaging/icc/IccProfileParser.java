@@ -276,10 +276,8 @@ public class IccProfileParser extends BinaryFileParser {
             // tags .add(tag);
         }
 
-        {
-            // read stream to end, filling cache.
-            IOUtils.consume(is);
-        }
+        // read stream to end, filling cache.
+        IOUtils.consume(is);
 
         final byte[] data = cis.getCache();
 
