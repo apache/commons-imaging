@@ -55,6 +55,7 @@ import org.apache.commons.imaging.formats.psd.datareaders.DataReader;
 import org.apache.commons.imaging.formats.psd.datareaders.UncompressedDataReader;
 
 public class PsdImageParser extends ImageParser<PsdImagingParameters> implements XmpEmbeddable {
+
     private static final String DEFAULT_EXTENSION = ImageFormats.PSD.getDefaultExtension();
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.PSD.getExtensions();
     private static final int PSD_SECTION_HEADER = 0;
@@ -488,7 +489,6 @@ public class PsdImageParser extends ImageParser<PsdImagingParameters> implements
 
     /**
      * Extracts embedded XML metadata as XML string.
-     * <p>
      *
      * @param byteSource
      *            File containing image data.

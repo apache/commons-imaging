@@ -63,7 +63,7 @@ import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.internal.Debug;
 
-public class JpegImageParser extends ImageParser<JpegImagingParameters> implements XmpEmbeddable {
+public class JpegImageParser extends ImageParser<JpegImagingParameters> implements XmpEmbeddable<JpegImagingParameters> {
 
     private static final Logger LOGGER = Logger.getLogger(JpegImageParser.class.getName());
 
@@ -748,7 +748,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     @Override
-    public String getXmpXml(final ByteSource byteSource, final XmpImagingParameters params)
+    public String getXmpXml(final ByteSource byteSource, final XmpImagingParameters<JpegImagingParameters> params)
             throws ImageReadException, IOException {
 
         final List<String> result = new ArrayList<>();

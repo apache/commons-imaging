@@ -56,7 +56,7 @@ import org.apache.commons.imaging.common.mylzw.MyLzwDecompressor;
 import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
 
-public class GifImageParser extends ImageParser<GifImagingParameters> implements XmpEmbeddable {
+public class GifImageParser extends ImageParser<GifImagingParameters> implements XmpEmbeddable<GifImagingParameters> {
 
     private static final Logger LOGGER = Logger.getLogger(GifImageParser.class.getName());
 
@@ -71,8 +71,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
     private static final int XMP_EXTENSION = 0xff;
     private static final int TERMINATOR_BYTE = 0x3b;
     private static final int APPLICATION_EXTENSION_LABEL = 0xff;
-    private static final int XMP_COMPLETE_CODE = (EXTENSION_CODE << 8)
-            | XMP_EXTENSION;
+    private static final int XMP_COMPLETE_CODE = (EXTENSION_CODE << 8) | XMP_EXTENSION;
     private static final int LOCAL_COLOR_TABLE_FLAG_MASK = 1 << 7;
     private static final int INTERLACE_FLAG_MASK = 1 << 6;
     private static final int SORT_FLAG_MASK = 1 << 5;
@@ -516,7 +515,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     @Override
-    public String getXmpXml(final ByteSource byteSource, final XmpImagingParameters params)
+    public String getXmpXml(final ByteSource byteSource, final XmpImagingParameters<GifImagingParameters> params)
             throws ImageReadException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             final GifHeaderInfo ghi = readHeader(is, null);

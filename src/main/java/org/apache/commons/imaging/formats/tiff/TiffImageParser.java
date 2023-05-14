@@ -64,7 +64,7 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterYCbCr;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 
-public class TiffImageParser extends ImageParser<TiffImagingParameters> implements XmpEmbeddable {
+public class TiffImageParser extends ImageParser<TiffImagingParameters> implements XmpEmbeddable<TiffImagingParameters> {
     private static final String DEFAULT_EXTENSION = ImageFormats.TIFF.getDefaultExtension();
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.TIFF.getExtensions();
 
@@ -916,10 +916,10 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
     }
 
     @Override
-    public String getXmpXml(final ByteSource byteSource, XmpImagingParameters params)
+    public String getXmpXml(final ByteSource byteSource, XmpImagingParameters<TiffImagingParameters> params)
             throws ImageReadException, IOException {
         if (params == null) {
-            params = new XmpImagingParameters();
+            params = new XmpImagingParameters<>();
         }
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffContents contents = new TiffReader(params.isStrict()).readDirectories(

@@ -71,7 +71,7 @@ import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFi
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilterTrueColor;
 import org.apache.commons.imaging.icc.IccProfileParser;
 
-public class PngImageParser extends ImageParser<PngImagingParameters>  implements XmpEmbeddable {
+public class PngImageParser extends ImageParser<PngImagingParameters>  implements XmpEmbeddable<PngImagingParameters> {
 
     private static final Logger LOGGER = Logger.getLogger(PngImageParser.class.getName());
 
@@ -587,7 +587,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
     }
 
     @Override
-    public String getXmpXml(final ByteSource byteSource, final XmpImagingParameters params)
+    public String getXmpXml(final ByteSource byteSource, final XmpImagingParameters<PngImagingParameters> params)
             throws ImageReadException, IOException {
 
         final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] { ChunkType.iTXt }, false);
