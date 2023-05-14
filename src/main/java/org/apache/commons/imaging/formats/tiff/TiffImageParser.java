@@ -137,15 +137,9 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
                 for (int d = 0; d < directories.size(); d++) {
                     final TiffDirectory directory = directories.get(d);
 
-                    final List<TiffField> entries = directory.entries;
-
-                    if (entries == null) {
-                        return false;
-                    }
-
                     // Debug.debug("directory offset", directory.offset);
 
-                    for (final TiffField field : entries) {
+                    for (final TiffField field : directory) {
                         field.dump(pw, Integer.toString(d));
                     }
                 }
@@ -255,12 +249,6 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
     protected BufferedImage getBufferedImage(final TiffDirectory directory,
             final ByteOrder byteOrder, final TiffImagingParameters params)
             throws ImageReadException, IOException {
-        final List<TiffField> entries = directory.entries;
-
-        if (entries == null) {
-            throw new ImageReadException("TIFF missing entries");
-        }
-
         final short compressionFieldValue;
         if (directory.findField(TiffTagConstants.TIFF_TAG_COMPRESSION) != null) {
             compressionFieldValue = directory.getFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION);
@@ -521,9 +509,8 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
         final int bitsPerPixel = bitsPerSample; // assume grayscale;
         // dunno if this handles colormapped images correctly.
 
-        final List<TiffField> entries = directory.entries;
-        final List<String> comments = Allocator.arrayList(entries.size());
-        for (final TiffField field : entries) {
+        final List<String> comments = Allocator.arrayList(directory.size());
+        for (final TiffField field : directory) {
             final String comment = field.toString();
             comments.add(comment);
         }
@@ -759,12 +746,6 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
             final ByteOrder byteOrder,
             TiffImagingParameters params)
             throws ImageReadException, IOException {
-        final List<TiffField> entries = directory.entries;
-
-        if (entries == null) {
-            throw new ImageReadException("TIFF missing entries");
-        }
-
         if (params == null) {
             params = this.getDefaultParameters();
         }

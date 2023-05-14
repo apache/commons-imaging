@@ -83,8 +83,7 @@ public class TiffContents {
         for (final TiffDirectory directory : directories) {
             result.add(directory);
 
-            final List<TiffField> fields = directory.entries;
-            for (final TiffField field : fields) {
+            for (final TiffField field : directory) {
                 final TiffElement oversizeValue = field.getOversizeValueElement();
                 if (null != oversizeValue) {
                     result.add(oversizeValue);

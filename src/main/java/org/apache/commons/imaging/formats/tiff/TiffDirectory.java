@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageReadException;
@@ -63,7 +64,8 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoXpString;
  * for individual images or sets of metadata. While not all Directories contain
  * images, images are always stored in a Directory.
  */
-public class TiffDirectory extends TiffElement {
+public class TiffDirectory extends TiffElement implements Iterable<TiffField> {
+
     public static final class ImageDataElement extends TiffElement {
         public ImageDataElement(final long offset, final int length) {
             super(offset, length);
@@ -74,6 +76,7 @@ public class TiffDirectory extends TiffElement {
             return "ImageDataElement";
         }
     }
+
     public static String description(final int type) {
         switch (type) {
         case TiffDirectoryConstants.DIRECTORY_TYPE_UNKNOWN:
@@ -94,19 +97,22 @@ public class TiffDirectory extends TiffElement {
             return "Bad Type";
         }
     }
-    public final int type;
-    public final List<TiffField> entries;
+
+    private final List<TiffField> entries;
+
+    /**
+     * Preserves the byte order derived from the TIFF file header. Some of the legacy methods in this class require byte
+     * order as an argument, though that use could be phased out eventually.
+     */
+    private final ByteOrder headerByteOrder;
+
+    private JpegImageData jpegImageData;
+
     public final long nextDirectoryOffset;
 
     private TiffImageData tiffImageData;
 
-
-    private JpegImageData jpegImageData;
-
-    // Preservers the byte order derived from the TIFF file header.
-    // Some of the legacy methods in this class require byte order as an
-    // argument, though that use could be phased out eventually.
-    private final ByteOrder headerByteOrder;
+    public final int type;
 
     public TiffDirectory(
         final int type,
@@ -132,7 +138,6 @@ public class TiffDirectory extends TiffElement {
         for (final TiffField entry : entries) {
             entry.dump();
         }
-
     }
 
 
@@ -143,10 +148,6 @@ public class TiffDirectory extends TiffElement {
 
     public TiffField findField(final TagInfo tag, final boolean failIfMissing)
             throws ImageReadException {
-        if (entries == null) {
-            return null;
-        }
-
         for (final TiffField field : entries) {
             if (field.getTag() == tag.tag) {
                 return field;
@@ -852,10 +853,10 @@ public class TiffDirectory extends TiffElement {
         final TiffField stripOffsets = findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS);
         final TiffField stripByteCounts = findField(TiffTagConstants.TIFF_TAG_STRIP_BYTE_COUNTS);
 
-        if ((tileOffsets != null) && (tileByteCounts != null)) {
+        if (tileOffsets != null && tileByteCounts != null) {
             return getRawImageDataElements(tileOffsets, tileByteCounts);
         }
-        if ((stripOffsets != null) && (stripByteCounts != null)) {
+        if (stripOffsets != null && stripByteCounts != null) {
             return getRawImageDataElements(stripOffsets, stripByteCounts);
         }
         throw new ImageReadException("Couldn't find image data.");
@@ -924,13 +925,18 @@ public class TiffDirectory extends TiffElement {
         final TiffField stripOffsets = findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS);
         final TiffField stripByteCounts = findField(TiffTagConstants.TIFF_TAG_STRIP_BYTE_COUNTS);
 
-        if ((tileOffsets != null) && (tileByteCounts != null)) {
+        if (tileOffsets != null && tileByteCounts != null) {
             return false;
         }
-        if ((stripOffsets != null) && (stripByteCounts != null)) {
+        if (stripOffsets != null && stripByteCounts != null) {
             return true;
         }
         throw new ImageReadException("Couldn't find image data.");
+    }
+
+    @Override
+    public Iterator<TiffField> iterator() {
+        return entries.iterator();
     }
 
     public void setJpegImageData(final JpegImageData value) {
@@ -939,5 +945,9 @@ public class TiffDirectory extends TiffElement {
 
     public void setTiffImageData(final TiffImageData rawImageData) {
         this.tiffImageData = rawImageData;
+    }
+
+    public int size() {
+        return entries.size();
     }
 }
