@@ -32,7 +32,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShortOrLong;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShorts;
 
 /**
- * RFC 2301: File Format for Internet Fax
+ * RFC 2301: File Format for Internet Fax.
  * <p>
  * www.ietf.org/rfc/rfc2301.txt
  * </p>

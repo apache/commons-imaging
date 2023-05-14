@@ -27,7 +27,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoRational;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShorts;
 
 /**
- * Molecular Dynamics GEL file format
+ * Molecular Dynamics GEL file format.
  * <p>
  * http://www.awaresystems.be/imaging/tiff/tifftags/docs/gel.html
  * </p>

@@ -24,7 +24,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUndefineds;
 
 /**
- * TIFF specification supplement 2
+ * TIFF specification supplement 2.
  * <p>
  * Adobe Photoshop (R) TIFF Technical Notes
  * </p>
