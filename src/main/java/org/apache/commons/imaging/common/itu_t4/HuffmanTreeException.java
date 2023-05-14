@@ -16,7 +16,9 @@
  */
 package org.apache.commons.imaging.common.itu_t4;
 
-class HuffmanTreeException extends Exception {
+import org.apache.commons.imaging.ImagingException;
+
+class HuffmanTreeException extends ImagingException {
     private static final long serialVersionUID = 1L;
 
     HuffmanTreeException(final String message) {
