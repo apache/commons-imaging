@@ -49,7 +49,7 @@ public abstract class TiffRasterData {
 
 
     /**
-     * Construct an instance allocating memory for the specified dimensions.
+     * Constructs an instance allocating memory for the specified dimensions.
      *
      * @param width a value of 1 or greater
      * @param height a value of 1 or greater

@@ -48,7 +48,7 @@ public class TiffRasterDataFloat extends TiffRasterData {
     private final float[] data;
 
     /**
-     * Construct an instance allocating memory for the specified dimensions.
+     * Constructs an instance allocating memory for the specified dimensions.
      *
      * @param width a value of 1 or greater
      * @param height a value of 1 or greater
@@ -59,7 +59,7 @@ public class TiffRasterDataFloat extends TiffRasterData {
     }
 
     /**
-     * Construct an instance allocating memory for the specified dimensions.
+     * Constructs an instance allocating memory for the specified dimensions.
      *
      * @param width a value of 1 or greater
      * @param height a value of 1 or greater
@@ -76,7 +76,7 @@ public class TiffRasterDataFloat extends TiffRasterData {
     }
 
     /**
-     * Construct an instance allocating memory for the specified dimensions.
+     * Constructs an instance allocating memory for the specified dimensions.
      *
      * @param width a value of 1 or greater
      * @param height a value of 1 or greater
@@ -88,7 +88,7 @@ public class TiffRasterDataFloat extends TiffRasterData {
     }
 
     /**
-     * Construct an instance allocating memory for the specified dimensions.
+     * Constructs an instance allocating memory for the specified dimensions.
      *
      * @param width a value of 1 or greater
      * @param height a value of 1 or greater

@@ -63,7 +63,7 @@ public class ImageBuilder {
     private final boolean isAlphaPremultiplied;
 
     /**
-     * Construct an ImageBuilder instance.
+     * Constructs an ImageBuilder instance.
      *
      * @param width the width of the image to be built
      * @param height the height of the image to be built
@@ -84,7 +84,8 @@ public class ImageBuilder {
 
 
     /**
-     * Construct an ImageBuilder instance
+     * Constructs an ImageBuilder instance.
+     *
      * @param width the width of the image to be built
      * @param height the height of the image to be built
      * @param hasAlpha indicates whether the image has an alpha channel

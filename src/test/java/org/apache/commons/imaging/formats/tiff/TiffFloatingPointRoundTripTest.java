@@ -212,7 +212,7 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
     }
 
     /**
-     * Construct a photometric interpreter. This initialization is performed in
+     * Constructs a photometric interpreter. This initialization is performed in
      * a dedicated method to ensure consistency throughout different phases of
      * the test.
      *

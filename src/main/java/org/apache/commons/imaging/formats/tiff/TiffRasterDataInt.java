@@ -46,7 +46,7 @@ public class TiffRasterDataInt extends TiffRasterData {
     private final int[] data;
 
     /**
-     * Construct an instance allocating memory for the specified dimensions.
+     * Constructs an instance allocating memory for the specified dimensions.
      *
      * @param width a value of 1 or greater
      * @param height a value of 1 or greater
@@ -57,7 +57,7 @@ public class TiffRasterDataInt extends TiffRasterData {
     }
 
     /**
-     * Construct an instance allocating memory for the specified dimensions.
+     * Constructs an instance allocating memory for the specified dimensions.
      *
      * @param width a value of 1 or greater
      * @param height a value of 1 or greater
@@ -69,7 +69,7 @@ public class TiffRasterDataInt extends TiffRasterData {
     }
 
     /**
-     * Construct an instance allocating memory for the specified dimensions.
+     * Constructs an instance allocating memory for the specified dimensions.
      *
      * @param width a value of 1 or greater
      * @param height a value of 1 or greater
@@ -87,7 +87,7 @@ public class TiffRasterDataInt extends TiffRasterData {
     }
 
     /**
-     * Construct an instance allocating memory for the specified dimensions.
+     * Constructs an instance allocating memory for the specified dimensions.
      *
      * @param width a value of 1 or greater
      * @param height a value of 1 or greater
