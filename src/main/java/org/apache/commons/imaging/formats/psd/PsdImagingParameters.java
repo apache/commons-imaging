@@ -25,4 +25,5 @@ import org.apache.commons.imaging.ImagingParameters;
  * @since 1.0-alpha3
  */
 public class PsdImagingParameters extends ImagingParameters<PsdImagingParameters> {
+    // empty
 }
