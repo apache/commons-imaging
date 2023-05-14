@@ -16,6 +16,7 @@
  */
 package org.apache.commons.imaging.common.itu_t4;
 
+import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -26,17 +27,16 @@ import org.apache.commons.imaging.ImagingException;
  * across byte boundaries in most significant
  * bit first order.
  */
-class BitInputStreamFlexible extends InputStream {
+class BitInputStreamFlexible extends FilterInputStream {
     // TODO should be byte order conscious, ie TIFF for reading
     // samples size<8 - shouldn't that effect their order within byte?
-    private final InputStream is;
+
     private int cache;
     private int cacheBitsRemaining;
     private long bytesRead;
 
     BitInputStreamFlexible(final InputStream is) {
-        this.is = is;
-        // super(is);
+        super(is);
     }
 
     public void flushCache() {
@@ -52,7 +52,7 @@ class BitInputStreamFlexible extends InputStream {
         if (cacheBitsRemaining > 0) {
             throw new ImagingException("BitInputStream: incomplete bit read");
         }
-        return is.read();
+        return in.read();
     }
 
     public final int readBits(int count) throws IOException {
@@ -75,7 +75,7 @@ class BitInputStreamFlexible extends InputStream {
                 }
             }
             while (count >= 8) {
-                cache = is.read();
+                cache = in.read();
                 if (cache < 0) {
                     throw new ImagingException("couldn't read bits");
                 }
@@ -87,7 +87,7 @@ class BitInputStreamFlexible extends InputStream {
                 count -= 8;
             }
             if (count > 0) {
-                cache = is.read();
+                cache = in.read();
                 if (cache < 0) {
                     throw new ImagingException("couldn't read bits");
                 }
