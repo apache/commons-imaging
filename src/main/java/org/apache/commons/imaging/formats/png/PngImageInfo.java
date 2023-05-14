@@ -23,6 +23,7 @@ import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageInfo;
 
 public class PngImageInfo extends ImageInfo {
+
     private final List<PngText> textChunks;
     private final PhysicalScale physicalScale;
 
@@ -45,16 +46,16 @@ public class PngImageInfo extends ImageInfo {
     }
 
     /**
-        * Physical scale of Image.
-        *
-        * @return {@link PhysicalScale}. If undefined then {@link PhysicalScale#UNDEFINED}
-        * is returned.
-        */
-        public PhysicalScale getPhysicalScale() {
-            return physicalScale;
-        }
+     * Gets the physical scale of Image.
+     *
+     * @return {@link PhysicalScale}. If undefined then {@link PhysicalScale#UNDEFINED} is returned.
+     */
+    public PhysicalScale getPhysicalScale() {
+        return physicalScale;
+    }
 
-   public List<PngText> getTextChunks() {
-    return new ArrayList<>(textChunks);
-}
+    public List<PngText> getTextChunks() {
+        return new ArrayList<>(textChunks);
+    }
+
 }
