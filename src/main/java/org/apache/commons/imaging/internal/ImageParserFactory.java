@@ -50,7 +50,7 @@ public class ImageParserFactory {
     }
 
     public static <T extends ImagingParameters<T>> ImageParser<T> getImageParser(final ImageFormat format) {
-        return getImageParser(parser -> parser.canAcceptType(format), () -> new IllegalArgumentException("Unknown Format: " + format));
+        return getImageParser(parser -> parser.canAcceptType(format), () -> new IllegalArgumentException("Unknown ImageFormat: " + format));
     }
 
     // This generics suppression is as good as the predicate given. If the predicate violates a generics design,
@@ -66,7 +66,7 @@ public class ImageParserFactory {
     }
 
     public static <T extends ImagingParameters<T>> ImageParser<T> getImageParser(final String fileExtension) {
-        return getImageParser(parser -> parser.canAcceptExtension(fileExtension), () -> new IllegalArgumentException("Unknown Extension: " + fileExtension));
+        return getImageParser(parser -> parser.canAcceptExtension(fileExtension), () -> new IllegalArgumentException("Unknown extension: " + fileExtension));
     }
 
     private ImageParserFactory() {}

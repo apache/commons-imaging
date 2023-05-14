@@ -22,11 +22,9 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 
 /**
- * Implementations support embedding the Extensible Metadata Platform
- * tags.
+ * Implementations support embedding the Extensible Metadata Platform tags.
  *
  * @see <a href="https://en.wikipedia.org/wiki/Extensible_Metadata_Platform">https://en.wikipedia.org/wiki/Extensible_Metadata_Platform</a>
- * @since 1.0
  */
 public interface XmpEmbeddable {
 
