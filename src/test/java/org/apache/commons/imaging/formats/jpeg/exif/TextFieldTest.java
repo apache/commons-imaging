@@ -20,8 +20,7 @@ package org.apache.commons.imaging.formats.jpeg.exif;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
@@ -33,7 +32,7 @@ public class TextFieldTest extends SpecificExifTagTest {
 
     @Override
     protected void checkField(final File imageFile, final TiffField field)
-            throws IOException, ImageReadException, ImageWriteException {
+            throws IOException, ImagingException, ImagingException {
         if ((field.getTag() == ExifTagConstants.EXIF_TAG_USER_COMMENT.tag) || (field.getTag() == GpsTagConstants.GPS_TAG_GPS_PROCESSING_METHOD.tag
                 && field.getDirectoryType() == TiffDirectoryType.EXIF_DIRECTORY_GPS.directoryType)) {
             // do nothing
@@ -48,7 +47,7 @@ public class TextFieldTest extends SpecificExifTagTest {
             final Object textFieldValue = field.getValue();
             Assertions.assertNotNull(textFieldValue);
             // TODO what else to assert?
-        } catch (final ImageReadException e) {
+        } catch (final ImagingException e) {
             Debug.debug("imageFile", imageFile.getAbsoluteFile());
             Debug.debug(e);
             throw e;

@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
@@ -30,7 +30,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 public class TiffOutputField {
     private static final String NEWLINE = System.lineSeparator();
     protected static TiffOutputField createOffsetField(final TagInfo tagInfo,
-            final ByteOrder byteOrder) throws ImageWriteException {
+            final ByteOrder byteOrder) throws ImagingException {
         return new TiffOutputField(tagInfo, FieldType.LONG, 1,
                 FieldType.LONG.writeData(0, byteOrder));
     }
@@ -81,13 +81,13 @@ public class TiffOutputField {
         return bytes.length <= TIFF_ENTRY_MAX_VALUE_LENGTH;
     }
 
-    protected void setData(final byte[] bytes) throws ImageWriteException {
+    protected void setData(final byte[] bytes) throws ImagingException {
         // if(tagInfo.isUnknown())
         // Debug.debug("unknown tag(0x" + Integer.toHexString(tag)
         // + ") setData", bytes);
 
         if (this.bytes.length != bytes.length) {
-            throw new ImageWriteException("Cannot change size of value.");
+            throw new ImagingException("Cannot change size of value.");
         }
 
         // boolean wasLocalValue = isLocalValue();
@@ -132,17 +132,17 @@ public class TiffOutputField {
     }
 
     protected void writeField(final BinaryOutputStream bos) throws IOException,
-            ImageWriteException {
+            ImagingException {
         bos.write2Bytes(tag);
         bos.write2Bytes(fieldType.getType());
         bos.write4Bytes(count);
 
         if (isLocalValue()) {
             if (separateValueItem != null) {
-                throw new ImageWriteException("Unexpected separate value item.");
+                throw new ImagingException("Unexpected separate value item.");
             }
             if (bytes.length > 4) {
-                throw new ImageWriteException(
+                throw new ImagingException(
                         "Local value has invalid length: " + bytes.length);
             }
 
@@ -153,7 +153,7 @@ public class TiffOutputField {
             }
         } else {
             if (separateValueItem == null) {
-                throw new ImageWriteException("Missing separate value item.");
+                throw new ImagingException("Missing separate value item.");
             }
 
             bos.write4Bytes((int) separateValueItem.getOffset());

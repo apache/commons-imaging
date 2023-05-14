@@ -21,7 +21,7 @@ import static org.apache.commons.imaging.common.BinaryFunctions.read2Bytes;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 
 public class TransparencyFilterGrayscale extends TransparencyFilter {
     private final int transparentColor;
@@ -34,7 +34,7 @@ public class TransparencyFilterGrayscale extends TransparencyFilter {
     }
 
     @Override
-    public int filter(final int rgb, final int index) throws ImageReadException, IOException {
+    public int filter(final int rgb, final int index) throws ImagingException, IOException {
         if (index != transparentColor) {
             return rgb;
         }

@@ -23,8 +23,8 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
-import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingTest;
 
 public abstract class GifBaseTest extends ImagingTest {
@@ -39,15 +39,15 @@ public abstract class GifBaseTest extends ImagingTest {
 
     private static final ImageFilter SINGLE_IMAGE_FILTER = file -> isGif(file) && isSingleImage(file);
 
-    protected static List<File> getAnimatedGifImages() throws IOException, ImageReadException {
+    protected static List<File> getAnimatedGifImages() throws IOException, ImagingException {
         return getTestImages(ANIMATED_IMAGE_FILTER);
     }
 
-    protected static List<File> getGifImages() throws IOException, ImageReadException {
+    protected static List<File> getGifImages() throws IOException, ImagingException {
         return getTestImages(IMAGE_FILTER);
     }
 
-    protected static List<File> getGifImagesWithSingleImage() throws IOException, ImageReadException {
+    protected static List<File> getGifImagesWithSingleImage() throws IOException, ImagingException {
         return getTestImages(SINGLE_IMAGE_FILTER);
     }
 

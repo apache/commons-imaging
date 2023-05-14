@@ -19,8 +19,8 @@ package org.apache.commons.imaging.formats.tiff;
 import java.io.IOException;
 import java.nio.ByteOrder;
 
-import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImagingConstants;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
@@ -82,7 +82,7 @@ public abstract class TiffImageData {
           final int samplesPerPixel, final int width, final int height,
           final int compression,
           final TiffPlanarConfiguration planarConfiguration,
-          final ByteOrder byteorder) throws IOException, ImageReadException {
+          final ByteOrder byteorder) throws IOException, ImagingException {
             final int sampleFormat = extractSampleFormat(directory);
             return new DataReaderStrips(directory, photometricInterpreter,
               bitsPerPixel, bitsPerSample, predictor,
@@ -130,7 +130,7 @@ public abstract class TiffImageData {
           final int samplesPerPixel, final int width, final int height,
           final int compression,
           final TiffPlanarConfiguration planarConfiguration,
-          final ByteOrder byteOrder) throws IOException, ImageReadException {
+          final ByteOrder byteOrder) throws IOException, ImagingException {
             final int sampleFormat = extractSampleFormat(directory);
             return new DataReaderTiled(directory, photometricInterpreter,
               tileWidth, tileLength, bitsPerPixel, bitsPerSample,
@@ -174,7 +174,7 @@ public abstract class TiffImageData {
         // }
     }
 
-    private static int extractSampleFormat(final TiffDirectory directory) throws ImageReadException {
+    private static int extractSampleFormat(final TiffDirectory directory) throws ImagingException {
         final short[] sSampleFmt = directory.getFieldValue(
             TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, false);
         if (sSampleFmt != null && sSampleFmt.length > 0) {
@@ -188,7 +188,7 @@ public abstract class TiffImageData {
       int[] bitsPerSample, int predictor, int samplesPerPixel, int width,
       int height, int compression,
       TiffPlanarConfiguration planarConfiguration,
-      ByteOrder byteOrder) throws IOException, ImageReadException;
+      ByteOrder byteOrder) throws IOException, ImagingException;
 
     public abstract TiffElement.DataElement[] getImageData();
 

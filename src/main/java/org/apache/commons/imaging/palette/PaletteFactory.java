@@ -27,7 +27,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 
 /**
@@ -427,9 +427,9 @@ public class PaletteFactory {
      * @param transparent whether to consider the alpha values
      * @param max the maximum number of colors the palette can contain
      * @return the palette of at most {@code max} colors
-     * @throws ImageWriteException if it fails to process the palette
+     * @throws ImagingException if it fails to process the palette
      */
-    public Palette makeQuantizedRgbaPalette(final BufferedImage src, final boolean transparent, final int max) throws ImageWriteException {
+    public Palette makeQuantizedRgbaPalette(final BufferedImage src, final boolean transparent, final int max) throws ImagingException {
         return new MedianCutQuantizer(!transparent).process(src, max,
                 new LongestAxisMedianCut());
     }

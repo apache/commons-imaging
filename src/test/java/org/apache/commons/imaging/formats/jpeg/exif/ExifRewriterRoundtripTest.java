@@ -25,9 +25,8 @@ import java.security.SecureRandom;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
@@ -79,7 +78,7 @@ public class ExifRewriterRoundtripTest extends ExifBaseTest {
     }
 
     private void copyToDuplicateFile(final File sourceFile, final TiffOutputSet duplicateTiffOutputSet) throws IOException,
-            ImageReadException, ImageWriteException {
+            ImagingException, ImagingException {
         final ExifRewriter exifRewriter = new ExifRewriter();
         duplicateFile = createTempFile();
         try (OutputStream duplicateOutputStream = new BufferedOutputStream(new FileOutputStream(duplicateFile))) {
@@ -93,7 +92,7 @@ public class ExifRewriterRoundtripTest extends ExifBaseTest {
         return new File(temp_dir, temp_filename);
     }
 
-    private TiffOutputSet duplicateTiffOutputSet(final TiffOutputSet sourceTiffOutputSet) throws ImageWriteException {
+    private TiffOutputSet duplicateTiffOutputSet(final TiffOutputSet sourceTiffOutputSet) throws ImagingException {
         final TiffOutputSet duplicateTiffOutputSet = new TiffOutputSet();
         for (final TiffOutputDirectory tiffOutputDirectory : sourceTiffOutputSet) {
             duplicateTiffOutputSet.addDirectory(tiffOutputDirectory);
@@ -101,7 +100,7 @@ public class ExifRewriterRoundtripTest extends ExifBaseTest {
         return duplicateTiffOutputSet;
     }
 
-    private JpegImageMetadata getJpegImageMetadata(final File sourceFile) throws ImageReadException, IOException {
+    private JpegImageMetadata getJpegImageMetadata(final File sourceFile) throws ImagingException, IOException {
         final JpegImageMetadata jpegImageMetadata = (JpegImageMetadata) Imaging.getMetadata(sourceFile);
         if (null == jpegImageMetadata) {
             throw new TestSkippedException();
@@ -117,7 +116,7 @@ public class ExifRewriterRoundtripTest extends ExifBaseTest {
         return tiffImageMetadata;
     }
 
-    private TiffOutputSet getTiffOutputSet(final TiffImageMetadata sourceTiffImageMetadata) throws ImageWriteException {
+    private TiffOutputSet getTiffOutputSet(final TiffImageMetadata sourceTiffImageMetadata) throws ImagingException {
         final TiffOutputSet tiffOutputSet = sourceTiffImageMetadata.getOutputSet();
         if (tiffOutputSet == null) {
             throw new TestSkippedException();

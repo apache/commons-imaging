@@ -32,8 +32,7 @@ import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -101,7 +100,7 @@ public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
 
     @Override
     public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final IcnsContents icnsContents = readImage(byteSource);
         icnsContents.icnsHeader.dump(pw);
         for (final IcnsElement icnsElement : icnsContents.icnsElements) {
@@ -122,20 +121,20 @@ public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
 
     @Override
     public List<BufferedImage> getAllBufferedImages(final ByteSource byteSource)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final IcnsContents icnsContents = readImage(byteSource);
         return IcnsDecoder.decodeAllImages(icnsContents.icnsElements);
     }
 
     @Override
     public final BufferedImage getBufferedImage(final ByteSource byteSource,
-            final IcnsImagingParameters params) throws ImageReadException, IOException {
+            final IcnsImagingParameters params) throws ImagingException, IOException {
         final IcnsContents icnsContents = readImage(byteSource);
         final List<BufferedImage> result = IcnsDecoder.decodeAllImages(icnsContents.icnsElements);
         if (!result.isEmpty()) {
             return result.get(0);
         }
-        throw new ImageReadException("No icons in ICNS file");
+        throw new ImagingException("No icons in ICNS file");
     }
 
     @Override
@@ -150,17 +149,17 @@ public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
 
     @Override
     public byte[] getICCProfileBytes(final ByteSource byteSource, final IcnsImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         return null;
     }
 
     @Override
     public ImageInfo getImageInfo(final ByteSource byteSource, final IcnsImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final IcnsContents contents = readImage(byteSource);
         final List<BufferedImage> images = IcnsDecoder.decodeAllImages(contents.icnsElements);
         if (images.isEmpty()) {
-            throw new ImageReadException("No icons in ICNS file");
+            throw new ImagingException("No icons in ICNS file");
         }
         final BufferedImage image0 = images.get(0);
         return new ImageInfo("Icns", 32, new ArrayList<>(),
@@ -173,11 +172,11 @@ public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
 
     @Override
     public Dimension getImageSize(final ByteSource byteSource, final IcnsImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final IcnsContents contents = readImage(byteSource);
         final List<BufferedImage> images = IcnsDecoder.decodeAllImages(contents.icnsElements);
         if (images.isEmpty()) {
-            throw new ImageReadException("No icons in ICNS file");
+            throw new ImagingException("No icons in ICNS file");
         }
         final BufferedImage image0 = images.get(0);
         return new Dimension(image0.getWidth(), image0.getHeight());
@@ -186,7 +185,7 @@ public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
     // FIXME should throw UOE
     @Override
     public ImageMetadata getMetadata(final ByteSource byteSource, final IcnsImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         return null;
     }
 
@@ -210,19 +209,19 @@ public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
     }
 
     private IcnsHeader readIcnsHeader(final InputStream is)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final int magic = read4Bytes("Magic", is, "Not a Valid ICNS File", getByteOrder());
         final int fileSize = read4Bytes("FileSize", is, "Not a Valid ICNS File", getByteOrder());
 
         if (magic != ICNS_MAGIC) {
-            throw new ImageReadException("Not a Valid ICNS File: " + "magic is 0x" + Integer.toHexString(magic));
+            throw new ImagingException("Not a Valid ICNS File: " + "magic is 0x" + Integer.toHexString(magic));
         }
 
         return new IcnsHeader(magic, fileSize);
     }
 
     private IcnsContents readImage(final ByteSource byteSource)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             final IcnsHeader icnsHeader = readIcnsHeader(is);
 
@@ -239,7 +238,7 @@ public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
 
     @Override
     public void writeImage(final BufferedImage src, final OutputStream os, final IcnsImagingParameters params)
-            throws ImageWriteException, IOException {
+            throws ImagingException, IOException {
         IcnsType imageType;
         if (src.getWidth() == 16 && src.getHeight() == 16) {
             imageType = IcnsType.ICNS_16x16_32BIT_IMAGE;
@@ -250,7 +249,7 @@ public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
         } else if (src.getWidth() == 128 && src.getHeight() == 128) {
             imageType = IcnsType.ICNS_128x128_32BIT_IMAGE;
         } else {
-            throw new ImageWriteException("Invalid/unsupported source width "
+            throw new ImagingException("Invalid/unsupported source width "
                     + src.getWidth() + " and height " + src.getHeight());
         }
 

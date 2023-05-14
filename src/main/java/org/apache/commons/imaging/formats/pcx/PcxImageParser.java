@@ -44,8 +44,7 @@ import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -163,7 +162,7 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
 
     @Override
     public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         readPcxHeader(byteSource).dump(pw);
         return true;
     }
@@ -180,7 +179,7 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
     }
 
     @Override
-    public final BufferedImage getBufferedImage(final ByteSource byteSource, PcxImagingParameters params) throws ImageReadException, IOException {
+    public final BufferedImage getBufferedImage(final ByteSource byteSource, PcxImagingParameters params) throws ImagingException, IOException {
         if (params == null) {
             params = new PcxImagingParameters();
         }
@@ -202,13 +201,13 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
 
     @Override
     public byte[] getICCProfileBytes(final ByteSource byteSource, final PcxImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         return null;
     }
 
     @Override
     public ImageInfo getImageInfo(final ByteSource byteSource, final PcxImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final PcxHeader pcxHeader = readPcxHeader(byteSource);
         final Dimension size = getImageSize(byteSource, params);
         return new ImageInfo(
@@ -235,22 +234,22 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
 
     @Override
     public Dimension getImageSize(final ByteSource byteSource, final PcxImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final PcxHeader pcxHeader = readPcxHeader(byteSource);
         final int xSize = pcxHeader.xMax - pcxHeader.xMin + 1;
         if (xSize < 0) {
-            throw new ImageReadException("Image width is negative");
+            throw new ImagingException("Image width is negative");
         }
         final int ySize = pcxHeader.yMax - pcxHeader.yMin + 1;
         if (ySize < 0) {
-            throw new ImageReadException("Image height is negative");
+            throw new ImagingException("Image height is negative");
         }
         return new Dimension(xSize, ySize);
     }
 
     @Override
     public ImageMetadata getMetadata(final ByteSource byteSource, final PcxImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         return null;
     }
 
@@ -284,17 +283,17 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
     }
 
     private BufferedImage readImage(final PcxHeader pcxHeader, final InputStream is,
-            final ByteSource byteSource) throws ImageReadException, IOException {
+            final ByteSource byteSource) throws ImagingException, IOException {
         final int xSize = pcxHeader.xMax - pcxHeader.xMin + 1;
         if (xSize < 0) {
-            throw new ImageReadException("Image width is negative");
+            throw new ImagingException("Image width is negative");
         }
         final int ySize = pcxHeader.yMax - pcxHeader.yMin + 1;
         if (ySize < 0) {
-            throw new ImageReadException("Image height is negative");
+            throw new ImagingException("Image height is negative");
         }
         if (pcxHeader.nPlanes <= 0 || 4 < pcxHeader.nPlanes) {
-            throw new ImageReadException("Unsupported/invalid image with " + pcxHeader.nPlanes + " planes");
+            throw new ImagingException("Unsupported/invalid image with " + pcxHeader.nPlanes + " planes");
         }
         final RleReader rleReader;
         if (pcxHeader.encoding == PcxHeader.ENCODING_UNCOMPRESSED) {
@@ -302,7 +301,7 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
         } else if (pcxHeader.encoding == PcxHeader.ENCODING_RLE) {
             rleReader = new RleReader(true);
         } else {
-            throw new ImageReadException("Unsupported/invalid image encoding " + pcxHeader.encoding);
+            throw new ImagingException("Unsupported/invalid image encoding " + pcxHeader.encoding);
         }
         final int scanlineLength = pcxHeader.bytesPerLine * pcxHeader.nPlanes;
         final byte[] scanline = Allocator.byteArray(scanlineLength);
@@ -332,7 +331,7 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
                     palette = read256ColorPaletteFromEndOfFile(byteSource);
                 }
                 if (palette == null) {
-                    throw new ImageReadException(
+                    throw new ImagingException(
                             "No 256 color palette found in image that needs it");
                 }
             } else {
@@ -403,7 +402,7 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
                     colorModel.isAlphaPremultiplied(), new Properties());
         }
         if (((pcxHeader.bitsPerPixel != 24) || (pcxHeader.nPlanes != 1)) && ((pcxHeader.bitsPerPixel != 32) || (pcxHeader.nPlanes != 1))) {
-            throw new ImageReadException(
+            throw new ImagingException(
                     "Invalid/unsupported image with bitsPerPixel "
                             + pcxHeader.bitsPerPixel + " and planes "
                             + pcxHeader.nPlanes);
@@ -435,14 +434,14 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
     }
 
     private PcxHeader readPcxHeader(final ByteSource byteSource)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             return readPcxHeader(is, false);
         }
     }
 
     private PcxHeader readPcxHeader(final InputStream is, final boolean isStrict)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final byte[] pcxHeaderBytes = readBytes("PcxHeader", is, 128,
                 "Not a Valid PCX File");
         final int manufacturer = 0xff & pcxHeaderBytes[0];
@@ -468,14 +467,14 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
         final int vScreenSize = toUInt16(pcxHeaderBytes, 72, getByteOrder());
 
         if (manufacturer != 10) {
-            throw new ImageReadException(
+            throw new ImagingException(
                     "Not a Valid PCX File: manufacturer is " + manufacturer);
         }
         if (isStrict) {
             // Note that reserved is sometimes set to a non-zero value
             // by Paintbrush itself, so it shouldn't be enforced.
             if (bytesPerLine % 2 != 0) {
-                throw new ImageReadException(
+                throw new ImagingException(
                         "Not a Valid PCX File: bytesPerLine is odd");
             }
         }
@@ -487,7 +486,7 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
 
     @Override
     public void writeImage(final BufferedImage src, final OutputStream os, final PcxImagingParameters params)
-            throws ImageWriteException, IOException {
+            throws ImagingException, IOException {
         new PcxWriter(params).writeImage(src, os);
     }
 }

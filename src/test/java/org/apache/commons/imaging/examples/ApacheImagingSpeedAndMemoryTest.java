@@ -157,7 +157,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
@@ -242,7 +241,7 @@ public class ApacheImagingSpeedAndMemoryTest {
                 byteSource = null;
                 params = null;
                 tiffImageParser = null;
-            } catch (final ImageReadException | IOException ioex) {
+            } catch (final IOException ioex) {
                 ioex.printStackTrace();
                 System.exit(-1);
             }

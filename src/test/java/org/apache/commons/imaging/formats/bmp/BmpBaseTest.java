@@ -22,15 +22,15 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
-import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingTest;
 
 public abstract class BmpBaseTest extends ImagingTest {
 
     private static final ImageFilter IMAGE_FILTER = BmpBaseTest::isBmp;
 
-    protected static List<File> getBmpImages() throws IOException, ImageReadException {
+    protected static List<File> getBmpImages() throws IOException, ImagingException {
         return getTestImages(IMAGE_FILTER);
     }
 

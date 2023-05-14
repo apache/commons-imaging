@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteOrder;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -39,7 +39,7 @@ public class JpegUtils extends BinaryFileParser {
         // return false to exit traversal.
         boolean visitSegment(int marker, byte[] markerBytes,
                 int segmentLength, byte[] segmentLengthBytes,
-                byte[] segmentData) throws ImageReadException,
+                byte[] segmentData) throws ImagingException,
                 IOException;
 
         void visitSOS(int marker, byte[] markerBytes, byte[] imageData);
@@ -126,7 +126,7 @@ public class JpegUtils extends BinaryFileParser {
         super(ByteOrder.BIG_ENDIAN);
     }
 
-    public void dumpJFIF(final ByteSource byteSource) throws ImageReadException,
+    public void dumpJFIF(final ByteSource byteSource) throws ImagingException,
             IOException {
         final Visitor visitor = new Visitor() {
             // return false to exit before reading image data.
@@ -157,7 +157,7 @@ public class JpegUtils extends BinaryFileParser {
     }
 
     public void traverseJFIF(final ByteSource byteSource, final Visitor visitor)
-            throws ImageReadException,
+            throws ImagingException,
             IOException {
         try (InputStream is = byteSource.getInputStream()) {
             readAndVerifyBytes(is, JpegConstants.SOI,
@@ -188,7 +188,7 @@ public class JpegUtils extends BinaryFileParser {
                 final byte[] segmentLengthBytes = readBytes("segmentLengthBytes", is, 2, "segmentLengthBytes");
                 final int segmentLength = ByteConversions.toUInt16(segmentLengthBytes, getByteOrder());
                 if (segmentLength < 2) {
-                    throw new ImageReadException("Invalid segment size");
+                    throw new ImagingException("Invalid segment size");
                 }
 
                 final byte[] segmentData = readBytes("Segment Data",

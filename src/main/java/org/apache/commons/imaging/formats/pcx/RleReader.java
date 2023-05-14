@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFunctions;
 
 class RleReader {
@@ -31,7 +31,7 @@ class RleReader {
         this.isCompressed = isCompressed;
     }
 
-    void read(final InputStream is, final byte[] samples) throws IOException, ImageReadException {
+    void read(final InputStream is, final byte[] samples) throws IOException, ImagingException {
         if (isCompressed) {
             final int prefill = Math.min(count, samples.length);
             Arrays.fill(samples, 0, prefill, sample);
@@ -56,7 +56,7 @@ class RleReader {
             for (int bytesRead = 0; bytesRead < samples.length; bytesRead += r) {
                 r = is.read(samples, bytesRead, samples.length - bytesRead);
                 if (r < 0) {
-                    throw new ImageReadException(
+                    throw new ImagingException(
                             "Premature end of file reading image data");
                 }
             }

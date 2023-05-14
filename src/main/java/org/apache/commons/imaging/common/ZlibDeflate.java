@@ -22,8 +22,7 @@ import java.util.zip.DataFormatException;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.Inflater;
 
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 
 /**
  * <p>
@@ -44,15 +43,15 @@ public class ZlibDeflate {
      * @param bytes The bytes to compress
      *
      * @return The compressed bytes.
-     * @throws ImageWriteException if the bytes could not be compressed.
+     * @throws ImagingException if the bytes could not be compressed.
      * @see DeflaterOutputStream
      */
-    public static byte[] compress(final byte[] bytes) throws ImageWriteException {
+    public static byte[] compress(final byte[] bytes) throws ImagingException {
         final ByteArrayOutputStream out = new ByteArrayOutputStream(Allocator.checkByteArray(bytes.length / 2));
         try (DeflaterOutputStream compressOut = new DeflaterOutputStream(out)) {
             compressOut.write(bytes);
         } catch (final IOException e) {
-            throw new ImageWriteException("Unable to compress image", e);
+            throw new ImagingException("Unable to compress image", e);
         }
         return out.toByteArray();
     }
@@ -64,10 +63,10 @@ public class ZlibDeflate {
      * @param expectedSize The expected size of the decompressed byte[].
      *
      * @return The decompressed bytes.
-     * @throws ImageReadException if the bytes could not be decompressed.
+     * @throws ImagingException if the bytes could not be decompressed.
      * @see Inflater
      */
-    public static byte[] decompress(final byte[] bytes, final int expectedSize) throws ImageReadException {
+    public static byte[] decompress(final byte[] bytes, final int expectedSize) throws ImagingException {
         try {
             final Inflater inflater = new Inflater();
             inflater.setInput(bytes);
@@ -75,7 +74,7 @@ public class ZlibDeflate {
             inflater.inflate(result);
             return result;
         } catch (final DataFormatException e) {
-            throw new ImageReadException("Unable to decompress image", e);
+            throw new ImagingException("Unable to decompress image", e);
         }
     }
 

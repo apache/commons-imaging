@@ -33,8 +33,7 @@ import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -57,7 +56,7 @@ public class PnmImageParser extends ImageParser<PnmImagingParameters> {
 
     @Override
     public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         pw.println("pnm.dumpImageFile");
 
         final ImageInfo imageData = getImageInfo(byteSource);
@@ -90,7 +89,7 @@ public class PnmImageParser extends ImageParser<PnmImagingParameters> {
 
     @Override
     public BufferedImage getBufferedImage(final ByteSource byteSource, final PnmImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             final FileInfo info = readHeader(is);
 
@@ -118,13 +117,13 @@ public class PnmImageParser extends ImageParser<PnmImagingParameters> {
 
     @Override
     public byte[] getICCProfileBytes(final ByteSource byteSource, final PnmImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         return null;
     }
 
     @Override
     public ImageInfo getImageInfo(final ByteSource byteSource, final PnmImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final FileInfo info = readHeader(byteSource);
 
         final List<String> comments = new ArrayList<>();
@@ -160,7 +159,7 @@ public class PnmImageParser extends ImageParser<PnmImagingParameters> {
 
     @Override
     public Dimension getImageSize(final ByteSource byteSource, final PnmImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final FileInfo info = readHeader(byteSource);
 
         return new Dimension(info.width, info.height);
@@ -168,7 +167,7 @@ public class PnmImageParser extends ImageParser<PnmImagingParameters> {
 
     @Override
     public ImageMetadata getMetadata(final ByteSource byteSource, final PnmImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         return null;
     }
 
@@ -178,19 +177,19 @@ public class PnmImageParser extends ImageParser<PnmImagingParameters> {
     }
 
     private FileInfo readHeader(final ByteSource byteSource)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             return readHeader(is);
         }
     }
 
-    private FileInfo readHeader(final InputStream is) throws ImageReadException,
+    private FileInfo readHeader(final InputStream is) throws ImagingException,
             IOException {
         final byte identifier1 = readByte("Identifier1", is, "Not a Valid PNM File");
         final byte identifier2 = readByte("Identifier2", is, "Not a Valid PNM File");
 
         if (identifier1 != PnmConstants.PNM_PREFIX_BYTE) {
-            throw new ImageReadException("PNM file has invalid prefix byte 1");
+            throw new ImagingException("PNM file has invalid prefix byte 1");
         }
 
         final WhiteSpaceReader wsr = new WhiteSpaceReader(is);
@@ -206,13 +205,13 @@ public class PnmImageParser extends ImageParser<PnmImagingParameters> {
             try {
               width = Integer.parseInt(wsr.readtoWhiteSpace());
             } catch (final NumberFormatException e) {
-              throw new ImageReadException("Invalid width specified." , e);
+              throw new ImagingException("Invalid width specified." , e);
             }
             final int height;
             try {
               height = Integer.parseInt(wsr.readtoWhiteSpace());
             } catch (final NumberFormatException e) {
-              throw new ImageReadException("Invalid height specified." , e);
+              throw new ImagingException("Invalid height specified." , e);
             }
 
             switch (identifier2) {
@@ -264,64 +263,64 @@ public class PnmImageParser extends ImageParser<PnmImagingParameters> {
                 if ("WIDTH".equals(type)) {
                     seenWidth = true;
                     if(!tokenizer.hasMoreTokens()) {
-                        throw new ImageReadException("PAM header has no WIDTH value");
+                        throw new ImagingException("PAM header has no WIDTH value");
                     }
                     width = Integer.parseInt(tokenizer.nextToken());
                 } else if ("HEIGHT".equals(type)) {
                     seenHeight = true;
                     if(!tokenizer.hasMoreTokens()) {
-                        throw new ImageReadException("PAM header has no HEIGHT value");
+                        throw new ImagingException("PAM header has no HEIGHT value");
                     }
                     height = Integer.parseInt(tokenizer.nextToken());
                 } else if ("DEPTH".equals(type)) {
                     seenDepth = true;
                     if(!tokenizer.hasMoreTokens()) {
-                        throw new ImageReadException("PAM header has no DEPTH value");
+                        throw new ImagingException("PAM header has no DEPTH value");
                     }
                     depth = Integer.parseInt(tokenizer.nextToken());
                 } else if ("MAXVAL".equals(type)) {
                     seenMaxVal = true;
                     if(!tokenizer.hasMoreTokens()) {
-                        throw new ImageReadException("PAM header has no MAXVAL value");
+                        throw new ImagingException("PAM header has no MAXVAL value");
                     }
                     maxVal = Integer.parseInt(tokenizer.nextToken());
                 } else if ("TUPLTYPE".equals(type)) {
                     seenTupleType = true;
                     if(!tokenizer.hasMoreTokens()) {
-                        throw new ImageReadException("PAM header has no TUPLTYPE value");
+                        throw new ImagingException("PAM header has no TUPLTYPE value");
                     }
                     tupleType.append(tokenizer.nextToken());
                 } else if ("ENDHDR".equals(type)) {
                     break;
                 } else {
-                    throw new ImageReadException("Invalid PAM file header type " + type);
+                    throw new ImagingException("Invalid PAM file header type " + type);
                 }
             }
 
             if (!seenWidth) {
-                throw new ImageReadException("PAM header has no WIDTH");
+                throw new ImagingException("PAM header has no WIDTH");
             }
             if (!seenHeight) {
-                throw new ImageReadException("PAM header has no HEIGHT");
+                throw new ImagingException("PAM header has no HEIGHT");
             }
             if (!seenDepth) {
-                throw new ImageReadException("PAM header has no DEPTH");
+                throw new ImagingException("PAM header has no DEPTH");
             }
             if (!seenMaxVal) {
-                throw new ImageReadException("PAM header has no MAXVAL");
+                throw new ImagingException("PAM header has no MAXVAL");
             }
             if (!seenTupleType) {
-                throw new ImageReadException("PAM header has no TUPLTYPE");
+                throw new ImagingException("PAM header has no TUPLTYPE");
             }
 
             return new PamFileInfo(width, height, depth, maxVal, tupleType.toString());
         }
-        throw new ImageReadException("PNM file has invalid prefix byte 2");
+        throw new ImagingException("PNM file has invalid prefix byte 2");
     }
 
     @Override
     public void writeImage(final BufferedImage src, final OutputStream os, final PnmImagingParameters params)
-            throws ImageWriteException, IOException {
+            throws ImagingException, IOException {
         PnmWriter writer = null;
         boolean useRawbits = true;
 

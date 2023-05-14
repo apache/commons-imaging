@@ -18,7 +18,7 @@ package org.apache.commons.imaging.common;
 
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 
 /**
@@ -41,11 +41,11 @@ public interface XmpEmbeddable<E extends XmpImagingParameters<E>> {
      *                   interpretation of the input data.
      * @return If XMP metadata is present, a valid string;
      *         if it is not present, a null.
-     * @throws ImageReadException In the event that the specified content
+     * @throws ImagingException In the event that the specified content
      *                            does not conform to the format of the specific
      *                            parser implementation.
      * @throws IOException        In the event of unsuccessful read or access operation.
      */
-    String getXmpXml(ByteSource byteSource, XmpImagingParameters<E> params) throws ImageReadException, IOException;
+    String getXmpXml(ByteSource byteSource, XmpImagingParameters<E> params) throws ImagingException, IOException;
 
 }

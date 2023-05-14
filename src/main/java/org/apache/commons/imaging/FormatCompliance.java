@@ -51,19 +51,19 @@ public class FormatCompliance {
         this.failOnError = failOnError;
     }
 
-    public void addComment(final String comment) throws ImageReadException {
+    public void addComment(final String comment) throws ImagingException {
         comments.add(comment);
         if (failOnError) {
-            throw new ImageReadException(comment);
+            throw new ImagingException(comment);
         }
     }
 
-    public void addComment(final String comment, final int value) throws ImageReadException {
+    public void addComment(final String comment, final int value) throws ImagingException {
         addComment(comment + ": " + getValueDescription(value));
     }
 
     public boolean checkBounds(final String name, final int min, final int max, final int actual)
-            throws ImageReadException {
+            throws ImagingException {
         if ((actual < min) || (actual > max)) {
             addComment(name + ": " + "bounds check: " + min + " <= " + actual
                     + " <= " + max + ": false");
@@ -74,12 +74,12 @@ public class FormatCompliance {
     }
 
     public boolean compare(final String name, final int valid, final int actual)
-            throws ImageReadException {
+            throws ImagingException {
         return compare(name, new int[] { valid, }, actual);
     }
 
     public boolean compare(final String name, final int[] valid, final int actual)
-            throws ImageReadException {
+            throws ImagingException {
         for (final int element : valid) {
             if (actual == element) {
                 return true;
@@ -107,7 +107,7 @@ public class FormatCompliance {
     }
 
     public boolean compareBytes(final String name, final byte[] expected, final byte[] actual)
-            throws ImageReadException {
+            throws ImagingException {
         if (expected.length != actual.length) {
             addComment(name + ": " + "Unexpected length: (expected: "
                     + expected.length + ", actual: " + actual.length + ")");

@@ -18,7 +18,7 @@ package org.apache.commons.imaging.formats.png.scanlinefilters;
 
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 
 public class ScanlineFilterAverage implements ScanlineFilter {
     private final int bytesPerPixel;
@@ -29,7 +29,7 @@ public class ScanlineFilterAverage implements ScanlineFilter {
 
     @Override
     public void unfilter(final byte[] src, final byte[] dst, final byte[] up)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         for (int i = 0; i < src.length; i++) {
             int raw = 0;
             final int prevIndex = i - bytesPerPixel;

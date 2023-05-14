@@ -21,7 +21,7 @@ import static org.apache.commons.imaging.common.BinaryFunctions.read2Bytes;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 
 public class TransparencyFilterTrueColor extends TransparencyFilter {
     private final int transparentColor;
@@ -41,7 +41,7 @@ public class TransparencyFilterTrueColor extends TransparencyFilter {
     }
 
     @Override
-    public int filter(final int rgb, final int sample) throws ImageReadException,
+    public int filter(final int rgb, final int sample) throws ImagingException,
             IOException {
         if ((0x00ffffff & rgb) == transparentColor) {
             return 0x00;

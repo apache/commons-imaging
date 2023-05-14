@@ -18,11 +18,11 @@ package org.apache.commons.imaging.icc;
 
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 
 interface IccTagDataType {
 
-    void dump(String prefix, byte[] bytes) throws ImageReadException, IOException;
+    void dump(String prefix, byte[] bytes) throws ImagingException, IOException;
 
     String getName();
 

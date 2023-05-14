@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.tiff.taginfos;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
@@ -31,7 +31,7 @@ public class TagInfoAscii extends TagInfo {
     }
 
     public byte[] encodeValue(final ByteOrder byteOrder, final String... values)
-            throws ImageWriteException {
+            throws ImagingException {
         return FieldType.ASCII.writeData(values, byteOrder);
     }
 

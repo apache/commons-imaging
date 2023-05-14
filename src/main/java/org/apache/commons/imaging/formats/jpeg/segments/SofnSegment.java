@@ -25,7 +25,7 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
@@ -55,12 +55,12 @@ public class SofnSegment extends Segment {
 
     private final Component[] components;
 
-    public SofnSegment(final int marker, final byte[] segmentData) throws IOException, ImageReadException {
+    public SofnSegment(final int marker, final byte[] segmentData) throws IOException, ImagingException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
     public SofnSegment(final int marker, final int markerLength, final InputStream is)
-            throws IOException, ImageReadException {
+            throws IOException, ImagingException {
         super(marker, markerLength);
 
         if (LOGGER.isLoggable(Level.FINEST)) {
@@ -73,7 +73,7 @@ public class SofnSegment extends Segment {
         numberOfComponents = readByte("Number_of_components", is,
                 "Not a Valid JPEG File");
         if (numberOfComponents < 0) {
-            throw new ImageReadException("The number of components in a SOF0Segment cannot be less than 0!");
+            throw new ImagingException("The number of components in a SOF0Segment cannot be less than 0!");
         }
         components = Allocator.array(numberOfComponents, Component[]::new, Component.SHALLOW_SIZE);
         for (int i = 0; i < numberOfComponents; i++) {

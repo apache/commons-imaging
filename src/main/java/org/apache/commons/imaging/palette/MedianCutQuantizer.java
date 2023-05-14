@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.internal.Debug;
 
@@ -85,7 +85,7 @@ public class MedianCutQuantizer {
 
     public Palette process(final BufferedImage image, final int maxColors,
             final MedianCut medianCut)
-            throws ImageWriteException {
+            throws ImagingException {
         final Map<Integer, ColorCount> colorMap = groupColors(image, maxColors);
 
         final int discreteColors = colorMap.size();
@@ -132,13 +132,13 @@ public class MedianCutQuantizer {
             colorGroup.paletteIndex = i;
 
             if (colorGroup.getColorCounts().isEmpty()) {
-                throw new ImageWriteException("empty color_group: "
+                throw new ImagingException("empty color_group: "
                         + colorGroup);
             }
         }
 
         if (paletteSize > discreteColors) {
-            throw new ImageWriteException("palette_size > discrete_colors");
+            throw new ImagingException("palette_size > discrete_colors");
         }
 
         return new MedianCutPalette(root, palette);

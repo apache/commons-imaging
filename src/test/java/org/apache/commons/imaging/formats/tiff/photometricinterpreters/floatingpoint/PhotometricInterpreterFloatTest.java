@@ -18,21 +18,20 @@ package org.apache.commons.imaging.formats.tiff.photometricinterpreters.floating
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /**
- * Provides a unit test for the TIFF photometric interpreter used for mapping
- * floating-point values to a color palette.
+ * Provides a unit test for the TIFF photometric interpreter used for mapping floating-point values to a color palette.
  */
 public class PhotometricInterpreterFloatTest {
 
@@ -45,7 +44,7 @@ public class PhotometricInterpreterFloatTest {
     private static final Color green = new Color(22, 155, 98);
 
     @BeforeAll
-    public static void setUpClass() throws ImageReadException, IOException {
+    public static void setUpClass() throws ImagingException, IOException {
         // the setup is to assign color (grayscale) values to the
         // pixels along the main diagonal at coordinates
         // (0, 0), (1, 1), ... (256, 256).
@@ -65,7 +64,7 @@ public class PhotometricInterpreterFloatTest {
             final PaletteEntryForRange entry = new PaletteEntryForRange(f0, f1, c0, c1);
             paletteList.add(entry);
         }
-        // The interpreter is supposed to sort entries.  To test that,
+        // The interpreter is supposed to sort entries. To test that,
         // we copy them to a list in reverse order.
         for (int i = paletteList.size() - 1; i >= 0; i--) {
             final PaletteEntry entry = paletteList.get(i);
@@ -117,22 +116,14 @@ public class PhotometricInterpreterFloatTest {
 
     @Test
     public void testConstructors() {
-        PhotometricInterpreterFloat ptest;
-        ptest = new PhotometricInterpreterFloat(0, 1);
-        ptest = new PhotometricInterpreterFloat(1, 0);
-        try {
-            ptest = new PhotometricInterpreterFloat(null);
-            fail("Constructor failed to detect null arguments");
-        } catch (final IllegalArgumentException iex) {
+        new PhotometricInterpreterFloat(0, 1);
+        new PhotometricInterpreterFloat(1, 0);
 
-        }
+        assertThrows(IllegalArgumentException.class, () -> new PhotometricInterpreterFloat(null),
+                "Constructor failed to detect null arguments");
 
-        try {
-            ptest = new PhotometricInterpreterFloat(0.1f, 0.1f);
-            fail("Constructor failed to detect bad-range argument values");
-        } catch (final IllegalArgumentException iex) {
-
-        }
+        assertThrows(IllegalArgumentException.class, () -> new PhotometricInterpreterFloat(0.1f, 0.1f),
+                "Constructor failed to detect bad-range argument values");
 
     }
 
@@ -151,7 +142,7 @@ public class PhotometricInterpreterFloatTest {
      */
     @Test
     public void testGetMaxXY() {
-        final int[] expResult = {256, 256};
+        final int[] expResult = { 256, 256 };
         final int[] result = pInterp.getMaxXY();
         assertArrayEquals(expResult, result);
     }
@@ -181,7 +172,7 @@ public class PhotometricInterpreterFloatTest {
      */
     @Test
     public void testGetMinXY() {
-        final int[] expResult = {0, 0};
+        final int[] expResult = { 0, 0 };
         final int[] result = pInterp.getMinXY();
         assertArrayEquals(expResult, result);
     }
@@ -200,7 +191,7 @@ public class PhotometricInterpreterFloatTest {
 
         // nothing should match the i=256 case.
         // The last entry in the palette has values
-        // in the range  224.0/256.0 <= value < 256.0/256.0.  So when it
+        // in the range 224.0/256.0 <= value < 256.0/256.0. So when it
         // was rendered, there was not palette entry that matched it,
         // and the corresponding pixel was set to zero.
         int argb = imageBuilder.getRGB(256, 256);
@@ -241,11 +232,11 @@ public class PhotometricInterpreterFloatTest {
         assertEquals(test, argb, "Excluded value mapped to incorrect ARGB");
     }
 
-     /**
+    /**
      * Test of overlapping entries
      */
     @Test
-    public void testOverlappingEntriesEntry() throws ImageReadException, IOException  {
+    public void testOverlappingEntriesEntry() throws ImagingException, IOException {
         final Color c0 = new Color(0xff0000ff);
         final Color c1 = new Color(0xff00ff00);
         final List<PaletteEntry> overlapList = new ArrayList<>();
@@ -260,8 +251,8 @@ public class PhotometricInterpreterFloatTest {
         interpreter.interpretPixel(imageBuilder, samples, 0, 0);
         samples[0] = Float.floatToRawIntBits(1.2f);
         interpreter.interpretPixel(imageBuilder, samples, 1, 1);
-        int argb0 = imageBuilder.getRGB(0,0)|0xff000000;
-        int argb1 = imageBuilder.getRGB(1,1)|0xff000000;
+        int argb0 = imageBuilder.getRGB(0, 0) | 0xff000000;
+        int argb1 = imageBuilder.getRGB(1, 1) | 0xff000000;
         assertEquals(argb0, c0.getRGB(), "Invalid result for overlapping palette entry 0");
         assertEquals(argb1, c1.getRGB(), "Invalid result for overlapping palette entry 1");
         argb0 = interpreter.mapValueToARGB(0.5f);

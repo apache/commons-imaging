@@ -22,7 +22,7 @@ import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.png.InterlaceMethod;
 import org.apache.commons.imaging.formats.png.PngColorType;
 
@@ -35,7 +35,7 @@ public class PngChunkIhdr extends PngChunk {
     public final int filterMethod;
     public final InterlaceMethod interlaceMethod;
 
-    public PngChunkIhdr(final int length, final int chunkType, final int crc, final byte[] bytes) throws ImageReadException, IOException {
+    public PngChunkIhdr(final int length, final int chunkType, final int crc, final byte[] bytes) throws ImagingException, IOException {
         super(length, chunkType, crc, bytes);
 
         final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
@@ -45,13 +45,13 @@ public class PngChunkIhdr extends PngChunk {
         final int type = readByte("ColorType", is, "Not a Valid PNG File: IHDR Corrupt");
         pngColorType = PngColorType.getColorType(type);
         if (pngColorType == null) {
-            throw new ImageReadException("PNG: unknown color type: " + type);
+            throw new ImagingException("PNG: unknown color type: " + type);
         }
         compressionMethod = readByte("CompressionMethod", is, "Not a Valid PNG File: IHDR Corrupt");
         filterMethod = readByte("FilterMethod", is, "Not a Valid PNG File: IHDR Corrupt");
         final int method = readByte("InterlaceMethod", is, "Not a Valid PNG File: IHDR Corrupt");
         if (method < 0 || method >= InterlaceMethod.values().length) {
-            throw new ImageReadException("PNG: unknown interlace method: " + method);
+            throw new ImagingException("PNG: unknown interlace method: " + method);
         }
         interlaceMethod = InterlaceMethod.values()[method];
     }

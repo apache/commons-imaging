@@ -19,8 +19,7 @@ package org.apache.commons.imaging.common.itu_t4;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.itu_t4.T4_T6_Tables.Entry;
 
@@ -67,7 +66,7 @@ public final class T4AndT6Compression {
             CONTROL_CODES.insert(T4_T6_Tables.VR1.bitString, T4_T6_Tables.VR1);
             CONTROL_CODES.insert(T4_T6_Tables.VR2.bitString, T4_T6_Tables.VR2);
             CONTROL_CODES.insert(T4_T6_Tables.VR3.bitString, T4_T6_Tables.VR3);
-        } catch (final HuffmanTreeException cannotHappen) {
+        } catch (final ImagingException cannotHappen) {
             throw new IllegalStateException(cannotHappen);
         }
     }
@@ -81,7 +80,7 @@ public final class T4AndT6Compression {
 
     private static void compress1DLine(final BitInputStreamFlexible inputStream,
             final BitArrayOutputStream outputStream, final int[] referenceLine, final int width)
-            throws ImageWriteException {
+            throws ImagingException {
         int color = WHITE;
         int runLength = 0;
 
@@ -99,7 +98,7 @@ public final class T4AndT6Compression {
                     runLength = 1;
                 }
             } catch (final IOException ioException) {
-                throw new ImageWriteException("Error reading image to compress", ioException);
+                throw new ImagingException("Error reading image to compress", ioException);
             }
         }
 
@@ -115,10 +114,10 @@ public final class T4AndT6Compression {
      * @param width image width
      * @param height image height
      * @return the compressed data
-     * @throws ImageWriteException if it fails to write the compressed data
+     * @throws ImagingException if it fails to write the compressed data
      */
     public static byte[] compressModifiedHuffman(final byte[] uncompressed, final int width, final int height)
-            throws ImageWriteException {
+            throws ImagingException {
         final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(new ByteArrayInputStream(uncompressed));
         try (BitArrayOutputStream outputStream = new BitArrayOutputStream()) {
             for (int y = 0; y < height; y++) {
@@ -171,7 +170,7 @@ public final class T4AndT6Compression {
     }
 
     public static byte[] compressT4_1D(final byte[] uncompressed, final int width,
-            final int height, final boolean hasFill) throws ImageWriteException {
+            final int height, final boolean hasFill) throws ImagingException {
         final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(new ByteArrayInputStream(uncompressed));
         try (BitArrayOutputStream outputStream = new BitArrayOutputStream()) {
             if (hasFill) {
@@ -202,7 +201,7 @@ public final class T4AndT6Compression {
 
     public static byte[] compressT4_2D(final byte[] uncompressed, final int width,
             final int height, final boolean hasFill, final int parameterK)
-            throws ImageWriteException {
+            throws ImagingException {
         final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(new ByteArrayInputStream(uncompressed));
         final BitArrayOutputStream outputStream = new BitArrayOutputStream();
         int[] referenceLine = Allocator.intArray(width);
@@ -222,7 +221,7 @@ public final class T4AndT6Compression {
                     try {
                         codingLine[i] = inputStream.readBits(1);
                     } catch (final IOException ioException) {
-                        throw new ImageWriteException("Error reading image to compress", ioException);
+                        throw new ImagingException("Error reading image to compress", ioException);
                     }
                 }
                 int codingA0Color = WHITE;
@@ -280,7 +279,7 @@ public final class T4AndT6Compression {
     }
 
     public static byte[] compressT6(final byte[] uncompressed, final int width, final int height)
-            throws ImageWriteException {
+            throws ImagingException {
         try (ByteArrayInputStream bais = new ByteArrayInputStream(uncompressed);
                 BitInputStreamFlexible inputStream = new BitInputStreamFlexible(bais)) {
             final BitArrayOutputStream outputStream = new BitArrayOutputStream();
@@ -291,7 +290,7 @@ public final class T4AndT6Compression {
                     try {
                         codingLine[i] = inputStream.readBits(1);
                     } catch (final IOException e) {
-                        throw new ImageWriteException("Error reading image to compress", e);
+                        throw new ImagingException("Error reading image to compress", e);
                     }
                 }
                 int codingA0Color = WHITE;
@@ -329,7 +328,7 @@ public final class T4AndT6Compression {
             T4_T6_Tables.EOL.writeBits(outputStream);
             return outputStream.toByteArray();
         } catch (final IOException ioException) {
-            throw new ImageWriteException("I/O error", ioException);
+            throw new ImagingException("I/O error", ioException);
         }
     }
     /**
@@ -341,10 +340,10 @@ public final class T4AndT6Compression {
      * @param width image width
      * @param height image height
      * @return the compressed data
-     * @throws ImageReadException if it fails to read the compressed data
+     * @throws ImagingException if it fails to read the compressed data
      */
     public static byte[] decompressModifiedHuffman(final byte[] compressed,
-            final int width, final int height) throws ImageReadException {
+            final int width, final int height) throws ImagingException {
         try (ByteArrayInputStream baos = new ByteArrayInputStream(compressed);
                 BitInputStreamFlexible inputStream = new BitInputStreamFlexible(baos);
                 BitArrayOutputStream outputStream = new BitArrayOutputStream()) {
@@ -364,12 +363,12 @@ public final class T4AndT6Compression {
                     inputStream.flushCache();
                     outputStream.flush();
                 } else if (rowLength > width) {
-                    throw new ImageReadException("Unrecoverable row length error in image row " + y);
+                    throw new ImagingException("Unrecoverable row length error in image row " + y);
                 }
             }
             return outputStream.toByteArray();
         } catch (final IOException ioException) {
-            throw new ImageReadException("Error reading image to decompress", ioException);
+            throw new ImagingException("Error reading image to decompress", ioException);
         }
     }
 
@@ -382,10 +381,10 @@ public final class T4AndT6Compression {
      * @param height image height
      * @param hasFill used to check the end of line
      * @return the decompressed data
-     * @throws ImageReadException if it fails to read the compressed data
+     * @throws ImagingException if it fails to read the compressed data
      */
     public static byte[] decompressT4_1D(final byte[] compressed, final int width,
-            final int height, final boolean hasFill) throws ImageReadException {
+            final int height, final boolean hasFill) throws ImagingException {
         final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(new ByteArrayInputStream(compressed));
         try (BitArrayOutputStream outputStream = new BitArrayOutputStream()) {
             for (int y = 0; y < height; y++) {
@@ -393,7 +392,7 @@ public final class T4AndT6Compression {
                 try {
                     final T4_T6_Tables.Entry entry = CONTROL_CODES.decode(inputStream);
                     if (!isEOL(entry, hasFill)) {
-                        throw new ImageReadException("Expected EOL not found");
+                        throw new ImagingException("Expected EOL not found");
                     }
                     int color = WHITE;
                     for (rowLength = 0; rowLength < width;) {
@@ -404,14 +403,14 @@ public final class T4AndT6Compression {
                         color = 1 - color;
                         rowLength += runLength;
                     }
-                } catch (final HuffmanTreeException huffmanException) {
-                    throw new ImageReadException("Decompression error", huffmanException);
+                } catch (final ImagingException huffmanException) {
+                    throw new ImagingException("Decompression error", huffmanException);
                 }
 
                 if (rowLength == width) {
                     outputStream.flush();
                 } else if (rowLength > width) {
-                    throw new ImageReadException("Unrecoverable row length error in image row " + y);
+                    throw new ImagingException("Unrecoverable row length error in image row " + y);
                 }
             }
             return outputStream.toByteArray();
@@ -429,10 +428,10 @@ public final class T4AndT6Compression {
      * @param height image height
      * @param hasFill used to check the end of line
      * @return the decompressed data
-     * @throws ImageReadException if it fails to read the compressed data
+     * @throws ImagingException if it fails to read the compressed data
      */
     public static byte[] decompressT4_2D(final byte[] compressed, final int width,
-            final int height, final boolean hasFill) throws ImageReadException {
+            final int height, final boolean hasFill) throws ImagingException {
         final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(new ByteArrayInputStream(compressed));
         try (BitArrayOutputStream outputStream = new BitArrayOutputStream()) {
             final int[] referenceLine = Allocator.intArray(width);
@@ -441,7 +440,7 @@ public final class T4AndT6Compression {
                 try {
                     T4_T6_Tables.Entry entry = CONTROL_CODES.decode(inputStream);
                     if (!isEOL(entry, hasFill)) {
-                        throw new ImageReadException("Expected EOL not found");
+                        throw new ImagingException("Expected EOL not found");
                     }
                     final int tagBit = inputStream.readBits(1);
                     if (tagBit == 0) {
@@ -482,7 +481,7 @@ public final class T4AndT6Compression {
                                 } else if (entry == T4_T6_Tables.VR3) {
                                     a1b1 = 3;
                                 } else {
-                                    throw new ImageReadException("Invalid/unknown T.4 control code " + entry.bitString);
+                                    throw new ImagingException("Invalid/unknown T.4 control code " + entry.bitString);
                                 }
                                 a1 = b1 + a1b1;
                                 fillRange(outputStream, referenceLine, a0, a1, codingA0Color);
@@ -512,14 +511,14 @@ public final class T4AndT6Compression {
                             rowLength += runLength;
                         }
                     }
-                } catch (final IOException | HuffmanTreeException huffmanException) {
-                    throw new ImageReadException("Decompression error", huffmanException);
+                } catch (final IOException e) {
+                    throw new ImagingException("Decompression error", e);
                 }
 
                 if (rowLength == width) {
                     outputStream.flush();
                 } else if (rowLength > width) {
-                    throw new ImageReadException("Unrecoverable row length error in image row " + y);
+                    throw new ImagingException("Unrecoverable row length error in image row " + y);
                 }
             }
 
@@ -536,16 +535,15 @@ public final class T4AndT6Compression {
      * @param width image width
      * @param height image height
      * @return the decompressed data
-     * @throws ImageReadException if it fails to read the compressed data
+     * @throws ImagingException if it fails to read the compressed data
      */
     public static byte[] decompressT6(final byte[] compressed, final int width, final int height)
-            throws ImageReadException {
-        final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(new ByteArrayInputStream(compressed));
-        final BitArrayOutputStream outputStream = new BitArrayOutputStream();
-        final int[] referenceLine = Allocator.intArray(width);
-        for (int y = 0; y < height; y++) {
-            int rowLength = 0;
-            try {
+            throws ImagingException {
+        try (BitInputStreamFlexible inputStream = new BitInputStreamFlexible(new ByteArrayInputStream(compressed));
+                BitArrayOutputStream outputStream = new BitArrayOutputStream()) {
+            final int[] referenceLine = Allocator.intArray(width);
+            for (int y = 0; y < height; y++) {
+                int rowLength = 0;
                 int codingA0Color = WHITE;
                 int referenceA0Color = WHITE;
                 int b1 = nextChangingElement(referenceLine, referenceA0Color, 0);
@@ -553,7 +551,7 @@ public final class T4AndT6Compression {
                 for (int a0 = 0; a0 < width;) {
                     int a1;
                     int a2;
-                    final T4_T6_Tables.Entry  entry = CONTROL_CODES.decode(inputStream);
+                    final T4_T6_Tables.Entry entry = CONTROL_CODES.decode(inputStream);
                     if (entry == T4_T6_Tables.P) {
                         fillRange(outputStream, referenceLine, a0, b2, codingA0Color);
                         a0 = b2;
@@ -582,7 +580,7 @@ public final class T4AndT6Compression {
                         } else if (entry == T4_T6_Tables.VR3) {
                             a1b1 = 3;
                         } else {
-                            throw new ImageReadException("Invalid/unknown T.6 control code " + entry.bitString);
+                            throw new ImagingException("Invalid/unknown T.6 control code " + entry.bitString);
                         }
                         a1 = b1 + a1b1;
                         fillRange(outputStream, referenceLine, a0, a1, codingA0Color);
@@ -599,18 +597,20 @@ public final class T4AndT6Compression {
                     b2 = nextChangingElement(referenceLine, 1 - codingA0Color, b1 + 1);
                     rowLength = a0;
                 }
-            } catch (final HuffmanTreeException huffmanException) {
-                throw new ImageReadException("Decompression error", huffmanException);
+                if (rowLength == width) {
+                    outputStream.flush();
+                } else if (rowLength > width) {
+                    throw new ImagingException("Unrecoverable row length error in image row " + y);
+                }
             }
-
-            if (rowLength == width) {
-                outputStream.flush();
-            } else if (rowLength > width) {
-                throw new ImageReadException("Unrecoverable row length error in image row " + y);
+            return outputStream.toByteArray();
+        } catch (IOException e) {
+            if (e instanceof ImagingException) {
+                throw (ImagingException) e;
             }
+            // IOException cannot happen because the close() methods in use here do not throw
+            throw new ImagingException("Closing stream", e);
         }
-
-        return outputStream.toByteArray();
     }
 
     private static void fillRange(final BitArrayOutputStream outputStream,
@@ -666,22 +666,18 @@ public final class T4AndT6Compression {
     }
 
     private static int readTotalRunLength(final BitInputStreamFlexible bitStream,
-            final int color) throws ImageReadException {
-        try {
-            int totalLength = 0;
-            Integer runLength;
-            do {
-                if (color == WHITE) {
-                    runLength = WHITE_RUN_LENGTHS.decode(bitStream);
-                } else {
-                    runLength = BLACK_RUN_LENGTHS.decode(bitStream);
-                }
-                totalLength += runLength;
-            } while (runLength > 63);
-            return totalLength;
-        } catch (final HuffmanTreeException huffmanException) {
-            throw new ImageReadException("Decompression error", huffmanException);
-        }
+            final int color) throws ImagingException {
+        int totalLength = 0;
+        Integer runLength;
+        do {
+            if (color == WHITE) {
+                runLength = WHITE_RUN_LENGTHS.decode(bitStream);
+            } else {
+                runLength = BLACK_RUN_LENGTHS.decode(bitStream);
+            }
+            totalLength += runLength;
+        } while (runLength > 63);
+        return totalLength;
     }
 
     private static void writeRunLength(final BitArrayOutputStream bitStream,

@@ -21,7 +21,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.ByteOrder;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
@@ -74,7 +74,7 @@ public final class DataReaderStrips extends ImageDataReader {
             final ImageBuilder imageBuilder,
             final byte[] bytes,
             final int pixelsPerStrip,
-            final int yLimit) throws ImageReadException, IOException {
+            final int yLimit) throws ImagingException, IOException {
         if (y >= yLimit) {
             return;
         }
@@ -248,7 +248,7 @@ public final class DataReaderStrips extends ImageDataReader {
     public ImageBuilder readImageData(final Rectangle subImageSpecification,
         final boolean hasAlpha,
         final boolean isAlphaPreMultiplied)
-        throws ImageReadException, IOException {
+        throws IOException, ImagingException {
 
         final Rectangle subImage;
         if (subImageSpecification == null) {
@@ -343,20 +343,20 @@ public final class DataReaderStrips extends ImageDataReader {
 
     @Override
     public TiffRasterData readRasterData(final Rectangle subImage)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         switch (sampleFormat) {
             case TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT:
                 return readRasterDataFloat(subImage);
             case TiffTagConstants.SAMPLE_FORMAT_VALUE_TWOS_COMPLEMENT_SIGNED_INTEGER:
                 return readRasterDataInt(subImage);
             default:
-                throw new ImageReadException("Unsupported sample format, value="
+                throw new ImagingException("Unsupported sample format, value="
                         + sampleFormat);
         }
     }
 
     private TiffRasterData readRasterDataFloat(final Rectangle subImage)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         int xRaster;
         int yRaster;
         int rasterWidth;
@@ -409,7 +409,7 @@ public final class DataReaderStrips extends ImageDataReader {
     }
 
     private TiffRasterData readRasterDataInt(final Rectangle subImage)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         int xRaster;
         int yRaster;
         int rasterWidth;

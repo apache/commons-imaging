@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.bmp;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.ImageBuilder;
 
@@ -31,7 +31,7 @@ class PixelParserRle extends PixelParser {
         super(bhi, colorTable, imageData);
     }
 
-    private int[] convertDataToSamples(final int data) throws ImageReadException {
+    private int[] convertDataToSamples(final int data) throws ImagingException {
         int[] rgbs;
         if (bhi.bitsPerPixel == 8) {
             rgbs = new int[1];
@@ -45,21 +45,21 @@ class PixelParserRle extends PixelParser {
             rgbs[1] = getColorTableRGB(sample2);
             // pixels_written = 2;
         } else {
-            throw new ImageReadException("BMP RLE: bad BitsPerPixel: "
+            throw new ImagingException("BMP RLE: bad BitsPerPixel: "
                     + bhi.bitsPerPixel);
         }
 
         return rgbs;
     }
 
-    private int getSamplesPerByte() throws ImageReadException {
+    private int getSamplesPerByte() throws ImagingException {
         if (bhi.bitsPerPixel == 8) {
             return 1;
         }
         if (bhi.bitsPerPixel == 4) {
             return 2;
         }
-        throw new ImageReadException("BMP RLE: bad BitsPerPixel: "
+        throw new ImagingException("BMP RLE: bad BitsPerPixel: "
                 + bhi.bitsPerPixel);
     }
 
@@ -89,7 +89,7 @@ class PixelParserRle extends PixelParser {
 
     @Override
     public void processImage(final ImageBuilder imageBuilder)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final int width = bhi.width;
         final int height = bhi.height;
         int x = 0;

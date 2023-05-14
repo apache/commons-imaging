@@ -36,7 +36,7 @@ import java.io.InputStream;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.PackBits;
@@ -229,7 +229,7 @@ public abstract class ImageDataReader {
 
     protected byte[] decompress(final byte[] compressedInput, final int compression,
             final int expectedSize, final int tileWidth, final int tileHeight)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final TiffField fillOrderField = directory.findField(TiffTagConstants.TIFF_TAG_FILL_ORDER);
         int fillOrder = TiffTagConstants.FILL_ORDER_VALUE_NORMAL;
         if (fillOrderField != null) {
@@ -245,15 +245,16 @@ public abstract class ImageDataReader {
                 compressedOrdered[i] = (byte) (Integer.reverse(0xff & compressedInput[i]) >>> 24);
             }
         } else {
-            throw new ImageReadException("TIFF FillOrder=" + fillOrder
+            throw new ImagingException("TIFF FillOrder=" + fillOrder
                     + " is invalid");
         }
 
         switch (compression) {
-        case TIFF_COMPRESSION_UNCOMPRESSED: // None;
+        case TIFF_COMPRESSION_UNCOMPRESSED:
+            // None;
             return compressedOrdered;
-        case TIFF_COMPRESSION_CCITT_1D: // CCITT Group 3 1-Dimensional Modified
-                                        // Huffman run-length encoding.
+        case TIFF_COMPRESSION_CCITT_1D:
+            // CCITT Group 3 1-Dimensional Modified Huffman run-length encoding.
             return T4AndT6Compression.decompressModifiedHuffman(compressedOrdered,
                     tileWidth, tileHeight);
         case TIFF_COMPRESSION_CCITT_GROUP_3: {
@@ -265,7 +266,7 @@ public abstract class ImageDataReader {
             final boolean is2D = (t4Options & TIFF_FLAG_T4_OPTIONS_2D) != 0;
             final boolean usesUncompressedMode = (t4Options & TIFF_FLAG_T4_OPTIONS_UNCOMPRESSED_MODE) != 0;
             if (usesUncompressedMode) {
-                throw new ImageReadException(
+                throw new ImagingException(
                         "T.4 compression with the uncompressed mode extension is not yet supported");
             }
             final boolean hasFillBitsBeforeEOL = (t4Options & TIFF_FLAG_T4_OPTIONS_FILL) != 0;
@@ -284,7 +285,7 @@ public abstract class ImageDataReader {
             }
             final boolean usesUncompressedMode = (t6Options & TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE) != 0;
             if (usesUncompressedMode) {
-                throw new ImageReadException(
+                throw new ImagingException(
                         "T.6 compression with the uncompressed mode extension is not yet supported");
             }
             return T4AndT6Compression.decompressT6(compressedOrdered, tileWidth,
@@ -308,7 +309,7 @@ public abstract class ImageDataReader {
         }
 
         default:
-            throw new ImageReadException("Tiff: unknown/unsupported compression: " + compression);
+            throw new ImagingException("Tiff: unknown/unsupported compression: " + compression);
         }
     }
 
@@ -363,15 +364,14 @@ public abstract class ImageDataReader {
      * @param isAlphaPremultiplied indicates that the image uses the associated
      * alpha channel format (pre-multiplied alpha).
      * @return a valid instance containing the pixel data from the image.
-     * @throws ImageReadException in the event of a data format error or other
-     * TIFF-specific failure.
      * @throws IOException in the event of an unrecoverable I/O error.
+     * @throws ImagingException TODO
      */
     public abstract ImageBuilder readImageData(
             Rectangle subImageSpecification,
             boolean hasAlpha,
             boolean isAlphaPremultiplied)
-            throws ImageReadException, IOException;
+            throws IOException, ImagingException;
 
     /**
      * Defines a method for accessing the floating-point raster data in a TIFF
@@ -382,11 +382,11 @@ public abstract class ImageDataReader {
      * @param subImage if non-null, instructs the access method to retrieve only
      * a sub-section of the image data.
      * @return a valid instance
-     * @throws ImageReadException in the event of an incompatible data form.
+     * @throws ImagingException in the event of an incompatible data form.
      * @throws IOException in the event of I/O error.
      */
     public abstract TiffRasterData readRasterData(Rectangle subImage)
-        throws ImageReadException, IOException;
+        throws ImagingException, IOException;
 
     protected void resetPredictor() {
         Arrays.fill(last, 0);
@@ -619,7 +619,7 @@ public abstract class ImageDataReader {
      * @param byteOrder the byte order for the source data
      * @return a valid array of integers in row major order, dimensions
      * scan-size wide and height.
-     * @throws ImageReadException in the event of an invalid format.
+     * @throws ImagingException in the event of an invalid format.
      */
     protected int[] unpackFloatingPointSamples(
         final int width,
@@ -628,7 +628,7 @@ public abstract class ImageDataReader {
         final byte[] bytes,
         final int bitsPerPixel,
         final ByteOrder byteOrder)
-        throws ImageReadException {
+        throws ImagingException {
         final int bitsPerSample = bitsPerPixel / samplesPerPixel;
         final int bytesPerSample = bitsPerSample / 8;
         final int bytesPerScan = scanSize * samplesPerPixel * bytesPerSample;
@@ -641,7 +641,7 @@ public abstract class ImageDataReader {
             // main reason for this is that we have not located sample data
             // that can be used for testing and analysis.
             if (bitsPerPixel / samplesPerPixel != 32) {
-                throw new ImageReadException(
+                throw new ImagingException(
                     "Imaging does not yet support floating-point data"
                     + " with predictor type 3 for "
                     + bitsPerPixel + " bits per sample");
@@ -790,7 +790,7 @@ public abstract class ImageDataReader {
                 }
             }
         } else {
-            throw new ImageReadException(
+            throw new ImagingException(
                 "Imaging does not support floating-point samples with "
                 + bitsPerPixel + " bits per sample");
         }

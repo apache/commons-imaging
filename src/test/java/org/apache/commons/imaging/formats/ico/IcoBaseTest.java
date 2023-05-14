@@ -21,14 +21,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingTest;
 
 public abstract class IcoBaseTest extends ImagingTest {
 
     private static final ImageFilter IMAGE_FILTER = IcoBaseTest::isIco;
 
-    protected static List<File> getIcoImages() throws IOException, ImageReadException {
+    protected static List<File> getIcoImages() throws IOException, ImagingException {
         return getTestImages(IMAGE_FILTER);
     }
 

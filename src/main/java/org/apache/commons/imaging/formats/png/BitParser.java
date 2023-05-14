@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.png;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 
 class BitParser {
     private final byte[] bytes;
@@ -30,7 +30,7 @@ class BitParser {
     }
 
     public int getSample(final int pixelIndexInScanline, final int sampleIndex)
-            throws ImageReadException {
+            throws ImagingException {
         final int pixelIndexBits = bitsPerPixel * pixelIndexInScanline;
         final int sampleIndexBits = pixelIndexBits + (sampleIndex * bitDepth);
         final int sampleIndexBytes = sampleIndexBits >> 3;
@@ -50,11 +50,11 @@ class BitParser {
             return (((0xff & bytes[sampleIndexBytes]) << 8) | (0xff & bytes[sampleIndexBytes + 1]));
         }
 
-        throw new ImageReadException("PNG: bad BitDepth: " + bitDepth);
+        throw new ImagingException("PNG: bad BitDepth: " + bitDepth);
     }
 
     public int getSampleAsByte(final int pixelIndexInScanline, final int sampleIndex)
-            throws ImageReadException {
+            throws ImagingException {
         int sample = getSample(pixelIndexInScanline, sampleIndex);
 
         final int rot = 8 - bitDepth;

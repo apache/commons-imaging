@@ -25,9 +25,8 @@ import java.io.IOException;
 import java.util.Random;
 
 import org.apache.commons.imaging.ImageFormats;
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 
@@ -157,7 +156,7 @@ public class BmpRoundtripTest extends BmpBaseTest {
         writeAndReadImageData(smallRedPixels);
     }
 
-    private void writeAndReadImageData(final int[][] rawData) throws IOException, ImageReadException, ImageWriteException {
+    private void writeAndReadImageData(final int[][] rawData) throws IOException, ImagingException, ImagingException {
         final BufferedImage srcImage = imageDataToBufferedImage(rawData);
 
         final byte[] bytes = Imaging.writeImageToBytes(srcImage, ImageFormats.BMP);

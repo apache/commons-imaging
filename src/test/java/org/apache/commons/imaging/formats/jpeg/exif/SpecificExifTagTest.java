@@ -22,9 +22,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
@@ -40,10 +39,10 @@ public abstract class SpecificExifTagTest extends ExifBaseTest {
     }
 
     protected abstract void checkField(File imageFile, TiffField field)
-            throws IOException, ImageReadException, ImageWriteException;
+            throws IOException, ImagingException, ImagingException;
 
     private void checkImage(final File imageFile) throws IOException,
-            ImageReadException, ImageWriteException {
+            ImagingException, ImagingException {
         // Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
         final JpegImagingParameters params = new JpegImagingParameters();

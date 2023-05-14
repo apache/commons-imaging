@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.tiff.fieldtypes;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.RationalNumber;
@@ -44,7 +44,7 @@ public class FieldTypeRational extends FieldType {
     }
 
     @Override
-    public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException {
+    public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImagingException {
         if (o instanceof RationalNumber) {
             return ByteConversions.toBytes((RationalNumber) o, byteOrder);
         }
@@ -63,7 +63,7 @@ public class FieldTypeRational extends FieldType {
             return ByteConversions.toBytes(rationalNumbers, byteOrder);
         }
         if (!(o instanceof double[])) {
-            throw new ImageWriteException("Invalid data", o);
+            throw new ImagingException("Invalid data", o);
         }
         final double[] numbers = (double[]) o;
         final RationalNumber[] rationalNumbers = Allocator.array(numbers.length, RationalNumber[]::new,

@@ -25,7 +25,7 @@ import java.io.RandomAccessFile;
 import java.nio.ByteOrder;
 import java.util.logging.Logger;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 
 /**
  * Convenience methods for various binary and I/O operations.
@@ -175,11 +175,9 @@ public final class BinaryFunctions {
 
         final int result;
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
-            result = (byte0 << 16) | (byte1 << 8)
-                    | (byte2 << 0);
+            result = (byte0 << 16) | (byte1 << 8) | (byte2 << 0);
         } else {
-            result = (byte2 << 16) | (byte1 << 8)
-                    | (byte0 << 0);
+            result = (byte2 << 16) | (byte1 << 8) | (byte0 << 0);
         }
 
         return result;
@@ -209,42 +207,42 @@ public final class BinaryFunctions {
 
     public static void readAndVerifyBytes(final InputStream is,
             final BinaryConstant expected, final String exception)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         for (int i = 0; i < expected.size(); i++) {
             final int data = is.read();
             final byte b = (byte) (0xff & data);
 
             if (data < 0) {
-                throw new ImageReadException("Unexpected EOF.");
+                throw new ImagingException("Unexpected EOF.");
             }
 
             if (b != expected.get(i)) {
-                throw new ImageReadException(exception);
+                throw new ImagingException(exception);
             }
         }
     }
 
     public static void readAndVerifyBytes(final InputStream is, final byte[] expected,
-            final String exception) throws ImageReadException, IOException {
+            final String exception) throws ImagingException, IOException {
         for (final byte element : expected) {
             final int data = is.read();
             final byte b = (byte) (0xff & data);
 
             if (data < 0) {
-                throw new ImageReadException("Unexpected EOF.");
+                throw new ImagingException("Unexpected EOF.");
             }
 
             if (b != element) {
-                throw new ImageReadException(exception);
+                throw new ImagingException(exception);
             }
         }
     }
 
-    public static byte readByte(final String name, final InputStream is, final String exception)
+    public static byte readByte(final String name, final InputStream is, final String exceptionMessage)
             throws IOException {
         final int result = is.read();
         if ((result < 0)) {
-            throw new IOException(exception);
+            throw new IOException(exceptionMessage);
         }
         return (byte) (0xff & result);
     }

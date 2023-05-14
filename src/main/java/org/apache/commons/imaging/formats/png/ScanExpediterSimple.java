@@ -20,7 +20,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkPlte;
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilter;
 
@@ -34,7 +34,7 @@ class ScanExpediterSimple extends ScanExpediter {
     }
 
     @Override
-    public void drive() throws ImageReadException, IOException {
+    public void drive() throws ImagingException, IOException {
         final int bitsPerScanLine = bitsPerPixel * width;
         final int pixelBytesPerScanLine = getBitsToBytesRoundingUp(bitsPerScanLine);
         byte[] prev = null;

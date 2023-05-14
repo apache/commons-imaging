@@ -23,7 +23,7 @@ import java.nio.ByteOrder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.ByteConversions;
@@ -40,7 +40,7 @@ class RgbeInfo implements Closeable {
 
     private static final byte[] TWO_TWO = { 0x2, 0x2 };
     private static void decompress(final InputStream in, final byte[] out)
-            throws IOException,ImageReadException {
+            throws IOException,ImagingException {
         int position = 0;
         final int total = out.length;
 
@@ -48,7 +48,7 @@ class RgbeInfo implements Closeable {
             final int n = in.read();
 
             if (n < 0) {
-                throw new ImageReadException("Error decompressing RGBE file");
+                throw new ImagingException("Error decompressing RGBE file");
             }
 
             if (n > 128) {
@@ -79,7 +79,7 @@ class RgbeInfo implements Closeable {
         in.close();
     }
 
-    int getHeight() throws IOException, ImageReadException {
+    int getHeight() throws IOException, ImagingException {
         if (-1 == height) {
             readDimensions();
         }
@@ -87,7 +87,7 @@ class RgbeInfo implements Closeable {
         return height;
     }
 
-    ImageMetadata getMetadata() throws IOException, ImageReadException {
+    ImageMetadata getMetadata() throws IOException, ImagingException {
         if (null == metadata) {
             readMetadata();
         }
@@ -95,14 +95,14 @@ class RgbeInfo implements Closeable {
         return metadata;
     }
 
-    public float[][] getPixelData() throws IOException, ImageReadException {
+    public float[][] getPixelData() throws IOException, ImagingException {
         // Read into local variables to ensure that we have seeked into the file
         // far enough
         final int ht = getHeight();
         final int wd = getWidth();
 
         if (wd >= 32768) {
-            throw new ImageReadException("Scan lines must be less than 32768 bytes long");
+            throw new ImagingException("Scan lines must be less than 32768 bytes long");
         }
 
         final byte[] scanLineBytes = ByteConversions.toBytes((short) wd,
@@ -137,7 +137,7 @@ class RgbeInfo implements Closeable {
         return out;
     }
 
-    int getWidth() throws IOException, ImageReadException {
+    int getWidth() throws IOException, ImagingException {
         if (-1 == width) {
             readDimensions();
         }
@@ -145,7 +145,7 @@ class RgbeInfo implements Closeable {
         return width;
     }
 
-    private void readDimensions() throws IOException, ImageReadException {
+    private void readDimensions() throws IOException, ImagingException {
         getMetadata(); // Ensure we've read past this
 
         final InfoHeaderReader reader = new InfoHeaderReader(in);
@@ -153,7 +153,7 @@ class RgbeInfo implements Closeable {
         final Matcher matcher = RESOLUTION_STRING.matcher(resolution);
 
         if (!matcher.matches()) {
-            throw new ImageReadException(
+            throw new ImagingException(
                     "Invalid HDR resolution string. Only \"-Y N +X M\" is supported. Found \""
                             + resolution + "\"");
         }
@@ -162,13 +162,13 @@ class RgbeInfo implements Closeable {
         width = Integer.parseInt(matcher.group(2));
     }
 
-    private void readMetadata() throws IOException, ImageReadException {
+    private void readMetadata() throws IOException, ImagingException {
         BinaryFunctions.readAndVerifyBytes(in, HEADER, "Not a valid HDR: Incorrect Header");
 
         final InfoHeaderReader reader = new InfoHeaderReader(in);
 
         if (!reader.readNextLine().isEmpty()) {
-            throw new ImageReadException("Not a valid HDR: Incorrect Header");
+            throw new ImagingException("Not a valid HDR: Incorrect Header");
         }
 
         metadata = new GenericImageMetadata();
@@ -183,7 +183,7 @@ class RgbeInfo implements Closeable {
                 final String value = info.substring(equals + 1);
 
                 if ("FORMAT".equals(value) && !"32-bit_rle_rgbe".equals(value)) {
-                    throw new ImageReadException("Only 32-bit_rle_rgbe images are supported, trying to read " + value);
+                    throw new ImagingException("Only 32-bit_rle_rgbe images are supported, trying to read " + value);
                 }
 
                 metadata.add(variable, value);

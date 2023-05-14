@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
 class TiffOutputSummary {
@@ -58,7 +58,7 @@ class TiffOutputSummary {
         imageDataItems.add(imageDataInfo);
     }
 
-    public void updateOffsets(final ByteOrder byteOrder) throws ImageWriteException {
+    public void updateOffsets(final ByteOrder byteOrder) throws ImagingException {
         for (final OffsetItem offset : offsetItems) {
             final byte[] value = FieldType.LONG.writeData(
                     (int) offset.item.getOffset(), byteOrder);

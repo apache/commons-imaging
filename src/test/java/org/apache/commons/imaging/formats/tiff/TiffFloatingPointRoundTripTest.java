@@ -18,7 +18,6 @@ package org.apache.commons.imaging.formats.tiff;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
@@ -29,8 +28,7 @@ import java.nio.ByteOrder;
 import java.nio.file.Path;
 
 import org.apache.commons.imaging.FormatCompliance;
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
@@ -63,7 +61,7 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
     float[] f = new float[width * height];
     int[] argb = new int[width * height];
 
-    public TiffFloatingPointRoundTripTest() {
+    public TiffFloatingPointRoundTripTest() throws ImagingException, IOException {
         // populate the image data
         for (int iCol = 0; iCol < width; iCol++) {
             final float s = iCol / (float) (width - 1);
@@ -74,25 +72,19 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
         }
 
         // apply the photometric interpreter to assign colors to the
-        // floating-point input data.  The ultimate goal of the test is to verify
+        // floating-point input data. The ultimate goal of the test is to verify
         // that the values read back from the TIFF file match the input.
-        try {
-            final PhotometricInterpreterFloat pi = getPhotometricInterpreter();
-            final ImageBuilder builder = new ImageBuilder(width, height, false);
-            final int[] samples = new int[1];
-            for (int iCol = 0; iCol < width; iCol++) {
-                for (int iRow = 0; iRow < height; iRow++) {
-                    final int index = iRow * width + iCol;
-                    samples[0] = Float.floatToRawIntBits(f[index]);
-                    pi.interpretPixel(builder, samples, iCol, iRow);
-                    argb[index] = builder.getRGB(iCol, iRow);
-                }
+        final PhotometricInterpreterFloat pi = getPhotometricInterpreter();
+        final ImageBuilder builder = new ImageBuilder(width, height, false);
+        final int[] samples = new int[1];
+        for (int iCol = 0; iCol < width; iCol++) {
+            for (int iRow = 0; iRow < height; iRow++) {
+                final int index = iRow * width + iCol;
+                samples[0] = Float.floatToRawIntBits(f[index]);
+                pi.interpretPixel(builder, samples, iCol, iRow);
+                argb[index] = builder.getRGB(iCol, iRow);
             }
-
-        } catch (ImageReadException | IOException ex) {
-            fail("Exception initializing data " + ex.getMessage());
         }
-
     }
 
     /**
@@ -271,7 +263,7 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
     }
 
     private File writeFile(final int bitsPerSample, final ByteOrder byteOrder, final boolean useTiles)
-        throws IOException, ImageWriteException {
+        throws IOException, ImagingException {
         final String name = String.format("FpRoundTrip_%2d_%s_%s.tiff",
             bitsPerSample,
             byteOrder == ByteOrder.LITTLE_ENDIAN ? "LE" : "BE",

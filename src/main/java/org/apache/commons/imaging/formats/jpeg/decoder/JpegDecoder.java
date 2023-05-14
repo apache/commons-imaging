@@ -31,7 +31,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.color.ColorConversions;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFileParser;
@@ -132,7 +132,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
     private SosSegment sosSegment;
     private final float[][] scaledQuantizationTables = new float[4][];
     private BufferedImage image;
-    private ImageReadException imageReadException;
+    private ImagingException imageReadException;
     private IOException ioException;
 
     private final int[] zz = new int[64];
@@ -141,7 +141,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
 
     private final float[] block = new float[64];
 
-    private Block[] allocateMCUMemory() throws ImageReadException {
+    private Block[] allocateMCUMemory() throws ImagingException {
         final Block[] mcu = Allocator.array(sosSegment.numberOfComponents, Block[]::new, 24);
         for (int i = 0; i < sosSegment.numberOfComponents; i++) {
             final SosSegment.Component scanComponent = sosSegment.getComponents(i);
@@ -153,7 +153,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                 }
             }
             if (frameComponent == null) {
-                throw new ImageReadException("Invalid component");
+                throw new ImagingException("Invalid component");
             }
             final Block fullBlock = new Block(
                     8 * frameComponent.horizontalSamplingFactor,
@@ -169,7 +169,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
     }
 
     public BufferedImage decode(final ByteSource byteSource) throws IOException,
-            ImageReadException {
+            ImagingException {
         final JpegUtils jpegUtils = new JpegUtils();
         jpegUtils.traverseJFIF(byteSource, this);
         if (imageReadException != null) {
@@ -182,7 +182,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
     }
 
     private int decode(final JpegInputStream is, final DhtSegment.HuffmanTable huffmanTable)
-            throws ImageReadException {
+            throws ImagingException {
         // "DECODE", section F.2.2.3, figure F.16, page 109 of T.81
         int i = 1;
         int code = is.nextBit();
@@ -206,7 +206,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
     }
 
     private void readMCU(final JpegInputStream is, final int[] preds, final Block[] mcu)
-            throws ImageReadException {
+            throws ImagingException {
         for (int i = 0; i < sosSegment.numberOfComponents; i++) {
             final SosSegment.Component scanComponent = sosSegment.getComponents(i);
             SofnSegment.Component frameComponent = null;
@@ -217,7 +217,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                 }
             }
             if (frameComponent == null) {
-                throw new ImageReadException("Invalid component");
+                throw new ImagingException("Invalid component");
             }
             final Block fullBlock = mcu[i];
             for (int y = 0; y < frameComponent.verticalSamplingFactor; y++) {
@@ -295,7 +295,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
         }
     }
 
-    private int receive(final int ssss, final JpegInputStream is) throws ImageReadException {
+    private int receive(final int ssss, final JpegInputStream is) throws ImagingException {
         // "RECEIVE", section F.2.2.4, figure F.17, page 110 of T.81
         int i = 0;
         int v = 0;
@@ -345,7 +345,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
     @Override
     public boolean visitSegment(final int marker, final byte[] markerBytes,
             final int segmentLength, final byte[] segmentLengthBytes, final byte[] segmentData)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final int[] sofnSegments = {
                 JpegConstants.SOF0_MARKER,
                 JpegConstants.SOF1_MARKER,
@@ -364,7 +364,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
 
         if (Arrays.binarySearch(sofnSegments, marker) >= 0) {
             if (marker != JpegConstants.SOF0_MARKER) {
-                throw new ImageReadException("Only sequential, baseline JPEGs "
+                throw new ImagingException("Only sequential, baseline JPEGs "
                         + "are supported at the moment");
             }
             sofnSegment = new SofnSegment(marker, segmentData);
@@ -373,7 +373,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             for (final QuantizationTable table : dqtSegment.quantizationTables) {
                 if (0 > table.destinationIdentifier
                         || table.destinationIdentifier >= quantizationTables.length) {
-                    throw new ImageReadException(
+                    throw new ImagingException(
                             "Invalid quantization table identifier "
                                     + table.destinationIdentifier);
                 }
@@ -397,12 +397,12 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                 } else if (table.tableClass == 1) {
                     tables = huffmanACTables;
                 } else {
-                    throw new ImageReadException("Invalid huffman table class "
+                    throw new ImagingException("Invalid huffman table class "
                             + table.tableClass);
                 }
                 if (0 > table.destinationIdentifier
                         || table.destinationIdentifier >= tables.length) {
-                    throw new ImageReadException(
+                    throw new ImagingException(
                             "Invalid huffman table identifier "
                                     + table.destinationIdentifier);
                 }
@@ -476,7 +476,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                 // sofnSegment.width, sofnSegment.height);
                 break;
             default:
-                throw new ImageReadException(sofnSegment.numberOfComponents
+                throw new ImagingException(sofnSegment.numberOfComponents
                         + " components are invalid or unsupported");
             }
             final DataBuffer dataBuffer = raster.getDataBuffer();
@@ -522,7 +522,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                                 dataBuffer.setElem(dstRowOffset + x2, (Y << 16)
                                         | (Y << 8) | Y);
                             } else {
-                                throw new ImageReadException(
+                                throw new ImagingException(
                                         "Unsupported JPEG with " + mcu.length
                                                 + " components");
                             }
@@ -540,13 +540,13 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             // System.out.println("" + i + " = " +
             // Integer.toHexString(remainder[i]));
             // }
-        } catch (final ImageReadException imageReadEx) {
+        } catch (final ImagingException imageReadEx) {
             imageReadException = imageReadEx;
         } catch (final IOException ioEx) {
             ioException = ioEx;
         } catch (final RuntimeException ex) {
             // Corrupt images can throw NPE and IOOBE
-            imageReadException = new ImageReadException("Error parsing JPEG", ex);
+            imageReadException = new ImagingException("Error parsing JPEG", ex);
         }
     }
 }

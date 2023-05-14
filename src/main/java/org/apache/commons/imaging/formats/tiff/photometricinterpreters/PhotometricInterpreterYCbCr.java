@@ -18,7 +18,7 @@ package org.apache.commons.imaging.formats.tiff.photometricinterpreters;
 
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
 public class PhotometricInterpreterYCbCr extends PhotometricInterpreter {
@@ -65,7 +65,7 @@ public class PhotometricInterpreterYCbCr extends PhotometricInterpreter {
 
     @Override
     public void interpretPixel(final ImageBuilder imageBuilder, final int[] samples, final int x,
-            final int y) throws ImageReadException, IOException {
+            final int y) throws ImagingException, IOException {
         final int Y = samples[0];
         final int Cb = samples[1];
         final int Cr = samples[2];

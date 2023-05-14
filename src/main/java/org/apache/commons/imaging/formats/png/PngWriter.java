@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.internal.Debug;
@@ -135,12 +135,12 @@ class PngWriter {
     }
 
     private void writeChunkiTXt(final OutputStream os, final PngText.Itxt text)
-            throws IOException, ImageWriteException {
+            throws IOException, ImagingException {
         if (!isValidISO_8859_1(text.keyword)) {
-            throw new ImageWriteException("PNG tEXt chunk keyword is not ISO-8859-1: " + text.keyword);
+            throw new ImagingException("PNG tEXt chunk keyword is not ISO-8859-1: " + text.keyword);
         }
         if (!isValidISO_8859_1(text.languageTag)) {
-            throw new ImageWriteException("PNG tEXt chunk language tag is not ISO-8859-1: " + text.languageTag);
+            throw new ImagingException("PNG tEXt chunk language tag is not ISO-8859-1: " + text.languageTag);
         }
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -215,12 +215,12 @@ class PngWriter {
     }
 
     private void writeChunktEXt(final OutputStream os, final PngText.Text text)
-            throws IOException, ImageWriteException {
+            throws IOException, ImagingException {
         if (!isValidISO_8859_1(text.keyword)) {
-            throw new ImageWriteException("PNG tEXt chunk keyword is not ISO-8859-1: " + text.keyword);
+            throw new ImagingException("PNG tEXt chunk keyword is not ISO-8859-1: " + text.keyword);
         }
         if (!isValidISO_8859_1(text.text)) {
-            throw new ImageWriteException("PNG tEXt chunk text is not ISO-8859-1: " + text.text);
+            throw new ImagingException("PNG tEXt chunk text is not ISO-8859-1: " + text.text);
         }
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -269,12 +269,12 @@ class PngWriter {
     }
 
     private void writeChunkzTXt(final OutputStream os, final PngText.Ztxt text)
-            throws IOException, ImageWriteException {
+            throws IOException, ImagingException {
         if (!isValidISO_8859_1(text.keyword)) {
-            throw new ImageWriteException("PNG zTXt chunk keyword is not ISO-8859-1: " + text.keyword);
+            throw new ImagingException("PNG zTXt chunk keyword is not ISO-8859-1: " + text.keyword);
         }
         if (!isValidISO_8859_1(text.text)) {
-            throw new ImageWriteException("PNG zTXt chunk text is not ISO-8859-1: " + text.text);
+            throw new ImagingException("PNG zTXt chunk text is not ISO-8859-1: " + text.text);
         }
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -321,7 +321,7 @@ class PngWriter {
      tEXt   Yes None
      zTXt   Yes None
      */
-    public void writeImage(final BufferedImage src, final OutputStream os, PngImagingParameters params) throws ImageWriteException, IOException {
+    public void writeImage(final BufferedImage src, final OutputStream os, PngImagingParameters params) throws ImagingException, IOException {
         if (params == null) {
             params = new PngImagingParameters();
         }
@@ -343,7 +343,7 @@ class PngWriter {
             final boolean forceTrueColor = params.isForceTrueColor();
 
             if (forceIndexedColor && forceTrueColor) {
-                throw new ImageWriteException(
+                throw new ImagingException(
                         "Params: Cannot force both indexed and true color modes");
             }
             if (forceIndexedColor) {
@@ -447,7 +447,7 @@ class PngWriter {
                 } else if (text instanceof PngText.Itxt) {
                     writeChunkiTXt(os, (PngText.Itxt) text);
                 } else {
-                    throw new ImageWriteException("Unknown text to embed in PNG: " + text);
+                    throw new ImagingException("Unknown text to embed in PNG: " + text);
                 }
             }
         }

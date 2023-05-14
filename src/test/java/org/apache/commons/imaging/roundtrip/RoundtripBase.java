@@ -25,8 +25,7 @@ import java.io.IOException;
 import java.util.stream.Stream;
 
 import org.apache.commons.imaging.ImageParser;
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.common.RgbBufferedImageFactory;
 import org.apache.commons.imaging.internal.ImageParserFactory;
@@ -40,7 +39,7 @@ public class RoundtripBase {
 
     protected void roundtrip(final FormatInfo formatInfo, final BufferedImage testImage,
                              final String tempPrefix, final boolean imageExact) throws IOException,
-            ImageReadException, ImageWriteException {
+            ImagingException, ImagingException {
 
         final ImageParser imageParser = ImageParserFactory.getImageParser(formatInfo.format);
 

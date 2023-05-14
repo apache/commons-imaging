@@ -18,7 +18,7 @@ package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
 import java.nio.ByteOrder;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 
 public class FieldTypeByte extends FieldType {
@@ -36,14 +36,14 @@ public class FieldTypeByte extends FieldType {
     }
 
     @Override
-    public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException {
+    public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImagingException {
         if (o instanceof Byte) {
             return new byte[] { ((Byte) o).byteValue() };
         }
         if (o instanceof byte[]) {
             return (byte[]) o;
         }
-        throw new ImageWriteException("Invalid data", o);
+        throw new ImagingException("Invalid data", o);
     }
 
 }

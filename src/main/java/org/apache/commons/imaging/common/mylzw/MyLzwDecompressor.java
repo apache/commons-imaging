@@ -23,7 +23,7 @@ import java.io.OutputStream;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 
 public final class MyLzwDecompressor {
@@ -47,12 +47,12 @@ public final class MyLzwDecompressor {
     private int written;
     private final boolean tiffLZWMode;
 
-    public MyLzwDecompressor(final int initialCodeSize, final ByteOrder byteOrder, final boolean tiffLZWMode) throws ImageReadException {
+    public MyLzwDecompressor(final int initialCodeSize, final ByteOrder byteOrder, final boolean tiffLZWMode) throws ImagingException {
         this(initialCodeSize, byteOrder, tiffLZWMode, null);
     }
 
     public MyLzwDecompressor(final int initialCodeSize, final ByteOrder byteOrder,
-            final boolean tiffLZWMode, final Listener listener) throws ImageReadException {
+            final boolean tiffLZWMode, final Listener listener) throws ImagingException {
         this.listener = listener;
         this.byteOrder = byteOrder;
         this.tiffLZWMode = tiffLZWMode;
@@ -163,13 +163,13 @@ public final class MyLzwDecompressor {
         }
     }
 
-    private void initializeTable() throws ImageReadException {
+    private void initializeTable() throws ImagingException {
         codeSize = initialCodeSize;
 
         final int initialEntriesCount = 1 << codeSize + 2;
 
         if (initialEntriesCount > table.length) {
-            throw new ImageReadException(String.format("Invalid Lzw table length [%d]; entries count is [%d]", table.length, initialEntriesCount));
+            throw new ImagingException(String.format("Invalid Lzw table length [%d]; entries count is [%d]", table.length, initialEntriesCount));
         }
 
         for (int i = 0; i < initialEntriesCount; i++) {

@@ -19,7 +19,7 @@ package org.apache.commons.imaging.common;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.io.output.UnsynchronizedByteArrayOutputStream;
 
 public class PackBits {
@@ -73,7 +73,7 @@ public class PackBits {
     }
 
     public byte[] decompress(final byte[] bytes, final int expected)
-            throws ImageReadException {
+            throws ImagingException {
         int total = 0;
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -83,7 +83,7 @@ public class PackBits {
         while (total < expected) {
             // Read the next source byte into n.
             if (i >= bytes.length) {
-                throw new ImageReadException(
+                throw new ImagingException(
                         "Tiff: Unpack bits source exhausted: " + i
                                 + ", done + " + total + ", expected + "
                                 + expected);
@@ -112,7 +112,7 @@ public class PackBits {
                 }
             } else if (n == -128) {
                 // Else if n is -128, noop.
-                throw new ImageReadException("Packbits: " + n);
+                throw new ImagingException("Packbits: " + n);
             }
         }
 

@@ -20,14 +20,14 @@ import java.awt.color.ColorSpace;
 import java.awt.color.ICC_ColorSpace;
 import java.awt.color.ICC_Profile;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import org.apache.commons.imaging.icc.IccProfileInfo;
 import org.apache.commons.imaging.icc.IccProfileParser;
 
 /**
- * Used to store metadata and descriptive information extracted from
- * image files.
+ * Used to store metadata and descriptive information extracted from image files.
  */
 public class ImageDump {
 
@@ -41,7 +41,6 @@ public class ImageDump {
             return "TYPE_CMYK";
         case ColorSpace.TYPE_RGB:
             return "TYPE_RGB";
-
         case ColorSpace.CS_sRGB:
             return "CS_sRGB";
         case ColorSpace.CS_GRAY:
@@ -57,11 +56,11 @@ public class ImageDump {
         }
     }
 
-    public void dump(final BufferedImage src) {
+    public void dump(final BufferedImage src) throws IOException {
         dump("", src);
     }
 
-    public void dump(final String prefix, final BufferedImage src) {
+    public void dump(final String prefix, final BufferedImage src) throws IOException {
         LOGGER.fine(prefix + ": " + "dump");
         dumpColorSpace(prefix, src.getColorModel().getColorSpace());
         dumpBIProps(prefix, src);
@@ -74,18 +73,15 @@ public class ImageDump {
             return;
         }
         for (final String key : keys) {
-            LOGGER.fine(prefix + ": " + key + ": "
-                    + src.getProperty(key));
+            LOGGER.fine(prefix + ": " + key + ": " + src.getProperty(key));
         }
     }
 
-    public void dumpColorSpace(final String prefix, final ColorSpace cs) {
-        LOGGER.fine(prefix + ": " + "type: " + cs.getType() + " ("
-                + colorSpaceTypeToName(cs) + ")");
+    public void dumpColorSpace(final String prefix, final ColorSpace cs) throws IOException {
+        LOGGER.fine(prefix + ": " + "type: " + cs.getType() + " (" + colorSpaceTypeToName(cs) + ")");
 
         if (!(cs instanceof ICC_ColorSpace)) {
-            LOGGER.fine(prefix + ": " + "Unknown ColorSpace: "
-                    + cs.getClass().getName());
+            LOGGER.fine(prefix + ": " + "Unknown ColorSpace: " + cs.getClass().getName());
             return;
         }
 

@@ -26,7 +26,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.imaging.FormatCompliance;
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.TiffContents;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
@@ -361,12 +361,12 @@ public class ReadTagsAndImages {
      * path.
      *
      * @param args the command line arguments
-     * @throws org.apache.commons.imaging.ImageReadException in the event of an
+     * @throws org.apache.commons.imaging.ImagingException in the event of an
      * internal data format or version compatibility error reading the image.
      * @throws IOException in the event of an I/O error.
      */
     public static void main(final String[] args)
-        throws ImageReadException, IOException {
+        throws ImagingException, IOException {
         if (args.length == 0) {
             // Print usage and exit
             for (final String s : USAGE) {
@@ -460,11 +460,11 @@ public class ReadTagsAndImages {
      *
      * @param ps a valid instance to receive output
      * @param directory a valid directory
-     * @throws ImageReadException in the event of a data-format error or
+     * @throws ImagingException in the event of a data-format error or
      * unhandled I/O error.
      */
     private static void summarizeGeoTiffTags(final PrintStream ps, final TiffDirectory directory)
-        throws ImageReadException {
+        throws ImagingException {
 
         if (keyMap == null) {
             final GeoKey[] values = GeoKey.values();

@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteOrder;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.mylzw.BitsToByteInputStream;
@@ -41,7 +41,7 @@ public class UncompressedDataReader implements DataReader {
     @Override
     public void readData(final InputStream is, final BufferedImage bi,
             final PsdImageContents imageContents, final BinaryFileParser bfp)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final PsdHeaderInfo header = imageContents.header;
         final int width = header.columns;
         final int height = header.rows;

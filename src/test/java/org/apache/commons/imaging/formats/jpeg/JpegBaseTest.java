@@ -23,15 +23,15 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
-import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingTest;
 
 public abstract class JpegBaseTest extends ImagingTest {
 
     public static final ImageFilter imageFilter = JpegBaseTest::isJpeg;
 
-    protected static List<File> getJpegImages() throws IOException, ImageReadException {
+    protected static List<File> getJpegImages() throws IOException, ImagingException {
         return getTestImages(imageFilter);
     }
 

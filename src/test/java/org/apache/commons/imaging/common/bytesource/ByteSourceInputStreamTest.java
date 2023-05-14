@@ -24,8 +24,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingTestConstants;
 import org.apache.commons.io.FilenameUtils;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ class ByteSourceInputStreamTest {
     public static final int ICO_IMAGE_HEIGHT = 225;
 
     @Test
-    public void testReadFromStream() throws IOException, ImageReadException {
+    public void testReadFromStream() throws IOException, ImagingException {
 
         final String imagePath = FilenameUtils.separatorsToSystem(ICO_IMAGE_FILE);
         final File imageFile = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, imagePath);

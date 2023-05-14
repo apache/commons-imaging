@@ -21,8 +21,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 
 /**
@@ -81,13 +80,13 @@ public abstract class FieldType {
             Collections.unmodifiableList(Arrays.asList(
                     ASCII, BYTE));
 
-    public static FieldType getFieldType(final int type) throws ImageReadException {
+    public static FieldType getFieldType(final int type) throws ImagingException {
         for (final FieldType fieldType : ANY) {
             if (fieldType.getType() == type) {
                 return fieldType;
             }
         }
-        throw new ImageReadException("Field type " + type + " is unsupported");
+        throw new ImagingException("Field type " + type + " is unsupported");
     }
 
     private final int type;
@@ -116,5 +115,5 @@ public abstract class FieldType {
     }
 
     public abstract Object getValue(TiffField entry);
-    public abstract byte[] writeData(Object o, ByteOrder byteOrder) throws ImageWriteException;
+    public abstract byte[] writeData(Object o, ByteOrder byteOrder) throws ImagingException;
 }

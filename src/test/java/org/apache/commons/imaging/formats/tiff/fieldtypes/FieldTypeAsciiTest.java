@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import java.nio.ByteOrder;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -39,11 +39,11 @@ public class FieldTypeAsciiTest {
       final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
       final TiffField tiffField = new TiffField(0, 0, fieldTypeAscii, 0L, 0, byteArray, byteOrder, 1);
 
-      Assertions.assertThrows(ImageWriteException.class, () -> fieldTypeAscii.writeData(tiffField, byteOrder));
+      Assertions.assertThrows(ImagingException.class, () -> fieldTypeAscii.writeData(tiffField, byteOrder));
   }
 
   @Test
-  public void testCreatesFieldTypeAsciiAndWriteDataUsingByteArray() throws ImageWriteException {
+  public void testCreatesFieldTypeAsciiAndWriteDataUsingByteArray() throws ImagingException {
       final FieldTypeAscii fieldTypeAscii = new FieldTypeAscii(0, "1");
       final byte[] byteArray = new byte[1];
       final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
@@ -53,7 +53,7 @@ public class FieldTypeAsciiTest {
   }
 
     @Test
-    public void testCreatesFieldTypeAsciiAndWriteDataUsingString() throws ImageWriteException {
+    public void testCreatesFieldTypeAsciiAndWriteDataUsingString() throws ImagingException {
         final FieldTypeAscii fieldTypeAscii = new FieldTypeAscii(0, "1");
         final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
         final byte[] byteArrayTwo = fieldTypeAscii.writeData("asdf", byteOrder);

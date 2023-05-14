@@ -19,7 +19,7 @@ package org.apache.commons.imaging.palette;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 
 class ColorGroup {
 
@@ -48,12 +48,12 @@ class ColorGroup {
     final int diffTotal;
     final int totalPoints;
 
-    ColorGroup(final List<ColorCount> colorCounts, final boolean ignoreAlpha) throws ImageWriteException {
+    ColorGroup(final List<ColorCount> colorCounts, final boolean ignoreAlpha) throws ImagingException {
         this.colorCounts = colorCounts;
         this.ignoreAlpha = ignoreAlpha;
 
         if (colorCounts.isEmpty()) {
-            throw new ImageWriteException("empty color_group");
+            throw new ImagingException("empty color_group");
         }
 
         int total = 0;

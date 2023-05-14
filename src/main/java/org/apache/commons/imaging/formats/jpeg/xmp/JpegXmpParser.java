@@ -20,7 +20,7 @@ package org.apache.commons.imaging.formats.jpeg.xmp;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
@@ -36,9 +36,9 @@ public class JpegXmpParser extends BinaryFileParser {
     }
 
     public String parseXmpJpegSegment(final byte[] segmentData)
-            throws ImageReadException {
+            throws ImagingException {
         if (!isXmpJpegSegment(segmentData)) {
-            throw new ImageReadException("Invalid JPEG XMP Segment.");
+            throw new ImagingException("Invalid JPEG XMP Segment.");
         }
         final int index = JpegConstants.XMP_IDENTIFIER.size();
 

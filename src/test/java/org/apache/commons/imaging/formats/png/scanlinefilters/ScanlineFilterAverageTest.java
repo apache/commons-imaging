@@ -20,13 +20,13 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Test;
 
 public class ScanlineFilterAverageTest{
 
   @Test
-  public void testUnfilterWithNull() throws IOException, ImageReadException {
+  public void testUnfilterWithNull() throws IOException, ImagingException {
       final ScanlineFilterAverage scanlineFilterAverage = new ScanlineFilterAverage(2);
       final byte[] byteArray = new byte[9];
       scanlineFilterAverage.unfilter(byteArray, byteArray, null);

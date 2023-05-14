@@ -25,7 +25,6 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageMetadata;
@@ -54,7 +53,7 @@ public class JpegImageMetadata implements ImageMetadata {
     public TiffField findEXIFValue(final TagInfo tagInfo) {
         try {
             return exif != null ? exif.findField(tagInfo) : null;
-        } catch (final ImageReadException cannotHappen) {
+        } catch (final ImagingException cannotHappen) {
             return null;
         }
     }
@@ -62,7 +61,7 @@ public class JpegImageMetadata implements ImageMetadata {
     public TiffField findEXIFValueWithExactMatch(final TagInfo tagInfo) {
         try {
             return exif != null ? exif.findField(tagInfo, true) : null;
-        } catch (final ImageReadException cannotHappen) {
+        } catch (final ImagingException cannotHappen) {
             return null;
         }
     }
@@ -76,10 +75,10 @@ public class JpegImageMetadata implements ImageMetadata {
      *
      * @return the thumbnail image. May be {@code null} if no image could
      *         be found.
-     * @throws ImageReadException if it fails to read the image
+     * @throws ImagingException if it fails to read the image
      * @throws IOException if it fails to get the thumbnail or to read the image data
      */
-    public BufferedImage getEXIFThumbnail() throws ImageReadException,
+    public BufferedImage getEXIFThumbnail() throws ImagingException,
             IOException {
 
         if (exif == null) {
@@ -102,7 +101,7 @@ public class JpegImageMetadata implements ImageMetadata {
                 try {
                     image = Imaging.getBufferedImage(jpegImageData.getData());
                     imageSucceeded = true;
-                } catch (final ImagingException | IOException ioException) { // NOPMD
+                } catch (final IOException ignored) { // NOPMD
                 } finally {
                     // our JPEG reading is still a bit buggy -
                     // fall back to ImageIO on error
@@ -152,10 +151,10 @@ public class JpegImageMetadata implements ImageMetadata {
      * Returns the size of the first JPEG thumbnail found in the EXIF metadata.
      *
      * @return Thumbnail width and height or null if no thumbnail.
-     * @throws ImageReadException if it fails to read the image
+     * @throws ImagingException if it fails to read the image
      * @throws IOException if it fails to read the image size
      */
-    public Dimension getEXIFThumbnailSize() throws ImageReadException,
+    public Dimension getEXIFThumbnailSize() throws ImagingException,
             IOException {
         final byte[] data = getEXIFThumbnailData();
 

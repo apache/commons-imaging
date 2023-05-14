@@ -19,8 +19,8 @@ package org.apache.commons.imaging.formats.jpeg;
 
 import java.io.File;
 
-import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -37,6 +37,6 @@ public class JpegWithInvalidDhtSegmentTest {
         final File imageFile = new File(JpegWithInvalidDhtSegmentTest.class
                 .getResource("/IMAGING-215/ArrayIndexOutOfBoundsException_DhtSegment_79.jpeg")
                 .getFile());
-        Assertions.assertThrows(ImageReadException.class, () -> Imaging.getMetadata(imageFile));
+        Assertions.assertThrows(ImagingException.class, () -> Imaging.getMetadata(imageFile));
     }
 }

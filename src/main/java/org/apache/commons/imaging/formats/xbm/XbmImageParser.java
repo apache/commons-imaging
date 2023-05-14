@@ -40,8 +40,7 @@ import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BasicCParser;
 import org.apache.commons.imaging.common.ImageMetadata;
@@ -119,7 +118,7 @@ public class XbmImageParser extends ImageParser<XbmImagingParameters> {
 
     @Override
     public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         readXbmHeader(byteSource).dump(pw);
         return true;
     }
@@ -137,7 +136,7 @@ public class XbmImageParser extends ImageParser<XbmImagingParameters> {
 
     @Override
     public final BufferedImage getBufferedImage(final ByteSource byteSource,
-            final XbmImagingParameters params) throws ImageReadException, IOException {
+            final XbmImagingParameters params) throws ImagingException, IOException {
         final XbmParseResult result = parseXbmHeader(byteSource);
         return readXbmImage(result.xbmHeader, result.cParser);
     }
@@ -154,13 +153,13 @@ public class XbmImageParser extends ImageParser<XbmImagingParameters> {
 
     @Override
     public byte[] getICCProfileBytes(final ByteSource byteSource, final XbmImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         return null;
     }
 
     @Override
     public ImageInfo getImageInfo(final ByteSource byteSource, final XbmImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final XbmHeader xbmHeader = readXbmHeader(byteSource);
         return new ImageInfo("XBM", 1, new ArrayList<>(),
                 ImageFormats.XBM, "X BitMap", xbmHeader.height,
@@ -171,14 +170,14 @@ public class XbmImageParser extends ImageParser<XbmImagingParameters> {
 
     @Override
     public Dimension getImageSize(final ByteSource byteSource, final XbmImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final XbmHeader xbmHeader = readXbmHeader(byteSource);
         return new Dimension(xbmHeader.width, xbmHeader.height);
     }
 
     @Override
     public ImageMetadata getMetadata(final ByteSource byteSource, final XbmImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         return null;
     }
 
@@ -188,7 +187,7 @@ public class XbmImageParser extends ImageParser<XbmImagingParameters> {
     }
 
     private XbmParseResult parseXbmHeader(final ByteSource byteSource)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             final Map<String, String> defines = new HashMap<>();
             final ByteArrayOutputStream preprocessedFile = BasicCParser.preprocess(
@@ -210,10 +209,10 @@ public class XbmImageParser extends ImageParser<XbmImagingParameters> {
                 }
              }
             if (width == -1) {
-                throw new ImageReadException("width not found");
+                throw new ImagingException("width not found");
             }
             if (height == -1) {
-                throw new ImageReadException("height not found");
+                throw new ImagingException("height not found");
             }
 
             final XbmParseResult xbmParseResult = new XbmParseResult();
@@ -225,21 +224,21 @@ public class XbmImageParser extends ImageParser<XbmImagingParameters> {
     }
 
     private XbmHeader readXbmHeader(final ByteSource byteSource)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         return parseXbmHeader(byteSource).xbmHeader;
     }
 
     private BufferedImage readXbmImage(final XbmHeader xbmHeader, final BasicCParser cParser)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         String token;
         token = cParser.nextToken();
         if (!"static".equals(token)) {
-            throw new ImageReadException(
+            throw new ImagingException(
                     "Parsing XBM file failed, no 'static' token");
         }
         token = cParser.nextToken();
         if (token == null) {
-            throw new ImageReadException(
+            throw new ImagingException(
                     "Parsing XBM file failed, no 'unsigned' "
                             + "or 'char' or 'short' token");
         }
@@ -255,45 +254,45 @@ public class XbmImageParser extends ImageParser<XbmImagingParameters> {
             inputWidth = 16;
             hexWidth = 6; // 0xabcd
         } else {
-            throw new ImageReadException(
+            throw new ImagingException(
                     "Parsing XBM file failed, no 'char' or 'short' token");
         }
         final String name = cParser.nextToken();
         if (name == null) {
-            throw new ImageReadException(
+            throw new ImagingException(
                     "Parsing XBM file failed, no variable name");
         }
         if (name.charAt(0) != '_' && !Character.isLetter(name.charAt(0))) {
-            throw new ImageReadException(
+            throw new ImagingException(
                     "Parsing XBM file failed, variable name "
                             + "doesn't start with letter or underscore");
         }
         for (int i = 0; i < name.length(); i++) {
             final char c = name.charAt(i);
             if (!Character.isLetterOrDigit(c) && c != '_') {
-                throw new ImageReadException(
+                throw new ImagingException(
                         "Parsing XBM file failed, variable name "
                                 + "contains non-letter non-digit non-underscore");
             }
         }
         token = cParser.nextToken();
         if (!"[".equals(token)) {
-            throw new ImageReadException(
+            throw new ImagingException(
                     "Parsing XBM file failed, no '[' token");
         }
         token = cParser.nextToken();
         if (!"]".equals(token)) {
-            throw new ImageReadException(
+            throw new ImagingException(
                     "Parsing XBM file failed, no ']' token");
         }
         token = cParser.nextToken();
         if (!"=".equals(token)) {
-            throw new ImageReadException(
+            throw new ImagingException(
                     "Parsing XBM file failed, no '=' token");
         }
         token = cParser.nextToken();
         if (!"{".equals(token)) {
-            throw new ImageReadException(
+            throw new ImagingException(
                     "Parsing XBM file failed, no '{' token");
         }
 
@@ -304,11 +303,11 @@ public class XbmImageParser extends ImageParser<XbmImagingParameters> {
             for (int x = 0; x < xbmHeader.width; x += inputWidth) {
                 token = cParser.nextToken();
                 if (token == null || !token.startsWith("0x")) {
-                    throw new ImageReadException("Parsing XBM file failed, "
+                    throw new ImagingException("Parsing XBM file failed, "
                             + "hex value missing");
                 }
                 if (token.length() > hexWidth) {
-                    throw new ImageReadException("Parsing XBM file failed, "
+                    throw new ImagingException("Parsing XBM file failed, "
                             + "hex value too long");
                 }
                 final int value = Integer.parseInt(token.substring(2), 16);
@@ -324,12 +323,12 @@ public class XbmImageParser extends ImageParser<XbmImagingParameters> {
 
                 token = cParser.nextToken();
                 if (token == null) {
-                    throw new ImageReadException("Parsing XBM file failed, "
+                    throw new ImagingException("Parsing XBM file failed, "
                             + "premature end of file");
                 }
                 if (!",".equals(token)
                         && ((i < imageData.length) || !"}".equals(token))) {
-                    throw new ImageReadException("Parsing XBM file failed, "
+                    throw new ImagingException("Parsing XBM file failed, "
                             + "punctuation error");
                 }
             }
@@ -345,7 +344,7 @@ public class XbmImageParser extends ImageParser<XbmImagingParameters> {
 
     @Override
     public void writeImage(final BufferedImage src, final OutputStream os, final XbmImagingParameters params)
-            throws ImageWriteException, IOException {
+            throws ImagingException, IOException {
         final String name = randomName();
 
         os.write(("#define " + name + "_width " + src.getWidth() + "\n").getBytes(StandardCharsets.US_ASCII));

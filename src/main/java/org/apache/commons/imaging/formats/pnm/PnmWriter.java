@@ -20,11 +20,11 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 
 interface PnmWriter {
 
     void writeImage(BufferedImage src, OutputStream os,
-            PnmImagingParameters params) throws ImageWriteException, IOException;
+            PnmImagingParameters params) throws ImagingException, IOException;
 
 }

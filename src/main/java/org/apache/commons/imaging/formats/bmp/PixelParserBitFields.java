@@ -24,7 +24,7 @@ import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
 import java.io.IOException;
 import java.nio.ByteOrder;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 
 class PixelParserBitFields extends PixelParserSimple {
 
@@ -77,7 +77,7 @@ class PixelParserBitFields extends PixelParserSimple {
     }
 
     @Override
-    public int getNextRGB() throws ImageReadException, IOException {
+    public int getNextRGB() throws ImagingException, IOException {
         int data;
 
         switch (bhi.bitsPerPixel) {
@@ -98,7 +98,7 @@ class PixelParserBitFields extends PixelParserSimple {
             byteCount += 2;
             break;
         default:
-            throw new ImageReadException("Unknown BitsPerPixel: " + bhi.bitsPerPixel);
+            throw new ImagingException("Unknown BitsPerPixel: " + bhi.bitsPerPixel);
         }
 
         int red = (redMask & data);
@@ -115,7 +115,7 @@ class PixelParserBitFields extends PixelParserSimple {
     }
 
     @Override
-    public void newline() throws ImageReadException, IOException {
+    public void newline() throws ImagingException, IOException {
         while ((byteCount % 4) != 0) {
             readByte("Pixel", is, "BMP Image Data");
             byteCount++;

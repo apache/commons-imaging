@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 
 public class LongestAxisMedianCut implements MedianCut {
     private static final Comparator<ColorGroup> COMPARATOR = (cg1, cg2) -> {
@@ -31,7 +31,7 @@ public class LongestAxisMedianCut implements MedianCut {
     };
 
     private void doCut(final ColorGroup colorGroup, final ColorComponent mode,
-            final List<ColorGroup> colorGroups, final boolean ignoreAlpha) throws ImageWriteException {
+            final List<ColorGroup> colorGroups, final boolean ignoreAlpha) throws ImagingException {
 
         final List<ColorCount> colorCounts = colorGroup.getColorCounts();
         colorCounts.sort(new ColorCountComparator(mode));
@@ -95,7 +95,7 @@ public class LongestAxisMedianCut implements MedianCut {
 
     @Override
     public boolean performNextMedianCut(final List<ColorGroup> colorGroups, final boolean ignoreAlpha)
-            throws ImageWriteException {
+            throws ImagingException {
         colorGroups.sort(COMPARATOR);
         final ColorGroup colorGroup = colorGroups.get(0);
 

@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.GenericImageMetadata.GenericImageMetadataItem;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
@@ -44,10 +44,10 @@ public class IptcParserTest {
     /**
      * Tests for IptcParser encoding support. See IMAGING-168 and pull request #124 for more.
      * @throws IOException when reading input
-     * @throws ImageReadException when parsing file
+     * @throws ImagingException when parsing file
      */
     @Test
-    public void testEncodingSupport() throws IOException, ImageReadException {
+    public void testEncodingSupport() throws IOException, ImagingException {
         // NOTE: We use the JpegParser, so it will send only the block/segment that IptcParser needs for the test image
         final File file = new File(IptcParserTest.class.getResource("/images/jpeg/iptc/IMAGING-168/111083453-c07f1880-851e-11eb-8b61-2757f7d934bf.jpg").getFile());
         final JpegImageParser parser = new JpegImageParser();
@@ -76,11 +76,11 @@ public class IptcParserTest {
      * says "It is recommended that you do not interpret or use this data".
      *
      * @throws IOException when reading input
-     * @throws ImageReadException when parsing file
+     * @throws ImagingException when parsing file
      * @see <a href="https://www.adobe.com/devnet-apps/photoshop/fileformatashtml/">Adobe Photoshop File Formats Specification</a>
      */
     @Test
-    public void testSkipBlockTypes() throws ImageReadException, IOException {
+    public void testSkipBlockTypes() throws ImagingException, IOException {
         final String location = IptcParserTest.class
                 .getResource("/images/jpeg/photoshop/IMAGING-246/FallHarvestKitKat_07610.jpg")
                 .getFile();

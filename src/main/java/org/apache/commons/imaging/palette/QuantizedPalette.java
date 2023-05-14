@@ -19,7 +19,7 @@ package org.apache.commons.imaging.palette;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 
 public class QuantizedPalette implements Palette {
@@ -58,7 +58,7 @@ public class QuantizedPalette implements Palette {
     }
 
     @Override
-    public int getPaletteIndex(final int rgb) throws ImageWriteException {
+    public int getPaletteIndex(final int rgb) throws ImagingException {
         final int precisionMask = (1 << precision) - 1;
 
         final int index = ((rgb >> (24 - 3 * precision)) & (precisionMask << (precision << 1)))

@@ -22,13 +22,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 
 class PamWriter implements PnmWriter {
 
     @Override
     public void writeImage(final BufferedImage src, final OutputStream os,
-            final PnmImagingParameters params) throws ImageWriteException, IOException {
+            final PnmImagingParameters params) throws ImagingException, IOException {
 
         os.write(PnmConstants.PNM_PREFIX_BYTE);
         os.write(PnmConstants.PAM_RAW_CODE);

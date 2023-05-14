@@ -18,7 +18,7 @@ package org.apache.commons.imaging.formats.png.transparencyfilters;
 
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 
 public class TransparencyFilterIndexedColor extends TransparencyFilter {
 
@@ -27,14 +27,14 @@ public class TransparencyFilterIndexedColor extends TransparencyFilter {
     }
 
     @Override
-    public int filter(final int rgb, final int index) throws ImageReadException, IOException {
+    public int filter(final int rgb, final int index) throws ImagingException, IOException {
         final int length = getLength();
         if (index >= length) { // TODO see below - is this check correct?
             return rgb;
         }
 
         if ((index < 0) || (index > length)) { // TODO check for > length cannot be true because of check above
-            throw new ImageReadException(
+            throw new ImagingException(
                     "TransparencyFilterIndexedColor index: " + index + ", bytes.length: " + length);
         }
 

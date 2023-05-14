@@ -19,15 +19,15 @@ package org.apache.commons.imaging.formats.icns;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
@@ -132,13 +132,8 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
             // Missing 1 bit mask!!!
             bos.flush();
 
-            boolean threw = false;
-            try {
-                writeAndReadImageData("32bpp-half-masked-CORRUPT", baos.toByteArray(), foreground, background);
-            } catch (final ImageReadException imageReadException) {
-                threw = true;
-            }
-            assertTrue(threw);
+            assertThrows(ImagingException.class, () -> writeAndReadImageData("32bpp-half-masked-CORRUPT",
+                    baos.toByteArray(), foreground, background));
         }
     }
 
@@ -427,7 +422,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
 
     private void writeAndReadImageData(final String description, final byte[] rawData,
             final int foreground, final int background) throws IOException,
-            ImageReadException {
+            ImagingException {
         final BufferedImage dstImage = Imaging.getBufferedImage(new ByteArrayInputStream(rawData), "description.icns");
 
         assertNotNull(dstImage);

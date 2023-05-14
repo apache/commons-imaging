@@ -18,7 +18,7 @@ package org.apache.commons.imaging.formats.tiff.photometricinterpreters;
 
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
 /**
@@ -51,5 +51,5 @@ public abstract class PhotometricInterpreter {
     }
 
     public abstract void interpretPixel(ImageBuilder imageBuilder,
-            int[] samples, int x, int y) throws ImageReadException, IOException;
+            int[] samples, int x, int y) throws ImagingException, IOException;
 }

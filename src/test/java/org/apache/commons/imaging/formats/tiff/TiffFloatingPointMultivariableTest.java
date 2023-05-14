@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.imaging.FormatCompliance;
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
@@ -254,7 +254,7 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
         final ByteOrder byteOrder,
         final boolean useTiles,
         final boolean usePredictorForTiles,
-        final TiffPlanarConfiguration planarConfiguration ) throws IOException, ImageWriteException {
+        final TiffPlanarConfiguration planarConfiguration ) throws IOException, ImagingException {
 
         final String name = String.format("FpMultiVarRoundTrip_%s_%s%s.tiff",
             planarConfiguration==TiffPlanarConfiguration.CHUNKY ? "Chunky" : "Planar",

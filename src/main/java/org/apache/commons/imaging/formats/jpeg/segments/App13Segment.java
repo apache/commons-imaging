@@ -20,7 +20,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.formats.jpeg.iptc.IptcParser;
@@ -57,7 +57,7 @@ public class App13Segment extends AppnSegment {
     }
 
     public PhotoshopApp13Data parsePhotoshopSegment(final ImagingParameters<JpegImagingParameters> params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         /*
          * In practice, App13 segments are only used for Photoshop/IPTC
          * metadata. However, we should not treat App13 signatures without

@@ -27,8 +27,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.GenericImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
@@ -84,10 +84,10 @@ public class PngReadTest extends PngBaseTest {
      *
      * @see <a href="https://issues.apache.org/jira/browse/IMAGING-342">IMAGING-342</a>
      * @throws IOException if it fails to read the test image
-     * @throws ImageReadException if it fails to read the test image
+     * @throws ImagingException if it fails to read the test image
      */
     @Test
-    public void testReadMetadataFromItxtChunk() throws IOException, ImageReadException {
+    public void testReadMetadataFromItxtChunk() throws IOException, ImagingException {
         final String input = "/images/png/IMAGING-342/utf8-comment.png";
         final String file = PngReadTest.class.getResource(input).getFile();
         final PngImageParser parser = new PngImageParser();
@@ -115,7 +115,7 @@ public class PngReadTest extends PngBaseTest {
         final String input = "/images/png/oss-fuzz-33691/clusterfuzz-testcase-minimized-ImagingPngFuzzer-6177282101215232";
         final String file = PngReadTest.class.getResource(input).getFile();
         final PngImageParser parser = new PngImageParser();
-        assertThrows(ImageReadException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), new PngImagingParameters()));
+        assertThrows(ImagingException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), new PngImagingParameters()));
     }
 
     /**
@@ -131,6 +131,6 @@ public class PngReadTest extends PngBaseTest {
         final String input = "/images/png/IMAGING-317/clusterfuzz-testcase-minimized-ImagingPngFuzzer-6242400830357504";
         final String file = PngReadTest.class.getResource(input).getFile();
         final PngImageParser parser = new PngImageParser();
-        assertThrows(ImageReadException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), new PngImagingParameters()));
+        assertThrows(ImagingException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), new PngImagingParameters()));
     }
 }

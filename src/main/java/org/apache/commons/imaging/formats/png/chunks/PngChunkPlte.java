@@ -22,7 +22,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.formats.png.GammaCorrection;
 
@@ -30,13 +30,13 @@ public class PngChunkPlte extends PngChunk {
     private final int[] rgb;
 
     public PngChunkPlte(final int length, final int chunkType, final int crc, final byte[] bytes)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         super(length, chunkType, crc, bytes);
 
         final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
 
         if ((length % 3) != 0) {
-            throw new ImageReadException("PLTE: wrong length: " + length);
+            throw new ImagingException("PLTE: wrong length: " + length);
         }
 
         final int count = length / 3;
@@ -74,9 +74,9 @@ public class PngChunkPlte extends PngChunk {
     // Debug.debug();
     // }
 
-    public int getRGB(final int index) throws ImageReadException {
+    public int getRGB(final int index) throws ImagingException {
         if ((index < 0) || (index >= rgb.length)) {
-            throw new ImageReadException("PNG: unknown Palette reference: "
+            throw new ImagingException("PNG: unknown Palette reference: "
                     + index);
         }
         return rgb[index];

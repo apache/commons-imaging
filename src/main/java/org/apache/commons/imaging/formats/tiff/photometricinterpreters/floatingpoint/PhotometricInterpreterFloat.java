@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 
@@ -217,7 +217,7 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
     public void interpretPixel(
         final ImageBuilder imageBuilder,
         final int[] samples, final int x, final int y)
-        throws ImageReadException, IOException {
+        throws ImagingException, IOException {
 
         final float f = Float.intBitsToFloat(samples[0]);
         // in the event of NaN, do not store entry in the image builder.

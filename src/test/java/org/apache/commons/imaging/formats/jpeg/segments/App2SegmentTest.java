@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -31,14 +31,14 @@ import org.junit.jupiter.api.Test;
 public class App2SegmentTest {
 
   @Test
-  public void testCompareTo() throws IOException, ImageReadException {
+  public void testCompareTo() throws IOException, ImagingException {
       final App2Segment app2Segment = new App2Segment(0, 0, null);
 
       assertEquals(0, app2Segment.compareTo(app2Segment));
   }
 
   @Test
-  public void testEqualsReturningFalse()  throws IOException, ImageReadException {
+  public void testEqualsReturningFalse()  throws IOException, ImagingException {
       final byte[] byteArray = new byte[3];
       final App2Segment app2Segment = new App2Segment(65475, byteArray);
 
@@ -46,7 +46,7 @@ public class App2SegmentTest {
   }
 
   @Test
-  public void testEqualsReturningTrue()  throws IOException, ImageReadException {
+  public void testEqualsReturningTrue()  throws IOException, ImagingException {
       final App2Segment app2Segment = new App2Segment(0, 0, null);
 
       assertEquals(app2Segment, app2Segment);

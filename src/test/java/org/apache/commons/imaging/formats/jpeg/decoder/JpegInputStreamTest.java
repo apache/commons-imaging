@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.jpeg.decoder;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -33,7 +33,7 @@ public class JpegInputStreamTest {
     byteArray[1] = (byte) 74;
     final JpegInputStream jpegInputStream = new JpegInputStream(byteArray);
 
-    Assertions.assertThrows(ImageReadException.class, jpegInputStream::nextBit);
+    Assertions.assertThrows(ImagingException.class, jpegInputStream::nextBit);
 
   }
 

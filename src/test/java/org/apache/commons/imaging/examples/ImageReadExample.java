@@ -24,7 +24,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BufferedImageFactory;
 import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
@@ -51,7 +51,7 @@ public class ImageReadExample {
     }
 
     public static BufferedImage imageReadExample(final File file)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final TiffImagingParameters params = new TiffImagingParameters();
 
         // set optional parameters if you like

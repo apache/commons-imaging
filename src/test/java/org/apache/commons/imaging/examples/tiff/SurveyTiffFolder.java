@@ -27,8 +27,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageReadException;
-
 /**
  * Recursively search the specified path and list TIFF files and metadata.
  * <p>
@@ -212,7 +210,7 @@ public class SurveyTiffFolder {
             String result;
             try {
                 result = surveyor.surveyFile(file, csv);
-            } catch (IOException | ImageReadException ex) {
+            } catch (IOException ex) {
                 sBuilder.append(ex.getMessage());
                 badFiles.add(sBuilder.toString());
                 continue; // result = ex.getMessage();

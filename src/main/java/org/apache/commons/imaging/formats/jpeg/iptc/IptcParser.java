@@ -39,9 +39,8 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.ImagingConstants;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFileParser;
@@ -113,7 +112,7 @@ public class IptcParser extends BinaryFileParser {
     }
 
     protected List<IptcBlock> parseAllBlocks(final byte[] bytes,
-            final boolean strict) throws ImageReadException, IOException {
+            final boolean strict) throws ImagingException, IOException {
         final List<IptcBlock> blocks = new ArrayList<>();
 
         try (InputStream bis = new ByteArrayInputStream(bytes)) {
@@ -125,7 +124,7 @@ public class IptcParser extends BinaryFileParser {
                     JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.size(),
                     "App13 Segment missing identification string");
             if (!JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.equals(idString)) {
-                throw new ImageReadException("Not a Photoshop App13 Segment");
+                throw new ImagingException("Not a Photoshop App13 Segment");
             }
 
             // int index = PHOTOSHOP_IDENTIFICATION_STRING.length;
@@ -139,7 +138,7 @@ public class IptcParser extends BinaryFileParser {
                     break;
                 }
                 if (imageResourceBlockSignature != JpegConstants.CONST_8BIM) {
-                    throw new ImageReadException(
+                    throw new ImagingException(
                             "Invalid Image Resource Block Signature");
                 }
 
@@ -189,7 +188,7 @@ public class IptcParser extends BinaryFileParser {
                  * than bytes.length but will at least prevent OutOfMemory errors
                  */
                 if (blockSize > bytes.length) {
-                    throw new ImageReadException("Invalid Block Size : " + blockSize + " > " + bytes.length);
+                    throw new ImagingException("Invalid Block Size : " + blockSize + " > " + bytes.length);
                 }
 
                 final byte[] blockData;
@@ -336,7 +335,7 @@ public class IptcParser extends BinaryFileParser {
         return elements;
     }
 
-    public PhotoshopApp13Data parsePhotoshopSegment(final byte[] bytes, final boolean strict) throws ImageReadException,
+    public PhotoshopApp13Data parsePhotoshopSegment(final byte[] bytes, final boolean strict) throws ImagingException,
             IOException {
         final List<IptcRecord> records = new ArrayList<>();
 
@@ -394,14 +393,14 @@ public class IptcParser extends BinaryFileParser {
      * don't require it.
      */
     public PhotoshopApp13Data parsePhotoshopSegment(final byte[] bytes, final ImagingParameters<JpegImagingParameters> params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final boolean strict =  params != null && params.isStrict();
 
         return parsePhotoshopSegment(bytes, strict);
     }
 
     public byte[] writeIPTCBlock(List<IptcRecord> elements)
-            throws ImageWriteException, IOException {
+            throws ImagingException, IOException {
         Charset charset = DEFAULT_CHARSET;
         for (final IptcRecord element : elements) {
             final byte[] recordData = element.getValue().getBytes(charset);
@@ -448,7 +447,7 @@ public class IptcParser extends BinaryFileParser {
                 bos.write(IptcConstants.IPTC_APPLICATION_2_RECORD_NUMBER);
                 if (element.iptcType.getType() < 0
                         || element.iptcType.getType() > 0xff) {
-                    throw new ImageWriteException("Invalid record type: "
+                    throw new ImagingException("Invalid record type: "
                             + element.iptcType.getType());
                 }
                 bos.write(element.iptcType.getType());
@@ -471,7 +470,7 @@ public class IptcParser extends BinaryFileParser {
         return blockData;
     }
 
-    public byte[] writePhotoshopApp13Segment(final PhotoshopApp13Data data) throws IOException, ImageWriteException {
+    public byte[] writePhotoshopApp13Segment(final PhotoshopApp13Data data) throws IOException, ImagingException {
         try (ByteArrayOutputStream os = new ByteArrayOutputStream();
                 BinaryOutputStream bos = BinaryOutputStream.bigEndian(os)) {
 
@@ -482,13 +481,13 @@ public class IptcParser extends BinaryFileParser {
                 bos.write4Bytes(JpegConstants.CONST_8BIM);
 
                 if (block.getBlockType() < 0 || block.getBlockType() > 0xffff) {
-                    throw new ImageWriteException("Invalid IPTC block type.");
+                    throw new ImagingException("Invalid IPTC block type.");
                 }
                 bos.write2Bytes(block.getBlockType());
 
                 final byte[] blockNameBytes = block.getBlockNameBytes();
                 if (blockNameBytes.length > 255) {
-                    throw new ImageWriteException("IPTC block name is too long: " + blockNameBytes.length);
+                    throw new ImagingException("IPTC block name is too long: " + blockNameBytes.length);
                 }
                 bos.write(blockNameBytes.length);
                 bos.write(blockNameBytes);
@@ -498,7 +497,7 @@ public class IptcParser extends BinaryFileParser {
 
                 final byte[] blockData = block.getBlockData();
                 if (blockData.length > IptcConstants.IPTC_NON_EXTENDED_RECORD_MAXIMUM_SIZE) {
-                    throw new ImageWriteException("IPTC block data is too long: " + blockData.length);
+                    throw new ImagingException("IPTC block data is too long: " + blockData.length);
                 }
                 bos.write4Bytes(blockData.length);
                 bos.write(blockData);

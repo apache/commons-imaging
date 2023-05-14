@@ -21,7 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
@@ -33,11 +33,11 @@ public abstract class IptcBaseTest extends ImagingTest {
     private static final ImageFilter JPEG_IMAGE_FILTER = file -> file.getName().toLowerCase().endsWith(".jpg");
 
     protected static List<File> getImagesWithIptcData() throws IOException,
-            ImageReadException {
+            ImagingException {
         return getTestImages(HAS_IPTC_IMAGE_FILTER);
     }
 
-    protected static List<File> getJpegImages() throws IOException, ImageReadException {
+    protected static List<File> getJpegImages() throws IOException, ImagingException {
         return getTestImages(JPEG_IMAGE_FILTER);
     }
 
@@ -63,21 +63,21 @@ public abstract class IptcBaseTest extends ImagingTest {
     }
 
     protected List<File> getImagesWithIptcData(final int max) throws IOException,
-            ImageReadException {
+            ImagingException {
         return getTestImages(HAS_IPTC_IMAGE_FILTER, max);
     }
 
     protected File getImageWithIptcData() throws IOException,
-            ImageReadException {
+            ImagingException {
         return getTestImage(HAS_IPTC_IMAGE_FILTER);
     }
 
-    protected File getJpegImage() throws IOException, ImageReadException {
+    protected File getJpegImage() throws IOException, ImagingException {
         return getTestImage(JPEG_IMAGE_FILTER);
     }
 
     protected List<File> getJpegImages(final int max) throws IOException,
-            ImageReadException {
+            ImagingException {
         return getTestImages(JPEG_IMAGE_FILTER, max);
     }
 

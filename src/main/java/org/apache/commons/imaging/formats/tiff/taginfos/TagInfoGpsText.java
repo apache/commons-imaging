@@ -20,8 +20,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.formats.tiff.TiffField;
@@ -77,9 +76,9 @@ public final class TagInfoGpsText extends TagInfo {
 
     @Override
     public byte[] encodeValue(final FieldType fieldType, final Object value, final ByteOrder byteOrder)
-            throws ImageWriteException {
+            throws ImagingException {
         if (!(value instanceof String)) {
-            throw new ImageWriteException("GPS text value not String", value);
+            throw new ImagingException("GPS text value not String", value);
         }
         final String s = (String) value;
 
@@ -107,12 +106,12 @@ public final class TagInfoGpsText extends TagInfo {
             System.arraycopy(unicodeBytes, 0, result, encoding.prefix.length, unicodeBytes.length);
             return result;
         } catch (final UnsupportedEncodingException e) {
-            throw new ImageWriteException(e.getMessage(), e);
+            throw new ImagingException(e.getMessage(), e);
         }
     }
 
     @Override
-    public String getValue(final TiffField entry) throws ImageReadException {
+    public String getValue(final TiffField entry) throws ImagingException {
         if (entry.getFieldType() == FieldType.ASCII) {
             final Object object = FieldType.ASCII.getValue(entry);
             if (object instanceof String) {
@@ -126,7 +125,7 @@ public final class TagInfoGpsText extends TagInfo {
                 // together and return incomplete strings if they do.
                 return ((String[]) object)[0];
             }
-            throw new ImageReadException("Unexpected ASCII type decoded");
+            throw new ImagingException("Unexpected ASCII type decoded");
         }
         if (entry.getFieldType() == FieldType.UNDEFINED) {
             /* later */
@@ -137,7 +136,7 @@ public final class TagInfoGpsText extends TagInfo {
             Debug.debug("entry.directoryType: " + entry.getDirectoryType());
             Debug.debug("entry.type: " + entry.getDescriptionWithoutValue());
             Debug.debug("entry.type: " + entry.getFieldType());
-            throw new ImageReadException("GPS text field not encoded as bytes.");
+            throw new ImagingException("GPS text field not encoded as bytes.");
         }
 
         final byte[] bytes = entry.getByteArrayValue();
@@ -162,7 +161,7 @@ public final class TagInfoGpsText extends TagInfo {
                         return decodedString;
                     }
                 } catch (final UnsupportedEncodingException e) {
-                    throw new ImageReadException(e.getMessage(), e);
+                    throw new ImagingException(e.getMessage(), e);
                 }
             }
         }

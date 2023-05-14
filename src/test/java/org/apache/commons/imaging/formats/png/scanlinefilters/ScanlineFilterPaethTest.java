@@ -20,13 +20,13 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Test;
 
 public class ScanlineFilterPaethTest{
 
   @Test
-  public void testUnfilter() throws IOException, ImageReadException {
+  public void testUnfilter() throws IOException, ImagingException {
       final ScanlineFilterPaeth scanlineFilterPaeth = new ScanlineFilterPaeth(0);
       final byte[] byteArray = new byte[5];
       scanlineFilterPaeth.unfilter(byteArray, byteArray, null);

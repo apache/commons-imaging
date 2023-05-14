@@ -27,7 +27,7 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.common.mylzw.MyLzwCompressor;
@@ -38,7 +38,7 @@ import org.junit.jupiter.api.Test;
 
 public class TiffLzwTest extends TiffBaseTest {
 
-    private void compressRoundtripAndValidate(final byte[] src) throws IOException, ImageReadException {
+    private void compressRoundtripAndValidate(final byte[] src) throws IOException, ImagingException {
         final boolean DEBUG = false;
 
         if (DEBUG) {
@@ -130,7 +130,7 @@ public class TiffLzwTest extends TiffBaseTest {
         }
     }
 
-    private void decompressRoundtripAndValidate(final byte[] src) throws IOException, ImageReadException {
+    private void decompressRoundtripAndValidate(final byte[] src) throws IOException, ImagingException {
         Debug.debug();
         Debug.debug("roundtripAndValidate: " + src.length);
         Debug.debug();
@@ -244,7 +244,7 @@ public class TiffLzwTest extends TiffBaseTest {
 
     @Disabled // FIXME fails with java.io.IOException: Bad Code: -1 codes: 258 code_size: 9, table: 4096
     @Test
-    public void testTiffImageData() throws IOException, ImageReadException {
+    public void testTiffImageData() throws IOException, ImagingException {
         final List<File> images = getTiffImages();
         for (final File image : images) {
 

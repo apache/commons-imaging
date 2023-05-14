@@ -31,7 +31,7 @@ import org.apache.commons.imaging.test.util.FileSystemTraversal;
 public abstract class ImagingTest {
 
     public interface ImageFilter {
-        boolean accept(File file) throws IOException, ImageReadException;
+        boolean accept(File file) throws IOException, ImagingException;
     }
 
     private static final List<File> ALL_IMAGES = new ArrayList<>();
@@ -54,17 +54,17 @@ public abstract class ImagingTest {
         new FileSystemTraversal().traverseFiles(imagesFolder, visitor);
     }
 
-    protected static List<File> getTestImages() throws IOException, ImageReadException {
+    protected static List<File> getTestImages() throws IOException, ImagingException {
         return getTestImages(null, -1);
     }
 
     protected static List<File> getTestImages(final ImageFilter filter) throws IOException,
-            ImageReadException {
+            ImagingException {
         return getTestImages(filter, -1);
     }
 
     protected static List<File> getTestImages(final ImageFilter filter, final int max)
-            throws IOException, ImageReadException {
+            throws IOException, ImagingException {
         final List<File> images = new ArrayList<>();
 
         for (final File file : ALL_IMAGES) {
@@ -92,12 +92,12 @@ public abstract class ImagingTest {
         return images;
     }
 
-    protected File getTestImage() throws IOException, ImageReadException {
+    protected File getTestImage() throws IOException, ImagingException {
         return getTestImage(null);
     }
 
     protected File getTestImage(final ImageFilter filter) throws IOException,
-            ImageReadException {
+            ImagingException {
         final List<File> images = getTestImages(filter, 1);
 
         assertFalse(images.isEmpty());
@@ -106,7 +106,7 @@ public abstract class ImagingTest {
     }
 
     protected File getTestImageByName(final String fileName)
-            throws IOException, ImageReadException {
+            throws IOException, ImagingException {
         return getTestImage(file -> file.getName().equals(fileName));
     }
 

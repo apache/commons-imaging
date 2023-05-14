@@ -18,7 +18,7 @@ package org.apache.commons.imaging.formats.tiff.write;
 
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 
 abstract class TiffOutputItem {
@@ -41,9 +41,9 @@ abstract class TiffOutputItem {
             return bytes.length;
         }
 
-        public void updateValue(final byte[] bytes) throws ImageWriteException {
+        public void updateValue(final byte[] bytes) throws ImagingException {
             if (this.bytes.length != bytes.length) {
-                throw new ImageWriteException("Updated data size mismatch: "
+                throw new ImagingException("Updated data size mismatch: "
                         + this.bytes.length + " vs. " + bytes.length);
             }
             System.arraycopy(bytes, 0, this.bytes, 0, bytes.length);
@@ -51,7 +51,7 @@ abstract class TiffOutputItem {
 
         @Override
         public void writeItem(final BinaryOutputStream bos) throws IOException,
-                ImageWriteException {
+                ImagingException {
             bos.write(bytes);
         }
     }
@@ -73,5 +73,5 @@ abstract class TiffOutputItem {
     }
 
     public abstract void writeItem(BinaryOutputStream bos) throws IOException,
-            ImageWriteException;
+            ImagingException;
 }

@@ -22,8 +22,8 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
-import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingTest;
 
 public abstract class RgbeBaseTest extends ImagingTest {
@@ -35,7 +35,7 @@ public abstract class RgbeBaseTest extends ImagingTest {
         return format == ImageFormats.RGBE;
     }
 
-    protected List<File> getRgbeImages() throws IOException, ImageReadException {
+    protected List<File> getRgbeImages() throws IOException, ImagingException {
         return getTestImages(IMAGE_FILTER);
     }
 }

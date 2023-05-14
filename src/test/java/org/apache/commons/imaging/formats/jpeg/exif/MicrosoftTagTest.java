@@ -25,9 +25,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.iptc.JpegIptcRewriter;
@@ -69,7 +68,7 @@ public class MicrosoftTagTest extends ExifBaseTest {
         assertTrue(titleValues.contains(TITLE));
     }
 
-    private byte[] cleanImage(final File imageWithExif) throws ImageReadException, ImageWriteException, IOException {
+    private byte[] cleanImage(final File imageWithExif) throws ImagingException, ImagingException, IOException {
         // Windows doesn't show XP tags if same-meaning tags exist in IPTC or XMP. Remove them:
         final ByteArrayOutputStream noXmp = new ByteArrayOutputStream();
         new JpegXmpRewriter().removeXmpXml(imageWithExif, noXmp);

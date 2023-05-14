@@ -20,7 +20,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
 abstract class PixelParser {
@@ -52,6 +52,6 @@ abstract class PixelParser {
                 | (blue << 0);
     }
 
-    public abstract void processImage(ImageBuilder imageBuilder) throws ImageReadException, IOException;
+    public abstract void processImage(ImageBuilder imageBuilder) throws ImagingException, IOException;
 
 }

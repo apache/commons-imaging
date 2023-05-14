@@ -18,7 +18,7 @@ package org.apache.commons.imaging.formats.tiff.photometricinterpreters;
 
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
 public class PhotometricInterpreterRgb extends PhotometricInterpreter {
@@ -29,7 +29,7 @@ public class PhotometricInterpreterRgb extends PhotometricInterpreter {
 
     @Override
     public void interpretPixel(final ImageBuilder imageBuilder, final int[] samples, final int x,
-            final int y) throws ImageReadException, IOException {
+            final int y) throws ImagingException, IOException {
         final int red = samples[0];
         final int green = samples[1];
         final int blue = samples[2];

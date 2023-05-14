@@ -26,8 +26,8 @@ import java.io.File;
 import java.util.stream.Stream;
 
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
@@ -59,7 +59,7 @@ public class JpegReadTest extends JpegBaseTest {
         try {
             final BufferedImage image = Imaging.getBufferedImage(imageFile);
             assertNotNull(image);
-        } catch (final ImageReadException imageReadException) {
+        } catch (final ImagingException imageReadException) {
             assertEquals("Only sequential, baseline JPEGs are supported at the moment",
                     imageReadException.getMessage());
         }
@@ -79,7 +79,7 @@ public class JpegReadTest extends JpegBaseTest {
         final String input = "/images/jpeg/oss-fuzz-33458/clusterfuzz-testcase-minimized-ImagingJpegFuzzer-4548690447564800";
         final String file = JpegReadTest.class.getResource(input).getFile();
         final JpegImageParser parser = new JpegImageParser();
-        assertThrows(ImageReadException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), new JpegImagingParameters()));
+        assertThrows(ImagingException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), new JpegImagingParameters()));
     }
 
 }

@@ -25,8 +25,7 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -150,14 +149,6 @@ public class JpegRewriter extends BinaryFileParser {
 
     }
 
-    public static class JpegSegmentOverflowException extends ImageWriteException {
-        private static final long serialVersionUID = -1062145751550646846L;
-
-        public JpegSegmentOverflowException(final String message) {
-            super(message);
-        }
-    }
-
     private interface SegmentFilter {
         boolean filter(JFIFPieceSegment segment);
     }
@@ -178,7 +169,7 @@ public class JpegRewriter extends BinaryFileParser {
         super(JPEG_BYTE_ORDER);
     }
 
-    protected JFIFPieces analyzeJFIF(final ByteSource byteSource) throws ImageReadException, IOException {
+    protected JFIFPieces analyzeJFIF(final ByteSource byteSource) throws ImagingException, IOException {
         final List<JFIFPiece> pieces = new ArrayList<>();
         final List<JFIFPiece> segmentPieces = new ArrayList<>();
 
@@ -193,7 +184,7 @@ public class JpegRewriter extends BinaryFileParser {
             @Override
             public boolean visitSegment(final int marker, final byte[] markerBytes,
                     final int segmentLength, final byte[] segmentLengthBytes,
-                    final byte[] segmentData) throws ImageReadException, IOException {
+                    final byte[] segmentData) throws ImagingException, IOException {
                 final JFIFPiece piece = new JFIFPieceSegment(marker, markerBytes,
                         segmentLengthBytes, segmentData);
                 pieces.add(piece);
@@ -241,7 +232,7 @@ public class JpegRewriter extends BinaryFileParser {
     }
 
     protected <T extends JFIFPiece, U extends JFIFPiece> List<JFIFPiece> insertAfterLastAppSegments(
-            final List<T> segments, final List<U> newSegments) throws ImageWriteException {
+            final List<T> segments, final List<U> newSegments) throws ImagingException {
         int lastAppIndex = -1;
         for (int i = 0; i < segments.size(); i++) {
             final JFIFPiece piece = segments.get(i);
@@ -258,7 +249,7 @@ public class JpegRewriter extends BinaryFileParser {
         final List<JFIFPiece> result = new ArrayList<>(segments);
         if (lastAppIndex == -1) {
             if (segments.isEmpty()) {
-                throw new ImageWriteException("JPEG file has no APP segments.");
+                throw new ImagingException("JPEG file has no APP segments.");
             }
             result.addAll(1, newSegments);
         } else {
@@ -269,7 +260,7 @@ public class JpegRewriter extends BinaryFileParser {
     }
 
     protected <T extends JFIFPiece, U extends JFIFPiece> List<JFIFPiece> insertBeforeFirstAppSegments(
-            final List<T> segments, final List<U> newSegments) throws ImageWriteException {
+            final List<T> segments, final List<U> newSegments) throws ImagingException {
         int firstAppIndex = -1;
         for (int i = 0; i < segments.size(); i++) {
             final JFIFPiece piece = segments.get(i);
@@ -287,7 +278,7 @@ public class JpegRewriter extends BinaryFileParser {
 
         final List<JFIFPiece> result = new ArrayList<>(segments);
         if (firstAppIndex == -1) {
-            throw new ImageWriteException("JPEG file has no APP segments.");
+            throw new ImagingException("JPEG file has no APP segments.");
         }
         result.addAll(firstAppIndex, newSegments);
         return result;

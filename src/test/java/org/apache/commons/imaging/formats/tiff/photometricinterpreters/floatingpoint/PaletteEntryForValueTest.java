@@ -20,8 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.awt.Color;
 
@@ -37,18 +37,8 @@ public class PaletteEntryForValueTest {
 
     @Test
     public void testFaultyConstructors() {
-        final Color c0 = new Color(0xff0000ff);
-        final Color c1 = new Color(0xff00ff00);
-        PaletteEntryForValue pTest;
-
-
-        try {
-            pTest = new PaletteEntryForValue(0.0f, null);
-            fail("Constructor failed to detect null color");
-        } catch (final IllegalArgumentException iex) {
-            // successful test
-        }
-
+        assertThrows(IllegalArgumentException.class, () -> new PaletteEntryForValue(0.0f, null),
+                "Constructor failed to detect invalid color");
     }
 
     /**
@@ -92,7 +82,6 @@ public class PaletteEntryForValueTest {
         assertNull(c0, "Invalid return for invalid valid target 1.0f");
 
     }
-
 
     /**
      * Test of isCovered method, of class PaletteEntryForValue.

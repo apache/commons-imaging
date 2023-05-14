@@ -18,7 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingTest;
 
 public abstract class XpmBaseTest extends ImagingTest {
@@ -29,7 +29,7 @@ public abstract class XpmBaseTest extends ImagingTest {
         return file.getName().toLowerCase().endsWith(".xpm");
     }
 
-    protected List<File> getXpmImages() throws IOException, ImageReadException {
+    protected List<File> getXpmImages() throws IOException, ImagingException {
         return getTestImages(IMAGE_FILTER);
     }
 }

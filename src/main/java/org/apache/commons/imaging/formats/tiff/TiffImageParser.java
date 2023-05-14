@@ -41,8 +41,7 @@ import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.ImageMetadata;
@@ -87,7 +86,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
     }
 
     public List<byte[]> collectRawImageData(final ByteSource byteSource, final TiffImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffContents contents = new TiffReader(params != null && params.isStrict()).readDirectories(
                 byteSource, true, formatCompliance);
@@ -107,7 +106,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
 
     @Override
     public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         try {
             pw.println("tiff.dumpImageFile");
 
@@ -172,7 +171,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
 
     @Override
     public List<BufferedImage> getAllBufferedImages(final ByteSource byteSource)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffReader tiffReader = new TiffReader(true);
         final TiffContents contents = tiffReader.readDirectories(byteSource, true,
@@ -222,7 +221,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
      * interpretation of the input data (null objects are permitted and
      * must be supported by implementations).
      * @return A valid instance of BufferedImage.
-     * @throws ImageReadException In the event that the specified
+     * @throws ImagingException In the event that the specified
      * content does not conform to the format of the specific parser
      * implementation.
      * @throws IOException In the event of unsuccessful read or
@@ -230,7 +229,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
      */
     @Override
     public BufferedImage getBufferedImage(final ByteSource byteSource, TiffImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         if (params == null) {
             params = new TiffImagingParameters();
         }
@@ -241,14 +240,14 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
         final TiffDirectory directory = contents.directories.get(0);
         final BufferedImage result = directory.getTiffImage(byteOrder, params);
         if (null == result) {
-            throw new ImageReadException("TIFF does not contain an image.");
+            throw new ImagingException("TIFF does not contain an image.");
         }
         return result;
     }
 
     protected BufferedImage getBufferedImage(final TiffDirectory directory,
             final ByteOrder byteOrder, final TiffImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final short compressionFieldValue;
         if (directory.findField(TiffTagConstants.TIFF_TAG_COMPRESSION) != null) {
             compressionFieldValue = directory.getFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION);
@@ -264,22 +263,22 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
             // Check for valid subimage specification. The following checks
             // are consistent with BufferedImage.getSubimage()
             if (subImage.width <= 0) {
-                throw new ImageReadException("negative or zero subimage width");
+                throw new ImagingException("negative or zero subimage width");
             }
             if (subImage.height <= 0) {
-                throw new ImageReadException("negative or zero subimage height");
+                throw new ImagingException("negative or zero subimage height");
             }
             if (subImage.x < 0 || subImage.x >= width) {
-                throw new ImageReadException("subimage x is outside raster");
+                throw new ImagingException("subimage x is outside raster");
             }
             if (subImage.x + subImage.width > width) {
-                throw new ImageReadException("subimage (x+width) is outside raster");
+                throw new ImagingException("subimage (x+width) is outside raster");
             }
             if (subImage.y < 0 || subImage.y >= height) {
-                throw new ImageReadException("subimage y is outside raster");
+                throw new ImagingException("subimage y is outside raster");
             }
             if (subImage.y + subImage.height > height) {
-                throw new ImageReadException("subimage (y+height) is outside raster");
+                throw new ImagingException("subimage (y+height) is outside raster");
             }
         }
 
@@ -316,7 +315,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
         }
 
         if (samplesPerPixel != bitsPerSample.length) {
-            throw new ImageReadException("Tiff: samplesPerPixel ("
+            throw new ImagingException("Tiff: samplesPerPixel ("
                     + samplesPerPixel + ")!=fBitsPerSample.length ("
                     + bitsPerSample.length + ")");
         }
@@ -379,10 +378,10 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
             if (photometricInterpretation
               != TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_RGB
               || bitsPerPixel != 24) {
-                throw new ImageReadException("For planar configuration 2, only 24 bit RGB is currently supported");
+                throw new ImagingException("For planar configuration 2, only 24 bit RGB is currently supported");
             }
             if (null == directory.findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS)) {
-                throw new ImageReadException("For planar configuration 2, only strips-organization is supported");
+                throw new ImagingException("For planar configuration 2, only strips-organization is supported");
             }
         }
 
@@ -410,7 +409,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
 
     @Override
     public FormatCompliance getFormatCompliance(final ByteSource byteSource)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffImagingParameters params = new TiffImagingParameters();
         new TiffReader(params.isStrict()).readContents(byteSource, params,
@@ -420,7 +419,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
 
     @Override
     public byte[] getICCProfileBytes(final ByteSource byteSource, final TiffImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffContents contents = new TiffReader(params != null && params.isStrict()).readFirstDirectory(
                 byteSource, false, formatCompliance);
@@ -432,7 +431,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
 
     @Override
     public ImageInfo getImageInfo(final ByteSource byteSource, final TiffImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffContents contents = new TiffReader(params != null && params.isStrict()).readDirectories(
                 byteSource, false, formatCompliance);
@@ -444,7 +443,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
                 TiffTagConstants.TIFF_TAG_IMAGE_LENGTH, true);
 
         if ((widthField == null) || (heightField == null)) {
-            throw new ImageReadException("TIFF image missing size info.");
+            throw new ImagingException("TIFF image missing size info.");
         }
 
         final int height = heightField.getIntValue();
@@ -582,7 +581,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
 
      @Override
     public Dimension getImageSize(final ByteSource byteSource, final TiffImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffContents contents = new TiffReader(params != null && params.isStrict())
                 .readFirstDirectory(byteSource, false, formatCompliance);
@@ -594,7 +593,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
                 TiffTagConstants.TIFF_TAG_IMAGE_LENGTH, true);
 
         if ((widthField == null) || (heightField == null)) {
-            throw new ImageReadException("TIFF image missing size info.");
+            throw new ImagingException("TIFF image missing size info.");
         }
 
         final int height = heightField.getIntValue();
@@ -605,7 +604,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
 
     @Override
     public ImageMetadata getMetadata(final ByteSource byteSource, TiffImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         if (params == null) {
             params = this.getDefaultParameters();
         }
@@ -642,7 +641,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
             final TiffDirectory directory, final int photometricInterpretation,
             final int bitsPerPixel, final int[] bitsPerSample, final int predictor,
             final int samplesPerPixel, final int width, final int height)
-            throws ImageReadException {
+            throws ImagingException {
         switch (photometricInterpretation) {
         case 0:
         case 1:
@@ -658,7 +657,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
             final int expectedColormapSize = 3 * (1 << bitsPerPixel);
 
             if (colorMap.length != expectedColormapSize) {
-                throw new ImageReadException("Tiff: fColorMap.length ("
+                throw new ImagingException("Tiff: fColorMap.length ("
                         + colorMap.length + ")!=expectedColormapSize ("
                         + expectedColormapSize + ")");
             }
@@ -705,7 +704,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
         }
 
         default:
-            throw new ImageReadException(
+            throw new ImagingException(
                     "TIFF: Unknown fPhotometricInterpretation: "
                             + photometricInterpretation);
         }
@@ -738,14 +737,14 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
      * @param byteOrder the byte order of the data to be extracted
      * @param params an optional parameter object instance
      * @return a valid instance
-     * @throws ImageReadException in the event of incompatible or malformed data
+     * @throws ImagingException in the event of incompatible or malformed data
      * @throws IOException in the event of an I/O error
      */
     TiffRasterData getRasterData(
             final TiffDirectory directory,
             final ByteOrder byteOrder,
             TiffImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         if (params == null) {
             params = this.getDefaultParameters();
         }
@@ -753,7 +752,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
         final short[] sSampleFmt = directory.getFieldValue(
                 TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, true);
         if (sSampleFmt == null || sSampleFmt.length < 1) {
-            throw new ImageReadException(
+            throw new ImagingException(
                     "Directory does not specify numeric raster data");
         }
 
@@ -792,22 +791,22 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
             // Check for valid subimage specification. The following checks
             // are consistent with BufferedImage.getSubimage()
             if (subImage.width <= 0) {
-                throw new ImageReadException("negative or zero subimage width");
+                throw new ImagingException("negative or zero subimage width");
             }
             if (subImage.height <= 0) {
-                throw new ImageReadException("negative or zero subimage height");
+                throw new ImagingException("negative or zero subimage height");
             }
             if (subImage.x < 0 || subImage.x >= width) {
-                throw new ImageReadException("subimage x is outside raster");
+                throw new ImagingException("subimage x is outside raster");
             }
             if (subImage.x + subImage.width > width) {
-                throw new ImageReadException("subimage (x+width) is outside raster");
+                throw new ImagingException("subimage (x+width) is outside raster");
             }
             if (subImage.y < 0 || subImage.y >= height) {
-                throw new ImageReadException("subimage y is outside raster");
+                throw new ImagingException("subimage y is outside raster");
             }
             if (subImage.y + subImage.height > height) {
-                throw new ImageReadException("subimage (y+height) is outside raster");
+                throw new ImagingException("subimage (y+height) is outside raster");
             }
 
             // if the subimage is just the same thing as the whole
@@ -846,7 +845,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
 
         if (sSampleFmt[0] == TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT) {
             if (bitsPerSample[0] != 32 && bitsPerSample[0] != 64) {
-                throw new ImageReadException(
+                throw new ImagingException(
                         "TIFF floating-point data uses unsupported bits-per-sample: "
                         + bitsPerSample[0]);
             }
@@ -854,19 +853,19 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
             if (predictor != -1
                     && predictor != TiffTagConstants.PREDICTOR_VALUE_NONE
                     && predictor != TiffTagConstants.PREDICTOR_VALUE_FLOATING_POINT_DIFFERENCING) {
-                throw new ImageReadException(
+                throw new ImagingException(
                         "TIFF floating-point data uses unsupported horizontal-differencing predictor");
             }
         } else if (sSampleFmt[0] == TiffTagConstants.SAMPLE_FORMAT_VALUE_TWOS_COMPLEMENT_SIGNED_INTEGER) {
 
             if (samplesPerPixel != 1) {
-                throw new ImageReadException(
+                throw new ImagingException(
                         "TIFF integer data uses unsupported samples per pixel: "
                         + samplesPerPixel);
             }
 
             if (bitsPerPixel != 16 && bitsPerPixel != 32) {
-                throw new ImageReadException(
+                throw new ImagingException(
                         "TIFF integer data uses unsupported bits-per-pixel: "
                         + bitsPerPixel);
             }
@@ -874,11 +873,11 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
             if (predictor != -1
                     && predictor != TiffTagConstants.PREDICTOR_VALUE_NONE
                     && predictor != TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING) {
-                throw new ImageReadException(
+                throw new ImagingException(
                         "TIFF integer data uses unsupported horizontal-differencing predictor");
             }
         } else {
-            throw new ImageReadException("TIFF does not provide a supported raster-data format");
+            throw new ImagingException("TIFF does not provide a supported raster-data format");
         }
 
         // The photometric interpreter is not used, but the image-based
@@ -899,7 +898,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
 
     @Override
     public String getXmpXml(final ByteSource byteSource, XmpImagingParameters<TiffImagingParameters> params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         if (params == null) {
             params = new XmpImagingParameters<>();
         }
@@ -920,7 +919,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
 
     @Override
     public void writeImage(final BufferedImage src, final OutputStream os, TiffImagingParameters params)
-            throws ImageWriteException, IOException {
+            throws ImagingException, IOException {
         if (params == null) {
             params = new TiffImagingParameters();
         }

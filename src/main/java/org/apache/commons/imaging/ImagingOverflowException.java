@@ -14,21 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.imaging;
 
-/**
- * A custom exception thrown when an ImageParser or other utility
- * encounters a format-violation, non-supported element, or other
- * condition that renders image data unaccessible.
- */
-public class ImageReadException extends ImagingException {
-    private static final long serialVersionUID = -1L;
+public class ImagingOverflowException extends ImagingException {
 
-    public ImageReadException(final String message) {
+    private static final long serialVersionUID = 1L;
+
+    public ImagingOverflowException(final String message) {
         super(message);
-    }
-
-    public ImageReadException(final String message, final Throwable cause) {
-        super(message, cause);
     }
 }

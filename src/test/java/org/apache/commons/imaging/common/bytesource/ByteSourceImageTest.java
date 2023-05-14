@@ -37,8 +37,8 @@ import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
-import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
@@ -85,7 +85,7 @@ public class ByteSourceImageTest extends ByteSourceTest {
     }
 
     public void checkGetImageInfo(final File imageFile, final byte[] imageFileBytes)
-            throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, ImageReadException {
+            throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, ImagingException {
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
         final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
         ImagingParameters params = null;

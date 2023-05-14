@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.palette;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 
 /**
  * Color palette.
@@ -35,9 +35,9 @@ public interface Palette {
      * Looks up the palette index for a given color.
      * @param rgb the color to look up
      * @return the palette index
-     * @throws ImageWriteException if it fails to read the palette index
+     * @throws ImagingException if it fails to read the palette index
      */
-    int getPaletteIndex(int rgb) throws ImageWriteException;
+    int getPaletteIndex(int rgb) throws ImagingException;
 
     /**
      * The number of entries in the palette.

@@ -30,9 +30,8 @@ import java.util.List;
 import java.util.Random;
 
 import org.apache.commons.imaging.ImageFormats;
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.common.GenericImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
@@ -175,7 +174,7 @@ public class PngWriteReadTest extends ImagingTest {
     }
 
     private void writeAndReadImageData(final int[][] rawData) throws IOException,
-            ImageReadException, ImageWriteException {
+            ImagingException, ImagingException {
         final BufferedImage srcImage = imageDataToBufferedImage(rawData);
 
         final byte[] bytes = Imaging.writeImageToBytes(srcImage, ImageFormats.PNG);
@@ -191,7 +190,7 @@ public class PngWriteReadTest extends ImagingTest {
     }
 
     private void writeAndReadMultipleEXt(final int[][] rawData) throws IOException,
-       ImageReadException, ImageWriteException {
+       ImagingException, ImagingException {
         final BufferedImage srcImage = imageDataToBufferedImage(rawData);
 
         final List<PngText.Text> textChunks = new LinkedList<>();

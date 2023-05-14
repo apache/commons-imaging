@@ -18,9 +18,9 @@ package org.apache.commons.imaging.palette;
 
 import java.util.List;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 
 public interface MedianCut {
     boolean performNextMedianCut(List<ColorGroup> colorGroups, boolean ignoreAlpha)
-            throws ImageWriteException;
+            throws ImagingException;
 }

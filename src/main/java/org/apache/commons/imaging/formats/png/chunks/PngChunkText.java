@@ -22,7 +22,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.png.PngText;
 
 public class PngChunkText extends PngTextChunk {
@@ -33,11 +33,11 @@ public class PngChunkText extends PngTextChunk {
     public final String text;
 
     public PngChunkText(final int length, final int chunkType, final int crc, final byte[] bytes)
-            throws ImageReadException {
+            throws ImagingException {
         super(length, chunkType, crc, bytes);
         final int index = findNull(bytes);
         if (index < 0) {
-            throw new ImageReadException(
+            throw new ImagingException(
                     "PNG tEXt chunk keyword is not terminated.");
         }
 

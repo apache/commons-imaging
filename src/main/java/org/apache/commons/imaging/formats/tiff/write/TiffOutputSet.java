@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
@@ -45,22 +45,22 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     }
 
     public void addDirectory(final TiffOutputDirectory directory)
-            throws ImageWriteException {
+            throws ImagingException {
         if (null != findDirectory(directory.getType())) {
-            throw new ImageWriteException(
+            throw new ImagingException(
                     "Output set already contains a directory of that type.");
         }
         directories.add(directory);
     }
 
-    public TiffOutputDirectory addExifDirectory() throws ImageWriteException {
+    public TiffOutputDirectory addExifDirectory() throws ImagingException {
         final TiffOutputDirectory result = new TiffOutputDirectory(
                 TiffDirectoryConstants.DIRECTORY_TYPE_EXIF, byteOrder);
         addDirectory(result);
         return result;
     }
 
-    public TiffOutputDirectory addGPSDirectory() throws ImageWriteException {
+    public TiffOutputDirectory addGPSDirectory() throws ImagingException {
         final TiffOutputDirectory result = new TiffOutputDirectory(
                 TiffDirectoryConstants.DIRECTORY_TYPE_GPS, byteOrder);
         addDirectory(result);
@@ -68,7 +68,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     }
 
     public TiffOutputDirectory addInteroperabilityDirectory()
-            throws ImageWriteException {
+            throws ImagingException {
         getOrCreateExifDirectory();
 
         final TiffOutputDirectory result = new TiffOutputDirectory(
@@ -77,7 +77,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
         return result;
     }
 
-    public TiffOutputDirectory addRootDirectory() throws ImageWriteException {
+    public TiffOutputDirectory addRootDirectory() throws ImagingException {
         final TiffOutputDirectory result = new TiffOutputDirectory(
                 TiffDirectoryConstants.DIRECTORY_TYPE_ROOT, byteOrder);
         addDirectory(result);
@@ -128,7 +128,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     }
 
     public TiffOutputDirectory getOrCreateExifDirectory()
-            throws ImageWriteException {
+            throws ImagingException {
         // EXIF directory requires root directory.
         getOrCreateRootDirectory();
 
@@ -140,7 +140,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     }
 
     public TiffOutputDirectory getOrCreateGPSDirectory()
-            throws ImageWriteException {
+            throws ImagingException {
         // GPS directory requires EXIF directory
         getOrCreateExifDirectory();
 
@@ -152,7 +152,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     }
 
     public TiffOutputDirectory getOrCreateRootDirectory()
-            throws ImageWriteException {
+            throws ImagingException {
         final TiffOutputDirectory result = findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT);
         if (null != result) {
             return result;
@@ -161,7 +161,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     }
 
     protected List<TiffOutputItem> getOutputItems(
-            final TiffOutputSummary outputSummary) throws ImageWriteException {
+            final TiffOutputSummary outputSummary) throws ImagingException {
         final List<TiffOutputItem> result = new ArrayList<>();
 
         for (final TiffOutputDirectory directory : directories) {
@@ -201,10 +201,10 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
      *            Longitude in degrees E, negative values are W.
      * @param latitude
      *            latitude in degrees N, negative values are S.
-     * @throws ImageWriteException if it fails to write the new data to the GPS directory
+     * @throws ImagingException if it fails to write the new data to the GPS directory
      */
     public void setGPSInDegrees(double longitude, double latitude)
-            throws ImageWriteException {
+            throws ImagingException {
         final TiffOutputDirectory gpsDirectory = getOrCreateGPSDirectory();
 
         gpsDirectory.removeField(GpsTagConstants.GPS_TAG_GPS_VERSION_ID);

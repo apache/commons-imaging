@@ -20,13 +20,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.awt.image.BufferedImage;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingTest;
 import org.junit.jupiter.api.Test;
 
 public class PaletteQuantizationTest extends ImagingTest {
 
-    private void checkPaletteDetails(final BufferedImage image, final int limit, final int expectedSize) throws ImageWriteException {
+    private void checkPaletteDetails(final BufferedImage image, final int limit, final int expectedSize) throws ImagingException {
         final PaletteFactory paletteFactory = new PaletteFactory();
         Palette palette;
 
@@ -66,7 +66,7 @@ public class PaletteQuantizationTest extends ImagingTest {
         }
     }
 
-    private void checkPixelsAreIdentical(final BufferedImage src, final Palette palette) throws ImageWriteException {
+    private void checkPixelsAreIdentical(final BufferedImage src, final Palette palette) throws ImagingException {
         final BufferedImage dst = new BufferedImage(src.getWidth(), src.getHeight(), BufferedImage.TYPE_INT_RGB);
         dst.getGraphics().drawImage(src, 0, 0, src.getWidth(), src.getHeight(), null);
         Dithering.applyFloydSteinbergDithering(dst, palette);
@@ -77,7 +77,7 @@ public class PaletteQuantizationTest extends ImagingTest {
         }
     }
 
-    private void checkUniqueColors(final BufferedImage src, final Palette palette) throws ImageWriteException {
+    private void checkUniqueColors(final BufferedImage src, final Palette palette) throws ImagingException {
         final BufferedImage dst = new BufferedImage(src.getWidth(), src.getHeight(), BufferedImage.TYPE_INT_RGB);
         dst.getGraphics().drawImage(src, 0, 0, src.getWidth(), src.getHeight(), null);
         Dithering.applyFloydSteinbergDithering(dst, palette);
@@ -86,7 +86,7 @@ public class PaletteQuantizationTest extends ImagingTest {
     }
 
     @Test
-    public void testPaletteQuantization() throws ImageWriteException {
+    public void testPaletteQuantization() throws ImagingException {
         final BufferedImage whiteImage = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
         for (int y = 0; y < whiteImage.getHeight(); y++) {
             for (int x = 0; x < whiteImage.getWidth(); x++) {

@@ -24,8 +24,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.internal.Debug;
@@ -35,7 +35,7 @@ import org.junit.jupiter.api.Test;
 public class RgbeReadTest extends RgbeBaseTest {
 
     @Test
-    public void test() throws IOException, ImageReadException {
+    public void test() throws IOException, ImagingException {
         Debug.debug("start");
 
         final List<File> images = getRgbeImages();
@@ -66,6 +66,6 @@ public class RgbeReadTest extends RgbeBaseTest {
                         .getFile());
         final ByteSourceFile byteSourceFile = new ByteSourceFile(inputFile);
         final RgbeImagingParameters params = new RgbeImagingParameters();
-        Assertions.assertThrows(ImageReadException.class, () -> new RgbeImageParser().getBufferedImage(byteSourceFile, params));
+        Assertions.assertThrows(ImagingException.class, () -> new RgbeImageParser().getBufferedImage(byteSourceFile, params));
     }
 }

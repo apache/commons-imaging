@@ -18,7 +18,7 @@ package org.apache.commons.imaging.formats.tiff.photometricinterpreters;
 
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.color.ColorConversions;
 import org.apache.commons.imaging.common.ImageBuilder;
 
@@ -30,7 +30,7 @@ public class PhotometricInterpreterCmyk extends PhotometricInterpreter {
 
     @Override
     public void interpretPixel(final ImageBuilder imageBuilder, final int[] samples, final int x,
-            final int y) throws ImageReadException, IOException {
+            final int y) throws ImagingException, IOException {
 
         final int sc = samples[0];
         final int sm = samples[1];

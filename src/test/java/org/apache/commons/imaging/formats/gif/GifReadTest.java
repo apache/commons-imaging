@@ -29,8 +29,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
@@ -76,11 +76,11 @@ public class GifReadTest extends GifBaseTest {
 
     @Test
     public void testConvertInvalidDisposalMethodValues() {
-        Assertions.assertThrows(ImageReadException.class, () -> GifImageParser.createDisposalMethodFromIntValue(8));
+        Assertions.assertThrows(ImagingException.class, () -> GifImageParser.createDisposalMethodFromIntValue(8));
     }
 
     @Test
-    public void testConvertValidDisposalMethodValues() throws ImageReadException {
+    public void testConvertValidDisposalMethodValues() throws ImagingException {
         final DisposalMethod unspecified = GifImageParser.createDisposalMethodFromIntValue(0);
         final DisposalMethod doNotDispose = GifImageParser.createDisposalMethodFromIntValue(1);
         final DisposalMethod restoreToBackground = GifImageParser.createDisposalMethodFromIntValue(2);
@@ -162,7 +162,7 @@ public class GifReadTest extends GifBaseTest {
         final String input = "/images/gif/oss-fuzz-33464/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5174009164595200";
         final String file = GifReadTest.class.getResource(input).getFile();
         final GifImageParser parser = new GifImageParser();
-        assertThrows(ImageReadException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), new GifImagingParameters()));
+        assertThrows(ImagingException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), new GifImagingParameters()));
     }
 
     /**
@@ -179,7 +179,7 @@ public class GifReadTest extends GifBaseTest {
         final String input = "/images/gif/oss-fuzz-33501/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5914278319226880";
         final String file = GifReadTest.class.getResource(input).getFile();
         final GifImageParser parser = new GifImageParser();
-        assertThrows(ImageReadException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), new GifImagingParameters()));
+        assertThrows(ImagingException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), new GifImagingParameters()));
     }
 
     /**
@@ -194,6 +194,6 @@ public class GifReadTest extends GifBaseTest {
         final String input = "/images/gif/IMAGING-318/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5005192379629568";
         final String file = GifReadTest.class.getResource(input).getFile();
         final GifImageParser parser = new GifImageParser();
-        assertThrows(ImageReadException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), new GifImagingParameters()));
+        assertThrows(ImagingException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), new GifImagingParameters()));
     }
 }

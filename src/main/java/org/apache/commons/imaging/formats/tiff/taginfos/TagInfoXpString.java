@@ -20,8 +20,7 @@ import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
@@ -37,9 +36,9 @@ public class TagInfoXpString extends TagInfo {
 
     @Override
     public byte[] encodeValue(final FieldType fieldType, final Object value, final ByteOrder byteOrder)
-            throws ImageWriteException {
+            throws ImagingException {
         if (!(value instanceof String)) {
-            throw new ImageWriteException("Text value not String", value);
+            throw new ImagingException("Text value not String", value);
         }
         final String s = (String) value;
         final byte[] bytes = s.getBytes(StandardCharsets.UTF_16LE);
@@ -47,9 +46,9 @@ public class TagInfoXpString extends TagInfo {
     }
 
     @Override
-    public String getValue(final TiffField entry) throws ImageReadException {
+    public String getValue(final TiffField entry) throws ImagingException {
         if (entry.getFieldType() != FieldType.BYTE) {
-            throw new ImageReadException("Text field not encoded as bytes.");
+            throw new ImagingException("Text field not encoded as bytes.");
         }
         final byte[] bytes = entry.getByteArrayValue();
         final int length;

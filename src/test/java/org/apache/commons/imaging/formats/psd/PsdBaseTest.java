@@ -22,8 +22,8 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
-import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingTest;
 
 public abstract class PsdBaseTest extends ImagingTest {
@@ -34,7 +34,7 @@ public abstract class PsdBaseTest extends ImagingTest {
         return format == ImageFormats.PSD;
     }
 
-    protected List<File> getPsdImages() throws IOException, ImageReadException {
+    protected List<File> getPsdImages() throws IOException, ImagingException {
         return getTestImages(IMAGE_FILTER);
     }
 

@@ -23,7 +23,7 @@ import java.io.InputStream;
 import java.io.PushbackInputStream;
 import java.util.Map;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 
 /**
  * A rudimentary preprocessor and parser for the C programming
@@ -44,9 +44,9 @@ public class BasicCParser {
      * @since 1.0-alpha3
      */
     private static int appendHex(int i, final StringBuilder stringBuilder, final String string)
-        throws ImageReadException {
+        throws ImagingException {
         if (i + 2 >= string.length()) {
-            throw new ImageReadException(
+            throw new ImagingException(
                     "Parsing XPM file failed, "
                             + "hex constant in string too short");
         }
@@ -57,7 +57,7 @@ public class BasicCParser {
         try {
             constant = Integer.parseInt(hex1 + Character.toString(hex2), 16);
         } catch (final NumberFormatException nfe) {
-            throw new ImageReadException(
+            throw new ImagingException(
                     "Parsing XPM file failed, "
                             + "hex constant invalid", nfe);
         }
@@ -108,7 +108,7 @@ public class BasicCParser {
      * @since 1.0-alpha3
      */
     private static int parseEscape(int i, final StringBuilder stringBuilder, final String string)
-        throws ImageReadException {
+        throws ImagingException {
         final char c = string.charAt(i);
         switch (c) {
         case '\\':
@@ -155,7 +155,7 @@ public class BasicCParser {
             stringBuilder.append((char) 0x0b);
             break;
         default:
-            throw new ImageReadException("Parsing XPM file failed, "
+            throw new ImagingException("Parsing XPM file failed, "
                     + "invalid escape sequence");
         }
         return i;
@@ -164,7 +164,7 @@ public class BasicCParser {
 
     public static ByteArrayOutputStream preprocess(final InputStream is,
             final StringBuilder firstComment, final Map<String, String> defines)
-            throws IOException, ImageReadException {
+            throws IOException, ImagingException {
         boolean inSingleQuotes = false;
         boolean inString = false;
         boolean inComment = false;
@@ -221,7 +221,7 @@ public class BasicCParser {
                     break;
                 case '\r':
                 case '\n':
-                    throw new ImageReadException("Unterminated single quote in file");
+                    throw new ImagingException("Unterminated single quote in file");
                 default:
                     if (hadBackSlash) {
                         out.write('\\');
@@ -252,7 +252,7 @@ public class BasicCParser {
                     break;
                 case '\r':
                 case '\n':
-                    throw new ImageReadException("Unterminated string in file");
+                    throw new ImagingException("Unterminated string in file");
                 default:
                     if (hadBackSlash) {
                         out.write('\\');
@@ -266,10 +266,10 @@ public class BasicCParser {
                     inDirective = false;
                     final String[] tokens = tokenizeRow(directiveBuffer.toString());
                     if (tokens.length < 2 || tokens.length > 3) {
-                        throw new ImageReadException("Bad preprocessor directive");
+                        throw new ImagingException("Bad preprocessor directive");
                     }
                     if (!tokens[0].equals("define")) {
-                        throw new ImageReadException("Invalid/unsupported "
+                        throw new ImagingException("Invalid/unsupported "
                                 + "preprocessor directive '" + tokens[0] + "'");
                     }
                     defines.put(tokens[1], (tokens.length == 3) ? tokens[2]
@@ -312,7 +312,7 @@ public class BasicCParser {
                     break;
                 case '#':
                     if (defines == null) {
-                        throw new ImageReadException("Unexpected preprocessor directive");
+                        throw new ImagingException("Unexpected preprocessor directive");
                     }
                     inDirective = true;
                     break;
@@ -337,10 +337,10 @@ public class BasicCParser {
             out.write('*');
         }
         if (inString) {
-            throw new ImageReadException("Unterminated string at the end of file");
+            throw new ImagingException("Unterminated string at the end of file");
         }
         if (inComment) {
-            throw new ImageReadException("Unterminated comment at the end of file");
+            throw new ImagingException("Unterminated comment at the end of file");
         }
         return out;
     }
@@ -364,14 +364,14 @@ public class BasicCParser {
     }
 
     public static void unescapeString(final StringBuilder stringBuilder, final String string)
-            throws ImageReadException {
+            throws ImagingException {
         if (string.length() < 2) {
-            throw new ImageReadException("Parsing XPM file failed, "
+            throw new ImagingException("Parsing XPM file failed, "
                     + "string is too short");
         }
         if (string.charAt(0) != '"'
                 || string.charAt(string.length() - 1) != '"') {
-            throw new ImageReadException("Parsing XPM file failed, "
+            throw new ImagingException("Parsing XPM file failed, "
                     + "string not surrounded by '\"'");
         }
         boolean hadBackSlash = false;
@@ -383,14 +383,14 @@ public class BasicCParser {
             } else if (c == '\\') {
                 hadBackSlash = true;
             } else if (c == '"') {
-                throw new ImageReadException("Parsing XPM file failed, "
+                throw new ImagingException("Parsing XPM file failed, "
                         + "extra '\"' found in string");
             } else {
                 stringBuilder.append(c);
             }
         }
         if (hadBackSlash) {
-            throw new ImageReadException("Parsing XPM file failed, "
+            throw new ImagingException("Parsing XPM file failed, "
                     + "unterminated escape sequence found in string");
         }
     }
@@ -402,7 +402,7 @@ public class BasicCParser {
     }
 
 
-    public String nextToken() throws IOException, ImageReadException {
+    public String nextToken() throws IOException, ImagingException {
         // I don't know how complete the C parsing in an XPM file
         // is meant to be, this is just the very basics...
 
@@ -426,7 +426,7 @@ public class BasicCParser {
                     break;
                 case '\r':
                 case '\n':
-                    throw new ImageReadException(
+                    throw new ImagingException(
                             "Unterminated string in XPM file");
                 default:
                     token.append((char) c);
@@ -452,7 +452,7 @@ public class BasicCParser {
             } else if (c == ' ' || c == '\t' || c == '\r' || c == '\n') {
                 // ignore
             } else {
-                throw new ImageReadException(
+                throw new ImagingException(
                         "Unhandled/invalid character '" + ((char) c)
                                 + "' found in XPM file");
             }
@@ -462,7 +462,7 @@ public class BasicCParser {
             return token.toString();
         }
         if (inString) {
-            throw new ImageReadException("Unterminated string ends XMP file");
+            throw new ImagingException("Unterminated string ends XMP file");
         }
         return null;
     }

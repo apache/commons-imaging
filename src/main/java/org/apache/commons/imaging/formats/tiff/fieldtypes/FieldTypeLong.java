@@ -18,7 +18,7 @@ package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
 import java.nio.ByteOrder;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.tiff.TiffField;
@@ -39,7 +39,7 @@ public class FieldTypeLong extends FieldType {
     }
 
     @Override
-    public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException {
+    public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImagingException {
         if (o instanceof Integer) {
             return ByteConversions.toBytes((Integer) o, byteOrder);
         }
@@ -48,7 +48,7 @@ public class FieldTypeLong extends FieldType {
             return ByteConversions.toBytes(numbers, byteOrder);
         }
         if (!(o instanceof Integer[])) {
-            throw new ImageWriteException("Invalid data", o);
+            throw new ImagingException("Invalid data", o);
         }
         final Integer[] numbers = (Integer[]) o;
         final int[] values = Allocator.intArray(numbers.length);

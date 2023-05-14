@@ -23,7 +23,7 @@ import java.io.InputStream;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 
 class PamFileInfo extends FileInfo {
     private class ColorTupleReader extends TupleReader {
@@ -97,12 +97,12 @@ class PamFileInfo extends FileInfo {
 
     private final TupleReader tupleReader;
 
-    PamFileInfo(final int width, final int height, final int depth, final int maxval, final String tupleType) throws ImageReadException {
+    PamFileInfo(final int width, final int height, final int depth, final int maxval, final String tupleType) throws ImagingException {
         super(width, height, true);
         this.depth = depth;
         this.maxval = maxval;
         if (maxval <= 0) {
-            throw new ImageReadException("PAM maxVal " + maxval
+            throw new ImagingException("PAM maxVal " + maxval
                     + " is out of range [1;65535]");
         }
         if (maxval <= 255) {
@@ -112,7 +112,7 @@ class PamFileInfo extends FileInfo {
             scale = 65535f;
             bytesPerSample = 2;
         } else {
-            throw new ImageReadException("PAM maxVal " + maxval
+            throw new ImagingException("PAM maxVal " + maxval
                     + " is out of range [1;65535]");
         }
 
@@ -131,7 +131,7 @@ class PamFileInfo extends FileInfo {
                 tupleReader = new ColorTupleReader();
                 break;
             default:
-                throw new ImageReadException("Unknown PAM tupletype '" + tupleType + "'");
+                throw new ImagingException("Unknown PAM tupletype '" + tupleType + "'");
         }
     }
 

@@ -24,9 +24,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.itu_t4.T4AndT6Compression;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.internal.Debug;
@@ -80,7 +79,7 @@ public class TiffCcittTest extends TiffBaseTest {
     }
 
     @Test
-    public void testAll5x2Compressions() {
+    public void testAll5x2Compressions() throws IOException {
         final byte[] uncompressed = new byte[2];
         final int[] combinations = new int[10];
         do {
@@ -104,7 +103,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 for (int i = 0; i < uncompressed.length; i++) {
                     assertEquals(uncompressed[i], result[i]);
                 }
-            } catch (final ImageWriteException | ImageReadException ex) {
+            } catch (final ImagingException ex) {
                 Debug.debug(ex);
                 fail();
             }
@@ -118,7 +117,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 for (int i = 0; i < uncompressed.length; i++) {
                     assertEquals(uncompressed[i], result[i]);
                 }
-            } catch (final ImageWriteException | ImageReadException ex) {
+            } catch (final ImagingException ex) {
                 Debug.debug(ex);
                 fail();
             }
@@ -132,7 +131,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 for (int i = 0; i < uncompressed.length; i++) {
                     assertEquals(uncompressed[i], result[i]);
                 }
-            } catch (final ImageWriteException | ImageReadException ex) {
+            } catch (final ImagingException ex) {
                 Debug.debug(ex);
                 fail();
             }
@@ -146,7 +145,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 for (int i = 0; i < uncompressed.length; i++) {
                     assertEquals(uncompressed[i], result[i]);
                 }
-            } catch (final ImageWriteException | ImageReadException ex) {
+            } catch (final ImagingException ex) {
                 Debug.debug(ex);
                 fail();
             }
@@ -160,7 +159,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 for (int i = 0; i < uncompressed.length; i++) {
                     assertEquals(uncompressed[i], result[i]);
                 }
-            } catch (final ImageWriteException | ImageReadException ex) {
+            } catch (final ImagingException ex) {
                 Debug.debug(ex);
                 fail();
             }
@@ -174,7 +173,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 for (int i = 0; i < uncompressed.length; i++) {
                     assertEquals(uncompressed[i], result[i]);
                 }
-            } catch (final ImageWriteException | ImageReadException ex) {
+            } catch (final ImagingException ex) {
                 Debug.debug(ex);
                 fail();
             }
@@ -213,7 +212,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 }
                 final BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
-            } catch (final ImageWriteException | ImageReadException | IOException ex) {
+            } catch (final IOException ex) {
                 Debug.debug(ex);
                 fail();
             }
@@ -231,7 +230,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 }
                 final BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
-            } catch (final ImageWriteException | ImageReadException | IOException ex) {
+            } catch (final IOException ex) {
                 Debug.debug(ex);
                 fail();
             }
@@ -247,7 +246,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 }
                 final BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
-            } catch (final ImageWriteException | ImageReadException | IOException ex) {
+            } catch (final IOException ex) {
                 Debug.debug(ex);
                 fail();
             }
@@ -263,7 +262,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 }
                 final BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
-            } catch (final ImageWriteException | ImageReadException | IOException ex) {
+            } catch (final IOException ex) {
                 Debug.debug(ex);
                 fail();
             }
@@ -279,7 +278,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 }
                 final BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
-            } catch (final ImageWriteException | ImageReadException | IOException ex) {
+            } catch (final IOException ex) {
                 Debug.debug(ex);
                 fail();
             }
@@ -294,7 +293,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 }
                 final BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
-            } catch (final ImageWriteException | ImageReadException | IOException ex) {
+            } catch (final IOException ex) {
                 Debug.debug(ex);
                 fail();
             }

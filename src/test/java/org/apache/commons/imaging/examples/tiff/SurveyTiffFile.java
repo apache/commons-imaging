@@ -32,7 +32,7 @@ import java.io.PrintStream;
 import java.util.Formatter;
 
 import org.apache.commons.imaging.FormatCompliance;
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.TiffContents;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
@@ -92,7 +92,7 @@ public class SurveyTiffFile {
         return s.toString();
     }
 
-    private String getCompressionString(final TiffDirectory directory) throws ImageReadException {
+    private String getCompressionString(final TiffDirectory directory) throws ImagingException {
         final short compressionFieldValue;
         if (directory.findField(TiffTagConstants.TIFF_TAG_COMPRESSION) != null) {
             compressionFieldValue
@@ -123,7 +123,7 @@ public class SurveyTiffFile {
         }
     }
 
-    String getIccProfileString(final TiffDirectory directory) throws ImageReadException {
+    String getIccProfileString(final TiffDirectory directory) throws ImagingException {
         final byte[] b = directory.getFieldValue(TiffEpTagConstants.EXIF_TAG_INTER_COLOR_PROFILE,
             false);
         if (b == null || b.length == 0) {
@@ -132,7 +132,7 @@ public class SurveyTiffFile {
         return "Y";
     }
 
-    private String getPhotometricInterpreterString(final TiffDirectory directory, final int[] bitsPerSample) throws ImageReadException {
+    private String getPhotometricInterpreterString(final TiffDirectory directory, final int[] bitsPerSample) throws ImagingException {
         final int photometricInterpretation = 0xffff & directory.getFieldValue(
             TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION);
 
@@ -177,7 +177,7 @@ public class SurveyTiffFile {
 
     }
 
-    String getPlanarConfigurationString(final TiffDirectory directory) throws ImageReadException {
+    String getPlanarConfigurationString(final TiffDirectory directory) throws ImagingException {
 
         // Obtain the planar configuration
         final TiffField pcField = directory.findField(
@@ -193,7 +193,7 @@ public class SurveyTiffFile {
         return "Planar";
     }
 
-    String getPredictorString(final TiffDirectory directory) throws ImageReadException {
+    String getPredictorString(final TiffDirectory directory) throws ImagingException {
         int predictor = -1;
 
         final TiffField predictorField = directory.findField(
@@ -213,7 +213,7 @@ public class SurveyTiffFile {
         }
     }
 
-    String getSampleFormatString(final TiffDirectory directory) throws ImageReadException {
+    String getSampleFormatString(final TiffDirectory directory) throws ImagingException {
         final short[] sSampleFmt = directory.getFieldValue(
             TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, false);
         if (sSampleFmt == null || sSampleFmt.length == 0) {
@@ -294,7 +294,7 @@ public class SurveyTiffFile {
         return sb.toString();
     }
 
-    public String surveyFile(final File file, final boolean csv) throws ImageReadException, IOException {
+    public String surveyFile(final File file, final boolean csv) throws ImagingException, IOException {
         String delimiter = "  ";
         if (csv) {
             delimiter = ", ";
@@ -314,14 +314,14 @@ public class SurveyTiffFile {
                     FormatCompliance.getDefault());
 
             if (contents.directories.isEmpty()) {
-                throw new ImageReadException("No Image File Directory (IFD) found");
+                throw new ImagingException("No Image File Directory (IFD) found");
             }
             final TiffDirectory directory = contents.directories.get(0);
 
             // Get the metadata (Tags) and write them to standard output
             final boolean hasTiffImageData = directory.hasTiffImageData();
             if (!hasTiffImageData) {
-                throw new ImageReadException("No image data in file");
+                throw new ImagingException("No image data in file");
             }
 
             final int width = directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH);
@@ -340,7 +340,7 @@ public class SurveyTiffFile {
                 bitsPerPixel = bitsPerSampleField.getIntValueOrArraySum();
             }
             if (samplesPerPixel != bitsPerSample.length) {
-                throw new ImageReadException("Tiff: samplesPerPixel (" + samplesPerPixel + ")!=fBitsPerSample.length (" + bitsPerSample.length + ")");
+                throw new ImagingException("Tiff: samplesPerPixel (" + samplesPerPixel + ")!=fBitsPerSample.length (" + bitsPerSample.length + ")");
             }
 
             int rowsPerStrip = 0;
@@ -365,12 +365,12 @@ public class SurveyTiffFile {
             } else {
                 final TiffField tileWidthField = directory.findField(TiffTagConstants.TIFF_TAG_TILE_WIDTH);
                 if (null == tileWidthField) {
-                    throw new ImageReadException("Can't find tile width field.");
+                    throw new ImagingException("Can't find tile width field.");
                 }
                 tileWidth = tileWidthField.getIntValue();
                 final TiffField tileLengthField = directory.findField(TiffTagConstants.TIFF_TAG_TILE_LENGTH);
                 if (null == tileLengthField) {
-                    throw new ImageReadException("Can't find tile length field.");
+                    throw new ImagingException("Can't find tile length field.");
                 }
                 tileHeight = tileLengthField.getIntValue();
             }

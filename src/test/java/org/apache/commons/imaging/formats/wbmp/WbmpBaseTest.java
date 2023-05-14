@@ -18,7 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingTest;
 
 public abstract class WbmpBaseTest extends ImagingTest {
@@ -28,7 +28,7 @@ public abstract class WbmpBaseTest extends ImagingTest {
         return file.getName().toLowerCase().endsWith(".wbmp");
     }
 
-    protected List<File> getWbmpImages() throws IOException, ImageReadException {
+    protected List<File> getWbmpImages() throws IOException, ImagingException {
         return getTestImages(IMAGE_FILTER);
     }
 }

@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.imaging.ImagingException;
+
 /**
  * A Huffman tree implemented as 1 array for high locality of reference.
  */
@@ -31,7 +33,7 @@ class HuffmanTree<T> {
 
     private final List<Node<T>> nodes = new ArrayList<>();
 
-    public final T decode(final BitInputStreamFlexible bitStream) throws HuffmanTreeException {
+    public final T decode(final BitInputStreamFlexible bitStream) throws ImagingException {
         int position = 0;
         Node<T> node = nodes.get(0);
         while (node.value == null) {
@@ -39,7 +41,7 @@ class HuffmanTree<T> {
             try {
                 nextBit = bitStream.readBits(1);
             } catch (final IOException ioEx) {
-                throw new HuffmanTreeException(
+                throw new ImagingException(
                         "Error reading stream for huffman tree", ioEx);
             }
             if (nextBit == 0) {
@@ -48,11 +50,11 @@ class HuffmanTree<T> {
                 position = (position + 1) << 1;
             }
             if (position >= nodes.size()) {
-                throw new HuffmanTreeException("Invalid bit pattern");
+                throw new ImagingException("Invalid bit pattern");
             }
             node = nodes.get(position);
             if (node.empty) {
-                throw new HuffmanTreeException("Invalid bit pattern");
+                throw new ImagingException("Invalid bit pattern");
             }
         }
         return node.value;
@@ -67,11 +69,11 @@ class HuffmanTree<T> {
         return node;
     }
 
-    public final void insert(final String pattern, final T value) throws HuffmanTreeException {
+    public final void insert(final String pattern, final T value) throws ImagingException {
         int position = 0;
         Node<T> node = growAndGetNode(position);
         if (node.value != null) {
-            throw new HuffmanTreeException("Can't add child to a leaf");
+            throw new ImagingException("Can't add child to a leaf");
         }
         for (int patternPosition = 0; patternPosition < pattern.length(); patternPosition++) {
             final char nextChar = pattern.charAt(patternPosition);
@@ -82,7 +84,7 @@ class HuffmanTree<T> {
             }
             node = growAndGetNode(position);
             if (node.value != null) {
-                throw new HuffmanTreeException("Can't add child to a leaf");
+                throw new ImagingException("Can't add child to a leaf");
             }
         }
         node.value = value;

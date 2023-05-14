@@ -22,7 +22,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.formats.jpeg.decoder.JpegDecoderTest;
@@ -34,11 +34,11 @@ import org.junit.jupiter.api.Test;
 public class JpegImageParserTest {
     /**
      * Image created with The Gimp 2.8
-     * @throws ImageReadException
+     * @throws ImagingException
      * @throws IOException
      */
     @Test
-    public void testGetBufferedImage10() throws ImageReadException, IOException {
+    public void testGetBufferedImage10() throws ImagingException, IOException {
         final File imageFile = new File(
                 JpegDecoderTest.class.getResource("/IMAGING-136/1402522741337.jpg")
                 .getFile());

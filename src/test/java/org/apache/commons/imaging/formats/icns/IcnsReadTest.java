@@ -28,8 +28,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -71,11 +71,11 @@ public class IcnsReadTest extends IcnsBaseTest {
      * Test ICNS types such as mono (ICON) and some types for either JPEG2000 or PNG
      * (icp4, icp5, ic11, etc). For IMAGING-248.
      * @throws IOException if it fails to read the input stream
-     * @throws ImageReadException if the image is corrupted or invalid
+     * @throws ImagingException if the image is corrupted or invalid
      */
     @ParameterizedTest()
     @MethodSource("provideIcnsImagesWithMonoAndJpegPngData")
-    public void testIcnsElementMonoPngJpeg(final String file, final int numberOfImages) throws ImageReadException, IOException {
+    public void testIcnsElementMonoPngJpeg(final String file, final int numberOfImages) throws ImagingException, IOException {
         final File testFile = new File(IcnsReadTest.class.getResource(file).getFile());
         final List<BufferedImage> images = new IcnsImageParser().getAllBufferedImages(testFile);
         assertEquals(numberOfImages, images.size());

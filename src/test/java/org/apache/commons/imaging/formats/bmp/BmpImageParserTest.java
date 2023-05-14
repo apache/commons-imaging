@@ -23,7 +23,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -35,10 +35,10 @@ public class BmpImageParserTest {
     /**
      * For https://issues.apache.org/jira/browse/IMAGING-279.
      * @throws IOException
-     * @throws ImageReadException
+     * @throws ImagingException
      */
     @Test
-    public void testImageForNegativeArraySizeException() throws ImageReadException, IOException {
+    public void testImageForNegativeArraySizeException() throws ImagingException, IOException {
         final String file = "/images/bmp/IMAGING-279/negative_array_size_exception.bmp";
         final File bmp = new File(BmpImageParser.class.getResource(file).getFile());
         final BmpImageParser parser = new BmpImageParser();
@@ -48,10 +48,10 @@ public class BmpImageParserTest {
     /**
      * For https://issues.apache.org/jira/browse/IMAGING-264.
      * @throws IOException
-     * @throws ImageReadException
+     * @throws ImagingException
      */
     @Test
-    public void testImageWidthRounding() throws ImageReadException, IOException {
+    public void testImageWidthRounding() throws ImagingException, IOException {
         final String file = "/images/bmp/IMAGING-264/test-72_6-dpi.bmp";
         final File bmp = new File(BmpImageParser.class.getResource(file).getFile());
         final BmpImageParser parser = new BmpImageParser();

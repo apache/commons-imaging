@@ -23,20 +23,20 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for {@link ImageReadException}.
+ * Tests for {@link ImagingException}.
  */
 public class TestImageReadException {
 
     @Test
     public void testCreateExceptionWithMessage() {
-        final ImageReadException exception = new ImageReadException("imaging");
+        final ImagingException exception = new ImagingException("imaging");
         assertEquals("imaging", exception.getMessage());
         assertNull(exception.getCause());
     }
 
     @Test
     public void testCreateExceptionWithMessageAndCause() {
-        final ImageReadException exception = new ImageReadException("imaging", new Exception("cause"));
+        final ImagingException exception = new ImagingException("imaging", new Exception("cause"));
         assertEquals("imaging", exception.getMessage());
         assertNotNull(exception.getCause());
     }

@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Test;
 
 public class JfifSegmentTest{
@@ -33,7 +33,7 @@ public class JfifSegmentTest{
       try {
         new JfifSegment((-2275), byteArray);
         fail("Expecting exception: Exception");
-      } catch (final ImageReadException e) {
+      } catch (final ImagingException e) {
          assertEquals("Not a Valid JPEG File: missing JFIF string",e.getMessage());
          assertEquals(JfifSegment.class.getName(), e.getStackTrace()[0].getClassName());
       }

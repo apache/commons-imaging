@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.zip.InflaterInputStream;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.formats.png.PngConstants;
 import org.apache.commons.imaging.formats.png.PngText;
@@ -47,11 +47,11 @@ public class PngChunkItxt extends PngTextChunk {
     public final String translatedKeyword;
 
     public PngChunkItxt(final int length, final int chunkType, final int crc, final byte[] bytes)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         super(length, chunkType, crc, bytes);
         int terminator = findNull(bytes);
         if (terminator < 0) {
-            throw new ImageReadException(
+            throw new ImagingException(
                     "PNG iTXt chunk keyword is not terminated.");
         }
 
@@ -60,7 +60,7 @@ public class PngChunkItxt extends PngTextChunk {
 
         final int compressionFlag = bytes[index++];
         if (compressionFlag != 0 && compressionFlag != 1) {
-            throw new ImageReadException(
+            throw new ImagingException(
                     "PNG iTXt chunk has invalid compression flag: "
                             + compressionFlag);
         }
@@ -69,12 +69,12 @@ public class PngChunkItxt extends PngTextChunk {
 
         final int compressionMethod = bytes[index++];
         if (compressed && compressionMethod != PngConstants.COMPRESSION_DEFLATE_INFLATE) {
-            throw new ImageReadException("PNG iTXt chunk has unexpected compression method: " + compressionMethod);
+            throw new ImagingException("PNG iTXt chunk has unexpected compression method: " + compressionMethod);
         }
 
         terminator = findNull(bytes, index);
         if (terminator < 0) {
-            throw new ImageReadException("PNG iTXt chunk language tag is not terminated.");
+            throw new ImagingException("PNG iTXt chunk language tag is not terminated.");
         }
 
         languageTag = new String(bytes, index, terminator - index, StandardCharsets.ISO_8859_1);
@@ -82,7 +82,7 @@ public class PngChunkItxt extends PngTextChunk {
 
         terminator = findNull(bytes, index);
         if (terminator < 0) {
-            throw new ImageReadException("PNG iTXt chunk translated keyword is not terminated.");
+            throw new ImagingException("PNG iTXt chunk translated keyword is not terminated.");
         }
 
         translatedKeyword = new String(bytes, index, terminator - index, StandardCharsets.UTF_8);

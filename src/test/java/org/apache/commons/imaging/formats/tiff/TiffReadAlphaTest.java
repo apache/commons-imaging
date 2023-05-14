@@ -17,7 +17,6 @@
 package org.apache.commons.imaging.formats.tiff;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -25,8 +24,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingTestConstants;
 import org.junit.jupiter.api.Test;
 
@@ -64,28 +63,24 @@ public class TiffReadAlphaTest {
     }
 
     @Test
-    public void test() {
+    public void test() throws ImagingException, IOException {
         for (final String name : names) {
-            try {
-                final File subject = getTiffFile(name);
-                final BufferedImage overlay = Imaging.getBufferedImage(subject);
-                final BufferedImage composite = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
-                final Graphics2D g2d = composite.createGraphics();
-                g2d.setColor(Color.white);
-                g2d.fillRect(0, 0, 101, 101);
-                g2d.setColor(Color.black);
-                g2d.fillRect(0, 50, 101, 51);
-                g2d.drawImage(overlay, 0, 0, null);
+            final File subject = getTiffFile(name);
+            final BufferedImage overlay = Imaging.getBufferedImage(subject);
+            final BufferedImage composite = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
+            final Graphics2D g2d = composite.createGraphics();
+            g2d.setColor(Color.white);
+            g2d.fillRect(0, 0, 101, 101);
+            g2d.setColor(Color.black);
+            g2d.fillRect(0, 50, 101, 51);
+            g2d.drawImage(overlay, 0, 0, null);
 
-                for (final int[] element : testSite) {
-                    final int x = element[0];
-                    final int y = element[1];
-                    final int p = element[2];
-                    final int t = composite.getRGB(x, y);
-                    assertEquals(t, p, "Error for " + name + " at position " + x + ", " + y);
-                }
-            } catch (ImageReadException | IOException ex) {
-                fail("Exception reading " + name + ", " + ex.getMessage());
+            for (final int[] element : testSite) {
+                final int x = element[0];
+                final int y = element[1];
+                final int p = element[2];
+                final int t = composite.getRGB(x, y);
+                assertEquals(t, p, "Error for " + name + " at position " + x + ", " + y);
             }
         }
     }

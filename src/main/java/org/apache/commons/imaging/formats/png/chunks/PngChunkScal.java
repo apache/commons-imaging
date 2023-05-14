@@ -20,7 +20,7 @@ import static org.apache.commons.imaging.common.BinaryFunctions.findNull;
 
 import java.nio.charset.StandardCharsets;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 
 public class PngChunkScal extends PngChunk {
    public final double unitsPerPixelXAxis;
@@ -28,17 +28,17 @@ public class PngChunkScal extends PngChunk {
    public final int unitSpecifier;
 
    public PngChunkScal(final int length, final int chunkType, final int crc, final byte[] bytes)
-         throws ImageReadException {
+         throws ImagingException {
       super(length, chunkType, crc, bytes);
 
       unitSpecifier = bytes[0];
       if (unitSpecifier != 1 && unitSpecifier != 2) {
-         throw new ImageReadException("PNG sCAL invalid unit specifier: " + unitSpecifier);
+         throw new ImagingException("PNG sCAL invalid unit specifier: " + unitSpecifier);
       }
 
       final int separator = findNull(bytes);
       if (separator < 0) {
-         throw new ImageReadException("PNG sCAL x and y axis value separator not found.");
+         throw new ImagingException("PNG sCAL x and y axis value separator not found.");
       }
 
       final int xIndex = 1;
@@ -47,18 +47,18 @@ public class PngChunkScal extends PngChunk {
 
       final int yIndex = separator + 1;
       if (yIndex >= length) {
-         throw new ImageReadException("PNG sCAL chunk missing the y axis value.");
+         throw new ImagingException("PNG sCAL chunk missing the y axis value.");
       }
 
       final String yStr = new String(bytes, yIndex, length - yIndex, StandardCharsets.ISO_8859_1);
       unitsPerPixelYAxis = toDouble(yStr);
    }
 
-   private double toDouble(final String str) throws ImageReadException {
+   private double toDouble(final String str) throws ImagingException {
       try {
          return Double.parseDouble(str);
       } catch (final NumberFormatException e) {
-         throw new ImageReadException("PNG sCAL error reading axis value - " + str);
+         throw new ImagingException("PNG sCAL error reading axis value - " + str);
       }
    }
 }

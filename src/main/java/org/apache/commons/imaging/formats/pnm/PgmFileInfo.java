@@ -22,17 +22,17 @@ import java.io.InputStream;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 
 class PgmFileInfo extends FileInfo {
     private final int max;
     private final float scale;
     private final int bytesPerSample;
 
-    PgmFileInfo(final int width, final int height, final boolean rawbits, final int max) throws ImageReadException {
+    PgmFileInfo(final int width, final int height, final boolean rawbits, final int max) throws ImagingException {
         super(width, height, rawbits);
         if (max <= 0) {
-            throw new ImageReadException("PGM maxVal " + max
+            throw new ImagingException("PGM maxVal " + max
                     + " is out of range [1;65535]");
         }
         if (max <= 255) {
@@ -42,7 +42,7 @@ class PgmFileInfo extends FileInfo {
             scale = 65535f;
             bytesPerSample = 2;
         } else {
-            throw new ImageReadException("PGM maxVal " + max
+            throw new ImagingException("PGM maxVal " + max
                     + " is out of range [1;65535]");
         }
         this.max = max;

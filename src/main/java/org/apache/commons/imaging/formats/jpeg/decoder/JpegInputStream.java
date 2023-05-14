@@ -17,7 +17,7 @@ package org.apache.commons.imaging.formats.jpeg.decoder;
 
 import java.util.Arrays;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
 class JpegInputStream {
@@ -42,23 +42,23 @@ class JpegInputStream {
         return nextPos < this.interval.length;
     }
 
-    public int nextBit() throws ImageReadException {
+    public int nextBit() throws ImagingException {
         if (cnt == 0) {
             b = this.read();
             if (b < 0) {
-                throw new ImageReadException("Premature End of File");
+                throw new ImagingException("Premature End of File");
             }
             cnt = 8;
             if (b == 0xff) {
                 final int b2 = this.read();
                 if (b2 < 0) {
-                    throw new ImageReadException("Premature End of File");
+                    throw new ImagingException("Premature End of File");
                 }
                 if (b2 != 0) {
                     if (b2 == (0xff & JpegConstants.DNL_MARKER)) {
-                        throw new ImageReadException("DNL not yet supported");
+                        throw new ImagingException("DNL not yet supported");
                     }
-                    throw new ImageReadException("Invalid marker found "
+                    throw new ImagingException("Invalid marker found "
                         + "in entropy data: 0xFF " + Integer.toHexString(b2));
                 }
             }

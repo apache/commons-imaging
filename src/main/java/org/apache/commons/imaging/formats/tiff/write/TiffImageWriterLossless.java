@@ -30,8 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.FormatCompliance;
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -89,7 +88,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         this.exifBytes = exifBytes;
     }
 
-    private List<TiffElement> analyzeOldTiff(final Map<Integer, TiffOutputField> frozenFields) throws ImageWriteException,
+    private List<TiffElement> analyzeOldTiff(final Map<Integer, TiffOutputField> frozenFields) throws ImagingException,
             IOException {
         try {
             final ByteSource byteSource = new ByteSourceArray(exifBytes);
@@ -152,8 +151,8 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
             }
 
             return rewritableElements;
-        } catch (final ImageReadException e) {
-            throw new ImageWriteException(e.getMessage(), e);
+        } catch (final ImagingException e) {
+            throw new ImagingException(e.getMessage(), e);
         }
     }
 
@@ -236,7 +235,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
 
     @Override
     public void write(final OutputStream os, final TiffOutputSet outputSet)
-            throws IOException, ImageWriteException {
+            throws IOException, ImagingException {
         // There are some fields whose address in the file must not change,
         // unless of course their value is changed.
         final Map<Integer, TiffOutputField> frozenFields = new HashMap<>();
@@ -247,7 +246,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         final List<TiffElement> analysis = analyzeOldTiff(frozenFields);
         final int oldLength = exifBytes.length;
         if (analysis.isEmpty()) {
-            throw new ImageWriteException("Couldn't analyze old tiff data.");
+            throw new ImagingException("Couldn't analyze old tiff data.");
         }
         if (analysis.size() == 1) {
             final TiffElement onlyElement = analysis.get(0);
@@ -287,7 +286,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
 
     private void writeStep(final OutputStream os, final TiffOutputSet outputSet,
             final List<TiffElement> analysis, final List<TiffOutputItem> outputItems,
-            final long outputLength) throws IOException, ImageWriteException {
+            final long outputLength) throws IOException, ImagingException {
         final TiffOutputDirectory rootDirectory = outputSet.getRootDirectory();
 
         final byte[] output = Allocator.byteArray(outputLength);

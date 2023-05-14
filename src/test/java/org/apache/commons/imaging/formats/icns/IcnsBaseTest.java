@@ -23,15 +23,15 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
-import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingTest;
 
 public abstract class IcnsBaseTest extends ImagingTest {
 
     private static final ImageFilter IMAGE_FILTER = IcnsBaseTest::isIcns;
 
-    protected static List<File> getIcnsImages() throws IOException, ImageReadException {
+    protected static List<File> getIcnsImages() throws IOException, ImagingException {
         return getTestImages(IMAGE_FILTER);
     }
 

@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,7 +53,7 @@ public class PhotometricInterpreterRgbTest {
     }
 
     @Test
-    public void testInterpretPixel() throws ImageReadException, IOException {
+    public void testInterpretPixel() throws ImagingException, IOException {
         final ImageBuilder imgBuilder = new ImageBuilder(600, 400, /*alpha*/ true);
         final int x = 10;
         final int y = 20;

@@ -23,7 +23,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.imaging.FormatCompliance;
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.TiffContents;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
@@ -54,11 +54,11 @@ public class ReadAndRenderFloatingPoint {
      *
      * @param args the command line arguments giving the path to an input TIFF
      * file and an output JPEG.
-     * @throws org.apache.commons.imaging.ImageReadException in the event of an
+     * @throws org.apache.commons.imaging.ImagingException in the event of an
      * internal data format or version compatibility error reading the image.
      * @throws IOException in the event of an I/O error.
      */
-    public static void main(final String[] args) throws ImageReadException, IOException {
+    public static void main(final String[] args) throws ImagingException, IOException {
         if (args.length == 0) {
             // Print usage and exit
             for (final String s : USAGE) {

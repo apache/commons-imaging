@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.tiff.fieldtypes;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.tiff.TiffField;
@@ -39,7 +39,7 @@ public class FieldTypeDouble extends FieldType {
     }
 
     @Override
-    public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException {
+    public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImagingException {
         if (o instanceof Double) {
             return ByteConversions.toBytes(((Double) o).doubleValue(), byteOrder);
         }
@@ -47,7 +47,7 @@ public class FieldTypeDouble extends FieldType {
             return ByteConversions.toBytes((double[]) o, byteOrder);
         }
         if (!(o instanceof Double[])) {
-            throw new ImageWriteException("Invalid data", o);
+            throw new ImagingException("Invalid data", o);
         }
         final double[] values = Allocator.doubleArray(((Double[]) o).length);
         Arrays.setAll(values, i -> ((Double[]) o)[i].doubleValue());

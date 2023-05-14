@@ -18,7 +18,7 @@ package org.apache.commons.imaging.formats.bmp;
 
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
 abstract class PixelParserSimple extends PixelParser {
@@ -26,12 +26,12 @@ abstract class PixelParserSimple extends PixelParser {
         super(bhi, colorTable, imageData);
     }
 
-    public abstract int getNextRGB() throws ImageReadException, IOException;
+    public abstract int getNextRGB() throws ImagingException, IOException;
 
-    public abstract void newline() throws ImageReadException, IOException;
+    public abstract void newline() throws ImagingException, IOException;
 
     @Override
-    public void processImage(final ImageBuilder imageBuilder) throws ImageReadException, IOException {
+    public void processImage(final ImageBuilder imageBuilder) throws ImagingException, IOException {
         for (int y = bhi.height - 1; y >= 0; y--) {
             for (int x = 0; x < bhi.width; x++) {
                 final int rgb = getNextRGB();

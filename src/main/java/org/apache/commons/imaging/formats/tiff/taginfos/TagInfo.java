@@ -23,8 +23,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
@@ -76,7 +75,7 @@ public class TagInfo {
     }
 
     public byte[] encodeValue(final FieldType fieldType, final Object value, final ByteOrder byteOrder)
-            throws ImageWriteException {
+            throws ImagingException {
         return fieldType.writeData(value, byteOrder);
     }
 
@@ -88,9 +87,9 @@ public class TagInfo {
      *
      * @param entry the TIFF field whose value to return
      * @return the value of the TIFF field
-     * @throws ImageReadException thrown by subclasses
+     * @throws ImagingException thrown by subclasses
      */
-    public Object getValue(final TiffField entry) throws ImageReadException {
+    public Object getValue(final TiffField entry) throws ImagingException {
         return entry.getFieldType().getValue(entry);
     }
 

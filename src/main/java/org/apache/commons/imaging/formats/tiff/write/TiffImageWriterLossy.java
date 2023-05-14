@@ -23,7 +23,7 @@ import java.io.OutputStream;
 import java.nio.ByteOrder;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 
 public class TiffImageWriterLossy extends TiffImageWriterBase {
@@ -51,7 +51,7 @@ public class TiffImageWriterLossy extends TiffImageWriterBase {
 
     @Override
     public void write(final OutputStream os, final TiffOutputSet outputSet)
-            throws IOException, ImageWriteException {
+            throws IOException, ImagingException {
         final TiffOutputSummary outputSummary = validateDirectories(outputSet);
 
         final List<TiffOutputItem> outputItems = outputSet.getOutputItems(outputSummary);
@@ -68,7 +68,7 @@ public class TiffImageWriterLossy extends TiffImageWriterBase {
 
     private void writeStep(final BinaryOutputStream bos,
             final List<TiffOutputItem> outputItems) throws IOException,
-            ImageWriteException {
+            ImagingException {
         writeImageFileHeader(bos);
 
         for (final TiffOutputItem outputItem : outputItems) {

@@ -18,7 +18,7 @@ package org.apache.commons.imaging.palette;
 
 import java.awt.image.BufferedImage;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 
 /**
  * Dithering algorithms to use when quantizing an image to palette form.
@@ -66,9 +66,9 @@ public final class Dithering {
      *
      * @param image   the image to change
      * @param palette the palette to use
-     * @throws ImageWriteException if it fails to read the palette index
+     * @throws ImagingException if it fails to read the palette index
      */
-    public static void applyFloydSteinbergDithering(final BufferedImage image, final Palette palette) throws ImageWriteException {
+    public static void applyFloydSteinbergDithering(final BufferedImage image, final Palette palette) throws ImagingException {
         for (int y = 0; y < image.getHeight(); y++) {
             for (int x = 0; x < image.getWidth(); x++) {
                 final int argb = image.getRGB(x, y);

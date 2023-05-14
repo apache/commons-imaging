@@ -42,41 +42,31 @@ public class IccProfileParser extends BinaryFileParser {
         super(ByteOrder.BIG_ENDIAN);
     }
 
-    public IccProfileInfo getICCProfileInfo(final byte[] bytes) {
+    public IccProfileInfo getICCProfileInfo(final byte[] bytes) throws IOException {
         if (bytes == null) {
             return null;
         }
-
         return getICCProfileInfo(new ByteSourceArray(bytes));
     }
 
-    public IccProfileInfo getICCProfileInfo(final ByteSource byteSource) {
+    public IccProfileInfo getICCProfileInfo(final ByteSource byteSource) throws IOException {
         // TODO Throw instead of logging?
         final IccProfileInfo result;
         try (InputStream is = byteSource.getInputStream()) {
             result = readICCProfileInfo(is);
-        } catch (final Exception e) {
-            LOGGER.log(Level.SEVERE, e.getMessage(), e);
-            return null;
         }
         //
-        try {
-            for (final IccTag tag : result.getTags()) {
-                final byte[] bytes = byteSource.getBlock(tag.offset, tag.length);
-                // Debug.debug("bytes: " + bytes.length);
-                tag.setData(bytes);
-                // tag.dump("\t" + i + ": ");
-            }
-            // result.fillInTagData(byteSource);
-            return result;
-        } catch (final Exception e) {
-            // Debug.debug("Error: " + file.getAbsolutePath());
-            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+        for (final IccTag tag : result.getTags()) {
+            final byte[] bytes = byteSource.getBlock(tag.offset, tag.length);
+            // Debug.debug("bytes: " + bytes.length);
+            tag.setData(bytes);
+            // tag.dump("\t" + i + ": ");
         }
-        return null;
+        // result.fillInTagData(byteSource);
+        return result;
     }
 
-    public IccProfileInfo getICCProfileInfo(final File file) {
+    public IccProfileInfo getICCProfileInfo(final File file) throws IOException {
         if (file == null) {
             return null;
         }
@@ -84,7 +74,7 @@ public class IccProfileParser extends BinaryFileParser {
         return getICCProfileInfo(new ByteSourceFile(file));
     }
 
-    public IccProfileInfo getICCProfileInfo(final ICC_Profile iccProfile) {
+    public IccProfileInfo getICCProfileInfo(final ICC_Profile iccProfile) throws IOException {
         if (iccProfile == null) {
             return null;
         }

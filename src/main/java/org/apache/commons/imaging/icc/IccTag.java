@@ -26,7 +26,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFunctions;
 
 public class IccTag {
@@ -50,7 +50,7 @@ public class IccTag {
         this.fIccTagType = fIccTagType;
     }
 
-    public void dump(final PrintWriter pw, final String prefix) throws ImageReadException,
+    public void dump(final PrintWriter pw, final String prefix) throws ImagingException,
             IOException {
         pw.println(prefix
                 + "tag signature: "
@@ -93,7 +93,7 @@ public class IccTag {
 
     }
 
-    public void dump(final String prefix) throws ImageReadException, IOException {
+    public void dump(final String prefix) throws ImagingException, IOException {
         try (StringWriter sw = new StringWriter(); PrintWriter pw = new PrintWriter(sw)) {
             dump(pw, prefix);
             pw.flush();

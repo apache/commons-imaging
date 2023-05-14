@@ -19,13 +19,13 @@ package org.apache.commons.imaging.palette;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 
 public class MostPopulatedBoxesMedianCut implements MedianCut {
 
     @Override
     public boolean performNextMedianCut(final List<ColorGroup> colorGroups,
-            final boolean ignoreAlpha) throws ImageWriteException {
+            final boolean ignoreAlpha) throws ImagingException {
         int maxPoints = 0;
         ColorGroup colorGroup = null;
         for (final ColorGroup group : colorGroups) {

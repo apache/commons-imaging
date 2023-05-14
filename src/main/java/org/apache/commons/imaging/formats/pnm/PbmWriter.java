@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 
 class PbmWriter implements PnmWriter {
 
@@ -33,7 +33,7 @@ class PbmWriter implements PnmWriter {
 
     @Override
     public void writeImage(final BufferedImage src, final OutputStream os, final PnmImagingParameters params)
-            throws ImageWriteException, IOException {
+            throws ImagingException, IOException {
         os.write(PnmConstants.PNM_PREFIX_BYTE);
         os.write(rawBits ? PnmConstants.PBM_RAW_CODE : PnmConstants.PBM_TEXT_CODE);
         os.write(PnmConstants.PNM_SEPARATOR);

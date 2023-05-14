@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.internal.Debug;
 
@@ -35,7 +35,7 @@ public class TiffContents {
         this.tiffFields = Collections.unmodifiableList(tiffFields);
     }
 
-    public void dissect() throws ImageReadException {
+    public void dissect() throws ImagingException {
         final List<TiffElement> elements = getElements();
 
         elements.sort(TiffElement.COMPARATOR);
@@ -64,7 +64,7 @@ public class TiffContents {
         Debug.debug();
     }
 
-    public TiffField findField(final TagInfo tag) throws ImageReadException {
+    public TiffField findField(final TagInfo tag) throws ImagingException {
         for (final TiffDirectory directory : directories) {
             final TiffField field = directory.findField(tag);
             if (null != field) {
@@ -75,7 +75,7 @@ public class TiffContents {
         return null;
     }
 
-    public List<TiffElement> getElements() throws ImageReadException {
+    public List<TiffElement> getElements() throws ImagingException {
         final List<TiffElement> result = new ArrayList<>();
 
         result.add(header);

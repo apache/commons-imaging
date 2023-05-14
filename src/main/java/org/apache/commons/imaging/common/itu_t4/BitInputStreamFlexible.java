@@ -19,6 +19,8 @@ package org.apache.commons.imaging.common.itu_t4;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.commons.imaging.ImagingException;
+
 /**
  * Input stream that allows reading up to 32 bits
  * across byte boundaries in most significant
@@ -48,7 +50,7 @@ class BitInputStreamFlexible extends InputStream {
     @Override
     public int read() throws IOException {
         if (cacheBitsRemaining > 0) {
-            throw new IOException("BitInputStream: incomplete bit read");
+            throw new ImagingException("BitInputStream: incomplete bit read");
         }
         return is.read();
     }
@@ -75,7 +77,7 @@ class BitInputStreamFlexible extends InputStream {
             while (count >= 8) {
                 cache = is.read();
                 if (cache < 0) {
-                    throw new IOException("couldn't read bits");
+                    throw new ImagingException("couldn't read bits");
                 }
                 // System.out.println("cache 1: " + cache + " ("
                 // + Integer.toHexString(cache) + ", "
@@ -87,7 +89,7 @@ class BitInputStreamFlexible extends InputStream {
             if (count > 0) {
                 cache = is.read();
                 if (cache < 0) {
-                    throw new IOException("couldn't read bits");
+                    throw new ImagingException("couldn't read bits");
                 }
                 // System.out.println("cache 2: " + cache + " ("
                 // + Integer.toHexString(cache) + ", "
@@ -102,7 +104,7 @@ class BitInputStreamFlexible extends InputStream {
             return result;
         }
 
-        throw new IOException("BitInputStream: unknown error");
+        throw new ImagingException("BitInputStream: unknown error");
 
     }
 }

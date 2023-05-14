@@ -20,8 +20,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata.ImageMetadataItem;
 import org.apache.commons.imaging.common.RationalNumber;
@@ -34,7 +34,7 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 
 public class MetadataExample {
-    public static void metadataExample(final File file) throws ImageReadException,
+    public static void metadataExample(final File file) throws ImagingException,
             IOException {
         // get all metadata stored in EXIF format (ie. from JPEG or TIFF).
         final ImageMetadata metadata = Imaging.getMetadata(file);

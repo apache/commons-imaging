@@ -21,7 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
@@ -35,11 +35,11 @@ public abstract class ExifBaseTest extends ImagingTest {
     private static final ImageFilter JPEG_IMAGE_FILTER = file -> file.getName().toLowerCase().endsWith(".jpg");
 
     protected static List<File> getImagesWithExifData() throws IOException,
-            ImageReadException {
+            ImagingException {
         return getTestImages(HAS_EXIF_IMAGE_FILTER);
     }
 
-    protected static List<File> getJpegImages() throws IOException, ImageReadException {
+    protected static List<File> getJpegImages() throws IOException, ImagingException {
         return getTestImages(JPEG_IMAGE_FILTER);
     }
 
@@ -66,7 +66,7 @@ public abstract class ExifBaseTest extends ImagingTest {
     }
 
     protected File getImageWithExifData() throws IOException,
-            ImageReadException {
+            ImagingException {
         return getTestImage(HAS_EXIF_IMAGE_FILTER);
     }
 

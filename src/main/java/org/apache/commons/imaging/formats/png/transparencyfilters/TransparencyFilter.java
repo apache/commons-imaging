@@ -18,7 +18,7 @@ package org.apache.commons.imaging.formats.png.transparencyfilters;
 
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFileParser;
 
 public abstract class TransparencyFilter extends BinaryFileParser {
@@ -29,7 +29,7 @@ public abstract class TransparencyFilter extends BinaryFileParser {
 
     }
 
-    public abstract int filter(int rgb, int index) throws ImageReadException,
+    public abstract int filter(int rgb, int index) throws ImagingException,
             IOException;
 
     /**

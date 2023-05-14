@@ -50,7 +50,7 @@ public class RationalNumber extends Number {
         }
     }
 
-    private static final long serialVersionUID = -8412262656468158691L;
+    private static final long serialVersionUID = -1;
 
     // int-precision tolerance
     private static final double TOLERANCE = 1E-8;

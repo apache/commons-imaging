@@ -27,8 +27,7 @@ import java.nio.ByteOrder;
 import java.nio.file.Path;
 
 import org.apache.commons.imaging.FormatCompliance;
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
@@ -154,12 +153,12 @@ public class TiffRoundTripInt32Test extends TiffBaseTest {
             }
             final TiffImagingParameters xparams = new TiffImagingParameters();
             xparams.setSubImage(2, 2, width, height);
-            assertThrows(ImageReadException.class, () -> directory.getRasterData(xparams), "Failed to catch bad subimage for test " + name);
+            assertThrows(ImagingException.class, () -> directory.getRasterData(xparams), "Failed to catch bad subimage for test " + name);
         }
     }
 
     private File writeFile(final int bitsPerSample, final ByteOrder byteOrder, final boolean useTiles)
-        throws IOException, ImageWriteException {
+        throws IOException, ImagingException {
         final String name = String.format("Int32RoundTrip_%2d_%s_%s.tiff",
             bitsPerSample,
             byteOrder == ByteOrder.LITTLE_ENDIAN ? "LE" : "BE",

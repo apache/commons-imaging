@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import java.nio.ByteOrder;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -35,11 +35,11 @@ public class FieldTypeRationalTest {
   public void testWriteDataWithNonNull() {
       final FieldTypeRational fieldTypeRational = new FieldTypeRational((-922), "z_AX");
       final ByteOrder byteOrder = ByteOrder.nativeOrder();
-      Assertions.assertThrows(ImageWriteException.class, () -> fieldTypeRational.writeData("z_AX", byteOrder));
+      Assertions.assertThrows(ImagingException.class, () -> fieldTypeRational.writeData("z_AX", byteOrder));
   }
 
   @Test
-  public void testWriteDataWithNull() throws ImageWriteException {
+  public void testWriteDataWithNull() throws ImagingException {
       final FieldTypeRational fieldTypeRational = new FieldTypeRational(9, null);
       final Double doubleOne = 2.2d;
       final byte[] byteArray = fieldTypeRational.writeData(doubleOne, null);

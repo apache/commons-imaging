@@ -28,7 +28,7 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
@@ -146,7 +146,7 @@ public class TiffField {
         return directoryType;
     }
 
-    public double[] getDoubleArrayValue() throws ImageReadException {
+    public double[] getDoubleArrayValue() throws ImagingException {
         final Object o = getValue();
         // if (o == null)
         // return null;
@@ -183,15 +183,15 @@ public class TiffField {
             return Arrays.copyOf(numbers, numbers.length);
         }
 
-        throw new ImageReadException("Unknown value: " + o + " for: "
+        throw new ImagingException("Unknown value: " + o + " for: "
                 + getTagInfo().getDescription());
         // return null;
     }
 
-    public double getDoubleValue() throws ImageReadException {
+    public double getDoubleValue() throws ImagingException {
         final Object o = getValue();
         if (o == null) {
-            throw new ImageReadException("Missing value: "
+            throw new ImagingException("Missing value: "
                     + getTagInfo().getDescription());
         }
 
@@ -210,7 +210,7 @@ public class TiffField {
         return getFieldType().getName();
     }
 
-    public int[] getIntArrayValue() throws ImageReadException {
+    public int[] getIntArrayValue() throws ImagingException {
         final Object o = getValue();
         // if (o == null)
         // return null;
@@ -235,22 +235,22 @@ public class TiffField {
             return Arrays.copyOf(numbers, numbers.length);
         }
 
-        throw new ImageReadException("Unknown value: " + o + " for: "
+        throw new ImagingException("Unknown value: " + o + " for: "
                 + getTagInfo().getDescription());
         // return null;
     }
 
-    public int getIntValue() throws ImageReadException {
+    public int getIntValue() throws ImagingException {
         final Object o = getValue();
         if (o == null) {
-            throw new ImageReadException("Missing value: "
+            throw new ImagingException("Missing value: "
                     + getTagInfo().getDescription());
         }
 
         return ((Number) o).intValue();
     }
 
-    public int getIntValueOrArraySum() throws ImageReadException {
+    public int getIntValueOrArraySum() throws ImagingException {
         final Object o = getValue();
         // if (o == null)
         // return -1;
@@ -283,7 +283,7 @@ public class TiffField {
             return sum;
         }
 
-        throw new ImageReadException("Unknown value: " + o + " for: "
+        throw new ImagingException("Unknown value: " + o + " for: "
                 + getTagInfo().getDescription());
         // return -1;
     }
@@ -309,13 +309,13 @@ public class TiffField {
         return sortHint;
     }
 
-    public String getStringValue() throws ImageReadException {
+    public String getStringValue() throws ImagingException {
         final Object o = getValue();
         if (o == null) {
             return null;
         }
         if (!(o instanceof String)) {
-            throw new ImageReadException("Expected String value("
+            throw new ImagingException("Expected String value("
                     + getTagInfo().getDescription() + "): " + o);
         }
         return (String) o;
@@ -340,7 +340,7 @@ public class TiffField {
         return getTagInfo().name;
     }
 
-    public Object getValue() throws ImageReadException {
+    public Object getValue() throws ImagingException {
         // System.out.print("getValue");
         return getTagInfo().getValue(this);
     }
@@ -348,7 +348,7 @@ public class TiffField {
     public String getValueDescription() {
         try {
             return getValueDescription(getValue());
-        } catch (final ImageReadException e) {
+        } catch (final ImagingException e) {
             return "Invalid value: " + e.getMessage();
         }
     }

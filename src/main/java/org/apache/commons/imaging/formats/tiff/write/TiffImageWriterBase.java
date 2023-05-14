@@ -41,7 +41,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryOutputStream;
@@ -116,7 +116,7 @@ public abstract class TiffImageWriterBase {
         return false;
     }
     private void combineUserExifIntoFinalExif(final TiffOutputSet userExif,
-            final TiffOutputSet outputSet) throws ImageWriteException {
+            final TiffOutputSet outputSet) throws ImagingException {
         final List<TiffOutputDirectory> outputDirectories = outputSet.getDirectories();
         outputDirectories.sort(TiffOutputDirectory.COMPARATOR);
         for (final TiffOutputDirectory userDirectory : userExif.getDirectories()) {
@@ -213,9 +213,9 @@ public abstract class TiffImageWriterBase {
     }
 
     protected TiffOutputSummary validateDirectories(final TiffOutputSet outputSet)
-            throws ImageWriteException {
+            throws ImagingException {
         if (outputSet.isEmpty()) {
-            throw new ImageWriteException("No directories.");
+            throw new ImagingException("No directories.");
         }
 
         TiffOutputDirectory exifDirectory = null;
@@ -237,7 +237,7 @@ public abstract class TiffImageWriterBase {
                 switch (dirType) {
                     case TiffDirectoryConstants.DIRECTORY_TYPE_EXIF:
                         if (exifDirectory != null) {
-                            throw new ImageWriteException(
+                            throw new ImagingException(
                                     "More than one EXIF directory.");
                         }
                         exifDirectory = directory;
@@ -245,7 +245,7 @@ public abstract class TiffImageWriterBase {
 
                     case TiffDirectoryConstants.DIRECTORY_TYPE_GPS:
                         if (gpsDirectory != null) {
-                            throw new ImageWriteException(
+                            throw new ImagingException(
                                     "More than one GPS directory.");
                         }
                         gpsDirectory = directory;
@@ -253,18 +253,18 @@ public abstract class TiffImageWriterBase {
 
                     case TiffDirectoryConstants.DIRECTORY_TYPE_INTEROPERABILITY:
                         if (interoperabilityDirectory != null) {
-                            throw new ImageWriteException(
+                            throw new ImagingException(
                                     "More than one Interoperability directory.");
                         }
                         interoperabilityDirectory = directory;
                         break;
                     default:
-                        throw new ImageWriteException("Unknown directory: "
+                        throw new ImagingException("Unknown directory: "
                                 + dirType);
                 }
             } else {
                 if (directoryIndices.contains(dirType)) {
-                    throw new ImageWriteException(
+                    throw new ImagingException(
                             "More than one directory with index: " + dirType
                                     + ".");
                 }
@@ -275,7 +275,7 @@ public abstract class TiffImageWriterBase {
             final HashSet<Integer> fieldTags = new HashSet<>();
             for (final TiffOutputField field : directory) {
                 if (fieldTags.contains(field.tag)) {
-                    throw new ImageWriteException("Tag ("
+                    throw new ImagingException("Tag ("
                             + field.tagInfo.getDescription()
                             + ") appears twice in directory.");
                 }
@@ -283,19 +283,19 @@ public abstract class TiffImageWriterBase {
 
                 if (field.tag == ExifTagConstants.EXIF_TAG_EXIF_OFFSET.tag) {
                     if (exifDirectoryOffsetField != null) {
-                        throw new ImageWriteException(
+                        throw new ImagingException(
                                 "More than one Exif directory offset field.");
                     }
                     exifDirectoryOffsetField = field;
                 } else if (field.tag == ExifTagConstants.EXIF_TAG_INTEROP_OFFSET.tag) {
                     if (interoperabilityDirectoryOffsetField != null) {
-                        throw new ImageWriteException(
+                        throw new ImagingException(
                                 "More than one Interoperability directory offset field.");
                     }
                     interoperabilityDirectoryOffsetField = field;
                 } else if (field.tag == ExifTagConstants.EXIF_TAG_GPSINFO.tag) {
                     if (gpsDirectoryOffsetField != null) {
-                        throw new ImageWriteException(
+                        throw new ImagingException(
                                 "More than one GPS directory offset field.");
                     }
                     gpsDirectoryOffsetField = field;
@@ -305,7 +305,7 @@ public abstract class TiffImageWriterBase {
         }
 
         if (directoryIndices.isEmpty()) {
-            throw new ImageWriteException("Missing root directory.");
+            throw new ImagingException("Missing root directory.");
         }
 
         // "normal" TIFF directories should have continous indices starting with
@@ -316,7 +316,7 @@ public abstract class TiffImageWriterBase {
         for (int i = 0; i < directoryIndices.size(); i++) {
             final Integer index = directoryIndices.get(i);
             if (index != i) {
-                throw new ImageWriteException("Missing directory: " + i + ".");
+                throw new ImagingException("Missing directory: " + i + ".");
             }
 
             // set up chain of directory references for "normal" directories.
@@ -337,7 +337,7 @@ public abstract class TiffImageWriterBase {
         if (interoperabilityDirectory == null
                 && interoperabilityDirectoryOffsetField != null) {
             // perhaps we should just discard field?
-            throw new ImageWriteException(
+            throw new ImagingException(
                     "Output set has Interoperability Directory Offset field, but no Interoperability Directory");
         }
         if (interoperabilityDirectory != null) {
@@ -360,7 +360,7 @@ public abstract class TiffImageWriterBase {
         // make sure offset fields and offset'd directories correspond.
         if (exifDirectory == null && exifDirectoryOffsetField != null) {
             // perhaps we should just discard field?
-            throw new ImageWriteException(
+            throw new ImagingException(
                     "Output set has Exif Directory Offset field, but no Exif Directory");
         }
         if (exifDirectory != null) {
@@ -375,7 +375,7 @@ public abstract class TiffImageWriterBase {
 
         if (gpsDirectory == null && gpsDirectoryOffsetField != null) {
             // perhaps we should just discard field?
-            throw new ImageWriteException(
+            throw new ImagingException(
                     "Output set has GPS Directory Offset field, but no GPS Directory");
         }
         if (gpsDirectory != null) {
@@ -394,10 +394,10 @@ public abstract class TiffImageWriterBase {
     }
 
     public abstract void write(OutputStream os, TiffOutputSet outputSet)
-            throws IOException, ImageWriteException;
+            throws IOException, ImagingException;
 
     public void writeImage(final BufferedImage src, final OutputStream os, final TiffImagingParameters params)
-            throws ImageWriteException, IOException {
+            throws ImagingException, IOException {
         final TiffOutputSet userExif = params.getOutputSet();
 
         final String xmpXml = params.getXmpXml();
@@ -441,7 +441,7 @@ public abstract class TiffImageWriterBase {
             final Integer stripSizeInBytes = params.getLzwCompressionBlockSize();
             if (stripSizeInBytes != null) {
                 if (stripSizeInBytes < 8000) {
-                    throw new ImageWriteException(
+                    throw new ImagingException(
                             "Block size parameter " + stripSizeInBytes
                             + " is less than 8000 minimum");
                 }
@@ -492,7 +492,7 @@ public abstract class TiffImageWriterBase {
             final boolean is2D = (t4Options & 1) != 0;
             final boolean usesUncompressedMode = (t4Options & 2) != 0;
             if (usesUncompressedMode) {
-                throw new ImageWriteException(
+                throw new ImagingException(
                         "T.4 compression with the uncompressed mode extension is not yet supported");
             }
             final boolean hasFillBitsBeforeEOL = (t4Options & 4) != 0;
@@ -517,7 +517,7 @@ public abstract class TiffImageWriterBase {
             t6Options &= 0x4;
             final boolean usesUncompressedMode = (t6Options & TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE) != 0;
             if (usesUncompressedMode) {
-                throw new ImageWriteException(
+                throw new ImagingException(
                         "T.6 compression with the uncompressed mode extension is not yet supported");
             }
             for (int i = 0; i < strips.length; i++) {
@@ -553,7 +553,7 @@ public abstract class TiffImageWriterBase {
         case TIFF_COMPRESSION_UNCOMPRESSED:
             break;
         default:
-            throw new ImageWriteException(
+            throw new ImagingException(
                     "Invalid compression parameter (Only CCITT 1D/Group 3/Group 4, LZW, Packbits, Zlib Deflate and uncompressed supported).");
         }
 

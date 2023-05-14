@@ -18,13 +18,13 @@ package org.apache.commons.imaging.formats.png.scanlinefilters;
 
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 
 public class ScanlineFilterUp implements ScanlineFilter {
 
     @Override
     public void unfilter(final byte[] src, final byte[] dst, final byte[] up)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         for (int i = 0; i < src.length; i++) {
             // byte b;
 

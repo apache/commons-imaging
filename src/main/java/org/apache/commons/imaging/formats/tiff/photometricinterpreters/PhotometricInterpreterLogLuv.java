@@ -18,7 +18,7 @@ package org.apache.commons.imaging.formats.tiff.photometricinterpreters;
 
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
 /**
@@ -153,9 +153,9 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
 
     @Override
     public void interpretPixel(final ImageBuilder imageBuilder, final int[] samples, final int x,
-            final int y) throws ImageReadException, IOException {
+            final int y) throws ImagingException, IOException {
         if (samples == null || samples.length != 3) {
-            throw new ImageReadException("Invalid length of bits per sample (expected 3).");
+            throw new ImagingException("Invalid length of bits per sample (expected 3).");
         }
 
         // CIE illuminants. An illuminant is a theorical source of visible light with a profile.

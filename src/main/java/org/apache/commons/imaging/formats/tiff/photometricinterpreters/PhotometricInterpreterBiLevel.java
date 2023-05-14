@@ -18,7 +18,7 @@ package org.apache.commons.imaging.formats.tiff.photometricinterpreters;
 
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
 public class PhotometricInterpreterBiLevel extends PhotometricInterpreter {
@@ -37,7 +37,7 @@ public class PhotometricInterpreterBiLevel extends PhotometricInterpreter {
 
     @Override
     public void interpretPixel(final ImageBuilder imageBuilder, final int[] samples, final int x,
-            final int y) throws ImageReadException, IOException {
+            final int y) throws ImagingException, IOException {
         int sample = samples[0];
 
         if (invert) {

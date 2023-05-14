@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterLogLuv.TristimulusValues;
 import org.junit.jupiter.api.Assertions;
@@ -89,7 +89,7 @@ public class PhotometricInterpreterLogLuvTest {
     }
 
     @Test
-    public void testInterpretPixel() throws ImageReadException, IOException {
+    public void testInterpretPixel() throws ImagingException, IOException {
         final ImageBuilder imgBuilder = new ImageBuilder(600, 400, /*alpha*/ true);
         final int x = 10;
         final int y = 20;
@@ -99,11 +99,11 @@ public class PhotometricInterpreterLogLuvTest {
 
     @Test
     public void testInterpretPixelEmptySamples() {
-        Assertions.assertThrows(ImageReadException.class, () -> p.interpretPixel(null, new int[] {}, 0, 0));
+        Assertions.assertThrows(ImagingException.class, () -> p.interpretPixel(null, new int[] {}, 0, 0));
     }
 
     @Test
     public void testInterpretPixelNullSamples() {
-        Assertions.assertThrows(ImageReadException.class, () -> p.interpretPixel(null, null, 0, 0));
+        Assertions.assertThrows(ImagingException.class, () -> p.interpretPixel(null, null, 0, 0));
     }
 }

@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 
 class PgmWriter implements PnmWriter {
 
@@ -33,7 +33,7 @@ class PgmWriter implements PnmWriter {
 
     @Override
     public void writeImage(final BufferedImage src, final OutputStream os, final PnmImagingParameters params)
-            throws ImageWriteException, IOException {
+            throws ImagingException, IOException {
         // System.out.println
         // (b1 == 0x50 && b2 == 0x36)
         os.write(0x50);

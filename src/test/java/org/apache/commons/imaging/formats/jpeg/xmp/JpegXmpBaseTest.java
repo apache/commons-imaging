@@ -21,7 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
@@ -32,7 +32,7 @@ public abstract class JpegXmpBaseTest extends ImagingTest {
     private static final ImageFilter HAS_JPEG_XMP_IMAGE_FILTER = JpegXmpBaseTest::hasJpegXmpData;
 
     protected static List<File> getImagesWithXmpData() throws IOException,
-            ImageReadException {
+            ImagingException {
         return getTestImages(HAS_JPEG_XMP_IMAGE_FILTER);
     }
 
@@ -66,11 +66,11 @@ public abstract class JpegXmpBaseTest extends ImagingTest {
     }
 
     protected List<File> getImagesWithXmpData(final int max) throws IOException,
-            ImageReadException {
+            ImagingException {
         return getTestImages(HAS_JPEG_XMP_IMAGE_FILTER, max);
     }
 
-    protected File getImageWithXmpData() throws IOException, ImageReadException {
+    protected File getImageWithXmpData() throws IOException, ImagingException {
         return getTestImage(HAS_JPEG_XMP_IMAGE_FILTER);
     }
 

@@ -21,7 +21,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.logging.Logger;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 
 public class IccProfileInfo {
 
@@ -107,7 +107,7 @@ public class IccProfileInfo {
         }
     }
 
-    public String toString(final String prefix) throws ImageReadException,
+    public String toString(final String prefix) throws ImagingException,
             IOException {
         final StringWriter sw = new StringWriter();
         final PrintWriter pw = new PrintWriter(sw);

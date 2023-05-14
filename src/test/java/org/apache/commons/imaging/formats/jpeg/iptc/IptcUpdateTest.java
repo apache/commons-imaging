@@ -28,8 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
@@ -178,7 +177,7 @@ public class IptcUpdateTest extends IptcBaseTest {
         assertEquals(2, outMetadata.getItems().size());
     }
 
-    public byte[] writeIptc(final ByteSource byteSource, final PhotoshopApp13Data newData, final File imageFile) throws IOException, ImageReadException, ImageWriteException {
+    public byte[] writeIptc(final ByteSource byteSource, final PhotoshopApp13Data newData, final File imageFile) throws IOException, ImagingException, ImagingException {
         try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
             new JpegIptcRewriter().writeIPTC(byteSource, os, newData);
             return os.toByteArray();

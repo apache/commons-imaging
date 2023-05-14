@@ -32,8 +32,7 @@ import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ImageMetadata;
@@ -72,7 +71,7 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
 
     @Override
     public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         readDcxHeader(byteSource).dump(pw);
         return true;
     }
@@ -89,7 +88,7 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
 
     @Override
     public List<BufferedImage> getAllBufferedImages(final ByteSource byteSource)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final DcxHeader dcxHeader = readDcxHeader(byteSource);
         final List<BufferedImage> images = new ArrayList<>();
         final PcxImageParser pcxImageParser = new PcxImageParser();
@@ -107,7 +106,7 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
 
     @Override
     public final BufferedImage getBufferedImage(final ByteSource byteSource,
-            final PcxImagingParameters params) throws ImageReadException, IOException {
+            final PcxImagingParameters params) throws ImagingException, IOException {
         final List<BufferedImage> list = getAllBufferedImages(byteSource);
         return list.isEmpty() ? null : list.get(0);
     }
@@ -125,28 +124,28 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
     // FIXME should throw UOE
     @Override
     public byte[] getICCProfileBytes(final ByteSource byteSource, final PcxImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         return null;
     }
 
     // FIXME should throw UOE
     @Override
     public ImageInfo getImageInfo(final ByteSource byteSource, final PcxImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         return null;
     }
 
     // FIXME should throw UOE
     @Override
     public Dimension getImageSize(final ByteSource byteSource, final PcxImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         return null;
     }
 
     // FIXME should throw UOE
     @Override
     public ImageMetadata getMetadata(final ByteSource byteSource, final PcxImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         return null;
     }
 
@@ -156,7 +155,7 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
     }
 
     private DcxHeader readDcxHeader(final ByteSource byteSource)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             final int id = read4Bytes("Id", is, "Not a Valid DCX File", getByteOrder());
             final int size = 1024;
@@ -170,10 +169,10 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
             }
 
             if (id != DcxHeader.DCX_ID) {
-                throw new ImageReadException("Not a Valid DCX File: file id incorrect");
+                throw new ImagingException("Not a Valid DCX File: file id incorrect");
             }
             if (pageTable.size() == size) {
-                throw new ImageReadException("DCX page table not terminated by zero entry");
+                throw new ImagingException("DCX page table not terminated by zero entry");
             }
 
             final long[] pages = pageTable.stream().mapToLong(Long::longValue).toArray();
@@ -183,7 +182,7 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
 
     @Override
     public void writeImage(final BufferedImage src, final OutputStream os, final PcxImagingParameters params)
-            throws ImageWriteException, IOException {
+            throws ImagingException, IOException {
         final int headerSize = 4 + 1024 * 4;
 
         final BinaryOutputStream bos = BinaryOutputStream.littleEndian(os);

@@ -18,7 +18,7 @@ package org.apache.commons.imaging.formats.pnm;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -26,16 +26,16 @@ public class PgmFileInfoTest {
 
     @Test
     public void testCreateThrowsImageReadExceptionOne() {
-        Assertions.assertThrows(ImageReadException.class, () -> new PgmFileInfo(16711680, 16711680, false, 16711680));
+        Assertions.assertThrows(ImagingException.class, () -> new PgmFileInfo(16711680, 16711680, false, 16711680));
     }
 
     @Test
     public void testCreateThrowsImageReadExceptionTwo() {
-        Assertions.assertThrows(ImageReadException.class, () -> new PgmFileInfo(0, 0, true, 0));
+        Assertions.assertThrows(ImagingException.class, () -> new PgmFileInfo(0, 0, true, 0));
     }
 
     @Test
-    public void testGetBitDepth() throws ImageReadException {
+    public void testGetBitDepth() throws ImagingException {
         final PgmFileInfo pgmFileInfo = new PgmFileInfo(65535, 65535, false, 65535);
 
         assertEquals(65535, pgmFileInfo.getBitDepth());

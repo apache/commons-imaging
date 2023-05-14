@@ -22,7 +22,7 @@ import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
 import java.io.IOException;
 import java.nio.ByteOrder;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 
 class PixelParserRgb extends PixelParserSimple {
     private int byteCount;
@@ -35,14 +35,14 @@ class PixelParserRgb extends PixelParserSimple {
     }
 
     @Override
-    public int getNextRGB() throws ImageReadException, IOException {
+    public int getNextRGB() throws ImagingException, IOException {
 
         switch (bhi.bitsPerPixel) {
         case 1:
         case 4: {
             if (cachedBitCount < bhi.bitsPerPixel) {
                 if (cachedBitCount != 0) {
-                    throw new ImageReadException("Unexpected leftover bits: "
+                    throw new ImagingException("Unexpected leftover bits: "
                             + cachedBitCount + "/" + bhi.bitsPerPixel);
                 }
 
@@ -94,12 +94,12 @@ class PixelParserRgb extends PixelParserSimple {
             break;
         }
 
-        throw new ImageReadException("Unknown BitsPerPixel: "
+        throw new ImagingException("Unknown BitsPerPixel: "
                 + bhi.bitsPerPixel);
     }
 
     @Override
-    public void newline() throws ImageReadException, IOException {
+    public void newline() throws ImagingException, IOException {
         cachedBitCount = 0;
 
         while (((byteCount) % 4) != 0) {

@@ -18,7 +18,7 @@ package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
 import java.nio.ByteOrder;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.tiff.TiffField;
@@ -38,7 +38,7 @@ public class FieldTypeFloat extends FieldType {
     }
 
     @Override
-    public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException {
+    public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImagingException {
         if (o instanceof Float) {
             return ByteConversions.toBytes(((Float) o).floatValue(), byteOrder);
         }
@@ -47,7 +47,7 @@ public class FieldTypeFloat extends FieldType {
             return ByteConversions.toBytes(numbers, byteOrder);
         }
         if (!(o instanceof Float[])) {
-            throw new ImageWriteException("Invalid data", o);
+            throw new ImagingException("Invalid data", o);
         }
         final Float[] numbers = (Float[]) o;
         final float[] values = Allocator.floatArray(numbers.length);

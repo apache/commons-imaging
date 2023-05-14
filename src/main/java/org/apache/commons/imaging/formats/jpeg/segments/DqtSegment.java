@@ -24,7 +24,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 
 public class DqtSegment extends Segment {
     public static class QuantizationTable {
@@ -50,12 +50,12 @@ public class DqtSegment extends Segment {
     public final List<QuantizationTable> quantizationTables = new ArrayList<>();
 
     public DqtSegment(final int marker, final byte[] segmentData)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
     public DqtSegment(final int marker, int length, final InputStream is)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         super(marker, length);
 
         while (length > 0) {
@@ -76,7 +76,7 @@ public class DqtSegment extends Segment {
                     elements[i] = read2Bytes("QuantizationTableElement", is, "Not a Valid JPEG File", getByteOrder());
                     length -= 2;
                 } else {
-                    throw new ImageReadException(
+                    throw new ImagingException(
                             "Quantization table precision '" + precision
                                     + "' is invalid");
                 }

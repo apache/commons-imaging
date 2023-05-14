@@ -20,8 +20,7 @@ package org.apache.commons.imaging.formats.jpeg.exif;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.internal.Debug;
@@ -30,7 +29,7 @@ public class MakerNoteFieldTest extends SpecificExifTagTest {
 
     @Override
     protected void checkField(final File imageFile, final TiffField field)
-            throws IOException, ImageReadException, ImageWriteException {
+            throws IOException, ImagingException, ImagingException {
         if (field.getTag() != ExifTagConstants.EXIF_TAG_MAKER_NOTE.tag) {
             return;
         }

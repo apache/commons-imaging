@@ -23,8 +23,8 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
-import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingTest;
 
 public abstract class PngBaseTest extends ImagingTest {
@@ -36,7 +36,7 @@ public abstract class PngBaseTest extends ImagingTest {
         return format == ImageFormats.PNG;
     }
 
-    protected List<File> getPngImages() throws IOException, ImageReadException {
+    protected List<File> getPngImages() throws IOException, ImagingException {
         return getTestImages(IMAGE_FILTER);
     }
 

@@ -22,7 +22,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkPlte;
 import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilter;
@@ -63,20 +63,20 @@ abstract class ScanExpediter {
         this.transparencyFilter = transparencyFilter;
     }
 
-    public abstract void drive() throws ImageReadException, IOException;
+    public abstract void drive() throws ImagingException, IOException;
 
     final int getBitsToBytesRoundingUp(final int bits) {
         return (bits + 7) / 8;
     }
 
     byte[] getNextScanline(final InputStream is, final int length, final byte[] prev,
-            final int bytesPerPixel) throws ImageReadException, IOException {
+            final int bytesPerPixel) throws ImagingException, IOException {
         final int filterType = is.read();
         if (filterType < 0) {
-            throw new ImageReadException("PNG: missing filter type");
+            throw new ImagingException("PNG: missing filter type");
         }
         if (filterType >= FilterType.values().length) {
-            throw new ImageReadException("PNG: unknown filterType: " + filterType);
+            throw new ImagingException("PNG: unknown filterType: " + filterType);
         }
 
         final byte[] scanline = readBytes("scanline", is, length, "PNG: missing image data");
@@ -96,7 +96,7 @@ abstract class ScanExpediter {
     }
 
     int getRGB(final BitParser bitParser, final int pixelIndexInScanline)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
 
         switch (pngColorType) {
         case GREYSCALE: {
@@ -144,7 +144,7 @@ abstract class ScanExpediter {
             // 1,2,4,8 Each pixel is a palette index;
             // a PLTE chunk must appear.
             if (pngChunkPLTE == null) {
-                throw new ImageReadException("A PLTE chunk is required for an indexed color type.");
+                throw new ImagingException("A PLTE chunk is required for an indexed color type.");
             }
             final int index = bitParser.getSample(pixelIndexInScanline, 0);
 
@@ -184,7 +184,7 @@ abstract class ScanExpediter {
             return getPixelARGB(alpha, red, green, blue);
         }
         default:
-            throw new ImageReadException("PNG: unknown color type: " + pngColorType);
+            throw new ImagingException("PNG: unknown color type: " + pngColorType);
         }
     }
 
@@ -206,7 +206,7 @@ abstract class ScanExpediter {
     }
 
     byte[] unfilterScanline(final FilterType filterType, final byte[] src, final byte[] prev,
-            final int bytesPerPixel) throws ImageReadException, IOException {
+            final int bytesPerPixel) throws ImagingException, IOException {
         final ScanlineFilter filter = getScanlineFilter(filterType, bytesPerPixel);
 
         final byte[] dst = Allocator.byteArray(src.length);

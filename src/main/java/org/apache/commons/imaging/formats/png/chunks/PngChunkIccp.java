@@ -27,7 +27,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.InflaterInputStream;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 
 /**
@@ -66,17 +66,17 @@ public class PngChunkIccp extends PngChunk {
      * @param chunkType chunk type
      * @param crc CRC computed over the chunk type and chunk data (but not the length)
      * @param bytes chunk data bytes
-     * @throws ImageReadException when no profile name is present
+     * @throws ImagingException when no profile name is present
      * @throws IOException when an error happens while reading the profile data
      */
     public PngChunkIccp(
             final int length, final int chunkType, final int crc, final byte[] bytes)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         super(length, chunkType, crc, bytes);
 
         final int index = findNull(bytes);
         if (index < 0) {
-            throw new ImageReadException("PngChunkIccp: No Profile Name");
+            throw new ImagingException("PngChunkIccp: No Profile Name");
         }
         final byte[] nameBytes = Arrays.copyOf(bytes, index);
         profileName = new String(nameBytes, StandardCharsets.ISO_8859_1);

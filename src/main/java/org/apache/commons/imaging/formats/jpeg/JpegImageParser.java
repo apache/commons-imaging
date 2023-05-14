@@ -35,7 +35,7 @@ import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.XmpEmbeddable;
@@ -73,24 +73,24 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
         return startsWith(segment.getSegmentData(), JpegConstants.EXIF_IDENTIFIER_CODE);
     }
 
-    private byte[] assembleSegments(final List<App2Segment> segments) throws ImageReadException {
+    private byte[] assembleSegments(final List<App2Segment> segments) throws ImagingException {
         try {
             return assembleSegments(segments, false);
-        } catch (final ImageReadException e) {
+        } catch (final ImagingException e) {
             return assembleSegments(segments, true);
         }
     }
 
     private byte[] assembleSegments(final List<App2Segment> segments, final boolean startWithZero)
-            throws ImageReadException {
+            throws ImagingException {
         if (segments.isEmpty()) {
-            throw new ImageReadException("No App2 Segments Found.");
+            throw new ImagingException("No App2 Segments Found.");
         }
 
         final int markerCount = segments.get(0).numMarkers;
 
         if (segments.size() != markerCount) {
-            throw new ImageReadException("App2 Segments Missing.  Found: "
+            throw new ImagingException("App2 Segments Missing.  Found: "
                     + segments.size() + ", Expected: " + markerCount + ".");
         }
 
@@ -104,7 +104,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
 
             if ((i + offset) != segment.curMarker) {
                 dumpSegments(segments);
-                throw new ImageReadException(
+                throw new ImagingException(
                         "Incoherent App2 Segment Ordering.  i: " + i
                                 + ", segment[" + i + "].curMarker: "
                                 + segment.curMarker + ".");
@@ -112,7 +112,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
 
             if (markerCount != segment.numMarkers) {
                 dumpSegments(segments);
-                throw new ImageReadException(
+                throw new ImagingException(
                         "Inconsistent App2 Segment Count info.  markerCount: "
                                 + markerCount + ", segment[" + i
                                 + "].numMarkers: " + segment.numMarkers + ".");
@@ -136,7 +136,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
 
     @Override
     public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         pw.println("jpeg.dumpImageFile");
 
         {
@@ -154,7 +154,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
             final List<Segment> segments = readSegments(byteSource, null, false);
 
             if (segments == null) {
-                throw new ImageReadException("No Segments Found.");
+                throw new ImagingException("No Segments Found.");
             }
 
             for (int d = 0; d < segments.size(); d++) {
@@ -215,7 +215,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
 
     @Override
     public final BufferedImage getBufferedImage(final ByteSource byteSource,
-            final JpegImagingParameters params) throws ImageReadException, IOException {
+            final JpegImagingParameters params) throws ImagingException, IOException {
         final JpegDecoder jpegDecoder = new JpegDecoder();
         return jpegDecoder.decode(byteSource);
     }
@@ -231,7 +231,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
     }
 
     public TiffImageMetadata getExifMetadata(final ByteSource byteSource, TiffImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final byte[] bytes = getExifRawData(byteSource);
         if (null == bytes) {
             return null;
@@ -246,7 +246,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
     }
 
     public byte[] getExifRawData(final ByteSource byteSource)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final List<Segment> segments = readSegments(byteSource,
                 new int[] { JpegConstants.JPEG_APP1_MARKER, }, false);
 
@@ -267,7 +267,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
             return null;
         }
         if (exifSegments.size() > 1) {
-            throw new ImageReadException(
+            throw new ImagingException(
                     "Imaging currently can't parse EXIF metadata split across multiple APP1 segments.  "
                             + "Please send this image to the Imaging project.");
         }
@@ -284,7 +284,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
 
     @Override
     public byte[] getICCProfileBytes(final ByteSource byteSource, final JpegImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final List<Segment> segments = readSegments(byteSource,
                 new int[] { JpegConstants.JPEG_APP2_MARKER, }, false);
 
@@ -314,7 +314,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
 
     @Override
     public ImageInfo getImageInfo(final ByteSource byteSource, final JpegImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         // List allSegments = readSegments(byteSource, null, false);
 
         final List<Segment> SOF_segments = readSegments(byteSource, new int[] {
@@ -337,7 +337,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
         }, false);
 
         if (SOF_segments == null) {
-            throw new ImageReadException("No SOFN Data Found.");
+            throw new ImagingException("No SOFN Data Found.");
         }
 
         // if (SOF_segments.size() != 1)
@@ -352,7 +352,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
         // SOFNmarkers);
 
         if (fSOFNSegment == null) {
-            throw new ImageReadException("No SOFN Data Found.");
+            throw new ImagingException("No SOFN Data Found.");
         }
 
         final int width = fSOFNSegment.width;
@@ -649,7 +649,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
 
     @Override
     public Dimension getImageSize(final ByteSource byteSource, final JpegImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final List<Segment> segments = readSegments(byteSource, new int[] {
                 // kJFIFMarker,
                 JpegConstants.SOF0_MARKER,
@@ -669,11 +669,11 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
         }, true);
 
         if ((segments == null) || (segments.isEmpty())) {
-            throw new ImageReadException("No JFIF Data Found.");
+            throw new ImagingException("No JFIF Data Found.");
         }
 
         if (segments.size() > 1) {
-            throw new ImageReadException("Redundant JFIF Data Found.");
+            throw new ImagingException("Redundant JFIF Data Found.");
         }
 
         final SofnSegment fSOFNSegment = (SofnSegment) segments.get(0);
@@ -683,7 +683,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
 
     @Override
     public ImageMetadata getMetadata(final ByteSource byteSource, JpegImagingParameters params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         if (params == null) {
             params = new JpegImagingParameters();
         }
@@ -704,7 +704,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
     }
 
     public JpegPhotoshopMetadata getPhotoshopMetadata(final ByteSource byteSource,
-            final JpegImagingParameters params) throws ImageReadException, IOException {
+            final JpegImagingParameters params) throws ImagingException, IOException {
         final List<Segment> segments = readSegments(byteSource,
                 new int[] { JpegConstants.JPEG_APP13_MARKER, }, false);
 
@@ -720,7 +720,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
             final PhotoshopApp13Data data = segment.parsePhotoshopSegment(params);
             if (data != null) {
                 if (photoshopApp13Data != null) {
-                    throw new ImageReadException("JPEG contains more than one Photoshop App13 segment.");
+                    throw new ImagingException("JPEG contains more than one Photoshop App13 segment.");
                 }
                 photoshopApp13Data = data;
             }
@@ -744,7 +744,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
      */
     @Override
     public String getXmpXml(final ByteSource byteSource, final XmpImagingParameters<JpegImagingParameters> params)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
 
         final List<String> result = new ArrayList<>();
 
@@ -759,7 +759,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
             @Override
             public boolean visitSegment(final int marker, final byte[] markerBytes,
                     final int markerLength, final byte[] markerLengthBytes,
-                    final byte[] segmentData) throws ImageReadException {
+                    final byte[] segmentData) throws ImagingException {
                 if (marker == 0xffd9) {
                     return false;
                 }
@@ -786,14 +786,14 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
             return null;
         }
         if (result.size() > 1) {
-            throw new ImageReadException(
+            throw new ImagingException(
                     "JPEG file contains more than one XMP segment.");
         }
         return result.get(0);
     }
 
     public boolean hasExifSegment(final ByteSource byteSource)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final boolean[] result = { false, };
 
         final JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
@@ -835,7 +835,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
     }
 
     public boolean hasIptcSegment(final ByteSource byteSource)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final boolean[] result = { false, };
 
         final JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
@@ -877,7 +877,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
     }
 
     public boolean hasXmpSegment(final ByteSource byteSource)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         final boolean[] result = { false, };
 
         final JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
@@ -931,7 +931,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
         return false;
     }
 
-    public List<Segment> readSegments(final ByteSource byteSource, final int[] markers, final boolean returnAfterFirst) throws ImageReadException, IOException {
+    public List<Segment> readSegments(final ByteSource byteSource, final int[] markers, final boolean returnAfterFirst) throws ImagingException, IOException {
         final List<Segment> result = new ArrayList<>();
         final int[] sofnSegments = {
                 // kJFIFMarker,
@@ -961,7 +961,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
             @Override
             public boolean visitSegment(final int marker, final byte[] markerBytes,
                     final int markerLength, final byte[] markerLengthBytes,
-                    final byte[] segmentData) throws ImageReadException, IOException {
+                    final byte[] segmentData) throws ImagingException, IOException {
                 if (marker == JpegConstants.EOI_MARKER) {
                     return false;
                 }

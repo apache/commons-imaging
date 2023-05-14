@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.zip.InflaterInputStream;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.formats.png.PngConstants;
 import org.apache.commons.imaging.formats.png.PngText;
@@ -35,12 +35,12 @@ public class PngChunkZtxt extends PngTextChunk {
     public final String text;
 
     public PngChunkZtxt(final int length, final int chunkType, final int crc, final byte[] bytes)
-            throws ImageReadException, IOException {
+            throws ImagingException, IOException {
         super(length, chunkType, crc, bytes);
 
         int index = findNull(bytes);
         if (index < 0) {
-            throw new ImageReadException(
+            throw new ImagingException(
                     "PNG zTXt chunk keyword is unterminated.");
         }
 
@@ -49,7 +49,7 @@ public class PngChunkZtxt extends PngTextChunk {
 
         final int compressionMethod = bytes[index++];
         if (compressionMethod != PngConstants.COMPRESSION_DEFLATE_INFLATE) {
-            throw new ImageReadException(
+            throw new ImagingException(
                     "PNG zTXt chunk has unexpected compression method: "
                             + compressionMethod);
         }

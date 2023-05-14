@@ -18,7 +18,7 @@ package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
 import java.nio.ByteOrder;
 
-import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +29,7 @@ public class FieldTypeByteTest{
       final FieldTypeByte fieldTypeByte = FieldType.UNDEFINED;
       final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
 
-      Assertions.assertThrows(ImageWriteException.class, () -> fieldTypeByte.writeData( null, byteOrder));
+      Assertions.assertThrows(ImagingException.class, () -> fieldTypeByte.writeData( null, byteOrder));
   }
 
 }

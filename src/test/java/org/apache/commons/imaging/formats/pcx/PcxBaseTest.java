@@ -21,7 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingTest;
 
 public abstract class PcxBaseTest extends ImagingTest {
@@ -32,7 +32,7 @@ public abstract class PcxBaseTest extends ImagingTest {
         return file.getName().toLowerCase().endsWith(".pcx");
     }
 
-    protected List<File> getPcxImages() throws IOException, ImageReadException {
+    protected List<File> getPcxImages() throws IOException, ImagingException {
         return getTestImages(IMAGE_FILTER);
     }
 }

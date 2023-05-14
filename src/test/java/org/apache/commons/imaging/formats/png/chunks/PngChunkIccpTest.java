@@ -27,8 +27,8 @@ import java.util.stream.IntStream;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 
-import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImagingConstants;
+import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -42,11 +42,11 @@ public class PngChunkIccpTest {
     @Test
     public void testErrorOnNoProfileName() {
         final byte[] data = ImagingConstants.EMPTY_BYTE_ARRAY;
-        Assertions.assertThrows(ImageReadException.class, () -> new PngChunkIccp(0, chunkType, 0, data));
+        Assertions.assertThrows(ImagingException.class, () -> new PngChunkIccp(0, chunkType, 0, data));
     }
 
     @Test
-    public void testParsingIccpChunk() throws ImageReadException, IOException {
+    public void testParsingIccpChunk() throws ImagingException, IOException {
         final List<Byte> bytes = new ArrayList<>();
         final String profileName = "my-profile-01";
         for (final byte b : profileName.getBytes(StandardCharsets.ISO_8859_1)) {

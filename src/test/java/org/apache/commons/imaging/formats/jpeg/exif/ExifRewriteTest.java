@@ -35,9 +35,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageMetadata.ImageMetadataItem;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
@@ -60,12 +59,12 @@ public class ExifRewriteTest extends ExifBaseTest {
 
     private interface Rewriter {
         void rewrite(ByteSource byteSource, OutputStream os,
-                TiffOutputSet outputSet) throws ImageReadException,
-                IOException, ImageWriteException;
+                TiffOutputSet outputSet) throws ImagingException,
+                IOException, ImagingException;
     }
 
     private void compare(final File imageFile, final TiffImageMetadata oldExifMetadata,
-            final TiffImageMetadata newExifMetadata) throws ImageReadException {
+            final TiffImageMetadata newExifMetadata) throws ImagingException {
         assertNotNull(oldExifMetadata);
         assertNotNull(newExifMetadata);
 
@@ -197,7 +196,7 @@ public class ExifRewriteTest extends ExifBaseTest {
     }
 
     private void rewrite(final Rewriter rewriter, final String name) throws IOException,
-            ImageReadException {
+            ImagingException {
         final List<File> images = getImagesWithExifData();
         for (final File imageFile : images) {
 
@@ -249,13 +248,10 @@ public class ExifRewriteTest extends ExifBaseTest {
                 // newMetadata.dump();
 
                 compare(imageFile, oldExifMetadata, newExifMetadata);
-            } catch (final IOException | ImageReadException e) {
+            } catch (final IOException e) {
                 Debug.debug("imageFile", imageFile.getAbsoluteFile());
                 Debug.debug(e);
                 throw e;
-            } catch (final ImageWriteException e) {
-                Debug.debug("imageFile", imageFile.getAbsoluteFile());
-                Debug.debug(e);
             }
 
         }

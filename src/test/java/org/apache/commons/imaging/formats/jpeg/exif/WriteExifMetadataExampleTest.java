@@ -23,6 +23,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.util.stream.Stream;
 
+import org.apache.commons.imaging.ImagingOverflowException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.examples.WriteExifMetadataExample;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
@@ -65,7 +66,7 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest {
                     assertTrue(isOdd);
                 }
             }
-        } catch (final ExifRewriter.ExifOverflowException e) {
+        } catch (final ImagingOverflowException e) {
             Debug.debug("Ignoring unavoidable ExifOverflowException: " + e.getMessage());
             Debug.debug("Error image: " + imageFile.getAbsoluteFile());
         }
