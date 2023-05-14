@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.jpeg.iptc;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class IptcTypeLookup {
+final class IptcTypeLookup {
 
     private static final Map<Integer, IptcType> IPTC_TYPE_MAP = new HashMap<>();
 
