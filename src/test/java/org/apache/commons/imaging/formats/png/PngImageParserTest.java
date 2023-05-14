@@ -26,7 +26,7 @@ public class PngImageParserTest {
 
     @Test
     public void test_getImageSize() throws Exception {
-        byte[] bytes = {
+        final byte[] bytes = {
             // Header
             (byte) 0x89, 'P', 'N', 'G', '\r', '\n', 0x1A, '\n',
             // (Too large) Length

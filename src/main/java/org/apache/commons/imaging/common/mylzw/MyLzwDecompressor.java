@@ -47,12 +47,12 @@ public final class MyLzwDecompressor {
     private int written;
     private final boolean tiffLZWMode;
 
-    public MyLzwDecompressor(final int initialCodeSize, final ByteOrder byteOrder, boolean tiffLZWMode) throws ImageReadException {
+    public MyLzwDecompressor(final int initialCodeSize, final ByteOrder byteOrder, final boolean tiffLZWMode) throws ImageReadException {
         this(initialCodeSize, byteOrder, tiffLZWMode, null);
     }
 
     public MyLzwDecompressor(final int initialCodeSize, final ByteOrder byteOrder,
-            boolean tiffLZWMode, final Listener listener) throws ImageReadException {
+            final boolean tiffLZWMode, final Listener listener) throws ImageReadException {
         this.listener = listener;
         this.byteOrder = byteOrder;
         this.tiffLZWMode = tiffLZWMode;

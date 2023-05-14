@@ -51,7 +51,7 @@ public class GenericImageMetadata implements ImageMetadata {
             return result;
         }
     }
-    private static final String NEWLINE = System.getProperty("line.separator");
+    private static final String NEWLINE = System.lineSeparator();
 
     private final List<ImageMetadataItem> items = new ArrayList<>();
 

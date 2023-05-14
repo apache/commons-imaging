@@ -32,7 +32,7 @@ import org.apache.commons.imaging.internal.Debug;
 
 public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
 
-    private static final String NEWLINE = System.getProperty("line.separator");
+    private static final String NEWLINE = System.lineSeparator();
     public final ByteOrder byteOrder;
     private final List<TiffOutputDirectory> directories = new ArrayList<>();
 

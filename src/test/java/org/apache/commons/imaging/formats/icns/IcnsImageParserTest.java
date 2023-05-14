@@ -26,7 +26,7 @@ public class IcnsImageParserTest {
 
     @Test
     public void test_getImageSize() throws Exception {
-        byte[] bytes = {
+        final byte[] bytes = {
                 // Header
                 'i', 'c', 'n', 's',
                 // (Too large) file size

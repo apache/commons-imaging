@@ -28,7 +28,7 @@ import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 
 public class TiffOutputField {
-    private static final String NEWLINE = System.getProperty("line.separator");
+    private static final String NEWLINE = System.lineSeparator();
     protected static TiffOutputField createOffsetField(final TagInfo tagInfo,
             final ByteOrder byteOrder) throws ImageWriteException {
         return new TiffOutputField(tagInfo, FieldType.LONG, 1,

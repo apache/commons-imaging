@@ -37,7 +37,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.internal.Debug;
 
 public class JpegImageMetadata implements ImageMetadata {
-    private static final String NEWLINE = System.getProperty("line.separator");
+    private static final String NEWLINE = System.lineSeparator();
     private final JpegPhotoshopMetadata photoshop;
     private final TiffImageMetadata exif;
 

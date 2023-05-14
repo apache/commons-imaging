@@ -73,7 +73,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShorts;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoXpString;
 
 public final class TiffOutputDirectory extends TiffOutputItem implements Iterable<TiffOutputField> {
-    public static final Comparator<TiffOutputDirectory> COMPARATOR = Comparator.comparingInt(o -> o.getType());
+    public static final Comparator<TiffOutputDirectory> COMPARATOR = Comparator.comparingInt(TiffOutputDirectory::getType);
     private final int type;
     private final List<TiffOutputField> fields = new ArrayList<>();
     private final ByteOrder byteOrder;
