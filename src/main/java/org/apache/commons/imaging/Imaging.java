@@ -613,7 +613,7 @@ public final class Imaging {
     public static String getXmpXml(final ByteSource byteSource) throws ImageReadException, IOException {
         final ImageParser<?> imageParser = ImageParserFactory.getImageParser(byteSource);
         if (imageParser instanceof XmpEmbeddable) {
-            return ((XmpEmbeddable) imageParser).getXmpXml(byteSource, null);
+            return ((XmpEmbeddable<?>) imageParser).getXmpXml(byteSource, null);
         }
         return null;
     }
