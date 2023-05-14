@@ -48,7 +48,7 @@ public class UncompressedDataReader implements DataReader {
 
         final int channelCount = dataParser.getBasicChannelsCount();
         final int depth = header.depth;
-        final MyBitInputStream mbis = new MyBitInputStream(is, ByteOrder.BIG_ENDIAN);
+        final MyBitInputStream mbis = new MyBitInputStream(is, ByteOrder.BIG_ENDIAN, false);
         // we want all samples to be bytes
         try (BitsToByteInputStream bbis = new BitsToByteInputStream(mbis, 8)) {
             final int[][][] data = new int[Allocator.check(channelCount)][Allocator

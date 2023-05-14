@@ -107,10 +107,7 @@ public final class MyLzwDecompressor {
     public byte[] decompress(final InputStream is, final int expectedLength) throws IOException {
         int code;
         int oldCode = -1;
-        final MyBitInputStream mbis = new MyBitInputStream(is, byteOrder);
-        if (tiffLZWMode) {
-            mbis.setTiffLZWMode();
-        }
+        final MyBitInputStream mbis = new MyBitInputStream(is, byteOrder, tiffLZWMode);
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream(Allocator.checkByteArray(expectedLength));
 

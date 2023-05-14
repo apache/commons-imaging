@@ -73,7 +73,7 @@ public class CompressedDataReader implements DataReader {
 
                 final byte[] unpacked = new PackBits().decompress(packed, width);
                 final InputStream bais = new ByteArrayInputStream(unpacked);
-                final MyBitInputStream mbis = new MyBitInputStream(bais, ByteOrder.BIG_ENDIAN);
+                final MyBitInputStream mbis = new MyBitInputStream(bais, ByteOrder.BIG_ENDIAN, false);
                 // we want all samples to be bytes
                 try (BitsToByteInputStream bbis = new BitsToByteInputStream(mbis, 8)) {
                     final int[] scanline = bbis.readBitsArray(depth, width);

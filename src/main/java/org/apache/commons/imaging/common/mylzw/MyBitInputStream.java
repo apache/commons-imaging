@@ -23,14 +23,15 @@ import java.nio.ByteOrder;
 public class MyBitInputStream extends InputStream {
     private final InputStream is;
     private final ByteOrder byteOrder;
-    private boolean tiffLZWMode;
+    private final boolean tiffLZWMode;
     private long bytesRead;
     private int bitsInCache;
     private int bitCache;
 
-    public MyBitInputStream(final InputStream is, final ByteOrder byteOrder) {
+    public MyBitInputStream(final InputStream is, final ByteOrder byteOrder, final boolean tiffLZWMode) {
         this.byteOrder = byteOrder;
         this.is = is;
+        this.tiffLZWMode = tiffLZWMode;
     }
 
     public void flushCache() {
@@ -88,10 +89,6 @@ public class MyBitInputStream extends InputStream {
         bitCache &= remainderMask;
 
         return result;
-    }
-
-    public void setTiffLZWMode() {
-        tiffLZWMode = true;
     }
 
 }
