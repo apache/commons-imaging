@@ -16,12 +16,12 @@
  */
 package org.apache.commons.imaging.common.mylzw;
 
+import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteOrder;
 
-public class MyBitInputStream extends InputStream {
-    private final InputStream is;
+public class MyBitInputStream extends FilterInputStream {
     private final ByteOrder byteOrder;
     private final boolean tiffLZWMode;
     private long bytesRead;
@@ -29,8 +29,8 @@ public class MyBitInputStream extends InputStream {
     private int bitCache;
 
     public MyBitInputStream(final InputStream is, final ByteOrder byteOrder, final boolean tiffLZWMode) {
+        super(is);
         this.byteOrder = byteOrder;
-        this.is = is;
         this.tiffLZWMode = tiffLZWMode;
     }
 
@@ -50,7 +50,7 @@ public class MyBitInputStream extends InputStream {
 
     public int readBits(final int sampleBits) throws IOException {
         while (bitsInCache < sampleBits) {
-            final int next = is.read();
+            final int next = in.read();
 
             if (next < 0) {
                 if (tiffLZWMode) {
