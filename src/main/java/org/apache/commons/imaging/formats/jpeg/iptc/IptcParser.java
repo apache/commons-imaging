@@ -82,7 +82,9 @@ public class IptcParser extends BinaryFileParser {
             if (Charset.isSupported(codedCharsetString)) {
                 return Charset.forName(codedCharsetString);
             }
-        } catch (final IllegalArgumentException e) { }
+        } catch (final IllegalArgumentException ignored) {
+            // ignored
+        }
         // check if encoding is a escape sequence
         // normalize encoding byte sequence
         final byte[] codedCharsetNormalized = Allocator.byteArray(codedCharset.length);
@@ -469,45 +471,45 @@ public class IptcParser extends BinaryFileParser {
         return blockData;
     }
 
-    public byte[] writePhotoshopApp13Segment(final PhotoshopApp13Data data)
-            throws IOException, ImageWriteException {
-        final ByteArrayOutputStream os = new ByteArrayOutputStream();
-        final BinaryOutputStream bos = BinaryOutputStream.bigEndian(os);
+    public byte[] writePhotoshopApp13Segment(final PhotoshopApp13Data data) throws IOException, ImageWriteException {
+        try (ByteArrayOutputStream os = new ByteArrayOutputStream();
+                BinaryOutputStream bos = BinaryOutputStream.bigEndian(os)) {
 
-        JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.writeTo(bos);
+            JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.writeTo(bos);
 
-        final List<IptcBlock> blocks = data.getRawBlocks();
-        for (final IptcBlock block : blocks) {
-            bos.write4Bytes(JpegConstants.CONST_8BIM);
+            final List<IptcBlock> blocks = data.getRawBlocks();
+            for (final IptcBlock block : blocks) {
+                bos.write4Bytes(JpegConstants.CONST_8BIM);
 
-            if (block.getBlockType() < 0 || block.getBlockType() > 0xffff) {
-                throw new ImageWriteException("Invalid IPTC block type.");
-            }
-            bos.write2Bytes(block.getBlockType());
+                if (block.getBlockType() < 0 || block.getBlockType() > 0xffff) {
+                    throw new ImageWriteException("Invalid IPTC block type.");
+                }
+                bos.write2Bytes(block.getBlockType());
 
-            final byte[] blockNameBytes = block.getBlockNameBytes();
-            if (blockNameBytes.length > 255) {
-                throw new ImageWriteException("IPTC block name is too long: " + blockNameBytes.length);
-            }
-            bos.write(blockNameBytes.length);
-            bos.write(blockNameBytes);
-            if (blockNameBytes.length % 2 == 0) {
-                bos.write(0); // pad to even size, including length byte.
+                final byte[] blockNameBytes = block.getBlockNameBytes();
+                if (blockNameBytes.length > 255) {
+                    throw new ImageWriteException("IPTC block name is too long: " + blockNameBytes.length);
+                }
+                bos.write(blockNameBytes.length);
+                bos.write(blockNameBytes);
+                if (blockNameBytes.length % 2 == 0) {
+                    bos.write(0); // pad to even size, including length byte.
+                }
+
+                final byte[] blockData = block.getBlockData();
+                if (blockData.length > IptcConstants.IPTC_NON_EXTENDED_RECORD_MAXIMUM_SIZE) {
+                    throw new ImageWriteException("IPTC block data is too long: " + blockData.length);
+                }
+                bos.write4Bytes(blockData.length);
+                bos.write(blockData);
+                if (blockData.length % 2 == 1) {
+                    bos.write(0); // pad to even size
+                }
             }
 
-            final byte[] blockData = block.getBlockData();
-            if (blockData.length > IptcConstants.IPTC_NON_EXTENDED_RECORD_MAXIMUM_SIZE) {
-                throw new ImageWriteException("IPTC block data is too long: " + blockData.length);
-            }
-            bos.write4Bytes(blockData.length);
-            bos.write(blockData);
-            if (blockData.length % 2 == 1) {
-                bos.write(0); // pad to even size
-            }
+            bos.flush();
+            return os.toByteArray();
         }
-
-        bos.flush();
-        return os.toByteArray();
     }
 
 }
