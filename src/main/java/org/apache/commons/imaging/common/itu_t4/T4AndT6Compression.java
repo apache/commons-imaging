@@ -68,7 +68,7 @@ public final class T4AndT6Compression {
             CONTROL_CODES.insert(T4_T6_Tables.VR2.bitString, T4_T6_Tables.VR2);
             CONTROL_CODES.insert(T4_T6_Tables.VR3.bitString, T4_T6_Tables.VR3);
         } catch (final HuffmanTreeException cannotHappen) {
-            throw new Error(cannotHappen);
+            throw new IllegalStateException(cannotHappen);
         }
     }
 
