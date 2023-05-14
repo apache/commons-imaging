@@ -63,12 +63,14 @@ public class ImageBuilder {
     private final boolean isAlphaPremultiplied;
 
     /**
-     * Construct an ImageBuilder instance
+     * Construct an ImageBuilder instance.
+     *
      * @param width the width of the image to be built
      * @param height the height of the image to be built
      * @param hasAlpha indicates whether the image has an alpha channel
      * (the selection of alpha channel does not change the memory
      * requirements for the ImageBuilder or resulting BufferedImage.
+     * @throws RasterFormatException if {@code width} or {@code height} are equal or less than zero
      */
     public ImageBuilder(final int width, final int height, final boolean hasAlpha) {
         checkDimensions(width, height);
@@ -90,7 +92,7 @@ public class ImageBuilder {
      * requirements for the ImageBuilder or resulting BufferedImage.
      * @param isAlphaPremultiplied indicates whether alpha values are
      * pre-multiplied; this setting is relevant only if alpha is true.
-     *
+     * @throws RasterFormatException if {@code width} or {@code height} are equal or less than zero
      */
     public ImageBuilder(final int width, final int height,
         final boolean hasAlpha, final boolean isAlphaPremultiplied) {
