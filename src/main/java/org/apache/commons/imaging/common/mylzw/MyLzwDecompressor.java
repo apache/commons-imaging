@@ -181,9 +181,9 @@ public final class MyLzwDecompressor {
         return code < codes;
     }
 
-    private byte[] stringFromCode(final int code) throws IOException {
+    private byte[] stringFromCode(final int code) throws ImagingException {
         if ((code >= codes) || (code < 0)) {
-            throw new IOException("Bad Code: " + code + " codes: " + codes
+            throw new ImagingException("Bad Code: " + code + " codes: " + codes
                     + " code_size: " + codeSize + ", table: " + table.length);
         }
         return table[code];

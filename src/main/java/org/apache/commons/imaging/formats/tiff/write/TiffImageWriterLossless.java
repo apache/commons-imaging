@@ -59,7 +59,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         @Override
         public void write(final byte[] b, final int off, final int len) throws IOException {
             if (index + len > buffer.length) {
-                throw new IOException("Buffer overflow.");
+                throw new ImagingException("Buffer overflow.");
             }
             System.arraycopy(b, off, buffer, index, len);
             index += len;
@@ -68,7 +68,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         @Override
         public void write(final int b) throws IOException {
             if (index >= buffer.length) {
-                throw new IOException("Buffer overflow.");
+                throw new ImagingException("Buffer overflow.");
             }
 
             buffer[index++] = (byte) b;

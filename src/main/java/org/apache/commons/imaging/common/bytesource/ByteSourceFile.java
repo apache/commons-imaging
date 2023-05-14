@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
 
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFunctions;
 
 public class ByteSourceFile extends ByteSource {
@@ -54,7 +55,7 @@ public class ByteSourceFile extends ByteSource {
             // We include a separate check for int overflow.
             if ((start < 0) || (length < 0) || (start + length < 0)
                     || (start + length > raf.length())) {
-                throw new IOException("Could not read block (block start: "
+                throw new ImagingException("Could not read block (block start: "
                         + start + ", block length: " + length
                         + ", data length: " + raf.length() + ").");
             }

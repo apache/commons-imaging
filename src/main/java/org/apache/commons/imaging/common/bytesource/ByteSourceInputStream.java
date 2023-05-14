@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Objects;
 
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFunctions;
 
@@ -196,7 +197,7 @@ public class ByteSourceInputStream extends ByteSource {
         if ((blockStart < 0) || (blockLength < 0)
                 || (blockStart + blockLength < 0)
                 || (blockStart + blockLength > getLength())) {
-            throw new IOException("Could not read block (block start: "
+            throw new ImagingException("Could not read block (block start: "
                     + blockStart + ", block length: " + blockLength
                     + ", data length: " + streamLength + ").");
         }
@@ -209,7 +210,7 @@ public class ByteSourceInputStream extends ByteSource {
         while (true) {
             final int read = cis.read(bytes, total, bytes.length - total);
             if (read < 1) {
-                throw new IOException("Could not read block.");
+                throw new ImagingException("Could not read block.");
             }
             total += read;
             if (total >= blockLength) {

@@ -22,6 +22,7 @@ import java.nio.ByteOrder;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 
 public class MyLzwCompressor {
@@ -165,11 +166,11 @@ public class MyLzwCompressor {
     }
 
     private int codeFromString(final byte[] bytes, final int start, final int length)
-            throws IOException {
+            throws ImagingException {
         final ByteArray key = arrayToKey(bytes, start, length);
         final Integer code = map.get(key);
         if (code == null) {
-            throw new IOException("CodeFromString");
+            throw new ImagingException("CodeFromString");
         }
         return code;
     }

@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
+import org.apache.commons.imaging.ImagingException;
+
 public class ByteSourceArray extends ByteSource {
     private final byte[] bytes;
 
@@ -39,12 +41,12 @@ public class ByteSourceArray extends ByteSource {
     }
 
     @Override
-    public byte[] getBlock(final long startLong, final int length) throws IOException {
+    public byte[] getBlock(final long startLong, final int length) throws ImagingException {
         final int start = (int) startLong;
         // We include a separate check for int overflow.
         if ((start < 0) || (length < 0) || (start + length < 0)
                 || (start + length > bytes.length)) {
-            throw new IOException("Could not read block (block start: " + start
+            throw new ImagingException("Could not read block (block start: " + start
                     + ", block length: " + length + ", data length: "
                     + bytes.length + ").");
         }

@@ -19,6 +19,8 @@ package org.apache.commons.imaging.formats.rgbe;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.commons.imaging.ImagingException;
+
 class InfoHeaderReader {
     private final InputStream is;
 
@@ -29,7 +31,7 @@ class InfoHeaderReader {
     private char read() throws IOException {
         final int result = is.read();
         if (result < 0) {
-            throw new IOException("HDR: Unexpected EOF");
+            throw new ImagingException("HDR: Unexpected EOF");
         }
         return (char) result;
     }

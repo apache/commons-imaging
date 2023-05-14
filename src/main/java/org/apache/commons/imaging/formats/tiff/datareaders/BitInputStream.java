@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteOrder;
 
+import org.apache.commons.imaging.ImagingException;
+
 /**
  * Input stream reading 1-8, 16, 24 or 32 bits, starting from the most significant bit, but incapable of reading
  * non-aligned and < 8 bit fields across byte boundaries.
@@ -47,7 +49,7 @@ class BitInputStream extends FilterInputStream {
     @Override
     public int read() throws IOException {
         if (cacheBitsRemaining > 0) {
-            throw new IOException("BitInputStream: incomplete bit read");
+            throw new ImagingException("BitInputStream: incomplete bit read");
         }
         return in.read();
     }
@@ -61,7 +63,7 @@ class BitInputStream extends FilterInputStream {
                 bytesRead++;
             }
             if (count > cacheBitsRemaining) {
-                throw new IOException("BitInputStream: can't read bit fields across bytes");
+                throw new ImagingException("BitInputStream: can't read bit fields across bytes");
             }
 
             // int bits_to_shift = cache_bits_remaining - count;
@@ -87,7 +89,7 @@ class BitInputStream extends FilterInputStream {
 
         }
         if (cacheBitsRemaining > 0) {
-            throw new IOException("BitInputStream: incomplete bit read");
+            throw new ImagingException("BitInputStream: incomplete bit read");
         }
 
         if (count == 8) {
@@ -129,6 +131,6 @@ class BitInputStream extends FilterInputStream {
             }
         }
 
-        throw new IOException("BitInputStream: unknown error");
+        throw new ImagingException("BitInputStream: unknown error");
     }
 }

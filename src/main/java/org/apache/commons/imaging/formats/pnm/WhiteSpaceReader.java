@@ -19,6 +19,8 @@ package org.apache.commons.imaging.formats.pnm;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.commons.imaging.ImagingException;
+
 class WhiteSpaceReader {
     private final InputStream is;
 
@@ -40,7 +42,7 @@ class WhiteSpaceReader {
     private char read() throws IOException {
         final int result = is.read();
         if (result < 0) {
-            throw new IOException("PNM: Unexpected EOF");
+            throw new ImagingException("PNM: Unexpected EOF");
         }
         return (char) result;
     }

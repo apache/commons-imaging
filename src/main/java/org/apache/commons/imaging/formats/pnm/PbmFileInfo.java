@@ -22,6 +22,7 @@ import java.io.InputStream;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
+import org.apache.commons.imaging.ImagingException;
 
 class PbmFileInfo extends FileInfo {
     private int bitCache;
@@ -66,7 +67,7 @@ class PbmFileInfo extends FileInfo {
         if (bitsInCache < 1) {
             final int bits = is.read();
             if (bits < 0) {
-                throw new IOException("PBM: Unexpected EOF");
+                throw new ImagingException("PBM: Unexpected EOF");
             }
             bitCache = 0xff & bits;
             bitsInCache += 8;
@@ -82,7 +83,7 @@ class PbmFileInfo extends FileInfo {
         if (bit == 1) {
             return 0xff000000;
         }
-        throw new IOException("PBM: bad bit: " + bit);
+        throw new ImagingException("PBM: bad bit: " + bit);
     }
 
     @Override
@@ -94,7 +95,7 @@ class PbmFileInfo extends FileInfo {
         if (bit == 1) {
             return 0xffffffff;
         }
-        throw new IOException("PBM: bad bit: " + bit);
+        throw new ImagingException("PBM: bad bit: " + bit);
     }
 
     @Override

@@ -21,25 +21,28 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageInfo;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
 abstract class FileInfo {
+
     static int readSample(final InputStream is, final int bytesPerSample) throws IOException {
         int sample = 0;
         for (int i = 0; i < bytesPerSample; i++) {
             final int nextByte = is.read();
             if (nextByte < 0) {
-                throw new IOException("PNM: Unexpected EOF");
+                throw new ImagingException("PNM: Unexpected EOF");
             }
             sample <<= 8;
             sample |= nextByte;
         }
         return sample;
     }
-    static int scaleSample(int sample, final float scale, final int max) throws IOException {
+
+    static int scaleSample(int sample, final float scale, final int max) throws ImagingException {
         if (sample < 0) {
             // Even netpbm tools break for files like this
-            throw new IOException("Negative pixel values are invalid in PNM files");
+            throw new ImagingException("Negative pixel values are invalid in PNM files");
         }
         if (sample > max) {
             // invalid values -> black
@@ -47,6 +50,7 @@ abstract class FileInfo {
         }
         return (int) ((sample * scale / max) + 0.5f);
     }
+
     final int width;
 
     final int height;
