@@ -28,11 +28,13 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLongOrIFD;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
 
 /**
- * TIFF specification supplement 1
- * <BR>
+ * TIFF specification supplement 1.
+ * <p>
  * Enhancements for Adobe PageMaker(R) 6.0 software
- * <BR>
+ * </p>
+ * <p>
  * http://partners.adobe.com/public/developer/en/tiff/TIFFPM6.pdf
+ * </p>
  */
 public final class AdobePageMaker6TagConstants {
 

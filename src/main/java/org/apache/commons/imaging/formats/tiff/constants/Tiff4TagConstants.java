@@ -25,8 +25,9 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
 
 /**
  * Tags in TIFF4 but NOT in TIFF6.
- * <BR>
+ * <p>
  * http://cool.conservation-us.org/bytopic/imaging/std/tiff4.html
+ * </p>
  */
 public final class Tiff4TagConstants {
 

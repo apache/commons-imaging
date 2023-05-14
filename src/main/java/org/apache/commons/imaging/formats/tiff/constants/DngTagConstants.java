@@ -40,9 +40,10 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShorts;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUndefineds;
 
 /**
- * Digital Negative (DNG) Specification
- * <BR>
+ * Digital Negative (DNG) Specification.
+ * <p>
  * http://www.adobe.com/products/dng/pdfs/dng_spec_1_3_0_0.pdf
+ * </p>
  */
 public final class DngTagConstants {
 

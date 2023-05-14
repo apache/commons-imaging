@@ -26,9 +26,10 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShortOrLong;
 
 /**
- * Design rule for Camera Filesystem
- * <BR>
+ * Design rule for Camera file system.
+ * <p>
  * http://www.exif.org/dcf.PDF
+ * </p>
  */
 public final class DcfTagConstants {
 

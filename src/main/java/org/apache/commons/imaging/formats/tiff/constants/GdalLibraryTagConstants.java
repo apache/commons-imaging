@@ -25,25 +25,23 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
 
 /**
  * GDAL library.
- * <BR>
+ * <p>
  * http://www.awaresystems.be/imaging/tiff/tifftags/gdal_metadata.html
- * <BR>
+ * </p>
+ * <p>
  * http://www.awaresystems.be/imaging/tiff/tifftags/gdal_nodata.html
+ * </p>
  */
 public final class GdalLibraryTagConstants {
 
-    public static final TagInfoAscii EXIF_TAG_GDAL_METADATA = new TagInfoAscii(
-            "GDALMetadata", 0xa480, -1,
+    public static final TagInfoAscii EXIF_TAG_GDAL_METADATA = new TagInfoAscii("GDALMetadata", 0xa480, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoAscii EXIF_TAG_GDAL_NO_DATA = new TagInfoAscii(
-            "GDALNoData", 0xa481, -1,
+    public static final TagInfoAscii EXIF_TAG_GDAL_NO_DATA = new TagInfoAscii("GDALNoData", 0xa481, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final List<TagInfo> ALL_GDAL_LIBRARY_TAGS =
-            Collections.unmodifiableList(Arrays.<TagInfo> asList(
-                    EXIF_TAG_GDAL_METADATA,
-                    EXIF_TAG_GDAL_NO_DATA));
+    public static final List<TagInfo> ALL_GDAL_LIBRARY_TAGS = Collections
+            .unmodifiableList(Arrays.<TagInfo>asList(EXIF_TAG_GDAL_METADATA, EXIF_TAG_GDAL_NO_DATA));
 
     private GdalLibraryTagConstants() {
     }
