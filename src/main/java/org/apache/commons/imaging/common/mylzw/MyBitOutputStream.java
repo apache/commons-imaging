@@ -27,7 +27,7 @@ class MyBitOutputStream extends OutputStream {
     private int bitCache;
     private int bytesWritten;
 
-    public MyBitOutputStream(final OutputStream os, final ByteOrder byteOrder) {
+    MyBitOutputStream(final OutputStream os, final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
         this.os = os;
     }
