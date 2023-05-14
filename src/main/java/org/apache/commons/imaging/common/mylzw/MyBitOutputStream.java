@@ -16,24 +16,25 @@
  */
 package org.apache.commons.imaging.common.mylzw;
 
+import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteOrder;
 
-class MyBitOutputStream extends OutputStream {
-    private final OutputStream os;
+class MyBitOutputStream extends FilterOutputStream {
+
     private final ByteOrder byteOrder;
     private int bitsInCache;
     private int bitCache;
     private int bytesWritten;
 
     MyBitOutputStream(final OutputStream os, final ByteOrder byteOrder) {
+        super(os);
         this.byteOrder = byteOrder;
-        this.os = os;
     }
 
     private void actualWrite(final int value) throws IOException {
-        os.write(value);
+        out.write(value);
         bytesWritten++;
     }
 
@@ -45,10 +46,10 @@ class MyBitOutputStream extends OutputStream {
             if (byteOrder == ByteOrder.BIG_ENDIAN) {
                 // MSB, so write from left
                 b <<= 8 - bitsInCache; // left align fragment.
-                os.write(b);
+                out.write(b);
             } else {
                 // LSB, so write from right
-                os.write(b);
+                out.write(b);
             }
         }
 
