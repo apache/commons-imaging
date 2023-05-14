@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteOrder;
 
-public class MyBitOutputStream extends OutputStream {
+class MyBitOutputStream extends OutputStream {
     private final OutputStream os;
     private final ByteOrder byteOrder;
     private int bitsInCache;
