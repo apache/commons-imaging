@@ -98,7 +98,7 @@ class BitInputStream extends InputStream {
         }
 
         /**
-         * Taking default order of the Tiff to be Little Endian and reversing
+         * Taking default order of the TIFF to be Little Endian and reversing
          * the bytes in the end if its Big Endian.This is done because majority
          * (may be all) of the files will be of Little Endian.
          */

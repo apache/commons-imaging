@@ -49,7 +49,7 @@ public abstract class TiffImageData {
 
         @Override
         public String getElementDescription() {
-            return "Tiff image data: " + getDataLength() + " bytes";
+            return "TIFF image data: " + getDataLength() + " bytes";
         }
     }
 
@@ -60,7 +60,7 @@ public abstract class TiffImageData {
 
         @Override
         public String getElementDescription() {
-            return "Tiff image data: " + getDataLength() + " bytes";
+            return "TIFF image data: " + getDataLength() + " bytes";
         }
 
     }

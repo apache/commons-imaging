@@ -17,7 +17,7 @@
 
 /**
  * Provides classes and methods for reading and writing
- * Tagged Image File Format (TIFF) files.   Tiff files are
+ * Tagged Image File Format (TIFF) files.   TIFF files are
  * widely used in applications for which supplemental
  * metadata is added to images in the form of "tags".
  */

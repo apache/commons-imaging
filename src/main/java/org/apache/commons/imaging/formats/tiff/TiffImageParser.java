@@ -535,7 +535,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
         final boolean progressive = false;
         // is TIFF ever interlaced/progressive?
 
-        final String formatDetails = "Tiff v." + contents.header.tiffVersion;
+        final String formatDetails = "TIFF v." + contents.header.tiffVersion;
 
         final boolean transparent = false; // TODO: wrong
         boolean usesPalette = false;

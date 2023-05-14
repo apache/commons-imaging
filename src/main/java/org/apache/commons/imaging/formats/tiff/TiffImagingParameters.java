@@ -20,7 +20,7 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 
 /**
- * Tiff format parameters.
+ * TIFF format parameters.
  *
  * @since 1.0-alpha3
  */

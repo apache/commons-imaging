@@ -475,7 +475,7 @@ public class TiffReader extends BinaryFileParser {
 
         final int tiffVersion = read2Bytes("tiffVersion", is, "Not a Valid TIFF File", getByteOrder());
         if (tiffVersion != 42) {
-            throw new ImageReadException("Unknown Tiff Version: " + tiffVersion);
+            throw new ImageReadException("Unknown TIFF Version: " + tiffVersion);
         }
 
         final long offsetToFirstIFD =
