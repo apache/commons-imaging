@@ -22,6 +22,7 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImagingParameters;
+import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.formats.jpeg.iptc.IptcParser;
 import org.apache.commons.imaging.formats.jpeg.iptc.PhotoshopApp13Data;
 
@@ -55,7 +56,7 @@ public class App13Segment extends AppnSegment {
         return new IptcParser().isPhotoshopJpegSegment(getSegmentData());
     }
 
-    public PhotoshopApp13Data parsePhotoshopSegment(final ImagingParameters params)
+    public PhotoshopApp13Data parsePhotoshopSegment(final ImagingParameters<JpegImagingParameters> params)
             throws ImageReadException, IOException {
         /*
          * In practice, App13 segments are only used for Photoshop/IPTC
