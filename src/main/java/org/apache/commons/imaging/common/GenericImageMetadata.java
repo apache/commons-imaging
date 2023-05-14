@@ -20,7 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GenericImageMetadata implements ImageMetadata {
+
     public static class GenericImageMetadataItem implements ImageMetadataItem {
+
         private final String keyword;
         private final String text;
 
@@ -51,6 +53,7 @@ public class GenericImageMetadata implements ImageMetadata {
             return result;
         }
     }
+
     private static final String NEWLINE = System.lineSeparator();
 
     private final List<ImageMetadataItem> items = new ArrayList<>();
