@@ -16,17 +16,16 @@
  */
 package org.apache.commons.imaging.common.mylzw;
 
+import java.io.FilterInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.apache.commons.imaging.common.Allocator;
 
-public class BitsToByteInputStream extends InputStream {
-    private final MyBitInputStream is;
+public class BitsToByteInputStream extends FilterInputStream {
     private final int desiredDepth;
 
     public BitsToByteInputStream(final MyBitInputStream is, final int desiredDepth) {
-        this.is = is;
+        super(is);
         this.desiredDepth = desiredDepth;
     }
 
@@ -36,7 +35,7 @@ public class BitsToByteInputStream extends InputStream {
     }
 
     public int readBits(final int bitCount) throws IOException {
-        int i = is.readBits(bitCount);
+        int i = ((MyBitInputStream) in).readBits(bitCount);
         if (bitCount < desiredDepth) {
             i <<= (desiredDepth - bitCount);
         } else if (bitCount > desiredDepth) {
