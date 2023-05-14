@@ -24,14 +24,15 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 /**
  * Implementations support embedding the Extensible Metadata Platform tags.
  *
+ * @param <E> The type of {@link XmpImagingParameters}.
  * @see <a href="https://en.wikipedia.org/wiki/Extensible_Metadata_Platform">https://en.wikipedia.org/wiki/Extensible_Metadata_Platform</a>
  */
-public interface XmpEmbeddable {
+public interface XmpEmbeddable<E extends XmpImagingParameters<E>> {
 
     /**
-     * Get a string containing XML-formatted text conforming to the Extensible
-     * Metadata  Platform (EXP) standard for representing information about
-     * image content.  Not all image formats support EXP information and
+     * Gets a string containing XML conforming to the Extensible
+     * Metadata Platform (XMP) standard for representing information about
+     * image content.  Not all image formats support XMP information and
      * even for those that do, there is no guarantee that such information
      * will be present in an image.
      *
@@ -45,7 +46,6 @@ public interface XmpEmbeddable {
      *                            parser implementation.
      * @throws IOException        In the event of unsuccessful read or access operation.
      */
-    String getXmpXml(ByteSource byteSource, XmpImagingParameters params)
-            throws ImageReadException, IOException;
+    String getXmpXml(ByteSource byteSource, XmpImagingParameters<E> params) throws ImageReadException, IOException;
 
 }
