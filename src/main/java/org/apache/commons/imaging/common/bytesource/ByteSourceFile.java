@@ -17,7 +17,6 @@
 package org.apache.commons.imaging.common.bytesource;
 
 import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -26,6 +25,7 @@ import java.io.RandomAccessFile;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFunctions;
+import org.apache.commons.io.IOUtils;
 
 public class ByteSourceFile extends ByteSource {
     private final File file;
@@ -37,15 +37,8 @@ public class ByteSourceFile extends ByteSource {
 
     @Override
     public byte[] getAll() throws IOException {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
         try (InputStream is = getInputStream()) {
-            final byte[] buffer = new byte[1024];
-            int read;
-            while ((read = is.read(buffer)) > 0) {
-                baos.write(buffer, 0, read);
-            }
-            return baos.toByteArray();
+            return IOUtils.toByteArray(is);
         }
     }
 
