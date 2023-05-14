@@ -193,7 +193,6 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
         for (int i = 0; i < 1023; i++) {
             bos.write4Bytes(0);
         }
-        final PcxImageParser pcxImageParser = new PcxImageParser();
-        pcxImageParser.writeImage(src, bos, params);
+        new PcxImageParser().writeImage(src, bos, params);
     }
 }
