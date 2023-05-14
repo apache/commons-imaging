@@ -39,12 +39,12 @@ import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 public class JpegXmpRewriter extends JpegRewriter {
 
     /**
-     * Reads a Jpeg image, removes all XMP XML (by removing the APP1 segment),
+     * Reads a JPEG image, removes all XMP XML (by removing the APP1 segment),
      * and writes the result to a stream.
      * <p>
      *
      * @param src
-     *            Byte array containing Jpeg image data.
+     *            Byte array containing JPEG image data.
      * @param os
      *            OutputStream to write the image to.
      * @throws ImageReadException if it fails to read the JFIF segments
@@ -57,12 +57,12 @@ public class JpegXmpRewriter extends JpegRewriter {
     }
 
     /**
-     * Reads a Jpeg image, removes all XMP XML (by removing the APP1 segment),
+     * Reads a JPEG image, removes all XMP XML (by removing the APP1 segment),
      * and writes the result to a stream.
      * <p>
      *
      * @param byteSource
-     *            ByteSource containing Jpeg image data.
+     *            ByteSource containing JPEG image data.
      * @param os
      *            OutputStream to write the image to.
      * @throws ImageReadException if it fails to read the JFIF segments
@@ -77,7 +77,7 @@ public class JpegXmpRewriter extends JpegRewriter {
     }
 
     /**
-     * Reads a Jpeg image, removes all XMP XML (by removing the APP1 segment),
+     * Reads a JPEG image, removes all XMP XML (by removing the APP1 segment),
      * and writes the result to a stream.
      * <p>
      *
@@ -98,12 +98,12 @@ public class JpegXmpRewriter extends JpegRewriter {
     }
 
     /**
-     * Reads a Jpeg image, removes all XMP XML (by removing the APP1 segment),
+     * Reads a JPEG image, removes all XMP XML (by removing the APP1 segment),
      * and writes the result to a stream.
      * <p>
      *
      * @param src
-     *            InputStream containing Jpeg image data.
+     *            InputStream containing JPEG image data.
      * @param os
      *            OutputStream to write the image to.
      * @throws ImageReadException if it fails to read the JFIF segments
@@ -116,11 +116,11 @@ public class JpegXmpRewriter extends JpegRewriter {
     }
 
     /**
-     * Reads a Jpeg image, replaces the XMP XML and writes the result to a
+     * Reads a JPEG image, replaces the XMP XML and writes the result to a
      * stream.
      *
      * @param src
-     *            Byte array containing Jpeg image data.
+     *            Byte array containing JPEG image data.
      * @param os
      *            OutputStream to write the image to.
      * @param xmpXml
@@ -136,11 +136,11 @@ public class JpegXmpRewriter extends JpegRewriter {
     }
 
     /**
-     * Reads a Jpeg image, replaces the XMP XML and writes the result to a
+     * Reads a JPEG image, replaces the XMP XML and writes the result to a
      * stream.
      *
      * @param byteSource
-     *            ByteSource containing Jpeg image data.
+     *            ByteSource containing JPEG image data.
      * @param os
      *            OutputStream to write the image to.
      * @param xmpXml
@@ -173,7 +173,7 @@ public class JpegXmpRewriter extends JpegRewriter {
     }
 
     /**
-     * Reads a Jpeg image, replaces the XMP XML and writes the result to a
+     * Reads a JPEG image, replaces the XMP XML and writes the result to a
      * stream.
      *
      * @param src
@@ -193,11 +193,11 @@ public class JpegXmpRewriter extends JpegRewriter {
     }
 
     /**
-     * Reads a Jpeg image, replaces the XMP XML and writes the result to a
+     * Reads a JPEG image, replaces the XMP XML and writes the result to a
      * stream.
      *
      * @param src
-     *            InputStream containing Jpeg image data.
+     *            InputStream containing JPEG image data.
      * @param os
      *            OutputStream to write the image to.
      * @param xmpXml

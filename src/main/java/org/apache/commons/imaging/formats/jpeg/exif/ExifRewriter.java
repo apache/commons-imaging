@@ -199,11 +199,11 @@ public class ExifRewriter extends BinaryFileParser {
     }
 
     /**
-     * Reads a Jpeg image, removes all EXIF metadata (by removing the APP1
+     * Reads a JPEG image, removes all EXIF metadata (by removing the APP1
      * segment), and writes the result to a stream.
      *
      * @param src
-     *            Byte array containing Jpeg image data.
+     *            Byte array containing JPEG image data.
      * @param os
      *            OutputStream to write the image to.
      * @throws ImageReadException if it fails to read the JFIF segments
@@ -217,11 +217,11 @@ public class ExifRewriter extends BinaryFileParser {
     }
 
     /**
-     * Reads a Jpeg image, removes all EXIF metadata (by removing the APP1
+     * Reads a JPEG image, removes all EXIF metadata (by removing the APP1
      * segment), and writes the result to a stream.
      *
      * @param byteSource
-     *            ByteSource containing Jpeg image data.
+     *            ByteSource containing JPEG image data.
      * @param os
      *            OutputStream to write the image to.
      * @throws ImageReadException if it fails to read the JFIF segments
@@ -243,7 +243,7 @@ public class ExifRewriter extends BinaryFileParser {
     }
 
     /**
-     * Reads a Jpeg image, removes all EXIF metadata (by removing the APP1
+     * Reads a JPEG image, removes all EXIF metadata (by removing the APP1
      * segment), and writes the result to a stream.
      * <p>
      *
@@ -267,11 +267,11 @@ public class ExifRewriter extends BinaryFileParser {
     }
 
     /**
-     * Reads a Jpeg image, removes all EXIF metadata (by removing the APP1
+     * Reads a JPEG image, removes all EXIF metadata (by removing the APP1
      * segment), and writes the result to a stream.
      *
      * @param src
-     *            InputStream containing Jpeg image data.
+     *            InputStream containing JPEG image data.
      * @param os
      *            OutputStream to write the image to.
      * @throws ImageReadException if it fails to read the JFIF segments
@@ -285,7 +285,7 @@ public class ExifRewriter extends BinaryFileParser {
     }
 
     /**
-     * Reads a Jpeg image, replaces the EXIF metadata and writes the result to a
+     * Reads a JPEG image, replaces the EXIF metadata and writes the result to a
      * stream.
      *
      * <p>Note that this uses the "Lossless" approach - in order to preserve data
@@ -293,10 +293,10 @@ public class ExifRewriter extends BinaryFileParser {
      * this algorithm avoids overwriting any part of the original segment that
      * it couldn't parse. This can cause the EXIF segment to grow with each
      * update, which is a serious issue, since all EXIF data must fit in a
-     * single APP1 segment of the Jpeg image.</p>
+     * single APP1 segment of the JPEG image.</p>
      *
      * @param src
-     *            Byte array containing Jpeg image data.
+     *            Byte array containing JPEG image data.
      * @param os
      *            OutputStream to write the image to.
      * @param outputSet
@@ -313,7 +313,7 @@ public class ExifRewriter extends BinaryFileParser {
     }
 
     /**
-     * Reads a Jpeg image, replaces the EXIF metadata and writes the result to a
+     * Reads a JPEG image, replaces the EXIF metadata and writes the result to a
      * stream.
      *
      * <p>Note that this uses the "Lossless" approach - in order to preserve data
@@ -321,10 +321,10 @@ public class ExifRewriter extends BinaryFileParser {
      * this algorithm avoids overwriting any part of the original segment that
      * it couldn't parse. This can cause the EXIF segment to grow with each
      * update, which is a serious issue, since all EXIF data must fit in a
-     * single APP1 segment of the Jpeg image.</p>
+     * single APP1 segment of the JPEG image.</p>
      *
      * @param byteSource
-     *            ByteSource containing Jpeg image data.
+     *            ByteSource containing JPEG image data.
      * @param os
      *            OutputStream to write the image to.
      * @param outputSet
@@ -362,7 +362,7 @@ public class ExifRewriter extends BinaryFileParser {
     }
 
     /**
-     * Reads a Jpeg image, replaces the EXIF metadata and writes the result to a
+     * Reads a JPEG image, replaces the EXIF metadata and writes the result to a
      * stream.
      *
      * <p>Note that this uses the "Lossless" approach - in order to preserve data
@@ -370,7 +370,7 @@ public class ExifRewriter extends BinaryFileParser {
      * this algorithm avoids overwriting any part of the original segment that
      * it couldn't parse. This can cause the EXIF segment to grow with each
      * update, which is a serious issue, since all EXIF data must fit in a
-     * single APP1 segment of the Jpeg image.</p>
+     * single APP1 segment of the JPEG image.</p>
      *
      * @param src
      *            Image file.
@@ -390,7 +390,7 @@ public class ExifRewriter extends BinaryFileParser {
     }
 
     /**
-     * Reads a Jpeg image, replaces the EXIF metadata and writes the result to a
+     * Reads a JPEG image, replaces the EXIF metadata and writes the result to a
      * stream.
      *
      * <p>Note that this uses the "Lossless" approach - in order to preserve data
@@ -398,10 +398,10 @@ public class ExifRewriter extends BinaryFileParser {
      * this algorithm avoids overwriting any part of the original segment that
      * it couldn't parse. This can cause the EXIF segment to grow with each
      * update, which is a serious issue, since all EXIF data must fit in a
-     * single APP1 segment of the Jpeg image.</p>
+     * single APP1 segment of the JPEG image.</p>
      *
      * @param src
-     *            InputStream containing Jpeg image data.
+     *            InputStream containing JPEG image data.
      * @param os
      *            OutputStream to write the image to.
      * @param outputSet
@@ -418,7 +418,7 @@ public class ExifRewriter extends BinaryFileParser {
     }
 
     /**
-     * Reads a Jpeg image, replaces the EXIF metadata and writes the result to a
+     * Reads a JPEG image, replaces the EXIF metadata and writes the result to a
      * stream.
      *
      * <p>Note that this uses the "Lossy" approach - the algorithm overwrites the
@@ -426,7 +426,7 @@ public class ExifRewriter extends BinaryFileParser {
      * data it couldn't parse (such as Maker Notes).</p>
      *
      * @param src
-     *            Byte array containing Jpeg image data.
+     *            Byte array containing JPEG image data.
      * @param os
      *            OutputStream to write the image to.
      * @param outputSet
@@ -443,7 +443,7 @@ public class ExifRewriter extends BinaryFileParser {
     }
 
     /**
-     * Reads a Jpeg image, replaces the EXIF metadata and writes the result to a
+     * Reads a JPEG image, replaces the EXIF metadata and writes the result to a
      * stream.
      *
      * <p>Note that this uses the "Lossy" approach - the algorithm overwrites the
@@ -451,7 +451,7 @@ public class ExifRewriter extends BinaryFileParser {
      * data it couldn't parse (such as Maker Notes).</p>
      *
      * @param byteSource
-     *            ByteSource containing Jpeg image data.
+     *            ByteSource containing JPEG image data.
      * @param os
      *            OutputStream to write the image to.
      * @param outputSet
@@ -476,7 +476,7 @@ public class ExifRewriter extends BinaryFileParser {
     }
 
     /**
-     * Reads a Jpeg image, replaces the EXIF metadata and writes the result to a
+     * Reads a JPEG image, replaces the EXIF metadata and writes the result to a
      * stream.
      *
      * <p>Note that this uses the "Lossy" approach - the algorithm overwrites the
@@ -501,7 +501,7 @@ public class ExifRewriter extends BinaryFileParser {
     }
 
     /**
-     * Reads a Jpeg image, replaces the EXIF metadata and writes the result to a
+     * Reads a JPEG image, replaces the EXIF metadata and writes the result to a
      * stream.
      *
      * <p>Note that this uses the "Lossy" approach - the algorithm overwrites the
@@ -509,7 +509,7 @@ public class ExifRewriter extends BinaryFileParser {
      * data it couldn't parse (such as Maker Notes).</p>
      *
      * @param src
-     *            InputStream containing Jpeg image data.
+     *            InputStream containing JPEG image data.
      * @param os
      *            OutputStream to write the image to.
      * @param outputSet

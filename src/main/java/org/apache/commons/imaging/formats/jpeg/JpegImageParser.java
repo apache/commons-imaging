@@ -725,7 +725,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
             final PhotoshopApp13Data data = segment.parsePhotoshopSegment(params);
             if (data != null) {
                 if (photoshopApp13Data != null) {
-                    throw new ImageReadException("Jpeg contains more than one Photoshop App13 segment.");
+                    throw new ImageReadException("JPEG contains more than one Photoshop App13 segment.");
                 }
                 photoshopApp13Data = data;
             }
@@ -792,7 +792,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
         }
         if (result.size() > 1) {
             throw new ImageReadException(
-                    "Jpeg file contains more than one XMP segment.");
+                    "JPEG file contains more than one XMP segment.");
         }
         return result.get(0);
     }

@@ -312,7 +312,7 @@ public class JpegRewriter extends BinaryFileParser {
     // byte markerBytes[] = convertShortToByteArray(JPEG_APP1_MARKER,
     // JPEG_BYTE_ORDER);
     // if (piece.segmentData.length > 0xffff)
-    // throw new JpegSegmentOverflowException("Jpeg segment is too long: "
+    // throw new JpegSegmentOverflowException("JPEG segment is too long: "
     // + piece.segmentData.length);
     // int segmentLength = piece.segmentData.length + 2;
     // byte segmentLengthBytes[] = convertShortToByteArray(segmentLength,
