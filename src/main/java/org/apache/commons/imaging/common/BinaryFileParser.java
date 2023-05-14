@@ -27,7 +27,9 @@ public class BinaryFileParser {
 
     private static final Logger LOGGER = Logger.getLogger(BinaryFileParser.class.getName());
 
-    // default byte order for Java, many file formats.
+    /**
+     * Default ByteOrder for parsers.
+     */
     private ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
 
     /**
