@@ -26,6 +26,7 @@ import java.nio.ByteOrder;
 import java.util.logging.Logger;
 
 import org.apache.commons.imaging.ImagingException;
+import org.apache.commons.io.IOUtils;
 
 /**
  * Convenience methods for various binary and I/O operations.
@@ -58,11 +59,7 @@ public final class BinaryFunctions {
 
     public static void copyStreamToStream(final InputStream is, final OutputStream os)
             throws IOException {
-        final byte[] buffer = new byte[1024];
-        int read;
-        while ((read = is.read(buffer)) > 0) {
-            os.write(buffer, 0, read);
-        }
+        IOUtils.copy(is, os);
     }
 
     public static int findNull(final byte[] src) {
