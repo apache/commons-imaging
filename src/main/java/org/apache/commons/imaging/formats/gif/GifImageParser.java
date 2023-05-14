@@ -878,7 +878,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
 
             final int size = imageWidth * imageHeight;
             final MyLzwDecompressor myLzwDecompressor = new MyLzwDecompressor(
-                    lzwMinimumCodeSize, ByteOrder.LITTLE_ENDIAN);
+                    lzwMinimumCodeSize, ByteOrder.LITTLE_ENDIAN, false);
             imageData = myLzwDecompressor.decompress(bais, size);
         } else {
             final int LZWMinimumCodeSize = is.read();

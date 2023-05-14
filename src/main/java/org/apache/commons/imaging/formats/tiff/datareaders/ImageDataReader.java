@@ -292,15 +292,8 @@ public abstract class ImageDataReader {
         }
         case TIFF_COMPRESSION_LZW: {
             final InputStream is = new ByteArrayInputStream(compressedOrdered);
-
             final int lzwMinimumCodeSize = 8;
-
-            final MyLzwDecompressor myLzwDecompressor = new MyLzwDecompressor(
-                    lzwMinimumCodeSize, ByteOrder.BIG_ENDIAN);
-
-            myLzwDecompressor.setTiffLZWMode();
-
-            return myLzwDecompressor.decompress(is, expectedSize);
+            return new MyLzwDecompressor(lzwMinimumCodeSize, ByteOrder.BIG_ENDIAN, true).decompress(is, expectedSize);
         }
 
         // Packbits

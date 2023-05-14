@@ -121,8 +121,7 @@ public class TiffLzwTest extends TiffBaseTest {
         final InputStream is = new ByteArrayInputStream(compressed);
         final MyLzwDecompressor decompressor = new MyLzwDecompressor(
                 LZW_MINIMUM_CODE_SIZE, ByteOrder.BIG_ENDIAN,
-                decompressionListener);
-        decompressor.setTiffLZWMode();
+                true, decompressionListener);
         final byte[] decompressed = decompressor.decompress(is, src.length);
 
         assertEquals(src.length, decompressed.length);
@@ -158,8 +157,7 @@ public class TiffLzwTest extends TiffBaseTest {
         final InputStream is = new ByteArrayInputStream(src);
         final MyLzwDecompressor decompressor = new MyLzwDecompressor(
                 LZW_MINIMUM_CODE_SIZE, ByteOrder.BIG_ENDIAN,
-                decompressionListener);
-        decompressor.setTiffLZWMode();
+                true, decompressionListener);
         final byte[] decompressed = decompressor.decompress(is, src.length);
 
         final MyLzwCompressor.Listener compressionListener = new MyLzwCompressor.Listener() {

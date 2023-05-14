@@ -45,18 +45,17 @@ public final class MyLzwDecompressor {
     private final int clearCode;
     private final int eoiCode;
     private int written;
+    private final boolean tiffLZWMode;
 
-    private boolean tiffLZWMode;
-
-    public MyLzwDecompressor(final int initialCodeSize, final ByteOrder byteOrder) throws ImageReadException {
-        this(initialCodeSize, byteOrder, null);
+    public MyLzwDecompressor(final int initialCodeSize, final ByteOrder byteOrder, boolean tiffLZWMode) throws ImageReadException {
+        this(initialCodeSize, byteOrder, tiffLZWMode, null);
     }
 
     public MyLzwDecompressor(final int initialCodeSize, final ByteOrder byteOrder,
-            final Listener listener) throws ImageReadException {
+            boolean tiffLZWMode, final Listener listener) throws ImageReadException {
         this.listener = listener;
         this.byteOrder = byteOrder;
-
+        this.tiffLZWMode = tiffLZWMode;
         this.initialCodeSize = initialCodeSize;
 
         table = new byte[MAX_TABLE_SIZE][];
@@ -180,10 +179,6 @@ public final class MyLzwDecompressor {
 
     private boolean isInTable(final int code) {
         return code < codes;
-    }
-
-    public void setTiffLZWMode() {
-        tiffLZWMode = true;
     }
 
     private byte[] stringFromCode(final int code) throws IOException {
