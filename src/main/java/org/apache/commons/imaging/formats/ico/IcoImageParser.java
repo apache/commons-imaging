@@ -161,6 +161,7 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
     }
 
     static class IconInfo {
+        static final int SHALLOW_SIZE = 32;
         public final byte width;
         public final byte height;
         public final byte colorCount;
@@ -169,7 +170,6 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
         public final int bitCount;
         public final int imageSize;
         public final int imageOffset;
-        static final int SHALLOW_SIZE = 32;
 
         IconInfo(final byte width, final byte height,
                 final byte colorCount, final byte reserved, final int planes,

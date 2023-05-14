@@ -25,15 +25,15 @@ import org.openjdk.jol.info.ClassLayout;
 
 public class PrintShallowObjectSizes {
 
-    public static void print(final Class<?>... classes) {
-        new PrintShallowObjectSizes().go(classes);
-    }
-
     public static void main(final String[] args) {
         new PrintShallowObjectSizes().go(String.class,
                 org.apache.commons.imaging.formats.jpeg.segments.SofnSegment.Component.class,
                 org.apache.commons.imaging.formats.jpeg.segments.SosSegment.Component.class, RationalNumber.class,
                 IccTag.class, ArrayList.class);
+    }
+
+    public static void print(final Class<?>... classes) {
+        new PrintShallowObjectSizes().go(classes);
     }
 
     public void go(final Class<?>... classes) {

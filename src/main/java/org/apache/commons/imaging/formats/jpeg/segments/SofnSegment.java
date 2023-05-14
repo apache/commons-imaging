@@ -32,11 +32,11 @@ import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 public class SofnSegment extends Segment {
 
     public static class Component {
+        static final int SHALLOW_SIZE = 32;
         public final int componentIdentifier;
         public final int horizontalSamplingFactor;
         public final int verticalSamplingFactor;
         public final int quantTabDestSelector;
-        static final int SHALLOW_SIZE = 32;
 
         public Component(final int componentIdentifier, final int horizontalSamplingFactor,
                 final int veritcalSamplingFactor, final int quantTabDestSelector) {

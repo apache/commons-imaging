@@ -29,10 +29,10 @@ import org.apache.commons.imaging.common.Allocator;
 public class SosSegment extends Segment {
 
     public static class Component {
+        static final int SHALLOW_SIZE = 24;
         public final int scanComponentSelector;
         public final int dcCodingTableSelector;
         public final int acCodingTableSelector;
-        static final int SHALLOW_SIZE = 24;
 
         public Component(final int scanComponentSelector, final int dcCodingTableSelector,
                 final int acCodingTableSelector) {

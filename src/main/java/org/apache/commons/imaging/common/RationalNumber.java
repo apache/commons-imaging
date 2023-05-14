@@ -54,6 +54,7 @@ public class RationalNumber extends Number {
 
     // int-precision tolerance
     private static final double TOLERANCE = 1E-8;
+    public static final int SHALLOW_SIZE = 32;
     static RationalNumber factoryMethod(long n, long d) {
         // safer than constructor - handles values outside min/max range.
         // also does some simple finding of common denominators.
@@ -80,6 +81,7 @@ public class RationalNumber extends Number {
 
         return new RationalNumber((int) n, (int) d);
     }
+
     /**
      * Return the greatest common divisor
      */
@@ -181,8 +183,6 @@ public class RationalNumber extends Number {
     public final long divisor;
 
     public final boolean unsignedType;
-
-    public static final int SHALLOW_SIZE = 32;
 
     /**
      * Constructs an instance based on signed integers

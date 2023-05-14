@@ -21,13 +21,13 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
 class JpegInputStream {
+    static final int SHALLOW_SIZE = 32;
     // Figure F.18, F.2.2.5, page 111 of ITU-T T.81
     private final int[] interval;
     // next position in the array to read
     private int nextPos;
     private int cnt;
     private int b;
-    static final int SHALLOW_SIZE = 32;
 
     JpegInputStream(final int[] interval) {
         this.interval = Arrays.copyOf(interval, interval.length);

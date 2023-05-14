@@ -18,10 +18,10 @@ package org.apache.commons.imaging.formats.jpeg.decoder;
 import org.apache.commons.imaging.common.Allocator;
 
 final class Block {
+    static final int SHALLOW_SIZE = 24;
     final int[] samples;
     final int width;
     final int height;
-    static final int SHALLOW_SIZE = 24;
 
     Block(final int width, final int height) {
         this.samples = Allocator.intArray(width * height);

@@ -35,16 +35,16 @@ class ColorSpaceSubset {
 
     private static final Logger LOGGER = Logger.getLogger(ColorSpaceSubset.class.getName());
     public static final RgbComparator RGB_COMPARATOR = new RgbComparator();
+    static final int SHALLOW_SIZE = 40;
     final int[] mins;
     final int[] maxs;
     final int precision;
     final int precisionMask;
     final int total;
-    int rgb; // median
 
+    int rgb; // median
     // the index in the palette.
     private int index;
-    static final int SHALLOW_SIZE = 40;
 
     ColorSpaceSubset(final int total, final int precision) {
         this.total = total;
