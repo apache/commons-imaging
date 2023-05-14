@@ -35,7 +35,7 @@ public class QuantizedPalette implements Palette {
         straight = Allocator.array(1 << (precision * 3), ColorSpaceSubset[]::new, ColorSpaceSubset.SHALLOW_SIZE);
 
         for (int i = 0; i < this.subsets.size(); i++) {
-            final ColorSpaceSubset subset = subsets.get(i);
+            final ColorSpaceSubset subset = this.subsets.get(i);
             subset.setIndex(i);
 
             for (int u = subset.mins[0]; u <= subset.maxs[0]; u++) {
