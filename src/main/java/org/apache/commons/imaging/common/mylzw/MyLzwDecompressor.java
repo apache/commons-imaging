@@ -107,44 +107,42 @@ public final class MyLzwDecompressor {
     public byte[] decompress(final InputStream is, final int expectedLength) throws IOException {
         int code;
         int oldCode = -1;
-        final MyBitInputStream mbis = new MyBitInputStream(is, byteOrder, tiffLZWMode);
+        try (MyBitInputStream mbis = new MyBitInputStream(is, byteOrder, tiffLZWMode);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream(Allocator.checkByteArray(expectedLength))) {
 
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream(Allocator.checkByteArray(expectedLength));
+            clearTable();
 
-        clearTable();
+            while ((code = getNextCode(mbis)) != eoiCode) {
+                if (code == clearCode) {
+                    clearTable();
 
-        while ((code = getNextCode(mbis)) != eoiCode) {
-            if (code == clearCode) {
-                clearTable();
+                    if (written >= expectedLength) {
+                        break;
+                    }
+                    code = getNextCode(mbis);
+
+                    if (code == eoiCode) {
+                        break;
+                    }
+                    writeToResult(baos, stringFromCode(code));
+                } else if (isInTable(code)) {
+                    writeToResult(baos, stringFromCode(code));
+
+                    addStringToTable(appendBytes(stringFromCode(oldCode), firstChar(stringFromCode(code))));
+                } else {
+                    final byte[] outString = appendBytes(stringFromCode(oldCode), firstChar(stringFromCode(oldCode)));
+                    writeToResult(baos, outString);
+                    addStringToTable(outString);
+                }
+                oldCode = code;
 
                 if (written >= expectedLength) {
                     break;
                 }
-                code = getNextCode(mbis);
-
-                if (code == eoiCode) {
-                    break;
-                }
-                writeToResult(baos, stringFromCode(code));
-            } else if (isInTable(code)) {
-                writeToResult(baos, stringFromCode(code));
-
-                addStringToTable(appendBytes(stringFromCode(oldCode),
-                        firstChar(stringFromCode(code))));
-            } else {
-                final byte[] outString = appendBytes(stringFromCode(oldCode),
-                        firstChar(stringFromCode(oldCode)));
-                writeToResult(baos, outString);
-                addStringToTable(outString);
             }
-            oldCode = code;
 
-            if (written >= expectedLength) {
-                break;
-            }
+            return baos.toByteArray();
         }
-
-        return baos.toByteArray();
     }
 
     private byte firstChar(final byte[] bytes) {
