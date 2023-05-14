@@ -226,7 +226,9 @@ final class IcnsDecoder {
                 if (imageType.getWidth() <= 32) {
                     try {
                         image = decodeImageImpl(imageType, imageElement, icnsElements);
-                    } catch (final Exception ignored) { }
+                    } catch (final Exception ignored) {
+                        // ignored
+                    }
                 }
                 if (image == null) {
                     image = new BufferedImage(imageType.getWidth(), imageType.getHeight(), BufferedImage.TYPE_INT_ARGB);
