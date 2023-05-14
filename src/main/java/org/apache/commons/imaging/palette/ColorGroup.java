@@ -22,6 +22,7 @@ import java.util.List;
 import org.apache.commons.imaging.ImageWriteException;
 
 class ColorGroup {
+
     // final ColorGroup parent;
     ColorGroupCut cut;
     // final List children = new ArrayList();
@@ -81,10 +82,10 @@ class ColorGroup {
     }
 
     boolean contains(final int argb) {
-        final int alpha = 0xff & (argb >> 24);
-        final int red = 0xff & (argb >> 16);
-        final int green = 0xff & (argb >> 8);
-        final int blue = 0xff & (argb >> 0);
+        final int alpha = 0xff & argb >> 24;
+        final int red = 0xff & argb >> 16;
+        final int green = 0xff & argb >> 8;
+        final int blue = 0xff & argb >> 0;
 
         if (!ignoreAlpha && (alpha < minAlpha || alpha > maxAlpha)) {
             return false;
@@ -129,7 +130,7 @@ class ColorGroup {
         final int green = (int) Math.round((double) greenTotal / countTotal);
         final int blue = (int) Math.round((double) blueTotal / countTotal);
 
-        return (alpha << 24) | (red << 16) | (green << 8) | blue;
+        return alpha << 24 | red << 16 | green << 8 | blue;
     }
 
     @Override

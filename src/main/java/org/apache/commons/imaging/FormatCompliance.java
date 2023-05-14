@@ -35,6 +35,7 @@ public class FormatCompliance {
     public static FormatCompliance getDefault() {
         return new FormatCompliance("ignore", false);
     }
+
     private final boolean failOnError;
     private final String description;
 
@@ -42,7 +43,7 @@ public class FormatCompliance {
 
     public FormatCompliance(final String description) {
         this.description = description;
-        failOnError = false;
+        this.failOnError = false;
     }
 
     public FormatCompliance(final String description, final boolean failOnError) {
