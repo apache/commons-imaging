@@ -126,7 +126,7 @@ public abstract class TiffImageWriterBase {
                 outputSet.addDirectory(userDirectory);
             } else {
                 final TiffOutputDirectory outputDirectory = outputDirectories.get(location);
-                for (final TiffOutputField userField : userDirectory.getFields()) {
+                for (final TiffOutputField userField : userDirectory) {
                     if (outputDirectory.findField(userField.tagInfo) == null) {
                         outputDirectory.add(userField);
                     }
@@ -275,8 +275,7 @@ public abstract class TiffImageWriterBase {
             }
 
             final HashSet<Integer> fieldTags = new HashSet<>();
-            final List<TiffOutputField> fields = directory.getFields();
-            for (final TiffOutputField field : fields) {
+            for (final TiffOutputField field : directory) {
                 if (fieldTags.contains(field.tag)) {
                     throw new ImageWriteException("Tag ("
                             + field.tagInfo.getDescription()

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageWriteException;
@@ -71,7 +72,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShortOrRational;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShorts;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoXpString;
 
-public final class TiffOutputDirectory extends TiffOutputItem {
+public final class TiffOutputDirectory extends TiffOutputItem implements Iterable<TiffOutputField> {
     public static final Comparator<TiffOutputDirectory> COMPARATOR = Comparator.comparingInt(o -> o.getType());
     private final int type;
     private final List<TiffOutputField> fields = new ArrayList<>();
@@ -694,6 +695,11 @@ public final class TiffOutputDirectory extends TiffOutputItem {
 
     public int getType() {
         return type;
+    }
+
+    @Override
+    public Iterator<TiffOutputField> iterator() {
+        return fields.iterator();
     }
 
     public void removeField(final int tag) {
