@@ -21,7 +21,7 @@ import java.util.List;
 import org.apache.commons.imaging.common.XmpImagingParameters;
 
 /**
- * Png format parameters.
+ * PNG format parameters.
  * @since 1.0-alpha3
  */
 public class PngImagingParameters extends XmpImagingParameters<PngImagingParameters> {
@@ -49,7 +49,7 @@ public class PngImagingParameters extends XmpImagingParameters<PngImagingParamet
     private PhysicalScale physicalScale;
 
     /**
-     * <p>Only used when writing Png images.</p>
+     * <p>Only used when writing PNG images.</p>
      *
      * <p>Valid values: a list of WriteTexts.</p>
      */

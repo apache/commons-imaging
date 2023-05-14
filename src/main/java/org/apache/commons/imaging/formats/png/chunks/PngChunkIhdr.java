@@ -39,17 +39,17 @@ public class PngChunkIhdr extends PngChunk {
         super(length, chunkType, crc, bytes);
 
         final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
-        width = read4Bytes("Width", is, "Not a Valid Png File: IHDR Corrupt", getByteOrder());
-        height = read4Bytes("Height", is, "Not a Valid Png File: IHDR Corrupt", getByteOrder());
-        bitDepth = readByte("BitDepth", is, "Not a Valid Png File: IHDR Corrupt");
-        final int type = readByte("ColorType", is, "Not a Valid Png File: IHDR Corrupt");
+        width = read4Bytes("Width", is, "Not a Valid PNG File: IHDR Corrupt", getByteOrder());
+        height = read4Bytes("Height", is, "Not a Valid PNG File: IHDR Corrupt", getByteOrder());
+        bitDepth = readByte("BitDepth", is, "Not a Valid PNG File: IHDR Corrupt");
+        final int type = readByte("ColorType", is, "Not a Valid PNG File: IHDR Corrupt");
         pngColorType = PngColorType.getColorType(type);
         if (pngColorType == null) {
             throw new ImageReadException("PNG: unknown color type: " + type);
         }
-        compressionMethod = readByte("CompressionMethod", is, "Not a Valid Png File: IHDR Corrupt");
-        filterMethod = readByte("FilterMethod", is, "Not a Valid Png File: IHDR Corrupt");
-        final int method = readByte("InterlaceMethod", is, "Not a Valid Png File: IHDR Corrupt");
+        compressionMethod = readByte("CompressionMethod", is, "Not a Valid PNG File: IHDR Corrupt");
+        filterMethod = readByte("FilterMethod", is, "Not a Valid PNG File: IHDR Corrupt");
+        final int method = readByte("InterlaceMethod", is, "Not a Valid PNG File: IHDR Corrupt");
         if (method < 0 || method >= InterlaceMethod.values().length) {
             throw new ImageReadException("PNG: unknown interlace method: " + method);
         }

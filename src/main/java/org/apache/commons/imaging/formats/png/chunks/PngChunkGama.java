@@ -29,7 +29,7 @@ public class PngChunkGama extends PngChunk {
         super(length, chunkType, crc, bytes);
 
         final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
-        gamma = read4Bytes("Gamma", is, "Not a Valid Png File: gAMA Corrupt", getByteOrder());
+        gamma = read4Bytes("Gamma", is, "Not a Valid PNG File: gAMA Corrupt", getByteOrder());
     }
 
     public double getGamma() {

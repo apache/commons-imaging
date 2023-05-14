@@ -32,9 +32,9 @@ public class PngChunkPhys extends PngChunk {
 
         final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
 
-        pixelsPerUnitXAxis = read4Bytes("PixelsPerUnitXAxis", is, "Not a Valid Png File: pHYs Corrupt", getByteOrder());
-        pixelsPerUnitYAxis = read4Bytes("PixelsPerUnitYAxis", is, "Not a Valid Png File: pHYs Corrupt", getByteOrder());
-        unitSpecifier = readByte("Unit specifier", is, "Not a Valid Png File: pHYs Corrupt");
+        pixelsPerUnitXAxis = read4Bytes("PixelsPerUnitXAxis", is, "Not a Valid PNG File: pHYs Corrupt", getByteOrder());
+        pixelsPerUnitYAxis = read4Bytes("PixelsPerUnitYAxis", is, "Not a Valid PNG File: pHYs Corrupt", getByteOrder());
+        unitSpecifier = readByte("Unit specifier", is, "Not a Valid PNG File: pHYs Corrupt");
     }
 
 }

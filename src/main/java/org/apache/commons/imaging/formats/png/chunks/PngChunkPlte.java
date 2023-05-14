@@ -45,11 +45,11 @@ public class PngChunkPlte extends PngChunk {
 
         for (int i = 0; i < count; i++) {
             final int red = readByte("red[" + i + "]", is,
-                    "Not a Valid Png File: PLTE Corrupt");
+                    "Not a Valid PNG File: PLTE Corrupt");
             final int green = readByte("green[" + i + "]", is,
-                    "Not a Valid Png File: PLTE Corrupt");
+                    "Not a Valid PNG File: PLTE Corrupt");
             final int blue = readByte("blue[" + i + "]", is,
-                    "Not a Valid Png File: PLTE Corrupt");
+                    "Not a Valid PNG File: PLTE Corrupt");
             rgb[i] = 0xff000000 | ((0xff & red) << 16) | ((0xff & green) << 8)
                     | ((0xff & blue) << 0);
         }

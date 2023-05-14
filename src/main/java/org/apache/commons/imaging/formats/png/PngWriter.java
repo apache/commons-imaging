@@ -137,10 +137,10 @@ class PngWriter {
     private void writeChunkiTXt(final OutputStream os, final PngText.Itxt text)
             throws IOException, ImageWriteException {
         if (!isValidISO_8859_1(text.keyword)) {
-            throw new ImageWriteException("Png tEXt chunk keyword is not ISO-8859-1: " + text.keyword);
+            throw new ImageWriteException("PNG tEXt chunk keyword is not ISO-8859-1: " + text.keyword);
         }
         if (!isValidISO_8859_1(text.languageTag)) {
-            throw new ImageWriteException("Png tEXt chunk language tag is not ISO-8859-1: " + text.languageTag);
+            throw new ImageWriteException("PNG tEXt chunk language tag is not ISO-8859-1: " + text.languageTag);
         }
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -217,10 +217,10 @@ class PngWriter {
     private void writeChunktEXt(final OutputStream os, final PngText.Text text)
             throws IOException, ImageWriteException {
         if (!isValidISO_8859_1(text.keyword)) {
-            throw new ImageWriteException("Png tEXt chunk keyword is not ISO-8859-1: " + text.keyword);
+            throw new ImageWriteException("PNG tEXt chunk keyword is not ISO-8859-1: " + text.keyword);
         }
         if (!isValidISO_8859_1(text.text)) {
-            throw new ImageWriteException("Png tEXt chunk text is not ISO-8859-1: " + text.text);
+            throw new ImageWriteException("PNG tEXt chunk text is not ISO-8859-1: " + text.text);
         }
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -271,10 +271,10 @@ class PngWriter {
     private void writeChunkzTXt(final OutputStream os, final PngText.Ztxt text)
             throws IOException, ImageWriteException {
         if (!isValidISO_8859_1(text.keyword)) {
-            throw new ImageWriteException("Png zTXt chunk keyword is not ISO-8859-1: " + text.keyword);
+            throw new ImageWriteException("PNG zTXt chunk keyword is not ISO-8859-1: " + text.keyword);
         }
         if (!isValidISO_8859_1(text.text)) {
-            throw new ImageWriteException("Png zTXt chunk text is not ISO-8859-1: " + text.text);
+            throw new ImageWriteException("PNG zTXt chunk text is not ISO-8859-1: " + text.text);
         }
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
