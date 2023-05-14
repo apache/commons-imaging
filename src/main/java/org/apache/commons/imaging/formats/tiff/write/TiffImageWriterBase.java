@@ -230,7 +230,7 @@ public abstract class TiffImageWriterBase {
         final List<Integer> directoryIndices = new ArrayList<>();
         final Map<Integer, TiffOutputDirectory> directoryTypeMap = new HashMap<>();
         for (final TiffOutputDirectory directory : directories) {
-            final int dirType = directory.type;
+            final int dirType = directory.getType();
             directoryTypeMap.put(dirType, directory);
             // Debug.debug("validating dirType", dirType + " ("
             // + directory.getFields().size() + " fields)");

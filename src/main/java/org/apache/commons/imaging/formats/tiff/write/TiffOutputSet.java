@@ -44,7 +44,7 @@ public final class TiffOutputSet {
 
     public void addDirectory(final TiffOutputDirectory directory)
             throws ImageWriteException {
-        if (null != findDirectory(directory.type)) {
+        if (null != findDirectory(directory.getType())) {
             throw new ImageWriteException(
                     "Output set already contains a directory of that type.");
         }
@@ -88,7 +88,7 @@ public final class TiffOutputSet {
 
     public TiffOutputDirectory findDirectory(final int directoryType) {
         for (final TiffOutputDirectory directory : directories) {
-            if (directory.type == directoryType) {
+            if (directory.getType() == directoryType) {
                 return directory;
             }
         }
@@ -272,7 +272,7 @@ public final class TiffOutputSet {
         for (int i = 0; i < directories.size(); i++) {
             final TiffOutputDirectory directory = directories.get(i);
             result.append(String.format("%s\tdirectory %d: %s (%d)%n",
-                    prefix, i, directory.description(), directory.type));
+                    prefix, i, directory.description(), directory.getType()));
 
             final List<TiffOutputField> fields = directory.getFields();
             for (final TiffOutputField field : fields) {

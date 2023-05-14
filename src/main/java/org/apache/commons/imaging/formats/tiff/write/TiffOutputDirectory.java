@@ -72,8 +72,8 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShorts;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoXpString;
 
 public final class TiffOutputDirectory extends TiffOutputItem {
-    public static final Comparator<TiffOutputDirectory> COMPARATOR = Comparator.comparingInt(o -> o.type);
-    public final int type;
+    public static final Comparator<TiffOutputDirectory> COMPARATOR = Comparator.comparingInt(o -> o.getType());
+    private final int type;
     private final List<TiffOutputField> fields = new ArrayList<>();
     private final ByteOrder byteOrder;
     private TiffOutputDirectory nextDirectory;
@@ -531,7 +531,7 @@ public final class TiffOutputDirectory extends TiffOutputItem {
     }
 
     public String description() {
-        return TiffDirectory.description(type);
+        return TiffDirectory.description(getType());
     }
 
     /**
@@ -575,8 +575,8 @@ public final class TiffOutputDirectory extends TiffOutputItem {
 
     @Override
     public String getItemDescription() {
-        final TiffDirectoryType dirType = TiffDirectoryType.getExifDirectoryType(type);
-        return "Directory: " + dirType.name + " (" + type + ")";
+        final TiffDirectoryType dirType = TiffDirectoryType.getExifDirectoryType(getType());
+        return "Directory: " + dirType.name + " (" + getType() + ")";
     }
 
     @Override
@@ -690,6 +690,10 @@ public final class TiffOutputDirectory extends TiffOutputItem {
 
     public TiffImageData getRawTiffImageData() {
         return tiffImageData;
+    }
+
+    public int getType() {
+        return type;
     }
 
     public void removeField(final int tag) {
