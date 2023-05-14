@@ -431,7 +431,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
         final List<String> comments = getComments(blocks.blocks);
         final int bitsPerPixel = (bhi.colorResolution + 1);
         final ImageFormat format = ImageFormats.GIF;
-        final String formatName = "GIF Graphics Interchange Format";
+        final String formatName = "Graphics Interchange Format";
         final String mimeType = "image/gif";
 
         final int numberOfImages = findAllBlocks(blocks.blocks, IMAGE_SEPARATOR).size();
@@ -443,7 +443,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
         final int physicalHeightDpi = 72;
         final float physicalHeightInch = (float) ((double) height / (double) physicalHeightDpi);
 
-        final String formatDetails = "Gif " + ((char) blocks.gifHeaderInfo.version1)
+        final String formatDetails = "GIF " + ((char) blocks.gifHeaderInfo.version1)
                 + ((char) blocks.gifHeaderInfo.version2)
                 + ((char) blocks.gifHeaderInfo.version3);
 

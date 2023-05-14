@@ -20,7 +20,7 @@ package org.apache.commons.imaging.formats.gif;
 import org.apache.commons.imaging.common.XmpImagingParameters;
 
 /**
- * Gif format parameters.
+ * GIF format parameters.
  *
  * @since 1.0-alpha3
  */
