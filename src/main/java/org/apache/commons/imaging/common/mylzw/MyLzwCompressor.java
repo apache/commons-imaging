@@ -175,37 +175,35 @@ public class MyLzwCompressor {
     }
 
     public byte[] compress(final byte[] bytes) throws IOException {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream(Allocator.checkByteArray(bytes.length));
-        final MyBitOutputStream bos = new MyBitOutputStream(baos, byteOrder);
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream(Allocator.checkByteArray(bytes.length));
+                MyBitOutputStream bos = new MyBitOutputStream(baos, byteOrder)) {
 
-        initializeStringTable();
-        clearTable();
-        writeClearCode(bos);
+            initializeStringTable();
+            clearTable();
+            writeClearCode(bos);
 
-        int wStart = 0;
-        int wLength = 0;
+            int wStart = 0;
+            int wLength = 0;
 
-        for (int i = 0; i < bytes.length; i++) {
-            if (isInTable(bytes, wStart, wLength + 1)) {
-                wLength++;
-            } else {
-                final int code = codeFromString(bytes, wStart, wLength);
-                writeDataCode(bos, code);
-                addTableEntry(bos, bytes, wStart, wLength + 1);
+            for (int i = 0; i < bytes.length; i++) {
+                if (isInTable(bytes, wStart, wLength + 1)) {
+                    wLength++;
+                } else {
+                    final int code = codeFromString(bytes, wStart, wLength);
+                    writeDataCode(bos, code);
+                    addTableEntry(bos, bytes, wStart, wLength + 1);
 
-                wStart = i;
-                wLength = 1;
+                    wStart = i;
+                    wLength = 1;
+                }
             }
+
+            final int code = codeFromString(bytes, wStart, wLength);
+            writeDataCode(bos, code);
+            writeEoiCode(bos);
+            bos.flushCache();
+            return baos.toByteArray();
         }
-
-        final int code = codeFromString(bytes, wStart, wLength);
-        writeDataCode(bos, code);
-
-        writeEoiCode(bos);
-
-        bos.flushCache();
-
-        return baos.toByteArray();
     }
 
     private void incrementCodeSize() {
