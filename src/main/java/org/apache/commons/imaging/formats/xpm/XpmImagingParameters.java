@@ -22,4 +22,5 @@ import org.apache.commons.imaging.ImagingParameters;
  * @since 1.0-alpha3
  */
 public class XpmImagingParameters extends ImagingParameters<XpmImagingParameters> {
+    // empty
 }
