@@ -414,8 +414,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
 
     @Override
     public void visitSOS(final int marker, final byte[] markerBytes, final byte[] imageData) {
-        final ByteArrayInputStream is = new ByteArrayInputStream(imageData);
-        try {
+        try (ByteArrayInputStream is = new ByteArrayInputStream(imageData)) {
             // read the scan header
             final int segmentLength = read2Bytes("segmentLength", is,"Not a Valid JPEG File", getByteOrder());
             final byte[] sosSegmentBytes = readBytes("SosSegment", is, segmentLength - 2, "Not a Valid JPEG File");
@@ -547,7 +546,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             ioException = ioEx;
         } catch (final RuntimeException ex) {
             // Corrupt images can throw NPE and IOOBE
-            imageReadException = new ImageReadException("Error parsing JPEG",ex);
+            imageReadException = new ImageReadException("Error parsing JPEG", ex);
         }
     }
 }
