@@ -139,7 +139,7 @@ public class ExifRewriter extends BinaryFileParser {
      *            byte order of EXIF segment.
      */
     public ExifRewriter(final ByteOrder byteOrder) {
-        setByteOrder(byteOrder);
+        super(byteOrder);
     }
 
     private JFIFPieces analyzeJFIF(final ByteSource byteSource) throws ImageReadException, IOException {

@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,10 +98,6 @@ public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
     private static final String DEFAULT_EXTENSION = ImageFormats.ICNS.getDefaultExtension();
 
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.ICNS.getExtensions();
-
-    public IcnsImageParser() {
-        super.setByteOrder(ByteOrder.BIG_ENDIAN);
-    }
 
     @Override
     public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)

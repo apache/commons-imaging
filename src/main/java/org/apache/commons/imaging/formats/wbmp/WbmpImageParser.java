@@ -41,6 +41,7 @@ import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 
 public class WbmpImageParser extends ImageParser<WbmpImagingParameters> {
+
     static class WbmpHeader {
         final int typeField;
         final byte fixHeaderField;

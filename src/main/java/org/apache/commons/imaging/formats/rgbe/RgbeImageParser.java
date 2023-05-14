@@ -27,7 +27,6 @@ import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferFloat;
 import java.awt.image.Raster;
 import java.io.IOException;
-import java.nio.ByteOrder;
 import java.util.ArrayList;
 
 import org.apache.commons.imaging.ImageFormat;
@@ -42,10 +41,6 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
  * Parser for Radiance HDR images
  */
 public class RgbeImageParser extends ImageParser<RgbeImagingParameters> {
-
-    public RgbeImageParser() {
-        setByteOrder(ByteOrder.BIG_ENDIAN);
-    }
 
     @Override
     protected String[] getAcceptedExtensions() {

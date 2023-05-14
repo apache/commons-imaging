@@ -23,7 +23,6 @@ import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -72,10 +71,6 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
 
     public static boolean isExifAPP1Segment(final GenericSegment segment) {
         return startsWith(segment.getSegmentData(), JpegConstants.EXIF_IDENTIFIER_CODE);
-    }
-
-    public JpegImageParser() {
-        setByteOrder(ByteOrder.BIG_ENDIAN);
     }
 
     private byte[] assembleSegments(final List<App2Segment> segments) throws ImageReadException {

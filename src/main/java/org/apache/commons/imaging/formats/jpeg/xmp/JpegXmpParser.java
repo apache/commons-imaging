@@ -28,7 +28,7 @@ import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 public class JpegXmpParser extends BinaryFileParser {
 
     public JpegXmpParser() {
-        setByteOrder(ByteOrder.BIG_ENDIAN);
+        super(ByteOrder.BIG_ENDIAN);
     }
 
     public boolean isXmpJpegSegment(final byte[] segmentData) {

@@ -72,7 +72,7 @@ public class IptcParser extends BinaryFileParser {
     private static final byte[] CHARACTER_ESCAPE_SEQUENCE = {'\u001B', '%', 'G'};
 
     public IptcParser() {
-        setByteOrder(ByteOrder.BIG_ENDIAN);
+        super(ByteOrder.BIG_ENDIAN);
     }
 
     private Charset findCharset(final byte[] codedCharset) {

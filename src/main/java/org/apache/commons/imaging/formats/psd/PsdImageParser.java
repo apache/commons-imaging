@@ -29,7 +29,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,10 +67,6 @@ public class PsdImageParser extends ImageParser<PsdImagingParameters> implements
     public static final int IMAGE_RESOURCE_ID_ICC_PROFILE = 0x040F;
     public static final int IMAGE_RESOURCE_ID_XMP = 0x0424;
     public static final String BLOCK_NAME_XMP = "XMP";
-
-    public PsdImageParser() {
-        super.setByteOrder(ByteOrder.BIG_ENDIAN);
-    }
 
     @Override
     public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)

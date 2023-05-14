@@ -123,7 +123,7 @@ public class JpegUtils extends BinaryFileParser {
     }
 
     public JpegUtils() {
-        setByteOrder(ByteOrder.BIG_ENDIAN);
+        super(ByteOrder.BIG_ENDIAN);
     }
 
     public void dumpJFIF(final ByteSource byteSource) throws ImageReadException,

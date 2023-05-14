@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -119,6 +120,14 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
                 // new JBig2ImageParser(),
                 // new TgaImageParser(),
         );
+    }
+
+    public ImageParser() {
+        // defaults to big endian
+    }
+
+    public ImageParser(ByteOrder byteOrder) {
+        super(byteOrder);
     }
 
     /**

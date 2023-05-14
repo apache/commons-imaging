@@ -175,7 +175,7 @@ public class JpegRewriter extends BinaryFileParser {
      * extension.
      */
     public JpegRewriter() {
-        setByteOrder(JPEG_BYTE_ORDER);
+        super(JPEG_BYTE_ORDER);
     }
 
     protected JFIFPieces analyzeJFIF(final ByteSource byteSource) throws ImageReadException, IOException {

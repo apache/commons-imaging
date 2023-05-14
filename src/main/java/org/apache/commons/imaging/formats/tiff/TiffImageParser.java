@@ -65,6 +65,7 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 
 public class TiffImageParser extends ImageParser<TiffImagingParameters> implements XmpEmbeddable<TiffImagingParameters> {
+
     private static final String DEFAULT_EXTENSION = ImageFormats.TIFF.getDefaultExtension();
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.TIFF.getExtensions();
 

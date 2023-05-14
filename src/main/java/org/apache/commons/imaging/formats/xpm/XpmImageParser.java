@@ -53,15 +53,16 @@ import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 
 public class XpmImageParser extends ImageParser<XpmImagingParameters> {
+
     private static class PaletteEntry {
-        int index;
-        boolean haveColor = false;
         int colorArgb;
-        boolean haveGray = false;
-        int grayArgb;
-        boolean haveGray4Level = false;
         int gray4LevelArgb;
+        int grayArgb;
+        boolean haveColor = false;
+        boolean haveGray = false;
+        boolean haveGray4Level = false;
         boolean haveMono = false;
+        int index;
         int monoArgb;
 
         int getBestARGB() {
@@ -80,16 +81,17 @@ public class XpmImageParser extends ImageParser<XpmImagingParameters> {
             return 0x00000000;
         }
     }
+
     private static class XpmHeader {
-        final int width;
         final int height;
-        final int numColors;
         final int numCharsPerPixel;
+        final int numColors;
+        final  Map<Object, PaletteEntry> palette = new HashMap<>();
+        final int width;
         int xHotSpot = -1;
-        int yHotSpot = -1;
         final boolean xpmExt;
 
-        final  Map<Object, PaletteEntry> palette = new HashMap<>();
+        int yHotSpot = -1;
 
         XpmHeader(final int width, final int height, final int numColors,
                 final int numCharsPerPixel, final int xHotSpot, final int yHotSpot, final boolean xpmExt) {
@@ -116,14 +118,13 @@ public class XpmImageParser extends ImageParser<XpmImagingParameters> {
         }
     }
     private static class XpmParseResult {
-        XpmHeader xpmHeader;
         BasicCParser cParser;
+        XpmHeader xpmHeader;
     }
-    private static final String DEFAULT_EXTENSION = ImageFormats.XPM.getDefaultExtension();
-
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.XPM.getExtensions();
-
     private static Map<String, Integer> colorNames;
+
+    private static final String DEFAULT_EXTENSION = ImageFormats.XPM.getDefaultExtension();
 
     private static final char[] WRITE_PALETTE = { ' ', '.', 'X', 'o', 'O', '+',
         '@', '#', '$', '%', '&', '*', '=', '-', ';', ':', '>', ',', '<',

@@ -67,7 +67,7 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.DCX.getExtensions();
 
     public DcxImageParser() {
-        super.setByteOrder(ByteOrder.LITTLE_ENDIAN);
+        super(ByteOrder.LITTLE_ENDIAN);
     }
 
     @Override

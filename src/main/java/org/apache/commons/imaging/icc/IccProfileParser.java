@@ -39,7 +39,7 @@ public class IccProfileParser extends BinaryFileParser {
     private static final Logger LOGGER = Logger.getLogger(IccProfileParser.class.getName());
 
     public IccProfileParser() {
-        this.setByteOrder(ByteOrder.BIG_ENDIAN);
+        super(ByteOrder.BIG_ENDIAN);
     }
 
     public IccProfileInfo getICCProfileInfo(final byte[] bytes) {

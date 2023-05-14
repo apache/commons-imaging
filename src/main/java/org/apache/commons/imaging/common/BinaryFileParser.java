@@ -28,7 +28,7 @@ public class BinaryFileParser {
     private static final Logger LOGGER = Logger.getLogger(BinaryFileParser.class.getName());
 
     /**
-     * Default ByteOrder for parsers.
+     * The default {@link ByteOrder} for parsers is {@link ByteOrder#BIG_ENDIAN}.
      */
     private ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
 

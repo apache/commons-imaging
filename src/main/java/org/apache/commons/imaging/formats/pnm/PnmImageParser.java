@@ -41,6 +41,7 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.palette.PaletteFactory;
 
 public class PnmImageParser extends ImageParser<PnmImagingParameters> {
+
     private static final String DEFAULT_EXTENSION = ImageFormats.PNM.getDefaultExtension();
     private static final String[] ACCEPTED_EXTENSIONS = {
             ImageFormats.PAM.getDefaultExtension(),
@@ -51,7 +52,7 @@ public class PnmImageParser extends ImageParser<PnmImagingParameters> {
     };
 
     public PnmImageParser() {
-        super.setByteOrder(ByteOrder.LITTLE_ENDIAN);
+        super(ByteOrder.LITTLE_ENDIAN);
     }
 
     @Override

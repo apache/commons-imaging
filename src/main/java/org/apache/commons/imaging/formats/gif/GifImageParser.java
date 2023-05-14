@@ -114,7 +114,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
     }
 
     public GifImageParser() {
-        super.setByteOrder(ByteOrder.LITTLE_ENDIAN);
+        super(ByteOrder.LITTLE_ENDIAN);
     }
 
     private int convertColorTableSize(final int tableSize) {

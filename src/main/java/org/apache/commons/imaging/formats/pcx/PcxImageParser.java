@@ -158,7 +158,7 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.PCX.getExtensions();
 
     public PcxImageParser() {
-        super.setByteOrder(ByteOrder.LITTLE_ENDIAN);
+        super(ByteOrder.LITTLE_ENDIAN);
     }
 
     @Override

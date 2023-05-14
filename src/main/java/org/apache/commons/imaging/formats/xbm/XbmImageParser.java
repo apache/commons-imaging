@@ -48,9 +48,10 @@ import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 
 public class XbmImageParser extends ImageParser<XbmImagingParameters> {
+
     private static class XbmHeader {
-        final int width;
         final int height;
+        final int width;
         int xHot = -1;
         int yHot = -1;
 
@@ -71,14 +72,14 @@ public class XbmImageParser extends ImageParser<XbmImagingParameters> {
             }
         }
     }
+
     private static class XbmParseResult {
-        XbmHeader xbmHeader;
         BasicCParser cParser;
+        XbmHeader xbmHeader;
     }
+    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.XBM.getExtensions();
 
     private static final String DEFAULT_EXTENSION = ImageFormats.XBM.getDefaultExtension();
-
-    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.XBM.getExtensions();
 
     private static int parseCIntegerLiteral(final String value) {
         if (value.startsWith("0")) {

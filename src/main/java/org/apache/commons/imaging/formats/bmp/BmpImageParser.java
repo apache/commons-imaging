@@ -64,7 +64,7 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
     private static final int BITMAP_INFO_HEADER_SIZE = 40;
 
     public BmpImageParser() {
-        super.setByteOrder(ByteOrder.LITTLE_ENDIAN);
+        super(ByteOrder.LITTLE_ENDIAN);
     }
 
     @Override
