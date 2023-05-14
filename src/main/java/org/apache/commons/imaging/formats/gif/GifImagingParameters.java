@@ -25,4 +25,5 @@ import org.apache.commons.imaging.common.XmpImagingParameters;
  * @since 1.0-alpha3
  */
 public class GifImagingParameters extends XmpImagingParameters<GifImagingParameters> {
+    // empty
 }
