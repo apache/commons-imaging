@@ -22,7 +22,10 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 
 abstract class TiffOutputItem {
+
     public static class Value extends TiffOutputItem {
+
+        static final int SHALLOW_SIZE = 32;
         private final byte[] bytes;
         private final String name;
 

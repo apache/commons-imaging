@@ -30,7 +30,7 @@ class ImageDataOffsets {
         this.imageDataOffsets = imageDataOffsets;
         this.imageDataOffsetsField = imageDataOffsetsField;
 
-        outputItems = Allocator.array(imageData.length, TiffOutputItem[]::new, 24);
+        outputItems = Allocator.array(imageData.length, TiffOutputItem[]::new, TiffOutputItem.Value.SHALLOW_SIZE);
         Arrays.setAll(outputItems, i -> new TiffOutputItem.Value("TIFF image data", imageData[i].getData()));
 
     }

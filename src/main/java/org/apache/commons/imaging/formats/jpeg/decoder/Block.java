@@ -18,6 +18,7 @@ package org.apache.commons.imaging.formats.jpeg.decoder;
 import org.apache.commons.imaging.common.Allocator;
 
 final class Block {
+
     static final int SHALLOW_SIZE = 24;
     final int[] samples;
     final int width;

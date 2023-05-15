@@ -31,6 +31,7 @@ import org.apache.commons.imaging.common.BinaryFunctions;
 
 public class IccTag {
 
+    static final int SHALLOW_SIZE = 40;
     private static final Logger LOGGER = Logger.getLogger(IccTag.class.getName());
 
     public final int signature;

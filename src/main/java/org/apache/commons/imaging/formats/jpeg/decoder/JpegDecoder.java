@@ -142,7 +142,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
     private final float[] block = new float[64];
 
     private Block[] allocateMCUMemory() throws ImagingException {
-        final Block[] mcu = Allocator.array(sosSegment.numberOfComponents, Block[]::new, 24);
+        final Block[] mcu = Allocator.array(sosSegment.numberOfComponents, Block[]::new, Block.SHALLOW_SIZE);
         for (int i = 0; i < sosSegment.numberOfComponents; i++) {
             final SosSegment.Component scanComponent = sosSegment.getComponents(i);
             SofnSegment.Component frameComponent = null;
