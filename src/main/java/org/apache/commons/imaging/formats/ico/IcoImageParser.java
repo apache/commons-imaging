@@ -141,7 +141,9 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
         }
     }
 
-    private abstract static class IconData {
+    abstract static class IconData {
+        static final int SHALLOW_SIZE = 16;
+        
         public final IconInfo iconInfo;
 
         IconData(final IconInfo iconInfo) {
@@ -585,7 +587,7 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
                 fIconInfos[i] = readIconInfo(is);
             }
 
-            final IconData[] fIconDatas = Allocator.array(fileHeader.iconCount, IconData[]::new, 32);
+            final IconData[] fIconDatas = Allocator.array(fileHeader.iconCount, IconData[]::new, IconData.SHALLOW_SIZE);
             for (int i = 0; i < fileHeader.iconCount; i++) {
                 final byte[] iconData = byteSource.getBlock(
                         fIconInfos[i].imageOffset, fIconInfos[i].imageSize);
