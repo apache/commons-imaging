@@ -16,11 +16,10 @@
  */
 package org.apache.commons.imaging.formats.png.chunks;
 
-import static org.apache.commons.imaging.common.BinaryFunctions.findNull;
-
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.imaging.ImagingException;
+import org.apache.commons.imaging.common.BinaryFunctions;
 
 public class PngChunkScal extends PngChunk {
 
@@ -36,11 +35,7 @@ public class PngChunkScal extends PngChunk {
             throw new ImagingException("PNG sCAL invalid unit specifier: " + getUnitSpecifier());
         }
 
-        final int separator = findNull(bytes);
-        if (separator < 0) {
-            throw new ImagingException("PNG sCAL x and y axis value separator not found.");
-        }
-
+        final int separator = BinaryFunctions.findNull(bytes, "PNG sCAL x and y axis value separator not found.");
         final int xIndex = 1;
         final String xStr = new String(bytes, xIndex, separator - 1, StandardCharsets.ISO_8859_1);
         unitsPerPixelXAxis = toDouble(xStr);
