@@ -105,7 +105,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
             return false;
         }
         final PngChunkIhdr pngChunkIHDR = (PngChunkIhdr) IHDRs.get(0);
-        pw.println("Color: " + pngChunkIHDR.pngColorType.name());
+        pw.println("Color: " + pngChunkIHDR.getPngColorType().name());
 
         pw.println("chunks: " + chunks.size());
 
@@ -207,7 +207,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
         final List<PngChunk> tRNSs = filterChunks(chunks, ChunkType.tRNS);
         if (!tRNSs.isEmpty()) {
             final PngChunk pngChunktRNS = tRNSs.get(0);
-            transparencyFilter = getTransparencyFilter(pngChunkIHDR.pngColorType, pngChunktRNS);
+            transparencyFilter = getTransparencyFilter(pngChunkIHDR.getPngColorType(), pngChunktRNS);
         }
 
         ICC_Profile iccProfile = null;
@@ -266,13 +266,13 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
         }
 
         {
-            final int width = pngChunkIHDR.width;
-            final int height = pngChunkIHDR.height;
-            final PngColorType pngColorType = pngChunkIHDR.pngColorType;
-            final int bitDepth = pngChunkIHDR.bitDepth;
+            final int width = pngChunkIHDR.getWidth();
+            final int height = pngChunkIHDR.getHeight();
+            final PngColorType pngColorType = pngChunkIHDR.getPngColorType();
+            final int bitDepth = pngChunkIHDR.getBitDepth();
 
-            if (pngChunkIHDR.filterMethod != 0) {
-                throw new ImagingException("PNG: unknown FilterMethod: " + pngChunkIHDR.filterMethod);
+            if (pngChunkIHDR.getFilterMethod() != 0) {
+                throw new ImagingException("PNG: unknown FilterMethod: " + pngChunkIHDR.getFilterMethod());
             }
 
             final int bitsPerPixel = bitDepth * pngColorType.getSamplesPerPixel();
@@ -291,7 +291,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
 
             ScanExpediter scanExpediter;
 
-            switch (pngChunkIHDR.interlaceMethod) {
+            switch (pngChunkIHDR.getInterlaceMethod()) {
                 case NONE:
                     scanExpediter = new ScanExpediterSimple(width, height, iis,
                             result, pngColorType, bitDepth, bitsPerPixel,
@@ -303,7 +303,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
                             pngChunkPLTE, gammaCorrection, transparencyFilter);
                     break;
                 default:
-                    throw new ImagingException("Unknown InterlaceMethod: " + pngChunkIHDR.interlaceMethod);
+                    throw new ImagingException("Unknown InterlaceMethod: " + pngChunkIHDR.getInterlaceMethod());
             }
 
             scanExpediter.drive();
@@ -404,7 +404,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
             transparent = true;
         } else {
             // CE - Fix Alpha.
-            transparent = pngChunkIHDR.pngColorType.hasAlpha();
+            transparent = pngChunkIHDR.getPngColorType().hasAlpha();
             // END FIX
         }
 
@@ -461,14 +461,14 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
             textChunks.add(pngChunkiTXt.getContents());
         }
 
-        final int bitsPerPixel = pngChunkIHDR.bitDepth * pngChunkIHDR.pngColorType.getSamplesPerPixel();
+        final int bitsPerPixel = pngChunkIHDR.getBitDepth() * pngChunkIHDR.getPngColorType().getSamplesPerPixel();
         final ImageFormat format = ImageFormats.PNG;
         final String formatName = "PNG Portable Network Graphics";
-        final int height = pngChunkIHDR.height;
+        final int height = pngChunkIHDR.getHeight();
         final String mimeType = "image/png";
         final int numberOfImages = 1;
-        final int width = pngChunkIHDR.width;
-        final boolean progressive = pngChunkIHDR.interlaceMethod.isProgressive();
+        final int width = pngChunkIHDR.getWidth();
+        final boolean progressive = pngChunkIHDR.getInterlaceMethod().isProgressive();
 
         int physicalHeightDpi = -1;
         float physicalHeightInch = -1;
@@ -501,7 +501,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
         }
 
         ImageInfo.ColorType colorType;
-        switch (pngChunkIHDR.pngColorType) {
+        switch (pngChunkIHDR.getPngColorType()) {
             case GREYSCALE:
             case GREYSCALE_WITH_ALPHA:
                 colorType = ImageInfo.ColorType.GRAYSCALE;
@@ -512,7 +512,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
                 colorType = ImageInfo.ColorType.RGB;
                 break;
             default:
-                throw new ImagingException("Png: Unknown ColorType: " + pngChunkIHDR.pngColorType);
+                throw new ImagingException("Png: Unknown ColorType: " + pngChunkIHDR.getPngColorType());
         }
 
         final String formatDetails = "Png";
@@ -541,7 +541,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
 
         final PngChunkIhdr pngChunkIHDR = (PngChunkIhdr) chunks.get(0);
 
-        return new Dimension(pngChunkIHDR.width, pngChunkIHDR.height);
+        return new Dimension(pngChunkIHDR.getWidth(), pngChunkIHDR.getHeight());
     }
 
     @Override
