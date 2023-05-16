@@ -27,13 +27,14 @@ import org.apache.commons.imaging.formats.png.InterlaceMethod;
 import org.apache.commons.imaging.formats.png.PngColorType;
 
 public class PngChunkIhdr extends PngChunk {
-    public final int width;
-    public final int height;
-    public final int bitDepth;
-    public final PngColorType pngColorType;
-    public final int compressionMethod;
-    public final int filterMethod;
-    public final InterlaceMethod interlaceMethod;
+
+    private final int width;
+    private final int height;
+    private final int bitDepth;
+    private final PngColorType pngColorType;
+    private final int compressionMethod;
+    private final int filterMethod;
+    private final InterlaceMethod interlaceMethod;
 
     public PngChunkIhdr(final int length, final int chunkType, final int crc, final byte[] bytes) throws ImagingException, IOException {
         super(length, chunkType, crc, bytes);
@@ -44,7 +45,7 @@ public class PngChunkIhdr extends PngChunk {
         bitDepth = readByte("BitDepth", is, "Not a Valid PNG File: IHDR Corrupt");
         final int type = readByte("ColorType", is, "Not a Valid PNG File: IHDR Corrupt");
         pngColorType = PngColorType.getColorType(type);
-        if (pngColorType == null) {
+        if (getPngColorType() == null) {
             throw new ImagingException("PNG: unknown color type: " + type);
         }
         compressionMethod = readByte("CompressionMethod", is, "Not a Valid PNG File: IHDR Corrupt");
@@ -54,5 +55,33 @@ public class PngChunkIhdr extends PngChunk {
             throw new ImagingException("PNG: unknown interlace method: " + method);
         }
         interlaceMethod = InterlaceMethod.values()[method];
+    }
+
+    public int getBitDepth() {
+        return bitDepth;
+    }
+
+    public int getCompressionMethod() {
+        return compressionMethod;
+    }
+
+    public int getFilterMethod() {
+        return filterMethod;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public InterlaceMethod getInterlaceMethod() {
+        return interlaceMethod;
+    }
+
+    public PngColorType getPngColorType() {
+        return pngColorType;
+    }
+
+    public int getWidth() {
+        return width;
     }
 }

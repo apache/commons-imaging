@@ -22,7 +22,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 public class PngChunkGama extends PngChunk {
-    public final int gamma;
+
+    private final int gamma;
 
     public PngChunkGama(final int length, final int chunkType, final int crc, final byte[] bytes)
             throws IOException {

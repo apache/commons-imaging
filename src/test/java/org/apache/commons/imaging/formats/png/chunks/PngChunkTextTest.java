@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.apache.commons.imaging.ImagingConstants;
+import org.apache.commons.imaging.common.BinaryFunctions;
 import org.junit.jupiter.api.Test;
 
 public class PngChunkTextTest{
@@ -32,7 +33,7 @@ public class PngChunkTextTest{
             fail("Expecting exception: Exception");
         } catch (final Throwable e) {
             assertEquals("PNG tEXt chunk keyword is not terminated.",e.getMessage());
-            assertEquals(PngChunkText.class.getName(), e.getStackTrace()[0].getClassName());
+            assertEquals(BinaryFunctions.class.getName(), e.getStackTrace()[0].getClassName());
         }
     }
 

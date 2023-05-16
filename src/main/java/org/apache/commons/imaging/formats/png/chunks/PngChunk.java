@@ -25,19 +25,20 @@ import org.apache.commons.imaging.common.BinaryFileParser;
  * A PNG image is composed of several chunks. This is the base class for the chunks,
  * used by the parser.
  *
- * @see <a href="https://en.wikipedia.org/wiki/Portable_Network_Graphics#%22Chunks%22_within_the_file>Portable_Network_Graphics</a>
+ * @see <a href="https://en.wikipedia.org/wiki/Portable_Network_Graphics#%22Chunks%22_within_the_file">Portable_Network_Graphics</a>
  */
 public class PngChunk extends BinaryFileParser {
-    public final int length;
-    public final int chunkType;
-    public final int crc;
+
+    private final int length;
+    private final int chunkType;
+    private final int crc;
     private final byte[] bytes;
 
     private final boolean[] propertyBits;
-    public final boolean ancillary;
-    public final boolean isPrivate;
-    public final boolean reserved;
-    public final boolean safeToCopy;
+    private final boolean ancillary;
+    private final boolean isPrivate;
+    private final boolean reserved;
+    private final boolean safeToCopy;
 
     /**
      * Constructs a new instance.
@@ -56,11 +57,11 @@ public class PngChunk extends BinaryFileParser {
 
         propertyBits = new boolean[4];
         int shift = 24;
-        for (int i = 0; i < 4; i++) {
+        final int theMask = 1 << 5;
+        for (int i = 0; i < propertyBits.length; i++) {
             final int theByte = 0xff & (chunkType >> shift);
             shift -= 8;
-            final int theMask = 1 << 5;
-            propertyBits[i] = ((theByte & theMask) > 0);
+            propertyBits[i] = (theByte & theMask) > 0;
         }
 
         ancillary = propertyBits[0];
@@ -70,30 +71,60 @@ public class PngChunk extends BinaryFileParser {
     }
 
     /**
-     * Return a copy of the chunk bytes.
+     * Gets a copy of the chunk bytes.
+     *
      * @return the chunk bytes
      */
     public byte[] getBytes() {
         return bytes.clone();
     }
 
+    public int getChunkType() {
+        return chunkType;
+    }
+
+    public int getCrc() {
+        return crc;
+    }
+
     /**
-     * Create and return a {@link ByteArrayInputStream} for the chunk bytes.
+     * Gets a new {@link ByteArrayInputStream} for the chunk bytes.
      *
      * <p>The caller is responsible for closing the resource.</p>
      *
      * @return a ByteArrayInputStream for the chunk bytes
      */
     protected ByteArrayInputStream getDataStream() {
-        return new ByteArrayInputStream(getBytes());
+        return new ByteArrayInputStream(bytes);
+    }
+
+    public int getLength() {
+        return length;
     }
 
     /**
-     * Return a copy of the chunk property bits.
+     * Gets a copy of the chunk property bits.
+     *
      * @return the chunk property bits
      */
     public boolean[] getPropertyBits() {
         return propertyBits.clone();
+    }
+
+    public boolean isAncillary() {
+        return ancillary;
+    }
+
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
+    public boolean isReserved() {
+        return reserved;
+    }
+
+    public boolean isSafeToCopy() {
+        return safeToCopy;
     }
 
 }

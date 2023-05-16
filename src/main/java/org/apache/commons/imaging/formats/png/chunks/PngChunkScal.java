@@ -16,49 +16,56 @@
  */
 package org.apache.commons.imaging.formats.png.chunks;
 
-import static org.apache.commons.imaging.common.BinaryFunctions.findNull;
-
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.imaging.ImagingException;
+import org.apache.commons.imaging.common.BinaryFunctions;
 
 public class PngChunkScal extends PngChunk {
-   public final double unitsPerPixelXAxis;
-   public final double unitsPerPixelYAxis;
-   public final int unitSpecifier;
 
-   public PngChunkScal(final int length, final int chunkType, final int crc, final byte[] bytes)
-         throws ImagingException {
-      super(length, chunkType, crc, bytes);
+    private final double unitsPerPixelXAxis;
+    private final double unitsPerPixelYAxis;
+    private final int unitSpecifier;
 
-      unitSpecifier = bytes[0];
-      if (unitSpecifier != 1 && unitSpecifier != 2) {
-         throw new ImagingException("PNG sCAL invalid unit specifier: " + unitSpecifier);
-      }
+    public PngChunkScal(final int length, final int chunkType, final int crc, final byte[] bytes) throws ImagingException {
+        super(length, chunkType, crc, bytes);
 
-      final int separator = findNull(bytes);
-      if (separator < 0) {
-         throw new ImagingException("PNG sCAL x and y axis value separator not found.");
-      }
+        unitSpecifier = bytes[0];
+        if (getUnitSpecifier() != 1 && getUnitSpecifier() != 2) {
+            throw new ImagingException("PNG sCAL invalid unit specifier: " + getUnitSpecifier());
+        }
 
-      final int xIndex = 1;
-      final String xStr = new String(bytes, xIndex, separator - 1, StandardCharsets.ISO_8859_1);
-      unitsPerPixelXAxis = toDouble(xStr);
+        final int separator = BinaryFunctions.findNull(bytes, "PNG sCAL x and y axis value separator not found.");
+        final int xIndex = 1;
+        final String xStr = new String(bytes, xIndex, separator - 1, StandardCharsets.ISO_8859_1);
+        unitsPerPixelXAxis = toDouble(xStr);
 
-      final int yIndex = separator + 1;
-      if (yIndex >= length) {
-         throw new ImagingException("PNG sCAL chunk missing the y axis value.");
-      }
+        final int yIndex = separator + 1;
+        if (yIndex >= length) {
+            throw new ImagingException("PNG sCAL chunk missing the y axis value.");
+        }
 
-      final String yStr = new String(bytes, yIndex, length - yIndex, StandardCharsets.ISO_8859_1);
-      unitsPerPixelYAxis = toDouble(yStr);
-   }
+        final String yStr = new String(bytes, yIndex, length - yIndex, StandardCharsets.ISO_8859_1);
+        unitsPerPixelYAxis = toDouble(yStr);
+    }
 
-   private double toDouble(final String str) throws ImagingException {
-      try {
-         return Double.parseDouble(str);
-      } catch (final NumberFormatException e) {
-         throw new ImagingException("PNG sCAL error reading axis value - " + str);
-      }
-   }
+    public int getUnitSpecifier() {
+        return unitSpecifier;
+    }
+
+    public double getUnitsPerPixelXAxis() {
+        return unitsPerPixelXAxis;
+    }
+
+    public double getUnitsPerPixelYAxis() {
+        return unitsPerPixelYAxis;
+    }
+
+    private double toDouble(final String str) throws ImagingException {
+        try {
+            return Double.parseDouble(str);
+        } catch (final NumberFormatException e) {
+            throw new ImagingException("PNG sCAL error reading axis value - " + str);
+        }
+    }
 }

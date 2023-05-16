@@ -16,9 +16,6 @@
  */
 package org.apache.commons.imaging.formats.png.chunks;
 
-import static org.apache.commons.imaging.common.BinaryFunctions.findNull;
-import static org.apache.commons.imaging.common.BinaryFunctions.getStreamBytes;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -29,6 +26,7 @@ import java.util.zip.InflaterInputStream;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
+import org.apache.commons.imaging.common.BinaryFunctions;
 
 /**
  * The PNG iCCP chunk. If "present, the image samples conform to the color space represented by the embedded ICC
@@ -46,15 +44,18 @@ public class PngChunkIccp extends PngChunk {
     /**
      * ICC profile name.
      */
-    public final String profileName;
+    private final String profileName;
+
     /**
      * Compression method.
      */
-    public final int compressionMethod;
+    private final int compressionMethod;
+
     /**
      * Compressed profile data.
      */
     private final byte[] compressedProfile;
+
     /**
      * Uncompressed profile data.
      */
@@ -74,10 +75,7 @@ public class PngChunkIccp extends PngChunk {
             throws ImagingException, IOException {
         super(length, chunkType, crc, bytes);
 
-        final int index = findNull(bytes);
-        if (index < 0) {
-            throw new ImagingException("PngChunkIccp: No Profile Name");
-        }
+        final int index = BinaryFunctions.findNull(bytes, "PngChunkIccp: No Profile Name");
         final byte[] nameBytes = Arrays.copyOf(bytes, index);
         profileName = new String(nameBytes, StandardCharsets.ISO_8859_1);
 
@@ -95,11 +93,23 @@ public class PngChunkIccp extends PngChunk {
             LOGGER.finest("bytes.length: " + bytes.length);
         }
 
-        uncompressedProfile = getStreamBytes(new InflaterInputStream(new ByteArrayInputStream(compressedProfile)));
+        uncompressedProfile = BinaryFunctions.getStreamBytes(new InflaterInputStream(new ByteArrayInputStream(compressedProfile)));
 
         if (LOGGER.isLoggable(Level.FINEST)) {
             LOGGER.finest("UncompressedProfile: " + bytes.length);
         }
+    }
+
+    public byte[] getCompressedProfile() {
+        return compressedProfile.clone();
+    }
+
+    public int getCompressionMethod() {
+        return compressionMethod;
+    }
+
+    public String getProfileName() {
+        return profileName;
     }
 
     /**
