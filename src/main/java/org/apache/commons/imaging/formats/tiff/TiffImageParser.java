@@ -263,22 +263,22 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
             // Check for valid subimage specification. The following checks
             // are consistent with BufferedImage.getSubimage()
             if (subImage.width <= 0) {
-                throw new ImagingException("negative or zero subimage width");
+                throw new ImagingException("Negative or zero subimage width.");
             }
             if (subImage.height <= 0) {
-                throw new ImagingException("negative or zero subimage height");
+                throw new ImagingException("Negative or zero subimage height.");
             }
             if (subImage.x < 0 || subImage.x >= width) {
-                throw new ImagingException("subimage x is outside raster");
+                throw new ImagingException("Subimage x is outside raster.");
             }
             if (subImage.x + subImage.width > width) {
-                throw new ImagingException("subimage (x+width) is outside raster");
+                throw new ImagingException("Subimage (x+width) is outside raster.");
             }
             if (subImage.y < 0 || subImage.y >= height) {
-                throw new ImagingException("subimage y is outside raster");
+                throw new ImagingException("Subimage y is outside raster.");
             }
             if (subImage.y + subImage.height > height) {
-                throw new ImagingException("subimage (y+height) is outside raster");
+                throw new ImagingException("Subimage (y+height) is outside raster.");
             }
         }
 
@@ -791,22 +791,22 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
             // Check for valid subimage specification. The following checks
             // are consistent with BufferedImage.getSubimage()
             if (subImage.width <= 0) {
-                throw new ImagingException("negative or zero subimage width");
+                throw new ImagingException("Negative or zero subimage width.");
             }
             if (subImage.height <= 0) {
-                throw new ImagingException("negative or zero subimage height");
+                throw new ImagingException("Negative or zero subimage height.");
             }
             if (subImage.x < 0 || subImage.x >= width) {
-                throw new ImagingException("subimage x is outside raster");
+                throw new ImagingException("Subimage x is outside raster.");
             }
             if (subImage.x + subImage.width > width) {
-                throw new ImagingException("subimage (x+width) is outside raster");
+                throw new ImagingException("Subimage (x+width) is outside raster.");
             }
             if (subImage.y < 0 || subImage.y >= height) {
-                throw new ImagingException("subimage y is outside raster");
+                throw new ImagingException("Subimage y is outside raster.");
             }
             if (subImage.y + subImage.height > height) {
-                throw new ImagingException("subimage (y+height) is outside raster");
+                throw new ImagingException("Subimage (y+height) is outside raster.");
             }
 
             // if the subimage is just the same thing as the whole

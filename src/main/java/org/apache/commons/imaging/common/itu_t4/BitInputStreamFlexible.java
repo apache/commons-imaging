@@ -77,7 +77,7 @@ class BitInputStreamFlexible extends FilterInputStream {
             while (count >= 8) {
                 cache = in.read();
                 if (cache < 0) {
-                    throw new ImagingException("couldn't read bits");
+                    throw new ImagingException("Couldn't read bits");
                 }
                 // System.out.println("cache 1: " + cache + " ("
                 // + Integer.toHexString(cache) + ", "
@@ -89,7 +89,7 @@ class BitInputStreamFlexible extends FilterInputStream {
             if (count > 0) {
                 cache = in.read();
                 if (cache < 0) {
-                    throw new ImagingException("couldn't read bits");
+                    throw new ImagingException("Couldn't read bits");
                 }
                 // System.out.println("cache 2: " + cache + " ("
                 // + Integer.toHexString(cache) + ", "
