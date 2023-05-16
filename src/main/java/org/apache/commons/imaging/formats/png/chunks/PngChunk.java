@@ -46,7 +46,7 @@ public class PngChunk extends BinaryFileParser {
      * @param chunkType chunk type
      * @param crc CRC computed over the chunk type and chunk data (but not the length)
      * @param bytes chunk data bytes
-     * @throws NullPointerException if bytes is null. 
+     * @throws NullPointerException if bytes is null.
      */
     public PngChunk(final int length, final int chunkType, final int crc, final byte[] bytes) {
         this.length = length;
