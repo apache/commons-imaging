@@ -141,6 +141,8 @@ public class ImageBuilder {
     }
 
     /**
+     * Checks for valid dimensions and throws {@link RasterFormatException} if the inputs are invalid.
+     *
      * @param width image width (must be greater than zero)
      * @param height image height (must be greater than zero)
      * @throws RasterFormatException if {@code width} or {@code height} are equal or less than zero
@@ -152,7 +154,6 @@ public class ImageBuilder {
         if (height <= 0) {
             throw new RasterFormatException("zero or negative height value");
         }
-
     }
 
     /**
