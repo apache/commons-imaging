@@ -293,9 +293,10 @@ public class ImageBuilder {
     }
 
     /**
-     * Set the RGB or ARGB value for the pixel at position (x,y)
+     * Sets the RGB or ARGB value for the pixel at position (x,y)
      * within the image builder pixel field. For performance reasons,
      * no bounds checking is applied.
+     *
      * @param x the X coordinate of the pixel to be set
      * @param y the Y coordinate of the pixel to be set
      * @param argb the RGB or ARGB value to be stored.
