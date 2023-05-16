@@ -30,10 +30,11 @@ import org.apache.commons.imaging.formats.png.PngConstants;
 import org.apache.commons.imaging.formats.png.PngText;
 
 public class PngChunkItxt extends PngTextChunk {
-    public final String keyword;
-    public final String text;
 
-    /*
+    private final String keyword;
+    private final String text;
+
+    /**
      * The language tag defined in [RFC-3066] indicates the human language used
      * by the translated keyword and the text. Unlike the keyword, the language
      * tag is case-insensitive. It is an ISO 646.IRV:1991 [ISO 646] string
@@ -42,9 +43,9 @@ public class PngChunkItxt extends PngTextChunk {
      * is two or three letters long, it is an ISO language code [ISO-639]. If
      * the language tag is empty, the language is unspecified.
      */
-    public final String languageTag;
+    private final String languageTag;
 
-    public final String translatedKeyword;
+    private final String translatedKeyword;
 
     public PngChunkItxt(final int length, final int chunkType, final int crc, final byte[] bytes)
             throws ImagingException, IOException {
@@ -108,7 +109,7 @@ public class PngChunkItxt extends PngTextChunk {
     }
 
     /**
-     * @return Returns the keyword.
+     * @return Gets the keyword.
      */
     @Override
     public String getKeyword() {
@@ -116,10 +117,14 @@ public class PngChunkItxt extends PngTextChunk {
     }
 
     /**
-     * @return Returns the text.
+     * @return Gets the text.
      */
     @Override
     public String getText() {
         return text;
+    }
+
+    public String getTranslatedKeyword() {
+        return translatedKeyword;
     }
 }
