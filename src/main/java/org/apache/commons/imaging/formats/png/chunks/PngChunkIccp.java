@@ -106,7 +106,7 @@ public class PngChunkIccp extends PngChunk {
     }
 
     public byte[] getCompressedProfile() {
-        return compressedProfile;
+        return compressedProfile.clone();
     }
 
     public int getCompressionMethod() {
