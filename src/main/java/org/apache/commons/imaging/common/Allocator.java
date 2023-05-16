@@ -17,6 +17,7 @@
 
 package org.apache.commons.imaging.common;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.function.IntFunction;
 
@@ -144,10 +145,14 @@ public class Allocator {
      * @param elementSize The element size.
      * @return the request.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
-     * @throws ArithmeticException        if the result overflows an int.
      */
     public static int check(final int request, final int elementSize) {
-        final int multiplyExact = Math.multiplyExact(request, elementSize);
+        int multiplyExact;
+        try {
+            multiplyExact = Math.multiplyExact(request, elementSize);
+        } catch (ArithmeticException e) {
+            throw new AllocationRequestException(LIMIT, BigInteger.valueOf(request).multiply(BigInteger.valueOf(elementSize)));
+        }
         if (multiplyExact > LIMIT) {
             throw new AllocationRequestException(LIMIT, request);
         }
@@ -165,7 +170,6 @@ public class Allocator {
      * @param elementSize The element size.
      * @return the request.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
-     * @throws ArithmeticException        if the result overflows an int.
      */
     public static int check(final long request, final int elementSize) {
         if (request > Integer.MAX_VALUE) {

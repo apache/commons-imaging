@@ -17,6 +17,8 @@
 
 package org.apache.commons.imaging.common;
 
+import java.math.BigInteger;
+
 /**
  * Thrown when an allocation request is too large.
  */
@@ -25,7 +27,7 @@ public class AllocationRequestException extends ImagingRuntimeException {
     private static final long serialVersionUID = 1L;
 
     private final int limit;
-    private final long request;
+    private final BigInteger request;
 
     /**
      * Constructs a new instance.
@@ -33,7 +35,7 @@ public class AllocationRequestException extends ImagingRuntimeException {
      * @param limit The allocation limit.
      * @param request The allocation request.
      */
-    public AllocationRequestException(final int limit, final int request) {
+    public AllocationRequestException(final int limit, final BigInteger request) {
         super(String.format("Allocation limit %,d exceeded: %,d", limit, request));
         this.limit = limit;
         this.request = request;
@@ -45,10 +47,18 @@ public class AllocationRequestException extends ImagingRuntimeException {
      * @param limit The allocation limit.
      * @param request The allocation request.
      */
+    public AllocationRequestException(final int limit, final int request) {
+        this(limit, BigInteger.valueOf(request));
+    }
+
+    /**
+     * Constructs a new instance.
+     *
+     * @param limit The allocation limit.
+     * @param request The allocation request.
+     */
     public AllocationRequestException(final int limit, final long request) {
-        super(String.format("Allocation limit %,d exceeded: %,d", limit, request));
-        this.limit = limit;
-        this.request = request;
+        this(limit, BigInteger.valueOf(request));
     }
 
     /**
@@ -65,7 +75,7 @@ public class AllocationRequestException extends ImagingRuntimeException {
      *
      * @return the allocation request.
      */
-    public long getRequest() {
+    public BigInteger getRequest() {
         return request;
     }
 }
