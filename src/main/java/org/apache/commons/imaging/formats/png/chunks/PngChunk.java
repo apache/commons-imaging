@@ -29,16 +29,16 @@ import org.apache.commons.imaging.common.BinaryFileParser;
  */
 public class PngChunk extends BinaryFileParser {
 
-    public final int length;
-    public final int chunkType;
-    public final int crc;
+    private final int length;
+    private final int chunkType;
+    private final int crc;
     private final byte[] bytes;
 
     private final boolean[] propertyBits;
-    public final boolean ancillary;
-    public final boolean isPrivate;
-    public final boolean reserved;
-    public final boolean safeToCopy;
+    private final boolean ancillary;
+    private final boolean isPrivate;
+    private final boolean reserved;
+    private final boolean safeToCopy;
 
     /**
      * Constructs a new instance.
@@ -79,6 +79,14 @@ public class PngChunk extends BinaryFileParser {
         return bytes.clone();
     }
 
+    public int getChunkType() {
+        return chunkType;
+    }
+
+    public int getCrc() {
+        return crc;
+    }
+
     /**
      * Gets a new {@link ByteArrayInputStream} for the chunk bytes.
      *
@@ -90,6 +98,10 @@ public class PngChunk extends BinaryFileParser {
         return new ByteArrayInputStream(bytes);
     }
 
+    public int getLength() {
+        return length;
+    }
+
     /**
      * Gets a copy of the chunk property bits.
      *
@@ -97,6 +109,22 @@ public class PngChunk extends BinaryFileParser {
      */
     public boolean[] getPropertyBits() {
         return propertyBits.clone();
+    }
+
+    public boolean isAncillary() {
+        return ancillary;
+    }
+
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
+    public boolean isReserved() {
+        return reserved;
+    }
+
+    public boolean isSafeToCopy() {
+        return safeToCopy;
     }
 
 }

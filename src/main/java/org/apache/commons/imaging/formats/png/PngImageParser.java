@@ -115,7 +115,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
 
         for (int i = 0; i < chunks.size(); i++) {
             final PngChunk chunk = chunks.get(i);
-            printCharQuad(pw, "\t" + i + ": ", chunk.chunkType);
+            printCharQuad(pw, "\t" + i + ": ", chunk.getChunkType());
         }
 
         pw.println("");
@@ -129,7 +129,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
         final List<PngChunk> result = new ArrayList<>();
 
         for (final PngChunk chunk : chunks) {
-            if (chunk.chunkType == type.value) {
+            if (chunk.getChunkType() == type.value) {
                 result.add(chunk);
             }
         }
@@ -337,7 +337,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
         final List<PngChunk> chunks = readChunks(is, null, false);
         final List<String> chunkTypes = Allocator.arrayList(chunks.size());
         for (final PngChunk chunk : chunks) {
-            chunkTypes.add(getChunkTypeName(chunk.chunkType));
+            chunkTypes.add(getChunkTypeName(chunk.getChunkType()));
         }
         return chunkTypes;
     }
