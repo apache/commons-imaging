@@ -449,6 +449,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             final int[] preds = Allocator.intArray(sofnSegment.numberOfComponents);
             ColorModel colorModel;
             WritableRaster raster;
+            Allocator.check(Integer.BYTES * sofnSegment.width * sofnSegment.height);
             switch (sofnSegment.numberOfComponents) {
             case 4:
                 colorModel = new DirectColorModel(24, 0x00ff0000, 0x0000ff00, 0x000000ff);
@@ -456,18 +457,14 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                 raster = Raster.createPackedRaster(DataBuffer.TYPE_INT, sofnSegment.width, sofnSegment.height, bandMasks, null);
                 break;
             case 3:
-                colorModel = new DirectColorModel(24, 0x00ff0000, 0x0000ff00,
-                        0x000000ff);
-                raster = Raster.createPackedRaster(DataBuffer.TYPE_INT,
-                        sofnSegment.width, sofnSegment.height, new int[] {
-                                0x00ff0000, 0x0000ff00, 0x000000ff }, null);
+                colorModel = new DirectColorModel(24, 0x00ff0000, 0x0000ff00, 0x000000ff);
+                raster = Raster.createPackedRaster(DataBuffer.TYPE_INT, sofnSegment.width, sofnSegment.height, new int[] { 0x00ff0000, 0x0000ff00, 0x000000ff },
+                        null);
                 break;
             case 1:
-                colorModel = new DirectColorModel(24, 0x00ff0000, 0x0000ff00,
-                        0x000000ff);
-                raster = Raster.createPackedRaster(DataBuffer.TYPE_INT,
-                        sofnSegment.width, sofnSegment.height, new int[] {
-                                0x00ff0000, 0x0000ff00, 0x000000ff }, null);
+                colorModel = new DirectColorModel(24, 0x00ff0000, 0x0000ff00, 0x000000ff);
+                raster = Raster.createPackedRaster(DataBuffer.TYPE_INT, sofnSegment.width, sofnSegment.height, new int[] { 0x00ff0000, 0x0000ff00, 0x000000ff },
+                        null);
                 // FIXME: why do images come out too bright with CS_GRAY?
                 // colorModel = new ComponentColorModel(
                 // ColorSpace.getInstance(ColorSpace.CS_GRAY), false, true,
@@ -476,8 +473,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                 // sofnSegment.width, sofnSegment.height);
                 break;
             default:
-                throw new ImagingException(sofnSegment.numberOfComponents
-                        + " components are invalid or unsupported");
+                throw new ImagingException(sofnSegment.numberOfComponents + " components are invalid or unsupported");
             }
             final DataBuffer dataBuffer = raster.getDataBuffer();
 

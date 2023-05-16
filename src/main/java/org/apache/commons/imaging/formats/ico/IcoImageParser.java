@@ -143,7 +143,7 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
 
     abstract static class IconData {
         static final int SHALLOW_SIZE = 16;
-        
+
         public final IconInfo iconInfo;
 
         IconData(final IconInfo iconInfo) {
