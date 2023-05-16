@@ -28,7 +28,7 @@ import org.apache.commons.imaging.common.ImageBuilder;
  *
  * @see <a href=
  *      "https://www.awaresystems.be/imaging/tiff/tifftags/photometricinterpretation.html">
- *      Baseline TIFF Tag PhotometricInterpretation </a>
+ *      Baseline TIFF Tag PhotometricInterpretation</a>
  */
 public abstract class PhotometricInterpreter {
     protected final int samplesPerPixel;

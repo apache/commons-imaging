@@ -141,6 +141,8 @@ public class ImageBuilder {
     }
 
     /**
+     * Checks for valid dimensions and throws {@link RasterFormatException} if the inputs are invalid.
+     *
      * @param width image width (must be greater than zero)
      * @param height image height (must be greater than zero)
      * @throws RasterFormatException if {@code width} or {@code height} are equal or less than zero
@@ -152,7 +154,6 @@ public class ImageBuilder {
         if (height <= 0) {
             throw new RasterFormatException("zero or negative height value");
         }
-
     }
 
     /**
@@ -164,7 +165,7 @@ public class ImageBuilder {
     }
 
     /**
-     * Get the height of the ImageBuilder pixel field
+     * Gets the height of the ImageBuilder pixel field
      * @return  a positive integer
      */
     public int getHeight() {
@@ -172,7 +173,7 @@ public class ImageBuilder {
     }
 
     /**
-     * Get the RGB or ARGB value for the pixel at the position (x,y)
+     * Gets the RGB or ARGB value for the pixel at the position (x,y)
      * within the image builder pixel field. For performance reasons
      * no bounds checking is applied.
      * @param x the X coordinate of the pixel to be read
@@ -248,15 +249,15 @@ public class ImageBuilder {
      }
 
      /**
-     * Get the width of the ImageBuilder pixel field
-     * @return a positive integer
-     */
-    public int getWidth() {
-        return width;
-    }
+      * Get the width of the ImageBuilder pixel field
+      *
+      * @return a positive integer
+      */
+     public int getWidth() {
+         return width;
+     }
 
-
-    private BufferedImage makeBufferedImage(
+     private BufferedImage makeBufferedImage(
             final int[] argb, final int w, final int h, final boolean useAlpha) {
         ColorModel colorModel;
         WritableRaster raster;
@@ -292,9 +293,10 @@ public class ImageBuilder {
     }
 
     /**
-     * Set the RGB or ARGB value for the pixel at position (x,y)
+     * Sets the RGB or ARGB value for the pixel at position (x,y)
      * within the image builder pixel field. For performance reasons,
      * no bounds checking is applied.
+     *
      * @param x the X coordinate of the pixel to be set
      * @param y the Y coordinate of the pixel to be set
      * @param argb the RGB or ARGB value to be stored.

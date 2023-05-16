@@ -17,12 +17,13 @@
 
 package org.apache.commons.imaging.formats.ico;
 
+import org.apache.commons.imaging.formats.ico.IcoImageParser.IconData;
 import org.apache.commons.imaging.formats.ico.IcoImageParser.IconInfo;
 import org.apache.commons.imaging.test.util.PrintShallowObjectSizes;
 
 public class PrintShallowSizes {
 
     public static void main(final String[] args) {
-        PrintShallowObjectSizes.print(IconInfo.class);
+        PrintShallowObjectSizes.print(IconInfo.class, IconData.class);
     }
 }

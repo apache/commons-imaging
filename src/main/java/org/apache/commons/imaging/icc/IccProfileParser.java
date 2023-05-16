@@ -244,7 +244,7 @@ public class IccProfileParser extends BinaryFileParser {
         final int tagCount = read4Bytes("TagCount", is, "Not a Valid ICC Profile", getByteOrder());
 
         // List tags = new ArrayList();
-        final IccTag[] tags = Allocator.array(tagCount, IccTag[]::new, 40);
+        final IccTag[] tags = Allocator.array(tagCount, IccTag[]::new, IccTag.SHALLOW_SIZE);
 
         for (int i = 0; i < tagCount; i++) {
             final int tagSignature = read4Bytes("TagSignature[" + i + "]", is, "Not a Valid ICC Profile",
