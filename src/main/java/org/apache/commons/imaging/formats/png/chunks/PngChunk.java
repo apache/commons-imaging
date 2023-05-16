@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.formats.png.chunks;
 
 import java.io.ByteArrayInputStream;
+import java.util.Objects;
 
 import org.apache.commons.imaging.common.BinaryFileParser;
 
@@ -49,7 +50,7 @@ public class PngChunk extends BinaryFileParser {
         this.length = length;
         this.chunkType = chunkType;
         this.crc = crc;
-        this.bytes = bytes.clone();
+        this.bytes = Objects.requireNonNull(bytes, "bytes").clone();
 
         propertyBits = new boolean[4];
         int shift = 24;
