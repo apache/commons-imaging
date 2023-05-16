@@ -31,8 +31,8 @@ import org.apache.commons.imaging.formats.png.PngText;
 
 public class PngChunkZtxt extends PngTextChunk {
 
-    public final String keyword;
-    public final String text;
+    private final String keyword;
+    private final String text;
 
     public PngChunkZtxt(final int length, final int chunkType, final int crc, final byte[] bytes)
             throws ImagingException, IOException {
@@ -67,7 +67,9 @@ public class PngChunkZtxt extends PngTextChunk {
     }
 
     /**
-     * @return Returns the keyword.
+     * Gets the keyword.
+     *
+     * @return the keyword.
      */
     @Override
     public String getKeyword() {
@@ -75,7 +77,9 @@ public class PngChunkZtxt extends PngTextChunk {
     }
 
     /**
-     * @return Returns the text.
+     * Gets the text.
+     *
+     * @return the text.
      */
     @Override
     public String getText() {
