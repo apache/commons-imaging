@@ -428,12 +428,12 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
         }
         if (sCALs.size() == 1) {
             final PngChunkScal pngChunkScal = (PngChunkScal) sCALs.get(0);
-            if (pngChunkScal.unitSpecifier == 1) {
-                physicalScale = PhysicalScale.createFromMeters(pngChunkScal.unitsPerPixelXAxis,
-                      pngChunkScal.unitsPerPixelYAxis);
+            if (pngChunkScal.getUnitSpecifier() == 1) {
+                physicalScale = PhysicalScale.createFromMeters(pngChunkScal.getUnitsPerPixelXAxis(),
+                      pngChunkScal.getUnitsPerPixelYAxis());
             } else {
-                physicalScale = PhysicalScale.createFromRadians(pngChunkScal.unitsPerPixelXAxis,
-                      pngChunkScal.unitsPerPixelYAxis);
+                physicalScale = PhysicalScale.createFromRadians(pngChunkScal.getUnitsPerPixelXAxis(),
+                      pngChunkScal.getUnitsPerPixelYAxis());
             }
         }
 

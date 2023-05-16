@@ -56,9 +56,9 @@ public class PngChunkScalTest {
       final PngChunkScal pngChunkScal = new PngChunkScal(10, chunkType, 0,
             new byte[]{1, 48, 46, 48, 49, 0, 48, 46, 48, 50});
 
-      assertEquals(pngChunkScal.unitSpecifier, 1);
-      assertEquals(pngChunkScal.unitsPerPixelXAxis, 0.01, delta);
-      assertEquals(pngChunkScal.unitsPerPixelYAxis, 0.02, delta);
+      assertEquals(pngChunkScal.getUnitSpecifier(), 1);
+      assertEquals(pngChunkScal.getUnitsPerPixelXAxis(), 0.01, delta);
+      assertEquals(pngChunkScal.getUnitsPerPixelYAxis(), 0.02, delta);
    }
 
    @Test
@@ -66,8 +66,8 @@ public class PngChunkScalTest {
       final PngChunkScal pngChunkScal = new PngChunkScal(10, chunkType, 0,
             new byte[]{2, 48, 46, 48, 49, 0, 48, 46, 48, 50});
 
-      assertEquals(pngChunkScal.unitSpecifier, 2);
-      assertEquals(pngChunkScal.unitsPerPixelXAxis, 0.01, delta);
-      assertEquals(pngChunkScal.unitsPerPixelYAxis, 0.02, delta);
+      assertEquals(pngChunkScal.getUnitSpecifier(), 2);
+      assertEquals(pngChunkScal.getUnitsPerPixelXAxis(), 0.01, delta);
+      assertEquals(pngChunkScal.getUnitsPerPixelYAxis(), 0.02, delta);
    }
 }
