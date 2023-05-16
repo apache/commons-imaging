@@ -165,7 +165,7 @@ public class ImageBuilder {
     }
 
     /**
-     * Get the height of the ImageBuilder pixel field
+     * Gets the height of the ImageBuilder pixel field
      * @return  a positive integer
      */
     public int getHeight() {
@@ -173,7 +173,7 @@ public class ImageBuilder {
     }
 
     /**
-     * Get the RGB or ARGB value for the pixel at the position (x,y)
+     * Gets the RGB or ARGB value for the pixel at the position (x,y)
      * within the image builder pixel field. For performance reasons
      * no bounds checking is applied.
      * @param x the X coordinate of the pixel to be read
@@ -249,15 +249,15 @@ public class ImageBuilder {
      }
 
      /**
-     * Get the width of the ImageBuilder pixel field
-     * @return a positive integer
-     */
-    public int getWidth() {
-        return width;
-    }
+      * Get the width of the ImageBuilder pixel field
+      *
+      * @return a positive integer
+      */
+     public int getWidth() {
+         return width;
+     }
 
-
-    private BufferedImage makeBufferedImage(
+     private BufferedImage makeBufferedImage(
             final int[] argb, final int w, final int h, final boolean useAlpha) {
         ColorModel colorModel;
         WritableRaster raster;
