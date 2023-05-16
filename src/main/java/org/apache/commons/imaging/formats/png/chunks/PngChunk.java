@@ -89,7 +89,8 @@ public class PngChunk extends BinaryFileParser {
     }
 
     /**
-     * Return a copy of the chunk property bits.
+     * Gets a copy of the chunk property bits.
+     *
      * @return the chunk property bits
      */
     public boolean[] getPropertyBits() {
