@@ -447,7 +447,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
 
         for (final PngChunk tEXt : tEXts) {
             final PngChunkText pngChunktEXt = (PngChunkText) tEXt;
-            comments.add(pngChunktEXt.keyword + ": " + pngChunktEXt.text);
+            comments.add(pngChunktEXt.getKeyword() + ": " + pngChunktEXt.getText());
             textChunks.add(pngChunktEXt.getContents());
         }
         for (final PngChunk zTXt : zTXts) {

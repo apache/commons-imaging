@@ -29,23 +29,18 @@ public class PngChunkText extends PngTextChunk {
 
     private static final Logger LOGGER = Logger.getLogger(PngChunkText.class.getName());
 
-    public final String keyword;
-    public final String text;
+    private final String keyword;
+    private final String text;
 
-    public PngChunkText(final int length, final int chunkType, final int crc, final byte[] bytes)
-            throws ImagingException {
+    public PngChunkText(final int length, final int chunkType, final int crc, final byte[] bytes) throws ImagingException {
         super(length, chunkType, crc, bytes);
         final int index = findNull(bytes);
         if (index < 0) {
-            throw new ImagingException(
-                    "PNG tEXt chunk keyword is not terminated.");
+            throw new ImagingException("PNG tEXt chunk keyword is not terminated.");
         }
-
         keyword = new String(bytes, 0, index, StandardCharsets.ISO_8859_1);
-
         final int textLength = bytes.length - (index + 1);
         text = new String(bytes, index + 1, textLength, StandardCharsets.ISO_8859_1);
-
         if (LOGGER.isLoggable(Level.FINEST)) {
             LOGGER.finest("Keyword: " + keyword);
             LOGGER.finest("Text: " + text);
