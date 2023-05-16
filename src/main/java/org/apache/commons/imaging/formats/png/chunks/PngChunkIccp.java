@@ -46,15 +46,18 @@ public class PngChunkIccp extends PngChunk {
     /**
      * ICC profile name.
      */
-    public final String profileName;
+    private final String profileName;
+
     /**
      * Compression method.
      */
-    public final int compressionMethod;
+    private final int compressionMethod;
+
     /**
      * Compressed profile data.
      */
     private final byte[] compressedProfile;
+
     /**
      * Uncompressed profile data.
      */
@@ -100,6 +103,18 @@ public class PngChunkIccp extends PngChunk {
         if (LOGGER.isLoggable(Level.FINEST)) {
             LOGGER.finest("UncompressedProfile: " + bytes.length);
         }
+    }
+
+    public byte[] getCompressedProfile() {
+        return compressedProfile;
+    }
+
+    public int getCompressionMethod() {
+        return compressionMethod;
+    }
+
+    public String getProfileName() {
+        return profileName;
     }
 
     /**
