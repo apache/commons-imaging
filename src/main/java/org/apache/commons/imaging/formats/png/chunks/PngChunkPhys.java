@@ -23,18 +23,29 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 public class PngChunkPhys extends PngChunk {
-    public final int pixelsPerUnitXAxis;
-    public final int pixelsPerUnitYAxis;
-    public final int unitSpecifier;
+
+    private final int pixelsPerUnitXAxis;
+    private final int pixelsPerUnitYAxis;
+    private final int unitSpecifier;
 
     public PngChunkPhys(final int length, final int chunkType, final int crc, final byte[] bytes) throws IOException {
         super(length, chunkType, crc, bytes);
-
         final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
-
         pixelsPerUnitXAxis = read4Bytes("PixelsPerUnitXAxis", is, "Not a Valid PNG File: pHYs Corrupt", getByteOrder());
         pixelsPerUnitYAxis = read4Bytes("PixelsPerUnitYAxis", is, "Not a Valid PNG File: pHYs Corrupt", getByteOrder());
         unitSpecifier = readByte("Unit specifier", is, "Not a Valid PNG File: pHYs Corrupt");
+    }
+
+    public int getPixelsPerUnitXAxis() {
+        return pixelsPerUnitXAxis;
+    }
+
+    public int getPixelsPerUnitYAxis() {
+        return pixelsPerUnitYAxis;
+    }
+
+    public int getUnitSpecifier() {
+        return unitSpecifier;
     }
 
 }

@@ -484,13 +484,13 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
         // System.out.println("\t" + "pngChunkpHYs.PixelsPerUnitXAxis: " +
         // pngChunkpHYs.PixelsPerUnitXAxis );
         // }
-        if ((pngChunkpHYs != null) && (pngChunkpHYs.unitSpecifier == 1)) { // meters
+        if ((pngChunkpHYs != null) && (pngChunkpHYs.getUnitSpecifier() == 1)) { // meters
             final double metersPerInch = 0.0254;
 
-            physicalWidthDpi = (int) Math.round(pngChunkpHYs.pixelsPerUnitXAxis * metersPerInch);
-            physicalWidthInch = (float) (width / (pngChunkpHYs.pixelsPerUnitXAxis * metersPerInch));
-            physicalHeightDpi = (int) Math.round(pngChunkpHYs.pixelsPerUnitYAxis * metersPerInch);
-            physicalHeightInch = (float) (height / (pngChunkpHYs.pixelsPerUnitYAxis * metersPerInch));
+            physicalWidthDpi = (int) Math.round(pngChunkpHYs.getPixelsPerUnitXAxis() * metersPerInch);
+            physicalWidthInch = (float) (width / (pngChunkpHYs.getPixelsPerUnitXAxis() * metersPerInch));
+            physicalHeightDpi = (int) Math.round(pngChunkpHYs.getPixelsPerUnitYAxis() * metersPerInch);
+            physicalHeightInch = (float) (height / (pngChunkpHYs.getPixelsPerUnitYAxis() * metersPerInch));
         }
 
         boolean usesPalette = false;
