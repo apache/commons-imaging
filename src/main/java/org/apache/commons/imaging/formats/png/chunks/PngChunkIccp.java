@@ -62,7 +62,8 @@ public class PngChunkIccp extends PngChunk {
     private final byte[] uncompressedProfile;
 
     /**
-     * Constructor.
+     * Constructs a new instance.
+     *
      * @param length chunk length
      * @param chunkType chunk type
      * @param crc CRC computed over the chunk type and chunk data (but not the length)
@@ -70,9 +71,7 @@ public class PngChunkIccp extends PngChunk {
      * @throws ImagingException when no profile name is present
      * @throws IOException when an error happens while reading the profile data
      */
-    public PngChunkIccp(
-            final int length, final int chunkType, final int crc, final byte[] bytes)
-            throws ImagingException, IOException {
+    public PngChunkIccp(final int length, final int chunkType, final int crc, final byte[] bytes) throws ImagingException, IOException {
         super(length, chunkType, crc, bytes);
 
         final int index = BinaryFunctions.findNull(bytes, "PngChunkIccp: No Profile Name");
