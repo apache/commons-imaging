@@ -87,11 +87,13 @@ public class ByteSourceDataTest extends ByteSourceTest {
     public void testByteSourceInputStreamFileFactory(final byte[] testByteArray) throws Exception {
         writeAndReadBytes(new ByteSourceInputStreamFileFactory(), testByteArray);
     }
+
     @ParameterizedTest
     @MethodSource("data")
     public void testByteSourceInputStreamRawFactory(final byte[] testByteArray) throws Exception {
         writeAndReadBytes(new ByteSourceInputStreamRawFactory(), testByteArray);
     }
+
     protected void writeAndReadBytes(final ByteSourceFactory byteSourceFactory,
             final byte[] src) throws IOException {
         final ByteSource byteSource = byteSourceFactory.getByteSource(src);
