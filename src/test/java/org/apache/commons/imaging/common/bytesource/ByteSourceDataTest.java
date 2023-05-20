@@ -121,12 +121,6 @@ public class ByteSourceDataTest extends ByteSourceTest {
             }
         }
 
-        {
-            // test getAll() method.
-            final byte[] all = byteSource.getAll();
-            assertArrayEquals(src, all);
-        }
-
         if (src.length > 2) {
             // test optional start param to getInputStream()
 

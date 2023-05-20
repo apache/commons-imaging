@@ -28,8 +28,6 @@ public abstract class ByteSource {
         this.fileName = fileName;
     }
 
-    public abstract byte[] getAll() throws IOException;
-
     public byte[] getBlock(final int start, final int length) throws IOException {
         return getBlock(0xFFFFffffL & start, length);
     }

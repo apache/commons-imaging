@@ -17,7 +17,6 @@
 package org.apache.commons.imaging.common.bytesource;
 
 import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -29,6 +28,7 @@ import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.io.IOUtils;
 
 public class ByteSourceInputStream extends ByteSource {
+
     private class CacheBlock {
         public final byte[] bytes;
         private CacheBlock next;
@@ -167,29 +167,16 @@ public class ByteSourceInputStream extends ByteSource {
         }
 
     }
+
     private static final int BLOCK_SIZE = 1024;
     private final InputStream is;
     private CacheBlock cacheHead;
-
     private byte[] readBuffer;
-
     private long streamLength = -1;
 
     public ByteSourceInputStream(final InputStream is, final String fileName) {
         super(fileName);
         this.is = new BufferedInputStream(is);
-    }
-
-    @Override
-    public byte[] getAll() throws IOException {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        CacheBlock block = getFirstBlock();
-        while (block != null) {
-            baos.write(block.bytes);
-            block = block.getNext();
-        }
-        return baos.toByteArray();
     }
 
     @Override

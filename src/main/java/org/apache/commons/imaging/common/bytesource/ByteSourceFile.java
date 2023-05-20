@@ -25,7 +25,6 @@ import java.io.RandomAccessFile;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFunctions;
-import org.apache.commons.io.IOUtils;
 
 public class ByteSourceFile extends ByteSource {
     private final File file;
@@ -33,13 +32,6 @@ public class ByteSourceFile extends ByteSource {
     public ByteSourceFile(final File file) {
         super(file.getName());
         this.file = file;
-    }
-
-    @Override
-    public byte[] getAll() throws IOException {
-        try (InputStream is = getInputStream()) {
-            return IOUtils.toByteArray(is);
-        }
     }
 
     @Override

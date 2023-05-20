@@ -17,7 +17,6 @@
 package org.apache.commons.imaging.common.bytesource;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
@@ -33,11 +32,6 @@ public class ByteSourceArray extends ByteSource {
     public ByteSourceArray(final String fileName, final byte[] bytes) {
         super(fileName);
         this.bytes = bytes;
-    }
-
-    @Override
-    public byte[] getAll() throws IOException {
-        return bytes;
     }
 
     @Override
