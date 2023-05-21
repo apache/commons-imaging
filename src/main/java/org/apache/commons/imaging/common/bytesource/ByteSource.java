@@ -58,7 +58,7 @@ public abstract class ByteSource {
     }
 
     /**
-     * This operation can be VERY expensive; for inputstream byte sources, the
+     * This operation can be VERY expensive; for InputStream byte sources, the
      * entire stream must be drained to determine its length.
      *
      * @return the byte source length
