@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.common;
 
 import java.io.ByteArrayOutputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -316,7 +317,7 @@ public final class BinaryFunctions {
         while (length != total) {
             final long skipped = is.skip(length - total);
             if (skipped < 1) {
-                throw new IOException(exception + " (" + skipped + ")");
+                throw new EOFException(exception + " (" + skipped + ")");
             }
             total += skipped;
         }
