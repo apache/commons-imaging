@@ -17,7 +17,6 @@
 package org.apache.commons.imaging.common;
 
 import java.io.ByteArrayOutputStream;
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -311,15 +310,11 @@ public final class BinaryFunctions {
         skipBytes(is, length, "Couldn't skip bytes");
     }
 
-    public static void skipBytes(final InputStream is, final long length, final String exception)
-            throws IOException {
-        long total = 0;
-        while (length != total) {
-            final long skipped = is.skip(length - total);
-            if (skipped < 1) {
-                throw new EOFException(exception + " (" + skipped + ")");
-            }
-            total += skipped;
+    public static void skipBytes(final InputStream is, final long length, final String exception) throws IOException {
+        try {
+            IOUtils.skip(is, length);
+        } catch (IOException e) {
+            throw new IOException(exception, e);
         }
     }
 
