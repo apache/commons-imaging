@@ -62,10 +62,6 @@ public final class BinaryFunctions {
         IOUtils.copy(is, os);
     }
 
-    public static int findNull(final byte[] src, final String message) throws ImagingException {
-        return findNull(src, 0, message);
-    }
-
     public static int findNull(final byte[] src, final int start, final String message) throws ImagingException {
         for (int i = start; i < src.length; i++) {
             if (src[i] == 0) {
@@ -73,6 +69,10 @@ public final class BinaryFunctions {
             }
         }
         throw new ImagingException(message);
+    }
+
+    public static int findNull(final byte[] src, final String message) throws ImagingException {
+        return findNull(src, 0, message);
     }
 
     public static byte[] getRAFBytes(final RandomAccessFile raf, final long pos,
