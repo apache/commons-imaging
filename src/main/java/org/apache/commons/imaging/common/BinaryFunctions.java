@@ -238,7 +238,7 @@ public final class BinaryFunctions {
     public static byte readByte(final String name, final InputStream is, final String exceptionMessage)
             throws IOException {
         final int result = is.read();
-        if ((result < 0)) {
+        if (result < 0) {
             throw new IOException(exceptionMessage);
         }
         return (byte) (0xff & result);
@@ -325,7 +325,7 @@ public final class BinaryFunctions {
     }
 
     public static boolean startsWith(final byte[] haystack, final BinaryConstant needle) {
-        if ((haystack == null) || (haystack.length < needle.size())) {
+        if (haystack == null || haystack.length < needle.size()) {
             return false;
         }
 
