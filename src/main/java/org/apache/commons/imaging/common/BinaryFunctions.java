@@ -250,28 +250,16 @@ public final class BinaryFunctions {
 
     public static byte[] readBytes(final String name, final InputStream is, final int length)
             throws IOException {
-        final String exception = name + " could not be read.";
-        return readBytes(name, is, length, exception);
+        return readBytes(name, is, length, name + " could not be read.");
     }
 
     public static byte[] readBytes(final String name, final InputStream is, final int length,
             final String exception) throws IOException {
-        if (length < 0) {
-            throw new IOException(String.format("%s, invalid length: %d", exception, length));
+        try {
+            return IOUtils.toByteArray(is, Allocator.check(length));
+        } catch (IOException e) {
+            throw new IOException(exception + " length: " + length);
         }
-        final byte[] result = Allocator.byteArray(length);
-        int read = 0;
-        while (read < length) {
-            final int count = is.read(result, read, length - read);
-            if (count < 0) {
-                throw new IOException(exception + " count: " + count
-                        + " read: " + read + " length: " + length);
-            }
-
-            read += count;
-        }
-
-        return result;
     }
 
     public static byte[] remainingBytes(final String name, final byte[] bytes, final int count) {

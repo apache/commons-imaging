@@ -17,7 +17,7 @@
 
 package org.apache.commons.imaging.formats.tiff.write;
 
-import org.apache.commons.imaging.test.util.PrintShallowObjectSizes;
+import org.apache.commons.imaging.test.PrintShallowObjectSizes;
 
 public class PrintShallowSizes {
 

@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.imaging.internal.Debug;
-import org.apache.commons.imaging.test.util.FileSystemTraversal;
+import org.apache.commons.imaging.test.FileSystemTraversal;
 
 public abstract class ImagingTest {
 

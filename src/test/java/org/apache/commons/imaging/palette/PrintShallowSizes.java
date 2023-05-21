@@ -17,7 +17,7 @@
 
 package org.apache.commons.imaging.palette;
 
-import org.apache.commons.imaging.test.util.PrintShallowObjectSizes;
+import org.apache.commons.imaging.test.PrintShallowObjectSizes;
 
 public class PrintShallowSizes {
 

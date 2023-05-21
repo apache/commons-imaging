@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.ico;
 
 import org.apache.commons.imaging.formats.ico.IcoImageParser.IconData;
 import org.apache.commons.imaging.formats.ico.IcoImageParser.IconInfo;
-import org.apache.commons.imaging.test.util.PrintShallowObjectSizes;
+import org.apache.commons.imaging.test.PrintShallowObjectSizes;
 
 public class PrintShallowSizes {
 

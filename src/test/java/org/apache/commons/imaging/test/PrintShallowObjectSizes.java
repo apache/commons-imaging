@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.commons.imaging.test.util;
+package org.apache.commons.imaging.test;
 
 import java.util.ArrayList;
 
