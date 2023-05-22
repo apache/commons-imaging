@@ -27,7 +27,7 @@ import javax.imageio.ImageIO;
 
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.tiff.TiffContents;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffField;
@@ -388,7 +388,7 @@ public class ReadTagsAndImages {
         final boolean optionalImageReadingEnabled
             = rootName != null && !rootName.isEmpty();
 
-        final ByteSourceFile byteSource = new ByteSourceFile(target);
+        final ByteSource byteSource = ByteSource.file(target);
         final TiffImagingParameters params = new TiffImagingParameters();
 
         // Establish a TiffReader. This is just a simple constructor that

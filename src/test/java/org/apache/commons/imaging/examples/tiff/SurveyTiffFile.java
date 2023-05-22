@@ -33,7 +33,7 @@ import java.util.Formatter;
 
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.tiff.TiffContents;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffField;
@@ -308,7 +308,7 @@ public class SurveyTiffFile {
             // obtain the byteOrder, or other details, until the contents have
             // been read. Then read the directories associated with the
             // file by passing in the byte source and options.
-            final ByteSourceFile byteSource = new ByteSourceFile(file);
+            final ByteSource byteSource = ByteSource.file(file);
             final TiffReader tiffReader = new TiffReader(true);
             final TiffContents contents = tiffReader.readDirectories(byteSource, false, // read image data, if present
                     FormatCompliance.getDefault());

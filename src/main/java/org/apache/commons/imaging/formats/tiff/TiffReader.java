@@ -34,7 +34,6 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory.ImageDataElement;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
@@ -164,11 +163,10 @@ public class TiffReader extends BinaryFileParser {
         final List<ImageDataElement> elements = directory.getTiffRawImageDataElements();
         final TiffImageData.Data[] data = new TiffImageData.Data[elements.size()];
 
-        if (byteSource instanceof ByteSourceFile) {
-            final ByteSourceFile bsf = (ByteSourceFile) byteSource;
+        if (byteSource.isFile()) {
             for (int i = 0; i < elements.size(); i++) {
                 final TiffDirectory.ImageDataElement element = elements.get(i);
-                data[i] = new TiffImageData.ByteSourceData(element.offset, element.length, bsf);
+                data[i] = new TiffImageData.ByteSourceData(element.offset, element.length, byteSource);
             }
         } else {
             for (int i = 0; i < elements.size(); i++) {

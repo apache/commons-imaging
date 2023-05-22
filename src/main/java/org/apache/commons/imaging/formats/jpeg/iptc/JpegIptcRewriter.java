@@ -27,9 +27,6 @@ import java.util.List;
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
-import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
-import org.apache.commons.imaging.common.bytesource.ByteSourceInputStream;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.formats.jpeg.xmp.JpegRewriter;
@@ -80,7 +77,7 @@ public class JpegIptcRewriter extends JpegRewriter {
      */
     public void removeIPTC(final byte[] src, final OutputStream os, final boolean removeSegment)
             throws ImagingException, IOException, ImagingException {
-        final ByteSource byteSource = new ByteSourceArray(src);
+        final ByteSource byteSource = ByteSource.array(src);
         removeIPTC(byteSource, os, removeSegment);
     }
 
@@ -197,7 +194,7 @@ public class JpegIptcRewriter extends JpegRewriter {
      */
     public void removeIPTC(final File src, final OutputStream os, final boolean removeSegment)
             throws ImagingException, IOException, ImagingException {
-        final ByteSource byteSource = new ByteSourceFile(src);
+        final ByteSource byteSource = ByteSource.file(src);
         removeIPTC(byteSource, os, removeSegment);
     }
 
@@ -242,7 +239,7 @@ public class JpegIptcRewriter extends JpegRewriter {
      */
     public void removeIPTC(final InputStream src, final OutputStream os, final boolean removeSegment)
             throws ImagingException, IOException, ImagingException {
-        final ByteSource byteSource = new ByteSourceInputStream(src, null);
+        final ByteSource byteSource = ByteSource.inputStream(src, null);
         removeIPTC(byteSource, os, removeSegment);
     }
 
@@ -266,7 +263,7 @@ public class JpegIptcRewriter extends JpegRewriter {
     public void writeIPTC(final byte[] src, final OutputStream os,
             final PhotoshopApp13Data newData) throws ImagingException, IOException,
             ImagingException {
-        final ByteSource byteSource = new ByteSourceArray(src);
+        final ByteSource byteSource = ByteSource.array(src);
         writeIPTC(byteSource, os, newData);
     }
 
@@ -340,7 +337,7 @@ public class JpegIptcRewriter extends JpegRewriter {
      */
     public void writeIPTC(final File src, final OutputStream os, final PhotoshopApp13Data newData)
             throws ImagingException, IOException, ImagingException {
-        final ByteSource byteSource = new ByteSourceFile(src);
+        final ByteSource byteSource = ByteSource.file(src);
         writeIPTC(byteSource, os, newData);
     }
 
@@ -364,7 +361,7 @@ public class JpegIptcRewriter extends JpegRewriter {
     public void writeIPTC(final InputStream src, final OutputStream os,
             final PhotoshopApp13Data newData) throws ImagingException, IOException,
             ImagingException {
-        final ByteSource byteSource = new ByteSourceInputStream(src, null);
+        final ByteSource byteSource = ByteSource.inputStream(src, null);
         writeIPTC(byteSource, os, newData);
     }
 

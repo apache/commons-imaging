@@ -27,7 +27,7 @@ import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.io.IOUtils;
 
-public class ByteSourceInputStream extends ByteSource {
+class ByteSourceInputStream extends ByteSource {
 
     private class CacheBlock {
         public final byte[] bytes;
@@ -174,7 +174,7 @@ public class ByteSourceInputStream extends ByteSource {
     private byte[] readBuffer;
     private long streamLength = -1;
 
-    public ByteSourceInputStream(final InputStream is, final String fileName) {
+    ByteSourceInputStream(final InputStream is, final String fileName) {
         super(fileName);
         this.is = new BufferedInputStream(is);
     }
@@ -231,7 +231,7 @@ public class ByteSourceInputStream extends ByteSource {
         }
 
         try (InputStream cis = getInputStream()) {
-            long result = IOUtils.consume(cis);
+            final long result = IOUtils.consume(cis);
             streamLength = result;
             return result;
         }

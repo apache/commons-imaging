@@ -28,7 +28,7 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.GenericImageMetadata.GenericImageMetadataItem;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
@@ -86,7 +86,7 @@ public class IptcParserTest {
                 .getFile();
         final File imageFile = new File(location);
         final JpegImageMetadata metadata = (JpegImageMetadata) new JpegImageParser()
-                .getMetadata(new ByteSourceFile(imageFile), new JpegImagingParameters());
+                .getMetadata(ByteSource.file(imageFile), new JpegImagingParameters());
         final JpegPhotoshopMetadata photoshopMetadata = metadata.getPhotoshop();
         final PhotoshopApp13Data photoshopApp13Data = photoshopMetadata.photoshopApp13Data;
         final List<IptcBlock> blocks = photoshopApp13Data.getRawBlocks();

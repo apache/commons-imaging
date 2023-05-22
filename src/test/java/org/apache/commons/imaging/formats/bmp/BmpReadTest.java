@@ -28,7 +28,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingTestConstants;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -60,7 +60,7 @@ public class BmpReadTest extends BmpBaseTest {
     public void testGetMaskShiftZeroMask() throws ImagingException, IOException {
         final File inputFile = new File(ImagingTestConstants.TEST_IMAGE_FOLDER +
                 "/bmp/5/@broken/timeout-bd15dbfa26b4e88070de540c6603039e8a88626f");
-        new BmpImageParser().dumpImageFile(new ByteSourceFile(inputFile));
+        new BmpImageParser().dumpImageFile(ByteSource.file(inputFile));
     }
 
     @ParameterizedTest
@@ -83,6 +83,6 @@ public class BmpReadTest extends BmpBaseTest {
         final String input = "/images/bmp/IMAGING-325/crash-3afb569de74522535ef65922233e1920455cdc14.bmp";
         final String location = BmpReadTest.class.getResource(input).getFile();
         final File inputFile = new File(location);
-        assertThrows(ImagingException.class, () -> new BmpImageParser().dumpImageFile(new ByteSourceFile(inputFile)));
+        assertThrows(ImagingException.class, () -> new BmpImageParser().dumpImageFile(ByteSource.file(inputFile)));
     }
 }

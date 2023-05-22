@@ -27,9 +27,6 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
-import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
-import org.apache.commons.imaging.common.bytesource.ByteSourceInputStream;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
 /**
@@ -51,7 +48,7 @@ public class JpegXmpRewriter extends JpegRewriter {
      */
     public void removeXmpXml(final byte[] src, final OutputStream os)
             throws ImagingException, IOException {
-        final ByteSource byteSource = new ByteSourceArray(src);
+        final ByteSource byteSource = ByteSource.array(src);
         removeXmpXml(byteSource, os);
     }
 
@@ -92,7 +89,7 @@ public class JpegXmpRewriter extends JpegRewriter {
      */
     public void removeXmpXml(final File src, final OutputStream os)
             throws ImagingException, IOException {
-        final ByteSource byteSource = new ByteSourceFile(src);
+        final ByteSource byteSource = ByteSource.file(src);
         removeXmpXml(byteSource, os);
     }
 
@@ -110,7 +107,7 @@ public class JpegXmpRewriter extends JpegRewriter {
      */
     public void removeXmpXml(final InputStream src, final OutputStream os)
             throws ImagingException, IOException {
-        final ByteSource byteSource = new ByteSourceInputStream(src, null);
+        final ByteSource byteSource = ByteSource.inputStream(src, null);
         removeXmpXml(byteSource, os);
     }
 
@@ -130,7 +127,7 @@ public class JpegXmpRewriter extends JpegRewriter {
      */
     public void updateXmpXml(final byte[] src, final OutputStream os, final String xmpXml)
             throws ImagingException, IOException, ImagingException {
-        final ByteSource byteSource = new ByteSourceArray(src);
+        final ByteSource byteSource = ByteSource.array(src);
         updateXmpXml(byteSource, os, xmpXml);
     }
 
@@ -187,7 +184,7 @@ public class JpegXmpRewriter extends JpegRewriter {
      */
     public void updateXmpXml(final File src, final OutputStream os, final String xmpXml)
             throws ImagingException, IOException, ImagingException {
-        final ByteSource byteSource = new ByteSourceFile(src);
+        final ByteSource byteSource = ByteSource.file(src);
         updateXmpXml(byteSource, os, xmpXml);
     }
 
@@ -207,7 +204,7 @@ public class JpegXmpRewriter extends JpegRewriter {
      */
     public void updateXmpXml(final InputStream src, final OutputStream os, final String xmpXml)
             throws ImagingException, IOException, ImagingException {
-        final ByteSource byteSource = new ByteSourceInputStream(src, null);
+        final ByteSource byteSource = ByteSource.inputStream(src, null);
         updateXmpXml(byteSource, os, xmpXml);
     }
 

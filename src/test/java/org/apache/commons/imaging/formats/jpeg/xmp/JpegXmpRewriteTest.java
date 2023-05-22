@@ -25,8 +25,6 @@ import java.io.File;
 import java.util.stream.Stream;
 
 import org.apache.commons.imaging.common.bytesource.ByteSource;
-import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.junit.jupiter.api.Assertions;
@@ -42,7 +40,7 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
     @ParameterizedTest
     @MethodSource("data")
     public void testRemoveInsertUpdate(final File imageFile) throws Exception {
-        final ByteSource byteSource = new ByteSourceFile(imageFile);
+        final ByteSource byteSource = ByteSource.file(imageFile);
         final JpegImagingParameters params = new JpegImagingParameters();
         final String xmpXml = new JpegImageParser().getXmpXml(byteSource, params);
         assertNotNull(xmpXml);
@@ -57,10 +55,10 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
             }
 
             // Debug.debug("Source Segments:");
-            // new JpegUtils().dumpJFIF(new ByteSourceFile(noXmpFile));
+            // new JpegUtils().dumpJFIF(ByteSource.file(noXmpFile));
 
             final String outXmp = new JpegImageParser().getXmpXml(
-                    new ByteSourceArray("test.jpg", noXmpFile), params);
+                    ByteSource.array(noXmpFile, "test.jpg"), params);
             Assertions.assertNull(outXmp);
         }
 
@@ -75,10 +73,10 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
             }
 
             // Debug.debug("Source Segments:");
-            // new JpegUtils().dumpJFIF(new ByteSourceFile(updated));
+            // new JpegUtils().dumpJFIF(ByteSource.file(updated));
 
             final String outXmp = new JpegImageParser().getXmpXml(
-                    new ByteSourceArray("test.jpg", updated), params);
+                    ByteSource.array(updated, "test.jpg"), params);
             assertNotNull(outXmp);
             assertEquals(outXmp, newXmpXml);
         }
@@ -89,16 +87,16 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
             final String newXmpXml = "test";
             final byte[] updated;
             try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
-                new JpegXmpRewriter().updateXmpXml(new ByteSourceArray("test.jpg",
-                        noXmpFile), os, newXmpXml);
+                new JpegXmpRewriter().updateXmpXml(ByteSource.array(noXmpFile,
+                        "test.jpg"), os, newXmpXml);
                 updated = os.toByteArray();
             }
 
             // Debug.debug("Source Segments:");
-            // new JpegUtils().dumpJFIF(new ByteSourceFile(updated));
+            // new JpegUtils().dumpJFIF(ByteSource.file(updated));
 
             final String outXmp = new JpegImageParser().getXmpXml(
-                    new ByteSourceArray("test.jpg", updated), params);
+                    ByteSource.array(updated, "test.jpg"), params);
             assertNotNull(outXmp);
             assertEquals(outXmp, newXmpXml);
         }

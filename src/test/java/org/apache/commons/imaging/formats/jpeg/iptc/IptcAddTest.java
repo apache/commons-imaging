@@ -27,8 +27,6 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.apache.commons.imaging.common.bytesource.ByteSource;
-import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.formats.jpeg.JpegPhotoshopMetadata;
@@ -48,7 +46,7 @@ public class IptcAddTest extends IptcBaseTest {
     @ParameterizedTest
     @MethodSource("data")
     public void testAddIptcData(final File imageFile) throws Exception {
-        final ByteSource byteSource = new ByteSourceFile(imageFile);
+        final ByteSource byteSource = ByteSource.file(imageFile);
 
         final JpegImagingParameters params = new JpegImagingParameters();
 
@@ -80,7 +78,7 @@ public class IptcAddTest extends IptcBaseTest {
             bytes = os.toByteArray();
         }
 
-        final ByteSource updateByteSource = new ByteSourceArray("test.jpg", bytes);
+        final ByteSource updateByteSource = ByteSource.array(bytes, "test.jpg");
         final JpegPhotoshopMetadata outMetadata = new JpegImageParser().getPhotoshopMetadata(
                 updateByteSource, params);
 

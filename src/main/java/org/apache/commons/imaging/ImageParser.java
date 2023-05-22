@@ -36,8 +36,6 @@ import org.apache.commons.imaging.common.BufferedImageFactory;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.SimpleBufferedImageFactory;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
-import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.bmp.BmpImageParser;
 import org.apache.commons.imaging.formats.dcx.DcxImageParser;
 import org.apache.commons.imaging.formats.gif.GifImageParser;
@@ -196,7 +194,7 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
      * @throws IOException        In the event of unsuccessful read or access operation.
      */
     public final String dumpImageFile(final byte[] bytes) throws ImagingException, IOException {
-        return dumpImageFile(new ByteSourceArray(bytes));
+        return dumpImageFile(ByteSource.array(bytes));
     }
 
     /**
@@ -242,7 +240,7 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
             LOGGER.finest(getName() + ": " + file.getName());
         }
 
-        return dumpImageFile(new ByteSourceFile(file));
+        return dumpImageFile(ByteSource.file(file));
     }
 
     /**
@@ -289,7 +287,7 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
      */
     public final List<BufferedImage> getAllBufferedImages(final byte[] bytes)
             throws ImagingException, IOException {
-        return getAllBufferedImages(new ByteSourceArray(bytes));
+        return getAllBufferedImages(ByteSource.array(bytes));
     }
 
     /**
@@ -331,7 +329,7 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
             return null;
         }
 
-        return getAllBufferedImages(new ByteSourceFile(file));
+        return getAllBufferedImages(ByteSource.file(file));
     }
 
     /**
@@ -351,7 +349,7 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
      */
     public final BufferedImage getBufferedImage(final byte[] bytes, final T params)
             throws ImagingException, IOException {
-        return getBufferedImage(new ByteSourceArray(bytes), params);
+        return getBufferedImage(ByteSource.array(bytes), params);
     }
 
     /**
@@ -393,7 +391,7 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
             return null;
         }
 
-        return getBufferedImage(new ByteSourceFile(file), params);
+        return getBufferedImage(ByteSource.file(file), params);
     }
 
     /**
@@ -444,7 +442,7 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
      */
     public final FormatCompliance getFormatCompliance(final byte[] bytes)
             throws ImagingException, IOException {
-        return getFormatCompliance(new ByteSourceArray(bytes));
+        return getFormatCompliance(ByteSource.array(bytes));
     }
 
     /**
@@ -477,7 +475,7 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
             return null;
         }
 
-        return getFormatCompliance(new ByteSourceFile(file));
+        return getFormatCompliance(ByteSource.file(file));
     }
 
     /**
@@ -512,7 +510,7 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
      */
     public final byte[] getICCProfileBytes(final byte[] bytes, final T params)
             throws ImagingException, IOException {
-        return getICCProfileBytes(new ByteSourceArray(bytes), params);
+        return getICCProfileBytes(ByteSource.array(bytes), params);
     }
 
     /**
@@ -572,7 +570,7 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
             LOGGER.finest(getName() + ": " + file.getName());
         }
 
-        return getICCProfileBytes(new ByteSourceFile(file), params);
+        return getICCProfileBytes(ByteSource.file(file), params);
     }
 
     /**
@@ -601,7 +599,7 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
      */
     public final ImageInfo getImageInfo(final byte[] bytes, final T params)
             throws ImagingException, IOException {
-        return getImageInfo(new ByteSourceArray(bytes), params);
+        return getImageInfo(ByteSource.array(bytes), params);
     }
 
     /**
@@ -680,7 +678,7 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
             return null;
         }
 
-        return getImageInfo(new ByteSourceFile(file), params);
+        return getImageInfo(ByteSource.file(file), params);
     }
 
     /**
@@ -711,7 +709,7 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
      */
     public final Dimension getImageSize(final byte[] bytes, final T params)
             throws ImagingException, IOException {
-        return getImageSize(new ByteSourceArray(bytes), params);
+        return getImageSize(ByteSource.array(bytes), params);
     }
 
 
@@ -763,7 +761,7 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
             return null;
         }
 
-        return getImageSize(new ByteSourceFile(file), params);
+        return getImageSize(ByteSource.file(file), params);
     }
 
 
@@ -812,7 +810,7 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
      */
     public final ImageMetadata getMetadata(final byte[] bytes, final T params)
             throws ImagingException, IOException {
-        return getMetadata(new ByteSourceArray(bytes), params);
+        return getMetadata(ByteSource.array(bytes), params);
     }
 
     /**
@@ -916,7 +914,7 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
             return null;
         }
 
-        return getMetadata(new ByteSourceFile(file), params);
+        return getMetadata(ByteSource.file(file), params);
     }
 
     /**

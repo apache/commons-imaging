@@ -24,8 +24,6 @@ import java.util.List;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
-import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 
 public abstract class ExifBaseTest extends ImagingTest {
@@ -49,7 +47,7 @@ public abstract class ExifBaseTest extends ImagingTest {
         }
 
         try {
-            final ByteSource byteSource = new ByteSourceFile(file);
+            final ByteSource byteSource = ByteSource.file(file);
             return new JpegImageParser().hasExifSegment(byteSource);
         } catch (final Exception e) {
             return false;
@@ -58,7 +56,7 @@ public abstract class ExifBaseTest extends ImagingTest {
 
     protected static boolean hasExifData(final String fileName, final byte[] bytes) {
         try {
-            final ByteSource byteSource = new ByteSourceArray(fileName, bytes);
+            final ByteSource byteSource = ByteSource.array(bytes, fileName);
             return new JpegImageParser().hasExifSegment(byteSource);
         } catch (final Exception e) {
             return false;

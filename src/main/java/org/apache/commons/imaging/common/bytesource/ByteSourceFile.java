@@ -26,10 +26,10 @@ import java.io.RandomAccessFile;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFunctions;
 
-public class ByteSourceFile extends ByteSource {
+class ByteSourceFile extends ByteSource {
     private final File file;
 
-    public ByteSourceFile(final File file) {
+    ByteSourceFile(final File file) {
         super(file.getName());
         this.file = file;
     }
@@ -63,6 +63,11 @@ public class ByteSourceFile extends ByteSource {
     @Override
     public long getLength() {
         return file.length();
+    }
+
+    @Override
+    public boolean isFile() {
+        return true;
     }
 
 }

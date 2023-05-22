@@ -157,7 +157,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 /**
@@ -189,7 +189,7 @@ public class ApacheImagingSpeedAndMemoryTest {
         int n = 1;
         for (int i = 0; i < 10; i++) {
             try {
-                ByteSourceFile byteSource = new ByteSourceFile(target);
+                ByteSource byteSource = ByteSource.file(target);
                 // This test code allows you to test cases where the
                 // input is processed using Apache Imaging's
                 // ByteSourceInputStream rather than the ByteSourceFile.
@@ -197,7 +197,7 @@ public class ApacheImagingSpeedAndMemoryTest {
                 // FileInputStream fins = new FileInputStream(target);
                 // BufferedInputStream bins = new BufferedInputStream(fins);
                 // ByteSourceInputStream byteSource =
-                // new ByteSourceInputStream(bins, target.getName());
+                // ByteSource.inputStream(bins, target.getName());
                 // ready the parser (you may modify this code block
                 // to use your parser of choice)
                 TiffImagingParameters params = new TiffImagingParameters();

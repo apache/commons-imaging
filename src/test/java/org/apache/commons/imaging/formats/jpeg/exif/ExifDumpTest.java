@@ -24,7 +24,6 @@ import java.util.stream.Stream;
 
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.formats.jpeg.JpegUtils;
@@ -41,7 +40,7 @@ public class ExifDumpTest extends ExifBaseTest {
     @ParameterizedTest
     @MethodSource("data")
     public void testDumpJFIF(final File imageFile) throws Exception {
-        final ByteSource byteSource = new ByteSourceFile(imageFile);
+        final ByteSource byteSource = ByteSource.file(imageFile);
         Debug.debug("Segments:");
         new JpegUtils().dumpJFIF(byteSource);
         // TODO assert something

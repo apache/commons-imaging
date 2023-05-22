@@ -31,7 +31,7 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.GenericImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -115,7 +115,7 @@ public class PngReadTest extends PngBaseTest {
         final String input = "/images/png/oss-fuzz-33691/clusterfuzz-testcase-minimized-ImagingPngFuzzer-6177282101215232";
         final String file = PngReadTest.class.getResource(input).getFile();
         final PngImageParser parser = new PngImageParser();
-        assertThrows(ImagingException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), new PngImagingParameters()));
+        assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(new File(file)), new PngImagingParameters()));
     }
 
     /**
@@ -131,6 +131,6 @@ public class PngReadTest extends PngBaseTest {
         final String input = "/images/png/IMAGING-317/clusterfuzz-testcase-minimized-ImagingPngFuzzer-6242400830357504";
         final String file = PngReadTest.class.getResource(input).getFile();
         final PngImageParser parser = new PngImageParser();
-        assertThrows(ImagingException.class, () -> parser.getBufferedImage(new ByteSourceFile(new File(file)), new PngImagingParameters()));
+        assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(new File(file)), new PngImagingParameters()));
     }
 }

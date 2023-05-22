@@ -34,9 +34,6 @@ import org.apache.commons.imaging.ImagingOverflowException;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
-import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
-import org.apache.commons.imaging.common.bytesource.ByteSourceInputStream;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.formats.jpeg.JpegUtils;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterBase;
@@ -205,7 +202,7 @@ public class ExifRewriter extends BinaryFileParser {
      */
     public void removeExifMetadata(final byte[] src, final OutputStream os)
             throws ImagingException, IOException, ImagingException {
-        final ByteSource byteSource = new ByteSourceArray(src);
+        final ByteSource byteSource = ByteSource.array(src);
         removeExifMetadata(byteSource, os);
     }
 
@@ -255,7 +252,7 @@ public class ExifRewriter extends BinaryFileParser {
      */
     public void removeExifMetadata(final File src, final OutputStream os)
             throws ImagingException, IOException, ImagingException {
-        final ByteSource byteSource = new ByteSourceFile(src);
+        final ByteSource byteSource = ByteSource.file(src);
         removeExifMetadata(byteSource, os);
     }
 
@@ -273,7 +270,7 @@ public class ExifRewriter extends BinaryFileParser {
      */
     public void removeExifMetadata(final InputStream src, final OutputStream os)
             throws ImagingException, IOException, ImagingException {
-        final ByteSource byteSource = new ByteSourceInputStream(src, null);
+        final ByteSource byteSource = ByteSource.inputStream(src, null);
         removeExifMetadata(byteSource, os);
     }
 
@@ -301,7 +298,7 @@ public class ExifRewriter extends BinaryFileParser {
     public void updateExifMetadataLossless(final byte[] src, final OutputStream os,
             final TiffOutputSet outputSet) throws ImagingException, IOException,
             ImagingException {
-        final ByteSource byteSource = new ByteSourceArray(src);
+        final ByteSource byteSource = ByteSource.array(src);
         updateExifMetadataLossless(byteSource, os, outputSet);
     }
 
@@ -378,7 +375,7 @@ public class ExifRewriter extends BinaryFileParser {
     public void updateExifMetadataLossless(final File src, final OutputStream os,
             final TiffOutputSet outputSet) throws ImagingException, IOException,
             ImagingException {
-        final ByteSource byteSource = new ByteSourceFile(src);
+        final ByteSource byteSource = ByteSource.file(src);
         updateExifMetadataLossless(byteSource, os, outputSet);
     }
 
@@ -406,7 +403,7 @@ public class ExifRewriter extends BinaryFileParser {
     public void updateExifMetadataLossless(final InputStream src, final OutputStream os,
             final TiffOutputSet outputSet) throws ImagingException, IOException,
             ImagingException {
-        final ByteSource byteSource = new ByteSourceInputStream(src, null);
+        final ByteSource byteSource = ByteSource.inputStream(src, null);
         updateExifMetadataLossless(byteSource, os, outputSet);
     }
 
@@ -431,7 +428,7 @@ public class ExifRewriter extends BinaryFileParser {
     public void updateExifMetadataLossy(final byte[] src, final OutputStream os,
             final TiffOutputSet outputSet) throws ImagingException, IOException,
             ImagingException {
-        final ByteSource byteSource = new ByteSourceArray(src);
+        final ByteSource byteSource = ByteSource.array(src);
         updateExifMetadataLossy(byteSource, os, outputSet);
     }
 
@@ -489,7 +486,7 @@ public class ExifRewriter extends BinaryFileParser {
     public void updateExifMetadataLossy(final File src, final OutputStream os,
             final TiffOutputSet outputSet) throws ImagingException, IOException,
             ImagingException {
-        final ByteSource byteSource = new ByteSourceFile(src);
+        final ByteSource byteSource = ByteSource.file(src);
         updateExifMetadataLossy(byteSource, os, outputSet);
     }
 
@@ -514,7 +511,7 @@ public class ExifRewriter extends BinaryFileParser {
     public void updateExifMetadataLossy(final InputStream src, final OutputStream os,
             final TiffOutputSet outputSet) throws ImagingException, IOException,
             ImagingException {
-        final ByteSource byteSource = new ByteSourceInputStream(src, null);
+        final ByteSource byteSource = ByteSource.inputStream(src, null);
         updateExifMetadataLossy(byteSource, os, outputSet);
     }
 

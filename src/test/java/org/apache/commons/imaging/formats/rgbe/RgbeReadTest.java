@@ -27,7 +27,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageMetadata;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -64,7 +64,7 @@ public class RgbeReadTest extends RgbeBaseTest {
         final File inputFile = new File(
                 RgbeReadTest.class.getResource("/IMAGING-219/timeout-9713502c9c371f1654b493650c16ab17c0444369.hdr")
                         .getFile());
-        final ByteSourceFile byteSourceFile = new ByteSourceFile(inputFile);
+        final ByteSource byteSourceFile = ByteSource.file(inputFile);
         final RgbeImagingParameters params = new RgbeImagingParameters();
         Assertions.assertThrows(ImagingException.class, () -> new RgbeImageParser().getBufferedImage(byteSourceFile, params));
     }

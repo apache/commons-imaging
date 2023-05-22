@@ -29,7 +29,6 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.common.mylzw.MyLzwCompressor;
 import org.apache.commons.imaging.common.mylzw.MyLzwDecompressor;
 import org.apache.commons.imaging.internal.Debug;
@@ -250,7 +249,7 @@ public class TiffLzwTest extends TiffBaseTest {
 
             Debug.debug("imageFile", image);
 
-            final ByteSource byteSource = new ByteSourceFile(image);
+            final ByteSource byteSource = ByteSource.file(image);
             final List<byte[]> data = new TiffImageParser().collectRawImageData(byteSource, new TiffImagingParameters());
 
             for (final byte[] bytes : data) {

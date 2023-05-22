@@ -16,12 +16,30 @@
  */
 package org.apache.commons.imaging.common.bytesource;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.imaging.common.BinaryFunctions;
 
 public abstract class ByteSource {
+
+    public static ByteSource array(final byte[] array) {
+        return new ByteSourceArray(array);
+    }
+
+    public static ByteSource array(final byte[] array, final String name) {
+        return new ByteSourceArray(array, name);
+    }
+
+    public static ByteSource file(final File file) {
+        return new ByteSourceFile(file);
+    }
+
+    public static ByteSource inputStream(final InputStream is, final String name) {
+        return new ByteSourceInputStream(is, name);
+    }
+
     private final String fileName;
 
     public ByteSource(final String fileName) {
@@ -61,5 +79,9 @@ public abstract class ByteSource {
      * @throws IOException if it fails to read the byte source data
      */
     public abstract long getLength() throws IOException;
+
+    public boolean isFile() {
+        return false;
+    }
 
 }

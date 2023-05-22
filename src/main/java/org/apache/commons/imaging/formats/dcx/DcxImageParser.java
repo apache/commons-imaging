@@ -37,7 +37,6 @@ import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
-import org.apache.commons.imaging.common.bytesource.ByteSourceInputStream;
 import org.apache.commons.imaging.formats.pcx.PcxImageParser;
 import org.apache.commons.imaging.formats.pcx.PcxImagingParameters;
 
@@ -94,7 +93,7 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
         final PcxImageParser pcxImageParser = new PcxImageParser();
         for (final long element : dcxHeader.pageTable) {
             try (InputStream stream = byteSource.getInputStream(element)) {
-                final ByteSourceInputStream pcxSource = new ByteSourceInputStream(
+                final ByteSource pcxSource = ByteSource.inputStream(
                         stream, null);
                 final BufferedImage image = pcxImageParser.getBufferedImage(
                         pcxSource, new PcxImagingParameters());

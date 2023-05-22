@@ -24,7 +24,7 @@ import javax.imageio.ImageIO;
 
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.tiff.TiffContents;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
@@ -75,7 +75,7 @@ public class ReadAndRenderFloatingPoint {
         final boolean optionalImageWritingEnabled
             = outputPath != null && !outputPath.isEmpty();
 
-        final ByteSourceFile byteSource = new ByteSourceFile(target);
+        final ByteSource byteSource = ByteSource.file(target);
 
         // Establish a TiffReader. This is just a simple constructor that
         // does not actually access the file.  So the application cannot

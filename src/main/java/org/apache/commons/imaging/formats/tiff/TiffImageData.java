@@ -21,7 +21,7 @@ import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.datareaders.DataReaderStrips;
@@ -31,17 +31,18 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
 
 public abstract class TiffImageData {
     public static class ByteSourceData extends Data {
-        final ByteSourceFile byteSourceFile;
 
-        public ByteSourceData(final long offset, final int length, final ByteSourceFile byteSource) {
+        final ByteSource byteSource;
+
+        public ByteSourceData(final long offset, final int length, final ByteSource byteSource) {
             super(offset, length, ImagingConstants.EMPTY_BYTE_ARRAY);
-            byteSourceFile = byteSource;
+            this.byteSource = byteSource;
         }
 
         @Override
         public byte[] getData() {
             try {
-                return byteSourceFile.getBlock(offset, length);
+                return byteSource.getBlock(offset, length);
             } catch (final IOException ioex) {
                 return ImagingConstants.EMPTY_BYTE_ARRAY;
             }

@@ -23,7 +23,6 @@ import java.io.File;
 import java.util.stream.Stream;
 
 import org.apache.commons.imaging.common.bytesource.ByteSource;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -38,7 +37,7 @@ public class JpegXmpDumpTest extends JpegXmpBaseTest {
     @ParameterizedTest
     @MethodSource("data")
     public void test(final File imageFile) throws Exception {
-        final ByteSource byteSource = new ByteSourceFile(imageFile);
+        final ByteSource byteSource = ByteSource.file(imageFile);
         final JpegImagingParameters params = new JpegImagingParameters();
         final String xmpXml = new JpegImageParser().getXmpXml(byteSource, params);
 

@@ -34,7 +34,6 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
-import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.formats.tiff.JpegImageData;
 import org.apache.commons.imaging.formats.tiff.TiffContents;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
@@ -91,7 +90,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
     private List<TiffElement> analyzeOldTiff(final Map<Integer, TiffOutputField> frozenFields) throws ImagingException,
             IOException {
         try {
-            final ByteSource byteSource = new ByteSourceArray(exifBytes);
+            final ByteSource byteSource = ByteSource.array(exifBytes);
             final FormatCompliance formatCompliance = FormatCompliance.getDefault();
             final TiffContents contents = new TiffReader(false).readContents(
                     byteSource, new TiffImagingParameters(), formatCompliance);

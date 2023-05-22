@@ -23,7 +23,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.formats.jpeg.decoder.JpegDecoderTest;
 import org.junit.jupiter.api.Test;
@@ -43,7 +43,7 @@ public class JpegImageParserTest {
                 JpegDecoderTest.class.getResource("/IMAGING-136/1402522741337.jpg")
                 .getFile());
         final JpegImageParser parser = new JpegImageParser();
-        final BufferedImage image = parser.getBufferedImage(new ByteSourceFile(imageFile), null);
+        final BufferedImage image = parser.getBufferedImage(ByteSource.file(imageFile), null);
         assertEquals(680, image.getWidth());
         assertEquals(241, image.getHeight());
         assertEquals(-16777216, image.getRGB(0, 0));

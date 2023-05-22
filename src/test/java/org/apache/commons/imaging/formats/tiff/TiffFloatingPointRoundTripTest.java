@@ -30,7 +30,7 @@ import java.nio.file.Path;
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PhotometricInterpreterFloat;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
@@ -232,7 +232,7 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
         testFile[7] = writeFile(64, ByteOrder.BIG_ENDIAN, true);
         for (int i = 0; i < testFile.length; i++) {
             final String name = testFile[i].getName();
-            final ByteSourceFile byteSource = new ByteSourceFile(testFile[i]);
+            final ByteSource byteSource = ByteSource.file(testFile[i]);
             final TiffReader tiffReader = new TiffReader(true);
             final TiffContents contents = tiffReader.readDirectories(
                 byteSource,

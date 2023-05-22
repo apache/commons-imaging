@@ -32,8 +32,6 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
-import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.io.IOUtils;
 
 public class IccProfileParser extends BinaryFileParser {
@@ -48,7 +46,7 @@ public class IccProfileParser extends BinaryFileParser {
         if (bytes == null) {
             return null;
         }
-        return getICCProfileInfo(new ByteSourceArray(bytes));
+        return getICCProfileInfo(ByteSource.array(bytes));
     }
 
     public IccProfileInfo getICCProfileInfo(final ByteSource byteSource) throws IOException {
@@ -73,7 +71,7 @@ public class IccProfileParser extends BinaryFileParser {
             return null;
         }
 
-        return getICCProfileInfo(new ByteSourceFile(file));
+        return getICCProfileInfo(ByteSource.file(file));
     }
 
     public IccProfileInfo getICCProfileInfo(final ICC_Profile iccProfile) throws IOException {
@@ -81,7 +79,7 @@ public class IccProfileParser extends BinaryFileParser {
             return null;
         }
 
-        return getICCProfileInfo(new ByteSourceArray(iccProfile.getData()));
+        return getICCProfileInfo(ByteSource.array(iccProfile.getData()));
     }
 
     private IccTagType getIccTagType(final int quad) {
@@ -95,7 +93,7 @@ public class IccProfileParser extends BinaryFileParser {
     }
 
     public boolean issRGB(final byte[] bytes) throws IOException {
-        return issRGB(new ByteSourceArray(bytes));
+        return issRGB(ByteSource.array(bytes));
     }
 
     public boolean issRGB(final ByteSource byteSource) throws IOException {
@@ -133,11 +131,11 @@ public class IccProfileParser extends BinaryFileParser {
     }
 
     public boolean issRGB(final File file) throws IOException {
-        return issRGB(new ByteSourceFile(file));
+        return issRGB(ByteSource.file(file));
     }
 
     public boolean issRGB(final ICC_Profile iccProfile) throws IOException {
-        return issRGB(new ByteSourceArray(iccProfile.getData()));
+        return issRGB(ByteSource.array(iccProfile.getData()));
     }
 
     private IccProfileInfo readICCProfileInfo(InputStream is) throws IOException {

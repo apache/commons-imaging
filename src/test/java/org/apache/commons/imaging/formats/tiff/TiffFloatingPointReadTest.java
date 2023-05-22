@@ -31,7 +31,7 @@ import java.util.List;
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingTestConstants;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PaletteEntry;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PaletteEntryForRange;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PaletteEntryForValue;
@@ -90,7 +90,7 @@ public class TiffFloatingPointReadTest {
      */
     private PhotometricInterpreterFloat readAndInterpretTIFF(
         final File target, final float f0, final float f1, final float fNot) throws ImagingException, IOException {
-        final ByteSourceFile byteSource = new ByteSourceFile(target);
+        final ByteSource byteSource = ByteSource.file(target);
         final TiffReader tiffReader = new TiffReader(true);
         final TiffContents contents = tiffReader.readDirectories(
             byteSource,
@@ -128,7 +128,7 @@ public class TiffFloatingPointReadTest {
     private TiffRasterData readRasterFromTIFF(
         final File target, final TiffImagingParameters params)
         throws ImagingException, IOException {
-        final ByteSourceFile byteSource = new ByteSourceFile(target);
+        final ByteSource byteSource = ByteSource.file(target);
         final TiffReader tiffReader = new TiffReader(true);
         final TiffContents contents = tiffReader.readDirectories(
             byteSource,

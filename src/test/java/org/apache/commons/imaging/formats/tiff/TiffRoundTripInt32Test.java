@@ -28,7 +28,7 @@ import java.nio.file.Path;
 
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
@@ -129,7 +129,7 @@ public class TiffRoundTripInt32Test extends TiffBaseTest {
         testFile[3] = writeFile(32, ByteOrder.BIG_ENDIAN, true);
         for (int i = 0; i < testFile.length; i++) {
             final String name = testFile[i].getName();
-            final ByteSourceFile byteSource = new ByteSourceFile(testFile[i]);
+            final ByteSource byteSource = ByteSource.file(testFile[i]);
             final TiffReader tiffReader = new TiffReader(true);
             final TiffContents contents = tiffReader.readDirectories(byteSource, true, // indicates that application should read image data, if present
                     FormatCompliance.getDefault());

@@ -22,14 +22,14 @@ import java.util.Arrays;
 
 import org.apache.commons.imaging.ImagingException;
 
-public class ByteSourceArray extends ByteSource {
+class ByteSourceArray extends ByteSource {
     private final byte[] bytes;
 
-    public ByteSourceArray(final byte[] bytes) {
-        this(null, bytes);
+    ByteSourceArray(final byte[] bytes) {
+        this(bytes, null);
     }
 
-    public ByteSourceArray(final String fileName, final byte[] bytes) {
+    ByteSourceArray(final byte[] bytes, final String fileName) {
         super(fileName);
         this.bytes = bytes;
     }
