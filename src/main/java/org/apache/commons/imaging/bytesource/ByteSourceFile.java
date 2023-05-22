@@ -35,17 +35,17 @@ class ByteSourceFile extends ByteSource {
     }
 
     @Override
-    public byte[] getBlock(final long start, final int length) throws IOException {
+    public byte[] getBlock(final long from, final int length) throws IOException {
         try (RandomAccessFile raf = new RandomAccessFile(file, "r")) {
             // We include a separate check for int overflow.
-            if ((start < 0) || (length < 0) || (start + length < 0)
-                    || (start + length > raf.length())) {
+            if ((from < 0) || (length < 0) || (from + length < 0)
+                    || (from + length > raf.length())) {
                 throw new ImagingException("Could not read block (block start: "
-                        + start + ", block length: " + length
+                        + from + ", block length: " + length
                         + ", data length: " + raf.length() + ").");
             }
 
-            return BinaryFunctions.getRAFBytes(raf, start, length,
+            return BinaryFunctions.getRAFBytes(raf, from, length,
                     "Could not read value from file");
         }
     }

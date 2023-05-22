@@ -46,7 +46,7 @@ public abstract class ByteSource {
         this.fileName = fileName;
     }
 
-    public abstract byte[] getBlock(long start, int length) throws IOException;
+    public abstract byte[] getBlock(long from, int length) throws IOException;
 
     public abstract String getDescription();
 

@@ -35,8 +35,8 @@ class ByteSourceArray extends ByteSource {
     }
 
     @Override
-    public byte[] getBlock(final long startLong, final int length) throws ImagingException {
-        final int start = (int) startLong;
+    public byte[] getBlock(final long from, final int length) throws ImagingException {
+        final int start = (int) from;
         // We include a separate check for int overflow.
         if ((start < 0) || (length < 0) || (start + length < 0)
                 || (start + length > bytes.length)) {

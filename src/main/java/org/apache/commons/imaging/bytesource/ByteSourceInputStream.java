@@ -180,20 +180,20 @@ class ByteSourceInputStream extends ByteSource {
     }
 
     @Override
-    public byte[] getBlock(final long blockStart, final int blockLength) throws IOException {
+    public byte[] getBlock(final long from, final int length) throws IOException {
         // We include a separate check for int overflow.
-        if ((blockStart < 0) || (blockLength < 0)
-                || (blockStart + blockLength < 0)
-                || (blockStart + blockLength > getLength())) {
+        if ((from < 0) || (length < 0)
+                || (from + length < 0)
+                || (from + length > getLength())) {
             throw new ImagingException("Could not read block (block start: "
-                    + blockStart + ", block length: " + blockLength
+                    + from + ", block length: " + length
                     + ", data length: " + streamLength + ").");
         }
 
         final InputStream cis = getInputStream();
-        BinaryFunctions.skipBytes(cis, blockStart);
+        BinaryFunctions.skipBytes(cis, from);
 
-        final byte[] bytes = Allocator.byteArray(blockLength);
+        final byte[] bytes = Allocator.byteArray(length);
         int total = 0;
         while (true) {
             final int read = cis.read(bytes, total, bytes.length - total);
@@ -201,7 +201,7 @@ class ByteSourceInputStream extends ByteSource {
                 throw new ImagingException("Could not read block.");
             }
             total += read;
-            if (total >= blockLength) {
+            if (total >= length) {
                 return bytes;
             }
         }
