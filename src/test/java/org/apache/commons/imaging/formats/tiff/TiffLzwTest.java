@@ -29,9 +29,9 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
-import org.apache.commons.imaging.common.mylzw.MyLzwCompressor;
-import org.apache.commons.imaging.common.mylzw.MyLzwDecompressor;
 import org.apache.commons.imaging.internal.Debug;
+import org.apache.commons.imaging.mylzw.MyLzwCompressor;
+import org.apache.commons.imaging.mylzw.MyLzwDecompressor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 

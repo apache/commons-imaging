@@ -50,8 +50,8 @@ import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.XmpEmbeddable;
 import org.apache.commons.imaging.common.XmpImagingParameters;
-import org.apache.commons.imaging.common.mylzw.MyLzwCompressor;
-import org.apache.commons.imaging.common.mylzw.MyLzwDecompressor;
+import org.apache.commons.imaging.mylzw.MyLzwCompressor;
+import org.apache.commons.imaging.mylzw.MyLzwDecompressor;
 import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
 

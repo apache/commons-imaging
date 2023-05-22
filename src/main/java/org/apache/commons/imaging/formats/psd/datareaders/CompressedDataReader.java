@@ -27,11 +27,11 @@ import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.PackBits;
-import org.apache.commons.imaging.common.mylzw.BitsToByteInputStream;
-import org.apache.commons.imaging.common.mylzw.MyBitInputStream;
 import org.apache.commons.imaging.formats.psd.PsdHeaderInfo;
 import org.apache.commons.imaging.formats.psd.PsdImageContents;
 import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
+import org.apache.commons.imaging.mylzw.BitsToByteInputStream;
+import org.apache.commons.imaging.mylzw.MyBitInputStream;
 
 public class CompressedDataReader implements DataReader {
 

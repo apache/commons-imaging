@@ -162,22 +162,7 @@
     <Bug pattern="EI_EXPOSE_REP2" />
   </Match>
   <Match>
-    <Class name="org.apache.commons.imaging.common.mylzw.MyLzwCompressor" />
-    <Method name="&lt;init&gt;" />
-    <Bug pattern="EI_EXPOSE_REP2" />
-  </Match>
-  <Match>
-    <Class name="org.apache.commons.imaging.common.mylzw.MyBitOutputStream" />
-    <Method name="&lt;init&gt;" />
-    <Bug pattern="EI_EXPOSE_REP2" />
-  </Match>
-  <Match>
-    <Class name="org.apache.commons.imaging.common.mylzw.BitsToByteInputStream" />
-    <Method name="&lt;init&gt;" />
-    <Bug pattern="EI_EXPOSE_REP2" />
-  </Match>
-  <Match>
-    <Class name="org.apache.commons.imaging.common.BinaryOutputStream" />
+    <Class name="org.apache.commons.imaging.mylzw.MyLzwCompressor" />
     <Method name="&lt;init&gt;" />
     <Bug pattern="EI_EXPOSE_REP2" />
   </Match>

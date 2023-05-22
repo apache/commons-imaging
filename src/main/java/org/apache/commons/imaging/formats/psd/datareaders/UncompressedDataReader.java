@@ -24,11 +24,11 @@ import java.nio.ByteOrder;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFileParser;
-import org.apache.commons.imaging.common.mylzw.BitsToByteInputStream;
-import org.apache.commons.imaging.common.mylzw.MyBitInputStream;
 import org.apache.commons.imaging.formats.psd.PsdHeaderInfo;
 import org.apache.commons.imaging.formats.psd.PsdImageContents;
 import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
+import org.apache.commons.imaging.mylzw.BitsToByteInputStream;
+import org.apache.commons.imaging.mylzw.MyBitInputStream;
 
 public class UncompressedDataReader implements DataReader {
 

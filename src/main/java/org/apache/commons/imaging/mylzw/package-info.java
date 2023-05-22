@@ -18,5 +18,5 @@
 /**
  * Provides LZW compression.
  */
-package org.apache.commons.imaging.common.mylzw;
+package org.apache.commons.imaging.mylzw;
 

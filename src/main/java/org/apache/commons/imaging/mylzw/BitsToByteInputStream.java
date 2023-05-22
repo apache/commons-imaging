@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.common.mylzw;
+package org.apache.commons.imaging.mylzw;
 
 import java.io.FilterInputStream;
 import java.io.IOException;
