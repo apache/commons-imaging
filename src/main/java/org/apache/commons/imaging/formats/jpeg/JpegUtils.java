@@ -26,9 +26,9 @@ import java.io.InputStream;
 import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImagingException;
+import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.ByteConversions;
-import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.internal.Debug;
 
 public class JpegUtils extends BinaryFileParser {

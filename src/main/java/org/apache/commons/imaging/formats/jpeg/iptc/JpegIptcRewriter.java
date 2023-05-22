@@ -26,7 +26,7 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.common.bytesource.ByteSource;
+import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.formats.jpeg.xmp.JpegRewriter;

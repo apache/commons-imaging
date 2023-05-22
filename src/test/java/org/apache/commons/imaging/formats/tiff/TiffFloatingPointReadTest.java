@@ -31,7 +31,7 @@ import java.util.List;
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingTestConstants;
-import org.apache.commons.imaging.common.bytesource.ByteSource;
+import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PaletteEntry;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PaletteEntryForRange;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PaletteEntryForValue;

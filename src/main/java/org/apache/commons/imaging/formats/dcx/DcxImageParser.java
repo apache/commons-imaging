@@ -33,10 +33,10 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImagingException;
+import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ImageMetadata;
-import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.pcx.PcxImageParser;
 import org.apache.commons.imaging.formats.pcx.PcxImagingParameters;
 

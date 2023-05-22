@@ -31,11 +31,11 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.BufferedImageFactory;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.SimpleBufferedImageFactory;
-import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.bmp.BmpImageParser;
 import org.apache.commons.imaging.formats.dcx.DcxImageParser;
 import org.apache.commons.imaging.formats.gif.GifImageParser;

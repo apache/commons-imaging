@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.commons.imaging.common.bytesource;
+package org.apache.commons.imaging.bytesource;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
+import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;

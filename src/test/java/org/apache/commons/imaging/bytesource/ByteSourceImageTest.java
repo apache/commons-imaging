@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.commons.imaging.common.bytesource;
+package org.apache.commons.imaging.bytesource;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;

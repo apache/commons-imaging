@@ -27,8 +27,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.apache.commons.imaging.ImagingException;
+import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.GenericImageMetadata.GenericImageMetadataItem;
-import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;

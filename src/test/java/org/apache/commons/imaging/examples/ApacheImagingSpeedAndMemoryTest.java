@@ -157,7 +157,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import org.apache.commons.imaging.common.bytesource.ByteSource;
+import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 /**

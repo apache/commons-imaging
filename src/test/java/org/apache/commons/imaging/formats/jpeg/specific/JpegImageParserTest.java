@@ -23,7 +23,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.common.bytesource.ByteSource;
+import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.formats.jpeg.decoder.JpegDecoderTest;
 import org.junit.jupiter.api.Test;

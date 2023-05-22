@@ -31,9 +31,9 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingOverflowException;
+import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.ByteConversions;
-import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.formats.jpeg.JpegUtils;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterBase;

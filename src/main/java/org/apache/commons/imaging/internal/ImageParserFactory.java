@@ -25,7 +25,7 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingParameters;
-import org.apache.commons.imaging.common.bytesource.ByteSource;
+import org.apache.commons.imaging.bytesource.ByteSource;
 
 /**
  * Internal utilities.

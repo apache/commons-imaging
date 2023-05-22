@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.common.bytesource;
+package org.apache.commons.imaging.bytesource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -28,6 +28,7 @@ import java.nio.file.Files;
 
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.bytesource.ByteSource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

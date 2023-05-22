@@ -19,7 +19,7 @@ package org.apache.commons.imaging.common;
 import java.io.IOException;
 
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.common.bytesource.ByteSource;
+import org.apache.commons.imaging.bytesource.ByteSource;
 
 /**
  * Implementations support embedding the Extensible Metadata Platform tags.

@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingTest;
-import org.apache.commons.imaging.common.bytesource.ByteSource;
+import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 
 public abstract class IptcBaseTest extends ImagingTest {

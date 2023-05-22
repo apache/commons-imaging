@@ -20,7 +20,7 @@ package org.apache.commons.imaging.formats.jpeg.decoder;
 import java.io.File;
 
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.common.bytesource.ByteSource;
+import org.apache.commons.imaging.bytesource.ByteSource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

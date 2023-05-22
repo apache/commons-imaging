@@ -24,12 +24,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.imaging.ImagingException;
+import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.GenericImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
-import org.apache.commons.imaging.common.bytesource.ByteSource;
 
 class RgbeInfo implements Closeable {
     // #?RADIANCE

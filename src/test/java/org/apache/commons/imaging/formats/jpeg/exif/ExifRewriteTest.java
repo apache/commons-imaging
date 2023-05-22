@@ -37,8 +37,8 @@ import java.util.Set;
 
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
+import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.ImageMetadata.ImageMetadataItem;
-import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegUtils;
 import org.apache.commons.imaging.formats.tiff.TiffField;

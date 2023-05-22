@@ -23,8 +23,8 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImagingException;
+import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.RationalNumber;
-import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.GeoTiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;

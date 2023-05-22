@@ -31,9 +31,9 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.XmpEmbeddable;
-import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.icc.IccProfileInfo;
 import org.apache.commons.imaging.icc.IccProfileParser;
 import org.apache.commons.imaging.internal.ImageParserFactory;

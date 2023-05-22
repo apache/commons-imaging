@@ -32,10 +32,10 @@ import java.util.List;
 import java.util.Properties;
 
 import org.apache.commons.imaging.ImagingException;
+import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.color.ColorConversions;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFileParser;
-import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.formats.jpeg.JpegUtils;
 import org.apache.commons.imaging.formats.jpeg.segments.DhtSegment;

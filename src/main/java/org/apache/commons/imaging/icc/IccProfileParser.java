@@ -29,9 +29,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.imaging.ImagingException;
+import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFileParser;
-import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.io.IOUtils;
 
 public class IccProfileParser extends BinaryFileParser {

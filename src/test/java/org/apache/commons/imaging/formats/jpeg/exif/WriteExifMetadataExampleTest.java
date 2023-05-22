@@ -24,7 +24,7 @@ import java.nio.file.Files;
 import java.util.stream.Stream;
 
 import org.apache.commons.imaging.ImagingOverflowException;
-import org.apache.commons.imaging.common.bytesource.ByteSource;
+import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.examples.WriteExifMetadataExample;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.formats.tiff.TiffField;
