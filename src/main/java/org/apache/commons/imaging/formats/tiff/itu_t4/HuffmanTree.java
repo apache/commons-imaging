@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.common.itu_t4;
+package org.apache.commons.imaging.formats.tiff.itu_t4;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -48,7 +48,6 @@ import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.PackBits;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.common.ZlibDeflate;
-import org.apache.commons.imaging.common.itu_t4.T4AndT6Compression;
 import org.apache.commons.imaging.common.mylzw.MyLzwCompressor;
 import org.apache.commons.imaging.formats.tiff.TiffElement;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
@@ -56,6 +55,7 @@ import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
+import org.apache.commons.imaging.formats.tiff.itu_t4.T4AndT6Compression;
 
 public abstract class TiffImageWriterBase {
 

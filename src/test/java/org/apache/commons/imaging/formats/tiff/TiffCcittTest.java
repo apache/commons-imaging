@@ -26,8 +26,8 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.common.itu_t4.T4AndT6Compression;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
+import org.apache.commons.imaging.formats.tiff.itu_t4.T4AndT6Compression;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 

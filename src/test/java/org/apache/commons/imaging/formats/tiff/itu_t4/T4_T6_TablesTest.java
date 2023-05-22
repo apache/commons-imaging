@@ -14,9 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.apache.commons.imaging.formats.tiff.itu_t4;
 
-/**
- * Provides ITU-T T.4 and T.6 compression classes.
- */
-package org.apache.commons.imaging.common.itu_t4;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Arrays;
+
+import org.junit.jupiter.api.Test;
+
+public class T4_T6_TablesTest {
+
+    @Test
+    public void testCreatesT4_T6_TablesTakingNoArgumentsAndCallsWriteBits() {
+        try (final BitArrayOutputStream bitArrayOutputStream = new BitArrayOutputStream(2309)) {
+            T4_T6_Tables.EOL16.writeBits(bitArrayOutputStream);
+
+            assertEquals(2, bitArrayOutputStream.size());
+            assertEquals("[0, 1]", Arrays.toString(bitArrayOutputStream.toByteArray()));
+        }
+    }
+
+}
