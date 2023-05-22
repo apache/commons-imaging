@@ -20,30 +20,54 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import org.apache.commons.imaging.ImagingException;
+import org.apache.commons.imaging.ImagingFormatException;
+import org.apache.commons.imaging.common.AllocationRequestException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ImageBuilder;
 
 public class PhotometricInterpreterPalette extends PhotometricInterpreter {
 
     /**
-     * The color map of integer ARGB values tied to the pixel index of the
-     * palette
+     * The color map of integer ARGB values tied to the pixel index of the palette.
      */
     private final int[] indexColorMap;
     private final int bitsPerPixelMask;
 
-    public PhotometricInterpreterPalette(final int samplesPerPixel,
-            final int[] bitsPerSample, final int predictor, final int width, final int height,
-            final int[] colorMap) {
+    /**
+     * Constructs a new instance.
+     *
+     * @throws ImagingFormatException     if an index into the {@code colorMap} is out of bounds.
+     * @throws AllocationRequestException Thrown when an allocation request exceeds the {@link Allocator} limit.
+     */
+    public PhotometricInterpreterPalette(final int samplesPerPixel, final int[] bitsPerSample, final int predictor,
+            final int width, final int height, final int[] colorMap) {
         super(samplesPerPixel, bitsPerSample, predictor, width, height);
 
         final int bitsPerPixel = getBitsPerSample(0);
-        final int colormapScale = (1 << bitsPerPixel);
-        indexColorMap = Allocator.intArray(colormapScale);
+        final int colorMapScale = 1 << bitsPerPixel;
+        int colorMapScaleX2;
+        try {
+            colorMapScaleX2 = Math.multiplyExact(2, colorMapScale);
+        } catch (ArithmeticException e) {
+            throw new ImagingFormatException("bitsPerPixel is too large or colorMap is too small", e);
+        }
+        // Validate colorMap[i], colorMap[i + colorMapScale], and colorMap[i + colorMapScaleX2] where max(i) is
+        // colorMapScale - 1.
+        int maxI;
+        try {
+            maxI = Math.addExact(colorMapScaleX2, colorMapScale - 1);
+        } catch (ArithmeticException e) {
+            throw new ImagingFormatException("bitsPerPixel is too large or colorMap is too small", e);
+        }
+        if (maxI >= colorMap.length) {
+            throw new ImagingFormatException("bitsPerPixel %,d (maxI = %,d) is too large or colorMap is too small %,d",
+                    bitsPerPixel, maxI, colorMap.length);
+        }
+        indexColorMap = Allocator.intArray(colorMapScale);
         Arrays.setAll(indexColorMap, i -> {
             final int red = (colorMap[i] >> 8) & 0xff;
-            final int green = (colorMap[i + (colormapScale)] >> 8) & 0xff;
-            final int blue = (colorMap[i + (2 * colormapScale)] >> 8) & 0xff;
+            final int green = (colorMap[i + colorMapScale] >> 8) & 0xff;
+            final int blue = (colorMap[i + colorMapScaleX2] >> 8) & 0xff;
             return 0xff000000 | (red << 16) | (green << 8) | blue;
         });
 
@@ -63,8 +87,8 @@ public class PhotometricInterpreterPalette extends PhotometricInterpreter {
     }
 
     @Override
-    public void interpretPixel(final ImageBuilder imageBuilder, final int[] samples, final int x,
-            final int y) throws ImagingException, IOException {
+    public void interpretPixel(final ImageBuilder imageBuilder, final int[] samples, final int x, final int y)
+            throws ImagingException, IOException {
         imageBuilder.setRGB(x, y, indexColorMap[samples[0] & bitsPerPixelMask]);
     }
 }

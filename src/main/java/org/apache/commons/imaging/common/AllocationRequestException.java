@@ -19,6 +19,8 @@ package org.apache.commons.imaging.common;
 
 import java.math.BigInteger;
 
+import org.apache.commons.imaging.ImagingRuntimeException;
+
 /**
  * Thrown when an allocation request is too large.
  */

@@ -658,7 +658,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
 
             if (colorMap.length != expectedColormapSize) {
                 throw new ImagingException("Tiff: fColorMap.length ("
-                        + colorMap.length + ")!=expectedColormapSize ("
+                        + colorMap.length + ") != expectedColormapSize ("
                         + expectedColormapSize + ")");
             }
 
