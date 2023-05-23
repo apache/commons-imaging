@@ -32,7 +32,7 @@ import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
 
-class PngWriter {
+public class PngWriter {
 
     /*
      1. IHDR: image header, which is the first chunk in a PNG datastream.
@@ -322,19 +322,26 @@ class PngWriter {
      zTXt   Yes None
      */
     public void writeImage(final BufferedImage src, final OutputStream os, PngImagingParameters params) throws ImagingException, IOException {
+        writeImage(src, os, params, new PaletteFactory());
+    }
+
+    public void writeImage(final BufferedImage src, final OutputStream os, PngImagingParameters params, PaletteFactory paletteFactory) throws ImagingException, IOException {
         if (params == null) {
             params = new PngImagingParameters();
+        }
+        if (paletteFactory == null) {
+            paletteFactory = new PaletteFactory();
         }
         final int compressionLevel = Deflater.DEFAULT_COMPRESSION;
 
         final int width = src.getWidth();
         final int height = src.getHeight();
 
-        final boolean hasAlpha = new PaletteFactory().hasTransparency(src);
+        final boolean hasAlpha = paletteFactory.hasTransparency(src);
         Debug.debug("hasAlpha: " + hasAlpha);
-        // int transparency = new PaletteFactory().getTransparency(src);
+        // int transparency = paletteFactory.getTransparency(src);
 
-        boolean isGrayscale = new PaletteFactory().isGrayscale(src);
+        boolean isGrayscale = paletteFactory.isGrayscale(src);
         Debug.debug("isGrayscale: " + isGrayscale);
 
         PngColorType pngColorType;
@@ -396,8 +403,6 @@ class PngWriter {
             // PLTE No Before first IDAT
 
             final int maxColors = 256;
-
-            final PaletteFactory paletteFactory = new PaletteFactory();
 
             if (hasAlpha) {
                 palette = paletteFactory.makeQuantizedRgbaPalette(src, hasAlpha, maxColors);
