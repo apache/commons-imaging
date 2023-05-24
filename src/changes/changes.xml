@@ -57,6 +57,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action dev="ggregory" type="update" due-to="Gary Gregory">
         BinaryOutputStream now subclasses FilterOutputStream instead of OutputStream and does not need to count bytes.
       </action>
+      <action issue="IMAGING-353" dev="ggregory" type="update" due-to="Jeroen van der Vegt, Gary Gregory">
+        Fix PngImageParser hasPalette #295.
+      </action>
       <!-- ADD -->
       <action issue="IMAGING-352" dev="ggregory" type="update" due-to="Jeroen van der Vegt, Gary Gregory">
         [PngWriter] Allow custom PaletteFactory #294.
