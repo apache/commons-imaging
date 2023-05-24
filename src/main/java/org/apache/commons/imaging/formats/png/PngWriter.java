@@ -331,7 +331,7 @@ public class PngWriter {
      * @throws ImagingException When errors are detected.
      * @throws IOException When IO problems occur.
      */
-    public void writeImage(final BufferedImage src, final OutputStream os, PngImagingParameters params) throws ImagingException, IOException {
+    public void writeImage(final BufferedImage src, final OutputStream os, final PngImagingParameters params) throws ImagingException, IOException {
         writeImage(src, os, params, new PaletteFactory());
     }
 
