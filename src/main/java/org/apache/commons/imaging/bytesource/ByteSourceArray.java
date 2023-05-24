@@ -23,6 +23,7 @@ import java.util.Arrays;
 import org.apache.commons.imaging.ImagingException;
 
 class ByteSourceArray extends ByteSource {
+
     private final byte[] bytes;
 
     ByteSourceArray(final byte[] bytes) {
@@ -36,7 +37,12 @@ class ByteSourceArray extends ByteSource {
 
     @Override
     public byte[] getBlock(final long from, final int length) throws ImagingException {
-        final int start = (int) from;
+        int start;
+        try {
+            start = Math.toIntExact(from);
+        } catch (ArithmeticException e) {
+            throw new ImagingException(e);
+        }
         // We include a separate check for int overflow.
         if ((start < 0) || (length < 0) || (start + length < 0)
                 || (start + length > bytes.length)) {

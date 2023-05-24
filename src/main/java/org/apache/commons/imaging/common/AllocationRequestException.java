@@ -28,17 +28,22 @@ public class AllocationRequestException extends ImagingRuntimeException {
 
     private static final long serialVersionUID = 1L;
 
+    private static String format(final int limit, final BigInteger request) {
+        return String.format("Allocation limit %,d exceeded: %,d", limit, request);
+    }
+
     private final int limit;
+
     private final BigInteger request;
 
     /**
      * Constructs a new instance.
      *
-     * @param limit The allocation limit.
+     * @param limit   The allocation limit.
      * @param request The allocation request.
      */
     public AllocationRequestException(final int limit, final BigInteger request) {
-        super(String.format("Allocation limit %,d exceeded: %,d", limit, request));
+        super(format(limit, request));
         this.limit = limit;
         this.request = request;
     }
@@ -46,7 +51,21 @@ public class AllocationRequestException extends ImagingRuntimeException {
     /**
      * Constructs a new instance.
      *
-     * @param limit The allocation limit.
+     * @param limit     The allocation limit.
+     * @param request   The allocation request.
+     * @param throwable the cause (which is saved for later retrieval by the {@link #getCause()} method). (A {@code null} value is permitted, and indicates that
+     *                  the cause is nonexistent or unknown.)
+     */
+    public AllocationRequestException(final int limit, final BigInteger request, final Throwable throwable) {
+        super(format(limit, request), throwable);
+        this.limit = limit;
+        this.request = request;
+    }
+
+    /**
+     * Constructs a new instance.
+     *
+     * @param limit   The allocation limit.
      * @param request The allocation request.
      */
     public AllocationRequestException(final int limit, final int request) {
@@ -56,11 +75,13 @@ public class AllocationRequestException extends ImagingRuntimeException {
     /**
      * Constructs a new instance.
      *
-     * @param limit The allocation limit.
-     * @param request The allocation request.
+     * @param limit     The allocation limit.
+     * @param request   The allocation request.
+     * @param throwable the cause (which is saved for later retrieval by the {@link #getCause()} method). (A {@code null} value is permitted, and indicates that
+     *                  the cause is nonexistent or unknown.)
      */
-    public AllocationRequestException(final int limit, final long request) {
-        this(limit, BigInteger.valueOf(request));
+    public AllocationRequestException(final int limit, final long request, final Throwable throwable) {
+        this(limit, BigInteger.valueOf(request), throwable);
     }
 
     /**

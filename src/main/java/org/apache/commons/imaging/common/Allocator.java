@@ -151,7 +151,7 @@ public class Allocator {
         try {
             multiplyExact = Math.multiplyExact(request, elementSize);
         } catch (ArithmeticException e) {
-            throw new AllocationRequestException(LIMIT, BigInteger.valueOf(request).multiply(BigInteger.valueOf(elementSize)));
+            throw new AllocationRequestException(LIMIT, BigInteger.valueOf(request).multiply(BigInteger.valueOf(elementSize)), e);
         }
         if (multiplyExact > LIMIT) {
             throw new AllocationRequestException(LIMIT, request);
@@ -172,10 +172,11 @@ public class Allocator {
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      */
     public static int check(final long request, final int elementSize) {
-        if (request > Integer.MAX_VALUE) {
-            throw new AllocationRequestException(LIMIT, request);
+        try {
+            return check(Math.toIntExact(request), elementSize);
+        } catch (ArithmeticException e) {
+            throw new AllocationRequestException(LIMIT, request, e);
         }
-        return check((int) request, elementSize);
     }
 
     /**

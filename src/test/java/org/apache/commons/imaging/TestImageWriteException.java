@@ -32,7 +32,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class TestImageWriteException {
 
     public static Stream<Object[]> data() {
-        final ImagingException exception = new ImagingException(null);
+        final ImagingException exception = new ImagingException((String) null);
+        // @formatter:off
         return Stream.of(
                 new Object[] {null, "null"},
                 new Object[] {new Object[] {Integer.valueOf(1)}, "[Object[]: 1]"},
@@ -46,6 +47,7 @@ public class TestImageWriteException {
                 new Object[] {new boolean[] {true, false, true}, "[boolean[]: 3]"},
                 new Object[] {exception, exception.getClass().getName()}
                 );
+        // @formatter:on
     }
 
     @ParameterizedTest
