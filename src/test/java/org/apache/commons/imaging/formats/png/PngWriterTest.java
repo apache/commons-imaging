@@ -37,42 +37,9 @@ import org.junit.jupiter.api.Test;
  */
 public class PngWriterTest extends PngBaseTest {
 
-    @Test
-    public void testPaletteFactory() throws IOException {
-        final File imageFile = getValidPngImages().get(0);
-
-        final BufferedImage image = Imaging.getBufferedImage(imageFile);
-        final PngImagingParameters params = new PngImagingParameters();
-        params.setForceIndexedColor(true);
-
-        final byte[] bytes = getImageBytes(image, params);
-        final int numColors = countColors(bytes);
-        assertTrue(numColors > 1);
-
-        final PaletteFactory factory = new PaletteFactory() {
-            @Override
-            public Palette makeQuantizedRgbPalette(final BufferedImage src, final int max) {
-                // Force a stupid palette containing nothing but black (all zero's).
-                return new SimplePalette(new int[max]);
-            }
-        };
-        final byte[] palettedBytes = getImageBytesWithPalette(image, params, factory);
-
-        assertEquals(1, countColors(palettedBytes));
-    }
-
-    @Test
-    public void testNullParameters() throws IOException {
-        final File imageFile = getValidPngImages().get(0);
-
-        final BufferedImage image = Imaging.getBufferedImage(imageFile);
-
-        try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
-            new PngWriter().writeImage(image, os, null, null);
-            byte[] bytes = os.toByteArray();
-            final int numColors = countColors(bytes);
-            assertTrue(numColors > 1);
-        }
+    private static int countColors(final byte[] bytes) throws IOException {
+        final BufferedImage imageParsed = Imaging.getBufferedImage(bytes);
+        return new PaletteFactory().makeExactRgbPaletteSimple(imageParsed, Integer.MAX_VALUE).length();
     }
 
     private static byte[] getImageBytes(final BufferedImage image, final PngImagingParameters params) throws IOException {
@@ -100,8 +67,41 @@ public class PngWriterTest extends PngBaseTest {
         return result;
     }
 
-    private static int countColors(final byte[] bytes) throws IOException {
-        final BufferedImage imageParsed = Imaging.getBufferedImage(bytes);
-        return new PaletteFactory().makeExactRgbPaletteSimple(imageParsed, Integer.MAX_VALUE).length();
+    @Test
+    public void testNullParameters() throws IOException {
+        final File imageFile = getValidPngImages().get(0);
+
+        final BufferedImage image = Imaging.getBufferedImage(imageFile);
+
+        try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
+            new PngWriter().writeImage(image, os, null, null);
+            byte[] bytes = os.toByteArray();
+            final int numColors = countColors(bytes);
+            assertTrue(numColors > 1);
+        }
+    }
+
+    @Test
+    public void testPaletteFactory() throws IOException {
+        final File imageFile = getValidPngImages().get(0);
+
+        final BufferedImage image = Imaging.getBufferedImage(imageFile);
+        final PngImagingParameters params = new PngImagingParameters();
+        params.setForceIndexedColor(true);
+
+        final byte[] bytes = getImageBytes(image, params);
+        final int numColors = countColors(bytes);
+        assertTrue(numColors > 1);
+
+        final PaletteFactory factory = new PaletteFactory() {
+            @Override
+            public Palette makeQuantizedRgbPalette(final BufferedImage src, final int max) {
+                // Force a stupid palette containing nothing but black (all zero's).
+                return new SimplePalette(new int[max]);
+            }
+        };
+        final byte[] palettedBytes = getImageBytesWithPalette(image, params, factory);
+
+        assertEquals(1, countColors(palettedBytes));
     }
 }
