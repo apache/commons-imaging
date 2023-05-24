@@ -81,6 +81,7 @@ public class PngWriterTest extends PngBaseTest {
             return os.toByteArray();
         }
     }
+
     private static byte[] getImageBytesWithPalette(final BufferedImage image, final PngImagingParameters params, final PaletteFactory paletteFactory) throws IOException {
         try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
             new PngWriter().writeImage(image, os, params, paletteFactory);

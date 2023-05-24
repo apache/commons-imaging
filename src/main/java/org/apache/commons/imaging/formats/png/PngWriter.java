@@ -321,10 +321,30 @@ public class PngWriter {
      tEXt   Yes None
      zTXt   Yes None
      */
+
+    /**
+     * Writes an image to an output stream.
+     *
+     * @param src The image to write.
+     * @param os The output stream to write to.
+     * @param params The parameters to use (can be {@code NULL} to use the default parameters).
+     * @throws ImagingException When errors are detected.
+     * @throws IOException When IO problems occur.
+     */
     public void writeImage(final BufferedImage src, final OutputStream os, PngImagingParameters params) throws ImagingException, IOException {
         writeImage(src, os, params, new PaletteFactory());
     }
 
+    /**
+     * Writes an image to an output stream.
+     *
+     * @param src The image to write.
+     * @param os The output stream to write to.
+     * @param params The parameters to use (can be {@code NULL} to use the default {@link PngImagingParameters}).
+     * @param paletteFactory The palette factory to use (can be {@code NULL} to use the default {@link PaletteFactory}).
+     * @throws ImagingException When errors are detected.
+     * @throws IOException When IO problems occur.
+     */
     public void writeImage(final BufferedImage src, final OutputStream os, PngImagingParameters params, PaletteFactory paletteFactory) throws ImagingException, IOException {
         if (params == null) {
             params = new PngImagingParameters();
