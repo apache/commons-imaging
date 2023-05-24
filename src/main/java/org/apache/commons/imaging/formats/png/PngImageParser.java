@@ -734,7 +734,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
     @Override
     public void writeImage(final BufferedImage src, final OutputStream os, final PngImagingParameters params)
             throws ImagingException, IOException {
-        new PngWriter().writeImage(src, os, params);
+        new PngWriter().writeImage(src, os, params, null);
     }
 
 }

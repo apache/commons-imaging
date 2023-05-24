@@ -69,7 +69,7 @@ public class PngImageParserTest extends PngBaseTest {
 
     private static byte[] getPngImageBytes(final BufferedImage image, final PngImagingParameters params) throws IOException {
         try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
-            new PngWriter().writeImage(image, os, params);
+            new PngWriter().writeImage(image, os, params, null);
             return os.toByteArray();
         }
     }

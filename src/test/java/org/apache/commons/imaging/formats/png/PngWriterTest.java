@@ -42,14 +42,7 @@ public class PngWriterTest extends PngBaseTest {
         return new PaletteFactory().makeExactRgbPaletteSimple(imageParsed, Integer.MAX_VALUE).length();
     }
 
-    private static byte[] getImageBytes(final BufferedImage image, final PngImagingParameters params) throws IOException {
-        try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
-            new PngWriter().writeImage(image, os, params);
-            return os.toByteArray();
-        }
-    }
-
-    private static byte[] getImageBytesWithPalette(final BufferedImage image, final PngImagingParameters params, final PaletteFactory paletteFactory) throws IOException {
+    private static byte[] getImageBytes(final BufferedImage image, final PngImagingParameters params, final PaletteFactory paletteFactory) throws IOException {
         try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
             new PngWriter().writeImage(image, os, params, paletteFactory);
             return os.toByteArray();
@@ -59,7 +52,6 @@ public class PngWriterTest extends PngBaseTest {
     private List<File> getValidPngImages() throws IOException {
         final List<File> result = new ArrayList<>();
         for (final File imageFile : getPngImages()) {
-
             if (!isInvalidPNGTestFile(imageFile)) {
                 result.add(imageFile);
             }
@@ -89,7 +81,7 @@ public class PngWriterTest extends PngBaseTest {
         final PngImagingParameters params = new PngImagingParameters();
         params.setForceIndexedColor(true);
 
-        final byte[] bytes = getImageBytes(image, params);
+        final byte[] bytes = getImageBytes(image, params, null);
         final int numColors = countColors(bytes);
         assertTrue(numColors > 1);
 
@@ -100,7 +92,7 @@ public class PngWriterTest extends PngBaseTest {
                 return new SimplePalette(new int[max]);
             }
         };
-        final byte[] palettedBytes = getImageBytesWithPalette(image, params, factory);
+        final byte[] palettedBytes = getImageBytes(image, params, factory);
 
         assertEquals(1, countColors(palettedBytes));
     }
