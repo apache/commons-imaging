@@ -57,6 +57,10 @@ The <action> type attribute can be add,update,fix,remove.
       <action dev="ggregory" type="update" due-to="Gary Gregory">
         BinaryOutputStream now subclasses FilterOutputStream instead of OutputStream and does not need to count bytes.
       </action>
+      <!-- ADD -->
+      <action issue="IMAGING-352" dev="ggregory" type="update" due-to="Jeroen van der Vegt, Gary Gregory">
+        [PngWriter] Allow custom PaletteFactory #294.
+      </action>
       <!-- UPDATE -->
       <action dev="kinow" type="update" due-to="Dependabot, Gary Gregory">
         Bump actions/cache from 3.0.4 to 3.0.10 #225, #228, #239, #240.
