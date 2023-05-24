@@ -17,15 +17,22 @@
 
 package org.apache.commons.imaging.formats.png;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.common.AllocationRequestException;
 import org.junit.jupiter.api.Test;
 
-public class PngImageParserTest {
+public class PngImageParserTest extends PngBaseTest {
 
     @Test
-    public void test_getImageSize() throws Exception {
+    public void test_getImageSize() {
         final byte[] bytes = {
             // Header
             (byte) 0x89, 'P', 'N', 'G', '\r', '\n', 0x1A, '\n',
@@ -35,5 +42,35 @@ public class PngImageParserTest {
             'I', 'H', 'D', 'R',
         };
         assertThrows(AllocationRequestException.class, () -> new PngImageParser().getImageSize(bytes));
+    }
+
+    @Test
+    public void testPalette() throws IOException {
+        final BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+        image.setRGB(1, 1, 0x00FFffFF);
+        final PngImagingParameters params = new PngImagingParameters();
+        params.setForceIndexedColor(true);
+
+        final byte[] bytes = getPngImageBytes(image, params);
+        final ImageInfo imageInfo = new PngImageParser().getImageInfo(bytes, null);
+        assertTrue(imageInfo.usesPalette());
+    }
+
+    @Test
+    public void testNoPalette() throws IOException {
+        final BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+        image.setRGB(1, 1, 0x00FFffFF);
+        final PngImagingParameters params = new PngImagingParameters();
+
+        final byte[] bytes = getPngImageBytes(image, params);
+        final ImageInfo imageInfo = new PngImageParser().getImageInfo(bytes, null);
+        assertFalse(imageInfo.usesPalette());
+    }
+
+    private static byte[] getPngImageBytes(final BufferedImage image, final PngImagingParameters params) throws IOException {
+        try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
+            new PngWriter().writeImage(image, os, params);
+            return os.toByteArray();
+        }
     }
 }
