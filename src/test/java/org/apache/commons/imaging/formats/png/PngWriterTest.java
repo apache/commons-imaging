@@ -75,7 +75,7 @@ public class PngWriterTest extends PngBaseTest {
 
         try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
             new PngWriter().writeImage(image, os, null, null);
-            byte[] bytes = os.toByteArray();
+            final byte[] bytes = os.toByteArray();
             final int numColors = countColors(bytes);
             assertTrue(numColors > 1);
         }
