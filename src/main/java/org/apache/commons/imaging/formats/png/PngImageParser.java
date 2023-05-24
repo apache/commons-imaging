@@ -496,7 +496,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
         boolean usesPalette = false;
 
         final List<PngChunk> PLTEs = filterChunks(chunks, ChunkType.PLTE);
-        if (PLTEs.size() > 1) {
+        if (!PLTEs.isEmpty()) {
             usesPalette = true;
         }
 
