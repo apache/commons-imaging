@@ -27,6 +27,7 @@ import java.util.zip.InflaterInputStream;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFunctions;
+import org.apache.commons.io.IOUtils;
 
 /**
  * The PNG iCCP chunk. If "present, the image samples conform to the color space represented by the embedded ICC
@@ -92,7 +93,7 @@ public class PngChunkIccp extends PngChunk {
             LOGGER.finest("bytes.length: " + bytes.length);
         }
 
-        uncompressedProfile = BinaryFunctions.toByteArray(new InflaterInputStream(new ByteArrayInputStream(compressedProfile)));
+        uncompressedProfile = IOUtils.toByteArray(new InflaterInputStream(new ByteArrayInputStream(compressedProfile)));
 
         if (LOGGER.isLoggable(Level.FINEST)) {
             LOGGER.finest("UncompressedProfile: " + bytes.length);

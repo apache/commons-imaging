@@ -91,10 +91,6 @@ public final class BinaryFunctions {
 
     }
 
-    public static byte[] toByteArray(final InputStream is) throws IOException {
-        return IOUtils.toByteArray(is);
-    }
-
     public static byte[] head(final byte[] bytes, int count) {
         if (count > bytes.length) {
             count = bytes.length;

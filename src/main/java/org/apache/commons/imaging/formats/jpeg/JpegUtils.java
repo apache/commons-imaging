@@ -16,7 +16,6 @@
  */
 package org.apache.commons.imaging.formats.jpeg;
 
-import static org.apache.commons.imaging.common.BinaryFunctions.toByteArray;
 import static org.apache.commons.imaging.common.BinaryFunctions.readAndVerifyBytes;
 import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
 import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
@@ -30,6 +29,7 @@ import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.internal.Debug;
+import org.apache.commons.io.IOUtils;
 
 public class JpegUtils extends BinaryFileParser {
     public interface Visitor {
@@ -180,7 +180,7 @@ public class JpegUtils extends BinaryFileParser {
                         return;
                     }
 
-                    final byte[] imageData = toByteArray(is);
+                    final byte[] imageData = IOUtils.toByteArray(is);
                     visitor.visitSOS(marker, markerBytes, imageData);
                     break;
                 }

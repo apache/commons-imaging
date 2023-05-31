@@ -26,6 +26,7 @@ import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.formats.png.PngConstants;
 import org.apache.commons.imaging.formats.png.PngText;
+import org.apache.commons.io.IOUtils;
 
 public class PngChunkItxt extends PngTextChunk {
 
@@ -79,7 +80,7 @@ public class PngChunkItxt extends PngTextChunk {
             final byte[] compressedText = Allocator.byteArray(compressedTextLength);
             System.arraycopy(bytes, index, compressedText, 0, compressedTextLength);
 
-            text = new String(BinaryFunctions.toByteArray(new InflaterInputStream(new ByteArrayInputStream(compressedText))), StandardCharsets.UTF_8);
+            text = new String(IOUtils.toByteArray(new InflaterInputStream(new ByteArrayInputStream(compressedText))), StandardCharsets.UTF_8);
 
         } else {
             text = new String(bytes, index, bytes.length - index, StandardCharsets.UTF_8);
