@@ -92,7 +92,7 @@ public class PngChunkIccp extends PngChunk {
             LOGGER.finest("bytes.length: " + bytes.length);
         }
 
-        uncompressedProfile = BinaryFunctions.getStreamBytes(new InflaterInputStream(new ByteArrayInputStream(compressedProfile)));
+        uncompressedProfile = BinaryFunctions.toByteArray(new InflaterInputStream(new ByteArrayInputStream(compressedProfile)));
 
         if (LOGGER.isLoggable(Level.FINEST)) {
             LOGGER.finest("UncompressedProfile: " + bytes.length);

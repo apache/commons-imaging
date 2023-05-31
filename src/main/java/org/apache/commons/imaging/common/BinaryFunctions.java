@@ -91,7 +91,7 @@ public final class BinaryFunctions {
 
     }
 
-    public static byte[] getStreamBytes(final InputStream is) throws IOException {
+    public static byte[] toByteArray(final InputStream is) throws IOException {
         return IOUtils.toByteArray(is);
     }
 

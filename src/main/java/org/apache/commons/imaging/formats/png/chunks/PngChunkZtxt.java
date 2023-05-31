@@ -48,7 +48,7 @@ public class PngChunkZtxt extends PngTextChunk {
         final byte[] compressedText = Allocator.byteArray(compressedTextLength);
         System.arraycopy(bytes, index, compressedText, 0, compressedTextLength);
 
-        text = new String(BinaryFunctions.getStreamBytes(new InflaterInputStream(new ByteArrayInputStream(compressedText))), StandardCharsets.ISO_8859_1);
+        text = new String(BinaryFunctions.toByteArray(new InflaterInputStream(new ByteArrayInputStream(compressedText))), StandardCharsets.ISO_8859_1);
     }
 
     @Override

@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.jpeg;
 
-import static org.apache.commons.imaging.common.BinaryFunctions.getStreamBytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.toByteArray;
 import static org.apache.commons.imaging.common.BinaryFunctions.readAndVerifyBytes;
 import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
 import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
@@ -180,7 +180,7 @@ public class JpegUtils extends BinaryFileParser {
                         return;
                     }
 
-                    final byte[] imageData = getStreamBytes(is);
+                    final byte[] imageData = toByteArray(is);
                     visitor.visitSOS(marker, markerBytes, imageData);
                     break;
                 }
