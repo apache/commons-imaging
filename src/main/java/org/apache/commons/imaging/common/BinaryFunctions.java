@@ -16,10 +16,8 @@
  */
 package org.apache.commons.imaging.common;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
 import java.nio.ByteOrder;
@@ -94,9 +92,7 @@ public final class BinaryFunctions {
     }
 
     public static byte[] getStreamBytes(final InputStream is) throws IOException {
-        final ByteArrayOutputStream os = new ByteArrayOutputStream();
-        IOUtils.copy(is, os);
-        return os.toByteArray();
+        return IOUtils.toByteArray(is);
     }
 
     public static byte[] head(final byte[] bytes, int count) {
