@@ -16,10 +16,6 @@
  */
 package org.apache.commons.imaging.formats.jpeg;
 
-import static org.apache.commons.imaging.common.BinaryFunctions.readAndVerifyBytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
-import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteOrder;
@@ -27,6 +23,7 @@ import java.nio.ByteOrder;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.BinaryFileParser;
+import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.io.IOUtils;
@@ -156,24 +153,18 @@ public class JpegUtils extends BinaryFileParser {
         traverseJFIF(byteSource, visitor);
     }
 
-    public void traverseJFIF(final ByteSource byteSource, final Visitor visitor)
-            throws ImagingException,
-            IOException {
+    public void traverseJFIF(final ByteSource byteSource, final Visitor visitor) throws ImagingException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
-            readAndVerifyBytes(is, JpegConstants.SOI,
-                    "Not a Valid JPEG File: doesn't begin with 0xffd8");
+            BinaryFunctions.readAndVerifyBytes(is, JpegConstants.SOI, "Not a Valid JPEG File: doesn't begin with 0xffd8");
 
             int markerCount;
             for (markerCount = 0; true; markerCount++) {
                 final byte[] markerBytes = new byte[2];
                 do {
                     markerBytes[0] = markerBytes[1];
-                    markerBytes[1] = readByte("marker", is,
-                            "Could not read marker");
-                } while ((0xff & markerBytes[0]) != 0xff
-                        || (0xff & markerBytes[1]) == 0xff);
-                final int marker = ((0xff & markerBytes[0]) << 8)
-                        | (0xff & markerBytes[1]);
+                    markerBytes[1] = BinaryFunctions.readByte("marker", is, "Could not read marker");
+                } while ((0xff & markerBytes[0]) != 0xff || (0xff & markerBytes[1]) == 0xff);
+                final int marker = ((0xff & markerBytes[0]) << 8) | (0xff & markerBytes[1]);
 
                 if (marker == JpegConstants.EOI_MARKER || marker == JpegConstants.SOS_MARKER) {
                     if (!visitor.beginSOS()) {
@@ -185,15 +176,13 @@ public class JpegUtils extends BinaryFileParser {
                     break;
                 }
 
-                final byte[] segmentLengthBytes = readBytes("segmentLengthBytes", is, 2, "segmentLengthBytes");
+                final byte[] segmentLengthBytes = BinaryFunctions.readBytes("segmentLengthBytes", is, 2, "segmentLengthBytes");
                 final int segmentLength = ByteConversions.toUInt16(segmentLengthBytes, getByteOrder());
                 if (segmentLength < 2) {
                     throw new ImagingException("Invalid segment size");
                 }
 
-                final byte[] segmentData = readBytes("Segment Data",
-                        is, segmentLength - 2,
-                        "Invalid Segment: insufficient data");
+                final byte[] segmentData = BinaryFunctions.readBytes("Segment Data", is, segmentLength - 2, "Invalid Segment: insufficient data");
 
                 if (!visitor.visitSegment(marker, markerBytes, segmentLength, segmentLengthBytes, segmentData)) {
                     return;
