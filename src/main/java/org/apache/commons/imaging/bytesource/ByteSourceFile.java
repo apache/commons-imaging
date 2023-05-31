@@ -18,10 +18,10 @@ package org.apache.commons.imaging.bytesource;
 
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
+import java.nio.file.Files;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFunctions;
@@ -55,7 +55,7 @@ class ByteSourceFile extends ByteSource {
 
     @Override
     public InputStream getInputStream() throws IOException {
-        return new BufferedInputStream(new FileInputStream(file));
+        return new BufferedInputStream(Files.newInputStream(file.toPath()));
     }
 
     @Override
