@@ -29,7 +29,6 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;

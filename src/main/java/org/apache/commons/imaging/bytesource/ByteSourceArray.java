@@ -40,7 +40,7 @@ class ByteSourceArray extends ByteSource {
         int start;
         try {
             start = Math.toIntExact(from);
-        } catch (ArithmeticException e) {
+        } catch (final ArithmeticException e) {
             throw new ImagingException(e);
         }
         // We include a separate check for int overflow.
@@ -52,11 +52,6 @@ class ByteSourceArray extends ByteSource {
         }
 
         return Arrays.copyOfRange(bytes, start, start + length);
-    }
-
-    @Override
-    public String getDescription() {
-        return bytes.length + " byte array";
     }
 
     @Override

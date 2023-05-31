@@ -49,11 +49,6 @@ class ByteSourceFile extends ByteSource {
     }
 
     @Override
-    public String getDescription() {
-        return "File: '" + file.getAbsolutePath() + "'";
-    }
-
-    @Override
     public InputStream getInputStream() throws IOException {
         return new BufferedInputStream(Files.newInputStream(file.toPath()));
     }

@@ -207,11 +207,6 @@ class ByteSourceInputStream extends ByteSource {
         }
     }
 
-    @Override
-    public String getDescription() {
-        return "Inputstream: '" + getFileName() + "'";
-    }
-
     private CacheBlock getFirstBlock() throws IOException {
         if (null == cacheHead) {
             cacheHead = readBlock();

@@ -28,7 +28,6 @@ import java.nio.file.Files;
 
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.ImagingTest;
-import org.apache.commons.imaging.bytesource.ByteSource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
