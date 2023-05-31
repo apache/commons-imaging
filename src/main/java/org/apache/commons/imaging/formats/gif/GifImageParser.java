@@ -17,8 +17,8 @@
 package org.apache.commons.imaging.formats.gif;
 
 import static org.apache.commons.imaging.common.BinaryFunctions.compareBytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.printByteBits;
-import static org.apache.commons.imaging.common.BinaryFunctions.printCharQuad;
+import static org.apache.commons.imaging.common.BinaryFunctions.logByteBits;
+import static org.apache.commons.imaging.common.BinaryFunctions.logCharQuad;
 import static org.apache.commons.imaging.common.BinaryFunctions.read2Bytes;
 import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
 import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
@@ -763,9 +763,9 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
         }
 
         if (LOGGER.isLoggable(Level.FINEST)) {
-            printCharQuad("identifier: ", ((identifier1 << 16)
+            logCharQuad("identifier: ", ((identifier1 << 16)
                     | (identifier2 << 8) | (identifier3 << 0)));
-            printCharQuad("version: ",
+            logCharQuad("version: ",
                     ((version1 << 16) | (version2 << 8) | (version3 << 0)));
         }
 
@@ -787,7 +787,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
                 "Not a Valid GIF File");
 
         if (LOGGER.isLoggable(Level.FINEST)) {
-            printByteBits("PackedFields bits", packedFields);
+            logByteBits("PackedFields bits", packedFields);
         }
 
         final boolean globalColorTableFlag = ((packedFields & 128) > 0);
@@ -841,7 +841,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
         }
 
         if (LOGGER.isLoggable(Level.FINEST)) {
-            printByteBits("PackedFields bits", packedFields);
+            logByteBits("PackedFields bits", packedFields);
         }
 
         final boolean localColorTableFlag = (((packedFields >> 7) & 1) > 0);

@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.icc;
 
-import static org.apache.commons.imaging.common.BinaryFunctions.printCharQuad;
+import static org.apache.commons.imaging.common.BinaryFunctions.logCharQuad;
 import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
 import static org.apache.commons.imaging.common.BinaryFunctions.skipBytes;
 
@@ -118,12 +118,12 @@ public class IccProfileParser extends BinaryFileParser {
 
             final int deviceManufacturer = read4Bytes("ProfileFileSignature", is, "Not a Valid ICC Profile", getByteOrder());
             if (LOGGER.isLoggable(Level.FINEST)) {
-                printCharQuad("DeviceManufacturer", deviceManufacturer);
+                logCharQuad("DeviceManufacturer", deviceManufacturer);
             }
 
             final int deviceModel = read4Bytes("DeviceModel", is, "Not a Valid ICC Profile", getByteOrder());
             if (LOGGER.isLoggable(Level.FINEST)) {
-                printCharQuad("DeviceModel", deviceModel);
+                logCharQuad("DeviceModel", deviceModel);
             }
 
             return deviceManufacturer == IccConstants.IEC && deviceModel == IccConstants.sRGB;
@@ -162,7 +162,7 @@ public class IccProfileParser extends BinaryFileParser {
 
         final int cmmTypeSignature = read4Bytes("Signature", is, "Not a Valid ICC Profile", getByteOrder());
         if (LOGGER.isLoggable(Level.FINEST)) {
-            printCharQuad("CMMTypeSignature", cmmTypeSignature);
+            logCharQuad("CMMTypeSignature", cmmTypeSignature);
         }
 
         final int profileVersion = read4Bytes("ProfileVersion", is, "Not a Valid ICC Profile", getByteOrder());
@@ -170,18 +170,18 @@ public class IccProfileParser extends BinaryFileParser {
         final int profileDeviceClassSignature = read4Bytes("ProfileDeviceClassSignature", is, "Not a Valid ICC Profile",
                 getByteOrder());
         if (LOGGER.isLoggable(Level.FINEST)) {
-            printCharQuad("ProfileDeviceClassSignature", profileDeviceClassSignature);
+            logCharQuad("ProfileDeviceClassSignature", profileDeviceClassSignature);
         }
 
         final int colorSpace = read4Bytes("ColorSpace", is, "Not a Valid ICC Profile", getByteOrder());
         if (LOGGER.isLoggable(Level.FINEST)) {
-            printCharQuad("ColorSpace", colorSpace);
+            logCharQuad("ColorSpace", colorSpace);
         }
 
         final int profileConnectionSpace = read4Bytes("ProfileConnectionSpace", is, "Not a Valid ICC Profile",
                 getByteOrder());
         if (LOGGER.isLoggable(Level.FINEST)) {
-            printCharQuad("ProfileConnectionSpace", profileConnectionSpace);
+            logCharQuad("ProfileConnectionSpace", profileConnectionSpace);
         }
 
         skipBytes(is, 12, "Not a Valid ICC Profile");
@@ -189,35 +189,35 @@ public class IccProfileParser extends BinaryFileParser {
         final int profileFileSignature = read4Bytes("ProfileFileSignature", is, "Not a Valid ICC Profile",
                 getByteOrder());
         if (LOGGER.isLoggable(Level.FINEST)) {
-            printCharQuad("ProfileFileSignature", profileFileSignature);
+            logCharQuad("ProfileFileSignature", profileFileSignature);
         }
 
         final int primaryPlatformSignature = read4Bytes("PrimaryPlatformSignature", is, "Not a Valid ICC Profile",
                 getByteOrder());
         if (LOGGER.isLoggable(Level.FINEST)) {
-            printCharQuad("PrimaryPlatformSignature", primaryPlatformSignature);
+            logCharQuad("PrimaryPlatformSignature", primaryPlatformSignature);
         }
 
         final int variousFlags = read4Bytes("VariousFlags", is, "Not a Valid ICC Profile", getByteOrder());
         if (LOGGER.isLoggable(Level.FINEST)) {
-            printCharQuad("VariousFlags", profileFileSignature);
+            logCharQuad("VariousFlags", profileFileSignature);
         }
 
         final int deviceManufacturer = read4Bytes("DeviceManufacturer", is, "Not a Valid ICC Profile", getByteOrder());
         if (LOGGER.isLoggable(Level.FINEST)) {
-            printCharQuad("DeviceManufacturer", deviceManufacturer);
+            logCharQuad("DeviceManufacturer", deviceManufacturer);
         }
 
         final int deviceModel = read4Bytes("DeviceModel", is, "Not a Valid ICC Profile", getByteOrder());
         if (LOGGER.isLoggable(Level.FINEST)) {
-            printCharQuad("DeviceModel", deviceModel);
+            logCharQuad("DeviceModel", deviceModel);
         }
 
         skipBytes(is, 8, "Not a Valid ICC Profile");
 
         final int renderingIntent = read4Bytes("RenderingIntent", is, "Not a Valid ICC Profile", getByteOrder());
         if (LOGGER.isLoggable(Level.FINEST)) {
-            printCharQuad("RenderingIntent", renderingIntent);
+            logCharQuad("RenderingIntent", renderingIntent);
         }
 
         skipBytes(is, 12, "Not a Valid ICC Profile");
@@ -225,7 +225,7 @@ public class IccProfileParser extends BinaryFileParser {
         final int profileCreatorSignature = read4Bytes("ProfileCreatorSignature", is, "Not a Valid ICC Profile",
                 getByteOrder());
         if (LOGGER.isLoggable(Level.FINEST)) {
-            printCharQuad("ProfileCreatorSignature", profileCreatorSignature);
+            logCharQuad("ProfileCreatorSignature", profileCreatorSignature);
         }
 
         skipBytes(is, 16, "Not a Valid ICC Profile");

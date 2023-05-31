@@ -98,19 +98,19 @@ public final class BinaryFunctions {
         return slice(bytes, 0, count);
     }
 
-    public static void printByteBits(final String msg, final byte i) {
+    public static void logByteBits(final String msg, final byte i) {
         LOGGER.finest(msg + ": '" + Integer.toBinaryString(0xff & i));
     }
 
-    public static void printCharQuad(final PrintWriter pw, final String msg, final int i) {
-        pw.println(msg + ": '" + (char) (0xff & (i >> 24))
+    public static void logCharQuad(final String msg, final int i) {
+        LOGGER.finest(msg + ": '" + (char) (0xff & (i >> 24))
                 + (char) (0xff & (i >> 16)) + (char) (0xff & (i >> 8))
                 + (char) (0xff & (i >> 0)) + "'");
 
     }
 
-    public static void printCharQuad(final String msg, final int i) {
-        LOGGER.finest(msg + ": '" + (char) (0xff & (i >> 24))
+    public static void printCharQuad(final PrintWriter pw, final String msg, final int i) {
+        pw.println(msg + ": '" + (char) (0xff & (i >> 24))
                 + (char) (0xff & (i >> 16)) + (char) (0xff & (i >> 8))
                 + (char) (0xff & (i >> 0)) + "'");
 
@@ -299,13 +299,13 @@ public final class BinaryFunctions {
         return result;
     }
 
-    public static boolean startsWith(final byte[] haystack, final BinaryConstant needle) {
-        if (haystack == null || haystack.length < needle.size()) {
+    public static boolean startsWith(final byte[] buffer, final BinaryConstant search) {
+        if (buffer == null || buffer.length < search.size()) {
             return false;
         }
 
-        for (int i = 0; i < needle.size(); i++) {
-            if (haystack[i] != needle.get(i)) {
+        for (int i = 0; i < search.size(); i++) {
+            if (buffer[i] != search.get(i)) {
                 return false;
             }
         }
@@ -313,19 +313,19 @@ public final class BinaryFunctions {
         return true;
     }
 
-    public static boolean startsWith(final byte[] haystack, final byte[] needle) {
-        if (needle == null) {
+    public static boolean startsWith(final byte[] buffer, final byte[] search) {
+        if (search == null) {
             return false;
         }
-        if (haystack == null) {
+        if (buffer == null) {
             return false;
         }
-        if (needle.length > haystack.length) {
+        if (search.length > buffer.length) {
             return false;
         }
 
-        for (int i = 0; i < needle.length; i++) {
-            if (needle[i] != haystack[i]) {
+        for (int i = 0; i < search.length; i++) {
+            if (search[i] != buffer[i]) {
                 return false;
             }
         }

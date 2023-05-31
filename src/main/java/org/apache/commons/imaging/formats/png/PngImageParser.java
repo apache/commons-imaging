@@ -16,12 +16,6 @@
  */
 package org.apache.commons.imaging.formats.png;
 
-import static org.apache.commons.imaging.common.BinaryFunctions.printCharQuad;
-import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.readAndVerifyBytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.skipBytes;
-
 import java.awt.Dimension;
 import java.awt.color.ColorSpace;
 import java.awt.color.ICC_ColorSpace;
@@ -48,6 +42,7 @@ import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.Allocator;
+import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.GenericImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.XmpEmbeddable;
@@ -115,7 +110,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
 
         for (int i = 0; i < chunks.size(); i++) {
             final PngChunk chunk = chunks.get(i);
-            printCharQuad(pw, "\t" + i + ": ", chunk.getChunkType());
+            BinaryFunctions.printCharQuad(pw, "\t" + i + ": ", chunk.getChunkType());
         }
 
         pw.println("");
@@ -656,24 +651,24 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
         final List<PngChunk> result = new ArrayList<>();
 
         while (true) {
-            final int length = read4Bytes("Length", is, "Not a Valid PNG File", getByteOrder());
+            final int length = BinaryFunctions.read4Bytes("Length", is, "Not a Valid PNG File", getByteOrder());
             if (length < 0) {
                 throw new ImagingException("Invalid PNG chunk length: " + length);
             }
-            final int chunkType = read4Bytes("ChunkType", is, "Not a Valid PNG File", getByteOrder());
+            final int chunkType = BinaryFunctions.read4Bytes("ChunkType", is, "Not a Valid PNG File", getByteOrder());
 
             if (LOGGER.isLoggable(Level.FINEST)) {
-                printCharQuad("ChunkType", chunkType);
+                BinaryFunctions.logCharQuad("ChunkType", chunkType);
                 debugNumber("Length", length, 4);
             }
             final boolean keep = keepChunk(chunkType, chunkTypes);
 
             byte[] bytes = null;
             if (keep) {
-                bytes = readBytes("Chunk Data", is, length,
+                bytes = BinaryFunctions.readBytes("Chunk Data", is, length,
                         "Not a Valid PNG File: Couldn't read Chunk Data.");
             } else {
-                skipBytes(is, length, "Not a Valid PNG File");
+                BinaryFunctions.skipBytes(is, length, "Not a Valid PNG File");
             }
 
             if (LOGGER.isLoggable(Level.FINEST)) {
@@ -682,7 +677,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
                 }
             }
 
-            final int crc = read4Bytes("CRC", is, "Not a Valid PNG File", getByteOrder());
+            final int crc = BinaryFunctions.read4Bytes("CRC", is, "Not a Valid PNG File", getByteOrder());
 
             if (keep) {
                 if (chunkType == ChunkType.iCCP.value) {
@@ -726,7 +721,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
 
     public void readSignature(final InputStream is) throws ImagingException,
             IOException {
-        readAndVerifyBytes(is, PngConstants.PNG_SIGNATURE,
+        BinaryFunctions.readAndVerifyBytes(is, PngConstants.PNG_SIGNATURE,
                 "Not a Valid PNG Segment: Incorrect Signature");
 
     }
