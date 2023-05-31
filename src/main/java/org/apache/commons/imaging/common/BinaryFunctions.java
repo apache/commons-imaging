@@ -57,11 +57,6 @@ public final class BinaryFunctions {
         return true;
     }
 
-    public static void copyStreamToStream(final InputStream is, final OutputStream os)
-            throws IOException {
-        IOUtils.copy(is, os);
-    }
-
     public static int findNull(final byte[] src, final int start, final String message) throws ImagingException {
         for (int i = start; i < src.length; i++) {
             if (src[i] == 0) {
@@ -100,7 +95,7 @@ public final class BinaryFunctions {
 
     public static byte[] getStreamBytes(final InputStream is) throws IOException {
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
-        copyStreamToStream(is, os);
+        IOUtils.copy(is, os);
         return os.toByteArray();
     }
 
