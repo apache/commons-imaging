@@ -25,6 +25,7 @@ import java.io.RandomAccessFile;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFunctions;
+import org.apache.commons.io.RandomAccessFileMode;
 
 class ByteSourceFile extends ByteSource {
     private final File file;
@@ -36,17 +37,14 @@ class ByteSourceFile extends ByteSource {
 
     @Override
     public byte[] getBlock(final long from, final int length) throws IOException {
-        try (RandomAccessFile raf = new RandomAccessFile(file, "r")) {
+        try (RandomAccessFile raf = RandomAccessFileMode.READ_ONLY.create(file)) {
             // We include a separate check for int overflow.
-            if ((from < 0) || (length < 0) || (from + length < 0)
-                    || (from + length > raf.length())) {
-                throw new ImagingException("Could not read block (block start: "
-                        + from + ", block length: " + length
-                        + ", data length: " + raf.length() + ").");
+            if ((from < 0) || (length < 0) || (from + length < 0) || (from + length > raf.length())) {
+                throw new ImagingException(
+                        "Could not read block (block start: " + from + ", block length: " + length + ", data length: " + raf.length() + ").");
             }
 
-            return BinaryFunctions.getRAFBytes(raf, from, length,
-                    "Could not read value from file");
+            return BinaryFunctions.getRAFBytes(raf, from, length, "Could not read value from file");
         }
     }
 
