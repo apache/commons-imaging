@@ -52,10 +52,6 @@ public abstract class ByteSource {
 
     public abstract byte[] getBlock(long from, int length) throws IOException;
 
-    public String getDescription() {
-        return getClass().getSimpleName() + "[" + getFileName() + "]";
-    }
-
     public final String getFileName() {
         return fileName;
     }
@@ -88,6 +84,11 @@ public abstract class ByteSource {
 
     public boolean isFile() {
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "[" + getFileName() + "]";
     }
 
 }

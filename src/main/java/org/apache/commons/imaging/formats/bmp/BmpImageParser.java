@@ -159,7 +159,7 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
 
     @Override
     public FormatCompliance getFormatCompliance(final ByteSource byteSource) throws ImagingException, IOException {
-        final FormatCompliance result = new FormatCompliance(byteSource.getDescription());
+        final FormatCompliance result = new FormatCompliance(byteSource.toString());
 
         try (InputStream is = byteSource.getInputStream()) {
             readImageContents(is, result);

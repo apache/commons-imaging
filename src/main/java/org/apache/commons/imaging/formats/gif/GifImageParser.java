@@ -391,7 +391,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
     public FormatCompliance getFormatCompliance(final ByteSource byteSource)
             throws ImagingException, IOException {
         final FormatCompliance result = new FormatCompliance(
-                byteSource.getDescription());
+                byteSource.toString());
 
         readFile(byteSource, false, result);
 
