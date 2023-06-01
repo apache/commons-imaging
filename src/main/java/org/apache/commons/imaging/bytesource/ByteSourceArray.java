@@ -26,10 +26,6 @@ class ByteSourceArray extends ByteSource {
 
     private final byte[] bytes;
 
-    ByteSourceArray(final byte[] bytes) {
-        this(bytes, null);
-    }
-
     ByteSourceArray(final byte[] bytes, final String fileName) {
         super(fileName);
         this.bytes = bytes;

@@ -25,7 +25,7 @@ import org.apache.commons.imaging.common.BinaryFunctions;
 public abstract class ByteSource {
 
     public static ByteSource array(final byte[] array) {
-        return new ByteSourceArray(array);
+        return new ByteSourceArray(array, null);
     }
 
     public static ByteSource array(final byte[] array, final String name) {
