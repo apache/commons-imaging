@@ -82,10 +82,6 @@ public abstract class ByteSource {
      */
     public abstract long getLength() throws IOException;
 
-    public boolean isFile() {
-        return false;
-    }
-
     @Override
     public String toString() {
         return getClass().getSimpleName() + "[" + getFileName() + "]";

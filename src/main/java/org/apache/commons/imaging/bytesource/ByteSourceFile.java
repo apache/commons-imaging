@@ -58,9 +58,4 @@ class ByteSourceFile extends ByteSource {
         return file.length();
     }
 
-    @Override
-    public boolean isFile() {
-        return true;
-    }
-
 }
