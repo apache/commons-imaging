@@ -589,7 +589,7 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
 
             final IconData[] fIconDatas = Allocator.array(fileHeader.iconCount, IconData[]::new, IconData.SHALLOW_SIZE);
             for (int i = 0; i < fileHeader.iconCount; i++) {
-                final byte[] iconData = byteSource.getBlock(
+                final byte[] iconData = byteSource.getByteArray(
                         fIconInfos[i].imageOffset, fIconInfos[i].imageSize);
                 fIconDatas[i] = readIconData(iconData, fIconInfos[i]);
             }

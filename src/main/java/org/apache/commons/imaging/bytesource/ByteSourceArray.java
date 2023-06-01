@@ -32,7 +32,7 @@ class ByteSourceArray extends ByteSource {
     }
 
     @Override
-    public byte[] getBlock(final long from, final int length) throws ImagingException {
+    public byte[] getByteArray(final long from, final int length) throws ImagingException {
         int start;
         try {
             start = Math.toIntExact(from);

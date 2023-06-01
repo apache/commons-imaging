@@ -137,7 +137,7 @@ public class TiffReader extends BinaryFileParser {
         if (offset + length > byteSource.getLength()) {
             length = (int) (byteSource.getLength() - offset);
         }
-        final byte[] data = byteSource.getBlock(offset, length);
+        final byte[] data = byteSource.getByteArray(offset, length);
         // check if the last read byte is actually the end of the image data
         if (strict &&
                 (length < 2 ||
@@ -165,7 +165,7 @@ public class TiffReader extends BinaryFileParser {
 
         for (int i = 0; i < elements.size(); i++) {
             final TiffDirectory.ImageDataElement element = elements.get(i);
-            final byte[] bytes = byteSource.getBlock(element.offset, element.length);
+            final byte[] bytes = byteSource.getByteArray(element.offset, element.length);
             data[i] = new TiffImageData.Data(element.offset, element.length, bytes);
         }
 
@@ -339,7 +339,7 @@ public class TiffReader extends BinaryFileParser {
                         // corrupt field, ignore it
                         continue;
                     }
-                    value = byteSource.getBlock(offset, (int) valueLength);
+                    value = byteSource.getByteArray(offset, (int) valueLength);
                 } else {
                     value = offsetBytes;
                 }

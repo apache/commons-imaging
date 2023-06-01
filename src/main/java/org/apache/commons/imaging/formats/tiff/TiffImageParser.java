@@ -96,7 +96,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
             final TiffDirectory directory = contents.directories.get(i);
             final List<ImageDataElement> dataElements = directory.getTiffRawImageDataElements();
             for (final ImageDataElement element : dataElements) {
-                final byte[] bytes = byteSource.getBlock(element.offset,
+                final byte[] bytes = byteSource.getByteArray(element.offset,
                         element.length);
                 result.add(bytes);
             }

@@ -50,7 +50,7 @@ public abstract class ByteSource {
         this.fileName = fileName;
     }
 
-    public abstract byte[] getBlock(long from, int length) throws IOException;
+    public abstract byte[] getByteArray(long from, int length) throws IOException;
 
     public final String getFileName() {
         return fileName;

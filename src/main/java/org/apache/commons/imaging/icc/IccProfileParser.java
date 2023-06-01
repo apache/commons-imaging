@@ -57,7 +57,7 @@ public class IccProfileParser extends BinaryFileParser {
         }
         //
         for (final IccTag tag : result.getTags()) {
-            final byte[] bytes = byteSource.getBlock(tag.offset, tag.length);
+            final byte[] bytes = byteSource.getByteArray(tag.offset, tag.length);
             // Debug.debug("bytes: " + bytes.length);
             tag.setData(bytes);
             // tag.dump("\t" + i + ": ");

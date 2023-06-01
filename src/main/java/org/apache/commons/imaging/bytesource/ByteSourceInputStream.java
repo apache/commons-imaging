@@ -180,7 +180,7 @@ class ByteSourceInputStream extends ByteSource {
     }
 
     @Override
-    public byte[] getBlock(final long from, final int length) throws IOException {
+    public byte[] getByteArray(final long from, final int length) throws IOException {
         // We include a separate check for int overflow.
         if ((from < 0) || (length < 0)
                 || (from + length < 0)
