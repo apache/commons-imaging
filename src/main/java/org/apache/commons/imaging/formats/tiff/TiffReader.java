@@ -134,8 +134,8 @@ public class TiffReader extends BinaryFileParser {
         final long offset = element.offset;
         int length = element.length;
         // In case the length is not correct, adjust it and check if the last read byte actually is the end of the image
-        if (offset + length > byteSource.getLength()) {
-            length = (int) (byteSource.getLength() - offset);
+        if (offset + length > byteSource.size()) {
+            length = (int) (byteSource.size() - offset);
         }
         final byte[] data = byteSource.getByteArray(offset, length);
         // check if the last read byte is actually the end of the image data
@@ -283,7 +283,7 @@ public class TiffReader extends BinaryFileParser {
         visited.add(directoryOffset);
 
         try (InputStream is = byteSource.getInputStream()) {
-            if (directoryOffset >= byteSource.getLength()) {
+            if (directoryOffset >= byteSource.size()) {
                 return true;
             }
 
@@ -328,13 +328,13 @@ public class TiffReader extends BinaryFileParser {
                 final long valueLength = count * fieldType.getSize();
                 final byte[] value;
                 if (valueLength > TIFF_ENTRY_MAX_VALUE_LENGTH) {
-                    if ((offset < 0) || (offset + valueLength) > byteSource.getLength()) {
+                    if ((offset < 0) || (offset + valueLength) > byteSource.size()) {
                         if (strict) {
                             throw new IOException(
                                     "Attempt to read byte range starting from " + offset + " "
                                             + "of length " + valueLength + " "
                                             + "which is outside the file's size of "
-                                            + byteSource.getLength());
+                                            + byteSource.size());
                         }
                         // corrupt field, ignore it
                         continue;

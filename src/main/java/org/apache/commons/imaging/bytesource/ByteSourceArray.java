@@ -56,7 +56,7 @@ class ByteSourceArray extends ByteSource {
     }
 
     @Override
-    public long getLength() {
+    public long size() {
         return bytes.length;
     }
 

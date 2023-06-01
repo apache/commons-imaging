@@ -76,7 +76,7 @@ public abstract class ByteSource {
      * @return the byte source length
      * @throws IOException if it fails to read the byte source data
      */
-    public abstract long getLength() throws IOException;
+    public abstract long size() throws IOException;
 
     @Override
     public String toString() {

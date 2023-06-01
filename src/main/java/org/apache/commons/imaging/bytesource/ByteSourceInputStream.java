@@ -184,7 +184,7 @@ class ByteSourceInputStream extends ByteSource {
         // We include a separate check for int overflow.
         if ((from < 0) || (length < 0)
                 || (from + length < 0)
-                || (from + length > getLength())) {
+                || (from + length > size())) {
             throw new ImagingException("Could not read block (block start: "
                     + from + ", block length: " + length
                     + ", data length: " + streamLength + ").");
@@ -219,19 +219,6 @@ class ByteSourceInputStream extends ByteSource {
         return new CacheReadingInputStream();
     }
 
-    @Override
-    public long getLength() throws IOException {
-        if (streamLength >= 0) {
-            return streamLength;
-        }
-
-        try (InputStream cis = getInputStream()) {
-            final long result = IOUtils.consume(cis);
-            streamLength = result;
-            return result;
-        }
-    }
-
     private CacheBlock readBlock() throws IOException {
         if (null == readBuffer) {
             readBuffer = new byte[BLOCK_SIZE];
@@ -249,6 +236,19 @@ class ByteSourceInputStream extends ByteSource {
         final byte[] result = readBuffer;
         readBuffer = null;
         return new CacheBlock(result);
+    }
+
+    @Override
+    public long size() throws IOException {
+        if (streamLength >= 0) {
+            return streamLength;
+        }
+
+        try (InputStream cis = getInputStream()) {
+            final long result = IOUtils.consume(cis);
+            streamLength = result;
+            return result;
+        }
     }
 
 }

@@ -54,7 +54,7 @@ class ByteSourceFile extends ByteSource {
     }
 
     @Override
-    public long getLength() {
+    public long size() {
         return file.length();
     }
 

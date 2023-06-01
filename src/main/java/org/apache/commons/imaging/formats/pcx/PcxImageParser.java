@@ -276,7 +276,7 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
     private int[] read256ColorPaletteFromEndOfFile(final ByteSource byteSource)
             throws IOException {
         try (InputStream stream = byteSource.getInputStream()) {
-            final long toSkip = byteSource.getLength() - 769;
+            final long toSkip = byteSource.size() - 769;
             skipBytes(stream, (int) toSkip);
             return read256ColorPalette(stream);
         }
