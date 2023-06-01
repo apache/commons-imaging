@@ -19,6 +19,8 @@ package org.apache.commons.imaging.formats.tiff;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.File;
+
 import org.apache.commons.imaging.ImagingFormatException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.junit.jupiter.api.Test;
@@ -30,8 +32,10 @@ public class TiffImageParserTest {
 
     @Test
     public void testOssFuzzIssue53669() {
-        assertThrows(ImagingFormatException.class, () -> new TiffImageParser().getBufferedImage(ByteSource.file(
-                "src/test/resources/images/tiff/oss-fuzz-53669/clusterfuzz-testcase-minimized-ImagingTiffFuzzer-5965016805539840.tiff"),
-                null));
+        assertThrows(ImagingFormatException.class,
+                () -> new TiffImageParser().getBufferedImage(
+                        ByteSource.file(new File(
+                                "src/test/resources/images/tiff/oss-fuzz-53669/clusterfuzz-testcase-minimized-ImagingTiffFuzzer-5965016805539840.tiff")),
+                        null));
     }
 }

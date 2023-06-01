@@ -36,10 +36,6 @@ public abstract class ByteSource {
         return new ByteSourceFile(file);
     }
 
-    public static ByteSource file(final String file) {
-        return file(new File(file));
-    }
-
     public static ByteSource inputStream(final InputStream is, final String name) {
         return new ByteSourceInputStream(is, name);
     }
