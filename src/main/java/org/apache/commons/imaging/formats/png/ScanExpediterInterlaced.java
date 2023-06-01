@@ -35,11 +35,11 @@ class ScanExpediterInterlaced extends ScanExpediter {
     ScanExpediterInterlaced(final int width, final int height, final InputStream is,
             final BufferedImage bi,
             final PngColorType pngColorType, final int bitDepth, final int bitsPerPixel,
-            final PngChunkPlte fPNGChunkPLTE,
+            final PngChunkPlte pngChunkPLTE,
             final GammaCorrection gammaCorrection,
             final TransparencyFilter transparencyFilter) {
         super(width, height, is, bi, pngColorType, bitDepth, bitsPerPixel,
-                fPNGChunkPLTE, gammaCorrection, transparencyFilter);
+                pngChunkPLTE, gammaCorrection, transparencyFilter);
     }
 
     @Override
