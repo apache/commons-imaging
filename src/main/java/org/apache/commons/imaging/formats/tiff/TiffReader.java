@@ -163,17 +163,10 @@ public class TiffReader extends BinaryFileParser {
         final List<ImageDataElement> elements = directory.getTiffRawImageDataElements();
         final TiffImageData.Data[] data = new TiffImageData.Data[elements.size()];
 
-        if (byteSource.isFile()) {
-            for (int i = 0; i < elements.size(); i++) {
-                final TiffDirectory.ImageDataElement element = elements.get(i);
-                data[i] = new TiffImageData.ByteSourceData(element.offset, element.length, byteSource);
-            }
-        } else {
-            for (int i = 0; i < elements.size(); i++) {
-                final TiffDirectory.ImageDataElement element = elements.get(i);
-                final byte[] bytes = byteSource.getBlock(element.offset, element.length);
-                data[i] = new TiffImageData.Data(element.offset, element.length, bytes);
-            }
+        for (int i = 0; i < elements.size(); i++) {
+            final TiffDirectory.ImageDataElement element = elements.get(i);
+            final byte[] bytes = byteSource.getBlock(element.offset, element.length);
+            data[i] = new TiffImageData.Data(element.offset, element.length, bytes);
         }
 
         if (directory.imageDataInStrips()) {

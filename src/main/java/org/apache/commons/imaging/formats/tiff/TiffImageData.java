@@ -19,9 +19,7 @@ package org.apache.commons.imaging.formats.tiff;
 import java.io.IOException;
 import java.nio.ByteOrder;
 
-import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.datareaders.DataReaderStrips;
@@ -30,31 +28,9 @@ import org.apache.commons.imaging.formats.tiff.datareaders.ImageDataReader;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 
 public abstract class TiffImageData {
-    public static class ByteSourceData extends Data {
-
-        final ByteSource byteSource;
-
-        public ByteSourceData(final long offset, final int length, final ByteSource byteSource) {
-            super(offset, length, ImagingConstants.EMPTY_BYTE_ARRAY);
-            this.byteSource = byteSource;
-        }
-
-        @Override
-        public byte[] getData() {
-            try {
-                return byteSource.getBlock(offset, length);
-            } catch (final IOException ioex) {
-                return ImagingConstants.EMPTY_BYTE_ARRAY;
-            }
-        }
-
-        @Override
-        public String getElementDescription() {
-            return "TIFF image data: " + getDataLength() + " bytes";
-        }
-    }
 
     public static class Data extends TiffElement.DataElement {
+
         public Data(final long offset, final int length, final byte[] data) {
             super(offset, length, data);
         }
@@ -67,6 +43,7 @@ public abstract class TiffImageData {
     }
 
     public static class Strips extends TiffImageData {
+
         private final TiffElement.DataElement[] strips;
         // public final byte strips[][];
         public final int rowsPerStrip;
@@ -112,6 +89,7 @@ public abstract class TiffImageData {
     }
 
     public static class Tiles extends TiffImageData {
+
         public final TiffElement.DataElement[] tiles;
 
         // public final byte tiles[][];
