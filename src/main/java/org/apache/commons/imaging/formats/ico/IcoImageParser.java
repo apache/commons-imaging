@@ -209,10 +209,10 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
         }
     }
 
-    private static class PNGIconData extends IconData {
+    private static class PngIconData extends IconData {
         public final BufferedImage bufferedImage;
 
-        PNGIconData(final IconInfo iconInfo,
+        PngIconData(final IconInfo iconInfo,
                 final BufferedImage bufferedImage) {
             super(iconInfo);
             this.bufferedImage = bufferedImage;
@@ -547,7 +547,7 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
         final ImageFormat imageFormat = Imaging.guessFormat(iconData);
         if (imageFormat.equals(ImageFormats.PNG)) {
             final BufferedImage bufferedImage = Imaging.getBufferedImage(iconData);
-            return new PNGIconData(fIconInfo, bufferedImage);
+            return new PngIconData(fIconInfo, bufferedImage);
         }
         return readBitmapIconData(iconData, fIconInfo);
     }
