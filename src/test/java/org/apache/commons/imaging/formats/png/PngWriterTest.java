@@ -52,7 +52,7 @@ public class PngWriterTest extends PngBaseTest {
     private List<File> getValidPngImages() throws IOException {
         final List<File> result = new ArrayList<>();
         for (final File imageFile : getPngImages()) {
-            if (!isInvalidPNGTestFile(imageFile)) {
+            if (!isInvalidPngTestFile(imageFile)) {
                 result.add(imageFile);
             }
         }

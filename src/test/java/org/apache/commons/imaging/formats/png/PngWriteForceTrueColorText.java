@@ -36,7 +36,7 @@ public class PngWriteForceTrueColorText extends PngBaseTest {
         for (final File imageFile : images) {
 
             try {
-                if (isInvalidPNGTestFile(imageFile)) {
+                if (isInvalidPngTestFile(imageFile)) {
                     continue;
                 }
 

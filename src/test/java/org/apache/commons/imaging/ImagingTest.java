@@ -110,7 +110,7 @@ public abstract class ImagingTest {
         return getTestImage(file -> file.getName().equals(fileName));
     }
 
-    protected boolean isInvalidPNGTestFile(final File file) {
+    protected boolean isInvalidPngTestFile(final File file) {
         return (file.getParentFile().getName().equalsIgnoreCase("pngsuite") &&
                 file.getName().toLowerCase().startsWith("x"));
     }

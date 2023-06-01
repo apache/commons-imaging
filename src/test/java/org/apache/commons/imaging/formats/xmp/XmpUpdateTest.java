@@ -43,7 +43,7 @@ public class XmpUpdateTest<E extends XmpImagingParameters<E>> extends ImagingTes
         for (final File imageFile : images) {
 
             if (imageFile.getName().toLowerCase().endsWith(".png")
-                    && isInvalidPNGTestFile(imageFile)) {
+                    && isInvalidPngTestFile(imageFile)) {
                 continue;
             }
 

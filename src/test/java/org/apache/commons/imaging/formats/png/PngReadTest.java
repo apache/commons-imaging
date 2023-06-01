@@ -46,7 +46,7 @@ public class PngReadTest extends PngBaseTest {
         for (final File imageFile : images) {
 
             Debug.debug("imageFile", imageFile);
-            if (isInvalidPNGTestFile(imageFile)) {
+            if (isInvalidPngTestFile(imageFile)) {
                 assertThrows(
                     Exception.class,
                     () -> Imaging.getMetadata(imageFile),
