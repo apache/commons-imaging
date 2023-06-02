@@ -27,7 +27,8 @@ jobs:
     strategy:
       matrix:
 #        os: [windows-latest, ubuntu-latest]
-        os: [windows-latest, macos-latest]
+#        os: [windows-latest, macos-latest]
+        os: [windows-latest]
         java: [ 8, 11, 17 ]
         experimental: [false]
 #        include:
