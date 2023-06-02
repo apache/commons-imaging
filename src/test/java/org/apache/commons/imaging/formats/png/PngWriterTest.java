@@ -88,7 +88,7 @@ public class PngWriterTest extends PngBaseTest {
         final PaletteFactory factory = new PaletteFactory() {
             @Override
             public Palette makeQuantizedRgbPalette(final BufferedImage src, final int max) {
-                // Force a stupid palette containing nothing but black (all zero's).
+                // Force a palette containing nothing but black (all zero's).
                 return new SimplePalette(new int[max]);
             }
         };
