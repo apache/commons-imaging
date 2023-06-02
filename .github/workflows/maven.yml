@@ -37,10 +37,11 @@ jobs:
         
     steps:
     # https://github.com/actions/checkout/issues/226#issuecomment-854736025
-#    - name: Prepare git
-#      run: |-
-#        git config --global core.autocrlf false
-#        git config --global core.eol lf
+    # Why is this not an issue in other Apache Commons repos?
+    - name: Prepare git
+      run: |-
+        git config --global core.autocrlf false
+        git config --global core.eol lf
     - uses: actions/checkout@v3.5.2
       with:
         persist-credentials: false
