@@ -30,6 +30,7 @@ import org.apache.commons.io.IOUtils;
 class ByteSourceInputStream extends ByteSource {
 
     private class CacheBlock {
+
         public final byte[] bytes;
         private CacheBlock next;
         private boolean triedNext;
@@ -52,7 +53,7 @@ class ByteSourceInputStream extends ByteSource {
 
     }
 
-    private class CacheReadingInputStream extends InputStream {
+    private class CachingInputStream extends InputStream {
         private CacheBlock block;
         private boolean readFirst;
         private int blockIndex;
@@ -216,7 +217,7 @@ class ByteSourceInputStream extends ByteSource {
 
     @Override
     public InputStream getInputStream() throws IOException {
-        return new CacheReadingInputStream();
+        return new CachingInputStream();
     }
 
     private CacheBlock readBlock() throws IOException {
