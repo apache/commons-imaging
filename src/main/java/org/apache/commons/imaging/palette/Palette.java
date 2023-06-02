@@ -24,15 +24,16 @@ import org.apache.commons.imaging.ImagingException;
 public interface Palette {
 
     /**
-     * Looks up the color for a given palette index.
+     * Gets the color for a given palette index.
+     *
      * @param index the palette index to look up
      * @return the color in ARGB format
      */
     int getEntry(int index);
 
-    // TODO: shouldn't it be an ImageReadException for getPaletteIndex?
     /**
-     * Looks up the palette index for a given color.
+     * Gets the palette index for a given color.
+     *
      * @param rgb the color to look up
      * @return the palette index
      * @throws ImagingException if it fails to read the palette index
@@ -40,7 +41,8 @@ public interface Palette {
     int getPaletteIndex(int rgb) throws ImagingException;
 
     /**
-     * The number of entries in the palette.
+     * Gets the number of entries in the palette.
+     *
      * @return the number of palette entries
      */
     int length();
