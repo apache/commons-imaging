@@ -23,7 +23,8 @@ permissions:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+#    runs-on: ubuntu-latest
+    runs-on: windows-latest
     strategy:
       matrix:
         java: [ 8 ]
