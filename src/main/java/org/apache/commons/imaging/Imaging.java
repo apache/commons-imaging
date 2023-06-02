@@ -760,12 +760,12 @@ public final class Imaging {
                     .of(imageFormat.getExtensions())
                     .anyMatch(extension -> {
                         final String fileName = byteSource.getFileName();
-                        if (fileName == null || fileName.trim().length() == 0) {
+                        if (fileName == null || fileName.trim().isEmpty()) {
                             return false;
                         }
                         final String fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1);
                         return extension != null
-                                && extension.trim().length() > 0
+                                && !extension.trim().isEmpty()
                                 && fileExtension.equalsIgnoreCase(extension);
                     }))
                 .findFirst()
