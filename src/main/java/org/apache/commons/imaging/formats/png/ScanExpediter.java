@@ -34,6 +34,7 @@ import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilterUp;
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilter;
 
 abstract class ScanExpediter {
+
     final int width;
     final int height;
     final InputStream is;
