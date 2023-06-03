@@ -293,16 +293,23 @@ public class ImageBuilder {
     }
 
     /**
-     * Sets the RGB or ARGB value for the pixel at position (x,y)
-     * within the image builder pixel field. For performance reasons,
-     * no bounds checking is applied.
+     * Sets the RGB or ARGB value for the pixel at position (x,y) within the image builder pixel field. For performance
+     * reasons, no bounds checking is applied.
      *
-     * @param x the X coordinate of the pixel to be set
-     * @param y the Y coordinate of the pixel to be set
+     * @param x    the X coordinate of the pixel to be set.
+     * @param y    the Y coordinate of the pixel to be set.
      * @param argb the RGB or ARGB value to be stored.
+     * @throws ArithmeticException if the index computation overflows an int.
+     * @throws IllegalArgumentException if the resulting index is illegal.
      */
     public void setRGB(final int x, final int y, final int argb) {
-        final int rowOffset = y * width;
-        data[rowOffset + x] = argb;
+        // Throw ArithmeticException if the result overflows an int.
+        final int rowOffset = Math.multiplyExact(y, width);
+        // Throw ArithmeticException if the result overflows an int.
+        final int index = Math.addExact(rowOffset, x);
+        if (index > data.length) {
+            throw new IllegalArgumentException("setRGB: Illegal array index.");
+        }
+        data[index] = argb;
     }
 }
