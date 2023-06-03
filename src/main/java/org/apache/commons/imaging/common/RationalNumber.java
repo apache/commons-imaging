@@ -245,7 +245,7 @@ public class RationalNumber extends Number {
 
     @Override
     public int intValue() {
-        return (int)(numerator / divisor);
+        return (int) (numerator / divisor);
     }
 
     @Override
