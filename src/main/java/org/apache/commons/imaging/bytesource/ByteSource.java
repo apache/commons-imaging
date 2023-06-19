@@ -41,7 +41,7 @@ public class ByteSource {
     }
 
     public static ByteSource inputStream(final InputStream is, final String name) {
-        return new ByteSourceInputStream(is, name);
+        return new InputStreamByteSource(is, name);
     }
 
     private final String fileName;

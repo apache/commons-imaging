@@ -9,7 +9,7 @@
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under the License inputStream distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -28,19 +28,19 @@ import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.build.AbstractOrigin.InputStreamOrigin;
 
-class ByteSourceInputStream extends ByteSource {
+final class InputStreamByteSource extends ByteSource {
 
-    private class CacheBlock {
+    private final class Block {
 
         public final byte[] bytes;
-        private CacheBlock next;
+        private Block next;
         private boolean triedNext;
 
-        CacheBlock(final byte[] bytes) {
+        Block(final byte[] bytes) {
             this.bytes = bytes;
         }
 
-        public CacheBlock getNext() throws IOException {
+        public Block getNext() throws IOException {
             if (null != next) {
                 return next;
             }
@@ -54,8 +54,8 @@ class ByteSourceInputStream extends ByteSource {
 
     }
 
-    private class CachingInputStream extends InputStream {
-        private CacheBlock block;
+    private final class BlockInputStream extends InputStream {
+        private Block block;
         private boolean readFirst;
         private int blockIndex;
 
@@ -89,8 +89,7 @@ class ByteSourceInputStream extends ByteSource {
         public int read(final byte[] array, final int off, final int len) throws IOException {
             // first section copied verbatim from InputStream
             Objects.requireNonNull(array, "array");
-            if ((off < 0) || (off > array.length) || (len < 0)
-                    || ((off + len) > array.length) || ((off + len) < 0)) {
+            if ((off < 0) || (off > array.length) || (len < 0) || ((off + len) > array.length) || ((off + len) < 0)) {
                 throw new IndexOutOfBoundsException();
             }
             if (len == 0) {
@@ -171,29 +170,26 @@ class ByteSourceInputStream extends ByteSource {
     }
 
     private static final int BLOCK_SIZE = 1024;
-    private final InputStream is;
-    private CacheBlock cacheHead;
+    private final InputStream inputStream;
+    private Block headBlock;
     private byte[] readBuffer;
     private long streamLength = -1;
 
-    ByteSourceInputStream(final InputStream is, final String fileName) {
-        super(new InputStreamOrigin(is), fileName);
-        this.is = new BufferedInputStream(is);
+    InputStreamByteSource(final InputStream inputStream, final String fileName) {
+        super(new InputStreamOrigin(inputStream), fileName);
+        this.inputStream = new BufferedInputStream(inputStream);
     }
 
     @Override
-    public byte[] getByteArray(final long from, final int length) throws IOException {
+    public byte[] getByteArray(final long position, final int length) throws IOException {
         // We include a separate check for int overflow.
-        if ((from < 0) || (length < 0)
-                || (from + length < 0)
-                || (from + length > size())) {
-            throw new ImagingException("Could not read block (block start: "
-                    + from + ", block length: " + length
-                    + ", data length: " + streamLength + ").");
+        if ((position < 0) || (length < 0) || (position + length < 0) || (position + length > size())) {
+            throw new ImagingException(
+                    "Could not read block (block start: " + position + ", block length: " + length + ", data length: " + streamLength + ").");
         }
 
         final InputStream cis = getInputStream();
-        BinaryFunctions.skipBytes(cis, from);
+        BinaryFunctions.skipBytes(cis, position);
 
         final byte[] bytes = Allocator.byteArray(length);
         int total = 0;
@@ -209,35 +205,35 @@ class ByteSourceInputStream extends ByteSource {
         }
     }
 
-    private CacheBlock getFirstBlock() throws IOException {
-        if (null == cacheHead) {
-            cacheHead = readBlock();
+    private Block getFirstBlock() throws IOException {
+        if (null == headBlock) {
+            headBlock = readBlock();
         }
-        return cacheHead;
+        return headBlock;
     }
 
     @Override
     public InputStream getInputStream() throws IOException {
-        return new CachingInputStream();
+        return new BlockInputStream();
     }
 
-    private CacheBlock readBlock() throws IOException {
+    private Block readBlock() throws IOException {
         if (null == readBuffer) {
             readBuffer = new byte[BLOCK_SIZE];
         }
 
-        final int read = is.read(readBuffer);
+        final int read = inputStream.read(readBuffer);
         if (read < 1) {
             return null;
         }
         if (read < BLOCK_SIZE) {
             // return a copy.
-            return new CacheBlock(Arrays.copyOf(readBuffer, read));
+            return new Block(Arrays.copyOf(readBuffer, read));
         }
         // return current buffer.
         final byte[] result = readBuffer;
         readBuffer = null;
-        return new CacheBlock(result);
+        return new Block(result);
     }
 
     @Override
