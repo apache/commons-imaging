@@ -26,6 +26,7 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.build.AbstractOrigin.InputStreamOrigin;
 
 class ByteSourceInputStream extends ByteSource {
 
@@ -176,7 +177,7 @@ class ByteSourceInputStream extends ByteSource {
     private long streamLength = -1;
 
     ByteSourceInputStream(final InputStream is, final String fileName) {
-        super(fileName);
+        super(new InputStreamOrigin(is), fileName);
         this.is = new BufferedInputStream(is);
     }
 

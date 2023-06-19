@@ -19,21 +19,25 @@ package org.apache.commons.imaging.bytesource;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 import org.apache.commons.imaging.common.BinaryFunctions;
+import org.apache.commons.io.build.AbstractOrigin;
+import org.apache.commons.io.build.AbstractOrigin.ByteArrayOrigin;
+import org.apache.commons.io.build.AbstractOrigin.FileOrigin;
 
-public abstract class ByteSource {
+public class ByteSource {
 
     public static ByteSource array(final byte[] array) {
-        return new ByteSourceArray(array, null);
+        return new ByteSource(new ByteArrayOrigin(array), null);
     }
 
     public static ByteSource array(final byte[] array, final String name) {
-        return new ByteSourceArray(array, name);
+        return new ByteSource(new ByteArrayOrigin(array), name);
     }
 
     public static ByteSource file(final File file) {
-        return new ByteSourceFile(file);
+        return new ByteSource(new FileOrigin(file), file.getName());
     }
 
     public static ByteSource inputStream(final InputStream is, final String name) {
@@ -41,18 +45,30 @@ public abstract class ByteSource {
     }
 
     private final String fileName;
+    private final AbstractOrigin<?, ?> origin;
 
-    public ByteSource(final String fileName) {
+    public ByteSource(final AbstractOrigin<?, ?> origin, final String fileName) {
         this.fileName = fileName;
+        this.origin = origin;
     }
 
-    public abstract byte[] getByteArray(long from, int length) throws IOException;
+    public byte[] getByteArray(final long position, final int length) throws IOException {
+        final byte[] bytes = origin.getByteArray();
+        // Checks for int overflow.
+        final int start = Math.toIntExact(position);
+        if (start < 0 || length < 0 || start + length < 0 || start + length > bytes.length) {
+            throw new IllegalArgumentException("Couldn't read array (start: " + start + ", length: " + length + ", data length: " + bytes.length + ").");
+        }
+        return Arrays.copyOfRange(bytes, start, start + length);
+    }
 
     public final String getFileName() {
         return fileName;
     }
 
-    public abstract InputStream getInputStream() throws IOException;
+    public InputStream getInputStream() throws IOException {
+        return origin.getInputStream();
+    }
 
     public final InputStream getInputStream(final long start) throws IOException {
         InputStream is = null;
@@ -70,13 +86,14 @@ public abstract class ByteSource {
     }
 
     /**
-     * This operation can be VERY expensive; for InputStream byte sources, the
-     * entire stream must be drained to determine its length.
+     * This operation can be VERY expensive; for InputStream byte sources, the entire stream must be drained to determine its length.
      *
      * @return the byte source length
      * @throws IOException if it fails to read the byte source data
      */
-    public abstract long size() throws IOException;
+    public long size() throws IOException {
+        return origin.getByteArray().length;
+    }
 
     @Override
     public String toString() {
