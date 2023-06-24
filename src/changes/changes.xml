@@ -60,6 +60,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="IMAGING-353" dev="ggregory" type="update" due-to="Jeroen van der Vegt, Gary Gregory">
         Fix PngImageParser hasPalette #295.
       </action>
+      <action dev="ggregory" type="fix" due-to="step-security-bot, Gary Gregory">
+        [StepSecurity] ci: Harden GitHub Actions #297.
+      </action>            
       <!-- ADD -->
       <action issue="IMAGING-352" dev="ggregory" type="update" due-to="Jeroen van der Vegt, Gary Gregory">
         [PngWriter] Allow custom PaletteFactory #294.
