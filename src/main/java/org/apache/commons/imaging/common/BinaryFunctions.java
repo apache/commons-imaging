@@ -281,13 +281,13 @@ public final class BinaryFunctions {
         return false;
     }
 
-    public static void skipBytes(final InputStream is, final long length) throws IOException {
-        skipBytes(is, length, "Couldn't skip bytes");
+    public static long skipBytes(final InputStream is, final long length) throws IOException {
+        return skipBytes(is, length, "Couldn't skip bytes");
     }
 
-    public static void skipBytes(final InputStream is, final long length, final String exception) throws IOException {
+    public static long skipBytes(final InputStream is, final long length, final String exception) throws IOException {
         try {
-            IOUtils.skip(is, length);
+            return IOUtils.skip(is, length);
         } catch (IOException e) {
             throw new IOException(exception, e);
         }
