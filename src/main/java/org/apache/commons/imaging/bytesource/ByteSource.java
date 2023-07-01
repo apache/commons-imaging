@@ -92,7 +92,7 @@ public class ByteSource {
      * @throws IOException if it fails to read the byte source data
      */
     public long size() throws IOException {
-        return origin.getByteArray().length;
+        return origin.size();
     }
 
     @Override
