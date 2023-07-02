@@ -152,6 +152,7 @@
  * ---------------------------------------------------------------
  */
 package org.apache.commons.imaging.examples;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -160,11 +161,13 @@ import java.io.PrintStream;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
+
 /**
  * A "test stand" for evaluating the speed an memory use of different Apache
  * Imaging operations
  */
 public class ApacheImagingSpeedAndMemoryTest {
+
     /**
      * Create an instance of the speed and memory test class and execute a test
      * loop for the specified file.
@@ -177,6 +180,7 @@ public class ApacheImagingSpeedAndMemoryTest {
         final ApacheImagingSpeedAndMemoryTest testStand = new ApacheImagingSpeedAndMemoryTest();
         testStand.performTest(System.out, name);
     }
+
     /**
      * Loads the input file multiple times, measuring the time and memory use
      * for each iteration.
@@ -260,4 +264,3 @@ public class ApacheImagingSpeedAndMemoryTest {
         }
     }
 }
-
