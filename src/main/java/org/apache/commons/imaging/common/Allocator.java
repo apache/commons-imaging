@@ -141,7 +141,7 @@ public class Allocator {
      * "org.apache.commons.imaging.common.mylzw.AllocationChecker".
      * </p>
      *
-     * @param request     an allocation request count.
+     * @param request     an allocation requestï¿½count.
      * @param elementSize The element size.
      * @return the request.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
@@ -166,7 +166,7 @@ public class Allocator {
      * "org.apache.commons.imaging.common.mylzw.AllocationChecker".
      * </p>
      *
-     * @param request     an allocation request count is cast down to an int.
+     * @param request     an allocation request count is cast down to an int.
      * @param elementSize The element size.
      * @return the request.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
