@@ -161,6 +161,7 @@ import java.io.PrintStream;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
+import org.apache.commons.lang3.ArrayUtils;
 
 /**
  * A "test stand" for evaluating the speed an memory use of different Apache
@@ -176,6 +177,9 @@ public class ApacheImagingSpeedAndMemoryTest {
      *            the path to the file to be processed
      */
     public static void main(final String[] args) {
+        if (ArrayUtils.isEmpty(args)) {
+            throw new IllegalArgumentException("Missing path to file to test.");
+        }
         final String name = args[0];
         final ApacheImagingSpeedAndMemoryTest testStand = new ApacheImagingSpeedAndMemoryTest();
         testStand.performTest(System.out, name);

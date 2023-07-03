@@ -19,7 +19,6 @@ package org.apache.commons.imaging.bytesource;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.io.build.AbstractOrigin;
@@ -53,13 +52,7 @@ public class ByteSource {
     }
 
     public byte[] getByteArray(final long position, final int length) throws IOException {
-        final byte[] bytes = origin.getByteArray();
-        // Checks for int overflow.
-        final int start = Math.toIntExact(position);
-        if (start < 0 || length < 0 || start + length < 0 || start + length > bytes.length) {
-            throw new IllegalArgumentException("Couldn't read array (start: " + start + ", length: " + length + ", data length: " + bytes.length + ").");
-        }
-        return Arrays.copyOfRange(bytes, start, start + length);
+        return origin.getByteArray(position, length);
     }
 
     public final String getFileName() {
