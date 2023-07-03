@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.RandomAccessFiles;
 
 /**
  * Convenience methods for various binary and I/O operations.
@@ -73,21 +74,8 @@ public final class BinaryFunctions {
         if (length < 0) {
             throw new IOException(String.format("%s, invalid length: %d", exception, length));
         }
-        final byte[] result = Allocator.byteArray(length);
-
-        raf.seek(pos);
-
-        int read = 0;
-        while (read < length) {
-            final int count = raf.read(result, read, length - read);
-            if (count < 0) {
-                throw new IOException(exception);
-            }
-
-            read += count;
-        }
-
-        return result;
+        Allocator.checkByteArray(length);
+        return RandomAccessFiles.read(raf, pos, length);
 
     }
 
