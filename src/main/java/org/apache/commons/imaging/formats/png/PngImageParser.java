@@ -304,14 +304,14 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
             scanExpediter.drive();
 
             if (iccProfile != null) {
-                final boolean is_srgb = new IccProfileParser().issRGB(iccProfile);
-                if (!is_srgb) {
+                final boolean isSrgb = new IccProfileParser().issRGB(iccProfile);
+                if (!isSrgb) {
                     final ICC_ColorSpace cs = new ICC_ColorSpace(iccProfile);
 
                     final ColorModel srgbCM = ColorModel.getRGBdefault();
-                    final ColorSpace cs_sRGB = srgbCM.getColorSpace();
+                    final ColorSpace csSrgb = srgbCM.getColorSpace();
 
-                    result = new ColorTools().convertBetweenColorSpaces(result, cs, cs_sRGB);
+                    result = new ColorTools().convertBetweenColorSpaces(result, cs, csSrgb);
                 }
             }
 
