@@ -396,7 +396,7 @@ public final class ColorConversions {
     }
 
     public static int convertHSVtoRGB(final ColorHsv HSV) {
-        return convertHSVtoRGB(HSV.H, HSV.S, HSV.V);
+        return convertHSVtoRGB(HSV.h, HSV.s, HSV.v);
     }
 
     public static int convertHSVtoRGB(final double h, final double s, final double v) {

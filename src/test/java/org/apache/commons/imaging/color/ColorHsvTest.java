@@ -43,12 +43,12 @@ public class ColorHsvTest {
 
     @Test
     public void testHAssignment() {
-        assertEquals(1.0, color.H, 0.0);
+        assertEquals(1.0, color.h, 0.0);
     }
 
     @Test
     public void testSAssignment() {
-        assertEquals(2.0, color.S, 0.0);
+        assertEquals(2.0, color.s, 0.0);
     }
 
     @Test
@@ -58,6 +58,6 @@ public class ColorHsvTest {
 
     @Test
     public void testVAssignment() {
-        assertEquals(3.0, color.V, 0.0);
+        assertEquals(3.0, color.v, 0.0);
     }
 }
