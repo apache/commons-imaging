@@ -69,7 +69,7 @@ public final class BinaryFunctions {
         return findNull(src, 0, message);
     }
 
-    public static byte[] getRAFBytes(final RandomAccessFile raf, final long pos,
+    public static byte[] getBytes(final RandomAccessFile raf, final long pos,
             final int length, final String exception) throws IOException {
         if (length < 0) {
             throw new IOException(String.format("%s, invalid length: %d", exception, length));
