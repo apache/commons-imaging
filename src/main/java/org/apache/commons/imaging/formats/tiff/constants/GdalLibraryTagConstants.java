@@ -26,10 +26,10 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
 /**
  * GDAL library.
  * <p>
- * http://www.awaresystems.be/imaging/tiff/tifftags/gdal_metadata.html
+ * https://www.awaresystems.be/imaging/tiff/tifftags/gdal_metadata.html
  * </p>
  * <p>
- * http://www.awaresystems.be/imaging/tiff/tifftags/gdal_nodata.html
+ * https://www.awaresystems.be/imaging/tiff/tifftags/gdal_nodata.html
  * </p>
  */
 public final class GdalLibraryTagConstants {
