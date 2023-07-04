@@ -39,7 +39,7 @@ abstract class PixelParser {
         is = new ByteArrayInputStream(imageData);
     }
 
-    int getColorTableRGB(int index) {
+    int getColorTableRgb(int index) {
         index *= 4;
         final int blue = 0xff & colorTable[index + 0];
         final int green = 0xff & colorTable[index + 1];

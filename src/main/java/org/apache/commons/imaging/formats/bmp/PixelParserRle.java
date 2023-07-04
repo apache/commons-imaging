@@ -35,14 +35,14 @@ class PixelParserRle extends PixelParser {
         int[] rgbs;
         if (bhi.bitsPerPixel == 8) {
             rgbs = new int[1];
-            rgbs[0] = getColorTableRGB(data);
+            rgbs[0] = getColorTableRgb(data);
             // pixels_written = 1;
         } else if (bhi.bitsPerPixel == 4) {
             rgbs = new int[2];
             final int sample1 = data >> 4;
             final int sample2 = 0x0f & data;
-            rgbs[0] = getColorTableRGB(sample1);
-            rgbs[1] = getColorTableRGB(sample2);
+            rgbs[0] = getColorTableRgb(sample1);
+            rgbs[1] = getColorTableRgb(sample2);
             // pixels_written = 2;
         } else {
             throw new ImagingException("BMP RLE: bad BitsPerPixel: "

@@ -54,11 +54,11 @@ class PixelParserRgb extends PixelParserSimple {
             final int sample = cacheMask & (cachedByte >> (8 - bhi.bitsPerPixel));
             cachedByte = 0xff & (cachedByte << bhi.bitsPerPixel);
             cachedBitCount -= bhi.bitsPerPixel;
-            return getColorTableRGB(sample);
+            return getColorTableRgb(sample);
         }
         case 8: {
             final int sample = 0xff & imageData[byteCount + 0];
-            final int rgb = getColorTableRGB(sample);
+            final int rgb = getColorTableRgb(sample);
             byteCount += 1;
             return rgb;
         }
