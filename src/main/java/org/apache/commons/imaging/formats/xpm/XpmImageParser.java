@@ -57,10 +57,10 @@ public class XpmImageParser extends ImageParser<XpmImagingParameters> {
         int colorArgb;
         int gray4LevelArgb;
         int grayArgb;
-        boolean haveColor = false;
-        boolean haveGray = false;
-        boolean haveGray4Level = false;
-        boolean haveMono = false;
+        boolean haveColor;
+        boolean haveGray;
+        boolean haveGray4Level;
+        boolean haveMono;
         int index;
         int monoArgb;
 
