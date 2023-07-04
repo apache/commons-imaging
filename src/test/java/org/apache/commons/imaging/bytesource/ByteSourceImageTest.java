@@ -68,7 +68,7 @@ public class ByteSourceImageTest extends ByteSourceTest {
         assertEquals(imageFileHeight, imageBytes.getHeight());
     }
 
-    public void checkGetICCProfileBytes(final File imageFile, final byte[] imageFileBytes)
+    public void checkGetIccProfileBytes(final File imageFile, final byte[] imageFileBytes)
             throws Exception {
         // check guessFormat()
         final byte[] iccBytesFile = Imaging.getIccProfileBytes(imageFile);
@@ -205,7 +205,7 @@ public class ByteSourceImageTest extends ByteSourceTest {
             return;
         }
 
-        checkGetICCProfileBytes(imageFile, imageFileBytes);
+        checkGetIccProfileBytes(imageFile, imageFileBytes);
 
         if (!imageFile.getParentFile().getName().toLowerCase().equals("@broken")) {
             checkGetImageInfo(imageFile, imageFileBytes);

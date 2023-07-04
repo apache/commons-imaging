@@ -28,7 +28,7 @@ public class ColorConversionsTest {
             0xff00ffff, 0x00000000, 0xff7f7f7f, };
 
     @Test
-    public void testRGBtoCMYK() {
+    public void testRgbToCmyk() {
         for (final int rgb : SAMPLE_RGBS) {
             final ColorCmy cmy = ColorConversions.convertRgbToCmy(rgb);
             final ColorCmyk cmyk = ColorConversions.convertCmyToCmyk(cmy);
@@ -45,7 +45,7 @@ public class ColorConversionsTest {
     }
 
     @Test
-    public void testRGBtoDin99b() {
+    public void testRgbToDin99b() {
         for (final int rgb : SAMPLE_RGBS) {
 
             final ColorXyz xyz = ColorConversions.convertRgbToXyz(rgb);
@@ -61,7 +61,7 @@ public class ColorConversionsTest {
     }
 
     @Test
-    public void testRGBtoDin99o() {
+    public void testRgbToDin99o() {
         for (final int rgb : SAMPLE_RGBS) {
 
             final ColorXyz xyz = ColorConversions.convertRgbToXyz(rgb);
@@ -77,7 +77,7 @@ public class ColorConversionsTest {
     }
 
     @Test
-    public void testRGBtoHSL() {
+    public void testRgbToHsl() {
         for (final int rgb : SAMPLE_RGBS) {
             final ColorHsl hsl = ColorConversions.convertRgbToHsl(rgb);
             final int hslRgb = ColorConversions.convertHslToRgb(hsl);
@@ -90,7 +90,7 @@ public class ColorConversionsTest {
     }
 
     @Test
-    public void testRGBtoHSV() {
+    public void testRgbToHsv() {
         for (final int rgb : SAMPLE_RGBS) {
             final ColorHsv hsv = ColorConversions.convertRgbToHsv(rgb);
             final int hsvRgb = ColorConversions.convertHsvToRgb(hsv);
@@ -103,7 +103,7 @@ public class ColorConversionsTest {
     }
 
     @Test
-    public void testXYZ() {
+    public void testXyz() {
         for (final int rgb : SAMPLE_RGBS) {
             final ColorXyz xyz = ColorConversions.convertRgbToXyz(rgb);
             final int xyzRgb = ColorConversions.convertXyzToRgb(xyz);
