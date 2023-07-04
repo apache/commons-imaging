@@ -87,9 +87,9 @@ public class ExifRewriterRoundtripTest extends ExifBaseTest {
     }
 
     private File createTempFile() {
-        final String temp_dir = System.getProperty("java.io.tmpdir");
-        final String temp_filename = this.getClass().getName() + "-" + random.nextLong() + ".tmp";
-        return new File(temp_dir, temp_filename);
+        final String tempDir = System.getProperty("java.io.tmpdir");
+        final String tempFileName = this.getClass().getName() + "-" + random.nextLong() + ".tmp";
+        return new File(tempDir, tempFileName);
     }
 
     private TiffOutputSet duplicateTiffOutputSet(final TiffOutputSet sourceTiffOutputSet) throws ImagingException {
