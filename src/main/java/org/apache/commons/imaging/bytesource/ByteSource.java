@@ -43,12 +43,12 @@ public class ByteSource {
         return new ByteSource(new FileOrigin(file), file.getName());
     }
 
-    public static ByteSource path(final Path file) {
-        return new ByteSource(new PathOrigin(file), Objects.toString(file.getFileName(), null));
-    }
-
     public static ByteSource inputStream(final InputStream is, final String name) {
         return new InputStreamByteSource(is, name);
+    }
+
+    public static ByteSource path(final Path file) {
+        return new ByteSource(new PathOrigin(file), Objects.toString(file.getFileName(), null));
     }
 
     private final String fileName;

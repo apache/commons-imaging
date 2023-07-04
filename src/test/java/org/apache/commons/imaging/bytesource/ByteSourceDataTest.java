@@ -53,18 +53,6 @@ public class ByteSourceDataTest extends ByteSourceTest {
         }
     }
 
-    private class ByteSourcePathFactory implements ByteSourceFactory {
-        @Override
-        public ByteSource getByteSource(final byte[] src) throws IOException {
-            final Path file = createTempFile(src).toPath();
-
-            // test that all bytes written to file.
-            assertEquals(src.length, Files.size(file));
-
-            return ByteSource.path(file);
-        }
-    }
-
     private class ByteSourceInputStreamFileFactory implements ByteSourceFactory {
         @Override
         public ByteSource getByteSource(final byte[] src) throws IOException {
@@ -86,6 +74,18 @@ public class ByteSourceDataTest extends ByteSourceTest {
 
     }
 
+    private class ByteSourcePathFactory implements ByteSourceFactory {
+        @Override
+        public ByteSource getByteSource(final byte[] src) throws IOException {
+            final Path file = createTempFile(src).toPath();
+
+            // test that all bytes written to file.
+            assertEquals(src.length, Files.size(file));
+
+            return ByteSource.path(file);
+        }
+    }
+
     public static Stream<byte[]> data() {
         return Arrays.asList(getTestByteArrays()).stream();
     }
@@ -98,12 +98,6 @@ public class ByteSourceDataTest extends ByteSourceTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testByteSourcePathFactory(final byte[] testByteArray) throws Exception {
-        writeAndReadBytes(new ByteSourcePathFactory(), testByteArray);
-    }
-
-    @ParameterizedTest
-    @MethodSource("data")
     public void testByteSourceInputStreamFileFactory(final byte[] testByteArray) throws Exception {
         writeAndReadBytes(new ByteSourceInputStreamFileFactory(), testByteArray);
     }
@@ -112,6 +106,12 @@ public class ByteSourceDataTest extends ByteSourceTest {
     @MethodSource("data")
     public void testByteSourceInputStreamRawFactory(final byte[] testByteArray) throws Exception {
         writeAndReadBytes(new ByteSourceInputStreamRawFactory(), testByteArray);
+    }
+
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testByteSourcePathFactory(final byte[] testByteArray) throws Exception {
+        writeAndReadBytes(new ByteSourcePathFactory(), testByteArray);
     }
 
     protected void writeAndReadBytes(final ByteSourceFactory byteSourceFactory,

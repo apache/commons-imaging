@@ -31,6 +31,13 @@ import org.junit.jupiter.api.Test;
 
 public class PngImageParserTest extends PngBaseTest {
 
+    private static byte[] getPngImageBytes(final BufferedImage image, final PngImagingParameters params) throws IOException {
+        try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
+            new PngWriter().writeImage(image, os, params, null);
+            return os.toByteArray();
+        }
+    }
+
     @Test
     public void testGetImageSize() {
         final byte[] bytes = {
@@ -45,18 +52,6 @@ public class PngImageParserTest extends PngBaseTest {
     }
 
     @Test
-    public void testPalette() throws IOException {
-        final BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
-        image.setRGB(1, 1, 0x00FFffFF);
-        final PngImagingParameters params = new PngImagingParameters();
-        params.setForceIndexedColor(true);
-
-        final byte[] bytes = getPngImageBytes(image, params);
-        final ImageInfo imageInfo = new PngImageParser().getImageInfo(bytes, null);
-        assertTrue(imageInfo.usesPalette());
-    }
-
-    @Test
     public void testNoPalette() throws IOException {
         final BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
         image.setRGB(1, 1, 0x00FFffFF);
@@ -67,10 +62,15 @@ public class PngImageParserTest extends PngBaseTest {
         assertFalse(imageInfo.usesPalette());
     }
 
-    private static byte[] getPngImageBytes(final BufferedImage image, final PngImagingParameters params) throws IOException {
-        try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
-            new PngWriter().writeImage(image, os, params, null);
-            return os.toByteArray();
-        }
+    @Test
+    public void testPalette() throws IOException {
+        final BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+        image.setRGB(1, 1, 0x00FFffFF);
+        final PngImagingParameters params = new PngImagingParameters();
+        params.setForceIndexedColor(true);
+
+        final byte[] bytes = getPngImageBytes(image, params);
+        final ImageInfo imageInfo = new PngImageParser().getImageInfo(bytes, null);
+        assertTrue(imageInfo.usesPalette());
     }
 }
