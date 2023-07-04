@@ -39,23 +39,23 @@ final class ImageAsserts {
 
         for (int x = 0; x < a.getWidth(); x++) {
             for (int y = 0; y < a.getHeight(); y++) {
-                final int a_argb = a.getRGB(x, y);
-                final int b_argb = b.getRGB(x, y);
-                if (a_argb != b_argb) {
-                    if (calculateARGBDistance(a_argb, b_argb) <= tolerance) {
+                final int aArgb = a.getRGB(x, y);
+                final int bArgb = b.getRGB(x, y);
+                if (aArgb != bArgb) {
+                    if (calculateARGBDistance(aArgb, bArgb) <= tolerance) {
                         continue; // ignore.
                     }
                 }
-                if (a_argb != b_argb) {
+                if (aArgb != bArgb) {
                     Debug.debug("width: " + a.getWidth());
                     Debug.debug("height: " + a.getHeight());
-                    Debug.debug("distance: " + calculateARGBDistance(a_argb, b_argb));
+                    Debug.debug("distance: " + calculateARGBDistance(aArgb, bArgb));
                     Debug.debug("x: " + x);
                     Debug.debug("y: " + y);
-                    Debug.debug("a_argb: " + a_argb + " (0x" + Integer.toHexString(a_argb) + ")");
-                    Debug.debug("b_argb: " + b_argb + " (0x" + Integer.toHexString(b_argb) + ")");
+                    Debug.debug("aArgb: " + aArgb + " (0x" + Integer.toHexString(aArgb) + ")");
+                    Debug.debug("bArgb: " + bArgb + " (0x" + Integer.toHexString(bArgb) + ")");
                 }
-                Assertions.assertEquals(a_argb, b_argb);
+                Assertions.assertEquals(aArgb, bArgb);
             }
         }
     }
