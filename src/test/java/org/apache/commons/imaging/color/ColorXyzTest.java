@@ -48,16 +48,16 @@ public class ColorXyzTest {
 
     @Test
     public void testXAssignment() {
-        assertEquals(1.0, color.X, 0.0);
+        assertEquals(1.0, color.x, 0.0);
     }
 
     @Test
     public void testYAssignment() {
-        assertEquals(2.0, color.Y, 0.0);
+        assertEquals(2.0, color.y, 0.0);
     }
 
     @Test
     public void testZAssignment() {
-        assertEquals(3.0, color.Z, 0.0);
+        assertEquals(3.0, color.z, 0.0);
     }
 }

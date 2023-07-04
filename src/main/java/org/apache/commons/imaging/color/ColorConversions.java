@@ -697,7 +697,7 @@ public final class ColorConversions {
     }
 
     public static ColorCieLab convertXYZtoCIELab(final ColorXyz xyz) {
-        return convertXYZtoCIELab(xyz.X, xyz.Y, xyz.Z);
+        return convertXYZtoCIELab(xyz.x, xyz.y, xyz.z);
     }
 
     public static ColorCieLab convertXYZtoCIELab(final double x, final double y, final double z) {
@@ -719,7 +719,7 @@ public final class ColorConversions {
     }
 
     public static ColorCieLuv convertXYZtoCIELuv(final ColorXyz xyz) {
-        return convertXYZtoCIELuv(xyz.X, xyz.Y, xyz.Z);
+        return convertXYZtoCIELuv(xyz.x, xyz.y, xyz.z);
     }
 
     public static ColorCieLuv convertXYZtoCIELuv(final double x, final double y, final double z) {
@@ -752,7 +752,7 @@ public final class ColorConversions {
     }
 
     public static ColorHunterLab convertXYZtoHunterLab(final ColorXyz xyz) {
-        return convertXYZtoHunterLab(xyz.X, xyz.Y, xyz.Z);
+        return convertXYZtoHunterLab(xyz.x, xyz.y, xyz.z);
     }
 
     public static ColorHunterLab convertXYZtoHunterLab(final double x,
@@ -765,7 +765,7 @@ public final class ColorConversions {
     }
 
     public static int convertXYZtoRGB(final ColorXyz xyz) {
-        return convertXYZtoRGB(xyz.X, xyz.Y, xyz.Z);
+        return convertXYZtoRGB(xyz.x, xyz.y, xyz.z);
     }
 
     public static int convertXYZtoRGB(final double x, final double y, final double z) {

@@ -78,14 +78,14 @@ public final class ColorXyz {
      */
     public static final ColorXyz BLUE = new ColorXyz(18.05, 7.22, 95.05);
 
-    public final double X;
-    public final double Y;
-    public final double Z;
+    public final double x;
+    public final double y;
+    public final double z;
 
-    public ColorXyz(final double X, final double Y, final double Z) {
-        this.X = X;
-        this.Y = Y;
-        this.Z = Z;
+    public ColorXyz(final double x, final double y, final double z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
     @Override
@@ -98,13 +98,13 @@ public final class ColorXyz {
         }
 
         final ColorXyz colorXyz = (ColorXyz) o;
-        if (Double.compare(colorXyz.X, X) != 0) {
+        if (Double.compare(colorXyz.x, x) != 0) {
             return false;
         }
-        if (Double.compare(colorXyz.Y, Y) != 0) {
+        if (Double.compare(colorXyz.y, y) != 0) {
             return false;
         }
-        if (Double.compare(colorXyz.Z, Z) != 0) {
+        if (Double.compare(colorXyz.z, z) != 0) {
             return false;
         }
 
@@ -115,17 +115,17 @@ public final class ColorXyz {
     public int hashCode() {
         int result;
         long temp;
-        temp = Double.doubleToLongBits(X);
+        temp = Double.doubleToLongBits(x);
         result = (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(Y);
+        temp = Double.doubleToLongBits(y);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(Z);
+        temp = Double.doubleToLongBits(z);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
 
     @Override
     public String toString() {
-        return "{X: " + X + ", Y: " + Y + ", Z: " + Z + "}";
+        return "{X: " + x + ", Y: " + y + ", Z: " + z + "}";
     }
 }
