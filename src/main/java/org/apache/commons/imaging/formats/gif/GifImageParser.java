@@ -615,7 +615,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
 
                 case COMMENT_EXTENSION:
                 case PLAIN_TEXT_EXTENSION: {
-                    final GenericGifBlock block = readGenericGIFBlock(is,
+                    final GenericGifBlock block = readGenericGifBlock(is,
                             completeCode);
                     result.add(block);
                     break;
@@ -634,7 +634,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
                     }
 
                     if (label.length > 0) {
-                        final GenericGifBlock block = readGenericGIFBlock(is,
+                        final GenericGifBlock block = readGenericGifBlock(is,
                                 completeCode, label);
                         result.add(block);
                     }
@@ -648,7 +648,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
                                 completeCode);
                     }
 
-                    final GenericGifBlock block = readGenericGIFBlock(is,
+                    final GenericGifBlock block = readGenericGifBlock(is,
                             completeCode);
                     result.add(block);
                     break;
@@ -701,12 +701,12 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
         }
     }
 
-    private GenericGifBlock readGenericGIFBlock(final InputStream is, final int code)
+    private GenericGifBlock readGenericGifBlock(final InputStream is, final int code)
             throws IOException {
-        return readGenericGIFBlock(is, code, null);
+        return readGenericGifBlock(is, code, null);
     }
 
-    private GenericGifBlock readGenericGIFBlock(final InputStream is, final int code,
+    private GenericGifBlock readGenericGifBlock(final InputStream is, final int code,
             final byte[] first) throws IOException {
         final List<byte[]> subBlocks = new ArrayList<>();
 
@@ -871,7 +871,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
         if (!stopBeforeImageData) {
             final int lzwMinimumCodeSize = is.read();
 
-            final GenericGifBlock block = readGenericGIFBlock(is, -1);
+            final GenericGifBlock block = readGenericGifBlock(is, -1);
             final byte[] bytes = block.appendSubBlocks();
             final InputStream bais = new ByteArrayInputStream(bytes);
 
@@ -885,7 +885,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
                 LOGGER.finest("LZWMinimumCodeSize: " + LZWMinimumCodeSize);
             }
 
-            readGenericGIFBlock(is, -1);
+            readGenericGifBlock(is, -1);
         }
 
         return new ImageDescriptor(blockCode,
