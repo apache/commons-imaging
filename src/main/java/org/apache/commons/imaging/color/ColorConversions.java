@@ -35,7 +35,7 @@ public final class ColorConversions {
     /** see: https://en.wikipedia.org/wiki/CIELAB_color_space#From_CIEXYZ_to_CIELAB[10] */
     private static final double XYZ_t0 = 0.008856;
 
-    public static int convertCIELabtoARGBTest(final int cieL, final int cieA, final int cieB) {
+    public static int convertCieLabToArgbTest(final int cieL, final int cieA, final int cieB) {
         double x, y, z;
         {
 

@@ -35,6 +35,6 @@ public class DataParserLab extends DataParser {
         cieA -= 128;
         cieB -= 128;
 
-        return ColorConversions.convertCIELabtoARGBTest(cieL, cieA, cieB);
+        return ColorConversions.convertCieLabToArgbTest(cieL, cieA, cieB);
     }
 }

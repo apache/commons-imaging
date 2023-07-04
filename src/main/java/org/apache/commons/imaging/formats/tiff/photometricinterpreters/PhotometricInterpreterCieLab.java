@@ -35,7 +35,7 @@ public class PhotometricInterpreterCieLab extends PhotometricInterpreter {
         final int cieA = (byte) samples[1];
         final int cieB = (byte) samples[2];
 
-        final int rgb = ColorConversions.convertCIELabtoARGBTest(cieL, cieA, cieB);
+        final int rgb = ColorConversions.convertCieLabToArgbTest(cieL, cieA, cieB);
         imageBuilder.setRGB(x, y, rgb);
     }
 
