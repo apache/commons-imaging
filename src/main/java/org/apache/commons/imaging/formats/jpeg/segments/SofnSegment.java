@@ -64,7 +64,7 @@ public class SofnSegment extends Segment {
         super(marker, markerLength);
 
         if (LOGGER.isLoggable(Level.FINEST)) {
-            LOGGER.finest("SOF0Segment marker_length: " + markerLength);
+            LOGGER.finest("SOF0Segment markerLength: " + markerLength);
         }
 
         precision = readByte("Data_precision", is, "Not a Valid JPEG File");
