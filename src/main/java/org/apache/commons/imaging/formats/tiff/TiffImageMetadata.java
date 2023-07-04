@@ -491,7 +491,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return tag.getValue(field);
     }
 
-    public GpsInfo getGPS() throws ImagingException {
+    public GpsInfo getGpsInfo() throws ImagingException {
         final TiffDirectory gpsDirectory = findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_GPS);
         if (null == gpsDirectory) {
             return null;
