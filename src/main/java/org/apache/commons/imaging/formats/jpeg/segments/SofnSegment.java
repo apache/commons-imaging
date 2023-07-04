@@ -70,7 +70,7 @@ public class SofnSegment extends Segment {
         precision = readByte("precision", is, "Not a Valid JPEG File");
         height = read2Bytes("height", is, "Not a Valid JPEG File", getByteOrder());
         width = read2Bytes("width", is, "Not a Valid JPEG File", getByteOrder());
-        numberOfComponents = readByte("Number_of_components", is,
+        numberOfComponents = readByte("numberOfComponents", is,
                 "Not a Valid JPEG File");
         if (numberOfComponents < 0) {
             throw new ImagingException("The number of components in a SOF0Segment cannot be less than 0!");
