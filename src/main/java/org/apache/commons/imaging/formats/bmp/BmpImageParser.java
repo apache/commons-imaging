@@ -248,7 +248,7 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
         return "Bmp-Custom";
     }
 
-    private byte[] getRLEBytes(final InputStream is, final int rleSamplesPerByte) throws IOException {
+    private byte[] getRleBytes(final InputStream is, final int rleSamplesPerByte) throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         // this.setDebug(true);
@@ -611,7 +611,7 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
 
         byte[] imageData;
         if (rle) {
-            imageData = getRLEBytes(is, rleSamplesPerByte);
+            imageData = getRleBytes(is, rleSamplesPerByte);
         } else {
             imageData = readBytes("ImageData", is, imageDataSize,
                     "Not a Valid BMP File");
