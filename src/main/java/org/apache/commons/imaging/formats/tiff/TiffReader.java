@@ -172,20 +172,20 @@ public class TiffReader extends BinaryFileParser {
 
         if (directory.imageDataInStrips()) {
             final TiffField rowsPerStripField = directory.findField(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP);
-            /*
-             * Default value of rowsPerStripField is assumed to be infinity
-             * http://www.awaresystems.be/imaging/tiff/tifftags/rowsperstrip.html
-             */
+            //
+            // Default value of rowsPerStripField is assumed to be infinity
+            // https://www.awaresystems.be/imaging/tiff/tifftags/rowsperstrip.html
+            //
             int rowsPerStrip = Integer.MAX_VALUE;
 
             if (null != rowsPerStripField) {
                 rowsPerStrip = rowsPerStripField.getIntValue();
             } else {
                 final TiffField imageHeight = directory.findField(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH);
-                /**
-                 * if rows per strip not present then rowsPerStrip is equal to
-                 * imageLength or an infinity value;
-                 */
+                //
+                // if rows per strip not present then rowsPerStrip is equal to
+                // imageLength or an infinity value;
+                //
                 if (imageHeight != null) {
                     rowsPerStrip = imageHeight.getIntValue();
                 }
