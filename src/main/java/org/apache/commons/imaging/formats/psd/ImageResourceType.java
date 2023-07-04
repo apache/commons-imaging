@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.psd;
 /**
  * TODO Turn into an enum
  *
- * @see <a href="http://www.adobe.com/devnet-apps/photoshop/fileformatashtml/#50577409_pgfId-1037727">Photoshop File Formats Specification - Image Resource IDs</a>
+ * @see <a href="https://www.adobe.com/devnet-apps/photoshop/fileformatashtml/#50577409_pgfId-1037727">Photoshop File Formats Specification - Image Resource IDs</a>
  */
 class ImageResourceType {
 
