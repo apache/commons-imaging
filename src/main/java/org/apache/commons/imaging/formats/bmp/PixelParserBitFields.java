@@ -77,7 +77,7 @@ class PixelParserBitFields extends PixelParserSimple {
     }
 
     @Override
-    public int getNextRGB() throws ImagingException, IOException {
+    public int getNextRgb() throws ImagingException, IOException {
         int data;
 
         switch (bhi.bitsPerPixel) {

@@ -26,7 +26,7 @@ abstract class PixelParserSimple extends PixelParser {
         super(bhi, colorTable, imageData);
     }
 
-    public abstract int getNextRGB() throws ImagingException, IOException;
+    public abstract int getNextRgb() throws ImagingException, IOException;
 
     public abstract void newline() throws ImagingException, IOException;
 
@@ -34,7 +34,7 @@ abstract class PixelParserSimple extends PixelParser {
     public void processImage(final ImageBuilder imageBuilder) throws ImagingException, IOException {
         for (int y = bhi.height - 1; y >= 0; y--) {
             for (int x = 0; x < bhi.width; x++) {
-                final int rgb = getNextRGB();
+                final int rgb = getNextRgb();
 
                 imageBuilder.setRgb(x, y, rgb);
                 // db.setElem(y * bhi.width + x, rgb);

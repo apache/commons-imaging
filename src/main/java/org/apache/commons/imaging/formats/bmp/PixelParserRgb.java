@@ -35,7 +35,7 @@ class PixelParserRgb extends PixelParserSimple {
     }
 
     @Override
-    public int getNextRGB() throws ImagingException, IOException {
+    public int getNextRgb() throws ImagingException, IOException {
 
         switch (bhi.bitsPerPixel) {
         case 1:
