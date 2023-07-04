@@ -28,8 +28,8 @@ public class GammaCorrection {
     public GammaCorrection(final double srcGamma, final double dstGamma) {
 
         if (LOGGER.isLoggable(Level.FINEST)) {
-            LOGGER.finest("src_gamma: " + srcGamma);
-            LOGGER.finest("dst_gamma: " + dstGamma);
+            LOGGER.finest("srcGamma: " + srcGamma);
+            LOGGER.finest("dstGamma: " + dstGamma);
         }
 
         lookupTable = new int[256];
