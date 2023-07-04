@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
 public class PngImageParserTest extends PngBaseTest {
 
     @Test
-    public void test_getImageSize() {
+    public void testGetImageSize() {
         final byte[] bytes = {
             // Header
             (byte) 0x89, 'P', 'N', 'G', '\r', '\n', 0x1A, '\n',
