@@ -36,6 +36,13 @@ public class PhotometricInterpreterPalette extends PhotometricInterpreter {
     /**
      * Constructs a new instance.
      *
+     * @param samplesPerPixel Samples per pixel.
+     * @param bitsPerSample Bits per sample.
+     * @param predictor TODO
+     * @param width TODO
+     * @param height TODO
+     * @param colorMap TODO
+     *
      * @throws ImagingFormatException     if an index into the {@code colorMap} is out of bounds.
      * @throws AllocationRequestException Thrown when an allocation request exceeds the {@link Allocator} limit.
      */
