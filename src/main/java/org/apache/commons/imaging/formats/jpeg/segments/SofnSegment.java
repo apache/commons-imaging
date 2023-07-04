@@ -67,9 +67,9 @@ public class SofnSegment extends Segment {
             LOGGER.finest("SOF0Segment markerLength: " + markerLength);
         }
 
-        precision = readByte("Data_precision", is, "Not a Valid JPEG File");
-        height = read2Bytes("Image_height", is, "Not a Valid JPEG File", getByteOrder());
-        width = read2Bytes("Image_Width", is, "Not a Valid JPEG File", getByteOrder());
+        precision = readByte("precision", is, "Not a Valid JPEG File");
+        height = read2Bytes("height", is, "Not a Valid JPEG File", getByteOrder());
+        width = read2Bytes("width", is, "Not a Valid JPEG File", getByteOrder());
         numberOfComponents = readByte("Number_of_components", is,
                 "Not a Valid JPEG File");
         if (numberOfComponents < 0) {
