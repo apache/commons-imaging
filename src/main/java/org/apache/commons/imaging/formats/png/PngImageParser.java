@@ -304,7 +304,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
             scanExpediter.drive();
 
             if (iccProfile != null) {
-                final boolean isSrgb = new IccProfileParser().issRGB(iccProfile);
+                final boolean isSrgb = new IccProfileParser().isSrgb(iccProfile);
                 if (!isSrgb) {
                     final ICC_ColorSpace cs = new ICC_ColorSpace(iccProfile);
 

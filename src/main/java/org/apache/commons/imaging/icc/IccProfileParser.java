@@ -53,7 +53,7 @@ public class IccProfileParser extends BinaryFileParser {
         // TODO Throw instead of logging?
         final IccProfileInfo result;
         try (InputStream is = byteSource.getInputStream()) {
-            result = readICCProfileInfo(is);
+            result = readIccProfileInfo(is);
         }
         //
         for (final IccTag tag : result.getTags()) {
@@ -92,11 +92,11 @@ public class IccProfileParser extends BinaryFileParser {
         return null;
     }
 
-    public boolean issRGB(final byte[] bytes) throws IOException {
-        return issRGB(ByteSource.array(bytes));
+    public boolean isSrgb(final byte[] bytes) throws IOException {
+        return isSrgb(ByteSource.array(bytes));
     }
 
-    public boolean issRGB(final ByteSource byteSource) throws IOException {
+    public boolean isSrgb(final ByteSource byteSource) throws IOException {
         // setDebug(true);
 
         // long length = byteSource.getLength();
@@ -130,15 +130,15 @@ public class IccProfileParser extends BinaryFileParser {
         }
     }
 
-    public boolean issRGB(final File file) throws IOException {
-        return issRGB(ByteSource.file(file));
+    public boolean isSrgb(final File file) throws IOException {
+        return isSrgb(ByteSource.file(file));
     }
 
-    public boolean issRGB(final ICC_Profile iccProfile) throws IOException {
-        return issRGB(ByteSource.array(iccProfile.getData()));
+    public boolean isSrgb(final ICC_Profile iccProfile) throws IOException {
+        return isSrgb(ByteSource.array(iccProfile.getData()));
     }
 
-    private IccProfileInfo readICCProfileInfo(InputStream is) throws IOException {
+    private IccProfileInfo readIccProfileInfo(InputStream is) throws IOException {
         final CachingInputStream cis = new CachingInputStream(is);
         is = cis;
 
