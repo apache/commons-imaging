@@ -78,12 +78,12 @@ public final class ColorCieLab {
      */
     public static final ColorCieLab BLUE = new ColorCieLab(32, 79, -108);
 
-    public final double L;
+    public final double l;
     public final double a;
     public final double b;
 
     public ColorCieLab(final double L, final double a, final double b) {
-        this.L = L;
+        this.l = L;
         this.a = a;
         this.b = b;
     }
@@ -98,7 +98,7 @@ public final class ColorCieLab {
         }
 
         final ColorCieLab that = (ColorCieLab) o;
-        if (Double.compare(that.L, L) != 0) {
+        if (Double.compare(that.l, l) != 0) {
             return false;
         }
         if (Double.compare(that.a, a) != 0) {
@@ -115,7 +115,7 @@ public final class ColorCieLab {
     public int hashCode() {
         int result;
         long temp;
-        temp = Double.doubleToLongBits(L);
+        temp = Double.doubleToLongBits(l);
         result = (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(a);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
@@ -126,6 +126,6 @@ public final class ColorCieLab {
 
     @Override
     public String toString() {
-        return "{L: " + L + ", a: " + a + ", b: " + b + "}";
+        return "{L: " + l + ", a: " + a + ", b: " + b + "}";
     }
 }

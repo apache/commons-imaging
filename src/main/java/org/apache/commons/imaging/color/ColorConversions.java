@@ -76,7 +76,7 @@ public final class ColorConversions {
     }
 
     public static ColorCieLch convertCIELabtoCIELCH(final ColorCieLab cielab) {
-        return convertCIELabtoCIELCH(cielab.L, cielab.a, cielab.b);
+        return convertCIELabtoCIELCH(cielab.l, cielab.a, cielab.b);
     }
 
     public static ColorCieLch convertCIELabtoCIELCH(final double l, final double a, final double b) {
@@ -94,7 +94,7 @@ public final class ColorConversions {
     }
 
     public static ColorDin99Lab convertCIELabToDIN99bLab(final ColorCieLab cie) {
-        return convertCIELabToDIN99bLab(cie.L, cie.a, cie.b);
+        return convertCIELabToDIN99bLab(cie.l, cie.a, cie.b);
     }
 
     public static ColorDin99Lab convertCIELabToDIN99bLab(final double l, final double a, final double b) {
@@ -127,7 +127,7 @@ public final class ColorConversions {
      * @see <a href="https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum">https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum</a>
      */
     public static ColorDin99Lab convertCIELabToDIN99oLab(final ColorCieLab cie) {
-        return convertCIELabToDIN99oLab(cie.L, cie.a, cie.b);
+        return convertCIELabToDIN99oLab(cie.l, cie.a, cie.b);
     }
 
     /**
@@ -162,7 +162,7 @@ public final class ColorConversions {
     }
 
     public static ColorXyz convertCIELabtoXYZ(final ColorCieLab cielab) {
-        return convertCIELabtoXYZ(cielab.L, cielab.a, cielab.b);
+        return convertCIELabtoXYZ(cielab.l, cielab.a, cielab.b);
     }
 
     public static ColorXyz convertCIELabtoXYZ(final double l, final double a, final double b) {
