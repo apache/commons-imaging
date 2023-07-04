@@ -198,7 +198,7 @@ public final class ColorConversions {
     }
 
     public static ColorXyz convertCIELuvtoXYZ(final ColorCieLuv cielch) {
-        return convertCIELuvtoXYZ(cielch.L, cielch.u, cielch.v);
+        return convertCIELuvtoXYZ(cielch.l, cielch.u, cielch.v);
     }
 
     public static ColorXyz convertCIELuvtoXYZ(final double l, final double u, final double v) {

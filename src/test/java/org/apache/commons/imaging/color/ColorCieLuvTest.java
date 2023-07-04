@@ -43,7 +43,7 @@ public class ColorCieLuvTest {
 
     @Test
     public void testLAssignment() {
-        assertEquals(1.0, color.L, 0.0);
+        assertEquals(1.0, color.l, 0.0);
     }
 
     @Test

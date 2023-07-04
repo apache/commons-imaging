@@ -77,12 +77,12 @@ public final class ColorCieLuv {
      */
     public static final ColorCieLuv BLUE = new ColorCieLuv(32.303, -9.400, -130.358);
 
-    public final double L;
+    public final double l;
     public final double u;
     public final double v;
 
     public ColorCieLuv(final double L, final double u, final double v) {
-        this.L = L;
+        this.l = L;
         this.u = u;
         this.v = v;
     }
@@ -97,7 +97,7 @@ public final class ColorCieLuv {
         }
 
         final ColorCieLuv that = (ColorCieLuv) o;
-        if (Double.compare(that.L, L) != 0) {
+        if (Double.compare(that.l, l) != 0) {
             return false;
         }
         if (Double.compare(that.u, u) != 0) {
@@ -114,7 +114,7 @@ public final class ColorCieLuv {
     public int hashCode() {
         int result;
         long temp;
-        temp = Double.doubleToLongBits(L);
+        temp = Double.doubleToLongBits(l);
         result = (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(u);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
@@ -125,6 +125,6 @@ public final class ColorCieLuv {
 
     @Override
     public String toString() {
-        return "{L: " + L + ", u: " + u + ", v: " + v + "}";
+        return "{L: " + l + ", u: " + u + ", v: " + v + "}";
     }
 }
