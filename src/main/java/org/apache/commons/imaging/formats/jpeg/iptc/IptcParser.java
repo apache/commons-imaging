@@ -212,7 +212,7 @@ public class IptcParser extends BinaryFileParser {
         }
     }
 
-    protected List<IptcRecord> parseIPTCBlock(final byte[] bytes) {
+    protected List<IptcRecord> parseIptcBlock(final byte[] bytes) {
         Charset charset = DEFAULT_CHARSET;
         final List<IptcRecord> elements = new ArrayList<>();
 
@@ -347,7 +347,7 @@ public class IptcParser extends BinaryFileParser {
                 continue;
             }
 
-            records.addAll(parseIPTCBlock(block.getBlockData()));
+            records.addAll(parseIptcBlock(block.getBlockData()));
         }
 
         return new PhotoshopApp13Data(records, blocks);
@@ -399,7 +399,7 @@ public class IptcParser extends BinaryFileParser {
         return parsePhotoshopSegment(bytes, strict);
     }
 
-    public byte[] writeIPTCBlock(List<IptcRecord> elements)
+    public byte[] writeIptcBlock(List<IptcRecord> elements)
             throws ImagingException, IOException {
         Charset charset = DEFAULT_CHARSET;
         for (final IptcRecord element : elements) {
