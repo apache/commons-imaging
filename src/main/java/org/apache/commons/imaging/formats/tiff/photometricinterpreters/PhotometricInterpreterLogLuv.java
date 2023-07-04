@@ -62,29 +62,29 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
      * @see <a href="https://en.wikipedia.org/wiki/CIELAB_color_space">CIELAB color space</a>
      */
     RgbValues getRgbValues(final TristimulusValues tristimulusValues) {
-        final float var_X = tristimulusValues.x / 100f; // X = From 0 to ref_X
-        final float var_Y = tristimulusValues.y / 100f; // Y = From 0 to ref_Y
-        final float var_Z = tristimulusValues.z / 100f; // Z = From 0 to ref_Y
+        final float varX = tristimulusValues.x / 100f; // X = From 0 to ref_X
+        final float varY = tristimulusValues.y / 100f; // Y = From 0 to ref_Y
+        final float varZ = tristimulusValues.z / 100f; // Z = From 0 to ref_Y
 
-        float var_R = var_X * 3.2406f + var_Y * -1.5372f + var_Z * -0.4986f;
-        float var_G = var_X * -0.9689f + var_Y * 1.8758f + var_Z * 0.0415f;
-        float var_B = var_X * 0.0557f + var_Y * -0.2040f + var_Z * 1.0570f;
+        float varR = varX * 3.2406f + varY * -1.5372f + varZ * -0.4986f;
+        float varG = varX * -0.9689f + varY * 1.8758f + varZ * 0.0415f;
+        float varB = varX * 0.0557f + varY * -0.2040f + varZ * 1.0570f;
 
-        if (var_R > 0.0031308) {
-            var_R = 1.055f * (float) Math.pow(var_R, (1 / 2.4)) - 0.055f;
+        if (varR > 0.0031308) {
+            varR = 1.055f * (float) Math.pow(varR, (1 / 2.4)) - 0.055f;
         } else {
-            var_R = 12.92f * var_R;
+            varR = 12.92f * varR;
         }
-        if (var_G > 0.0031308) {
-            var_G = 1.055f * (float) Math.pow(var_G, (1 / 2.4)) - 0.055f;
+        if (varG > 0.0031308) {
+            varG = 1.055f * (float) Math.pow(varG, (1 / 2.4)) - 0.055f;
         } else {
-            var_G = 12.92f * var_G;
+            varG = 12.92f * varG;
         }
 
-        if (var_B > 0.0031308) {
-            var_B = 1.055f * (float) Math.pow(var_B, (1 / 2.4)) - 0.055f;
+        if (varB > 0.0031308) {
+            varB = 1.055f * (float) Math.pow(varB, (1 / 2.4)) - 0.055f;
         } else {
-            var_B = 12.92f * var_B;
+            varB = 12.92f * varB;
         }
 
         // var_R = ((var_R + 0.16561039f) / (3.0152583f + 0.16561039f));
@@ -92,9 +92,9 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
         // var_B = ((var_B + 0.19393992f) / (3.1043448f + 0.19393992f));
 
         final RgbValues values = new RgbValues();
-        values.r = (int) (var_R * 255f);
-        values.g = (int) (var_G * 255f);
-        values.b = (int) (var_B * 255f);
+        values.r = (int) (varR * 255f);
+        values.g = (int) (varG * 255f);
+        values.b = (int) (varB * 255f);
         return values;
     }
 
