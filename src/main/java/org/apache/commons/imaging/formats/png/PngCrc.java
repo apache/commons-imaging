@@ -25,8 +25,8 @@ class PngCrc {
     /* Flag: has the table been computed? Initially false. */
     private boolean crcTableComputed;
 
-    public final long continuePartialCrc(final long old_crc, final byte[] buf, final int len) {
-        return updateCrc(old_crc, buf);
+    public final long continuePartialCrc(final long oldCrc, final byte[] buf, final int len) {
+        return updateCrc(oldCrc, buf);
     }
 
     /*
@@ -40,8 +40,8 @@ class PngCrc {
         return (int) (updateCrc(0xffffffffL, buf) ^ 0xffffffffL);
     }
 
-    public final long finishPartialCrc(final long old_crc) {
-        return (old_crc ^ 0xffffffffL);
+    public final long finishPartialCrc(final long oldCrc) {
+        return (oldCrc ^ 0xffffffffL);
     }
 
     /* Make the table for a fast CRC. */
