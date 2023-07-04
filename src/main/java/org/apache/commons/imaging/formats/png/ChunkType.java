@@ -23,7 +23,7 @@ import org.apache.commons.imaging.common.BinaryFunctions;
 /**
  * Type of a PNG chunk.
  *
- * @see <a href="http://www.w3.org/TR/PNG/#11Chunks">Portable Network Graphics Specification - Chunk specifications</a>
+ * @see <a href="https://www.w3.org/TR/png/#11Chunks">Portable Network Graphics Specification - Chunk specifications</a>
  */
 public enum ChunkType {
 
