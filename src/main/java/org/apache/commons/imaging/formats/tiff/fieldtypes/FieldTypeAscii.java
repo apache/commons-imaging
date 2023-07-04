@@ -44,7 +44,7 @@ public class FieldTypeAscii extends FieldType {
         int stringsAdded = 0;
         strings[0] = ""; // if we have a 0 length string
         int nextStringPos = 0;
-        // According to the Exiftool FAQ, http://www.metadataworkinggroup.org
+        // According to the Exiftool FAQ, [BROKEN URL] http://www.metadataworkinggroup.org
         // specifies that the TIFF ASCII fields are actually UTF-8.
         // Exiftool however allows you to configure the charset used.
         for (int i = 0; i < bytes.length; i++) {
