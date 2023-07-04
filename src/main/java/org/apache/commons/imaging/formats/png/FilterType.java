@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.png;
 /**
  * Filter types for filter method 0.
  *
- * @see <a href="http://www.w3.org/TR/PNG/#9Filters">Portable Network Graphics Specification - Filtering</a>
+ * @see <a href="https://www.w3.org/TR/png/#9Filters">Portable Network Graphics Specification - Filtering</a>
  */
 enum FilterType {
     NONE,
