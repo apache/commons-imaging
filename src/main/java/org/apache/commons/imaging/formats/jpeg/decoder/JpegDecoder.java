@@ -504,7 +504,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                                 final int M = scaledMCU[1].samples[srcRowOffset + x2];
                                 final int Y = scaledMCU[2].samples[srcRowOffset + x2];
                                 final int K = scaledMCU[3].samples[srcRowOffset + x2];
-                                final int rgb = ColorConversions.convertCMYKtoRGB(C, M, Y, K);
+                                final int rgb = ColorConversions.convertCmykToRgb(C, M, Y, K);
                                 dataBuffer.setElem(dstRowOffset + x2, rgb);
                             } else if (scaledMCU.length == 3) {
                                 final int Y = scaledMCU[0].samples[srcRowOffset + x2];

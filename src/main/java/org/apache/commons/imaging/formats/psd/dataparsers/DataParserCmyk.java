@@ -39,7 +39,7 @@ public class DataParserCmyk extends DataParser {
         sy = 255 - sy;
         sk = 255 - sk;
 
-        return ColorConversions.convertCMYKtoRGB(sc, sm, sy, sk);
+        return ColorConversions.convertCmykToRgb(sc, sm, sy, sk);
     }
 
 }
