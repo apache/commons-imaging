@@ -473,7 +473,7 @@ public final class ColorConversions {
     }
 
     public static ColorXyz convertHunterLabtoXYZ(final ColorHunterLab cielab) {
-        return convertHunterLabtoXYZ(cielab.L, cielab.a, cielab.b);
+        return convertHunterLabtoXYZ(cielab.l, cielab.a, cielab.b);
     }
 
     public static ColorXyz convertHunterLabtoXYZ(final double l, final double a,
