@@ -48,7 +48,7 @@ public class IptcBlock {
         return blockType;
     }
 
-    public boolean isIPTCBlock() {
+    public boolean isIptcBlock() {
         return blockType == IptcConstants.IMAGE_RESOURCE_BLOCK_IPTC_DATA;
     }
 }

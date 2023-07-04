@@ -343,7 +343,7 @@ public class IptcParser extends BinaryFileParser {
 
         for (final IptcBlock block : blocks) {
             // Ignore everything but IPTC data.
-            if (!block.isIPTCBlock()) {
+            if (!block.isIptcBlock()) {
                 continue;
             }
 
