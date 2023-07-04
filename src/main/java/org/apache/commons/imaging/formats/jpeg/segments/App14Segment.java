@@ -24,7 +24,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 /**
- * http://www.aiim.org/documents/standards/PDF-Ref/References/Adobe/5116.DCT_Filter.pdf
+ * [BROKEN URL] http://www.aiim.org/documents/standards/PDF-Ref/References/Adobe/5116.DCT_Filter.pdf
  */
 public class App14Segment extends AppnSegment {
     private static final byte[] ADOBE_PREFIX;
