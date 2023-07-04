@@ -90,7 +90,7 @@ public class ColorTools {
 
     }
 
-    public BufferedImage convertBetweenICCProfiles(final BufferedImage bi, final ICC_Profile from, final ICC_Profile to) {
+    public BufferedImage convertBetweenIccProfiles(final BufferedImage bi, final ICC_Profile from, final ICC_Profile to) {
         final ICC_ColorSpace csFrom = new ICC_ColorSpace(from);
         final ICC_ColorSpace csTo = new ICC_ColorSpace(to);
 
@@ -121,12 +121,12 @@ public class ColorTools {
         return result;
     }
 
-    public BufferedImage convertToICCProfile(final BufferedImage bi, final ICC_Profile to) {
+    public BufferedImage convertToIccProfile(final BufferedImage bi, final ICC_Profile to) {
         final ICC_ColorSpace csTo = new ICC_ColorSpace(to);
         return convertToColorSpace(bi, csTo);
     }
 
-    public BufferedImage convertTosRGB(final BufferedImage bi) {
+    public BufferedImage convertTosRgb(final BufferedImage bi) {
         final ColorModel srgbCM = ColorModel.getRGBdefault();
         return convertToColorSpace(bi, srgbCM.getColorSpace());
     }
