@@ -895,7 +895,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
     }
 
     private byte[] readSubBlock(final InputStream is) throws IOException {
-        final int blockSize = 0xff & readByte("block_size", is, "GIF: corrupt block");
+        final int blockSize = 0xff & readByte("blockSize", is, "GIF: corrupt block");
 
         return readBytes("block", is, blockSize, "GIF: corrupt block");
     }
