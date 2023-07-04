@@ -255,9 +255,9 @@ public final class ColorConversions {
     public static ColorCmyk convertCMYtoCMYK(final ColorCmy cmy) {
         // Where CMYK and CMY values = 0 ÷ 1
 
-        double c = cmy.C;
-        double m = cmy.M;
-        double y = cmy.Y;
+        double c = cmy.c;
+        double m = cmy.m;
+        double y = cmy.y;
 
         double varK = 1.0;
 
@@ -292,9 +292,9 @@ public final class ColorConversions {
         // CMY values = 0 ÷ 1
         // RGB values = 0 ÷ 255
 
-        final double r = (1 - cmy.C) * 255.0;
-        final double g = (1 - cmy.M) * 255.0;
-        final double b = (1 - cmy.Y) * 255.0;
+        final double r = (1 - cmy.c) * 255.0;
+        final double g = (1 - cmy.m) * 255.0;
+        final double b = (1 - cmy.y) * 255.0;
 
         return convertRGBtoRGB(r, g, b);
     }

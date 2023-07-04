@@ -38,7 +38,7 @@ public class ColorCmyTest {
 
     @Test
     public void testCAssignment() {
-        assertEquals(1.0, color.C, 0.0);
+        assertEquals(1.0, color.c, 0.0);
     }
 
     @Test
@@ -47,8 +47,8 @@ public class ColorCmyTest {
         final ColorCmy colorCmyTwo = ColorCmy.YELLOW;
 
         assertNotEquals(colorCmy, colorCmyTwo);
-        assertEquals((-1568.733868772), colorCmy.Y, 0.01);
-        assertEquals((-1668.733868772), colorCmy.M, 0.01);
+        assertEquals((-1568.733868772), colorCmy.y, 0.01);
+        assertEquals((-1668.733868772), colorCmy.m, 0.01);
     }
 
     @Test
@@ -59,7 +59,7 @@ public class ColorCmyTest {
 
     @Test
     public void testMAssignment() {
-        assertEquals(2.0, color.M, 0.0);
+        assertEquals(2.0, color.m, 0.0);
     }
 
     @Test
@@ -69,7 +69,7 @@ public class ColorCmyTest {
 
     @Test
     public void testYAssignment() {
-        assertEquals(3.0, color.Y, 0.0);
+        assertEquals(3.0, color.y, 0.0);
     }
 
 }

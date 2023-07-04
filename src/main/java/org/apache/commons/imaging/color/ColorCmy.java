@@ -107,14 +107,14 @@ public final class ColorCmy {
      */
     public static final ColorCmy BLUE = new ColorCmy(100, 100, 0);
 
-    public final double C;
-    public final double M;
-    public final double Y;
+    public final double c;
+    public final double m;
+    public final double y;
 
     public ColorCmy(final double C, final double M, final double Y) {
-        this.C = C;
-        this.M = M;
-        this.Y = Y;
+        this.c = C;
+        this.m = M;
+        this.y = Y;
     }
 
     @Override
@@ -127,13 +127,13 @@ public final class ColorCmy {
         }
 
         final ColorCmy colorCmy = (ColorCmy) o;
-        if (Double.compare(colorCmy.C, C) != 0) {
+        if (Double.compare(colorCmy.c, c) != 0) {
             return false;
         }
-        if (Double.compare(colorCmy.M, M) != 0) {
+        if (Double.compare(colorCmy.m, m) != 0) {
             return false;
         }
-        if (Double.compare(colorCmy.Y, Y) != 0) {
+        if (Double.compare(colorCmy.y, y) != 0) {
             return false;
         }
 
@@ -144,17 +144,17 @@ public final class ColorCmy {
     public int hashCode() {
         int result;
         long temp;
-        temp = Double.doubleToLongBits(C);
+        temp = Double.doubleToLongBits(c);
         result = (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(M);
+        temp = Double.doubleToLongBits(m);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(Y);
+        temp = Double.doubleToLongBits(y);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
 
     @Override
     public String toString() {
-        return "{C: " + C + ", M: " + M + ", Y: " + Y + "}";
+        return "{C: " + c + ", M: " + m + ", Y: " + y + "}";
     }
 }
