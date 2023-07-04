@@ -201,7 +201,7 @@ public class PsdImageParser extends ImageParser<PsdImagingParameters> implements
                     + imageContents.header.mode);
         }
         DataReader fDataReader;
-        switch (imageContents.Compression) {
+        switch (imageContents.compression) {
         case 0:
             fDataReader = new UncompressedDataReader(dataParser);
             break;
@@ -210,7 +210,7 @@ public class PsdImageParser extends ImageParser<PsdImagingParameters> implements
             break;
         default:
             throw new ImagingException("Unknown Compression: "
-                    + imageContents.Compression);
+                    + imageContents.compression);
         }
 
         try (InputStream is = getInputStream(byteSource, PSD_SECTION_IMAGE_DATA)) {
@@ -382,7 +382,7 @@ public class PsdImageParser extends ImageParser<PsdImagingParameters> implements
         final ImageInfo.ColorType colorType = ImageInfo.ColorType.UNKNOWN;
 
         ImageInfo.CompressionAlgorithm compressionAlgorithm;
-        switch (imageContents.Compression) {
+        switch (imageContents.compression) {
         case 0:
             compressionAlgorithm = ImageInfo.CompressionAlgorithm.NONE;
             break;
@@ -637,7 +637,7 @@ public class PsdImageParser extends ImageParser<PsdImagingParameters> implements
             final PsdImageContents imageContents = readImageContents(imageStream);
 
             final byte[] ImageResources = readBytes("ImageResources",
-                    resourceStream, imageContents.ImageResourcesLength,
+                    resourceStream, imageContents.imageResourcesLength,
                     "Not a Valid PSD File");
 
             return readImageResourceBlocks(ImageResources, imageResourceIDs,

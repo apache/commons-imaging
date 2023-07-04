@@ -28,20 +28,20 @@ public class PsdImageContents {
 
     public final PsdHeaderInfo header;
 
-    public final int ColorModeDataLength;
-    public final int ImageResourcesLength;
-    public final int LayerAndMaskDataLength;
-    public final int Compression;
+    public final int colorModeDataLength;
+    public final int imageResourcesLength;
+    public final int layerAndMaskDataLength;
+    public final int compression;
 
     public PsdImageContents(final PsdHeaderInfo header,
 
-    final int ColorModeDataLength, final int ImageResourcesLength,
-            final int LayerAndMaskDataLength, final int Compression) {
+    final int colorModeDataLength, final int imageResourcesLength,
+            final int layerAndMaskDataLength, final int compression) {
         this.header = header;
-        this.ColorModeDataLength = ColorModeDataLength;
-        this.ImageResourcesLength = ImageResourcesLength;
-        this.LayerAndMaskDataLength = LayerAndMaskDataLength;
-        this.Compression = Compression;
+        this.colorModeDataLength = colorModeDataLength;
+        this.imageResourcesLength = imageResourcesLength;
+        this.layerAndMaskDataLength = layerAndMaskDataLength;
+        this.compression = compression;
     }
 
     public void dump() {
@@ -58,14 +58,14 @@ public class PsdImageContents {
     public void dump(final PrintWriter pw) {
         pw.println("");
         pw.println("ImageContents");
-        pw.println("Compression: " + Compression + " ("
-                + Integer.toHexString(Compression) + ")");
-        pw.println("ColorModeDataLength: " + ColorModeDataLength + " ("
-                + Integer.toHexString(ColorModeDataLength) + ")");
-        pw.println("ImageResourcesLength: " + ImageResourcesLength + " ("
-                + Integer.toHexString(ImageResourcesLength) + ")");
-        pw.println("LayerAndMaskDataLength: " + LayerAndMaskDataLength + " ("
-                + Integer.toHexString(LayerAndMaskDataLength) + ")");
+        pw.println("Compression: " + compression + " ("
+                + Integer.toHexString(compression) + ")");
+        pw.println("ColorModeDataLength: " + colorModeDataLength + " ("
+                + Integer.toHexString(colorModeDataLength) + ")");
+        pw.println("ImageResourcesLength: " + imageResourcesLength + " ("
+                + Integer.toHexString(imageResourcesLength) + ")");
+        pw.println("LayerAndMaskDataLength: " + layerAndMaskDataLength + " ("
+                + Integer.toHexString(layerAndMaskDataLength) + ")");
         // System.out.println("Depth: " + Depth + " ("
         // + Integer.toHexString(Depth) + ")");
         // System.out.println("Mode: " + Mode + " (" + Integer.toHexString(Mode)
