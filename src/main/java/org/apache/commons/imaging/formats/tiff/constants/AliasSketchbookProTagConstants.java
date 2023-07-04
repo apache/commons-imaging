@@ -26,7 +26,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
 /**
  * Alias Sketchbook Pro multi-layer TIFF.
  * <p>
- * http://www.awaresystems.be/imaging/tiff/tifftags/docs/alias.html
+ * https://www.awaresystems.be/imaging/tiff/tifftags/docs/alias.html
  * </p>
  */
 public final class AliasSketchbookProTagConstants {
