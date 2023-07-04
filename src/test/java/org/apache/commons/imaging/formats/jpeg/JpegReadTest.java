@@ -51,7 +51,7 @@ public class JpegReadTest extends JpegBaseTest {
         //assertNotNull(metadata);
         Debug.debug("metadata", metadata);
 
-        Debug.debug("ICC profile", Imaging.getICCProfile(imageFile));
+        Debug.debug("ICC profile", Imaging.getIccProfile(imageFile));
 
         final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
         assertNotNull(imageInfo);

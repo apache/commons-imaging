@@ -71,9 +71,9 @@ public class SampleUsage {
             Imaging.writeImage(image, os, format);
 
             // <b>get the image's embedded ICC Profile, if it has one. </b>
-            final byte[] iccProfileBytes = Imaging.getICCProfileBytes(imageBytes);
+            final byte[] iccProfileBytes = Imaging.getIccProfileBytes(imageBytes);
 
-            final ICC_Profile iccProfile = Imaging.getICCProfile(imageBytes);
+            final ICC_Profile iccProfile = Imaging.getIccProfile(imageBytes);
 
             // <b>get the image's width and height. </b>
             final Dimension d = Imaging.getImageSize(imageBytes);

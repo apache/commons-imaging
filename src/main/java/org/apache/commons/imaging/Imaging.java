@@ -301,12 +301,12 @@ public final class Imaging {
      * @throws ImagingException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static ICC_Profile getICCProfile(final byte[] bytes) throws ImagingException, IOException {
-        return getICCProfile(ByteSource.array(bytes));
+    public static ICC_Profile getIccProfile(final byte[] bytes) throws ImagingException, IOException {
+        return getIccProfile(ByteSource.array(bytes));
     }
 
-    protected static ICC_Profile getICCProfile(final ByteSource byteSource) throws ImagingException, IOException {
-        final byte[] bytes = getICCProfileBytes(byteSource);
+    protected static ICC_Profile getIccProfile(final ByteSource byteSource) throws ImagingException, IOException {
+        final byte[] bytes = getIccProfileBytes(byteSource);
         if (bytes == null) {
             return null;
         }
@@ -331,8 +331,8 @@ public final class Imaging {
      * @throws ImagingException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static ICC_Profile getICCProfile(final File file) throws ImagingException, IOException {
-        return getICCProfile(ByteSource.file(file));
+    public static ICC_Profile getIccProfile(final File file) throws ImagingException, IOException {
+        return getIccProfile(ByteSource.file(file));
     }
 
     /**
@@ -344,8 +344,8 @@ public final class Imaging {
      * @throws ImagingException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static ICC_Profile getICCProfile(final InputStream is, final String fileName) throws ImagingException, IOException {
-        return getICCProfile(ByteSource.inputStream(is, fileName));
+    public static ICC_Profile getIccProfile(final InputStream is, final String fileName) throws ImagingException, IOException {
+        return getIccProfile(ByteSource.inputStream(is, fileName));
     }
 
     /**
@@ -363,11 +363,11 @@ public final class Imaging {
      * @throws ImagingException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static byte[] getICCProfileBytes(final byte[] bytes) throws ImagingException, IOException {
-        return getICCProfileBytes(ByteSource.array(bytes));
+    public static byte[] getIccProfileBytes(final byte[] bytes) throws ImagingException, IOException {
+        return getIccProfileBytes(ByteSource.array(bytes));
     }
 
-    private static byte[] getICCProfileBytes(final ByteSource byteSource) throws ImagingException, IOException {
+    private static byte[] getIccProfileBytes(final ByteSource byteSource) throws ImagingException, IOException {
         final ImageParser<?> imageParser = ImageParserFactory.getImageParser(byteSource);
         return imageParser.getIccProfileBytes(byteSource, null);
     }
@@ -387,8 +387,8 @@ public final class Imaging {
      * @throws ImagingException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static byte[] getICCProfileBytes(final File file) throws ImagingException, IOException {
-        return getICCProfileBytes(ByteSource.file(file));
+    public static byte[] getIccProfileBytes(final File file) throws ImagingException, IOException {
+        return getIccProfileBytes(ByteSource.file(file));
     }
 
     /**

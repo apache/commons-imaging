@@ -43,7 +43,7 @@ public class TiffReadTest extends TiffBaseTest {
             final ImageMetadata metadata = Imaging.getMetadata(imageFile);
             assertNotNull(metadata);
 
-            Debug.debug("ICC profile", Imaging.getICCProfile(imageFile));
+            Debug.debug("ICC profile", Imaging.getIccProfile(imageFile));
 
             final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
             assertNotNull(imageInfo);

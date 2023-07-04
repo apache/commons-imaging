@@ -71,7 +71,7 @@ public class PngReadTest extends PngBaseTest {
                 final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
                 assertNotNull(imageInfo);
 
-                Debug.debug("ICC profile", Imaging.getICCProfile(imageFile));
+                Debug.debug("ICC profile", Imaging.getIccProfile(imageFile));
 
                 final BufferedImage image = Imaging.getBufferedImage(imageFile);
                 assertNotNull(image);

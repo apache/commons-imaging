@@ -46,7 +46,7 @@ public class PsdReadTest extends PsdBaseTest {
             final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
             assertNotNull(imageInfo);
 
-            Imaging.getICCProfile(imageFile);
+            Imaging.getIccProfile(imageFile);
 
             final BufferedImage image = Imaging.getBufferedImage(imageFile);
             assertNotNull(image);

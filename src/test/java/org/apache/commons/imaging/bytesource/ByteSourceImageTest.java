@@ -71,9 +71,9 @@ public class ByteSourceImageTest extends ByteSourceTest {
     public void checkGetICCProfileBytes(final File imageFile, final byte[] imageFileBytes)
             throws Exception {
         // check guessFormat()
-        final byte[] iccBytesFile = Imaging.getICCProfileBytes(imageFile);
+        final byte[] iccBytesFile = Imaging.getIccProfileBytes(imageFile);
 
-        final byte[] iccBytesBytes = Imaging.getICCProfileBytes(imageFileBytes);
+        final byte[] iccBytesBytes = Imaging.getIccProfileBytes(imageFileBytes);
 
         assertEquals((iccBytesFile != null), (iccBytesBytes != null));
 

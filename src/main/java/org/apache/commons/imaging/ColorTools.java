@@ -133,7 +133,7 @@ public class ColorTools {
 
     public BufferedImage correctImage(final BufferedImage src, final File file)
             throws ImagingException, IOException {
-        final ICC_Profile icc = Imaging.getICCProfile(file);
+        final ICC_Profile icc = Imaging.getIccProfile(file);
         if (icc == null) {
             return src;
         }
