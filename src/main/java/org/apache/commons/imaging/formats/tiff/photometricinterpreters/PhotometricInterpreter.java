@@ -30,6 +30,7 @@ import org.apache.commons.imaging.common.ImageBuilder;
  *      PhotometricInterpretation</a>
  */
 public abstract class PhotometricInterpreter {
+
     protected final int samplesPerPixel;
     private final int[] bitsPerSample;
     protected final int predictor;
