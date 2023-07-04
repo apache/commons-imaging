@@ -79,7 +79,7 @@ public final class ColorConversions {
         return convertCIELabtoCIELCH(cielab.L, cielab.a, cielab.b);
     }
 
-    public static ColorCieLch convertCIELabtoCIELCH(final double L, final double a, final double b) {
+    public static ColorCieLch convertCIELabtoCIELCH(final double l, final double a, final double b) {
         // atan2(y,x) returns atan(y/x)
         final double atanba = Math.atan2(b, a); // Quadrant by signs
 
@@ -90,20 +90,20 @@ public final class ColorConversions {
         // L = L;
         final double C = Math.sqrt(square(a) + square(b));
 
-        return new ColorCieLch(L, C, h);
+        return new ColorCieLch(l, C, h);
     }
 
     public static ColorDin99Lab convertCIELabToDIN99bLab(final ColorCieLab cie) {
         return convertCIELabToDIN99bLab(cie.L, cie.a, cie.b);
     }
 
-    public static ColorDin99Lab convertCIELabToDIN99bLab(final double L, final double a, final double b) {
-        final double FAC_1 = 100.0 / Math.log(129.0 / 50.0); // = 105.51
+    public static ColorDin99Lab convertCIELabToDIN99bLab(final double l, final double a, final double b) {
+        final double fac1 = 100.0 / Math.log(129.0 / 50.0); // = 105.51
         final double kE = 1.0; // brightness factor, 1.0 for CIE reference conditions
         final double kCH = 1.0; // chroma and hue factor, 1.0 for CIE reference conditions
         final double ang = Math.toRadians(16.0);
 
-        final double L99 = kE * FAC_1 * Math.log(1. + 0.0158 * L);
+        final double l99 = kE * fac1 * Math.log(1. + 0.0158 * l);
         double a99 = 0.0;
         double b99 = 0.0;
         if (a != 0.0 || b != 0.0) {
@@ -116,7 +116,7 @@ public final class ColorConversions {
                 b99 = k * f;
             }
         }
-        return new ColorDin99Lab(L99, a99, b99);
+        return new ColorDin99Lab(l99, a99, b99);
     }
 
     /**
@@ -133,19 +133,19 @@ public final class ColorConversions {
     /**
      * DIN99o.
      *
-     * @param L lightness of color.
+     * @param l lightness of color.
      * @param a position between red and green.
      * @param b position between yellow and blue.
      * @return CIBELab colors converted to DIN99oLab color space.
      * @see <a href="https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum">https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum</a>
      */
-    public static ColorDin99Lab convertCIELabToDIN99oLab(final double L, final double a, final double b) {
+    public static ColorDin99Lab convertCIELabToDIN99oLab(final double l, final double a, final double b) {
         final double kE = 1.0; // brightness factor, 1.0 for CIE reference conditions
         final double kCH = 1.0; // chroma and hue factor, 1.0 for CIE reference conditions
-        final double FAC_1 = 100.0 / Math.log(139.0 / 100.0); // L99 scaling factor = 303.67100547050995
+        final double fac1 = 100.0 / Math.log(139.0 / 100.0); // L99 scaling factor = 303.67100547050995
         final double ang = Math.toRadians(26.0);
 
-        final double L99o = FAC_1 / kE * Math.log(1 + 0.0039 * L); // Lightness correction kE
+        final double l99o = fac1 / kE * Math.log(1 + 0.0039 * l); // Lightness correction kE
         double a99o = 0.0;
         double b99o = 0.0;
         if (a != 0.0 || b != 0.0) {
@@ -158,15 +158,15 @@ public final class ColorConversions {
             a99o = C99o * Math.cos(h99o);
             b99o = C99o * Math.sin(h99o);
         }
-        return new ColorDin99Lab(L99o, a99o, b99o);
+        return new ColorDin99Lab(l99o, a99o, b99o);
     }
 
     public static ColorXyz convertCIELabtoXYZ(final ColorCieLab cielab) {
         return convertCIELabtoXYZ(cielab.L, cielab.a, cielab.b);
     }
 
-    public static ColorXyz convertCIELabtoXYZ(final double L, final double a, final double b) {
-        double varY = (L + 16) / 116.0;
+    public static ColorXyz convertCIELabtoXYZ(final double l, final double a, final double b) {
+        double varY = (l + 16) / 116.0;
         double varX = a / 500 + varY;
         double varZ = varY - b / 200.0;
 
@@ -187,30 +187,30 @@ public final class ColorConversions {
         return convertCIELCHtoCIELab(cielch.L, cielch.C, cielch.h);
     }
 
-    public static ColorCieLab convertCIELCHtoCIELab(final double L, final double C, final double H) {
+    public static ColorCieLab convertCIELCHtoCIELab(final double l, final double c, final double h) {
         // Where CIE-H° = 0 ÷ 360°
 
         // CIE-L* = CIE-L;
-        final double a = Math.cos(degree2radian(H)) * C;
-        final double b = Math.sin(degree2radian(H)) * C;
+        final double a = Math.cos(degree2radian(h)) * c;
+        final double b = Math.sin(degree2radian(h)) * c;
 
-        return new ColorCieLab(L, a, b);
+        return new ColorCieLab(l, a, b);
     }
 
     public static ColorXyz convertCIELuvtoXYZ(final ColorCieLuv cielch) {
         return convertCIELuvtoXYZ(cielch.L, cielch.u, cielch.v);
     }
 
-    public static ColorXyz convertCIELuvtoXYZ(final double L, final double u, final double v) {
+    public static ColorXyz convertCIELuvtoXYZ(final double l, final double u, final double v) {
         // problems here with div by zero
 
-        double varY = (L + 16) / 116.0;
+        double varY = (l + 16) / 116.0;
         varY = unPivotXYZ(varY);
 
         final double refU = (4 * REF_X) / (REF_X + (15 * REF_Y) + (3 * REF_Z));
         final double refV = (9 * REF_Y) / (REF_X + (15 * REF_Y) + (3 * REF_Z));
-        final double varU = u / (13 * L) + refU;
-        final double varV = v / (13 * L) + refV;
+        final double varU = u / (13 * l) + refU;
+        final double varV = v / (13 * l) + refV;
 
         final double y = varY * 100;
         final double x = -(9 * y * varU) / ((varU - 4) * varV - varU * varV);
@@ -335,26 +335,26 @@ public final class ColorConversions {
     /**
      * DIN99o.
      *
-     * @param L99o lightness of color.
+     * @param l99o lightness of color.
      * @param a99o position between red and green.
      * @param b99o position between yellow and blue.
      * @return DIN99o colors converted to CIELab color space.
      * @see <a href="https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum">https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum</a>
      */
-    public static ColorCieLab convertDIN99oLabToCIELab(final double L99o, final double a99o, final double b99o) {
+    public static ColorCieLab convertDIN99oLabToCIELab(final double l99o, final double a99o, final double b99o) {
         final double kE = 1.0; // brightness factor, 1.0 for CIE reference conditions
         final double kCH = 1.0; // chroma and hue factor, 1.0 for CIE reference conditions
         final double fac1 = 100.0 / Math.log(139.0 / 100.0); // L99 scaling factor = 303.67100547050995
         final double ang = Math.toRadians(26.0);
 
-        final double l = (Math.exp(L99o * kE / fac1) - 1.0) / 0.0039;
+        final double l = (Math.exp(l99o * kE / fac1) - 1.0) / 0.0039;
 
         final double h99ef = Math.atan2(b99o, a99o); // arctan in four quadrants
 
         final double heofo = h99ef - ang; // backwards hue rotation
 
-        final double C99 = Math.sqrt(a99o * a99o + b99o * b99o); // DIN99 chroma
-        final double g = (Math.exp(0.0435 * kE * kCH * C99) - 1.0) / 0.075; // factor for chroma decompression and viewing conditions
+        final double c99 = Math.sqrt(a99o * a99o + b99o * b99o); // DIN99 chroma
+        final double g = (Math.exp(0.0435 * kE * kCH * c99) - 1.0) / 0.075; // factor for chroma decompression and viewing conditions
         final double e = g * Math.cos(heofo);
         final double f = g * Math.sin(heofo);
 
@@ -638,10 +638,10 @@ public final class ColorConversions {
         return new ColorHsv(h, s, v);
     }
 
-    private static int convertRGBtoRGB(final double R, final double G, final double B) {
-        int red = (int) Math.round(R);
-        int green = (int) Math.round(G);
-        int blue = (int) Math.round(B);
+    private static int convertRGBtoRGB(final double r, final double g, final double b) {
+        int red = (int) Math.round(r);
+        int green = (int) Math.round(g);
+        int blue = (int) Math.round(b);
 
         red = Math.min(255, Math.max(0, red));
         green = Math.min(255, Math.max(0, green));
@@ -700,11 +700,11 @@ public final class ColorConversions {
         return convertXYZtoCIELab(xyz.X, xyz.Y, xyz.Z);
     }
 
-    public static ColorCieLab convertXYZtoCIELab(final double X, final double Y, final double Z) {
+    public static ColorCieLab convertXYZtoCIELab(final double x, final double y, final double z) {
 
-        double varX = X / REF_X; // REF_X = 95.047 Observer= 2°, Illuminant= D65
-        double varY = Y / REF_Y; // REF_Y = 100.000
-        double varZ = Z / REF_Z; // REF_Z = 108.883
+        double varX = x / REF_X; // REF_X = 95.047 Observer= 2°, Illuminant= D65
+        double varY = y / REF_Y; // REF_Y = 100.000
+        double varZ = z / REF_Z; // REF_Z = 108.883
 
         // Pivot XÝZ:
         varX = pivotXYZ(varX);
