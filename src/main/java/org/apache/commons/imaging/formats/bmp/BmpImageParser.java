@@ -371,7 +371,7 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
         colorsImportant = read4Bytes("ColorsImportant", is, "Not a Valid BMP File", getByteOrder());
         if (bitmapHeaderSize >= 52 || compression == BI_BITFIELDS) {
             // 52 = BITMAPV2INFOHEADER, now undocumented
-            // see http://en.wikipedia.org/wiki/BMP_file_format
+            // see https://en.wikipedia.org/wiki/BMP_file_format
             redMask = read4Bytes("RedMask", is, "Not a Valid BMP File", getByteOrder());
             greenMask = read4Bytes("GreenMask", is, "Not a Valid BMP File", getByteOrder());
             blueMask = read4Bytes("BlueMask", is, "Not a Valid BMP File", getByteOrder());
@@ -379,7 +379,7 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
         if (bitmapHeaderSize >= 56) {
             // 56 = the now undocumented BITMAPV3HEADER sometimes used by
             // Photoshop
-            // see http://forums.adobe.com/thread/751592?tstart=1
+            // see [BROKEN URL] http://forums.adobe.com/thread/751592?tstart=1
             alphaMask = read4Bytes("AlphaMask", is, "Not a Valid BMP File", getByteOrder());
         }
         if (bitmapHeaderSize >= 108) {
