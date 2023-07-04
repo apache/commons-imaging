@@ -122,7 +122,7 @@ public class JpegIptcRewriter extends JpegRewriter {
      */
     public void removeIptc(final ByteSource byteSource, final OutputStream os, final boolean removeSegment)
             throws ImagingException, IOException, ImagingException {
-        final JFIFPieces jfifPieces = analyzeJFIF(byteSource);
+        final JFIFPieces jfifPieces = analyzeJfif(byteSource);
         final List<JFIFPiece> oldPieces = jfifPieces.pieces;
         final List<JFIFPiece> photoshopApp13Segments = findPhotoshopApp13Segments(oldPieces);
 
@@ -287,7 +287,7 @@ public class JpegIptcRewriter extends JpegRewriter {
     public void writeIptc(final ByteSource byteSource, final OutputStream os,
             PhotoshopApp13Data newData) throws ImagingException, IOException,
             ImagingException {
-        final JFIFPieces jfifPieces = analyzeJFIF(byteSource);
+        final JFIFPieces jfifPieces = analyzeJfif(byteSource);
         final List<JFIFPiece> oldPieces = jfifPieces.pieces;
         final List<JFIFPiece> photoshopApp13Segments = findPhotoshopApp13Segments(oldPieces);
 

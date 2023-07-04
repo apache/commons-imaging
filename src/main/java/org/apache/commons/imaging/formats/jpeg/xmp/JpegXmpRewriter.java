@@ -66,7 +66,7 @@ public class JpegXmpRewriter extends JpegRewriter {
      */
     public void removeXmpXml(final ByteSource byteSource, final OutputStream os)
             throws ImagingException, IOException {
-        final JFIFPieces jfifPieces = analyzeJFIF(byteSource);
+        final JFIFPieces jfifPieces = analyzeJfif(byteSource);
         List<JFIFPiece> pieces = jfifPieces.pieces;
         pieces = removeXmpSegments(pieces);
         writeSegments(os, pieces);
@@ -148,7 +148,7 @@ public class JpegXmpRewriter extends JpegRewriter {
     public void updateXmpXml(final ByteSource byteSource, final OutputStream os,
             final String xmpXml) throws ImagingException, IOException,
             ImagingException {
-        final JFIFPieces jfifPieces = analyzeJFIF(byteSource);
+        final JFIFPieces jfifPieces = analyzeJfif(byteSource);
         List<JFIFPiece> pieces = jfifPieces.pieces;
         pieces = removeXmpSegments(pieces);
 

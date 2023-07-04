@@ -169,7 +169,7 @@ public class JpegRewriter extends BinaryFileParser {
         super(JPEG_BYTE_ORDER);
     }
 
-    protected JFIFPieces analyzeJFIF(final ByteSource byteSource) throws ImagingException, IOException {
+    protected JFIFPieces analyzeJfif(final ByteSource byteSource) throws ImagingException, IOException {
         final List<JFIFPiece> pieces = new ArrayList<>();
         final List<JFIFPiece> segmentPieces = new ArrayList<>();
 
