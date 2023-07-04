@@ -40,7 +40,7 @@ public interface PaletteEntry {
      * @param f valid floating point value, or a NaN.
      * @return an integer value
      */
-    int getARGB(float f);
+    int getArgb(float f);
 
     /**
      * Gets the color assignment associated with the input value. If the input

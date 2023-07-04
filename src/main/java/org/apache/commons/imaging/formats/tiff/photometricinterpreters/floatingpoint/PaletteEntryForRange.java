@@ -113,7 +113,7 @@ public class PaletteEntryForRange implements PaletteEntry {
     }
 
     @Override
-    public int getARGB(final float f) {
+    public int getArgb(final float f) {
         if (v0 <= f && f <= v1) {
             final float t = (f - v0) / (v1 - v0);
             final int a = (int) (t * (a1 - a0) + a0 + 0.5);

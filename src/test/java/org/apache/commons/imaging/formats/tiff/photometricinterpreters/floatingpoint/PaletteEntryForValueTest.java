@@ -48,15 +48,15 @@ public class PaletteEntryForValueTest {
     public void testGetARGB() {
         final Color c0 = new Color(0xff0000ff);
         PaletteEntryForValue instance = new PaletteEntryForValue(0.0f, c0);
-        int a0 = instance.getARGB(0.0f);
-        int a1 = instance.getARGB(0.5f);
-        final int a2 = instance.getARGB(Float.NaN);
+        int a0 = instance.getArgb(0.0f);
+        int a1 = instance.getArgb(0.5f);
+        final int a2 = instance.getArgb(Float.NaN);
         assertEquals(0xff0000ff, a0, "Invalid value for target 0.0f");
         assertEquals(0, a1, "Invalid value for target 0.5f");
         assertEquals(0, a2, "Invalid value for target NaN");
         instance = new PaletteEntryForValue(Float.NaN, c0);
-        a0 = instance.getARGB(0.0f);
-        a1 = instance.getARGB(Float.NaN);
+        a0 = instance.getArgb(0.0f);
+        a1 = instance.getArgb(Float.NaN);
         assertEquals(0, a0, "Invalid value for target 0.0f");
         assertEquals(0xff0000ff, a1, "Invalid value for target NaN");
     }

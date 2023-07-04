@@ -56,7 +56,7 @@ public class PaletteEntryForValue implements PaletteEntry {
     }
 
     @Override
-    public int getARGB(final float f) {
+    public int getArgb(final float f) {
         if (isNull && Float.isNaN(f)) {
             return iColor;
         }

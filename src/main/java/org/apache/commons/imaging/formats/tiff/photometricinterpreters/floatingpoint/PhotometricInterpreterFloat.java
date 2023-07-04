@@ -225,7 +225,7 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
         // only the single bound palette entries support NaN
         for (final PaletteEntry entry : singleValuePaletteEntries) {
             if (entry.isCovered(f)) {
-                final int p = entry.getARGB(f);
+                final int p = entry.getArgb(f);
                 imageBuilder.setRgb(x, y, p);
                 return;
             }
@@ -251,7 +251,7 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
 
         for (final PaletteEntry entry : singleValuePaletteEntries) {
             if (entry.isCovered(f)) {
-                final int p = entry.getARGB(f);
+                final int p = entry.getArgb(f);
                 imageBuilder.setRgb(x, y, p);
                 return;
             }
@@ -259,7 +259,7 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
 
         for (final PaletteEntry entry : rangePaletteEntries) {
             if (entry.isCovered(f)) {
-                final int p = entry.getARGB(f);
+                final int p = entry.getArgb(f);
                 imageBuilder.setRgb(x, y, p);
                 break;
             }
@@ -284,7 +284,7 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
         // because NaN may have special treatment.
         for (final PaletteEntry entry : singleValuePaletteEntries) {
             if (entry.isCovered(f)) {
-                return entry.getARGB(f);
+                return entry.getArgb(f);
             }
         }
 
@@ -296,7 +296,7 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
 
         for (final PaletteEntry entry : rangePaletteEntries) {
             if (entry.isCovered(f)) {
-                return entry.getARGB(f);
+                return entry.getArgb(f);
             }
         }
         return 0;

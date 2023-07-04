@@ -75,8 +75,8 @@ public class PaletteEntryForRangeTest {
         final Color c0 = new Color(0xff0000ff);
         final Color c1 = new Color(0xff00ff00);
         final PaletteEntryForRange instance = new PaletteEntryForRange(0.0f, 1.0f, c0, c1);
-        final int a0 = instance.getARGB(0.0f);
-        final int a1 = instance.getARGB(0.5f);
+        final int a0 = instance.getArgb(0.0f);
+        final int a1 = instance.getArgb(0.5f);
         assertEquals(0xff0000ff, a0, "Invalid value for 0.0f");
         assertEquals(0xff008080, a1, "Invalid interpolated values");
     }
