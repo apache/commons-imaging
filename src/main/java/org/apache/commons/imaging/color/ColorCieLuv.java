@@ -81,8 +81,8 @@ public final class ColorCieLuv {
     public final double u;
     public final double v;
 
-    public ColorCieLuv(final double L, final double u, final double v) {
-        this.l = L;
+    public ColorCieLuv(final double l, final double u, final double v) {
+        this.l = l;
         this.u = u;
         this.v = v;
     }
