@@ -132,7 +132,7 @@ public class ExifRewriter extends BinaryFileParser {
         super(byteOrder);
     }
 
-    private JFIFPieces analyzeJFIF(final ByteSource byteSource) throws ImagingException, IOException {
+    private JFIFPieces analyzeJfif(final ByteSource byteSource) throws ImagingException, IOException {
         final List<JFIFPiece> pieces = new ArrayList<>();
         final List<JFIFPiece> exifPieces = new ArrayList<>();
 
@@ -220,7 +220,7 @@ public class ExifRewriter extends BinaryFileParser {
      */
     public void removeExifMetadata(final ByteSource byteSource, final OutputStream os)
             throws ImagingException, IOException, ImagingException {
-        final JFIFPieces jfifPieces = analyzeJFIF(byteSource);
+        final JFIFPieces jfifPieces = analyzeJfif(byteSource);
         final List<JFIFPiece> pieces = jfifPieces.pieces;
 
         // Debug.debug("pieces", pieces);
@@ -327,7 +327,7 @@ public class ExifRewriter extends BinaryFileParser {
             final OutputStream os, final TiffOutputSet outputSet)
             throws ImagingException, IOException, ImagingException {
         // List outputDirectories = outputSet.getDirectories();
-        final JFIFPieces jfifPieces = analyzeJFIF(byteSource);
+        final JFIFPieces jfifPieces = analyzeJfif(byteSource);
         final List<JFIFPiece> pieces = jfifPieces.pieces;
 
         TiffImageWriterBase writer;
@@ -453,7 +453,7 @@ public class ExifRewriter extends BinaryFileParser {
     public void updateExifMetadataLossy(final ByteSource byteSource, final OutputStream os,
             final TiffOutputSet outputSet) throws ImagingException, IOException,
             ImagingException {
-        final JFIFPieces jfifPieces = analyzeJFIF(byteSource);
+        final JFIFPieces jfifPieces = analyzeJfif(byteSource);
         final List<JFIFPiece> pieces = jfifPieces.pieces;
 
         final TiffImageWriterBase writer = new TiffImageWriterLossy(
