@@ -200,7 +200,7 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final PcxImagingParameters params)
+    public byte[] getIccProfileBytes(final ByteSource byteSource, final PcxImagingParameters params)
             throws ImagingException, IOException {
         return null;
     }

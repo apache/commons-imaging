@@ -320,7 +320,7 @@ public class PsdImageParser extends ImageParser<PsdImagingParameters> implements
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final PsdImagingParameters params)
+    public byte[] getIccProfileBytes(final ByteSource byteSource, final PsdImagingParameters params)
             throws ImagingException, IOException {
         final List<ImageResourceBlock> blocks = readImageResourceBlocks(byteSource,
                 new int[] { IMAGE_RESOURCE_ID_ICC_PROFILE, }, 1);

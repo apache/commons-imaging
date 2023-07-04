@@ -122,7 +122,7 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
 
     // FIXME should throw UOE
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final PcxImagingParameters params)
+    public byte[] getIccProfileBytes(final ByteSource byteSource, final PcxImagingParameters params)
             throws ImagingException, IOException {
         return null;
     }

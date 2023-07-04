@@ -348,7 +348,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final PngImagingParameters params)
+    public byte[] getIccProfileBytes(final ByteSource byteSource, final PngImagingParameters params)
             throws ImagingException, IOException {
         final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] { ChunkType.iCCP },
                 true);

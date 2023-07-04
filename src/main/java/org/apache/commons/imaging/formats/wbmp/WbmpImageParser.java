@@ -106,7 +106,7 @@ public class WbmpImageParser extends ImageParser<WbmpImagingParameters> {
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final WbmpImagingParameters params)
+    public byte[] getIccProfileBytes(final ByteSource byteSource, final WbmpImagingParameters params)
             throws ImagingException, IOException {
         return null;
     }

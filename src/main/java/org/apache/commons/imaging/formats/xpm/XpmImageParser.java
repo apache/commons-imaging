@@ -203,7 +203,7 @@ public class XpmImageParser extends ImageParser<XpmImagingParameters> {
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final XpmImagingParameters params) throws ImagingException, IOException {
+    public byte[] getIccProfileBytes(final ByteSource byteSource, final XpmImagingParameters params) throws ImagingException, IOException {
         return null;
     }
 

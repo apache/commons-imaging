@@ -369,7 +369,7 @@ public final class Imaging {
 
     private static byte[] getICCProfileBytes(final ByteSource byteSource) throws ImagingException, IOException {
         final ImageParser<?> imageParser = ImageParserFactory.getImageParser(byteSource);
-        return imageParser.getICCProfileBytes(byteSource, null);
+        return imageParser.getIccProfileBytes(byteSource, null);
     }
 
     /**

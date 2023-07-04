@@ -84,7 +84,7 @@ public class RgbeImageParser extends ImageParser<RgbeImagingParameters> {
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final RgbeImagingParameters params)
+    public byte[] getIccProfileBytes(final ByteSource byteSource, final RgbeImagingParameters params)
             throws ImagingException, IOException {
         return null;
     }

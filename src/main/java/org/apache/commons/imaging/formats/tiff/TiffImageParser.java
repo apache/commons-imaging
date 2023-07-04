@@ -418,7 +418,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final TiffImagingParameters params)
+    public byte[] getIccProfileBytes(final ByteSource byteSource, final TiffImagingParameters params)
             throws ImagingException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffContents contents = new TiffReader(params != null && params.isStrict()).readFirstDirectory(

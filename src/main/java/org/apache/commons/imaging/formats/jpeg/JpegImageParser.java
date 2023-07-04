@@ -283,7 +283,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final JpegImagingParameters params)
+    public byte[] getIccProfileBytes(final ByteSource byteSource, final JpegImagingParameters params)
             throws ImagingException, IOException {
         final List<Segment> segments = readSegments(byteSource,
                 new int[] { JpegConstants.JPEG_APP2_MARKER, }, false);

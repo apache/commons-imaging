@@ -148,7 +148,7 @@ public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final IcnsImagingParameters params)
+    public byte[] getIccProfileBytes(final ByteSource byteSource, final IcnsImagingParameters params)
             throws ImagingException, IOException {
         return null;
     }

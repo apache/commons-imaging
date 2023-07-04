@@ -399,7 +399,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final GifImagingParameters params)
+    public byte[] getIccProfileBytes(final ByteSource byteSource, final GifImagingParameters params)
             throws ImagingException, IOException {
         return null;
     }

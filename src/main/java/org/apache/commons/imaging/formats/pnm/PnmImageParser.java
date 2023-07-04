@@ -116,7 +116,7 @@ public class PnmImageParser extends ImageParser<PnmImagingParameters> {
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final PnmImagingParameters params)
+    public byte[] getIccProfileBytes(final ByteSource byteSource, final PnmImagingParameters params)
             throws ImagingException, IOException {
         return null;
     }

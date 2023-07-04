@@ -297,7 +297,7 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
 
     // TODO should throw UOE
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final IcoImagingParameters params)
+    public byte[] getIccProfileBytes(final ByteSource byteSource, final IcoImagingParameters params)
             throws ImagingException, IOException {
         return null;
     }

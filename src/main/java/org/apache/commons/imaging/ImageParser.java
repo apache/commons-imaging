@@ -490,8 +490,8 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
      *                            parser implementation.
      * @throws IOException        In the event of unsuccessful read or access operation.
      */
-    public final byte[] getICCProfileBytes(final byte[] bytes) throws ImagingException, IOException {
-        return getICCProfileBytes(bytes, null);
+    public final byte[] getIccProfileBytes(final byte[] bytes) throws ImagingException, IOException {
+        return getIccProfileBytes(bytes, null);
     }
 
     /**
@@ -508,9 +508,9 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
      *                            parser implementation.
      * @throws IOException        In the event of unsuccessful read or access operation.
      */
-    public final byte[] getICCProfileBytes(final byte[] bytes, final T params)
+    public final byte[] getIccProfileBytes(final byte[] bytes, final T params)
             throws ImagingException, IOException {
-        return getICCProfileBytes(ByteSource.array(bytes), params);
+        return getIccProfileBytes(ByteSource.array(bytes), params);
     }
 
     /**
@@ -527,7 +527,7 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
      *                            parser implementation.
      * @throws IOException        In the event of unsuccessful read or access operation.
      */
-    public abstract byte[] getICCProfileBytes(ByteSource byteSource, T params)
+    public abstract byte[] getIccProfileBytes(ByteSource byteSource, T params)
             throws ImagingException, IOException;
 
     /**
@@ -542,8 +542,8 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
      *                            parser implementation.
      * @throws IOException        In the event of unsuccessful read or access operation.
      */
-    public final byte[] getICCProfileBytes(final File file) throws ImagingException, IOException {
-        return getICCProfileBytes(file, null);
+    public final byte[] getIccProfileBytes(final File file) throws ImagingException, IOException {
+        return getIccProfileBytes(file, null);
     }
 
     /**
@@ -560,7 +560,7 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
      *                            parser implementation.
      * @throws IOException        In the event of unsuccessful read or access operation.
      */
-    public final byte[] getICCProfileBytes(final File file, final T params)
+    public final byte[] getIccProfileBytes(final File file, final T params)
             throws ImagingException, IOException {
         if (!canAcceptExtension(file)) {
             return null;
@@ -570,7 +570,7 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
             LOGGER.finest(getName() + ": " + file.getName());
         }
 
-        return getICCProfileBytes(ByteSource.file(file), params);
+        return getIccProfileBytes(ByteSource.file(file), params);
     }
 
     /**
