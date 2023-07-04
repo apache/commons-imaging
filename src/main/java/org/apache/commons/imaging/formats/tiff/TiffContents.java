@@ -25,6 +25,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.internal.Debug;
 
 public class TiffContents {
+
     public final TiffHeader header;
     public final List<TiffDirectory> directories;
     public final List<TiffField> tiffFields;
