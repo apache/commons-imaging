@@ -111,10 +111,10 @@ public final class ColorCmy {
     public final double m;
     public final double y;
 
-    public ColorCmy(final double C, final double M, final double Y) {
-        this.c = C;
-        this.m = M;
-        this.y = Y;
+    public ColorCmy(final double c, final double m, final double y) {
+        this.c = c;
+        this.m = m;
+        this.y = y;
     }
 
     @Override
