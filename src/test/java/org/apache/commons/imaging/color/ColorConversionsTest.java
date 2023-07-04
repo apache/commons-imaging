@@ -32,15 +32,15 @@ public class ColorConversionsTest {
         for (final int rgb : SAMPLE_RGBS) {
             final ColorCmy cmy = ColorConversions.convertRGBtoCMY(rgb);
             final ColorCmyk cmyk = ColorConversions.convertCMYtoCMYK(cmy);
-            final ColorCmy cmyk_cmy = ColorConversions.convertCMYKtoCMY(cmyk);
-            final int cmyk_cmy_rgb = ColorConversions.convertCMYtoRGB(cmyk_cmy);
+            final ColorCmy cmykCmy = ColorConversions.convertCMYKtoCMY(cmyk);
+            final int cmykCmyRgb = ColorConversions.convertCMYtoRGB(cmykCmy);
 
             Debug.debug("cmy: " + cmy);
             Debug.debug("cmyk: " + cmyk);
-            Debug.debug("cmyk_cmy: " + cmyk_cmy);
-            Debug.debug("cmyk_cmy_rgb: " + cmyk_cmy_rgb + " (" + Integer.toHexString(cmyk_cmy_rgb) + ")");
+            Debug.debug("cmykCmy: " + cmykCmy);
+            Debug.debug("cmykCmyRgb: " + cmykCmyRgb + " (" + Integer.toHexString(cmykCmyRgb) + ")");
 
-            assertEquals(toHexString(0xffffff & rgb), toHexString(0xffffff & cmyk_cmy_rgb));
+            assertEquals(toHexString(0xffffff & rgb), toHexString(0xffffff & cmykCmyRgb));
         }
     }
 
@@ -52,11 +52,11 @@ public class ColorConversionsTest {
             final ColorCieLab cielab = ColorConversions.convertXYZtoCIELab(xyz);
             final ColorDin99Lab din99b = ColorConversions.convertCIELabToDIN99bLab(cielab);
 
-            final ColorCieLab din99_cielab = ColorConversions.convertDIN99bLabToCIELab(din99b);
-            final ColorXyz din99_cielab_xyz = ColorConversions.convertCIELabtoXYZ(din99_cielab);
-            final int din99_cielab_xyz_rgb = ColorConversions.convertXYZtoRGB(din99_cielab_xyz);
+            final ColorCieLab din99Cielab = ColorConversions.convertDIN99bLabToCIELab(din99b);
+            final ColorXyz din99CielabXyz = ColorConversions.convertCIELabtoXYZ(din99Cielab);
+            final int din99CielabXyzRgb = ColorConversions.convertXYZtoRGB(din99CielabXyz);
 
-            assertEquals(toHexString(0xffffff & rgb), toHexString(0xffffff & din99_cielab_xyz_rgb));
+            assertEquals(toHexString(0xffffff & rgb), toHexString(0xffffff & din99CielabXyzRgb));
         }
     }
 
@@ -68,11 +68,11 @@ public class ColorConversionsTest {
             final ColorCieLab cielab = ColorConversions.convertXYZtoCIELab(xyz);
             final ColorDin99Lab din99o = ColorConversions.convertCIELabToDIN99oLab(cielab);
 
-            final ColorCieLab din99_cielab = ColorConversions.convertDIN99oLabToCIELab(din99o);
-            final ColorXyz din99_cielab_xyz = ColorConversions.convertCIELabtoXYZ(din99_cielab);
-            final int din99_cielab_xyz_rgb = ColorConversions.convertXYZtoRGB(din99_cielab_xyz);
+            final ColorCieLab din99Cielab = ColorConversions.convertDIN99oLabToCIELab(din99o);
+            final ColorXyz din99CielabXyz = ColorConversions.convertCIELabtoXYZ(din99Cielab);
+            final int din99CielabXyzRgb = ColorConversions.convertXYZtoRGB(din99CielabXyz);
 
-            assertEquals(toHexString(0xffffff & rgb), toHexString(0xffffff & din99_cielab_xyz_rgb));
+            assertEquals(toHexString(0xffffff & rgb), toHexString(0xffffff & din99CielabXyzRgb));
         }
     }
 
@@ -80,12 +80,12 @@ public class ColorConversionsTest {
     public void testRGBtoHSL() {
         for (final int rgb : SAMPLE_RGBS) {
             final ColorHsl hsl = ColorConversions.convertRGBtoHSL(rgb);
-            final int hsl_rgb = ColorConversions.convertHSLtoRGB(hsl);
+            final int hslRgb = ColorConversions.convertHSLtoRGB(hsl);
 
             Debug.debug("hsl: " + hsl);
-            Debug.debug("hsl_rgb: " + hsl_rgb + " (" + Integer.toHexString(hsl_rgb) + ")");
+            Debug.debug("hslRgb: " + hslRgb + " (" + Integer.toHexString(hslRgb) + ")");
 
-            assertEquals(toHexString(0xffffff & rgb), toHexString(0xffffff & hsl_rgb));
+            assertEquals(toHexString(0xffffff & rgb), toHexString(0xffffff & hslRgb));
         }
     }
 
@@ -93,12 +93,12 @@ public class ColorConversionsTest {
     public void testRGBtoHSV() {
         for (final int rgb : SAMPLE_RGBS) {
             final ColorHsv hsv = ColorConversions.convertRGBtoHSV(rgb);
-            final int hsv_rgb = ColorConversions.convertHSVtoRGB(hsv);
+            final int hsvRgb = ColorConversions.convertHSVtoRGB(hsv);
 
             Debug.debug("hsv: " + hsv);
-            Debug.debug("hsv_rgb: " + hsv_rgb + " (" + Integer.toHexString(hsv_rgb) + ")");
+            Debug.debug("hsvRgb: " + hsvRgb + " (" + Integer.toHexString(hsvRgb) + ")");
 
-            assertEquals(toHexString(0xffffff & rgb), toHexString(0xffffff & hsv_rgb));
+            assertEquals(toHexString(0xffffff & rgb), toHexString(0xffffff & hsvRgb));
         }
     }
 
@@ -106,47 +106,47 @@ public class ColorConversionsTest {
     public void testXYZ() {
         for (final int rgb : SAMPLE_RGBS) {
             final ColorXyz xyz = ColorConversions.convertRGBtoXYZ(rgb);
-            final int xyz_rgb = ColorConversions.convertXYZtoRGB(xyz);
+            final int xyzRgb = ColorConversions.convertXYZtoRGB(xyz);
 
             Debug.debug();
             Debug.debug("rgb: " + rgb + " (" + Integer.toHexString(rgb) + ")");
             Debug.debug("xyz: " + xyz);
-            Debug.debug("xyz_rgb: " + xyz_rgb + " (" + Integer.toHexString(xyz_rgb) + ")");
+            Debug.debug("xyzRgb: " + xyzRgb + " (" + Integer.toHexString(xyzRgb) + ")");
 
-            assertEquals(toHexString(0xffffff & rgb), toHexString(0xffffff & xyz_rgb), "rgb "+toHexString(rgb)+", "+xyz);
+            assertEquals(toHexString(0xffffff & rgb), toHexString(0xffffff & xyzRgb), "rgb "+toHexString(rgb)+", "+xyz);
 
             final ColorCieLab cielab = ColorConversions.convertXYZtoCIELab(xyz);
-            final ColorXyz cielab_xyz = ColorConversions.convertCIELabtoXYZ(cielab);
-            final int cielab_xyz_rgb = ColorConversions.convertXYZtoRGB(cielab_xyz);
+            final ColorXyz cielabXyz = ColorConversions.convertCIELabtoXYZ(cielab);
+            final int cielabXyzRgb = ColorConversions.convertXYZtoRGB(cielabXyz);
 
             Debug.debug("cielab: " + cielab);
-            Debug.debug("cielab_xyz: " + cielab_xyz);
-            Debug.debug("cielab_xyz_rgb: " + cielab_xyz_rgb + " (" + Integer.toHexString(cielab_xyz_rgb) + ")");
+            Debug.debug("cielabXyz: " + cielabXyz);
+            Debug.debug("cielabXyzRgb: " + cielabXyzRgb + " (" + Integer.toHexString(cielabXyzRgb) + ")");
 
-            assertEquals(toHexString(0xffffff & rgb), toHexString(0xffffff & cielab_xyz_rgb));
+            assertEquals(toHexString(0xffffff & rgb), toHexString(0xffffff & cielabXyzRgb));
 
             final ColorHunterLab hunterlab = ColorConversions.convertXYZtoHunterLab(xyz);
-            final ColorXyz hunterlab_xyz = ColorConversions.convertHunterLabtoXYZ(hunterlab);
-            final int hunterlab_xyz_rgb = ColorConversions.convertXYZtoRGB(hunterlab_xyz);
+            final ColorXyz hunterlabXyz = ColorConversions.convertHunterLabtoXYZ(hunterlab);
+            final int hunterlabXyzRgb = ColorConversions.convertXYZtoRGB(hunterlabXyz);
 
             Debug.debug("hunterlab: " + hunterlab);
-            Debug.debug("hunterlab_xyz: " + hunterlab_xyz);
-            Debug.debug("hunterlab_xyz_rgb: " + hunterlab_xyz_rgb + " ("
-                            + Integer.toHexString(hunterlab_xyz_rgb) + ")");
+            Debug.debug("hunterlabXyz: " + hunterlabXyz);
+            Debug.debug("hunterlabXyzRgb: " + hunterlabXyzRgb + " ("
+                            + Integer.toHexString(hunterlabXyzRgb) + ")");
 
-            assertEquals(toHexString(0xffffff & rgb), toHexString(0xffffff & hunterlab_xyz_rgb));
+            assertEquals(toHexString(0xffffff & rgb), toHexString(0xffffff & hunterlabXyzRgb));
 
             final ColorCieLch cielch = ColorConversions.convertCIELabtoCIELCH(cielab);
-            final ColorCieLab cielch_cielab = ColorConversions.convertCIELCHtoCIELab(cielch);
+            final ColorCieLab cielchCielab = ColorConversions.convertCIELCHtoCIELab(cielch);
 
             Debug.debug("cielch", cielch);
-            Debug.debug("cielch_cielab", cielch_cielab);
+            Debug.debug("cielchCielab", cielchCielab);
 
             final ColorCieLuv cieluv = ColorConversions.convertXYZtoCIELuv(xyz);
-            final ColorXyz cieluv_xyz = ColorConversions.convertCIELuvtoXYZ(cieluv);
+            final ColorXyz cieluvXyz = ColorConversions.convertCIELuvtoXYZ(cieluv);
 
             Debug.debug("cieluv", cieluv);
-            Debug.debug("cieluv_xyz", cieluv_xyz);
+            Debug.debug("cieluvXyz", cieluvXyz);
         }
     }
 }
