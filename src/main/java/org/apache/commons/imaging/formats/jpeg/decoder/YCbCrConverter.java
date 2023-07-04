@@ -99,7 +99,7 @@ final class YCbCrConverter {
         }
     }
 
-    public static int convertYCbCrToRGB(final int y, final int cb, final int cr) {
+    public static int convertYCbCrToRgb(final int y, final int cb, final int cr) {
         final int r = REDS[(cr << 8) | y];
         final int g1 = GREENS1[(cb << 8) | cr];
         final int g = GREENS2[(g1 << 8) | y];

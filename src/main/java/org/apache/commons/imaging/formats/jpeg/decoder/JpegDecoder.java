@@ -510,7 +510,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                                 final int y = scaledMCU[0].samples[srcRowOffset + x2];
                                 final int cb = scaledMCU[1].samples[srcRowOffset + x2];
                                 final int cr = scaledMCU[2].samples[srcRowOffset + x2];
-                                final int rgb = YCbCrConverter.convertYCbCrToRGB(y,
+                                final int rgb = YCbCrConverter.convertYCbCrToRgb(y,
                                         cb, cr);
                                 dataBuffer.setElem(dstRowOffset + x2, rgb);
                             } else if (mcu.length == 1) {
