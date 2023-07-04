@@ -80,13 +80,13 @@ public final class ColorCieLch {
      */
     public static final ColorCieLch BLUE = new ColorCieLch(32, 79, -108);
 
-    public final double L;
-    public final double C;
+    public final double l;
+    public final double c;
     public final double h;
 
-    public ColorCieLch(final double L, final double C, final double h) {
-        this.L = L;
-        this.C = C;
+    public ColorCieLch(final double l, final double c, final double h) {
+        this.l = l;
+        this.c = c;
         this.h = h;
     }
 
@@ -100,13 +100,13 @@ public final class ColorCieLch {
         }
 
         final ColorCieLch that = (ColorCieLch) o;
-        if (Double.compare(that.C, C) != 0) {
+        if (Double.compare(that.c, c) != 0) {
             return false;
         }
         if (Double.compare(that.h, h) != 0) {
             return false;
         }
-        if (Double.compare(that.L, L) != 0) {
+        if (Double.compare(that.l, l) != 0) {
             return false;
         }
 
@@ -117,9 +117,9 @@ public final class ColorCieLch {
     public int hashCode() {
         int result;
         long temp;
-        temp = Double.doubleToLongBits(L);
+        temp = Double.doubleToLongBits(l);
         result = (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(C);
+        temp = Double.doubleToLongBits(c);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(h);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
@@ -128,6 +128,6 @@ public final class ColorCieLch {
 
     @Override
     public String toString() {
-        return "{L: " + L + ", C: " + C + ", h: " + h + "}";
+        return "{L: " + l + ", C: " + c + ", h: " + h + "}";
     }
 }

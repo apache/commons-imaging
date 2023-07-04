@@ -184,7 +184,7 @@ public final class ColorConversions {
 
 
     public static ColorCieLab convertCIELCHtoCIELab(final ColorCieLch cielch) {
-        return convertCIELCHtoCIELab(cielch.L, cielch.C, cielch.h);
+        return convertCIELCHtoCIELab(cielch.l, cielch.c, cielch.h);
     }
 
     public static ColorCieLab convertCIELCHtoCIELab(final double l, final double c, final double h) {

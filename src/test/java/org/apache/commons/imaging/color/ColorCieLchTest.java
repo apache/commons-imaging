@@ -37,7 +37,7 @@ public class ColorCieLchTest {
 
     @Test
     public void testCAssignment() {
-        assertEquals(2.0, color.C, 0.0);
+        assertEquals(2.0, color.c, 0.0);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class ColorCieLchTest {
 
     @Test
     public void testLAssignment() {
-        assertEquals(1.0, color.L, 0.0);
+        assertEquals(1.0, color.l, 0.0);
     }
 
     @Test
