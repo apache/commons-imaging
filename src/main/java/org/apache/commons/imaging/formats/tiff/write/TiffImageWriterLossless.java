@@ -130,14 +130,14 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
             elements.sort(TiffElement.COMPARATOR);
 
             final List<TiffElement> rewritableElements = new ArrayList<>();
-            final int TOLERANCE = 3;
+            final int tolerance = 3;
             TiffElement start = null;
             long index = -1;
             for (final TiffElement element : elements) {
                 final long lastElementByte = element.offset + element.length;
                 if (start == null) {
                     start = element;
-                } else if (element.offset - index > TOLERANCE) {
+                } else if (element.offset - index > tolerance) {
                     rewritableElements.add(new TiffElement.Stub(start.offset,
                             (int) (index - start.offset)));
                     start = element;
