@@ -26,7 +26,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
 /**
  * Oce Scanjob.
  * <p>
- * http://www.awaresystems.be/imaging/tiff/tifftags/docs/oce.html
+ * https://www.awaresystems.be/imaging/tiff/tifftags/docs/oce.html
  * </p>
  */
 public final class OceScanjobTagConstants {
