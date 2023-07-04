@@ -32,18 +32,18 @@ public class PhotometricInterpreterYCbCr extends PhotometricInterpreter {
      * the case of a null constructor, or they are automatically calculated from
      * the image parameter constructor.
      *
-     * @param Y
+     * @param y
      *            The Y component set.
-     * @param Cb
+     * @param cb
      *            The Cb component set.
-     * @param Cr
+     * @param cr
      *            The Cr component set.
      * @return R The R component.
      */
-    public static int convertYCbCrtoRGB(final int Y, final int Cb, final int Cr) {
-        final double r1 = (((1.164 * (Y - 16.0))) + (1.596 * (Cr - 128.0)));
-        final double g1 = (((1.164 * (Y - 16.0))) - (0.813 * (Cr - 128.0)) - (0.392 * (Cb - 128.0)));
-        final double b1 = (((1.164 * (Y - 16.0))) + (2.017 * (Cb - 128.0)));
+    public static int convertYCbCrtoRGB(final int y, final int cb, final int cr) {
+        final double r1 = (((1.164 * (y - 16.0))) + (1.596 * (cr - 128.0)));
+        final double g1 = (((1.164 * (y - 16.0))) - (0.813 * (cr - 128.0)) - (0.392 * (cb - 128.0)));
+        final double b1 = (((1.164 * (y - 16.0))) + (2.017 * (cb - 128.0)));
 
         final int r = limit((int) r1, 0, 255);
         final int g = limit((int) g1, 0, 255);
@@ -67,15 +67,15 @@ public class PhotometricInterpreterYCbCr extends PhotometricInterpreter {
     public void interpretPixel(final ImageBuilder imageBuilder, final int[] samples, final int x,
             final int y) throws ImagingException, IOException {
         final int Y = samples[0];
-        final int Cb = samples[1];
-        final int Cr = samples[2];
-        final double R = Y + 1.402 * (Cr - 128.0);
-        final double G = Y - 0.34414 * (Cb - 128.0) - 0.71414 * (Cr - 128.0);
-        final double B = Y + 1.772 * (Cb - 128.0);
+        final int cb = samples[1];
+        final int cr = samples[2];
+        final double r = Y + 1.402 * (cr - 128.0);
+        final double g = Y - 0.34414 * (cb - 128.0) - 0.71414 * (cr - 128.0);
+        final double b = Y + 1.772 * (cb - 128.0);
 
-        final int red = limit((int) R, 0, 255);
-        final int green = limit((int) G, 0, 255);
-        final int blue = limit((int) B, 0, 255);
+        final int red = limit((int) r, 0, 255);
+        final int green = limit((int) g, 0, 255);
+        final int blue = limit((int) b, 0, 255);
 
         final int alpha = 0xff;
         final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
