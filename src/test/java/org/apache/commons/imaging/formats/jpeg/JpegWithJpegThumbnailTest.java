@@ -36,7 +36,7 @@ public class JpegWithJpegThumbnailTest extends ImagingTest {
         final ImageMetadata metadata = Imaging.getMetadata(imageFile);
         assertNotNull(metadata);
         final JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
-        final BufferedImage image = jpegMetadata.getEXIFThumbnail();
+        final BufferedImage image = jpegMetadata.getExifThumbnail();
         assertNotNull(image);
     }
 }

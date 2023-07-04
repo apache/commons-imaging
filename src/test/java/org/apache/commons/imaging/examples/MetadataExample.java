@@ -94,13 +94,13 @@ public class MetadataExample {
             }
 
             // more specific example of how to manually access GPS values
-            final TiffField gpsLatitudeRefField = jpegMetadata.findEXIFValueWithExactMatch(
+            final TiffField gpsLatitudeRefField = jpegMetadata.findExifValueWithExactMatch(
                     GpsTagConstants.GPS_TAG_GPS_LATITUDE_REF);
-            final TiffField gpsLatitudeField = jpegMetadata.findEXIFValueWithExactMatch(
+            final TiffField gpsLatitudeField = jpegMetadata.findExifValueWithExactMatch(
                     GpsTagConstants.GPS_TAG_GPS_LATITUDE);
-            final TiffField gpsLongitudeRefField = jpegMetadata.findEXIFValueWithExactMatch(
+            final TiffField gpsLongitudeRefField = jpegMetadata.findExifValueWithExactMatch(
                     GpsTagConstants.GPS_TAG_GPS_LONGITUDE_REF);
-            final TiffField gpsLongitudeField = jpegMetadata.findEXIFValueWithExactMatch(
+            final TiffField gpsLongitudeField = jpegMetadata.findExifValueWithExactMatch(
                     GpsTagConstants.GPS_TAG_GPS_LONGITUDE);
             if (gpsLatitudeRefField != null && gpsLatitudeField != null &&
                     gpsLongitudeRefField != null &&
@@ -150,7 +150,7 @@ public class MetadataExample {
 
     private static void printTagValue(final JpegImageMetadata jpegMetadata,
             final TagInfo tagInfo) {
-        final TiffField field = jpegMetadata.findEXIFValueWithExactMatch(tagInfo);
+        final TiffField field = jpegMetadata.findExifValueWithExactMatch(tagInfo);
         if (field == null) {
             System.out.println(tagInfo.name + ": " + "Not Found.");
         } else {

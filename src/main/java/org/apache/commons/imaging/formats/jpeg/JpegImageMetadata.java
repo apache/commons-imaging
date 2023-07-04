@@ -50,7 +50,7 @@ public class JpegImageMetadata implements ImageMetadata {
         Debug.debug(this.toString());
     }
 
-    public TiffField findEXIFValue(final TagInfo tagInfo) {
+    public TiffField findExifValue(final TagInfo tagInfo) {
         try {
             return exif != null ? exif.findField(tagInfo) : null;
         } catch (final ImagingException cannotHappen) {
@@ -58,7 +58,7 @@ public class JpegImageMetadata implements ImageMetadata {
         }
     }
 
-    public TiffField findEXIFValueWithExactMatch(final TagInfo tagInfo) {
+    public TiffField findExifValueWithExactMatch(final TagInfo tagInfo) {
         try {
             return exif != null ? exif.findField(tagInfo, true) : null;
         } catch (final ImagingException cannotHappen) {
@@ -78,7 +78,7 @@ public class JpegImageMetadata implements ImageMetadata {
      * @throws ImagingException if it fails to read the image
      * @throws IOException if it fails to get the thumbnail or to read the image data
      */
-    public BufferedImage getEXIFThumbnail() throws ImagingException,
+    public BufferedImage getExifThumbnail() throws ImagingException,
             IOException {
 
         if (exif == null) {
@@ -125,7 +125,7 @@ public class JpegImageMetadata implements ImageMetadata {
      *
      * @return JPEG data or null if no thumbnail.
      */
-    public byte[] getEXIFThumbnailData() {
+    public byte[] getExifThumbnailData() {
         if (exif == null) {
             return null;
         }
@@ -154,9 +154,9 @@ public class JpegImageMetadata implements ImageMetadata {
      * @throws ImagingException if it fails to read the image
      * @throws IOException if it fails to read the image size
      */
-    public Dimension getEXIFThumbnailSize() throws ImagingException,
+    public Dimension getExifThumbnailSize() throws ImagingException,
             IOException {
-        final byte[] data = getEXIFThumbnailData();
+        final byte[] data = getExifThumbnailData();
 
         if (data != null) {
             return Imaging.getImageSize(data);

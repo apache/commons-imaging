@@ -408,19 +408,19 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
 
             if (metadata != null) {
                 {
-                    final TiffField field = metadata.findEXIFValue(TiffTagConstants.TIFF_TAG_XRESOLUTION);
+                    final TiffField field = metadata.findExifValue(TiffTagConstants.TIFF_TAG_XRESOLUTION);
                     if (field != null) {
                         xDensity = ((Number) field.getValue()).doubleValue();
                     }
                 }
                 {
-                    final TiffField field = metadata.findEXIFValue(TiffTagConstants.TIFF_TAG_YRESOLUTION);
+                    final TiffField field = metadata.findExifValue(TiffTagConstants.TIFF_TAG_YRESOLUTION);
                     if (field != null) {
                         yDensity = ((Number) field.getValue()).doubleValue();
                     }
                 }
                 {
-                    final TiffField field = metadata.findEXIFValue(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT);
+                    final TiffField field = metadata.findExifValue(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT);
                     if (field != null) {
                         final int densityUnits = ((Number) field.getValue()).intValue();
 
