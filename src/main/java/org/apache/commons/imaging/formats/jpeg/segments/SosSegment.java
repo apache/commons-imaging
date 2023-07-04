@@ -59,12 +59,12 @@ public class SosSegment extends Segment {
         super(marker, markerLength);
 
         if (LOGGER.isLoggable(Level.FINEST)) {
-            LOGGER.finest("SosSegment marker_length: " + markerLength);
+            LOGGER.finest("SosSegment markerLength: " + markerLength);
         }
 
         // Debug.debug("SOS", marker_length);
 
-        numberOfComponents = readByte("number_of_components_in_scan", is,
+        numberOfComponents = readByte("numberOfComponents", is,
                 "Not a Valid JPEG File");
         // Debug.debug("number_of_components_in_scan",
         // numberOfComponents);
@@ -86,14 +86,14 @@ public class SosSegment extends Segment {
                     dcCodingTableSelector, acCodingTableSelector);
         }
 
-        startOfSpectralSelection = readByte("start_of_spectral_selection", is,
+        startOfSpectralSelection = readByte("startOfSpectralSelection", is,
                 "Not a Valid JPEG File");
         // Debug.debug("start_of_spectral_selection", startOfSpectralSelection);
-        endOfSpectralSelection = readByte("end_of_spectral_selection", is,
+        endOfSpectralSelection = readByte("endOfSpectralSelection", is,
                 "Not a Valid JPEG File");
         // Debug.debug("end_of_spectral_selection", endOfSpectralSelection);
         final int successiveApproximationBitPosition = readByte(
-                "successive_approximation_bit_position", is,
+                "successiveApproximationBitPosition", is,
                 "Not a Valid JPEG File");
         // Debug.debug("successive_approximation_bit_position",
         // successive_approximation_bit_position);
