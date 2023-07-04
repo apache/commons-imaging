@@ -666,10 +666,10 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
         os.write(0x42); // B, Windows 3.1x, 95, NT, Bitmap
         os.write(0x4d); // M
 
-        final int filesize = BITMAP_FILE_HEADER_SIZE + BITMAP_INFO_HEADER_SIZE + // header size
+        final int fileSize = BITMAP_FILE_HEADER_SIZE + BITMAP_INFO_HEADER_SIZE + // header size
                 4 * writer.getPaletteSize() + // palette size in bytes
                 imageData.length;
-        bos.write4Bytes(filesize);
+        bos.write4Bytes(fileSize);
 
         bos.write4Bytes(0); // reserved
         bos.write4Bytes(BITMAP_FILE_HEADER_SIZE + BITMAP_INFO_HEADER_SIZE
