@@ -53,7 +53,7 @@ class ColorGroup {
         this.ignoreAlpha = ignoreAlpha;
 
         if (colorCounts.isEmpty()) {
-            throw new ImagingException("Empty color_group");
+            throw new ImagingException("Empty colorCounts");
         }
 
         int total = 0;
