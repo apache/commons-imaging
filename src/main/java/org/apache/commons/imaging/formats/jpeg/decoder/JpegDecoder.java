@@ -500,23 +500,23 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                         for (int x2 = 0; x2 < hSize
                                 && x1 + x2 < sofnSegment.width; x2++) {
                             if (scaledMCU.length == 4) {
-                                final int C = scaledMCU[0].samples[srcRowOffset + x2];
-                                final int M = scaledMCU[1].samples[srcRowOffset + x2];
-                                final int Y = scaledMCU[2].samples[srcRowOffset + x2];
-                                final int K = scaledMCU[3].samples[srcRowOffset + x2];
-                                final int rgb = ColorConversions.convertCmykToRgb(C, M, Y, K);
+                                final int c = scaledMCU[0].samples[srcRowOffset + x2];
+                                final int m = scaledMCU[1].samples[srcRowOffset + x2];
+                                final int y = scaledMCU[2].samples[srcRowOffset + x2];
+                                final int k = scaledMCU[3].samples[srcRowOffset + x2];
+                                final int rgb = ColorConversions.convertCmykToRgb(c, m, y, k);
                                 dataBuffer.setElem(dstRowOffset + x2, rgb);
                             } else if (scaledMCU.length == 3) {
-                                final int Y = scaledMCU[0].samples[srcRowOffset + x2];
-                                final int Cb = scaledMCU[1].samples[srcRowOffset + x2];
-                                final int Cr = scaledMCU[2].samples[srcRowOffset + x2];
-                                final int rgb = YCbCrConverter.convertYCbCrToRGB(Y,
-                                        Cb, Cr);
+                                final int y = scaledMCU[0].samples[srcRowOffset + x2];
+                                final int cb = scaledMCU[1].samples[srcRowOffset + x2];
+                                final int cr = scaledMCU[2].samples[srcRowOffset + x2];
+                                final int rgb = YCbCrConverter.convertYCbCrToRGB(y,
+                                        cb, cr);
                                 dataBuffer.setElem(dstRowOffset + x2, rgb);
                             } else if (mcu.length == 1) {
-                                final int Y = scaledMCU[0].samples[srcRowOffset + x2];
-                                dataBuffer.setElem(dstRowOffset + x2, (Y << 16)
-                                        | (Y << 8) | Y);
+                                final int y = scaledMCU[0].samples[srcRowOffset + x2];
+                                dataBuffer.setElem(dstRowOffset + x2, (y << 16)
+                                        | (y << 8) | y);
                             } else {
                                 throw new ImagingException(
                                         "Unsupported JPEG with " + mcu.length
