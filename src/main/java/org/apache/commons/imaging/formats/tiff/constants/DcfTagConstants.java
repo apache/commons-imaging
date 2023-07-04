@@ -28,6 +28,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShortOrLong;
 /**
  * Design rule for Camera file system.
  * <p>
+ * [BROKEN URL]
  * http://www.exif.org/dcf.PDF
  * </p>
  */
