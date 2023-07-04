@@ -256,7 +256,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
 
         final List<Segment> exifSegments = filterAPP1Segments(segments);
         if (LOGGER.isLoggable(Level.FINEST)) {
-            LOGGER.finest("exif_segments.size" + ": " + exifSegments.size());
+            LOGGER.finest("exifSegments.size()" + ": " + exifSegments.size());
         }
 
         // Debug.debug("segments", segments);
