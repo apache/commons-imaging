@@ -121,7 +121,7 @@ public class PngWriteReadTest extends ImagingTest {
     }
 
     @Test
-    public void test_withMultipletEXt() throws Exception {
+    public void tesMultipletEXt() throws Exception {
         final int[][] smallBlackPixels = getSimpleRawData(256, 256, 0);
 
         writeAndReadMultipleEXt(smallBlackPixels);
