@@ -50,7 +50,7 @@ public class GpsTest extends ExifBaseTest {
             return;
         }
 
-        final TiffImageMetadata.GPSInfo gpsInfo = exifMetadata.getGPS();
+        final TiffImageMetadata.GpsInfo gpsInfo = exifMetadata.getGPS();
         if (null == gpsInfo) {
             return;
         }

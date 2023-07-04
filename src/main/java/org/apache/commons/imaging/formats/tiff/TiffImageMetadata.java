@@ -154,7 +154,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
 
     }
 
-    public static class GPSInfo {
+    public static class GpsInfo {
         public final String latitudeRef;
         public final String longitudeRef;
 
@@ -165,7 +165,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
         public final RationalNumber longitudeMinutes;
         public final RationalNumber longitudeSeconds;
 
-        public GPSInfo(final String latitudeRef, final String longitudeRef,
+        public GpsInfo(final String latitudeRef, final String longitudeRef,
                 final RationalNumber latitudeDegrees,
                 final RationalNumber latitudeMinutes,
                 final RationalNumber latitudeSeconds,
@@ -491,7 +491,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return tag.getValue(field);
     }
 
-    public GPSInfo getGPS() throws ImagingException {
+    public GpsInfo getGPS() throws ImagingException {
         final TiffDirectory gpsDirectory = findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_GPS);
         if (null == gpsDirectory) {
             return null;
@@ -526,7 +526,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
         final RationalNumber longitudeMinutes = longitude[1];
         final RationalNumber longitudeSeconds = longitude[2];
 
-        return new GPSInfo(latitudeRef, longitudeRef, latitudeDegrees,
+        return new GpsInfo(latitudeRef, longitudeRef, latitudeDegrees,
                 latitudeMinutes, latitudeSeconds, longitudeDegrees,
                 longitudeMinutes, longitudeSeconds);
     }
