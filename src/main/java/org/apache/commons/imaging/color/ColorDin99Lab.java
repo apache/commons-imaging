@@ -27,14 +27,14 @@ package org.apache.commons.imaging.color;
  */
 public final class ColorDin99Lab {
 
-    public final double L99;
+    public final double l99;
 
     public final double a99;
 
     public final double b99;
 
-    public ColorDin99Lab(final double L99, final double a99, final double b99) {
-        this.L99 = L99;
+    public ColorDin99Lab(final double l99, final double a99, final double b99) {
+        this.l99 = l99;
         this.a99 = a99;
         this.b99 = b99;
     }
@@ -49,7 +49,7 @@ public final class ColorDin99Lab {
         }
 
         final ColorDin99Lab that = (ColorDin99Lab) o;
-        if (Double.compare(that.L99, L99) != 0) {
+        if (Double.compare(that.l99, l99) != 0) {
             return false;
         }
         if (Double.compare(that.a99, a99) != 0) {
@@ -66,7 +66,7 @@ public final class ColorDin99Lab {
     public int hashCode() {
         int result;
         long temp;
-        temp = Double.doubleToLongBits(L99);
+        temp = Double.doubleToLongBits(l99);
         result = (int) (temp ^ temp >>> 32);
         temp = Double.doubleToLongBits(a99);
         result = 31 * result + (int) (temp ^ temp >>> 32);
@@ -77,6 +77,6 @@ public final class ColorDin99Lab {
 
     @Override
     public String toString() {
-        return "{L: " + L99 + ", a: " + a99 + ", b: " + b99 + "}";
+        return "{l: " + l99 + ", a: " + a99 + ", b: " + b99 + "}";
     }
 }

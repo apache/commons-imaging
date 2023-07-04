@@ -300,7 +300,7 @@ public final class ColorConversions {
     }
 
     public static ColorCieLab convertDIN99bLabToCIELab(final ColorDin99Lab dinb) {
-        return convertDIN99bLabToCIELab(dinb.L99, dinb.a99, dinb.b99);
+        return convertDIN99bLabToCIELab(dinb.l99, dinb.a99, dinb.b99);
     }
 
     public static ColorCieLab convertDIN99bLabToCIELab(final double L99b, final double a99b, final double b99b) {
@@ -329,7 +329,7 @@ public final class ColorConversions {
      * @see <a href="https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum">https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum</a>
      */
     public static ColorCieLab convertDIN99oLabToCIELab(final ColorDin99Lab dino) {
-        return convertDIN99oLabToCIELab(dino.L99, dino.a99, dino.b99);
+        return convertDIN99oLabToCIELab(dino.l99, dino.a99, dino.b99);
     }
 
     /**
