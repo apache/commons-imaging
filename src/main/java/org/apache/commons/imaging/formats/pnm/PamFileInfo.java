@@ -33,7 +33,7 @@ class PamFileInfo extends FileInfo {
         }
 
         @Override
-        public int getRGB(final InputStream is) throws IOException {
+        public int getRgb(final InputStream is) throws IOException {
             int red = readSample(is, bytesPerSample);
             int green = readSample(is, bytesPerSample);
             int blue = readSample(is, bytesPerSample);
@@ -67,7 +67,7 @@ class PamFileInfo extends FileInfo {
         }
 
         @Override
-        public int getRGB(final InputStream is) throws IOException {
+        public int getRgb(final InputStream is) throws IOException {
             int sample = readSample(is, bytesPerSample);
             sample = scaleSample(sample, scale, maxval);
 
@@ -85,7 +85,7 @@ class PamFileInfo extends FileInfo {
     }
     private abstract static class TupleReader {
         public abstract ImageInfo.ColorType getColorType();
-        public abstract int getRGB(InputStream is) throws IOException;
+        public abstract int getRgb(InputStream is) throws IOException;
     }
     private final int depth;
     private final int maxval;
@@ -167,7 +167,7 @@ class PamFileInfo extends FileInfo {
 
     @Override
     public int getRgb(final InputStream is) throws IOException {
-        return tupleReader.getRGB(is);
+        return tupleReader.getRgb(is);
     }
 
     @Override
