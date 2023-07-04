@@ -28,28 +28,28 @@ final class YCbCrConverter {
          * itself between adjacent pixels, so using it as the high order byte
          * gives higher locality of reference.
          */
-        for (int Y = 0; Y < 256; Y++) {
-            for (int Cr = 0; Cr < 256; Cr++) {
-                int r = Y + fastRound(1.402f * (Cr - 128));
+        for (int y = 0; y < 256; y++) {
+            for (int cr = 0; cr < 256; cr++) {
+                int r = y + fastRound(1.402f * (cr - 128));
                 if (r < 0) {
                     r = 0;
                 }
                 if (r > 255) {
                     r = 255;
                 }
-                REDS[(Cr << 8) | Y] = r << 16;
+                REDS[(cr << 8) | y] = r << 16;
             }
         }
-        for (int Y = 0; Y < 256; Y++) {
-            for (int Cb = 0; Cb < 256; Cb++) {
-                int b = Y + fastRound(1.772f * (Cb - 128));
+        for (int y = 0; y < 256; y++) {
+            for (int cb = 0; cb < 256; cb++) {
+                int b = y + fastRound(1.772f * (cb - 128));
                 if (b < 0) {
                     b = 0;
                 }
                 if (b > 255) {
                     b = 255;
                 }
-                BLUES[(Cb << 8) | Y] = b;
+                BLUES[(cb << 8) | y] = b;
             }
         }
         // green is the hardest
@@ -79,31 +79,31 @@ final class YCbCrConverter {
         // 0 134
         // thus the range is [-134,390] and has 524 values
         // but is clamped to [0, 255]
-        for (int Cb = 0; Cb < 256; Cb++) {
-            for (int Cr = 0; Cr < 256; Cr++) {
-                final int value = fastRound(0.34414f * (Cb - 128) + 0.71414f
-                        * (Cr - 128));
-                GREENS1[(Cb << 8) | Cr] = value + 135;
+        for (int cb = 0; cb < 256; cb++) {
+            for (int cr = 0; cr < 256; cr++) {
+                final int value = fastRound(0.34414f * (cb - 128) + 0.71414f
+                        * (cr - 128));
+                GREENS1[(cb << 8) | cr] = value + 135;
             }
         }
-        for (int Y = 0; Y < 256; Y++) {
+        for (int y = 0; y < 256; y++) {
             for (int value = 0; value < 270; value++) {
-                int green = Y - (value - 135);
+                int green = y - (value - 135);
                 if (green < 0) {
                     green = 0;
                 } else if (green > 255) {
                     green = 255;
                 }
-                GREENS2[(value << 8) | Y] = green << 8;
+                GREENS2[(value << 8) | y] = green << 8;
             }
         }
     }
 
-    public static int convertYCbCrToRGB(final int Y, final int Cb, final int Cr) {
-        final int r = REDS[(Cr << 8) | Y];
-        final int g1 = GREENS1[(Cb << 8) | Cr];
-        final int g = GREENS2[(g1 << 8) | Y];
-        final int b = BLUES[(Cb << 8) | Y];
+    public static int convertYCbCrToRGB(final int y, final int cb, final int cr) {
+        final int r = REDS[(cr << 8) | y];
+        final int g1 = GREENS1[(cb << 8) | cr];
+        final int g = GREENS2[(g1 << 8) | y];
+        final int b = BLUES[(cb << 8) | y];
         return r | g | b;
     }
 
