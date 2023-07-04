@@ -63,10 +63,10 @@ public class ImageDump {
     public void dump(final String prefix, final BufferedImage src) throws IOException {
         LOGGER.fine(prefix + ": " + "dump");
         dumpColorSpace(prefix, src.getColorModel().getColorSpace());
-        dumpBIProps(prefix, src);
+        dumpBiProps(prefix, src);
     }
 
-    public void dumpBIProps(final String prefix, final BufferedImage src) {
+    public void dumpBiProps(final String prefix, final BufferedImage src) {
         final String[] keys = src.getPropertyNames();
         if (keys == null) {
             LOGGER.fine(prefix + ": no props");
