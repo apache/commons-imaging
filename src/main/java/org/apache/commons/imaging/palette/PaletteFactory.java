@@ -489,7 +489,7 @@ public class PaletteFactory {
         for (int i = 0; i < subsets.size(); i++) {
             final ColorSpaceSubset subset = subsets.get(i);
 
-            subset.setAverageRGB(table);
+            subset.setAverageRgb(table);
 
             if (LOGGER.isLoggable(Level.FINEST)) {
                 subset.dump(i + ": ");

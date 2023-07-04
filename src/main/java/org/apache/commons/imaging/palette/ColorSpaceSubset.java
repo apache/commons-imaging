@@ -123,7 +123,7 @@ class ColorSpaceSubset {
                         + colorArea);
     }
 
-    public void dumpJustRGB(final String prefix) {
+    public void dumpJustRgb(final String prefix) {
         LOGGER.fine("\t" + "rgb: " + Integer.toHexString(rgb) + ", "
                 + "red: " + Integer.toHexString(mins[0] << (8 - precision))
                 + ", " + Integer.toHexString(maxs[0] << (8 - precision)) + ", "
@@ -146,7 +146,7 @@ class ColorSpaceSubset {
         return index;
     }
 
-    public void setAverageRGB(final int[] table) {
+    public void setAverageRgb(final int[] table) {
         long redsum = 0;
         long greensum = 0;
         long bluesum = 0;
