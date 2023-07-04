@@ -205,7 +205,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
         return v;
     }
 
-    private void readMCU(final JpegInputStream is, final int[] preds, final Block[] mcu)
+    private void readMcu(final JpegInputStream is, final int[] preds, final Block[] mcu)
             throws ImagingException {
         for (int i = 0; i < sosSegment.numberOfComponents; i++) {
             final SosSegment.Component scanComponent = sosSegment.getComponents(i);
@@ -306,7 +306,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
         return v;
     }
 
-    private void rescaleMCU(final Block[] dataUnits, final int hSize, final int vSize, final Block[] ret) {
+    private void rescaleMcu(final Block[] dataUnits, final int hSize, final int vSize, final Block[] ret) {
         for (int i = 0; i < dataUnits.length; i++) {
             final Block dataUnit = dataUnits[i];
             if (dataUnit.width == hSize && dataUnit.height == vSize) {
@@ -492,8 +492,8 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                         }
                     }
 
-                    readMCU(bitInputStream, preds, mcu);
-                    rescaleMCU(mcu, hSize, vSize, scaledMCU);
+                    readMcu(bitInputStream, preds, mcu);
+                    rescaleMcu(mcu, hSize, vSize, scaledMCU);
                     int srcRowOffset = 0;
                     int dstRowOffset = y1 * sofnSegment.width + x1;
                     for (int y2 = 0; y2 < vSize && y1 + y2 < sofnSegment.height; y2++) {
