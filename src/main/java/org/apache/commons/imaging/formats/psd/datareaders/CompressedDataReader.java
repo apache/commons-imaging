@@ -52,7 +52,7 @@ public class CompressedDataReader implements DataReader {
         final int scanlineCount = height * header.channels;
         final int[] scanlineByteCounts = Allocator.intArray(scanlineCount);
         for (int i = 0; i < scanlineCount; i++) {
-            scanlineByteCounts[i] = BinaryFunctions.read2Bytes("scanline_bytecount[" + i + "]", is,
+            scanlineByteCounts[i] = BinaryFunctions.read2Bytes("scanlineByteCounts[" + i + "]", is,
                     "PSD: bad Image Data", bfp.getByteOrder());
         }
         // System.out.println("fImageContents.Compression: "
