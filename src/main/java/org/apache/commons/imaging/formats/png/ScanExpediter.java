@@ -149,7 +149,7 @@ abstract class ScanExpediter {
             }
             final int index = bitParser.getSample(pixelIndexInScanline, 0);
 
-            int rgb = pngChunkPlte.getRGB(index);
+            int rgb = pngChunkPlte.getRgb(index);
 
             if (transparencyFilter != null) {
                 rgb = transparencyFilter.filter(rgb, index);
