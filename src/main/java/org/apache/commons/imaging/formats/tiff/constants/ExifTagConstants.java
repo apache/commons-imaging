@@ -43,9 +43,9 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUnknowns;
 /**
  * References:
  * <ul>
- * <li>http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/EXIF.html</li>
- * <li>http://tiki-lounge.com/~raf/tiff/fields.html</li>
- * <li>http://www.awaresystems.be/imaging/tiff/tifftags.html</li>
+ * <li>https://exiftool.org/TagNames/EXIF.html</li>
+ * <li>[BROKEN URL] http://tiki-lounge.com/~raf/tiff/fields.html</li>
+ * <li>https://www.awaresystems.be/imaging/tiff/tifftags.html</li>
  * <li>"Stonits": http://www.anyhere.com/gward/pixformat/tiffluv.html</li>
  * </ul>
  */
