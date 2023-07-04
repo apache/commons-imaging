@@ -475,15 +475,15 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
         // display the icon on a < 32 BPP screen. But it's still used instead of
         // alpha
         // if the image would be completely transparent with alpha...
-        int t_scanline_size = (width + 7) / 8;
-        if ((t_scanline_size % 4) != 0) {
-            t_scanline_size += 4 - (t_scanline_size % 4); // pad scanline to 4
+        int tScanlineSize = (width + 7) / 8;
+        if ((tScanlineSize % 4) != 0) {
+            tScanlineSize += 4 - (tScanlineSize % 4); // pad scanline to 4
                                                           // byte size.
         }
-        final int colorMapSizeBytes = t_scanline_size * (height / 2);
+        final int colorMapSizeBytes = tScanlineSize * (height / 2);
         byte[] transparencyMap = null;
         try {
-            transparencyMap = readBytes("transparency_map",
+            transparencyMap = readBytes("transparencyMap",
                     bmpInputStream, colorMapSizeBytes,
                     "Not a Valid ICO File");
         } catch (final IOException ioEx) {
@@ -511,7 +511,7 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
                 for (int x = 0; x < resultImage.getWidth(); x++) {
                     int alpha = 0xff;
                     if (transparencyMap != null) {
-                        final int alphaByte = 0xff & transparencyMap[t_scanline_size
+                        final int alphaByte = 0xff & transparencyMap[tScanlineSize
                                 * (bmpImage.getHeight() - y - 1) + (x / 8)];
                         alpha = 0x01 & (alphaByte >> (7 - (x % 8)));
                         alpha = (alpha == 0) ? 0xff : 0x00;
@@ -651,18 +651,18 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
 
         try (BinaryOutputStream bos = BinaryOutputStream.littleEndian(os)) {
 
-            int scanline_size = (bitCount * src.getWidth() + 7) / 8;
-            if ((scanline_size % 4) != 0) {
-                scanline_size += 4 - (scanline_size % 4); // pad scanline to 4 byte
+            int scanlineSize = (bitCount * src.getWidth() + 7) / 8;
+            if ((scanlineSize % 4) != 0) {
+                scanlineSize += 4 - (scanlineSize % 4); // pad scanline to 4 byte
                                                           // size.
             }
-            int t_scanline_size = (src.getWidth() + 7) / 8;
-            if ((t_scanline_size % 4) != 0) {
-                t_scanline_size += 4 - (t_scanline_size % 4); // pad scanline to 4
+            int tScanlineSize = (src.getWidth() + 7) / 8;
+            if ((tScanlineSize % 4) != 0) {
+                tScanlineSize += 4 - (tScanlineSize % 4); // pad scanline to 4
                                                               // byte size.
             }
-            final int imageSize = 40 + 4 * (bitCount <= 8 ? (1 << bitCount) : 0) + src.getHeight() * scanline_size
-                    + src.getHeight() * t_scanline_size;
+            final int imageSize = 40 + 4 * (bitCount <= 8 ? (1 << bitCount) : 0) + src.getHeight() * scanlineSize
+                    + src.getHeight() * tScanlineSize;
 
             // ICONDIR
             bos.write2Bytes(0); // reserved
@@ -718,7 +718,7 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
 
             int bitCache = 0;
             int bitsInCache = 0;
-            final int rowPadding = scanline_size - (bitCount * src.getWidth() + 7) / 8;
+            final int rowPadding = scanlineSize - (bitCount * src.getWidth() + 7) / 8;
             for (int y = src.getHeight() - 1; y >= 0; y--) {
                 for (int x = 0; x < src.getWidth(); x++) {
                     final int argb = src.getRGB(x, y);
@@ -759,7 +759,7 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
                 }
             }
 
-            final int t_row_padding = t_scanline_size - (src.getWidth() + 7) / 8;
+            final int tRowPadding = tScanlineSize - (src.getWidth() + 7) / 8;
             for (int y = src.getHeight() - 1; y >= 0; y--) {
                 for (int x = 0; x < src.getWidth(); x++) {
                     final int argb = src.getRGB(x, y);
@@ -783,7 +783,7 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
                     bitsInCache = 0;
                 }
 
-                for (int x = 0; x < t_row_padding; x++) {
+                for (int x = 0; x < tRowPadding; x++) {
                     bos.write(0);
                 }
             }
