@@ -955,189 +955,185 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
         }
         final int paletteSize = palette2.length() + (hasAlpha ? 1 : 0);
 
-        final BinaryOutputStream bos = BinaryOutputStream.littleEndian(os);
+        try (BinaryOutputStream bos = BinaryOutputStream.littleEndian(os)) {
 
-        // write Header
-        os.write(0x47); // G magic numbers
-        os.write(0x49); // I
-        os.write(0x46); // F
+            // write Header
+            os.write(0x47); // G magic numbers
+            os.write(0x49); // I
+            os.write(0x46); // F
 
-        os.write(0x38); // 8 version magic numbers
-        os.write(0x39); // 9
-        os.write(0x61); // a
+            os.write(0x38); // 8 version magic numbers
+            os.write(0x39); // 9
+            os.write(0x61); // a
 
-        // Logical Screen Descriptor.
+            // Logical Screen Descriptor.
 
-        bos.write2Bytes(width);
-        bos.write2Bytes(height);
+            bos.write2Bytes(width);
+            bos.write2Bytes(height);
 
-        final int colorTableScaleLessOne = (paletteSize > 128) ? 7
-                : (paletteSize > 64) ? 6 : (paletteSize > 32) ? 5
-                        : (paletteSize > 16) ? 4 : (paletteSize > 8) ? 3
-                                : (paletteSize > 4) ? 2
-                                        : (paletteSize > 2) ? 1 : 0;
+            final int colorTableScaleLessOne = (paletteSize > 128) ? 7
+                    : (paletteSize > 64) ? 6
+                            : (paletteSize > 32) ? 5
+                                    : (paletteSize > 16) ? 4
+                                            : (paletteSize > 8) ? 3 : (paletteSize > 4) ? 2 : (paletteSize > 2) ? 1 : 0;
 
-        final int colorTableSizeInFormat = 1 << (colorTableScaleLessOne + 1);
-        {
-            final byte colorResolution = (byte) colorTableScaleLessOne; // TODO:
-            final int packedFields = (7 & colorResolution) * 16;
-            bos.write(packedFields); // one byte
-        }
-        {
-            final byte backgroundColorIndex = 0;
-            bos.write(backgroundColorIndex);
-        }
-        {
-            final byte pixelAspectRatio = 0;
-            bos.write(pixelAspectRatio);
-        }
-
-        //{
-            // write Global Color Table.
-
-        //}
-
-        { // ALWAYS write GraphicControlExtension
-            bos.write(EXTENSION_CODE);
-            bos.write((byte) 0xf9);
-            // bos.write(0xff & (kGraphicControlExtension >> 8));
-            // bos.write(0xff & (kGraphicControlExtension >> 0));
-
-            bos.write((byte) 4); // block size;
-            final int packedFields = hasAlpha ? 1 : 0; // transparency flag
-            bos.write((byte) packedFields);
-            bos.write((byte) 0); // Delay Time
-            bos.write((byte) 0); // Delay Time
-            bos.write((byte) (hasAlpha ? palette2.length() : 0)); // Transparent
-            // Color
-            // Index
-            bos.write((byte) 0); // terminator
-        }
-
-        if (null != xmpXml) {
-            bos.write(EXTENSION_CODE);
-            bos.write(APPLICATION_EXTENSION_LABEL);
-
-            bos.write(XMP_APPLICATION_ID_AND_AUTH_CODE.length); // 0x0B
-            bos.write(XMP_APPLICATION_ID_AND_AUTH_CODE);
-
-            final byte[] xmpXmlBytes = xmpXml.getBytes(StandardCharsets.UTF_8);
-            bos.write(xmpXmlBytes);
-
-            // write "magic trailer"
-            for (int magic = 0; magic <= 0xff; magic++) {
-                bos.write(0xff - magic);
-            }
-
-            bos.write((byte) 0); // terminator
-
-        }
-
-        { // Image Descriptor.
-            bos.write(IMAGE_SEPARATOR);
-            bos.write2Bytes(0); // Image Left Position
-            bos.write2Bytes(0); // Image Top Position
-            bos.write2Bytes(width); // Image Width
-            bos.write2Bytes(height); // Image Height
-
+            final int colorTableSizeInFormat = 1 << (colorTableScaleLessOne + 1);
             {
-                final boolean localColorTableFlag = true;
-                // boolean LocalColorTableFlag = false;
-                final boolean interlaceFlag = false;
-                final boolean sortFlag = false;
-                final int sizeOfLocalColorTable = colorTableScaleLessOne;
-
-                // int SizeOfLocalColorTable = 0;
-
-                final int packedFields;
-                if (localColorTableFlag) {
-                    packedFields = (LOCAL_COLOR_TABLE_FLAG_MASK
-                            | (interlaceFlag ? INTERLACE_FLAG_MASK : 0)
-                            | (sortFlag ? SORT_FLAG_MASK : 0)
-                            | (7 & sizeOfLocalColorTable));
-                } else {
-                    packedFields = (0
-                            | (interlaceFlag ? INTERLACE_FLAG_MASK : 0)
-                            | (sortFlag ? SORT_FLAG_MASK : 0)
-                            | (7 & sizeOfLocalColorTable));
-                }
+                final byte colorResolution = (byte) colorTableScaleLessOne; // TODO:
+                final int packedFields = (7 & colorResolution) * 16;
                 bos.write(packedFields); // one byte
             }
-        }
+            {
+                final byte backgroundColorIndex = 0;
+                bos.write(backgroundColorIndex);
+            }
+            {
+                final byte pixelAspectRatio = 0;
+                bos.write(pixelAspectRatio);
+            }
 
-        { // write Local Color Table.
-            for (int i = 0; i < colorTableSizeInFormat; i++) {
-                if (i < palette2.length()) {
-                    final int rgb = palette2.getEntry(i);
+            // {
+            // write Global Color Table.
 
-                    final int red = 0xff & (rgb >> 16);
-                    final int green = 0xff & (rgb >> 8);
-                    final int blue = 0xff & (rgb >> 0);
+            // }
 
-                    bos.write(red);
-                    bos.write(green);
-                    bos.write(blue);
-                } else {
-                    bos.write(0);
-                    bos.write(0);
-                    bos.write(0);
+            { // ALWAYS write GraphicControlExtension
+                bos.write(EXTENSION_CODE);
+                bos.write((byte) 0xf9);
+                // bos.write(0xff & (kGraphicControlExtension >> 8));
+                // bos.write(0xff & (kGraphicControlExtension >> 0));
+
+                bos.write((byte) 4); // block size;
+                final int packedFields = hasAlpha ? 1 : 0; // transparency flag
+                bos.write((byte) packedFields);
+                bos.write((byte) 0); // Delay Time
+                bos.write((byte) 0); // Delay Time
+                bos.write((byte) (hasAlpha ? palette2.length() : 0)); // Transparent
+                // Color
+                // Index
+                bos.write((byte) 0); // terminator
+            }
+
+            if (null != xmpXml) {
+                bos.write(EXTENSION_CODE);
+                bos.write(APPLICATION_EXTENSION_LABEL);
+
+                bos.write(XMP_APPLICATION_ID_AND_AUTH_CODE.length); // 0x0B
+                bos.write(XMP_APPLICATION_ID_AND_AUTH_CODE);
+
+                final byte[] xmpXmlBytes = xmpXml.getBytes(StandardCharsets.UTF_8);
+                bos.write(xmpXmlBytes);
+
+                // write "magic trailer"
+                for (int magic = 0; magic <= 0xff; magic++) {
+                    bos.write(0xff - magic);
+                }
+
+                bos.write((byte) 0); // terminator
+
+            }
+
+            { // Image Descriptor.
+                bos.write(IMAGE_SEPARATOR);
+                bos.write2Bytes(0); // Image Left Position
+                bos.write2Bytes(0); // Image Top Position
+                bos.write2Bytes(width); // Image Width
+                bos.write2Bytes(height); // Image Height
+
+                {
+                    final boolean localColorTableFlag = true;
+                    // boolean LocalColorTableFlag = false;
+                    final boolean interlaceFlag = false;
+                    final boolean sortFlag = false;
+                    final int sizeOfLocalColorTable = colorTableScaleLessOne;
+
+                    // int SizeOfLocalColorTable = 0;
+
+                    final int packedFields;
+                    if (localColorTableFlag) {
+                        packedFields = (LOCAL_COLOR_TABLE_FLAG_MASK | (interlaceFlag ? INTERLACE_FLAG_MASK : 0)
+                                | (sortFlag ? SORT_FLAG_MASK : 0) | (7 & sizeOfLocalColorTable));
+                    } else {
+                        packedFields = (0 | (interlaceFlag ? INTERLACE_FLAG_MASK : 0) | (sortFlag ? SORT_FLAG_MASK : 0)
+                                | (7 & sizeOfLocalColorTable));
+                    }
+                    bos.write(packedFields); // one byte
                 }
             }
-        }
 
-        { // get Image Data.
-//            int image_data_total = 0;
+            { // write Local Color Table.
+                for (int i = 0; i < colorTableSizeInFormat; i++) {
+                    if (i < palette2.length()) {
+                        final int rgb = palette2.getEntry(i);
 
-            int lzwMinimumCodeSize = colorTableScaleLessOne + 1;
-            // LZWMinimumCodeSize = Math.max(8, LZWMinimumCodeSize);
-            if (lzwMinimumCodeSize < 2) {
-                lzwMinimumCodeSize = 2;
+                        final int red = 0xff & (rgb >> 16);
+                        final int green = 0xff & (rgb >> 8);
+                        final int blue = 0xff & (rgb >> 0);
+
+                        bos.write(red);
+                        bos.write(green);
+                        bos.write(blue);
+                    } else {
+                        bos.write(0);
+                        bos.write(0);
+                        bos.write(0);
+                    }
+                }
             }
 
-            // TODO:
-            // make
-            // better
-            // choice
-            // here.
-            bos.write(lzwMinimumCodeSize);
+            { // get Image Data.
+//            int image_data_total = 0;
 
-            final MyLzwCompressor compressor = new MyLzwCompressor(
-                    lzwMinimumCodeSize, ByteOrder.LITTLE_ENDIAN, false); // GIF
-            // Mode);
+                int lzwMinimumCodeSize = colorTableScaleLessOne + 1;
+                // LZWMinimumCodeSize = Math.max(8, LZWMinimumCodeSize);
+                if (lzwMinimumCodeSize < 2) {
+                    lzwMinimumCodeSize = 2;
+                }
 
-            final byte[] imageData = Allocator.byteArray(width * height);
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
-                    final int argb = src.getRGB(x, y);
-                    final int rgb = 0xffffff & argb;
-                    int index;
+                // TODO:
+                // make
+                // better
+                // choice
+                // here.
+                bos.write(lzwMinimumCodeSize);
 
-                    if (hasAlpha) {
-                        final int alpha = 0xff & (argb >> 24);
-                        final int alphaThreshold = 255;
-                        if (alpha < alphaThreshold) {
-                            index = palette2.length(); // is transparent
+                final MyLzwCompressor compressor = new MyLzwCompressor(lzwMinimumCodeSize, ByteOrder.LITTLE_ENDIAN,
+                        false); // GIF
+                // Mode);
+
+                final byte[] imageData = Allocator.byteArray(width * height);
+                for (int y = 0; y < height; y++) {
+                    for (int x = 0; x < width; x++) {
+                        final int argb = src.getRGB(x, y);
+                        final int rgb = 0xffffff & argb;
+                        int index;
+
+                        if (hasAlpha) {
+                            final int alpha = 0xff & (argb >> 24);
+                            final int alphaThreshold = 255;
+                            if (alpha < alphaThreshold) {
+                                index = palette2.length(); // is transparent
+                            } else {
+                                index = palette2.getPaletteIndex(rgb);
+                            }
                         } else {
                             index = palette2.getPaletteIndex(rgb);
                         }
-                    } else {
-                        index = palette2.getPaletteIndex(rgb);
-                    }
 
-                    imageData[y * width + x] = (byte) index;
+                        imageData[y * width + x] = (byte) index;
+                    }
                 }
+
+                final byte[] compressed = compressor.compress(imageData);
+                writeAsSubBlocks(bos, compressed);
+//            image_data_total += compressed.length;
             }
 
-            final byte[] compressed = compressor.compress(imageData);
-            writeAsSubBlocks(bos, compressed);
-//            image_data_total += compressed.length;
+            // palette2.dump();
+
+            bos.write(TERMINATOR_BYTE);
+
         }
-
-        // palette2.dump();
-
-        bos.write(TERMINATOR_BYTE);
-
-        bos.close();
         os.close();
     }
 }
