@@ -156,7 +156,7 @@ class PamFileInfo extends FileInfo {
     }
 
     @Override
-    public String getMIMEType() {
+    public String getMimeType() {
         return "image/x-portable-arbitrary-map";
     }
 
@@ -166,12 +166,12 @@ class PamFileInfo extends FileInfo {
     }
 
     @Override
-    public int getRGB(final InputStream is) throws IOException {
+    public int getRgb(final InputStream is) throws IOException {
         return tupleReader.getRGB(is);
     }
 
     @Override
-    public int getRGB(final WhiteSpaceReader wsr) throws IOException {
+    public int getRgb(final WhiteSpaceReader wsr) throws IOException {
         throw new UnsupportedOperationException("PAM files are only ever binary");
     }
 

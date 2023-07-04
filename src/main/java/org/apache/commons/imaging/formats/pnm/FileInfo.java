@@ -71,13 +71,13 @@ abstract class FileInfo {
 
     abstract String getImageTypeDescription();
 
-    abstract String getMIMEType();
+    abstract String getMimeType();
 
     abstract int getNumComponents();
 
-    abstract int getRGB(InputStream is) throws IOException;
+    abstract int getRgb(InputStream is) throws IOException;
 
-    abstract int getRGB(WhiteSpaceReader wsr) throws IOException;
+    abstract int getRgb(WhiteSpaceReader wsr) throws IOException;
 
     abstract boolean hasAlpha();
 
@@ -98,7 +98,7 @@ abstract class FileInfo {
 
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
-                    final int rgb = getRGB(wsr);
+                    final int rgb = getRgb(wsr);
 
                     imageBuilder.setRgb(x, y, rgb);
                     // count++;
@@ -109,7 +109,7 @@ abstract class FileInfo {
             for (int y = 0; y < height; y++) {
                 // System.out.println("y: " + y);
                 for (int x = 0; x < width; x++) {
-                    final int rgb = getRGB(is);
+                    final int rgb = getRgb(is);
                     imageBuilder.setRgb(x, y, rgb);
                     // count++;
                 }

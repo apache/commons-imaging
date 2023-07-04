@@ -67,7 +67,7 @@ class PpmFileInfo extends FileInfo {
     }
 
     @Override
-    public String getMIMEType() {
+    public String getMimeType() {
         return "image/x-portable-pixmap";
     }
 
@@ -77,7 +77,7 @@ class PpmFileInfo extends FileInfo {
     }
 
     @Override
-    public int getRGB(final InputStream is) throws IOException {
+    public int getRgb(final InputStream is) throws IOException {
         int red = readSample(is, bytesPerSample);
         int green = readSample(is, bytesPerSample);
         int blue = readSample(is, bytesPerSample);
@@ -94,7 +94,7 @@ class PpmFileInfo extends FileInfo {
     }
 
     @Override
-    public int getRGB(final WhiteSpaceReader wsr) throws IOException {
+    public int getRgb(final WhiteSpaceReader wsr) throws IOException {
         int red = Integer.parseInt(wsr.readtoWhiteSpace());
         int green = Integer.parseInt(wsr.readtoWhiteSpace());
         int blue = Integer.parseInt(wsr.readtoWhiteSpace());

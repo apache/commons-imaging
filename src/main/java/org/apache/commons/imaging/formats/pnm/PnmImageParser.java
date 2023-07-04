@@ -131,7 +131,7 @@ public class PnmImageParser extends ImageParser<PnmImagingParameters> {
         final int bitsPerPixel = info.getBitDepth() * info.getNumComponents();
         final ImageFormat format = info.getImageType();
         final String formatName = info.getImageTypeDescription();
-        final String mimeType = info.getMIMEType();
+        final String mimeType = info.getMimeType();
         final int numberOfImages = 1;
         final boolean progressive = false;
 

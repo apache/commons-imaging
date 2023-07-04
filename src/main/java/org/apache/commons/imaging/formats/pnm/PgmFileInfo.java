@@ -69,7 +69,7 @@ class PgmFileInfo extends FileInfo {
     }
 
     @Override
-    public String getMIMEType() {
+    public String getMimeType() {
         return "image/x-portable-graymap";
     }
 
@@ -79,7 +79,7 @@ class PgmFileInfo extends FileInfo {
     }
 
     @Override
-    public int getRGB(final InputStream is) throws IOException {
+    public int getRgb(final InputStream is) throws IOException {
         int sample = readSample(is, bytesPerSample);
 
         sample = scaleSample(sample, scale, max);
@@ -93,7 +93,7 @@ class PgmFileInfo extends FileInfo {
     }
 
     @Override
-    public int getRGB(final WhiteSpaceReader wsr) throws IOException {
+    public int getRgb(final WhiteSpaceReader wsr) throws IOException {
         int sample = Integer.parseInt(wsr.readtoWhiteSpace());
 
         sample = scaleSample(sample, scale, max);

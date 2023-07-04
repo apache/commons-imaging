@@ -35,7 +35,7 @@ public class PbmFileInfoTest{
       inputStream.read(byteArray);
 
       try {
-        pbmFileInfo.getRGB(inputStream);
+        pbmFileInfo.getRgb(inputStream);
         fail("Expecting exception: IOException");
       } catch (final IOException e) {
          assertEquals("PBM: Unexpected EOF",e.getMessage());

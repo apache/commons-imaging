@@ -53,7 +53,7 @@ class PbmFileInfo extends FileInfo {
     }
 
     @Override
-    public String getMIMEType() {
+    public String getMimeType() {
         return "image/x-portable-bitmap";
     }
 
@@ -63,7 +63,7 @@ class PbmFileInfo extends FileInfo {
     }
 
     @Override
-    public int getRGB(final InputStream is) throws IOException {
+    public int getRgb(final InputStream is) throws IOException {
         if (bitsInCache < 1) {
             final int bits = is.read();
             if (bits < 0) {
@@ -87,7 +87,7 @@ class PbmFileInfo extends FileInfo {
     }
 
     @Override
-    public int getRGB(final WhiteSpaceReader wsr) throws IOException {
+    public int getRgb(final WhiteSpaceReader wsr) throws IOException {
         final int bit = Integer.parseInt(wsr.readtoWhiteSpace());
         if (bit == 0) {
             return 0xff000000;
