@@ -220,7 +220,7 @@ public final class ColorConversions {
     }
 
     public static ColorCmy convertCMYKtoCMY(final ColorCmyk cmyk) {
-        return convertCMYKtoCMY(cmyk.C, cmyk.M, cmyk.Y, cmyk.K);
+        return convertCMYKtoCMY(cmyk.c, cmyk.m, cmyk.y, cmyk.k);
     }
 
     public static ColorCmy convertCMYKtoCMY(double c, double m, double y,

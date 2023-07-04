@@ -37,7 +37,7 @@ public class ColorCmykTest {
 
     @Test
     public void testCAssignment() {
-        assertEquals(1.0, color.C, 0.0);
+        assertEquals(1.0, color.c, 0.0);
     }
 
     @Test
@@ -50,12 +50,12 @@ public class ColorCmykTest {
      */
     @Test
     public void testKAssignment() {
-        assertEquals(4.0, color.K, 0.0);
+        assertEquals(4.0, color.k, 0.0);
     }
 
     @Test
     public void testMAssignment() {
-        assertEquals(2.0, color.M, 0.0);
+        assertEquals(2.0, color.m, 0.0);
     }
 
     @Test
@@ -65,6 +65,6 @@ public class ColorCmykTest {
 
     @Test
     public void testYAssignment() {
-        assertEquals(3.0, color.Y, 0.0);
+        assertEquals(3.0, color.y, 0.0);
     }
 }

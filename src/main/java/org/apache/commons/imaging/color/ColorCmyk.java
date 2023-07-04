@@ -115,16 +115,16 @@ public final class ColorCmyk {
      */
     public static final ColorCmyk BLUE = new ColorCmyk(100, 100, 0, 0);
 
-    public final double C;
-    public final double M;
-    public final double Y;
-    public final double K;
+    public final double c;
+    public final double m;
+    public final double y;
+    public final double k;
 
-    public ColorCmyk(final double C, final double M, final double Y, final double K) {
-        this.C = C;
-        this.M = M;
-        this.Y = Y;
-        this.K = K;
+    public ColorCmyk(final double c, final double m, final double y, final double k) {
+        this.c = c;
+        this.m = m;
+        this.y = y;
+        this.k = k;
     }
 
     @Override
@@ -137,16 +137,16 @@ public final class ColorCmyk {
         }
 
         final ColorCmyk colorCmyk = (ColorCmyk) o;
-        if (Double.compare(colorCmyk.C, C) != 0) {
+        if (Double.compare(colorCmyk.c, c) != 0) {
             return false;
         }
-        if (Double.compare(colorCmyk.K, K) != 0) {
+        if (Double.compare(colorCmyk.k, k) != 0) {
             return false;
         }
-        if (Double.compare(colorCmyk.M, M) != 0) {
+        if (Double.compare(colorCmyk.m, m) != 0) {
             return false;
         }
-        if (Double.compare(colorCmyk.Y, Y) != 0) {
+        if (Double.compare(colorCmyk.y, y) != 0) {
             return false;
         }
 
@@ -157,19 +157,19 @@ public final class ColorCmyk {
     public int hashCode() {
         int result;
         long temp;
-        temp = Double.doubleToLongBits(C);
+        temp = Double.doubleToLongBits(c);
         result = (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(M);
+        temp = Double.doubleToLongBits(m);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(Y);
+        temp = Double.doubleToLongBits(y);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(K);
+        temp = Double.doubleToLongBits(k);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
 
     @Override
     public String toString() {
-        return "{C: " + C + ", M: " + M + ", Y: " + Y + ", K: " + K + "}";
+        return "{C: " + c + ", M: " + m + ", Y: " + y + ", K: " + k + "}";
     }
 }
