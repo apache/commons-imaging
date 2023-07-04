@@ -36,7 +36,7 @@ public class GammaCorrection {
         for (int i = 0; i < 256; i++) {
             lookupTable[i] = correctSample(i, srcGamma, dstGamma);
             if (LOGGER.isLoggable(Level.FINEST)) {
-                LOGGER.finest("lookup_table[" + i + "]: " + lookupTable[i]);
+                LOGGER.finest("lookupTable[" + i + "]: " + lookupTable[i]);
             }
         }
     }
