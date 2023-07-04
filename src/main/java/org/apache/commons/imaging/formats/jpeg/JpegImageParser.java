@@ -69,7 +69,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
     private static final String DEFAULT_EXTENSION = ImageFormats.JPEG.getDefaultExtension();
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.JPEG.getExtensions();
 
-    public static boolean isExifAPP1Segment(final GenericSegment segment) {
+    public static boolean isExifApp1Segment(final GenericSegment segment) {
         return startsWith(segment.getSegmentData(), JpegConstants.EXIF_IDENTIFIER_CODE);
     }
 
@@ -189,12 +189,12 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
         Debug.debug();
     }
 
-    private List<Segment> filterAPP1Segments(final List<Segment> segments) {
+    private List<Segment> filterApp1Segments(final List<Segment> segments) {
         final List<Segment> result = new ArrayList<>();
 
         for (final Segment s : segments) {
             final GenericSegment segment = (GenericSegment) s;
-            if (isExifAPP1Segment(segment)) {
+            if (isExifApp1Segment(segment)) {
                 result.add(segment);
             }
         }
@@ -254,7 +254,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
             return null;
         }
 
-        final List<Segment> exifSegments = filterAPP1Segments(segments);
+        final List<Segment> exifSegments = filterApp1Segments(segments);
         if (LOGGER.isLoggable(Level.FINEST)) {
             LOGGER.finest("exifSegments.size()" + ": " + exifSegments.size());
         }
