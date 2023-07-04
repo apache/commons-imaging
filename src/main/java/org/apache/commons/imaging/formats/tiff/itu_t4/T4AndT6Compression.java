@@ -391,7 +391,7 @@ public final class T4AndT6Compression {
                 int rowLength;
                 try {
                     final T4_T6_Tables.Entry entry = CONTROL_CODES.decode(inputStream);
-                    if (!isEOL(entry, hasFill)) {
+                    if (!isEol(entry, hasFill)) {
                         throw new ImagingException("Expected EOL not found");
                     }
                     int color = WHITE;
@@ -439,7 +439,7 @@ public final class T4AndT6Compression {
                 int rowLength = 0;
                 try {
                     T4_T6_Tables.Entry entry = CONTROL_CODES.decode(inputStream);
-                    if (!isEOL(entry, hasFill)) {
+                    if (!isEol(entry, hasFill)) {
                         throw new ImagingException("Expected EOL not found");
                     }
                     final int tagBit = inputStream.readBits(1);
@@ -621,7 +621,7 @@ public final class T4AndT6Compression {
         }
     }
 
-    private static boolean isEOL(final T4_T6_Tables.Entry entry, final boolean hasFill) {
+    private static boolean isEol(final T4_T6_Tables.Entry entry, final boolean hasFill) {
         if (entry == T4_T6_Tables.EOL) {
             return true;
         }
