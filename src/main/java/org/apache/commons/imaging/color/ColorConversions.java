@@ -399,58 +399,58 @@ public final class ColorConversions {
         return convertHSVtoRGB(HSV.H, HSV.S, HSV.V);
     }
 
-    public static int convertHSVtoRGB(final double H, final double S, final double V) {
-        double R, G, B;
+    public static int convertHSVtoRGB(final double h, final double s, final double v) {
+        double r, g, b;
 
-        if (S == 0) {
+        if (s == 0) {
             // HSV values = 0 ÷ 1
-            R = V * 255;
-            G = V * 255;
-            B = V * 255;
+            r = v * 255;
+            g = v * 255;
+            b = v * 255;
         } else {
-            double var_h = H * 6;
-            if (var_h == 6) {
-                var_h = 0; // H must be < 1
+            double varH = h * 6;
+            if (varH == 6) {
+                varH = 0; // H must be < 1
             }
-            final double var_i = Math.floor(var_h); // Or ... var_i = floor( var_h )
-            final double var_1 = V * (1 - S);
-            final double var_2 = V * (1 - S * (var_h - var_i));
-            final double var_3 = V * (1 - S * (1 - (var_h - var_i)));
+            final double varI = Math.floor(varH); // Or ... varI = floor( varH )
+            final double var1 = v * (1 - s);
+            final double var2 = v * (1 - s * (varH - varI));
+            final double var3 = v * (1 - s * (1 - (varH - varI)));
 
-            double var_r, var_g, var_b;
+            double varR, varG, varB;
 
-            if (var_i == 0) {
-                var_r = V;
-                var_g = var_3;
-                var_b = var_1;
-            } else if (var_i == 1) {
-                var_r = var_2;
-                var_g = V;
-                var_b = var_1;
-            } else if (var_i == 2) {
-                var_r = var_1;
-                var_g = V;
-                var_b = var_3;
-            } else if (var_i == 3) {
-                var_r = var_1;
-                var_g = var_2;
-                var_b = V;
-            } else if (var_i == 4) {
-                var_r = var_3;
-                var_g = var_1;
-                var_b = V;
+            if (varI == 0) {
+                varR = v;
+                varG = var3;
+                varB = var1;
+            } else if (varI == 1) {
+                varR = var2;
+                varG = v;
+                varB = var1;
+            } else if (varI == 2) {
+                varR = var1;
+                varG = v;
+                varB = var3;
+            } else if (varI == 3) {
+                varR = var1;
+                varG = var2;
+                varB = v;
+            } else if (varI == 4) {
+                varR = var3;
+                varG = var1;
+                varB = v;
             } else {
-                var_r = V;
-                var_g = var_1;
-                var_b = var_2;
+                varR = v;
+                varG = var1;
+                varB = var2;
             }
 
-            R = var_r * 255; // RGB results = 0 ÷ 255
-            G = var_g * 255;
-            B = var_b * 255;
+            r = varR * 255; // RGB results = 0 ÷ 255
+            g = varG * 255;
+            b = varB * 255;
         }
 
-        return convertRGBtoRGB(R, G, B);
+        return convertRGBtoRGB(r, g, b);
     }
 
     private static double convertHuetoRGB(final double v1, final double v2, double vH) {
