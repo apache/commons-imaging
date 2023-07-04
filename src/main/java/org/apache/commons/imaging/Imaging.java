@@ -316,7 +316,7 @@ public final class Imaging {
         if (info == null) {
             return null;
         }
-        if (info.issRGB()) {
+        if (info.isSrgb()) {
             return null;
         }
 

@@ -289,7 +289,7 @@ public class IccProfileParser extends BinaryFileParser {
                 profileCreatorSignature, null, tags);
 
         if (LOGGER.isLoggable(Level.FINEST)) {
-            LOGGER.finest("issRGB: " + result.issRGB());
+            LOGGER.finest("issRGB: " + result.isSrgb());
         }
 
         return result;

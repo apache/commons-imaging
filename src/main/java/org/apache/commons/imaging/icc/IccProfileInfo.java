@@ -87,7 +87,7 @@ public class IccProfileInfo {
         return tags;
     }
 
-    public boolean issRGB() {
+    public boolean isSrgb() {
         return deviceManufacturer == IccConstants.IEC
                 && deviceModel == IccConstants.sRGB;
     }
@@ -132,7 +132,7 @@ public class IccProfileInfo {
             tag.dump(pw, "\t" + i + ": ");
         }
 
-        pw.println(prefix + ": " + "issRGB: " + issRGB());
+        pw.println(prefix + ": " + "isSrgb: " + isSrgb());
         pw.flush();
 
         return sw.getBuffer().toString();
