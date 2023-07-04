@@ -51,15 +51,15 @@ public class SampleUsage {
 
             // <b>how to read an image: </b>
             final byte[] imageBytes = someBytes;
-            final BufferedImage image_1 = Imaging.getBufferedImage(imageBytes);
+            final BufferedImage image1 = Imaging.getBufferedImage(imageBytes);
 
             // <b>methods of Imaging usually accept files, byte arrays, or
             // inputstreams as arguments. </b>
-            final BufferedImage image_2 = Imaging.getBufferedImage(imageBytes);
+            final BufferedImage image2 = Imaging.getBufferedImage(imageBytes);
             final File file = someFile;
-            final BufferedImage image_3 = Imaging.getBufferedImage(file);
+            final BufferedImage image3 = Imaging.getBufferedImage(file);
             final InputStream is = someInputStream;
-            final BufferedImage image_4 = Imaging.getBufferedImage(is);
+            final BufferedImage image4 = Imaging.getBufferedImage(is);
 
             // <b>Write an image. </b>
             final BufferedImage image = someImage;
