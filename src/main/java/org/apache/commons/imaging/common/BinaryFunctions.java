@@ -233,7 +233,7 @@ public final class BinaryFunctions {
         try {
             return IOUtils.toByteArray(is, Allocator.check(length));
         } catch (IOException e) {
-            throw new IOException(exception + " length: " + length);
+            throw new IOException(exception + ", name: " + name + ", length: " + length);
         }
     }
 
