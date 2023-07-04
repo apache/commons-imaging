@@ -25,7 +25,7 @@ import org.apache.commons.imaging.formats.psd.PsdImageContents;
 public abstract class DataParser {
     public abstract int getBasicChannelsCount();
 
-    protected abstract int getRGB(int[][][] data, int x, int y, PsdImageContents imageContents);
+    protected abstract int getRgb(int[][][] data, int x, int y, PsdImageContents imageContents);
 
     public final void parseData(final int[][][] data, final BufferedImage bi,
             final PsdImageContents imageContents) {
@@ -37,7 +37,7 @@ public abstract class DataParser {
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                final int rgb = getRGB(data, x, y, imageContents);
+                final int rgb = getRgb(data, x, y, imageContents);
                 buffer.setElem(y * width + x, rgb);
             }
         }

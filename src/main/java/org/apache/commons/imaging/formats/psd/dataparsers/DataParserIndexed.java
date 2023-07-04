@@ -43,7 +43,7 @@ public class DataParserIndexed extends DataParser {
     }
 
     @Override
-    protected int getRGB(final int[][][] data, final int x, final int y, final PsdImageContents imageContents) {
+    protected int getRgb(final int[][][] data, final int x, final int y, final PsdImageContents imageContents) {
         final int sample = 0xff & data[0][y][x];
         return colorTable[sample];
     }

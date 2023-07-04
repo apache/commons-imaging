@@ -27,7 +27,7 @@ public class DataParserLab extends DataParser {
     }
 
     @Override
-    protected int getRGB(final int[][][] data, final int x, final int y, final PsdImageContents imageContents) {
+    protected int getRgb(final int[][][] data, final int x, final int y, final PsdImageContents imageContents) {
         final int cieL = 0xff & data[0][y][x];
         int cieA = 0xff & data[1][y][x];
         int cieB = 0xff & data[2][y][x];
