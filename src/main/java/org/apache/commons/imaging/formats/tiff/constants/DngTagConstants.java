@@ -42,7 +42,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUndefineds;
 /**
  * Digital Negative (DNG) Specification.
  * <p>
- * http://www.adobe.com/products/dng/pdfs/dng_spec_1_3_0_0.pdf -> https://helpx.adobe.com/camera-raw/digital-negative.html
+ * http://www.adobe.com/products/dng/pdfs/dng_spec_1_3_0_0.pdf -&gt; https://helpx.adobe.com/camera-raw/digital-negative.html
  * </p>
  */
 public final class DngTagConstants {
@@ -70,6 +70,7 @@ public final class DngTagConstants {
     public static final TagInfoShort EXIF_TAG_CFALAYOUT = new TagInfoShort(
             "CFALayout", 0xc617,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+
     public static final int CFALAYOUT_VALUE_RECTANGULAR = 1;
     public static final int CFALAYOUT_VALUE_EVEN_COLUMNS_OFFSET_DOWN_1_2_ROW = 2;
     public static final int CFALAYOUT_VALUE_EVEN_COLUMNS_OFFSET_UP_1_2_ROW = 3;
