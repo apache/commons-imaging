@@ -184,7 +184,7 @@ public class PhotometricInterpreterFloatTest {
     public void testInterpretPixel() {
         for (int i = 0; i < 256; i++) {
             final int lowTest = (i / 32) * 32;
-            final int argb = imageBuilder.getRGB(i, i);
+            final int argb = imageBuilder.getRgb(i, i);
             final int b = argb & 0xff;
             assertEquals(b, lowTest, "Invalid conversion for level " + i);
         }
@@ -194,17 +194,17 @@ public class PhotometricInterpreterFloatTest {
         // in the range 224.0/256.0 <= value < 256.0/256.0. So when it
         // was rendered, there was not palette entry that matched it,
         // and the corresponding pixel was set to zero.
-        int argb = imageBuilder.getRGB(256, 256);
+        int argb = imageBuilder.getRgb(256, 256);
         assertEquals(argb, 0, "Invalid upper-bound test");
 
         // Now inspect the banded palette case
-        argb = bandedImageBuilder.getRGB(0, 0);
+        argb = bandedImageBuilder.getRgb(0, 0);
         assertEquals(Color.gray.getRGB(), argb, "Invalid mapping of NaN");
-        argb = bandedImageBuilder.getRGB(50, 10);
+        argb = bandedImageBuilder.getRgb(50, 10);
         assertEquals(green.getRGB(), argb, "Invalid mapping of green range");
-        argb = bandedImageBuilder.getRGB(150, 10);
+        argb = bandedImageBuilder.getRgb(150, 10);
         assertEquals(Color.white.getRGB(), argb, "Invalid mapping of white range");
-        argb = bandedImageBuilder.getRGB(250, 10);
+        argb = bandedImageBuilder.getRgb(250, 10);
         assertEquals(orange.getRGB(), argb, "Invalid mapping of orange range");
     }
 
@@ -215,7 +215,7 @@ public class PhotometricInterpreterFloatTest {
     public void testMapValueToARGB() {
 
         int argb = pInterp.mapValueToARGB(0.5f);
-        int test = imageBuilder.getRGB(128, 128);
+        int test = imageBuilder.getRgb(128, 128);
         assertEquals(test, argb, "Conflicting results from value-to-ARGB map");
 
         // pInterp does not define a state for NaN, but bandedInterp does.
@@ -251,8 +251,8 @@ public class PhotometricInterpreterFloatTest {
         interpreter.interpretPixel(imageBuilder, samples, 0, 0);
         samples[0] = Float.floatToRawIntBits(1.2f);
         interpreter.interpretPixel(imageBuilder, samples, 1, 1);
-        int argb0 = imageBuilder.getRGB(0, 0) | 0xff000000;
-        int argb1 = imageBuilder.getRGB(1, 1) | 0xff000000;
+        int argb0 = imageBuilder.getRgb(0, 0) | 0xff000000;
+        int argb1 = imageBuilder.getRgb(1, 1) | 0xff000000;
         assertEquals(argb0, c0.getRGB(), "Invalid result for overlapping palette entry 0");
         assertEquals(argb1, c1.getRGB(), "Invalid result for overlapping palette entry 1");
         argb0 = interpreter.mapValueToARGB(0.5f);

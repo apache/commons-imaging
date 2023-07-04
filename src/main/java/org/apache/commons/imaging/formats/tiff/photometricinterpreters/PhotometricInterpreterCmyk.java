@@ -38,7 +38,7 @@ public class PhotometricInterpreterCmyk extends PhotometricInterpreter {
         final int sk = samples[3];
 
         final int rgb = ColorConversions.convertCmykToRgb(sc, sm, sy, sk);
-        imageBuilder.setRGB(x, y, rgb);
+        imageBuilder.setRgb(x, y, rgb);
     }
 
 }

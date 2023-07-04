@@ -100,7 +100,7 @@ abstract class FileInfo {
                 for (int x = 0; x < width; x++) {
                     final int rgb = getRGB(wsr);
 
-                    imageBuilder.setRGB(x, y, rgb);
+                    imageBuilder.setRgb(x, y, rgb);
                     // count++;
                 }
                 newline();
@@ -110,7 +110,7 @@ abstract class FileInfo {
                 // System.out.println("y: " + y);
                 for (int x = 0; x < width; x++) {
                     final int rgb = getRGB(is);
-                    imageBuilder.setRGB(x, y, rgb);
+                    imageBuilder.setRgb(x, y, rgb);
                     // count++;
                 }
                 newline();

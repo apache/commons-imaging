@@ -193,7 +193,7 @@ public final class DataReaderStrips extends ImageDataReader {
                             | (bytes[k] << 16)
                             | ((bytes[k + 1] & 0xff) << 8)
                             | (bytes[k + 2] & 0xff);
-                        imageBuilder.setRGB(j, i, rgb);
+                        imageBuilder.setRgb(j, i, rgb);
                     }
                 }
             } else {
@@ -206,7 +206,7 @@ public final class DataReaderStrips extends ImageDataReader {
                             | ((bytes[k + 1] & 0xff) << 8)
                             | (bytes[k + 2] & 0xff)
                             | (bytes[k + 3] << 24);
-                        imageBuilder.setRGB(j, i, rgb);
+                        imageBuilder.setRgb(j, i, rgb);
                     }
                 }
             }

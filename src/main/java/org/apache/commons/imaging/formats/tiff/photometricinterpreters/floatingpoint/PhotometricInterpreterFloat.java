@@ -226,7 +226,7 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
         for (final PaletteEntry entry : singleValuePaletteEntries) {
             if (entry.isCovered(f)) {
                 final int p = entry.getARGB(f);
-                imageBuilder.setRGB(x, y, p);
+                imageBuilder.setRgb(x, y, p);
                 return;
             }
         }
@@ -252,7 +252,7 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
         for (final PaletteEntry entry : singleValuePaletteEntries) {
             if (entry.isCovered(f)) {
                 final int p = entry.getARGB(f);
-                imageBuilder.setRGB(x, y, p);
+                imageBuilder.setRgb(x, y, p);
                 return;
             }
         }
@@ -260,7 +260,7 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
         for (final PaletteEntry entry : rangePaletteEntries) {
             if (entry.isCovered(f)) {
                 final int p = entry.getARGB(f);
-                imageBuilder.setRGB(x, y, p);
+                imageBuilder.setRgb(x, y, p);
                 break;
             }
         }

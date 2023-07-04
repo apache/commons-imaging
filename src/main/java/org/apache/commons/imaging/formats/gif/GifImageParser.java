@@ -333,7 +333,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
                 if (transparentIndex == index) {
                     rgb = 0x00;
                 }
-                imageBuilder.setRGB(x, y, rgb);
+                imageBuilder.setRgb(x, y, rgb);
             }
         }
 

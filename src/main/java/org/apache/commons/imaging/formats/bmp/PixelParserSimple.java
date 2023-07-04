@@ -36,7 +36,7 @@ abstract class PixelParserSimple extends PixelParser {
             for (int x = 0; x < bhi.width; x++) {
                 final int rgb = getNextRGB();
 
-                imageBuilder.setRGB(x, y, rgb);
+                imageBuilder.setRgb(x, y, rgb);
                 // db.setElem(y * bhi.width + x, rgb);
             }
             newline();

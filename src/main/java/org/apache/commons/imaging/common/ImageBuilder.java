@@ -180,7 +180,7 @@ public class ImageBuilder {
      * @param y the Y coordinate of the pixel to be read
      * @return the RGB or ARGB pixel value
      */
-    public int getRGB(final int x, final int y) {
+    public int getRgb(final int x, final int y) {
         final int rowOffset = y * width;
         return data[rowOffset + x];
     }
@@ -302,7 +302,7 @@ public class ImageBuilder {
      * @throws ArithmeticException if the index computation overflows an int.
      * @throws IllegalArgumentException if the resulting index is illegal.
      */
-    public void setRGB(final int x, final int y, final int argb) {
+    public void setRgb(final int x, final int y, final int argb) {
         // Throw ArithmeticException if the result overflows an int.
         final int rowOffset = Math.multiplyExact(y, width);
         // Throw ArithmeticException if the result overflows an int.

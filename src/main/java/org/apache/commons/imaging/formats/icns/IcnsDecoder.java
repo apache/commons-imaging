@@ -111,7 +111,7 @@ final class IcnsDecoder {
                 }
                 value <<= 1;
                 bitsLeft--;
-                image.setRGB(x, y, (alpha << 24) | (0xffffff & image.getRGB(x, y)));
+                image.setRgb(x, y, (alpha << 24) | (0xffffff & image.getRgb(x, y)));
             }
         }
     }
@@ -120,8 +120,8 @@ final class IcnsDecoder {
         for (int y = 0; y < image.getHeight(); y++) {
             for (int x = 0; x < image.getWidth(); x++) {
                 final int alpha = 0xff & maskData[y * image.getWidth() + x];
-                image.setRGB(x, y,
-                        (alpha << 24) | (0xffffff & image.getRGB(x, y)));
+                image.setRgb(x, y,
+                        (alpha << 24) | (0xffffff & image.getRgb(x, y)));
             }
         }
     }
@@ -144,7 +144,7 @@ final class IcnsDecoder {
                 }
                 value <<= 1;
                 bitsLeft--;
-                image.setRGB(x, y, argb);
+                image.setRgb(x, y, argb);
             }
         }
     }
@@ -156,7 +156,7 @@ final class IcnsDecoder {
                         | ((0xff & imageData[4 * (y * imageType.getWidth() + x) + 1]) << 16)
                         | ((0xff & imageData[4 * (y * imageType.getWidth() + x) + 2]) << 8)
                         | (0xff & imageData[4 * (y * imageType.getWidth() + x) + 3]);
-                image.setRGB(x, y, argb);
+                image.setRgb(x, y, argb);
             }
         }
     }
@@ -173,7 +173,7 @@ final class IcnsDecoder {
                     index = 0xf & imageData[i++];
                 }
                 visited = !visited;
-                image.setRGB(x, y, PALETTE_4BPP[index]);
+                image.setRgb(x, y, PALETTE_4BPP[index]);
             }
         }
     }
@@ -182,7 +182,7 @@ final class IcnsDecoder {
         for (int y = 0; y < imageType.getHeight(); y++) {
             for (int x = 0; x < imageType.getWidth(); x++) {
                 final int index = 0xff & imageData[y * imageType.getWidth() + x];
-                image.setRGB(x, y, PALETTE_8BPP[index]);
+                image.setRgb(x, y, PALETTE_8BPP[index]);
             }
         }
     }

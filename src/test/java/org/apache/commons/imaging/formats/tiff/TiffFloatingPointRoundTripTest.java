@@ -82,7 +82,7 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
                 final int index = iRow * width + iCol;
                 samples[0] = Float.floatToRawIntBits(f[index]);
                 pi.interpretPixel(builder, samples, iCol, iRow);
-                argb[index] = builder.getRGB(iCol, iRow);
+                argb[index] = builder.getRgb(iCol, iRow);
             }
         }
     }

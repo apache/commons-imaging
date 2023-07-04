@@ -175,7 +175,7 @@ public class ExampleReadFloatingPointData {
                     final float f = rasterData.getValue(x, y);
                     final int argb
                         = photometricInterpreter.mapValueToARGB(f);
-                    builder.setRGB(x, y, argb);
+                    builder.setRgb(x, y, argb);
                 }
             }
 

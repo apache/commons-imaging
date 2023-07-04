@@ -58,6 +58,6 @@ public class PhotometricInterpreterRgbTest {
         final int x = 10;
         final int y = 20;
         p.interpretPixel(imgBuilder, new int[] {255, 255, 255}, x, y);
-        assertEquals(0xffffffff, imgBuilder.getRGB(x, y));
+        assertEquals(0xffffffff, imgBuilder.getRgb(x, y));
     }
 }

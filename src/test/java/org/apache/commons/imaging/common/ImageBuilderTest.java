@@ -55,7 +55,7 @@ public class ImageBuilderTest {
             for (int y = 0; y < 100; y++) {
                 final int k = y * 100 + x;
                 final int rgb = 0xff000000 | k;
-                imageBuilder.setRGB(x, y, rgb);
+                imageBuilder.setRgb(x, y, rgb);
             }
         }
     }
@@ -127,7 +127,7 @@ public class ImageBuilderTest {
         for (int x = 25; x < 50; x++) {
             for (int y = 25; y < 50; y++) {
                 final int k = bImage.getRGB(x - 25, y - 25);
-                final int rgb = imageBuilder.getRGB(x, y);
+                final int rgb = imageBuilder.getRgb(x, y);
                 assertEquals(k, rgb, "Invalid buffered image subpixel at " + x + ", " + y);
             }
         }
@@ -135,8 +135,8 @@ public class ImageBuilderTest {
         final ImageBuilder testBuilder = imageBuilder.getSubset(25, 25, 25, 25);
         for (int x = 25; x < 50; x++) {
             for (int y = 25; y < 50; y++) {
-                final int k = testBuilder.getRGB(x - 25, y - 25);
-                final int rgb = imageBuilder.getRGB(x, y);
+                final int k = testBuilder.getRgb(x - 25, y - 25);
+                final int rgb = imageBuilder.getRgb(x, y);
                 assertEquals(k, rgb, "Invalid image builder subpixel at " + x + ", " + y);
             }
         }

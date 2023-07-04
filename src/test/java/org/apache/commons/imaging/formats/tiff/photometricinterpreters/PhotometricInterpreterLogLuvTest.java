@@ -94,7 +94,7 @@ public class PhotometricInterpreterLogLuvTest {
         final int x = 10;
         final int y = 20;
         p.interpretPixel(imgBuilder, new int[] {100, (byte) 32, (byte) 2}, x, y);
-        assertEquals(-7584166, imgBuilder.getRGB(x, y));
+        assertEquals(-7584166, imgBuilder.getRgb(x, y));
     }
 
     @Test

@@ -74,7 +74,7 @@ class PixelParserRle extends PixelParser {
                 // rgb = getNextRGB();
                 final int rgb = rgbs[i % rgbs.length];
                 // bi.setRGB(x, y, rgb);
-                imageBuilder.setRGB(x, y, rgb);
+                imageBuilder.setRgb(x, y, rgb);
                 // bi.setRGB(x, y, 0xff00ff00);
             } else {
                 LOGGER.fine("skipping bad pixel (" + x + "," + y + ")");
