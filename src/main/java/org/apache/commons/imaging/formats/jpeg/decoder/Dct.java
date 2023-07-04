@@ -101,7 +101,7 @@ final class Dct {
      * "JPEG still image data compression standard", by Pennebaker and Mitchell,
      * chapter 4, figure "4-8".
      */
-    public static void forwardDCT8(final float[] vector) {
+    public static void forwardDct8(final float[] vector) {
         final float a00 = vector[0] + vector[7];
         final float a10 = vector[1] + vector[6];
         final float a20 = vector[2] + vector[5];
@@ -142,7 +142,7 @@ final class Dct {
         vector[3] = a74 - a43;
     }
 
-    public static void forwardDCT8x8(final float[] matrix) {
+    public static void forwardDct8x8(final float[] matrix) {
         float a00, a10, a20, a30, a40, a50, a60, a70;
         float a01, a11, a21, a31, neg_a41, a51, a61;
         float a22, a23, mul5, a43, a53, a63;
@@ -223,7 +223,7 @@ final class Dct {
      * easy equations and properly explains constants and scaling factors. Terms
      * have been inlined and the negation optimized out of existence.
      */
-    public static void inverseDCT8(final float[] vector) {
+    public static void inverseDct8(final float[] vector) {
         // B1
         final float a2 = vector[2] - vector[6];
         final float a3 = vector[2] + vector[6];
@@ -270,7 +270,7 @@ final class Dct {
         vector[7] = m4 - a7;
     }
 
-    public static void inverseDCT8x8(final float[] matrix) {
+    public static void inverseDct8x8(final float[] matrix) {
         float a2, a3, a4, tmp1, tmp2, a5, a6, a7;
         float tmp4, neg_b4, b6, b2, b5;
         float tmp3, n0, n1, n2, n3, neg_n5;

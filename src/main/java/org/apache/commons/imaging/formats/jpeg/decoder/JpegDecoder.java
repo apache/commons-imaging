@@ -269,7 +269,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                     for (int j = 0; j < 64; j++) {
                         block[j] = blockInt[j] * scaledQuantizationTable[j];
                     }
-                    Dct.inverseDCT8x8(block);
+                    Dct.inverseDct8x8(block);
 
                     int dstRowOffset = 8 * y * 8
                             * frameComponent.horizontalSamplingFactor + 8 * x;

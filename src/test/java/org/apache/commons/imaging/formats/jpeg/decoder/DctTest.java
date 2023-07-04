@@ -113,7 +113,7 @@ public class DctTest {
         }
 
         final float[] data = originalData.clone();
-        Dct.forwardDCT8x8(data);
+        Dct.forwardDct8x8(data);
         Dct.scaleQuantizationMatrix(data);
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
@@ -122,7 +122,7 @@ public class DctTest {
         }
 
         Dct.scaleDequantizationMatrix(data);
-        Dct.inverseDCT8x8(data);
+        Dct.inverseDct8x8(data);
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
                 assertEquals(originalData8x8[y][x], data[8 * y + x], 0.001);
@@ -144,14 +144,14 @@ public class DctTest {
         }
 
         final float[] data = originalData.clone();
-        Dct.forwardDCT8(data);
+        Dct.forwardDct8(data);
         Dct.scaleQuantizationVector(data);
         for (int i = 0; i < 8; i++) {
             assertEquals(data[i], transformed[i], 0.001);
         }
 
         Dct.scaleDequantizationVector(data);
-        Dct.inverseDCT8(data);
+        Dct.inverseDct8(data);
         for (int i = 0; i < 8; i++) {
             assertEquals(data[i], originalData[i], 0.001);
         }
