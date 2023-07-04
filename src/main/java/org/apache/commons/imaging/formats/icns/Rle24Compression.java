@@ -24,8 +24,8 @@ final class Rle24Compression {
         final byte[] result = Allocator.byteArray(4 * pixelCount);
 
         // Several ICNS parsers advance by 4 bytes here:
-        // http://code.google.com/p/icns2png/ - when the width is >= 128
-        // http://icns.sourceforge.net/ - when those 4 bytes are all zero
+        // https://code.google.com/archive/p/icns2png/ - when the width is >= 128
+        // https://icns.sourceforge.io/ - when those 4 bytes are all zero
         //
         // A scan of all .icns files on MacOS shows that
         // all 128x128 images indeed start with 4 zeroes,
