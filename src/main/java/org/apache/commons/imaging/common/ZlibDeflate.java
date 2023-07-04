@@ -31,7 +31,7 @@ import org.apache.commons.imaging.ImagingException;
  * </p>
  *
  * <p>
- * <a href="http://www.ietf.org/rfc/rfc1951.txt">RFC 1951 - DEFLATE Compressed
+ * <a href="https://www.ietf.org/rfc/rfc1951.txt">RFC 1951 - DEFLATE Compressed
  * Data Format Specification version 1.3</a>
  * </p>
  */
