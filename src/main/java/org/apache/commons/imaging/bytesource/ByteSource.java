@@ -23,6 +23,7 @@ import java.nio.file.Path;
 import java.util.Objects;
 
 import org.apache.commons.imaging.common.BinaryFunctions;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.build.AbstractOrigin;
 import org.apache.commons.io.build.AbstractOrigin.ByteArrayOrigin;
 import org.apache.commons.io.build.AbstractOrigin.FileOrigin;
@@ -78,8 +79,8 @@ public class ByteSource {
             BinaryFunctions.skipBytes(is, start);
             succeeded = true;
         } finally {
-            if (!succeeded && is != null) {
-                is.close();
+            if (!succeeded) {
+                IOUtils.close(is);
             }
         }
         return is;
