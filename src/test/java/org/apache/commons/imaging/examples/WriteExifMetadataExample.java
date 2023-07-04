@@ -111,7 +111,7 @@ public class WriteExifMetadataExample {
                 final double latitude = 40 + 43 / 60.0; // 40 degrees N (in Degrees
                 // North)
 
-                outputSet.setGPSInDegrees(longitude, latitude);
+                outputSet.setGpsInDegrees(longitude, latitude);
             }
 
             // printTagValue(jpegMetadata, TiffConstants.TIFF_TAG_DATE_TIME);
@@ -258,7 +258,7 @@ public class WriteExifMetadataExample {
                 final double latitude = 40 + 43 / 60.0; // 40 degrees N (in Degrees
                 // North)
 
-                outputSet.setGPSInDegrees(longitude, latitude);
+                outputSet.setGpsInDegrees(longitude, latitude);
             }
 
             new ExifRewriter().updateExifMetadataLossless(jpegImageFile, os,

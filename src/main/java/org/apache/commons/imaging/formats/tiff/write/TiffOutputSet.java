@@ -60,7 +60,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
         return result;
     }
 
-    public TiffOutputDirectory addGPSDirectory() throws ImagingException {
+    public TiffOutputDirectory addGpsDirectory() throws ImagingException {
         final TiffOutputDirectory result = new TiffOutputDirectory(
                 TiffDirectoryConstants.DIRECTORY_TYPE_GPS, byteOrder);
         addDirectory(result);
@@ -119,7 +119,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
         return findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_EXIF);
     }
 
-    public TiffOutputDirectory getGPSDirectory() {
+    public TiffOutputDirectory getGpsDirectory() {
         return findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_GPS);
     }
 
@@ -139,7 +139,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
         return addExifDirectory();
     }
 
-    public TiffOutputDirectory getOrCreateGPSDirectory()
+    public TiffOutputDirectory getOrCreateGpsDirectory()
             throws ImagingException {
         // GPS directory requires EXIF directory
         getOrCreateExifDirectory();
@@ -148,7 +148,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
         if (null != result) {
             return result;
         }
-        return addGPSDirectory();
+        return addGpsDirectory();
     }
 
     public TiffOutputDirectory getOrCreateRootDirectory()
@@ -203,9 +203,9 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
      *            latitude in degrees N, negative values are S.
      * @throws ImagingException if it fails to write the new data to the GPS directory
      */
-    public void setGPSInDegrees(double longitude, double latitude)
+    public void setGpsInDegrees(double longitude, double latitude)
             throws ImagingException {
-        final TiffOutputDirectory gpsDirectory = getOrCreateGPSDirectory();
+        final TiffOutputDirectory gpsDirectory = getOrCreateGpsDirectory();
 
         gpsDirectory.removeField(GpsTagConstants.GPS_TAG_GPS_VERSION_ID);
         gpsDirectory.add(GpsTagConstants.GPS_TAG_GPS_VERSION_ID, GpsTagConstants.gpsVersion());

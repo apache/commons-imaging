@@ -39,7 +39,7 @@ public class TiffOutputSetTest {
      */
     @Test
     public void testImaging144() throws Exception {
-        tiffOutputSet.setGPSInDegrees(1.0, 1.0);
+        tiffOutputSet.setGpsInDegrees(1.0, 1.0);
 
         final TiffOutputField gpsVersionId = tiffOutputSet.findField(GpsTagConstants.GPS_TAG_GPS_VERSION_ID);
 
