@@ -219,7 +219,7 @@ final class Dct {
 
     /**
      * Fast inverse Dct using AA&N. This is taken from the beautiful
-     * http://vsr.finermatik.tu-chemnitz.de/~jan/MPEG/HTML/IDCT.html which gives
+     * [BROEKN URL] http://vsr.finermatik.tu-chemnitz.de/~jan/MPEG/HTML/IDCT.html which gives
      * easy equations and properly explains constants and scaling factors. Terms
      * have been inlined and the negation optimized out of existence.
      */
