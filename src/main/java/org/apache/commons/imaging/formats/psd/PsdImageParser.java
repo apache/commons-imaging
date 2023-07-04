@@ -259,39 +259,39 @@ public class PsdImageParser extends ImageParser<PsdImagingParameters> implements
             }
             skipBytes(is, PSD_HEADER_LENGTH);
 
-            final int ColorModeDataLength = read4Bytes("ColorModeDataLength", is,
+            final int colorModeDataLength = read4Bytes("ColorModeDataLength", is,
                     "Not a Valid PSD File", getByteOrder());
 
             if (section == PSD_SECTION_COLOR_MODE) {
-                return readBytes("ColorModeData", is, ColorModeDataLength,
+                return readBytes("ColorModeData", is, colorModeDataLength,
                         "Not a Valid PSD File");
             }
 
-            skipBytes(is, ColorModeDataLength);
+            skipBytes(is, colorModeDataLength);
             // byte ColorModeData[] = readByteArray("ColorModeData",
             // ColorModeDataLength, is, "Not a Valid PSD File");
 
-            final int ImageResourcesLength = read4Bytes("ImageResourcesLength", is,
+            final int imageResourcesLength = read4Bytes("ImageResourcesLength", is,
                     "Not a Valid PSD File", getByteOrder());
 
             if (section == PSD_SECTION_IMAGE_RESOURCES) {
                 return readBytes("ImageResources", is,
-                        ImageResourcesLength, "Not a Valid PSD File");
+                        imageResourcesLength, "Not a Valid PSD File");
             }
 
-            skipBytes(is, ImageResourcesLength);
+            skipBytes(is, imageResourcesLength);
             // byte ImageResources[] = readByteArray("ImageResources",
             // ImageResourcesLength, is, "Not a Valid PSD File");
 
-            final int LayerAndMaskDataLength = read4Bytes("LayerAndMaskDataLength",
+            final int layerAndMaskDataLength = read4Bytes("LayerAndMaskDataLength",
                     is, "Not a Valid PSD File", getByteOrder());
 
             if (section == PSD_SECTION_LAYER_AND_MASK_DATA) {
                 return readBytes("LayerAndMaskData",
-                        is, LayerAndMaskDataLength, "Not a Valid PSD File");
+                        is, layerAndMaskDataLength, "Not a Valid PSD File");
             }
 
-            skipBytes(is, LayerAndMaskDataLength);
+            skipBytes(is, layerAndMaskDataLength);
             // byte LayerAndMaskData[] = readByteArray("LayerAndMaskData",
             // LayerAndMaskDataLength, is, "Not a Valid PSD File");
 
@@ -354,13 +354,13 @@ public class PsdImageParser extends ImageParser<PsdImagingParameters> implements
         final List<String> comments = new ArrayList<>();
         // TODO: comments...
 
-        int BitsPerPixel = header.depth * getChannelsPerMode(header.mode);
+        int bitsPerPixel = header.depth * getChannelsPerMode(header.mode);
         // System.out.println("header.Depth: " + header.Depth);
         // System.out.println("header.Mode: " + header.Mode);
         // System.out.println("getChannelsPerMode(header.Mode): " +
         // getChannelsPerMode(header.Mode));
-        if (BitsPerPixel < 0) {
-            BitsPerPixel = 0;
+        if (bitsPerPixel < 0) {
+            bitsPerPixel = 0;
         }
         final ImageFormat format = ImageFormats.PSD;
         final String formatName = "Photoshop";
@@ -393,7 +393,7 @@ public class PsdImageParser extends ImageParser<PsdImagingParameters> implements
             compressionAlgorithm = ImageInfo.CompressionAlgorithm.UNKNOWN;
         }
 
-        return new ImageInfo(formatDetails, BitsPerPixel, comments,
+        return new ImageInfo(formatDetails, bitsPerPixel, comments,
                 format, formatName, height, mimeType, numberOfImages,
                 physicalHeightDpi, physicalHeightInch, physicalWidthDpi,
                 physicalWidthInch, width, progressive, transparent,
@@ -537,13 +537,13 @@ public class PsdImageParser extends ImageParser<PsdImagingParameters> implements
         return new String(block.data, 0, block.data.length, StandardCharsets.UTF_8);
     }
 
-    private boolean keepImageResourceBlock(final int ID, final int[] imageResourceIDs) {
+    private boolean keepImageResourceBlock(final int id, final int[] imageResourceIDs) {
         if (imageResourceIDs == null) {
             return true;
         }
 
         for (final int imageResourceID : imageResourceIDs) {
-            if (ID == imageResourceID) {
+            if (id == imageResourceID) {
                 return true;
             }
         }
@@ -583,28 +583,28 @@ public class PsdImageParser extends ImageParser<PsdImagingParameters> implements
             throws ImagingException, IOException {
         final PsdHeaderInfo header = readHeader(is);
 
-        final int ColorModeDataLength = read4Bytes("ColorModeDataLength", is,
+        final int colorModeDataLength = read4Bytes("ColorModeDataLength", is,
                 "Not a Valid PSD File", getByteOrder());
-        skipBytes(is, ColorModeDataLength);
+        skipBytes(is, colorModeDataLength);
         // is.skip(ColorModeDataLength);
         // byte ColorModeData[] = readByteArray("ColorModeData",
         // ColorModeDataLength, is, "Not a Valid PSD File");
 
-        final int ImageResourcesLength = read4Bytes("ImageResourcesLength", is,
+        final int imageResourcesLength = read4Bytes("ImageResourcesLength", is,
                 "Not a Valid PSD File", getByteOrder());
-        skipBytes(is, ImageResourcesLength);
+        skipBytes(is, imageResourcesLength);
         // long skipped = is.skip(ImageResourcesLength);
         // byte ImageResources[] = readByteArray("ImageResources",
         // ImageResourcesLength, is, "Not a Valid PSD File");
 
-        final int LayerAndMaskDataLength = read4Bytes("LayerAndMaskDataLength", is,
+        final int layerAndMaskDataLength = read4Bytes("LayerAndMaskDataLength", is,
                 "Not a Valid PSD File", getByteOrder());
-        skipBytes(is, LayerAndMaskDataLength);
+        skipBytes(is, layerAndMaskDataLength);
         // is.skip(LayerAndMaskDataLength);
         // byte LayerAndMaskData[] = readByteArray("LayerAndMaskData",
         // LayerAndMaskDataLength, is, "Not a Valid PSD File");
 
-        final int Compression = read2Bytes("Compression", is, "Not a Valid PSD File", getByteOrder());
+        final int compression = read2Bytes("Compression", is, "Not a Valid PSD File", getByteOrder());
 
         // skip_bytes(is, LayerAndMaskDataLength);
         // byte ImageData[] = readByteArray("ImageData", LayerAndMaskDataLength,
@@ -612,13 +612,13 @@ public class PsdImageParser extends ImageParser<PsdImagingParameters> implements
 
         // System.out.println("Compression: " + Compression);
 
-        return new PsdImageContents(header, ColorModeDataLength,
+        return new PsdImageContents(header, colorModeDataLength,
         // ColorModeData,
-                ImageResourcesLength,
+                imageResourcesLength,
                 // ImageResources,
-                LayerAndMaskDataLength,
+                layerAndMaskDataLength,
                 // LayerAndMaskData,
-                Compression);
+                compression);
     }
 
     private List<ImageResourceBlock> readImageResourceBlocks(final byte[] bytes,
