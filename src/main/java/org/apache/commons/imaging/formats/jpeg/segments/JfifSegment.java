@@ -55,16 +55,16 @@ public class JfifSegment extends Segment {
                     "Not a Valid JPEG File: missing JFIF string");
         }
 
-        jfifMajorVersion = readByte("JFIF_major_version", is,
+        jfifMajorVersion = readByte("jfifMajorVersion", is,
                 "Not a Valid JPEG File");
-        jfifMinorVersion = readByte("JFIF_minor_version", is,
+        jfifMinorVersion = readByte("jfifMinorVersion", is,
                 "Not a Valid JPEG File");
-        densityUnits = readByte("density_units", is, "Not a Valid JPEG File");
-        xDensity = read2Bytes("x_density", is, "Not a Valid JPEG File", getByteOrder());
-        yDensity = read2Bytes("y_density", is, "Not a Valid JPEG File", getByteOrder());
+        densityUnits = readByte("densityUnits", is, "Not a Valid JPEG File");
+        xDensity = read2Bytes("xDensity", is, "Not a Valid JPEG File", getByteOrder());
+        yDensity = read2Bytes("yDensity", is, "Not a Valid JPEG File", getByteOrder());
 
-        xThumbnail = readByte("x_thumbnail", is, "Not a Valid JPEG File");
-        yThumbnail = readByte("y_thumbnail", is, "Not a Valid JPEG File");
+        xThumbnail = readByte("xThumbnail", is, "Not a Valid JPEG File");
+        yThumbnail = readByte("yThumbnail", is, "Not a Valid JPEG File");
         thumbnailSize = xThumbnail * yThumbnail;
         if (thumbnailSize > 0) {
             skipBytes(is, thumbnailSize,
