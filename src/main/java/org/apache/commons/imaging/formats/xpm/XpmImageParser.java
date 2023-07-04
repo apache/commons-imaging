@@ -64,7 +64,7 @@ public class XpmImageParser extends ImageParser<XpmImagingParameters> {
         int index;
         int monoArgb;
 
-        int getBestARGB() {
+        int getBestArgb() {
             if (haveColor) {
                 return colorArgb;
             }
@@ -214,7 +214,7 @@ public class XpmImageParser extends ImageParser<XpmImagingParameters> {
         ImageInfo.ColorType colorType = ImageInfo.ColorType.BW;
         for (final Entry<Object, PaletteEntry> entry : xpmHeader.palette.entrySet()) {
             final PaletteEntry paletteEntry = entry.getValue();
-            if ((paletteEntry.getBestARGB() & 0xff000000) != 0xff000000) {
+            if ((paletteEntry.getBestArgb() & 0xff000000) != 0xff000000) {
                 transparent = true;
             }
             if (paletteEntry.haveColor) {
@@ -514,7 +514,7 @@ public class XpmImageParser extends ImageParser<XpmImagingParameters> {
             final int[] palette = Allocator.intArray(xpmHeader.palette.size());
             for (final Entry<Object, PaletteEntry> entry : xpmHeader.palette.entrySet()) {
                 final PaletteEntry paletteEntry = entry.getValue();
-                palette[paletteEntry.index] = paletteEntry.getBestARGB();
+                palette[paletteEntry.index] = paletteEntry.getBestArgb();
             }
             colorModel = new IndexColorModel(8, xpmHeader.palette.size(), palette, 0, true, -1, DataBuffer.TYPE_BYTE);
             // Check allocation
@@ -530,7 +530,7 @@ public class XpmImageParser extends ImageParser<XpmImagingParameters> {
             final int[] palette = Allocator.intArray(xpmHeader.palette.size());
             for (final Entry<Object, PaletteEntry> entry : xpmHeader.palette.entrySet()) {
                 final PaletteEntry paletteEntry = entry.getValue();
-                palette[paletteEntry.index] = paletteEntry.getBestARGB();
+                palette[paletteEntry.index] = paletteEntry.getBestArgb();
             }
             colorModel = new IndexColorModel(16, xpmHeader.palette.size(), palette, 0, true, -1, DataBuffer.TYPE_USHORT);
             // Check allocation
@@ -570,7 +570,7 @@ public class XpmImageParser extends ImageParser<XpmImagingParameters> {
                 if (bpp <= 16) {
                     dataBuffer.setElem(rowOffset + x, paletteEntry.index);
                 } else {
-                    dataBuffer.setElem(rowOffset + x, paletteEntry.getBestARGB());
+                    dataBuffer.setElem(rowOffset + x, paletteEntry.getBestArgb());
                 }
             }
         }
