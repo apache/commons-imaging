@@ -33,6 +33,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
  * Enhancements for Adobe PageMaker(R) 6.0 software
  * </p>
  * <p>
+ * [BROKEN URL]
  * http://partners.adobe.com/public/developer/en/tiff/TIFFPM6.pdf
  * </p>
  */
