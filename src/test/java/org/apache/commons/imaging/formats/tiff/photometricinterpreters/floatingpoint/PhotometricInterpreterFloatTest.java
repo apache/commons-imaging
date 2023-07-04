@@ -214,20 +214,20 @@ public class PhotometricInterpreterFloatTest {
     @Test
     public void testMapValueToARGB() {
 
-        int argb = pInterp.mapValueToARGB(0.5f);
+        int argb = pInterp.mapValueToArgb(0.5f);
         int test = imageBuilder.getRgb(128, 128);
         assertEquals(test, argb, "Conflicting results from value-to-ARGB map");
 
         // pInterp does not define a state for NaN, but bandedInterp does.
         // so test both variations
-        argb = pInterp.mapValueToARGB(Float.NaN);
+        argb = pInterp.mapValueToArgb(Float.NaN);
         assertEquals(0, argb, "Non-defined NaN did not return ARGB of zero");
 
         // to test mappings for special values, use the banded-interpreter
-        argb = bandedInterp.mapValueToARGB(Float.NaN);
+        argb = bandedInterp.mapValueToArgb(Float.NaN);
         test = Color.gray.getRGB();
         assertEquals(test, argb, "Float.NaN mapped to incorrect ARGB");
-        argb = bandedInterp.mapValueToARGB(-1f);
+        argb = bandedInterp.mapValueToArgb(-1f);
         test = Color.gray.getRGB();
         assertEquals(test, argb, "Excluded value mapped to incorrect ARGB");
     }
@@ -255,8 +255,8 @@ public class PhotometricInterpreterFloatTest {
         int argb1 = imageBuilder.getRgb(1, 1) | 0xff000000;
         assertEquals(argb0, c0.getRGB(), "Invalid result for overlapping palette entry 0");
         assertEquals(argb1, c1.getRGB(), "Invalid result for overlapping palette entry 1");
-        argb0 = interpreter.mapValueToARGB(0.5f);
-        argb1 = interpreter.mapValueToARGB(1.2f);
+        argb0 = interpreter.mapValueToArgb(0.5f);
+        argb1 = interpreter.mapValueToArgb(1.2f);
         assertEquals(argb0, c0.getRGB(), "Invalid mapping for overlapping palette entry 0");
         assertEquals(argb1, c1.getRGB(), "Invalid mapping for overlapping palette entry 1");
     }

@@ -276,7 +276,7 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
      * @return a valid ARGB value, or zero if no palette specification covers
      * the input value.
      */
-    public int mapValueToARGB(final float f) {
+    public int mapValueToArgb(final float f) {
 
         // The single-value palette entries can accept a Float.NaN as
         // a target while the range-of-values entries cannot.  So
