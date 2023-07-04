@@ -37,13 +37,13 @@ public class PaletteFactory {
 
     private static class DivisionCandidate {
         // private final ColorSpaceSubset src;
-        private final ColorSpaceSubset dst_a;
-        private final ColorSpaceSubset dst_b;
+        private final ColorSpaceSubset dstA;
+        private final ColorSpaceSubset dstB;
 
-        DivisionCandidate(final ColorSpaceSubset dst_a, final ColorSpaceSubset dst_b) {
+        DivisionCandidate(final ColorSpaceSubset dstA, final ColorSpaceSubset dstB) {
             // this.src = src;
-            this.dst_a = dst_a;
-            this.dst_b = dst_b;
+            this.dstA = dstA;
+            this.dstB = dstB;
         }
     }
 
@@ -133,8 +133,8 @@ public class PaletteFactory {
                     precision);
             if (dc != null) {
                 v.remove(maxSubset);
-                v.add(dc.dst_a);
-                v.add(dc.dst_b);
+                v.add(dc.dstA);
+                v.add(dc.dstB);
             } else {
                 ignore.add(maxSubset);
             }
@@ -156,8 +156,8 @@ public class PaletteFactory {
         double bestScore = Double.MAX_VALUE;
 
         for (final DivisionCandidate dc : dcs) {
-            final ColorSpaceSubset first = dc.dst_a;
-            final ColorSpaceSubset second = dc.dst_b;
+            final ColorSpaceSubset first = dc.dstA;
+            final ColorSpaceSubset second = dc.dstB;
             final int area1 = first.total;
             final int area2 = second.total;
 
