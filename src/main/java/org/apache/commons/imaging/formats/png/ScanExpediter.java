@@ -43,7 +43,7 @@ abstract class ScanExpediter {
     final int bitDepth;
     final int bytesPerPixel;
     final int bitsPerPixel;
-    final PngChunkPlte pngChunkPLTE;
+    final PngChunkPlte pngChunkPlte;
     final GammaCorrection gammaCorrection;
     final TransparencyFilter transparencyFilter;
 
@@ -59,7 +59,7 @@ abstract class ScanExpediter {
         this.bitDepth = bitDepth;
         this.bytesPerPixel = this.getBitsToBytesRoundingUp(bitsPerPixel);
         this.bitsPerPixel = bitsPerPixel;
-        this.pngChunkPLTE = pngChunkPLTE;
+        this.pngChunkPlte = pngChunkPLTE;
         this.gammaCorrection = gammaCorrection;
         this.transparencyFilter = transparencyFilter;
     }
@@ -85,18 +85,18 @@ abstract class ScanExpediter {
         return unfilterScanline(FilterType.values()[filterType], scanline, prev, bytesPerPixel);
     }
 
-    final int getPixelARGB(final int alpha, final int red, final int green, final int blue) {
+    final int getPixelArgb(final int alpha, final int red, final int green, final int blue) {
         return ((0xff & alpha) << 24)
              | ((0xff & red)   << 16)
              | ((0xff & green) << 8)
              | ((0xff & blue)  << 0);
     }
 
-    final int getPixelRGB(final int red, final int green, final int blue) {
-        return getPixelARGB(0xff, red, green, blue);
+    final int getPixelRgb(final int red, final int green, final int blue) {
+        return getPixelArgb(0xff, red, green, blue);
     }
 
-    int getRGB(final BitParser bitParser, final int pixelIndexInScanline)
+    int getRgb(final BitParser bitParser, final int pixelIndexInScanline)
             throws ImagingException, IOException {
 
         switch (pngColorType) {
@@ -108,7 +108,7 @@ abstract class ScanExpediter {
                 sample = gammaCorrection.correctSample(sample);
             }
 
-            int rgb = getPixelRGB(sample, sample, sample);
+            int rgb = getPixelRgb(sample, sample, sample);
 
             if (transparencyFilter != null) {
                 rgb = transparencyFilter.filter(rgb, sample);
@@ -123,7 +123,7 @@ abstract class ScanExpediter {
             int green = bitParser.getSampleAsByte(pixelIndexInScanline, 1);
             int blue = bitParser.getSampleAsByte(pixelIndexInScanline, 2);
 
-            int rgb = getPixelRGB(red, green, blue);
+            int rgb = getPixelRgb(red, green, blue);
 
             if (transparencyFilter != null) {
                 rgb = transparencyFilter.filter(rgb, -1);
@@ -135,7 +135,7 @@ abstract class ScanExpediter {
                 red = gammaCorrection.correctSample(red);
                 green = gammaCorrection.correctSample(green);
                 blue = gammaCorrection.correctSample(blue);
-                rgb = getPixelARGB(alpha, red, green, blue);
+                rgb = getPixelArgb(alpha, red, green, blue);
             }
 
             return rgb;
@@ -144,12 +144,12 @@ abstract class ScanExpediter {
         case INDEXED_COLOR: {
             // 1,2,4,8 Each pixel is a palette index;
             // a PLTE chunk must appear.
-            if (pngChunkPLTE == null) {
+            if (pngChunkPlte == null) {
                 throw new ImagingException("A PLTE chunk is required for an indexed color type.");
             }
             final int index = bitParser.getSample(pixelIndexInScanline, 0);
 
-            int rgb = pngChunkPLTE.getRGB(index);
+            int rgb = pngChunkPlte.getRGB(index);
 
             if (transparencyFilter != null) {
                 rgb = transparencyFilter.filter(rgb, index);
@@ -167,7 +167,7 @@ abstract class ScanExpediter {
                 sample = gammaCorrection.correctSample(sample);
             }
 
-            return getPixelARGB(alpha, sample, sample, sample);
+            return getPixelArgb(alpha, sample, sample, sample);
         }
         case TRUE_COLOR_WITH_ALPHA: {
             // 8,16 Each pixel is an R,G,B triple,
@@ -182,7 +182,7 @@ abstract class ScanExpediter {
                 blue = gammaCorrection.correctSample(blue);
             }
 
-            return getPixelARGB(alpha, red, green, blue);
+            return getPixelArgb(alpha, red, green, blue);
         }
         default:
             throw new ImagingException("PNG: unknown color type: " + pngColorType);

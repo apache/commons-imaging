@@ -48,7 +48,7 @@ class ScanExpediterSimple extends ScanExpediter {
                     bitDepth);
 
             for (int x = 0; x < width; x++) {
-                final int rgb = getRGB(bitParser, x);
+                final int rgb = getRgb(bitParser, x);
 
                 bi.setRGB(x, y, rgb);
             }
