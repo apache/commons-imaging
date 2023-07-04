@@ -40,7 +40,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShorts;
  * Also subsumes "The spirit of TIFF class F"
  * </p>
  * <p>
- * http://cool.conservation-us.org/bytopic/imaging/std/tiff-f.html
+ * https://cool.culturalheritage.org/bytopic/imaging/std/tiff-f.html
  * </p>
  */
 public final class Rfc2301TagConstants {
