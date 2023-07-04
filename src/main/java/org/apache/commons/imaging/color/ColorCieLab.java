@@ -82,8 +82,8 @@ public final class ColorCieLab {
     public final double a;
     public final double b;
 
-    public ColorCieLab(final double L, final double a, final double b) {
-        this.l = L;
+    public ColorCieLab(final double l, final double a, final double b) {
+        this.l = l;
         this.a = a;
         this.b = b;
     }
