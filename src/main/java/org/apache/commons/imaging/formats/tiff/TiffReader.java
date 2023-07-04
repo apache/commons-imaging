@@ -45,6 +45,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoDirectory;
 public class TiffReader extends BinaryFileParser {
 
     private static class Collector implements Listener {
+
         private TiffHeader tiffHeader;
         private final List<TiffDirectory> directories = new ArrayList<>();
         private final List<TiffField> fields = new ArrayList<>();
@@ -172,7 +173,7 @@ public class TiffReader extends BinaryFileParser {
         if (directory.imageDataInStrips()) {
             final TiffField rowsPerStripField = directory.findField(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP);
             /*
-             * Default value of rowsperstrip is assumed to be infinity
+             * Default value of rowsPerStripField is assumed to be infinity
              * http://www.awaresystems.be/imaging/tiff/tifftags/rowsperstrip.html
              */
             int rowsPerStrip = Integer.MAX_VALUE;
