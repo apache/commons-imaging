@@ -788,10 +788,10 @@ public final class ColorConversions {
         varG = pivotRgb(varG);
         varB = pivotRgb(varB);
 
-        final double R = (varR * 255);
-        final double G = (varG * 255);
-        final double B = (varB * 255);
-        return convertRgbToRgb(R, G, B);
+        final double r = (varR * 255);
+        final double g = (varG * 255);
+        final double b = (varB * 255);
+        return convertRgbToRgb(r, g, b);
     }
 
     public static double degree2radian(final double degree) {
