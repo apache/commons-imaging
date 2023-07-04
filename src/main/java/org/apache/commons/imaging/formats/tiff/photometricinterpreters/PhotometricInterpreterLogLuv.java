@@ -110,44 +110,44 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
      * @see <a href="https://en.wikipedia.org/wiki/White_point">White point</a>
      */
     TristimulusValues getTristimulusValues(final int cieL, final int cieA, final int cieB) {
-        float var_Y = ((cieL * 100.0f / 255.0f) + 16.0f) / 116.0f;
-        float var_X = cieA / 500.0f + var_Y;
-        float var_Z = var_Y - cieB / 200.0f;
+        float varY = ((cieL * 100.0f / 255.0f) + 16.0f) / 116.0f;
+        float varX = cieA / 500.0f + varY;
+        float varZ = varY - cieB / 200.0f;
 
-        final float var_x_cube = (float) Math.pow(var_X, 3.0d);
-        final float var_y_cube = (float) Math.pow(var_Y, 3.0d);
-        final float var_z_cube = (float) Math.pow(var_Z, 3.0d);
+        final float varXCube = (float) Math.pow(varX, 3.0d);
+        final float varYCube = (float) Math.pow(varY, 3.0d);
+        final float varZCube = (float) Math.pow(varZ, 3.0d);
 
-        if (var_y_cube > 0.008856f) {
-            var_Y = var_y_cube;
+        if (varYCube > 0.008856f) {
+            varY = varYCube;
         } else {
-            var_Y = (var_Y - 16 / 116.0f) / 7.787f;
+            varY = (varY - 16 / 116.0f) / 7.787f;
         }
 
-        if (var_x_cube > 0.008856f) {
-            var_X = var_x_cube;
+        if (varXCube > 0.008856f) {
+            varX = varXCube;
         } else {
-            var_X = (var_X - 16 / 116.0f) / 7.787f;
+            varX = (varX - 16 / 116.0f) / 7.787f;
         }
 
-        if (var_z_cube > 0.008856f) {
-            var_Z = var_z_cube;
+        if (varZCube > 0.008856f) {
+            varZ = varZCube;
         } else {
-            var_Z = (var_Z - 16 / 116.0f) / 7.787f;
+            varZ = (varZ - 16 / 116.0f) / 7.787f;
         }
 
         // These reference values are the relative white points (XYZ) for commons scene types.
         // The chosen values here reflect a scene with Summer Sun and Sky, temperature of 6504 K,
         // X 95.047, Y 100.0, and Z 108.883.
         // See Color Science by Wyszecki and Stiles for more
-        final float ref_X = 95.047f;
-        final float ref_Y = 100.000f;
-        final float ref_Z = 108.883f;
+        final float refX = 95.047f;
+        final float refY = 100.000f;
+        final float refZ = 108.883f;
 
         final TristimulusValues values = new TristimulusValues();
-        values.x = ref_X * var_X; // ref_X = 95.047 Observer= 2°, Illuminant= D65
-        values.y = ref_Y * var_Y; // ref_Y = 100.000
-        values.z = ref_Z * var_Z; // ref_Z = 108.883
+        values.x = refX * varX; // ref_X = 95.047 Observer= 2°, Illuminant= D65
+        values.y = refY * varY; // ref_Y = 100.000
+        values.z = refZ * varZ; // ref_Z = 108.883
         return values;
     }
 
