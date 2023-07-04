@@ -56,7 +56,7 @@ public class PngChunkPlte extends PngChunk {
     }
 
     public void correct(final GammaCorrection gammaCorrection) {
-        Arrays.setAll(rgb, i -> gammaCorrection.correctARGB(rgb[i]));
+        Arrays.setAll(rgb, i -> gammaCorrection.correctArgb(rgb[i]));
     }
 
     public int[] getRgb() {

@@ -41,7 +41,7 @@ public class GammaCorrection {
         }
     }
 
-    public int correctARGB(final int pixel) {
+    public int correctArgb(final int pixel) {
         final int alpha = (0xff000000) & pixel;
         int red = (pixel >> 16) & 0xff;
         int green = (pixel >> 8) & 0xff;
