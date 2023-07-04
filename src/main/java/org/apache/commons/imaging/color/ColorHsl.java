@@ -77,14 +77,14 @@ public final class ColorHsl {
      */
     public static final ColorHsl BLUE = new ColorHsl(240, 100, 100);
 
-    public final double H;
-    public final double S;
-    public final double L;
+    public final double h;
+    public final double s;
+    public final double l;
 
-    public ColorHsl(final double H, final double S, final double L) {
-        this.H = H;
-        this.S = S;
-        this.L = L;
+    public ColorHsl(final double h, final double s, final double l) {
+        this.h = h;
+        this.s = s;
+        this.l = l;
     }
 
     @Override
@@ -97,13 +97,13 @@ public final class ColorHsl {
         }
 
         final ColorHsl colorHsl = (ColorHsl) o;
-        if (Double.compare(colorHsl.H, H) != 0) {
+        if (Double.compare(colorHsl.h, h) != 0) {
             return false;
         }
-        if (Double.compare(colorHsl.L, L) != 0) {
+        if (Double.compare(colorHsl.l, l) != 0) {
             return false;
         }
-        if (Double.compare(colorHsl.S, S) != 0) {
+        if (Double.compare(colorHsl.s, s) != 0) {
             return false;
         }
 
@@ -114,17 +114,17 @@ public final class ColorHsl {
     public int hashCode() {
         int result;
         long temp;
-        temp = Double.doubleToLongBits(H);
+        temp = Double.doubleToLongBits(h);
         result = (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(S);
+        temp = Double.doubleToLongBits(s);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(L);
+        temp = Double.doubleToLongBits(l);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
 
     @Override
     public String toString() {
-        return "{H: " + H + ", S: " + S + ", L: " + L + "}";
+        return "{H: " + h + ", S: " + s + ", L: " + l + "}";
     }
 }

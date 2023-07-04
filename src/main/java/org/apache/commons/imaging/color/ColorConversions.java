@@ -365,7 +365,7 @@ public final class ColorConversions {
     }
 
     public static int convertHSLtoRGB(final ColorHsl hsl) {
-        return convertHSLtoRGB(hsl.H, hsl.S, hsl.L);
+        return convertHSLtoRGB(hsl.h, hsl.s, hsl.l);
     }
 
     public static int convertHSLtoRGB(final double h, final double s, final double l) {
