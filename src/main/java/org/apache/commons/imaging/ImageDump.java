@@ -92,7 +92,7 @@ public class ImageDump {
 
         final IccProfileParser parser = new IccProfileParser();
 
-        final IccProfileInfo info = parser.getICCProfileInfo(bytes);
+        final IccProfileInfo info = parser.getIccProfileInfo(bytes);
         info.dump(prefix);
     }
 

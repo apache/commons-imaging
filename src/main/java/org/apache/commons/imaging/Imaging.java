@@ -312,7 +312,7 @@ public final class Imaging {
         }
 
         final IccProfileParser parser = new IccProfileParser();
-        final IccProfileInfo info = parser.getICCProfileInfo(bytes);
+        final IccProfileInfo info = parser.getIccProfileInfo(bytes);
         if (info == null) {
             return null;
         }

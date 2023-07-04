@@ -42,14 +42,14 @@ public class IccProfileParser extends BinaryFileParser {
         super(ByteOrder.BIG_ENDIAN);
     }
 
-    public IccProfileInfo getICCProfileInfo(final byte[] bytes) throws IOException {
+    public IccProfileInfo getIccProfileInfo(final byte[] bytes) throws IOException {
         if (bytes == null) {
             return null;
         }
-        return getICCProfileInfo(ByteSource.array(bytes));
+        return getIccProfileInfo(ByteSource.array(bytes));
     }
 
-    public IccProfileInfo getICCProfileInfo(final ByteSource byteSource) throws IOException {
+    public IccProfileInfo getIccProfileInfo(final ByteSource byteSource) throws IOException {
         // TODO Throw instead of logging?
         final IccProfileInfo result;
         try (InputStream is = byteSource.getInputStream()) {
@@ -66,20 +66,20 @@ public class IccProfileParser extends BinaryFileParser {
         return result;
     }
 
-    public IccProfileInfo getICCProfileInfo(final File file) throws IOException {
+    public IccProfileInfo getIccProfileInfo(final File file) throws IOException {
         if (file == null) {
             return null;
         }
 
-        return getICCProfileInfo(ByteSource.file(file));
+        return getIccProfileInfo(ByteSource.file(file));
     }
 
-    public IccProfileInfo getICCProfileInfo(final ICC_Profile iccProfile) throws IOException {
+    public IccProfileInfo getIccProfileInfo(final ICC_Profile iccProfile) throws IOException {
         if (iccProfile == null) {
             return null;
         }
 
-        return getICCProfileInfo(ByteSource.array(iccProfile.getData()));
+        return getIccProfileInfo(ByteSource.array(iccProfile.getData()));
     }
 
     private IccTagType getIccTagType(final int quad) {
