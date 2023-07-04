@@ -29,6 +29,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUndefineds;
  * Adobe Photoshop (R) TIFF Technical Notes
  * </p>
  * <p>
+ * [BROEKN URL]
  * http://partners.adobe.com/public/developer/en/tiff/TIFFphotoshop.pdf
  * </p>
  */
