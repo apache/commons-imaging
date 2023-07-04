@@ -164,14 +164,14 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
     }
 
     @Override
-    public boolean beginSOS() {
+    public boolean beginSos() {
         return true;
     }
 
     public BufferedImage decode(final ByteSource byteSource) throws IOException,
             ImagingException {
         final JpegUtils jpegUtils = new JpegUtils();
-        jpegUtils.traverseJFIF(byteSource, this);
+        jpegUtils.traverseJfif(byteSource, this);
         if (imageReadException != null) {
             throw imageReadException;
         }
@@ -413,7 +413,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
     }
 
     @Override
-    public void visitSOS(final int marker, final byte[] markerBytes, final byte[] imageData) {
+    public void visitSos(final int marker, final byte[] markerBytes, final byte[] imageData) {
         try (ByteArrayInputStream is = new ByteArrayInputStream(imageData)) {
             // read the scan header
             final int segmentLength = read2Bytes("segmentLength", is,"Not a Valid JPEG File", getByteOrder());

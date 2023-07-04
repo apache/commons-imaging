@@ -31,7 +31,7 @@ import org.apache.commons.io.IOUtils;
 public class JpegUtils extends BinaryFileParser {
     public interface Visitor {
         // return false to exit before reading image data.
-        boolean beginSOS();
+        boolean beginSos();
 
         // return false to exit traversal.
         boolean visitSegment(int marker, byte[] markerBytes,
@@ -39,7 +39,7 @@ public class JpegUtils extends BinaryFileParser {
                 byte[] segmentData) throws ImagingException,
                 IOException;
 
-        void visitSOS(int marker, byte[] markerBytes, byte[] imageData);
+        void visitSos(int marker, byte[] markerBytes, byte[] imageData);
     }
 
     public static String getMarkerName(final int marker) {
@@ -123,12 +123,12 @@ public class JpegUtils extends BinaryFileParser {
         super(ByteOrder.BIG_ENDIAN);
     }
 
-    public void dumpJFIF(final ByteSource byteSource) throws ImagingException,
+    public void dumpJfif(final ByteSource byteSource) throws ImagingException,
             IOException {
         final Visitor visitor = new Visitor() {
             // return false to exit before reading image data.
             @Override
-            public boolean beginSOS() {
+            public boolean beginSos() {
                 return true;
             }
 
@@ -144,16 +144,16 @@ public class JpegUtils extends BinaryFileParser {
             }
 
             @Override
-            public void visitSOS(final int marker, final byte[] markerBytes, final byte[] imageData) {
+            public void visitSos(final int marker, final byte[] markerBytes, final byte[] imageData) {
                 Debug.debug("SOS marker.  " + imageData.length + " bytes of image data.");
                 Debug.debug("");
             }
         };
 
-        traverseJFIF(byteSource, visitor);
+        traverseJfif(byteSource, visitor);
     }
 
-    public void traverseJFIF(final ByteSource byteSource, final Visitor visitor) throws ImagingException, IOException {
+    public void traverseJfif(final ByteSource byteSource, final Visitor visitor) throws ImagingException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             BinaryFunctions.readAndVerifyBytes(is, JpegConstants.SOI, "Not a Valid JPEG File: doesn't begin with 0xffd8");
 
@@ -167,12 +167,12 @@ public class JpegUtils extends BinaryFileParser {
                 final int marker = ((0xff & markerBytes[0]) << 8) | (0xff & markerBytes[1]);
 
                 if (marker == JpegConstants.EOI_MARKER || marker == JpegConstants.SOS_MARKER) {
-                    if (!visitor.beginSOS()) {
+                    if (!visitor.beginSos()) {
                         return;
                     }
 
                     final byte[] imageData = IOUtils.toByteArray(is);
-                    visitor.visitSOS(marker, markerBytes, imageData);
+                    visitor.visitSos(marker, markerBytes, imageData);
                     break;
                 }
 

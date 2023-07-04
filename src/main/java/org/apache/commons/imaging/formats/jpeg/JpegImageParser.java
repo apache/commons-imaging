@@ -751,7 +751,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
         final JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
             // return false to exit before reading image data.
             @Override
-            public boolean beginSOS() {
+            public boolean beginSos() {
                 return false;
             }
 
@@ -775,12 +775,12 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
             }
 
             @Override
-            public void visitSOS(final int marker, final byte[] markerBytes,
+            public void visitSos(final int marker, final byte[] markerBytes,
                     final byte[] imageData) {
                 // don't need image data
             }
         };
-        new JpegUtils().traverseJFIF(byteSource, visitor);
+        new JpegUtils().traverseJfif(byteSource, visitor);
 
         if (result.isEmpty()) {
             return null;
@@ -799,7 +799,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
         final JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
             // return false to exit before reading image data.
             @Override
-            public boolean beginSOS() {
+            public boolean beginSos() {
                 return false;
             }
 
@@ -823,13 +823,13 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
             }
 
             @Override
-            public void visitSOS(final int marker, final byte[] markerBytes,
+            public void visitSos(final int marker, final byte[] markerBytes,
                     final byte[] imageData) {
                 // don't need image data
             }
         };
 
-        new JpegUtils().traverseJFIF(byteSource, visitor);
+        new JpegUtils().traverseJfif(byteSource, visitor);
 
         return result[0];
     }
@@ -841,7 +841,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
         final JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
             // return false to exit before reading image data.
             @Override
-            public boolean beginSOS() {
+            public boolean beginSos() {
                 return false;
             }
 
@@ -865,13 +865,13 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
             }
 
             @Override
-            public void visitSOS(final int marker, final byte[] markerBytes,
+            public void visitSos(final int marker, final byte[] markerBytes,
                     final byte[] imageData) {
                 // don't need image data
             }
         };
 
-        new JpegUtils().traverseJFIF(byteSource, visitor);
+        new JpegUtils().traverseJfif(byteSource, visitor);
 
         return result[0];
     }
@@ -883,7 +883,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
         final JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
             // return false to exit before reading image data.
             @Override
-            public boolean beginSOS() {
+            public boolean beginSos() {
                 return false;
             }
 
@@ -907,12 +907,12 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
             }
 
             @Override
-            public void visitSOS(final int marker, final byte[] markerBytes,
+            public void visitSos(final int marker, final byte[] markerBytes,
                     final byte[] imageData) {
                 // don't need image data
             }
         };
-        new JpegUtils().traverseJFIF(byteSource, visitor);
+        new JpegUtils().traverseJfif(byteSource, visitor);
 
         return result[0];
     }
@@ -953,7 +953,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
         final JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
             // return false to exit before reading image data.
             @Override
-            public boolean beginSOS() {
+            public boolean beginSos() {
                 return false;
             }
 
@@ -1008,13 +1008,13 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
             }
 
             @Override
-            public void visitSOS(final int marker, final byte[] markerBytes,
+            public void visitSos(final int marker, final byte[] markerBytes,
                     final byte[] imageData) {
                 // don't need image data
             }
         };
 
-        new JpegUtils().traverseJFIF(byteSource, visitor);
+        new JpegUtils().traverseJfif(byteSource, visitor);
 
         return result;
     }

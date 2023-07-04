@@ -42,7 +42,7 @@ public class ExifDumpTest extends ExifBaseTest {
     public void testDumpJFIF(final File imageFile) throws Exception {
         final ByteSource byteSource = ByteSource.file(imageFile);
         Debug.debug("Segments:");
-        new JpegUtils().dumpJFIF(byteSource);
+        new JpegUtils().dumpJfif(byteSource);
         // TODO assert something
     }
 

@@ -209,7 +209,7 @@ public class ExifRewriteTest extends ExifBaseTest {
 
                 final ByteSource byteSource = ByteSource.file(imageFile);
                 Debug.debug("Source Segments:");
-                new JpegUtils().dumpJFIF(byteSource);
+                new JpegUtils().dumpJfif(byteSource);
 
                 final JpegImageMetadata oldMetadata = (JpegImageMetadata) Imaging.getMetadata(imageFile);
                 if (null == oldMetadata) {
@@ -235,7 +235,7 @@ public class ExifRewriteTest extends ExifBaseTest {
                 final byte[] bytes = baos.toByteArray();
 
                 Debug.debug("Output Segments:");
-                new JpegUtils().dumpJFIF(ByteSource.array(bytes));
+                new JpegUtils().dumpJfif(ByteSource.array(bytes));
 
                 // assertTrue(!hasExifData(tempFile));
 
@@ -269,7 +269,7 @@ public class ExifRewriteTest extends ExifBaseTest {
 
             final ByteSource byteSource = ByteSource.file(imageFile);
             Debug.debug("Source Segments:");
-            new JpegUtils().dumpJFIF(byteSource);
+            new JpegUtils().dumpJfif(byteSource);
 
             final JpegImageMetadata originalMetadata = (JpegImageMetadata) Imaging.getMetadata(imageFile);
             assertNotNull(originalMetadata);
@@ -285,7 +285,7 @@ public class ExifRewriteTest extends ExifBaseTest {
 
                 Debug.debug("Output Segments:");
                 stripped = ByteSource.array(bytes);
-                new JpegUtils().dumpJFIF(stripped);
+                new JpegUtils().dumpJfif(stripped);
 
                 assertFalse(hasExifData("removed.jpg", bytes));
             }
@@ -302,7 +302,7 @@ public class ExifRewriteTest extends ExifBaseTest {
                 final byte[] bytes = baos.toByteArray();
 
                 Debug.debug("Output Segments:");
-                new JpegUtils().dumpJFIF(ByteSource.array(bytes));
+                new JpegUtils().dumpJfif(ByteSource.array(bytes));
 
                 // assertTrue(!hasExifData(tempFile));
 
@@ -332,7 +332,7 @@ public class ExifRewriteTest extends ExifBaseTest {
 
             final ByteSource byteSource = ByteSource.file(imageFile);
             Debug.debug("Source Segments:");
-            new JpegUtils().dumpJFIF(byteSource);
+            new JpegUtils().dumpJfif(byteSource);
 
             {
                 final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(imageFile);
@@ -345,7 +345,7 @@ public class ExifRewriteTest extends ExifBaseTest {
                 final byte[] bytes = baos.toByteArray();
 
                 Debug.debug("Output Segments:");
-                new JpegUtils().dumpJFIF(ByteSource.array(bytes));
+                new JpegUtils().dumpJfif(ByteSource.array(bytes));
 
                 assertFalse(hasExifData("test.jpg", bytes));
             }

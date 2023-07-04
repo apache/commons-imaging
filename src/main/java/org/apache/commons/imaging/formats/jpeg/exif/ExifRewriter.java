@@ -139,7 +139,7 @@ public class ExifRewriter extends BinaryFileParser {
         final JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
             // return false to exit before reading image data.
             @Override
-            public boolean beginSOS() {
+            public boolean beginSos() {
                 return true;
             }
 
@@ -171,12 +171,12 @@ public class ExifRewriter extends BinaryFileParser {
             }
 
             @Override
-            public void visitSOS(final int marker, final byte[] markerBytes, final byte[] imageData) {
+            public void visitSos(final int marker, final byte[] markerBytes, final byte[] imageData) {
                 pieces.add(new JFIFPieceImageData(markerBytes, imageData));
             }
         };
 
-        new JpegUtils().traverseJFIF(byteSource, visitor);
+        new JpegUtils().traverseJfif(byteSource, visitor);
 
         // GenericSegment exifSegment = exifSegmentArray[0];
         // if (exifSegments.size() < 1)
