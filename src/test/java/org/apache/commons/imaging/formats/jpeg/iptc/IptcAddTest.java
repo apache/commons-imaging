@@ -74,7 +74,7 @@ public class IptcAddTest extends IptcBaseTest {
 
         byte[] bytes;
         try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
-            new JpegIptcRewriter().writeIPTC(byteSource, os, newData);
+            new JpegIptcRewriter().writeIptc(byteSource, os, newData);
             bytes = os.toByteArray();
         }
 

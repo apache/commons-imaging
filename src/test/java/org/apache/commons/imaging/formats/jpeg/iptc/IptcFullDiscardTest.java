@@ -33,7 +33,7 @@ public class IptcFullDiscardTest {
         final IptcRecord record = new IptcRecord(IptcTypes.KEYWORDS, "meta; data");
         final PhotoshopApp13Data data = new PhotoshopApp13Data(Collections.singletonList(record), Collections.emptyList());
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        new JpegIptcRewriter().writeIPTC(bytes, byteArrayOutputStream, data);
+        new JpegIptcRewriter().writeIptc(bytes, byteArrayOutputStream, data);
         return byteArrayOutputStream.toByteArray();
     }
 
@@ -64,7 +64,7 @@ public class IptcFullDiscardTest {
 
     private byte[] removeMetaData(final byte[] bytes, final boolean removeApp13Segment) throws Exception {
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        new JpegIptcRewriter().removeIPTC(bytes, byteArrayOutputStream, removeApp13Segment);
+        new JpegIptcRewriter().removeIptc(bytes, byteArrayOutputStream, removeApp13Segment);
         return byteArrayOutputStream.toByteArray();
     }
 }

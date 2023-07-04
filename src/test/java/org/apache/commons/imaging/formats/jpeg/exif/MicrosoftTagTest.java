@@ -73,7 +73,7 @@ public class MicrosoftTagTest extends ExifBaseTest {
         final ByteArrayOutputStream noXmp = new ByteArrayOutputStream();
         new JpegXmpRewriter().removeXmpXml(imageWithExif, noXmp);
         final ByteArrayOutputStream noXmpNoIptc = new ByteArrayOutputStream();
-        new JpegIptcRewriter().removeIPTC(noXmp.toByteArray(), noXmpNoIptc);
+        new JpegIptcRewriter().removeIptc(noXmp.toByteArray(), noXmpNoIptc);
         return noXmpNoIptc.toByteArray();
     }
 

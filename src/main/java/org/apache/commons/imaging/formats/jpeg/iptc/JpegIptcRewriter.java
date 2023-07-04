@@ -52,9 +52,9 @@ public class JpegIptcRewriter extends JpegRewriter {
      *         target byte source
      * @throws ImagingException if it fails to write the target image
      */
-    public void removeIPTC(final byte[] src, final OutputStream os)
+    public void removeIptc(final byte[] src, final OutputStream os)
             throws ImagingException, IOException, ImagingException {
-        removeIPTC(src, os, false);
+        removeIptc(src, os, false);
     }
 
     /**
@@ -75,10 +75,10 @@ public class JpegIptcRewriter extends JpegRewriter {
      *         target byte source
      * @throws ImagingException if it fails to write the target image
      */
-    public void removeIPTC(final byte[] src, final OutputStream os, final boolean removeSegment)
+    public void removeIptc(final byte[] src, final OutputStream os, final boolean removeSegment)
             throws ImagingException, IOException, ImagingException {
         final ByteSource byteSource = ByteSource.array(src);
-        removeIPTC(byteSource, os, removeSegment);
+        removeIptc(byteSource, os, removeSegment);
     }
 
     /**
@@ -97,9 +97,9 @@ public class JpegIptcRewriter extends JpegRewriter {
      *         target byte source
      * @throws ImagingException if it fails to write the target image
      */
-    public void removeIPTC(final ByteSource byteSource, final OutputStream os)
+    public void removeIptc(final ByteSource byteSource, final OutputStream os)
             throws ImagingException, IOException, ImagingException {
-        removeIPTC(byteSource, os, false);
+        removeIptc(byteSource, os, false);
     }
 
     /**
@@ -120,7 +120,7 @@ public class JpegIptcRewriter extends JpegRewriter {
      *         target byte source
      * @throws ImagingException if it fails to write the target image
      */
-    public void removeIPTC(final ByteSource byteSource, final OutputStream os, final boolean removeSegment)
+    public void removeIptc(final ByteSource byteSource, final OutputStream os, final boolean removeSegment)
             throws ImagingException, IOException, ImagingException {
         final JFIFPieces jfifPieces = analyzeJFIF(byteSource);
         final List<JFIFPiece> oldPieces = jfifPieces.pieces;
@@ -166,9 +166,9 @@ public class JpegIptcRewriter extends JpegRewriter {
      * @see java.io.File
      * @see java.io.OutputStream
      */
-    public void removeIPTC(final File src, final OutputStream os)
+    public void removeIptc(final File src, final OutputStream os)
             throws ImagingException, IOException, ImagingException {
-        removeIPTC(src, os, false);
+        removeIptc(src, os, false);
     }
 
     /**
@@ -192,10 +192,10 @@ public class JpegIptcRewriter extends JpegRewriter {
      *         target byte source
      * @throws ImagingException if it fails to write the target image
      */
-    public void removeIPTC(final File src, final OutputStream os, final boolean removeSegment)
+    public void removeIptc(final File src, final OutputStream os, final boolean removeSegment)
             throws ImagingException, IOException, ImagingException {
         final ByteSource byteSource = ByteSource.file(src);
-        removeIPTC(byteSource, os, removeSegment);
+        removeIptc(byteSource, os, removeSegment);
     }
 
     /**
@@ -214,9 +214,9 @@ public class JpegIptcRewriter extends JpegRewriter {
      *         target byte source
      * @throws ImagingException if it fails to write the target image
      */
-    public void removeIPTC(final InputStream src, final OutputStream os)
+    public void removeIptc(final InputStream src, final OutputStream os)
             throws ImagingException, IOException, ImagingException {
-        removeIPTC(src, os, false);
+        removeIptc(src, os, false);
     }
 
     /**
@@ -237,10 +237,10 @@ public class JpegIptcRewriter extends JpegRewriter {
      *         target byte source
      * @throws ImagingException if it fails to write the target image
      */
-    public void removeIPTC(final InputStream src, final OutputStream os, final boolean removeSegment)
+    public void removeIptc(final InputStream src, final OutputStream os, final boolean removeSegment)
             throws ImagingException, IOException, ImagingException {
         final ByteSource byteSource = ByteSource.inputStream(src, null);
-        removeIPTC(byteSource, os, removeSegment);
+        removeIptc(byteSource, os, removeSegment);
     }
 
     /**
@@ -260,11 +260,11 @@ public class JpegIptcRewriter extends JpegRewriter {
      *         target byte source
      * @throws ImagingException if it fails to write the target image
      */
-    public void writeIPTC(final byte[] src, final OutputStream os,
+    public void writeIptc(final byte[] src, final OutputStream os,
             final PhotoshopApp13Data newData) throws ImagingException, IOException,
             ImagingException {
         final ByteSource byteSource = ByteSource.array(src);
-        writeIPTC(byteSource, os, newData);
+        writeIptc(byteSource, os, newData);
     }
 
     /**
@@ -284,7 +284,7 @@ public class JpegIptcRewriter extends JpegRewriter {
      *         target byte source
      * @throws ImagingException if it fails to write the target image
      */
-    public void writeIPTC(final ByteSource byteSource, final OutputStream os,
+    public void writeIptc(final ByteSource byteSource, final OutputStream os,
             PhotoshopApp13Data newData) throws ImagingException, IOException,
             ImagingException {
         final JFIFPieces jfifPieces = analyzeJFIF(byteSource);
@@ -335,10 +335,10 @@ public class JpegIptcRewriter extends JpegRewriter {
      *         target byte source
      * @throws ImagingException if it fails to write the target image
      */
-    public void writeIPTC(final File src, final OutputStream os, final PhotoshopApp13Data newData)
+    public void writeIptc(final File src, final OutputStream os, final PhotoshopApp13Data newData)
             throws ImagingException, IOException, ImagingException {
         final ByteSource byteSource = ByteSource.file(src);
-        writeIPTC(byteSource, os, newData);
+        writeIptc(byteSource, os, newData);
     }
 
     /**
@@ -358,11 +358,11 @@ public class JpegIptcRewriter extends JpegRewriter {
      *         target byte source
      * @throws ImagingException if it fails to write the target image
      */
-    public void writeIPTC(final InputStream src, final OutputStream os,
+    public void writeIptc(final InputStream src, final OutputStream os,
             final PhotoshopApp13Data newData) throws ImagingException, IOException,
             ImagingException {
         final ByteSource byteSource = ByteSource.inputStream(src, null);
-        writeIPTC(byteSource, os, newData);
+        writeIptc(byteSource, os, newData);
     }
 
 }

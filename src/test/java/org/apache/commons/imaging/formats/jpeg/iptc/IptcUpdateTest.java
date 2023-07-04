@@ -44,7 +44,7 @@ public class IptcUpdateTest extends IptcBaseTest {
 
     public byte[] removeIptc(final ByteSource byteSource, final File imageFile) throws Exception {
         try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
-            new JpegIptcRewriter().removeIPTC(byteSource, os);
+            new JpegIptcRewriter().removeIptc(byteSource, os);
             return os.toByteArray();
         }
     }
@@ -74,7 +74,7 @@ public class IptcUpdateTest extends IptcBaseTest {
 
         byte[] updated;
         try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
-            new JpegIptcRewriter().writeIPTC(ByteSource.array(noIptcFile,
+            new JpegIptcRewriter().writeIptc(ByteSource.array(noIptcFile,
                     "test.jpg"), os, newData);
             updated = os.toByteArray();
         }
@@ -177,7 +177,7 @@ public class IptcUpdateTest extends IptcBaseTest {
 
     public byte[] writeIptc(final ByteSource byteSource, final PhotoshopApp13Data newData, final File imageFile) throws IOException, ImagingException, ImagingException {
         try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
-            new JpegIptcRewriter().writeIPTC(byteSource, os, newData);
+            new JpegIptcRewriter().writeIptc(byteSource, os, newData);
             return os.toByteArray();
         }
     }
