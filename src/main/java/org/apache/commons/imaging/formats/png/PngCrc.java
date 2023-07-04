@@ -18,14 +18,15 @@ package org.apache.commons.imaging.formats.png;
 
 // should just use ints, not longs
 class PngCrc {
+
     /* Table of CRCs of all 8-bit messages. */
-    private final long[] crc_table = new long[256];
+    private final long[] crcTable = new long[256];
 
     /* Flag: has the table been computed? Initially false. */
-    private boolean crc_table_computed;
+    private boolean crcTableComputed;
 
-    public final long continue_partial_crc(final long old_crc, final byte[] buf, final int len) {
-        return update_crc(old_crc, buf);
+    public final long continuePartialCrc(final long old_crc, final byte[] buf, final int len) {
+        return updateCrc(old_crc, buf);
     }
 
     /*
@@ -36,15 +37,15 @@ class PngCrc {
 
     /* Return the CRC of the bytes buf[0..len-1]. */
     public final int crc(final byte[] buf, final int len) {
-        return (int) (update_crc(0xffffffffL, buf) ^ 0xffffffffL);
+        return (int) (updateCrc(0xffffffffL, buf) ^ 0xffffffffL);
     }
 
-    public final long finish_partial_crc(final long old_crc) {
+    public final long finishPartialCrc(final long old_crc) {
         return (old_crc ^ 0xffffffffL);
     }
 
     /* Make the table for a fast CRC. */
-    private void make_crc_table() {
+    private void makeCrcTable() {
         long c;
         int n;
         int k;
@@ -58,27 +59,27 @@ class PngCrc {
                     c = c >> 1;
                 }
             }
-            crc_table[n] = c;
+            crcTable[n] = c;
         }
-        crc_table_computed = true;
+        crcTableComputed = true;
     }
 
-    public final long start_partial_crc(final byte[] buf, final int len) {
-        return update_crc(0xffffffffL, buf);
+    public final long startPartialCrc(final byte[] buf, final int len) {
+        return updateCrc(0xffffffffL, buf);
     }
 
-    private long update_crc(final long crc, final byte[] buf) {
+    private long updateCrc(final long crc, final byte[] buf) {
         long c = crc;
         int n;
 
-        if (!crc_table_computed) {
-            make_crc_table();
+        if (!crcTableComputed) {
+            makeCrcTable();
         }
         for (n = 0; n < buf.length; n++) {
             // Debug.debug("crc[" + n + "]", c + " (" + Long.toHexString(c) +
             // ")");
 
-            c = crc_table[(int) ((c ^ buf[n]) & 0xff)] ^ (c >> 8);
+            c = crcTable[(int) ((c ^ buf[n]) & 0xff)] ^ (c >> 8);
         }
         return c;
     }

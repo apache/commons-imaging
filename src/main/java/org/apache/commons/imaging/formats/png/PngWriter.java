@@ -104,10 +104,10 @@ public class PngWriter {
 
         final PngCrc png_crc = new PngCrc();
 
-        final long crc1 = png_crc.start_partial_crc(chunkType.array, chunkType.array.length);
-        final long crc2 = data == null ? crc1 : png_crc.continue_partial_crc(
+        final long crc1 = png_crc.startPartialCrc(chunkType.array, chunkType.array.length);
+        final long crc2 = data == null ? crc1 : png_crc.continuePartialCrc(
                 crc1, data, data.length);
-        final int crc = (int) png_crc.finish_partial_crc(crc2);
+        final int crc = (int) png_crc.finishPartialCrc(crc2);
 
         writeInt(os, crc);
     }
