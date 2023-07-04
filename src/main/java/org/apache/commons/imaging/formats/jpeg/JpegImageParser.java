@@ -480,7 +480,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
         boolean transparent = false;
         final boolean usesPalette = false; // TODO: inaccurate.
 
-        // See http://docs.oracle.com/javase/6/docs/api/javax/imageio/metadata/doc-files/jpeg_metadata.html#color
+        // See https://docs.oracle.com/javase/8/docs/api/javax/imageio/metadata/doc-files/jpeg_metadata.html#color
         ImageInfo.ColorType colorType = ImageInfo.ColorType.UNKNOWN;
         // Some images have both JFIF/APP0 and APP14.
         // JFIF is meant to win but in them APP14 is clearly right, so make it win.
