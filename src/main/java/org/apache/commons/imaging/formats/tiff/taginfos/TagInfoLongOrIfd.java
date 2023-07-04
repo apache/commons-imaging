@@ -23,12 +23,12 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
 
-public class TagInfoLongOrIFD extends TagInfo {
-    public TagInfoLongOrIFD(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
+public class TagInfoLongOrIfd extends TagInfo {
+    public TagInfoLongOrIfd(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
         super(name, tag, FieldType.LONG_OR_IFD, length, directoryType);
     }
 
-    public TagInfoLongOrIFD(final String name, final int tag, final int length, final TiffDirectoryType directoryType, final boolean isOffset) {
+    public TagInfoLongOrIfd(final String name, final int tag, final int length, final TiffDirectoryType directoryType, final boolean isOffset) {
         super(name, tag, FieldType.LONG_OR_IFD, length, directoryType, isOffset);
     }
 

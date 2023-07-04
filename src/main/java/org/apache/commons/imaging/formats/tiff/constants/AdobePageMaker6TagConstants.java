@@ -24,7 +24,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoBytes;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLong;
-import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLongOrIFD;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLongOrIfd;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
 
 /**
@@ -39,7 +39,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
  */
 public final class AdobePageMaker6TagConstants {
 
-    public static final TagInfoLongOrIFD TIFF_TAG_SUB_IFD = new TagInfoLongOrIFD(
+    public static final TagInfoLongOrIfd TIFF_TAG_SUB_IFD = new TagInfoLongOrIfd(
             "SubIFDs",  0x014a, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN, true);
 
