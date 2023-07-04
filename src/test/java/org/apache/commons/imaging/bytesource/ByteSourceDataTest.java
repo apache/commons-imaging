@@ -26,6 +26,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -48,6 +50,18 @@ public class ByteSourceDataTest extends ByteSourceTest {
             assertEquals(src.length, file.length());
 
             return ByteSource.file(file);
+        }
+    }
+
+    private class ByteSourcePathFactory implements ByteSourceFactory {
+        @Override
+        public ByteSource getByteSource(final byte[] src) throws IOException {
+            final Path file = createTempFile(src).toPath();
+
+            // test that all bytes written to file.
+            assertEquals(src.length, Files.size(file));
+
+            return ByteSource.path(file);
         }
     }
 
@@ -80,6 +94,12 @@ public class ByteSourceDataTest extends ByteSourceTest {
     @MethodSource("data")
     public void testByteSourceFileFactory(final byte[] testByteArray) throws Exception {
         writeAndReadBytes(new ByteSourceFileFactory(), testByteArray);
+    }
+
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testByteSourcePathFactory(final byte[] testByteArray) throws Exception {
+        writeAndReadBytes(new ByteSourcePathFactory(), testByteArray);
     }
 
     @ParameterizedTest

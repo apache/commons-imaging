@@ -19,11 +19,14 @@ package org.apache.commons.imaging.bytesource;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
+import java.util.Objects;
 
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.io.build.AbstractOrigin;
 import org.apache.commons.io.build.AbstractOrigin.ByteArrayOrigin;
 import org.apache.commons.io.build.AbstractOrigin.FileOrigin;
+import org.apache.commons.io.build.AbstractOrigin.PathOrigin;
 
 public class ByteSource {
 
@@ -37,6 +40,10 @@ public class ByteSource {
 
     public static ByteSource file(final File file) {
         return new ByteSource(new FileOrigin(file), file.getName());
+    }
+
+    public static ByteSource path(final Path file) {
+        return new ByteSource(new PathOrigin(file), Objects.toString(file.getFileName(), null));
     }
 
     public static ByteSource inputStream(final InputStream is, final String name) {
