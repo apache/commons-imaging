@@ -129,7 +129,8 @@ public final class T4AndT6Compression {
         }
     }
 
-    private static int compressT(final int a0, final int a1, final int b1, final BitArrayOutputStream outputStream,final  int codingA0Color, final int[] codingLine ){
+    private static int compressT(final int a0, final int a1, final int b1, final BitArrayOutputStream outputStream, final int codingA0Color,
+            final int[] codingLine){
           final int a1b1 = a1 - b1;
           if (-3 <= a1b1 && a1b1 <= 3) {
               T4_T6_Tables.Entry entry;

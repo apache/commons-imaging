@@ -35,7 +35,7 @@ public class RleReaderTest{
             rleReader.read(byteArrayInputStream, byteArray);
             fail("Expecting exception: Exception");
         } catch (final Exception e) {
-            assertEquals("Premature end of file reading image data",e.getMessage());
+            assertEquals("Premature end of file reading image data", e.getMessage());
             assertEquals(RleReader.class.getName(), e.getStackTrace()[0].getClassName());
         }
     }

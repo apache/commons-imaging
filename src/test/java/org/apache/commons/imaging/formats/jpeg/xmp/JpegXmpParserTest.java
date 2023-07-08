@@ -32,7 +32,7 @@ public class JpegXmpParserTest{
             jpegXmpParser.parseXmpJpegSegment(byteArray);
             fail("Expecting exception: Exception");
         } catch (final Exception e) {
-            assertEquals("Invalid JPEG XMP Segment.",e.getMessage());
+            assertEquals("Invalid JPEG XMP Segment.", e.getMessage());
             assertEquals(JpegXmpParser.class.getName(), e.getStackTrace()[0].getClassName());
         }
     }

@@ -343,7 +343,7 @@ public final class DataReaderTiled extends ImageDataReader {
             }
         }
 
-        return new TiffRasterDataFloat(rasterWidth, rasterHeight, samplesPerPixel,rasterDataFloat);
+        return new TiffRasterDataFloat(rasterWidth, rasterHeight, samplesPerPixel, rasterDataFloat);
     }
 
     private TiffRasterData readRasterDataInt(final Rectangle subImage)

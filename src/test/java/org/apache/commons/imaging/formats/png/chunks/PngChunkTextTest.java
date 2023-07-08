@@ -32,7 +32,7 @@ public class PngChunkTextTest{
             new PngChunkText(1214, 1214, 0, byteArray);
             fail("Expecting exception: Exception");
         } catch (final Throwable e) {
-            assertEquals("PNG tEXt chunk keyword is not terminated.",e.getMessage());
+            assertEquals("PNG tEXt chunk keyword is not terminated.", e.getMessage());
             assertEquals(BinaryFunctions.class.getName(), e.getStackTrace()[0].getClassName());
         }
     }

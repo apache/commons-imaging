@@ -31,11 +31,11 @@ public class JfifSegmentTest{
       final byte[] byteArray = new byte[25];
 
       try {
-        new JfifSegment((-2275), byteArray);
-        fail("Expecting exception: Exception");
+          new JfifSegment((-2275), byteArray);
+          fail("Expecting exception: Exception");
       } catch (final ImagingException e) {
-         assertEquals("Not a Valid JPEG File: missing JFIF string",e.getMessage());
-         assertEquals(JfifSegment.class.getName(), e.getStackTrace()[0].getClassName());
+          assertEquals("Not a Valid JPEG File: missing JFIF string", e.getMessage());
+          assertEquals(JfifSegment.class.getName(), e.getStackTrace()[0].getClassName());
       }
 
   }

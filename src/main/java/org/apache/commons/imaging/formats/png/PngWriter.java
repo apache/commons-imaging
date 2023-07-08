@@ -573,7 +573,7 @@ public class PngWriter {
             final ByteArrayOutputStream baos = new ByteArrayOutputStream();
             final int chunkSize = 256 * 1024;
             final Deflater deflater = new Deflater(compressionLevel);
-            final DeflaterOutputStream dos = new DeflaterOutputStream(baos,deflater,chunkSize);
+            final DeflaterOutputStream dos = new DeflaterOutputStream(baos, deflater, chunkSize);
 
             for (int index = 0; index < uncompressed.length; index += chunkSize) {
                 final int end = Math.min(uncompressed.length, index + chunkSize);
