@@ -407,7 +407,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
     @Override
     public ImageInfo getImageInfo(final ByteSource byteSource, final GifImagingParameters params)
             throws ImagingException, IOException {
-        final GifImageContents blocks = readFile(byteSource, false);
+        final GifImageContents blocks = readFile(byteSource, true);
 
         final GifHeaderInfo bhi = blocks.gifHeaderInfo;
         if (bhi == null) {
@@ -482,7 +482,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
     @Override
     public ImageMetadata getMetadata(final ByteSource byteSource, final GifImagingParameters params)
             throws ImagingException, IOException {
-        final GifImageContents imageContents = readFile(byteSource, false);
+        final GifImageContents imageContents = readFile(byteSource, true);
 
         final GifHeaderInfo bhi = imageContents.gifHeaderInfo;
         if (bhi == null) {
