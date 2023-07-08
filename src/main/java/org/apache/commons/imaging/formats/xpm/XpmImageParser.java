@@ -283,11 +283,7 @@ public class XpmImageParser extends ImageParser<XpmImagingParameters> {
         }
         loadColorNames();
         final String colorLowercase = color.toLowerCase(Locale.ENGLISH);
-        final Integer integer = colorNames.get(colorLowercase);
-        if (integer != null) {
-            return integer;
-        }
-        return 0x00000000;
+        return colorNames.getOrDefault(colorLowercase, 0x00000000);
     }
 
     private boolean parseNextString(final BasicCParser cParser, final StringBuilder stringBuilder) throws IOException, ImagingException {
