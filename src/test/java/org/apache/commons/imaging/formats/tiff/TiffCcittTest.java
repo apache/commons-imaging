@@ -79,7 +79,7 @@ public class TiffCcittTest extends TiffBaseTest {
     }
 
     @Test
-    public void testAll5x2Compressions() throws IOException {
+    public void testAll5x2Compressions() {
         final byte[] uncompressed = new byte[2];
         final int[] combinations = new int[10];
         do {
