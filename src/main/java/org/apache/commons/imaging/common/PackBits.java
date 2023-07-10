@@ -26,7 +26,9 @@ public class PackBits {
 
     public byte[] compress(final byte[] bytes) throws IOException {
         // max length 1 extra byte for every 128
-        try (UnsynchronizedByteArrayOutputStream baos = new UnsynchronizedByteArrayOutputStream(Allocator.checkByteArray(bytes.length * 2))) {
+        try (UnsynchronizedByteArrayOutputStream baos = UnsynchronizedByteArrayOutputStream.builder()
+                .setBufferSize(Allocator.checkByteArray(bytes.length * 2))
+                .get()) {
             int ptr = 0;
             while (ptr < bytes.length) {
                 int dup = findNextDuplicate(bytes, ptr);
