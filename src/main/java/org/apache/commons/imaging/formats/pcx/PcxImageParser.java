@@ -38,6 +38,7 @@ import java.io.PrintWriter;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.commons.imaging.ImageFormat;
@@ -154,7 +155,7 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
     }
     private static final String DEFAULT_EXTENSION = ImageFormats.PCX.getDefaultExtension();
 
-    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.PCX.getExtensions();
+    private static final List<String> ACCEPTED_EXTENSIONS = ImageFormats.PCX.getExtensions();
 
     public PcxImageParser() {
         super(ByteOrder.LITTLE_ENDIAN);
@@ -168,7 +169,7 @@ public class PcxImageParser extends ImageParser<PcxImagingParameters> {
     }
 
     @Override
-    protected String[] getAcceptedExtensions() {
+    protected List<String> getAcceptedExtensions() {
         return ACCEPTED_EXTENSIONS;
     }
 

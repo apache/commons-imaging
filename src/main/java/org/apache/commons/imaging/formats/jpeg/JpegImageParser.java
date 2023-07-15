@@ -67,7 +67,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
     private static final Logger LOGGER = Logger.getLogger(JpegImageParser.class.getName());
 
     private static final String DEFAULT_EXTENSION = ImageFormats.JPEG.getDefaultExtension();
-    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.JPEG.getExtensions();
+    private static final List<String> ACCEPTED_EXTENSIONS = ImageFormats.JPEG.getExtensions();
 
     public static boolean isExifApp1Segment(final GenericSegment segment) {
         return startsWith(segment.getSegmentData(), JpegConstants.EXIF_IDENTIFIER_CODE);
@@ -203,7 +203,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
     }
 
     @Override
-    protected String[] getAcceptedExtensions() {
+    protected List<String> getAcceptedExtensions() {
         return ACCEPTED_EXTENSIONS;
     }
 

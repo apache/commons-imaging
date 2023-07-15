@@ -16,6 +16,11 @@
  */
 package org.apache.commons.imaging;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Enum of known image formats.
  */
@@ -43,24 +48,29 @@ public enum ImageFormats implements ImageFormat {
     XBM("xbm"),
     XPM("xpm");
 
-    private final String[] extensions;
+    private final List<String> extensions;
 
-    ImageFormats(final String ...extensions) {
-        this.extensions = extensions;
+    ImageFormats(final String... extensions) {
+        this.extensions = Arrays.stream(extensions).collect(Collectors.toList());
     }
 
     @Override
     public String getDefaultExtension() {
-        return this.extensions != null ? this.extensions[0] : null;
+        return this.extensions != null ? this.extensions.get(0) : null;
     }
 
     @Override
-    public String[] getExtensions() {
-        return this.extensions.clone();
+    public List<String> getExtensions() {
+        return new ArrayList<>(this.extensions);
     }
 
     @Override
     public String getName() {
         return name();
+    }
+
+
+    public static List<ImageFormats> valuesAsList() {
+        return Arrays.stream(values()).collect(Collectors.toList());
     }
 }

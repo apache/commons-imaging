@@ -70,7 +70,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
     private static final Logger LOGGER = Logger.getLogger(PngImageParser.class.getName());
 
     private static final String DEFAULT_EXTENSION = ImageFormats.PNG.getDefaultExtension();
-    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.PNG.getExtensions();
+    private static final List<String> ACCEPTED_EXTENSIONS = ImageFormats.PNG.getExtensions();
 
     public static String getChunkTypeName(final int chunkType) {
         final StringBuilder result = new StringBuilder();
@@ -133,8 +133,8 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
     }
 
     @Override
-    protected String[] getAcceptedExtensions() {
-        return ACCEPTED_EXTENSIONS.clone();
+    protected List<String> getAcceptedExtensions() {
+        return new ArrayList<>(ACCEPTED_EXTENSIONS);
     }
 
     @Override

@@ -31,6 +31,7 @@ import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
@@ -76,7 +77,7 @@ public class XbmImageParser extends ImageParser<XbmImagingParameters> {
         BasicCParser cParser;
         XbmHeader xbmHeader;
     }
-    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.XBM.getExtensions();
+    private static final List<String> ACCEPTED_EXTENSIONS = ImageFormats.XBM.getExtensions();
 
     private static final String DEFAULT_EXTENSION = ImageFormats.XBM.getDefaultExtension();
 
@@ -124,7 +125,7 @@ public class XbmImageParser extends ImageParser<XbmImagingParameters> {
     }
 
     @Override
-    protected String[] getAcceptedExtensions() {
+    protected List<String> getAcceptedExtensions() {
         return ACCEPTED_EXTENSIONS;
     }
 

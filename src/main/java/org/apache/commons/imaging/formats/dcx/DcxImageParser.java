@@ -62,7 +62,7 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
     // See [BROEKN URL] http://www.fileformat.fine/format/pcx/egff.htm for documentation
     private static final String DEFAULT_EXTENSION = ImageFormats.DCX.getDefaultExtension();
 
-    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.DCX.getExtensions();
+    private static final List<String> ACCEPTED_EXTENSIONS = ImageFormats.DCX.getExtensions();
 
     public DcxImageParser() {
         super(ByteOrder.LITTLE_ENDIAN);
@@ -76,7 +76,7 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
     }
 
     @Override
-    protected String[] getAcceptedExtensions() {
+    protected List<String> getAcceptedExtensions() {
         return ACCEPTED_EXTENSIONS;
     }
 

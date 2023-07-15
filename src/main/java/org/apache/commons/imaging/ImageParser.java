@@ -147,7 +147,7 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
      * @return If the parser can accept the format, true; otherwise, false.
      */
     public final boolean canAcceptExtension(final String fileName) {
-        final String[] extensions = getAcceptedExtensions();
+        final List<String> extensions = getAcceptedExtensions();
         if (extensions == null) {
             return true;
         }
@@ -265,7 +265,7 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
      *
      * @return A valid array of one or more elements.
      */
-    protected abstract String[] getAcceptedExtensions();
+    protected abstract List<String> getAcceptedExtensions();
 
     /**
      * Get an array of ImageFormat objects describing all accepted types

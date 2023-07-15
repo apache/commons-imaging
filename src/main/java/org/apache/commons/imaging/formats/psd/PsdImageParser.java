@@ -56,7 +56,7 @@ import org.apache.commons.imaging.formats.psd.datareaders.UncompressedDataReader
 public class PsdImageParser extends ImageParser<PsdImagingParameters> implements XmpEmbeddable {
 
     private static final String DEFAULT_EXTENSION = ImageFormats.PSD.getDefaultExtension();
-    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.PSD.getExtensions();
+    private static final List<String> ACCEPTED_EXTENSIONS = ImageFormats.PSD.getExtensions();
     private static final int PSD_SECTION_HEADER = 0;
     private static final int PSD_SECTION_COLOR_MODE = 1;
     private static final int PSD_SECTION_IMAGE_RESOURCES = 2;
@@ -113,8 +113,8 @@ public class PsdImageParser extends ImageParser<PsdImagingParameters> implements
     }
 
     @Override
-    protected String[] getAcceptedExtensions() {
-        return ACCEPTED_EXTENSIONS.clone();
+    protected List<String> getAcceptedExtensions() {
+        return new ArrayList<>(ACCEPTED_EXTENSIONS);
     }
 
     @Override

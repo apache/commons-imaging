@@ -232,7 +232,7 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
 
     private static final String DEFAULT_EXTENSION = ImageFormats.ICO.getDefaultExtension();
 
-    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.ICO.getExtensions();
+    private static final List<String> ACCEPTED_EXTENSIONS = ImageFormats.ICO.getExtensions();
 
     public IcoImageParser() {
         super(ByteOrder.LITTLE_ENDIAN);
@@ -250,7 +250,7 @@ public class IcoImageParser extends ImageParser<IcoImagingParameters> {
     }
 
     @Override
-    protected String[] getAcceptedExtensions() {
+    protected List<String> getAcceptedExtensions() {
         return ACCEPTED_EXTENSIONS;
     }
 

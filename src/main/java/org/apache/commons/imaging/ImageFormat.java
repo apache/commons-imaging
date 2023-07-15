@@ -16,6 +16,7 @@
  */
 package org.apache.commons.imaging;
 
+import java.util.List;
 
 /**
  * Simple image format interface.
@@ -27,9 +28,9 @@ public interface ImageFormat {
     /**
      * Gets the file extension associated with this {@link ImageFormat}.
      *
-     * @return String extension
+     * @return String extensions
      */
-    String[] getExtensions();
+    List<String> getExtensions();
 
     /**
      * Gets the name of this {@link ImageFormat}.

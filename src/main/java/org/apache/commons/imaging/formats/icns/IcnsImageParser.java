@@ -96,7 +96,7 @@ public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
 
     private static final String DEFAULT_EXTENSION = ImageFormats.ICNS.getDefaultExtension();
 
-    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.ICNS.getExtensions();
+    private static final List<String> ACCEPTED_EXTENSIONS = ImageFormats.ICNS.getExtensions();
 
     @Override
     public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
@@ -110,7 +110,7 @@ public class IcnsImageParser extends ImageParser<IcnsImagingParameters> {
     }
 
     @Override
-    protected String[] getAcceptedExtensions() {
+    protected List<String> getAcceptedExtensions() {
         return ACCEPTED_EXTENSIONS;
     }
 

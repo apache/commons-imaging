@@ -28,7 +28,7 @@ import java.awt.image.DataBufferFloat;
 import java.awt.image.Raster;
 import java.io.IOException;
 import java.util.ArrayList;
-
+import java.util.List;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
@@ -43,7 +43,7 @@ import org.apache.commons.imaging.common.ImageMetadata;
 public class RgbeImageParser extends ImageParser<RgbeImagingParameters> {
 
     @Override
-    protected String[] getAcceptedExtensions() {
+    protected List<String> getAcceptedExtensions() {
         return ImageFormats.RGBE.getExtensions();
     }
 

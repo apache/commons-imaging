@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.commons.imaging.ImageFormat;
@@ -66,7 +67,7 @@ public class WbmpImageParser extends ImageParser<WbmpImagingParameters> {
     }
     private static final String DEFAULT_EXTENSION = ImageFormats.WBMP.getDefaultExtension();
 
-    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.WBMP.getExtensions();
+    private static final List<String> ACCEPTED_EXTENSIONS = ImageFormats.WBMP.getExtensions();
 
     @Override
     public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
@@ -76,7 +77,7 @@ public class WbmpImageParser extends ImageParser<WbmpImagingParameters> {
     }
 
     @Override
-    protected String[] getAcceptedExtensions() {
+    protected List<String> getAcceptedExtensions() {
         return ACCEPTED_EXTENSIONS;
     }
 

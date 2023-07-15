@@ -66,7 +66,7 @@ import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 public class TiffImageParser extends ImageParser<TiffImagingParameters> implements XmpEmbeddable<TiffImagingParameters> {
 
     private static final String DEFAULT_EXTENSION = ImageFormats.TIFF.getDefaultExtension();
-    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.TIFF.getExtensions();
+    private static final List<String> ACCEPTED_EXTENSIONS = ImageFormats.TIFF.getExtensions();
 
     private Rectangle checkForSubImage(
             final TiffImagingParameters params) {
@@ -159,7 +159,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
     }
 
     @Override
-    protected String[] getAcceptedExtensions() {
+    protected List<String> getAcceptedExtensions() {
         return ACCEPTED_EXTENSIONS;
     }
 

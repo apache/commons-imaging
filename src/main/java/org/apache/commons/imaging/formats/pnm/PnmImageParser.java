@@ -26,6 +26,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -42,13 +43,13 @@ import org.apache.commons.imaging.palette.PaletteFactory;
 public class PnmImageParser extends ImageParser<PnmImagingParameters> {
 
     private static final String DEFAULT_EXTENSION = ImageFormats.PNM.getDefaultExtension();
-    private static final String[] ACCEPTED_EXTENSIONS = {
-            ImageFormats.PAM.getDefaultExtension(),
-            ImageFormats.PBM.getDefaultExtension(),
-            ImageFormats.PGM.getDefaultExtension(),
-            ImageFormats.PNM.getDefaultExtension(),
-            ImageFormats.PPM.getDefaultExtension()
-    };
+    private static final List<String> ACCEPTED_EXTENSIONS = Arrays.asList(
+                    ImageFormats.PAM.getDefaultExtension(),
+                    ImageFormats.PAM.getDefaultExtension(),
+                    ImageFormats.PBM.getDefaultExtension(),
+                    ImageFormats.PGM.getDefaultExtension(),
+                    ImageFormats.PNM.getDefaultExtension(),
+                    ImageFormats.PPM.getDefaultExtension());
 
     public PnmImageParser() {
         super(ByteOrder.LITTLE_ENDIAN);
@@ -72,7 +73,7 @@ public class PnmImageParser extends ImageParser<PnmImagingParameters> {
     }
 
     @Override
-    protected String[] getAcceptedExtensions() {
+    protected List<String> getAcceptedExtensions() {
         return ACCEPTED_EXTENSIONS;
     }
 

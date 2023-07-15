@@ -33,6 +33,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -122,7 +123,7 @@ public class XpmImageParser extends ImageParser<XpmImagingParameters> {
         XpmHeader xpmHeader;
     }
 
-    private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.XPM.getExtensions();
+    private static final List<String> ACCEPTED_EXTENSIONS = ImageFormats.XPM.getExtensions();
     private static Map<String, Integer> colorNames;
 
     private static final String DEFAULT_EXTENSION = ImageFormats.XPM.getDefaultExtension();
@@ -176,7 +177,7 @@ public class XpmImageParser extends ImageParser<XpmImagingParameters> {
     }
 
     @Override
-    protected String[] getAcceptedExtensions() {
+    protected List<String> getAcceptedExtensions() {
         return ACCEPTED_EXTENSIONS;
     }
 
