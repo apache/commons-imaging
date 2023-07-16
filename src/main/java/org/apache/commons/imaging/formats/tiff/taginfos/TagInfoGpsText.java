@@ -35,6 +35,7 @@ import org.apache.commons.imaging.internal.Debug;
  * the non-null-terminated text in an unknown byte order.
  */
 public final class TagInfoGpsText extends TagInfo {
+
     private static final class TextEncoding {
         final byte[] prefix;
         public final String encodingName;
@@ -44,6 +45,7 @@ public final class TagInfoGpsText extends TagInfo {
             this.encodingName = encodingName;
         }
     }
+
     private static final TagInfoGpsText.TextEncoding TEXT_ENCODING_ASCII = new TextEncoding(
             new byte[] { 0x41, 0x53, 0x43, 0x49, 0x49, 0x00, 0x00, 0x00, },
             "US-ASCII"); // ITU-T T.50 IA5
