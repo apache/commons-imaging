@@ -33,6 +33,7 @@ import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputField;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
@@ -87,7 +88,7 @@ public class ExifRewriterRoundtripTest extends ExifBaseTest {
     }
 
     private File createTempFile() {
-        final String tempDir = System.getProperty("java.io.tmpdir");
+        final String tempDir = FileUtils.getTempDirectoryPath();
         final String tempFileName = this.getClass().getName() + "-" + random.nextLong() + ".tmp";
         return new File(tempDir, tempFileName);
     }
