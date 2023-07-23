@@ -17,12 +17,13 @@
 
 package org.apache.commons.imaging.formats.png;
 
+import static org.apache.commons.imaging.test.TestResources.fileResource;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.File;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.examples.ImageReadExample.ManagedImageBufferedImageFactory;
-import org.apache.commons.imaging.formats.jpeg.JpegWithInvalidDhtSegmentTest;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -36,12 +37,11 @@ public class PngWithInvalidPngChunkSizeTest {
      */
     @Test
     public void testPngWithInvalidNegativePngChunkSize() {
-        final File imageFile = new File(
-                JpegWithInvalidDhtSegmentTest.class.getResource("/IMAGING-210/testfile.png").getFile());
+        final File imageFile = fileResource("/IMAGING-210/testfile.png");
         final PngImagingParameters params = new PngImagingParameters();
         params.setBufferedImageFactory(new ManagedImageBufferedImageFactory());
         final PngImageParser jpegImageParser = new PngImageParser();
-        Assertions.assertThrows(ImagingException.class, () -> jpegImageParser.getBufferedImage(imageFile, params));
+        assertThrows(ImagingException.class, () -> jpegImageParser.getBufferedImage(imageFile, params));
     }
 
     /**
@@ -50,10 +50,10 @@ public class PngWithInvalidPngChunkSizeTest {
      */
     @Test
     public void testPngWithInvalidPngChunkSize() {
-        final File imageFile = new File(JpegWithInvalidDhtSegmentTest.class.getResource("/IMAGING-211/testfile_2.png").getFile());
+        final File imageFile = fileResource("/IMAGING-211/testfile_2.png");
         final PngImagingParameters params = new PngImagingParameters();
         params.setBufferedImageFactory(new ManagedImageBufferedImageFactory());
         final PngImageParser jpegImageParser = new PngImageParser();
-        Assertions.assertThrows(ImagingException.class, () -> jpegImageParser.getBufferedImage(imageFile, params));
+        assertThrows(ImagingException.class, () -> jpegImageParser.getBufferedImage(imageFile, params));
     }
 }

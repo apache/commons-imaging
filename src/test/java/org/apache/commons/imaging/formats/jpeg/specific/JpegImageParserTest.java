@@ -16,6 +16,7 @@
 
 package org.apache.commons.imaging.formats.jpeg.specific;
 
+import static org.apache.commons.imaging.test.TestResources.fileResource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.awt.image.BufferedImage;
@@ -25,7 +26,6 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
-import org.apache.commons.imaging.formats.jpeg.decoder.JpegDecoderTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -39,9 +39,7 @@ public class JpegImageParserTest {
      */
     @Test
     public void testGetBufferedImage10() throws ImagingException, IOException {
-        final File imageFile = new File(
-                JpegDecoderTest.class.getResource("/IMAGING-136/1402522741337.jpg")
-                .getFile());
+        final File imageFile = fileResource("/IMAGING-136/1402522741337.jpg");
         final JpegImageParser parser = new JpegImageParser();
         final BufferedImage image = parser.getBufferedImage(ByteSource.file(imageFile), null);
         assertEquals(680, image.getWidth());

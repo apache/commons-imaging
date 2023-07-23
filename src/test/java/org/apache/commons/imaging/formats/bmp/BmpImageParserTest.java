@@ -16,6 +16,7 @@
  */
 package org.apache.commons.imaging.formats.bmp;
 
+import static org.apache.commons.imaging.test.TestResources.fileResource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -39,8 +40,7 @@ public class BmpImageParserTest {
      */
     @Test
     public void testImageForNegativeArraySizeException() throws ImagingException, IOException {
-        final String file = "/images/bmp/IMAGING-279/negative_array_size_exception.bmp";
-        final File bmp = new File(BmpImageParser.class.getResource(file).getFile());
+        final File bmp = fileResource("/images/bmp/IMAGING-279/negative_array_size_exception.bmp");
         final BmpImageParser parser = new BmpImageParser();
         assertThrows(IllegalArgumentException.class, () -> parser.getImageInfo(bmp, new BmpImagingParameters()));
     }
@@ -52,8 +52,7 @@ public class BmpImageParserTest {
      */
     @Test
     public void testImageWidthRounding() throws ImagingException, IOException {
-        final String file = "/images/bmp/IMAGING-264/test-72_6-dpi.bmp";
-        final File bmp = new File(BmpImageParser.class.getResource(file).getFile());
+        final File bmp = fileResource("/images/bmp/IMAGING-264/test-72_6-dpi.bmp");
         final BmpImageParser parser = new BmpImageParser();
         final ImageInfo imageInfo = parser.getImageInfo(bmp, new BmpImagingParameters());
         assertEquals(73, imageInfo.getPhysicalWidthDpi(), "Expected 72.6 resolution to be rounded to 73");

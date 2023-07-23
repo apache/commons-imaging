@@ -17,6 +17,7 @@
 
 package org.apache.commons.imaging.formats.icns;
 
+import static org.apache.commons.imaging.test.TestResources.fileResource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -76,7 +77,7 @@ public class IcnsReadTest extends IcnsBaseTest {
     @ParameterizedTest()
     @MethodSource("provideIcnsImagesWithMonoAndJpegPngData")
     public void testIcnsElementMonoPngJpeg(final String file, final int numberOfImages) throws ImagingException, IOException {
-        final File testFile = new File(IcnsReadTest.class.getResource(file).getFile());
+        final File testFile = fileResource(file);
         final List<BufferedImage> images = new IcnsImageParser().getAllBufferedImages(testFile);
         assertEquals(numberOfImages, images.size());
     }

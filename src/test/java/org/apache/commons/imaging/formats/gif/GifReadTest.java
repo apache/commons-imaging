@@ -17,6 +17,7 @@
 
 package org.apache.commons.imaging.formats.gif;
 
+import static org.apache.commons.imaging.test.TestResources.fileResource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -159,10 +160,9 @@ public class GifReadTest extends GifBaseTest {
      */
     @Test
     public void testUncaughtExceptionOssFuzz33464() throws IOException {
-        final String input = "/images/gif/oss-fuzz-33464/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5174009164595200";
-        final String file = GifReadTest.class.getResource(input).getFile();
+        final File file = fileResource("/images/gif/oss-fuzz-33464/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5174009164595200");
         final GifImageParser parser = new GifImageParser();
-        assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(new File(file)), new GifImagingParameters()));
+        assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(file), new GifImagingParameters()));
     }
 
     /**
@@ -176,10 +176,9 @@ public class GifReadTest extends GifBaseTest {
      */
     @Test
     public void testUncaughtExceptionOssFuzz33501() throws IOException {
-        final String input = "/images/gif/oss-fuzz-33501/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5914278319226880";
-        final String file = GifReadTest.class.getResource(input).getFile();
+        final File file = fileResource("/images/gif/oss-fuzz-33501/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5914278319226880");
         final GifImageParser parser = new GifImageParser();
-        assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(new File(file)), new GifImagingParameters()));
+        assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(file), new GifImagingParameters()));
     }
 
     /**
@@ -191,9 +190,8 @@ public class GifReadTest extends GifBaseTest {
      */
     @Test
     public void testUncaughtExceptionOssFuzz34185() throws IOException {
-        final String input = "/images/gif/IMAGING-318/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5005192379629568";
-        final String file = GifReadTest.class.getResource(input).getFile();
+        final File file = fileResource("/images/gif/IMAGING-318/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5005192379629568");
         final GifImageParser parser = new GifImageParser();
-        assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(new File(file)), new GifImagingParameters()));
+        assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(file), new GifImagingParameters()));
     }
 }
