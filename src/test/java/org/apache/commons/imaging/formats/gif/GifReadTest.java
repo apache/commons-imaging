@@ -32,7 +32,6 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -76,7 +75,7 @@ public class GifReadTest extends GifBaseTest {
 
     @Test
     public void testConvertInvalidDisposalMethodValues() {
-        Assertions.assertThrows(ImagingException.class, () -> GifImageParser.createDisposalMethodFromIntValue(8));
+        assertThrows(ImagingException.class, () -> GifImageParser.createDisposalMethodFromIntValue(8));
     }
 
     @Test
@@ -89,21 +88,21 @@ public class GifReadTest extends GifBaseTest {
         final DisposalMethod toBeDefined2 = GifImageParser.createDisposalMethodFromIntValue(5);
         final DisposalMethod toBeDefined3 = GifImageParser.createDisposalMethodFromIntValue(6);
         final DisposalMethod toBeDefined4 = GifImageParser.createDisposalMethodFromIntValue(7);
-        Assertions.assertEquals(unspecified, DisposalMethod.UNSPECIFIED);
-        Assertions.assertEquals(doNotDispose, DisposalMethod.DO_NOT_DISPOSE);
-        Assertions.assertEquals(restoreToBackground, DisposalMethod.RESTORE_TO_BACKGROUND);
-        Assertions.assertEquals(restoreToPrevious, DisposalMethod.RESTORE_TO_PREVIOUS);
-        Assertions.assertEquals(toBeDefined1, DisposalMethod.TO_BE_DEFINED_1);
-        Assertions.assertEquals(toBeDefined2, DisposalMethod.TO_BE_DEFINED_2);
-        Assertions.assertEquals(toBeDefined3, DisposalMethod.TO_BE_DEFINED_3);
-        Assertions.assertEquals(toBeDefined4, DisposalMethod.TO_BE_DEFINED_4);
+        assertEquals(unspecified, DisposalMethod.UNSPECIFIED);
+        assertEquals(doNotDispose, DisposalMethod.DO_NOT_DISPOSE);
+        assertEquals(restoreToBackground, DisposalMethod.RESTORE_TO_BACKGROUND);
+        assertEquals(restoreToPrevious, DisposalMethod.RESTORE_TO_PREVIOUS);
+        assertEquals(toBeDefined1, DisposalMethod.TO_BE_DEFINED_1);
+        assertEquals(toBeDefined2, DisposalMethod.TO_BE_DEFINED_2);
+        assertEquals(toBeDefined3, DisposalMethod.TO_BE_DEFINED_3);
+        assertEquals(toBeDefined4, DisposalMethod.TO_BE_DEFINED_4);
     }
 
     @Test
     public void testCreateMetadataWithDisposalMethods() {
         for(final DisposalMethod disposalMethod : DisposalMethod.values()) {
             final GifImageMetadataItem metadataItem = new GifImageMetadataItem(0, 0, 0, disposalMethod);
-            Assertions.assertEquals(disposalMethod, metadataItem.getDisposalMethod());
+            assertEquals(disposalMethod, metadataItem.getDisposalMethod());
         }
     }
 
@@ -143,7 +142,7 @@ public class GifReadTest extends GifBaseTest {
     @ParameterizedTest
     @MethodSource("data")
     public void testMetadata(final File imageFile) {
-        Assertions.assertThrows(UnsupportedOperationException.class, () -> Imaging.getMetadata(imageFile));
+        assertThrows(UnsupportedOperationException.class, () -> Imaging.getMetadata(imageFile));
     }
 
     /**

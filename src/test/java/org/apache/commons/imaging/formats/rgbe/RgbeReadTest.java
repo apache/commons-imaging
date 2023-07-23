@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.formats.rgbe;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -29,7 +30,6 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.internal.Debug;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class RgbeReadTest extends RgbeBaseTest {
@@ -66,6 +66,6 @@ public class RgbeReadTest extends RgbeBaseTest {
                         .getFile());
         final ByteSource byteSourceFile = ByteSource.file(inputFile);
         final RgbeImagingParameters params = new RgbeImagingParameters();
-        Assertions.assertThrows(ImagingException.class, () -> new RgbeImageParser().getBufferedImage(byteSourceFile, params));
+        assertThrows(ImagingException.class, () -> new RgbeImageParser().getBufferedImage(byteSourceFile, params));
     }
 }

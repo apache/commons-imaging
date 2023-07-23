@@ -17,11 +17,12 @@
 
 package org.apache.commons.imaging.formats.jpeg.decoder;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.File;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -39,6 +40,6 @@ public class JpegDecoderTest {
                 JpegDecoderTest.class.getResource("/IMAGING-220/timeout-48eb4251935b4ca8b26d1859ea525c1b42ae0c78.jpeg")
                         .getFile());
         final ByteSource byteSourceFile = ByteSource.file(inputFile);
-        Assertions.assertThrows(ImagingException.class, () -> new JpegDecoder().decode(byteSourceFile));
+        assertThrows(ImagingException.class, () -> new JpegDecoder().decode(byteSourceFile));
     }
 }

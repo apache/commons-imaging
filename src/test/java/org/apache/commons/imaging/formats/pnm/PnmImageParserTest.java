@@ -18,6 +18,7 @@ package org.apache.commons.imaging.formats.pnm;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -29,7 +30,6 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class PnmImageParserTest {
@@ -53,7 +53,7 @@ public class PnmImageParserTest {
         final byte[] bytes = "P1\n2 a\n0 0\n0 0\n0 0\n0 0\n0 0\n0 1\n1 1\n1 1\n1 1\n1 1\n1 1\n".getBytes(US_ASCII);
         final PnmImagingParameters params = new PnmImagingParameters();
         final PnmImageParser underTest = new PnmImageParser();
-        Assertions.assertThrows(ImagingException.class, () -> underTest.getImageInfo(bytes, params));
+        assertThrows(ImagingException.class, () -> underTest.getImageInfo(bytes, params));
     }
 
     /**
@@ -65,7 +65,7 @@ public class PnmImageParserTest {
         final byte[] bytes = "P1\na 2\n0 0 0 0 0 0 0 0 0 0 0\n1 1 1 1 1 1 1 1 1 1 1\n".getBytes(US_ASCII);
         final PnmImagingParameters params = new PnmImagingParameters();
         final PnmImageParser underTest = new PnmImageParser();
-        Assertions.assertThrows(ImagingException.class, () -> underTest.getImageInfo(bytes, params));
+        assertThrows(ImagingException.class, () -> underTest.getImageInfo(bytes, params));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class PnmImageParserTest {
         final byte[] bytes = "P7\nWIDTH \n".getBytes(US_ASCII);
         final PnmImagingParameters params = new PnmImagingParameters();
         final PnmImageParser underTest = new PnmImageParser();
-        Assertions.assertThrows(ImagingException.class, () -> underTest.getImageInfo(bytes, params));
+        assertThrows(ImagingException.class, () -> underTest.getImageInfo(bytes, params));
     }
 
     @Test

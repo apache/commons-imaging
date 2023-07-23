@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.formats.png.chunks;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -29,7 +30,6 @@ import java.util.zip.DeflaterOutputStream;
 
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.ImagingException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -42,7 +42,7 @@ public class PngChunkIccpTest {
     @Test
     public void testErrorOnNoProfileName() {
         final byte[] data = ImagingConstants.EMPTY_BYTE_ARRAY;
-        Assertions.assertThrows(ImagingException.class, () -> new PngChunkIccp(0, chunkType, 0, data));
+        assertThrows(ImagingException.class, () -> new PngChunkIccp(0, chunkType, 0, data));
     }
 
     @Test

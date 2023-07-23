@@ -16,8 +16,9 @@
  */
 package org.apache.commons.imaging.formats.jpeg.decoder;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.apache.commons.imaging.ImagingException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -33,7 +34,7 @@ public class JpegInputStreamTest {
     byteArray[1] = (byte) 74;
     final JpegInputStream jpegInputStream = new JpegInputStream(byteArray);
 
-    Assertions.assertThrows(ImagingException.class, jpegInputStream::nextBit);
+    assertThrows(ImagingException.class, jpegInputStream::nextBit);
 
   }
 
@@ -42,7 +43,7 @@ public class JpegInputStreamTest {
     final int[] byteArray = {};
     final JpegInputStream jpegInputStream = new JpegInputStream(byteArray);
 
-    Assertions.assertThrows(IllegalStateException.class, jpegInputStream::nextBit);
+    assertThrows(IllegalStateException.class, jpegInputStream::nextBit);
 
   }
 

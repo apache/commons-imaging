@@ -17,9 +17,9 @@
 package org.apache.commons.imaging.formats.png.chunks;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.apache.commons.imaging.ImagingException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class PngChunkScalTest {
@@ -28,27 +28,27 @@ public class PngChunkScalTest {
 
    @Test
    public void testConstruct_InvalidDblValue() {
-       Assertions.assertThrows(ImagingException.class,() -> new PngChunkScal(10, chunkType, 0, new byte[]{2, 65, 46, 48, 49, 0, 48, 46, 48, 50}));
+       assertThrows(ImagingException.class,() -> new PngChunkScal(10, chunkType, 0, new byte[]{2, 65, 46, 48, 49, 0, 48, 46, 48, 50}));
    }
 
    @Test
    public void testConstruct_InvalidUnitSpecifier() {
-       Assertions.assertThrows(ImagingException.class,() -> new PngChunkScal(10, chunkType, 0, new byte[]{3, 48, 46, 48, 49, 0, 48, 46, 48, 50}));
+       assertThrows(ImagingException.class,() -> new PngChunkScal(10, chunkType, 0, new byte[]{3, 48, 46, 48, 49, 0, 48, 46, 48, 50}));
    }
 
    @Test
    public void testConstruct_MissingSeparator() {
-      Assertions.assertThrows(ImagingException.class,() -> new PngChunkScal(9, chunkType, 0, new byte[]{1, 48, 46, 48, 49, 48, 46, 48, 50}));
+      assertThrows(ImagingException.class,() -> new PngChunkScal(9, chunkType, 0, new byte[]{1, 48, 46, 48, 49, 48, 46, 48, 50}));
    }
 
    @Test
    public void testConstruct_MissingXValue() {
-      Assertions.assertThrows(ImagingException.class,() -> new PngChunkScal(2, chunkType, 0, new byte[]{2, 0}));
+      assertThrows(ImagingException.class,() -> new PngChunkScal(2, chunkType, 0, new byte[]{2, 0}));
    }
 
    @Test
    public void testConstruct_MissingYValue() {
-       Assertions.assertThrows(ImagingException.class,() -> new PngChunkScal(6, chunkType, 0, new byte[]{2, 48, 46, 48, 49, 0}));
+       assertThrows(ImagingException.class,() -> new PngChunkScal(6, chunkType, 0, new byte[]{2, 48, 46, 48, 49, 0}));
    }
 
    @Test

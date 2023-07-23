@@ -16,10 +16,11 @@
  */
 package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImagingException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class FieldTypeByteTest{
@@ -29,7 +30,7 @@ public class FieldTypeByteTest{
       final FieldTypeByte fieldTypeByte = FieldType.UNDEFINED;
       final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
 
-      Assertions.assertThrows(ImagingException.class, () -> fieldTypeByte.writeData( null, byteOrder));
+      assertThrows(ImagingException.class, () -> fieldTypeByte.writeData( null, byteOrder));
   }
 
 }

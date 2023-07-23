@@ -58,7 +58,7 @@ public class RoundtripBase {
         if (imageExact) {
             // note tolerance when comparing grayscale images
             // BufferedImages of
-            ImageAsserts.assertEquals(testImage, image2);
+            ImageAsserts.assertImageEquals(testImage, image2);
         }
 
         if (formatInfo.identicalSecondWrite) {
