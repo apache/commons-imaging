@@ -17,11 +17,11 @@
 package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImagingException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -35,7 +35,7 @@ public class FieldTypeRationalTest {
   public void testWriteDataWithNonNull() {
       final FieldTypeRational fieldTypeRational = new FieldTypeRational((-922), "z_AX");
       final ByteOrder byteOrder = ByteOrder.nativeOrder();
-      Assertions.assertThrows(ImagingException.class, () -> fieldTypeRational.writeData("z_AX", byteOrder));
+      assertThrows(ImagingException.class, () -> fieldTypeRational.writeData("z_AX", byteOrder));
   }
 
   @Test

@@ -16,8 +16,9 @@
  */
 package org.apache.commons.imaging.formats.pnm;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.apache.commons.imaging.ImagingException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -29,12 +30,12 @@ public class PpmFileInfoTest {
 
   @Test
   public void testCreatesPpmFileInfoOne() {
-      Assertions.assertThrows(ImagingException.class, () -> new PpmFileInfo(0, 0, false, 16711680));
+      assertThrows(ImagingException.class, () -> new PpmFileInfo(0, 0, false, 16711680));
   }
 
   @Test
   public void testCreatesPpmFileInfoThree() {
-      Assertions.assertThrows(ImagingException.class, () -> new PpmFileInfo(0, 0, true, 0));
+      assertThrows(ImagingException.class, () -> new PpmFileInfo(0, 0, true, 0));
   }
 
 }

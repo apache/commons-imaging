@@ -17,6 +17,7 @@
 
 package org.apache.commons.imaging.formats.pcx;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.awt.image.BufferedImage;
@@ -27,7 +28,6 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.internal.Debug;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class PcxReadTest extends PcxBaseTest {
@@ -42,7 +42,7 @@ public class PcxReadTest extends PcxBaseTest {
             Debug.debug("imageFile", imageFile);
 
             final ImageMetadata metadata = Imaging.getMetadata(imageFile);
-            Assertions.assertFalse(metadata instanceof File); // Dummy check to avoid unused warning (it may be null)
+            assertFalse(metadata instanceof File); // Dummy check to avoid unused warning (it may be null)
 
             final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
             assertNotNull(imageInfo);
