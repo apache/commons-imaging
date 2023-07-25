@@ -17,21 +17,21 @@
 package org.apache.commons.imaging.formats.pnm;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.apache.commons.imaging.ImagingException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class PgmFileInfoTest {
 
     @Test
     public void testCreateThrowsImageReadExceptionOne() {
-        Assertions.assertThrows(ImagingException.class, () -> new PgmFileInfo(16711680, 16711680, false, 16711680));
+        assertThrows(ImagingException.class, () -> new PgmFileInfo(16711680, 16711680, false, 16711680));
     }
 
     @Test
     public void testCreateThrowsImageReadExceptionTwo() {
-        Assertions.assertThrows(ImagingException.class, () -> new PgmFileInfo(0, 0, true, 0));
+        assertThrows(ImagingException.class, () -> new PgmFileInfo(0, 0, true, 0));
     }
 
     @Test

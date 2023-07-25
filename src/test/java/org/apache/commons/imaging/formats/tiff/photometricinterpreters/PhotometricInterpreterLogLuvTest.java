@@ -17,13 +17,13 @@
 package org.apache.commons.imaging.formats.tiff.photometricinterpreters;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterLogLuv.TristimulusValues;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -99,11 +99,11 @@ public class PhotometricInterpreterLogLuvTest {
 
     @Test
     public void testInterpretPixelEmptySamples() {
-        Assertions.assertThrows(ImagingException.class, () -> p.interpretPixel(null, new int[] {}, 0, 0));
+        assertThrows(ImagingException.class, () -> p.interpretPixel(null, new int[] {}, 0, 0));
     }
 
     @Test
     public void testInterpretPixelNullSamples() {
-        Assertions.assertThrows(ImagingException.class, () -> p.interpretPixel(null, null, 0, 0));
+        assertThrows(ImagingException.class, () -> p.interpretPixel(null, null, 0, 0));
     }
 }

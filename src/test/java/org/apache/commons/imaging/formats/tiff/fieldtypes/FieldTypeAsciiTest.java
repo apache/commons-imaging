@@ -17,12 +17,12 @@
 package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.tiff.TiffField;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -39,7 +39,7 @@ public class FieldTypeAsciiTest {
       final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
       final TiffField tiffField = new TiffField(0, 0, fieldTypeAscii, 0L, 0, byteArray, byteOrder, 1);
 
-      Assertions.assertThrows(ImagingException.class, () -> fieldTypeAscii.writeData(tiffField, byteOrder));
+      assertThrows(ImagingException.class, () -> fieldTypeAscii.writeData(tiffField, byteOrder));
   }
 
   @Test

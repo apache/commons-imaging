@@ -18,13 +18,13 @@
 package org.apache.commons.imaging.formats.dcx;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.stream.Stream;
 
 import org.apache.commons.imaging.Imaging;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -54,7 +54,7 @@ public class DcxReadTest extends DcxBaseTest {
     @ParameterizedTest
     @MethodSource("data")
     public void testImageMetadata(final File imageFile) {
-        Assertions.assertThrows(UnsupportedOperationException.class, () -> Imaging.getMetadata(imageFile));
+        assertThrows(UnsupportedOperationException.class, () -> Imaging.getMetadata(imageFile));
     }
 
 }

@@ -19,6 +19,7 @@ package org.apache.commons.imaging.formats.png;
 
 import static org.apache.commons.imaging.test.TestResources.fileResource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -34,7 +35,6 @@ import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.GenericImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.internal.Debug;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class PngReadTest extends PngBaseTest {
@@ -55,19 +55,19 @@ public class PngReadTest extends PngBaseTest {
                 );
 
                 assertThrows(
-                        Exception.class,
-                        () -> Imaging.getImageInfo(imageFile),
-                        "Image read should have failed."
+                    Exception.class,
+                    () -> Imaging.getImageInfo(imageFile),
+                    "Image read should have failed."
                 );
 
                 assertThrows(
-                        Exception.class,
-                        () -> Imaging.getBufferedImage(imageFile),
-                        "Image read should have failed."
+                    Exception.class,
+                    () -> Imaging.getBufferedImage(imageFile),
+                    "Image read should have failed."
                 );
             } else {
                 final ImageMetadata metadata = Imaging.getMetadata(imageFile);
-                Assertions.assertFalse(metadata instanceof File); // Dummy check to avoid unused warning (it may be null)
+                assertFalse(metadata instanceof File); // Dummy check to avoid unused warning (it may be null)
 
                 final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
                 assertNotNull(imageInfo);

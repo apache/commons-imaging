@@ -62,7 +62,10 @@ The <action> type attribute can be add,update,fix,remove.
       </action>
       <action dev="ggregory" type="fix" due-to="step-security-bot, Gary Gregory">
         [StepSecurity] ci: Harden GitHub Actions #297.
-      </action>            
+      </action>
+      <action dev="ggregory" type="fix" due-to="Marcono1234, Gary Gregory">
+         Use static imports for JUnit Assertions methods #307.
+      </action>
       <!-- ADD -->
       <action issue="IMAGING-352" dev="ggregory" type="update" due-to="Jeroen van der Vegt, Gary Gregory">
         [PngWriter] Allow custom PaletteFactory #294.
