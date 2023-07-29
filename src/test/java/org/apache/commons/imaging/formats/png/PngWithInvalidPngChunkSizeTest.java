@@ -23,7 +23,7 @@ import java.io.File;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.examples.ImageReadExample.ManagedImageBufferedImageFactory;
-import org.apache.commons.imaging.formats.jpeg.JpegWithInvalidDhtSegmentTest;
+import org.apache.commons.imaging.test.TestResources;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -37,8 +37,7 @@ public class PngWithInvalidPngChunkSizeTest {
      */
     @Test
     public void testPngWithInvalidNegativePngChunkSize() {
-        final File imageFile = new File(
-                JpegWithInvalidDhtSegmentTest.class.getResource("/IMAGING-210/testfile.png").getFile());
+        final File imageFile = TestResources.fileResource("/IMAGING-210/testfile.png");
         final PngImagingParameters params = new PngImagingParameters();
         params.setBufferedImageFactory(new ManagedImageBufferedImageFactory());
         final PngImageParser jpegImageParser = new PngImageParser();
@@ -51,7 +50,7 @@ public class PngWithInvalidPngChunkSizeTest {
      */
     @Test
     public void testPngWithInvalidPngChunkSize() {
-        final File imageFile = new File(JpegWithInvalidDhtSegmentTest.class.getResource("/IMAGING-211/testfile_2.png").getFile());
+        final File imageFile = TestResources.fileResource("/IMAGING-211/testfile_2.png");
         final PngImagingParameters params = new PngImagingParameters();
         params.setBufferedImageFactory(new ManagedImageBufferedImageFactory());
         final PngImageParser jpegImageParser = new PngImageParser();

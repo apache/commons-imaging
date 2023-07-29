@@ -29,6 +29,7 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingTestConstants;
 import org.apache.commons.imaging.bytesource.ByteSource;
+import org.apache.commons.imaging.test.TestResources;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -79,9 +80,7 @@ public class BmpReadTest extends BmpBaseTest {
 
     @Test
     public void testNegativePaletteLength() {
-        final String input = "/images/bmp/IMAGING-325/crash-3afb569de74522535ef65922233e1920455cdc14.bmp";
-        final String location = BmpReadTest.class.getResource(input).getFile();
-        final File inputFile = new File(location);
+        final File inputFile = TestResources.fileResource("/images/bmp/IMAGING-325/crash-3afb569de74522535ef65922233e1920455cdc14.bmp");
         assertThrows(ImagingException.class, () -> new BmpImageParser().dumpImageFile(ByteSource.file(inputFile)));
     }
 }

@@ -23,6 +23,7 @@ import java.io.File;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
+import org.apache.commons.imaging.test.TestResources;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -36,9 +37,7 @@ public class JpegDecoderTest {
     @Test
     public void testDecodeBadFile() {
         // From IMAGING-220
-        final File inputFile = new File(
-                JpegDecoderTest.class.getResource("/IMAGING-220/timeout-48eb4251935b4ca8b26d1859ea525c1b42ae0c78.jpeg")
-                        .getFile());
+        final File inputFile = TestResources.fileResource("/IMAGING-220/timeout-48eb4251935b4ca8b26d1859ea525c1b42ae0c78.jpeg");
         final ByteSource byteSourceFile = ByteSource.file(inputFile);
         assertThrows(ImagingException.class, () -> new JpegDecoder().decode(byteSourceFile));
     }

@@ -32,6 +32,7 @@ import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.internal.Debug;
+import org.apache.commons.imaging.test.TestResources;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -76,10 +77,9 @@ public class JpegReadTest extends JpegBaseTest {
      */
     @Test
     public void testUncaughtExceptionOssFuzz33458() {
-        final String input = "/images/jpeg/oss-fuzz-33458/clusterfuzz-testcase-minimized-ImagingJpegFuzzer-4548690447564800";
-        final String file = JpegReadTest.class.getResource(input).getFile();
+        final File file = TestResources.fileResource("/images/jpeg/oss-fuzz-33458/clusterfuzz-testcase-minimized-ImagingJpegFuzzer-4548690447564800");
         final JpegImageParser parser = new JpegImageParser();
-        assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(new File(file)), new JpegImagingParameters()));
+        assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(file), new JpegImagingParameters()));
     }
 
 }
