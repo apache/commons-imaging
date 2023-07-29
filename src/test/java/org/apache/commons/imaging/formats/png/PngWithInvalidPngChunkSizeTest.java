@@ -37,7 +37,7 @@ public class PngWithInvalidPngChunkSizeTest {
      */
     @Test
     public void testPngWithInvalidNegativePngChunkSize() {
-        final File imageFile = TestResources.fileResource("/IMAGING-210/testfile.png");
+        final File imageFile = TestResources.resourceToFile("/IMAGING-210/testfile.png");
         final PngImagingParameters params = new PngImagingParameters();
         params.setBufferedImageFactory(new ManagedImageBufferedImageFactory());
         final PngImageParser jpegImageParser = new PngImageParser();
@@ -50,7 +50,7 @@ public class PngWithInvalidPngChunkSizeTest {
      */
     @Test
     public void testPngWithInvalidPngChunkSize() {
-        final File imageFile = TestResources.fileResource("/IMAGING-211/testfile_2.png");
+        final File imageFile = TestResources.resourceToFile("/IMAGING-211/testfile_2.png");
         final PngImagingParameters params = new PngImagingParameters();
         params.setBufferedImageFactory(new ManagedImageBufferedImageFactory());
         final PngImageParser jpegImageParser = new PngImageParser();

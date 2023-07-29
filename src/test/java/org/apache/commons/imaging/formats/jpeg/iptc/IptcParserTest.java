@@ -50,7 +50,7 @@ public class IptcParserTest {
     @Test
     public void testEncodingSupport() throws IOException, ImagingException {
         // NOTE: We use the JpegParser, so it will send only the block/segment that IptcParser needs for the test image
-        final File file = TestResources.fileResource("/images/jpeg/iptc/IMAGING-168/111083453-c07f1880-851e-11eb-8b61-2757f7d934bf.jpg");
+        final File file = TestResources.resourceToFile("/images/jpeg/iptc/IMAGING-168/111083453-c07f1880-851e-11eb-8b61-2757f7d934bf.jpg");
         final JpegImageParser parser = new JpegImageParser();
         final JpegImageMetadata metadata = (JpegImageMetadata) parser.getMetadata(file);
         final JpegPhotoshopMetadata photoshopMetadata = metadata.getPhotoshop();
@@ -82,7 +82,7 @@ public class IptcParserTest {
      */
     @Test
     public void testSkipBlockTypes() throws ImagingException, IOException {
-        final File imageFile = TestResources.fileResource("/images/jpeg/photoshop/IMAGING-246/FallHarvestKitKat_07610.jpg");
+        final File imageFile = TestResources.resourceToFile("/images/jpeg/photoshop/IMAGING-246/FallHarvestKitKat_07610.jpg");
         final JpegImageMetadata metadata = (JpegImageMetadata) new JpegImageParser()
                 .getMetadata(ByteSource.file(imageFile), new JpegImagingParameters());
         final JpegPhotoshopMetadata photoshopMetadata = metadata.getPhotoshop();

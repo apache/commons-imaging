@@ -62,7 +62,7 @@ public class RgbeReadTest extends RgbeBaseTest {
     @Test
     public void testErrorDecompressingInvalidFile() {
         // From IMAGING-219
-        final File inputFile = TestResources.fileResource("/IMAGING-219/timeout-9713502c9c371f1654b493650c16ab17c0444369.hdr");
+        final File inputFile = TestResources.resourceToFile("/IMAGING-219/timeout-9713502c9c371f1654b493650c16ab17c0444369.hdr");
         final ByteSource byteSourceFile = ByteSource.file(inputFile);
         final RgbeImagingParameters params = new RgbeImagingParameters();
         assertThrows(ImagingException.class, () -> new RgbeImageParser().getBufferedImage(byteSourceFile, params));

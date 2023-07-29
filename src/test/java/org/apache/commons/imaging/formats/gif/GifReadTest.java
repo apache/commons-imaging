@@ -159,7 +159,7 @@ public class GifReadTest extends GifBaseTest {
      */
     @Test
     public void testUncaughtExceptionOssFuzz33464() throws IOException {
-        final File file = TestResources.fileResource("/images/gif/oss-fuzz-33464/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5174009164595200");
+        final File file = TestResources.resourceToFile("/images/gif/oss-fuzz-33464/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5174009164595200");
         final GifImageParser parser = new GifImageParser();
         assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(file), new GifImagingParameters()));
     }
@@ -175,7 +175,7 @@ public class GifReadTest extends GifBaseTest {
      */
     @Test
     public void testUncaughtExceptionOssFuzz33501() throws IOException {
-        final File file = TestResources.fileResource("/images/gif/oss-fuzz-33501/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5914278319226880");
+        final File file = TestResources.resourceToFile("/images/gif/oss-fuzz-33501/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5914278319226880");
         final GifImageParser parser = new GifImageParser();
         assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(file), new GifImagingParameters()));
     }
@@ -189,7 +189,7 @@ public class GifReadTest extends GifBaseTest {
      */
     @Test
     public void testUncaughtExceptionOssFuzz34185() throws IOException {
-        final File file = TestResources.fileResource("/images/gif/IMAGING-318/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5005192379629568");
+        final File file = TestResources.resourceToFile("/images/gif/IMAGING-318/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5005192379629568");
         final GifImageParser parser = new GifImageParser();
         assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(file), new GifImagingParameters()));
     }

@@ -64,7 +64,10 @@ The <action> type attribute can be add,update,fix,remove.
         [StepSecurity] ci: Harden GitHub Actions #297.
       </action>
       <action dev="ggregory" type="fix" due-to="Marcono1234, Gary Gregory">
-         Use static imports for JUnit Assertions methods #307.
+        Use static imports for JUnit Assertions methods #307.
+      </action>
+      <action dev="ggregory" type="fix" issue="IMAGING-359" due-to="Marcono1234, Gary Gregory">
+        Fix test resource file paths not being constructed properly #306.
       </action>
       <!-- ADD -->
       <action issue="IMAGING-352" dev="ggregory" type="update" due-to="Jeroen van der Vegt, Gary Gregory">

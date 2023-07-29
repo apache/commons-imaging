@@ -36,7 +36,7 @@ public class JpegWithInvalidDhtSegmentTest {
     public void testSingleImage() {
         // we cannot use ImagingTest and getImageByFileName, as it would cause others
         // tests to fail
-        final File imageFile = TestResources.fileResource("/IMAGING-215/ArrayIndexOutOfBoundsException_DhtSegment_79.jpeg");
+        final File imageFile = TestResources.resourceToFile("/IMAGING-215/ArrayIndexOutOfBoundsException_DhtSegment_79.jpeg");
         assertThrows(ImagingException.class, () -> Imaging.getMetadata(imageFile));
     }
 }

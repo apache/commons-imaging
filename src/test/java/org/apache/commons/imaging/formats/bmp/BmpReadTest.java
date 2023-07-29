@@ -80,7 +80,7 @@ public class BmpReadTest extends BmpBaseTest {
 
     @Test
     public void testNegativePaletteLength() {
-        final File inputFile = TestResources.fileResource("/images/bmp/IMAGING-325/crash-3afb569de74522535ef65922233e1920455cdc14.bmp");
+        final File inputFile = TestResources.resourceToFile("/images/bmp/IMAGING-325/crash-3afb569de74522535ef65922233e1920455cdc14.bmp");
         assertThrows(ImagingException.class, () -> new BmpImageParser().dumpImageFile(ByteSource.file(inputFile)));
     }
 }

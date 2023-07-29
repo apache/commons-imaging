@@ -25,16 +25,28 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- * Helper class which provides convenience methods for accessing test resources.
+ * Provides convenience methods for accessing test resources.
  */
 public class TestResources {
-    private TestResources() {
+
+    /**
+     * Gets a {@link File} for a {@linkplain Class#getResource(String) resource path}.
+     */
+    public static File resourceToFile(String path) {
+        return new File(resourceToURI(path));
     }
 
-    private static URI resourceUri(String path) {
-        URL url = TestResources.class.getResource(path);
+    /**
+     * Gets a {@link Path} for a {@linkplain Class#getResource(String) resource path}.
+     */
+    public static Path resourceToPath(String path) {
+        return Paths.get(resourceToURI(path));
+    }
+
+    private static URI resourceToURI(String name) {
+        URL url = TestResources.class.getResource(name);
         if (url == null) {
-            throw new IllegalArgumentException("Resource does not exist: " + path);
+            throw new IllegalArgumentException("Resource does not exist: " + name);
         }
         try {
             return url.toURI();
@@ -43,17 +55,6 @@ public class TestResources {
         }
     }
 
-    /**
-     * Gets a {@link File} for a {@linkplain Class#getResource(String) resource path}.
-     */
-    public static File fileResource(String path) {
-        return new File(resourceUri(path));
-    }
-
-    /**
-     * Gets a {@link Path} for a {@linkplain Class#getResource(String) resource path}.
-     */
-    public static Path pathResource(String path) {
-        return Paths.get(resourceUri(path));
+    private TestResources() {
     }
 }

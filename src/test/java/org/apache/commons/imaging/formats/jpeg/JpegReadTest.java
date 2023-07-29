@@ -77,7 +77,7 @@ public class JpegReadTest extends JpegBaseTest {
      */
     @Test
     public void testUncaughtExceptionOssFuzz33458() {
-        final File file = TestResources.fileResource("/images/jpeg/oss-fuzz-33458/clusterfuzz-testcase-minimized-ImagingJpegFuzzer-4548690447564800");
+        final File file = TestResources.resourceToFile("/images/jpeg/oss-fuzz-33458/clusterfuzz-testcase-minimized-ImagingJpegFuzzer-4548690447564800");
         final JpegImageParser parser = new JpegImageParser();
         assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(file), new JpegImagingParameters()));
     }

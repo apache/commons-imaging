@@ -37,7 +37,7 @@ public class JpegDecoderTest {
     @Test
     public void testDecodeBadFile() {
         // From IMAGING-220
-        final File inputFile = TestResources.fileResource("/IMAGING-220/timeout-48eb4251935b4ca8b26d1859ea525c1b42ae0c78.jpeg");
+        final File inputFile = TestResources.resourceToFile("/IMAGING-220/timeout-48eb4251935b4ca8b26d1859ea525c1b42ae0c78.jpeg");
         final ByteSource byteSourceFile = ByteSource.file(inputFile);
         assertThrows(ImagingException.class, () -> new JpegDecoder().decode(byteSourceFile));
     }
