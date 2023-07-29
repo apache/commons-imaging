@@ -17,7 +17,6 @@
 
 package org.apache.commons.imaging.formats.png;
 
-import static org.apache.commons.imaging.test.TestResources.fileResource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -35,6 +34,7 @@ import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.GenericImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.internal.Debug;
+import org.apache.commons.imaging.test.TestResources;
 import org.junit.jupiter.api.Test;
 
 public class PngReadTest extends PngBaseTest {
@@ -89,7 +89,7 @@ public class PngReadTest extends PngBaseTest {
      */
     @Test
     public void testReadMetadataFromItxtChunk() throws IOException, ImagingException {
-        final File file = fileResource("/images/png/IMAGING-342/utf8-comment.png");
+        final File file = TestResources.fileResource("/images/png/IMAGING-342/utf8-comment.png");
         final PngImageParser parser = new PngImageParser();
 
         final ImageMetadata metadata = parser.getMetadata(file);
@@ -112,7 +112,7 @@ public class PngReadTest extends PngBaseTest {
      */
     @Test
     public void testUncaughtExceptionOssFuzz33691() throws IOException {
-        final File file = fileResource("/images/png/oss-fuzz-33691/clusterfuzz-testcase-minimized-ImagingPngFuzzer-6177282101215232");
+        final File file = TestResources.fileResource("/images/png/oss-fuzz-33691/clusterfuzz-testcase-minimized-ImagingPngFuzzer-6177282101215232");
         final PngImageParser parser = new PngImageParser();
         assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(file), new PngImagingParameters()));
     }
@@ -127,7 +127,7 @@ public class PngReadTest extends PngBaseTest {
      */
     @Test
     public void testUncaughtExceptionOssFuzz37607() throws IOException {
-        final File file = fileResource("/images/png/IMAGING-317/clusterfuzz-testcase-minimized-ImagingPngFuzzer-6242400830357504");
+        final File file = TestResources.fileResource("/images/png/IMAGING-317/clusterfuzz-testcase-minimized-ImagingPngFuzzer-6242400830357504");
         final PngImageParser parser = new PngImageParser();
         assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(file), new PngImagingParameters()));
     }

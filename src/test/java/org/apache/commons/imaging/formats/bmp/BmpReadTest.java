@@ -16,7 +16,6 @@
  */
 package org.apache.commons.imaging.formats.bmp;
 
-import static org.apache.commons.imaging.test.TestResources.fileResource;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -30,6 +29,7 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingTestConstants;
 import org.apache.commons.imaging.bytesource.ByteSource;
+import org.apache.commons.imaging.test.TestResources;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -80,7 +80,7 @@ public class BmpReadTest extends BmpBaseTest {
 
     @Test
     public void testNegativePaletteLength() {
-        final File inputFile = fileResource("/images/bmp/IMAGING-325/crash-3afb569de74522535ef65922233e1920455cdc14.bmp");
+        final File inputFile = TestResources.fileResource("/images/bmp/IMAGING-325/crash-3afb569de74522535ef65922233e1920455cdc14.bmp");
         assertThrows(ImagingException.class, () -> new BmpImageParser().dumpImageFile(ByteSource.file(inputFile)));
     }
 }
