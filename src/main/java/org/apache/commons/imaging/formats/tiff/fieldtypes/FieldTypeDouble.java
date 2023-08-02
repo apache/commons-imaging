@@ -49,7 +49,8 @@ public class FieldTypeDouble extends FieldType {
         if (!(o instanceof Double[])) {
             throw new ImagingException("Invalid data", o);
         }
-        final double[] values = Allocator.doubleArray(((Double[]) o).length);
+        // Trusted because length is based on length of existing array
+        final double[] values = Allocator.doubleArrayTrusted(((Double[]) o).length);
         Arrays.setAll(values, i -> ((Double[]) o)[i].doubleValue());
         return ByteConversions.toBytes(values, byteOrder);
     }

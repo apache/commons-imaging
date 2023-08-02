@@ -50,7 +50,8 @@ public class FieldTypeFloat extends FieldType {
             throw new ImagingException("Invalid data", o);
         }
         final Float[] numbers = (Float[]) o;
-        final float[] values = Allocator.floatArray(numbers.length);
+        // Trusted because length is based on length of existing array
+        final float[] values = Allocator.floatArrayTrusted(numbers.length);
         for (int i = 0; i < values.length; i++) {
             values[i] = numbers[i].floatValue();
         }

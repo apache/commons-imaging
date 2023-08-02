@@ -23,8 +23,8 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFunctions;
+import org.apache.commons.imaging.common.KnownSizeByteArrayBuilder;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.build.AbstractOrigin.InputStreamOrigin;
 
@@ -191,18 +191,9 @@ final class InputStreamByteSource extends ByteSource {
         final InputStream cis = getInputStream();
         BinaryFunctions.skipBytes(cis, position);
 
-        final byte[] bytes = Allocator.byteArray(length);
-        int total = 0;
-        while (true) {
-            final int read = cis.read(bytes, total, bytes.length - total);
-            if (read < 1) {
-                throw new ImagingException("Could not read block.");
-            }
-            total += read;
-            if (total >= length) {
-                return bytes;
-            }
-        }
+        KnownSizeByteArrayBuilder byteArrayBuilder = new KnownSizeByteArrayBuilder(length);
+        byteArrayBuilder.addAllBytesFrom(cis);
+        return byteArrayBuilder.createByteArray();
     }
 
     private Block getFirstBlock() throws IOException {

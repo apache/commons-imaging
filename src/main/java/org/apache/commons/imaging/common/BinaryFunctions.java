@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
 import java.nio.ByteOrder;
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 import org.apache.commons.imaging.ImagingException;
@@ -71,7 +72,7 @@ public final class BinaryFunctions {
 
     public static byte[] getBytes(final RandomAccessFile raf, final long pos,
             final int length, final String exception) throws IOException {
-        if (length < 0) {
+        if (length < 0 || length > raf.length()) {
             throw new IOException(String.format("%s, invalid length: %d", exception, length));
         }
         Allocator.checkByteArray(length);
@@ -230,11 +231,13 @@ public final class BinaryFunctions {
 
     public static byte[] readBytes(final String name, final InputStream is, final int length,
             final String exception) throws IOException {
+        KnownSizeByteArrayBuilder byteArrayBuilder = new KnownSizeByteArrayBuilder(length);
         try {
-            return IOUtils.toByteArray(is, Allocator.check(length));
+            byteArrayBuilder.addAllBytesFrom(is);
         } catch (IOException e) {
-            throw new IOException(exception + ", name: " + name + ", length: " + length);
+            throw new IOException(exception + ", name: " + name + ", length: " + length, e);
         }
+        return byteArrayBuilder.createByteArray();
     }
 
     public static byte[] remainingBytes(final String name, final byte[] bytes, final int count) {
@@ -282,9 +285,11 @@ public final class BinaryFunctions {
     }
 
     public static byte[] slice(final byte[] bytes, final int start, final int count) {
-        final byte[] result = Allocator.byteArray(count);
-        System.arraycopy(bytes, start, result, 0, count);
-        return result;
+        // Validate here; otherwise copyOfRange might create an array larger than the original one
+        if (start < 0 || count < 0 || bytes.length - count < start) {
+            throw new IllegalArgumentException("Invalid start or count");
+        }
+        return Arrays.copyOfRange(bytes, start, start + count);
     }
 
     public static boolean startsWith(final byte[] buffer, final BinaryConstant search) {

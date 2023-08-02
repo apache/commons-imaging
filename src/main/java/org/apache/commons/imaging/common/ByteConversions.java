@@ -57,11 +57,21 @@ public final class ByteConversions {
         return toBytes(values, 0, values.length, byteOrder);
     }
 
+    // TODO Replace this with java.util.Objects.checkFromIndexSize(int, int, int) once targeting Java 9+
+    private static void checkOffsetAndLength(int arrayLength, int offset, int length) {
+        if (offset < 0 || length < 0 || arrayLength - length < offset) {
+            throw new IllegalArgumentException("Invalid offset or length");
+        }
+    }
+
     private static byte[] toBytes(final double[] values, final int offset,
             final int length, final ByteOrder byteOrder) {
-        final byte[] result = Allocator.byteArray(length * 8);
+        checkOffsetAndLength(values.length, offset, length);
+
+        // Trusted because length is based on length of existing array
+        final byte[] result = Allocator.byteArrayTrusted(length * Double.BYTES);
         for (int i = 0; i < length; i++) {
-            toBytes(values[offset + i], byteOrder, result, i * 8);
+            toBytes(values[offset + i], byteOrder, result, i * Double.BYTES);
         }
         return result;
     }
@@ -92,9 +102,12 @@ public final class ByteConversions {
     }
 
     private static byte[] toBytes(final float[] values, final int offset, final int length, final ByteOrder byteOrder) {
-        final byte[] result = Allocator.byteArray(length * 4);
+        checkOffsetAndLength(values.length, offset, length);
+
+        // Trusted because length is based on length of existing array
+        final byte[] result = Allocator.byteArrayTrusted(length * Float.BYTES);
         for (int i = 0; i < length; i++) {
-            toBytes(values[offset + i], byteOrder, result, i * 4);
+            toBytes(values[offset + i], byteOrder, result, i * Float.BYTES);
         }
         return result;
     }
@@ -124,9 +137,12 @@ public final class ByteConversions {
     }
 
     private static byte[] toBytes(final int[] values, final int offset, final int length, final ByteOrder byteOrder) {
-        final byte[] result = Allocator.byteArray(length * 4);
+        checkOffsetAndLength(values.length, offset, length);
+
+        // Trusted because length is based on length of existing array
+        final byte[] result = Allocator.byteArrayTrusted(length * Integer.BYTES);
         for (int i = 0; i < length; i++) {
-            toBytes(values[offset + i], byteOrder, result, i * 4);
+            toBytes(values[offset + i], byteOrder, result, i * Integer.BYTES);
         }
         return result;
     }
@@ -166,7 +182,10 @@ public final class ByteConversions {
 
     private static byte[] toBytes(final RationalNumber[] values, final int offset,
             final int length, final ByteOrder byteOrder) {
-        final byte[] result = Allocator.byteArray(length * 8);
+        checkOffsetAndLength(values.length, offset, length);
+
+        // Trusted because length is based on length of existing array
+        final byte[] result = Allocator.byteArrayTrusted(length * 8);
         for (int i = 0; i < length; i++) {
             toBytes(values[offset + i], byteOrder, result, i * 8);
         }
@@ -194,9 +213,12 @@ public final class ByteConversions {
     }
 
     private static byte[] toBytes(final short[] values, final int offset, final int length, final ByteOrder byteOrder) {
-        final byte[] result = Allocator.byteArray(length * 2);
+        checkOffsetAndLength(values.length, offset, length);
+
+        // Trusted because length is based on length of existing array
+        final byte[] result = Allocator.byteArrayTrusted(length * Short.BYTES);
         for (int i = 0; i < length; i++) {
-            toBytes(values[offset + i], byteOrder, result, i * 2);
+            toBytes(values[offset + i], byteOrder, result, i * Short.BYTES);
         }
         return result;
     }
@@ -233,8 +255,11 @@ public final class ByteConversions {
 
     private static double[] toDoubles(final byte[] bytes, final int offset,
             final int length, final ByteOrder byteOrder) {
-        final double[] result = Allocator.doubleArray(length / 8);
-        Arrays.setAll(result, i -> toDouble(bytes, offset + 8 * i, byteOrder));
+        checkOffsetAndLength(bytes.length, offset, length);
+
+        // Trusted because length is based on length of existing array
+        final double[] result = Allocator.doubleArrayTrusted(length / Double.BYTES);
+        Arrays.setAll(result, i -> toDouble(bytes, offset + Double.BYTES * i, byteOrder));
         return result;
     }
 
@@ -262,9 +287,12 @@ public final class ByteConversions {
 
     private static float[] toFloats(final byte[] bytes, final int offset,
             final int length, final ByteOrder byteOrder) {
-        final float[] result = Allocator.floatArray(length / 4);
+        checkOffsetAndLength(bytes.length, offset, length);
+
+        // Trusted because length is based on length of existing array
+        final float[] result = Allocator.floatArrayTrusted(length / Float.BYTES);
         for (int i = 0; i < result.length; i++) {
-            result[i] = toFloat(bytes, offset + 4 * i, byteOrder);
+            result[i] = toFloat(bytes, offset + Float.BYTES * i, byteOrder);
         }
         return result;
     }
@@ -290,8 +318,11 @@ public final class ByteConversions {
 
     private static int[] toInts(final byte[] bytes, final int offset, final int length,
             final ByteOrder byteOrder) {
-        final int[] result = Allocator.intArray(length / 4);
-        Arrays.setAll(result, i -> toInt(bytes, offset + 4 * i, byteOrder));
+        checkOffsetAndLength(bytes.length, offset, length);
+
+        // Trusted because length is based on length of existing array
+        final int[] result = Allocator.intArrayTrusted(length / Integer.BYTES);
+        Arrays.setAll(result, i -> toInt(bytes, offset + Integer.BYTES * i, byteOrder));
         return result;
     }
 
@@ -349,7 +380,10 @@ public final class ByteConversions {
             final int length,
             final ByteOrder byteOrder,
             final boolean unsignedType) {
-        final RationalNumber[] result = new RationalNumber[length / 8];
+        checkOffsetAndLength(bytes.length, offset, length);
+
+        // Trusted because length is based on length of existing array
+        final RationalNumber[] result = Allocator.arrayTrusted(length / 8, RationalNumber[]::new, 1);
         Arrays.setAll(result, i -> toRational(bytes, offset + 8 * i, byteOrder, unsignedType));
         return result;
     }
@@ -368,9 +402,12 @@ public final class ByteConversions {
 
     private static short[] toShorts(final byte[] bytes, final int offset,
             final int length, final ByteOrder byteOrder) {
-        final short[] result = Allocator.shortArray(length / 2);
+        checkOffsetAndLength(bytes.length, offset, length);
+
+        // Trusted because length is based on length of existing array
+        final short[] result = Allocator.shortArrayTrusted(length / Short.BYTES);
         for (int i = 0; i < result.length; i++) {
-            result[i] = toShort(bytes, offset + 2 * i, byteOrder);
+            result[i] = toShort(bytes, offset + Short.BYTES * i, byteOrder);
         }
         return result;
     }
@@ -394,7 +431,10 @@ public final class ByteConversions {
 
     private static int[] toUInt16s(final byte[] bytes, final int offset, final int length,
             final ByteOrder byteOrder) {
-        final int[] result = Allocator.intArray(length / 2);
+        checkOffsetAndLength(bytes.length, offset, length);
+
+        // Trusted because length is based on length of existing array
+        final int[] result = Allocator.intArrayTrusted(length / 2);
         Arrays.setAll(result, i -> toUInt16(bytes, offset + 2 * i, byteOrder));
         return result;
     }

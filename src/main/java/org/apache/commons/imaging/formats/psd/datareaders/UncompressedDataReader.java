@@ -51,8 +51,8 @@ public class UncompressedDataReader implements DataReader {
         final MyBitInputStream mbis = new MyBitInputStream(is, ByteOrder.BIG_ENDIAN, false);
         // we want all samples to be bytes
         try (BitsToByteInputStream bbis = new BitsToByteInputStream(mbis, 8)) {
-            final int[][][] data = new int[Allocator.check(channelCount)][Allocator
-                    .check(height)][Allocator.check(width)];
+            Allocator.check(Math.multiplyExact(channelCount, Math.multiplyExact(height, width)), Integer.BYTES);
+            final int[][][] data = new int[channelCount][height][width];
             for (int channel = 0; channel < channelCount; channel++) {
                 for (int y = 0; y < height; y++) {
                     for (int x = 0; x < width; x++) {

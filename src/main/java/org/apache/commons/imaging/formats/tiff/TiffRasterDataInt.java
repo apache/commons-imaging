@@ -113,7 +113,8 @@ public class TiffRasterDataInt extends TiffRasterData {
      */
     @Override
     public float[] getData() {
-        final float[] result = Allocator.floatArray(nCells);
+        // Trusted because length is based on length of existing `data` array
+        final float[] result = Allocator.floatArrayTrusted(nCells);
         for (int i = 0; i < nCells; i++) {
             result[i] = data[i];
         }

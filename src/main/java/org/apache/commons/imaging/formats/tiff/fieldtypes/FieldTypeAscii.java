@@ -40,7 +40,8 @@ public class FieldTypeAscii extends FieldType {
                 nullCount++;
             }
         }
-        final String[] strings = Allocator.array(nullCount, String[]::new, 24);
+        // Trusted because length is based on length of existing array
+        final String[] strings = Allocator.arrayTrusted(nullCount, String[]::new, 24);
         int stringsAdded = 0;
         strings[0] = ""; // if we have a 0 length string
         int nextStringPos = 0;
@@ -85,15 +86,18 @@ public class FieldTypeAscii extends FieldType {
             throw new ImagingException("Unknown data type: " + o);
         }
         final String[] strings = (String[]) o;
+        final byte[][] stringBytes = new byte[strings.length][];
         int totalLength = 0;
-        for (final String string : strings) {
+        for (int i = 0; i < strings.length; i++) {
+            final String string = strings[i];
             final byte[] bytes = string.getBytes(StandardCharsets.UTF_8);
             totalLength += (bytes.length + 1);
+            stringBytes[i] = bytes;
         }
-        final byte[] result = Allocator.byteArray(totalLength);
+        // Trusted because length is based on length of existing arrays
+        final byte[] result = Allocator.byteArrayTrusted(totalLength);
         int position = 0;
-        for (final String string : strings) {
-            final byte[] bytes = string.getBytes(StandardCharsets.UTF_8);
+        for (final byte[] bytes : stringBytes) {
             System.arraycopy(bytes, 0, result, position, bytes.length);
             position += (bytes.length + 1);
         }

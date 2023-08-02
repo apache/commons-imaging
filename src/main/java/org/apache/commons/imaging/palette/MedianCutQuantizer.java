@@ -57,7 +57,8 @@ public class MedianCutQuantizer {
         final int width = image.getWidth();
         final int height = image.getHeight();
 
-        final int[] row = Allocator.intArray(width);
+        // Trusted because length is based on width of existing image
+        final int[] row = Allocator.intArrayTrusted(width);
         for (int y = 0; y < height; y++) {
             image.getRGB(0, y, width, 1, row, 0, width);
             for (int x = 0; x < width; x++) {
@@ -92,7 +93,8 @@ public class MedianCutQuantizer {
         if (discreteColors <= maxColors) {
             Debug.debug("lossless palette: " + discreteColors);
 
-            final int[] palette = Allocator.intArray(discreteColors);
+            // Trusted because length is based on size of existing Map
+            final int[] palette = Allocator.intArrayTrusted(discreteColors);
             final List<ColorCount> colorCounts = new ArrayList<>(
                     colorMap.values());
 

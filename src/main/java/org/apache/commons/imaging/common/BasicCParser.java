@@ -353,7 +353,8 @@ public class BasicCParser {
                 ++numLiveTokens;
             }
         }
-        final String[] liveTokens = Allocator.array(numLiveTokens, String[]::new, 24);
+        // Trusted because length is based on length of existing array
+        final String[] liveTokens = Allocator.arrayTrusted(numLiveTokens, String[]::new, 24);
         int next = 0;
         for (final String token : tokens) {
             if (token != null && !token.isEmpty()) {

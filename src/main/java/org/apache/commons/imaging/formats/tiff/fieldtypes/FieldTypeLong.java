@@ -51,7 +51,8 @@ public class FieldTypeLong extends FieldType {
             throw new ImagingException("Invalid data", o);
         }
         final Integer[] numbers = (Integer[]) o;
-        final int[] values = Allocator.intArray(numbers.length);
+        // Trusted because length is based on length of existing array
+        final int[] values = Allocator.intArrayTrusted(numbers.length);
         for (int i = 0; i < values.length; i++) {
             values[i] = numbers[i];
         }

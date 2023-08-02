@@ -42,7 +42,8 @@ public class TagInfoAscii extends TagInfo {
                 nullCount++;
             }
         }
-        final String[] strings = Allocator.array(nullCount + 1, String[]::new, 24);
+        // Trusted because length is based on length of existing array
+        final String[] strings = Allocator.arrayTrusted(nullCount + 1, String[]::new, 24);
         int stringsAdded = 0;
         strings[0] = ""; // if we have a 0 length string
         int nextStringPos = 0;

@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteOrder;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -241,8 +242,7 @@ public class IccProfileParser extends BinaryFileParser {
 
         final int tagCount = read4Bytes("TagCount", is, "Not a Valid ICC Profile", getByteOrder());
 
-        // List tags = new ArrayList();
-        final IccTag[] tags = Allocator.array(tagCount, IccTag[]::new, IccTag.SHALLOW_SIZE);
+        final List<IccTag> tags = Allocator.arrayList(tagCount);
 
         for (int i = 0; i < tagCount; i++) {
             final int tagSignature = read4Bytes("TagSignature[" + i + "]", is, "Not a Valid ICC Profile",
@@ -270,8 +270,7 @@ public class IccProfileParser extends BinaryFileParser {
 
             final IccTag tag = new IccTag(tagSignature, offsetToData, elementSize, fIccTagType);
             // tag.dump("\t" + i + ": ");
-            tags[i] = tag;
-            // tags .add(tag);
+            tags.add(tag);
         }
 
         // read stream to end, filling cache.
@@ -286,7 +285,7 @@ public class IccProfileParser extends BinaryFileParser {
         final IccProfileInfo result = new IccProfileInfo(data, profileSize, cmmTypeSignature, profileVersion,
                 profileDeviceClassSignature, colorSpace, profileConnectionSpace, profileFileSignature,
                 primaryPlatformSignature, variousFlags, deviceManufacturer, deviceModel, renderingIntent,
-                profileCreatorSignature, null, tags);
+                profileCreatorSignature, null, tags.toArray(new IccTag[0]));
 
         if (LOGGER.isLoggable(Level.FINEST)) {
             LOGGER.finest("issRGB: " + result.isSrgb());

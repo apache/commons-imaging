@@ -61,7 +61,8 @@ public class CompressedDataReader implements DataReader {
         final int depth = header.depth;
 
         final int channelCount = dataParser.getBasicChannelsCount();
-        final int[][][] data = new int[Allocator.check(channelCount)][Allocator.check(height)][];
+        Allocator.check(Math.multiplyExact(channelCount, height), Integer.BYTES);
+        final int[][][] data = new int[channelCount][height][];
         // channels[0] =
         for (int channel = 0; channel < channelCount; channel++) {
             for (int y = 0; y < height; y++) {

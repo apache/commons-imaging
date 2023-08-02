@@ -82,7 +82,8 @@ public class PngChunkIccp extends PngChunk {
         compressionMethod = bytes[index + 1];
 
         final int compressedProfileLength = bytes.length - (index + 1 + 1);
-        compressedProfile = Allocator.byteArray(compressedProfileLength);
+        // Trusted because length is based on length of existing array
+        compressedProfile = Allocator.byteArrayTrusted(compressedProfileLength);
         System.arraycopy(bytes, index + 1 + 1, compressedProfile, 0, compressedProfileLength);
 
         if (LOGGER.isLoggable(Level.FINEST)) {

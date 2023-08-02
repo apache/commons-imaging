@@ -123,7 +123,8 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
             }
         }
 
-        final byte[] result = Allocator.byteArray(total);
+        // Trusted because length is based on length of existing arrays
+        final byte[] result = Allocator.byteArrayTrusted(total);
         int progress = 0;
 
         for (final App2Segment segment : segments) {
@@ -459,7 +460,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
 
         final List<Segment> commentSegments = readSegments(byteSource,
                 new int[] { JpegConstants.COM_MARKER}, false);
-        final List<String> comments = Allocator.arrayList(commentSegments.size());
+        final List<String> comments = Allocator.arrayListWithCapacityFor(commentSegments);
         for (final Segment commentSegment : commentSegments) {
             final ComSegment comSegment = (ComSegment) commentSegment;
             comments.add(new String(comSegment.getComment(), StandardCharsets.UTF_8));

@@ -17,24 +17,45 @@
 
 package org.apache.commons.imaging.formats.icns;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.apache.commons.imaging.common.AllocationRequestException;
+import java.io.EOFException;
+import java.io.IOException;
+
 import org.junit.jupiter.api.Test;
 
 public class IcnsImageParserTest {
 
+    /**
+     * Gets the byte at the specified {@code index} from the int value.
+     */
+    private static byte intByte(int value, int index) {
+        return (byte) ((value >> (index * Byte.SIZE)) & 0xFF);
+    }
+
     @Test
     public void testGetImageSize() throws Exception {
+        // org.apache.commons.imaging.common.Allocator.DEFAULT
+        final int fileSize = 1_073_741_824;
+        final int elementSize = fileSize - 8;
+
         final byte[] bytes = {
-                // Header
-                'i', 'c', 'n', 's',
-                // (Too large) file size
-                (byte) 0b0111_1111, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF - 10,
-                // Type (does not matter?)
-                0, 0, 0, 0,
-                // (Too large) element size
-                (byte) 0b0111_1111, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF - 10 - 8, };
-        assertThrows(AllocationRequestException.class, () -> new IcnsImageParser().getImageSize(bytes));
+            // Header
+            'i', 'c', 'n', 's',
+            // (Too large) file size
+            intByte(fileSize, 3), intByte(fileSize, 2), intByte(fileSize, 1), intByte(fileSize, 0),
+            // Type (does not matter?)
+            0, 0, 0, 0,
+            // (Too large) element size
+            intByte(elementSize, 3), intByte(elementSize, 2), intByte(elementSize, 1), intByte(elementSize, 0),
+        };
+        IOException e = assertThrows(IOException.class, () -> new IcnsImageParser().getImageSize(bytes));
+        assertEquals("Not a valid ICNS file, name: Data, length: 1073741808", e.getMessage());
+
+        Throwable cause = e.getCause();
+        assertInstanceOf(EOFException.class, cause);
+        assertEquals("Unexpected EOF; was expecting more bytes", cause.getMessage());
     }
 }

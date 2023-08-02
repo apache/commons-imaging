@@ -337,7 +337,7 @@ public class PaletteFactory {
     public Palette makeExactRgbPaletteFancy(final BufferedImage src) {
         // map what rgb values have been used
 
-        final byte[] rgbmap = Allocator.byteArray(256 * 256 * 32);
+        final byte[] rgbmap = Allocator.byteArrayTrusted(256 * 256 * 32);
 
         final int width = src.getWidth();
         final int height = src.getHeight();
@@ -408,7 +408,8 @@ public class PaletteFactory {
             }
         }
 
-        final int[] result = Allocator.intArray(rgbs.size());
+        // Trusted because length is based on size of existing Set
+        final int[] result = Allocator.intArrayTrusted(rgbs.size());
         int next = 0;
         for (final int rgb : rgbs) {
             result[next++] = rgb;

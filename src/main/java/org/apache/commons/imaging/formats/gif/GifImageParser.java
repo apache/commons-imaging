@@ -175,7 +175,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
             throw new ImagingException("GIF: Invalid amount of Graphic Control Extensions");
         }
 
-        final List<GifImageData> imageData = Allocator.arrayList(descriptors.size());
+        final List<GifImageData> imageData = Allocator.arrayListWithCapacityFor(descriptors);
         for(int i = 0; i < descriptors.size(); i++) {
             final ImageDescriptor descriptor = descriptors.get(i);
             if (descriptor == null) {
@@ -235,7 +235,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
         }
 
         final List<GifImageData> imageData = findAllImageData(imageContents);
-        final List<BufferedImage> result = Allocator.arrayList(imageData.size());
+        final List<BufferedImage> result = Allocator.arrayListWithCapacityFor(imageData);
         for(final GifImageData id : imageData) {
             result.add(getBufferedImage(ghi, id, imageContents.globalColorTable));
         }
@@ -347,7 +347,8 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
         }
         final int length = bytes.length / 3;
 
-        final int[] result = Allocator.intArray(length);
+        // Trusted because length is based on length of existing array
+        final int[] result = Allocator.intArrayTrusted(length);
 
         for (int i = 0; i < length; i++) {
             final int red = 0xff & bytes[(i * 3) + 0];
@@ -490,7 +491,7 @@ public class GifImageParser extends ImageParser<GifImagingParameters> implements
         }
 
         final List<GifImageData> imageData = findAllImageData(imageContents);
-        final List<GifImageMetadataItem> metadataItems = Allocator.arrayList(imageData.size());
+        final List<GifImageMetadataItem> metadataItems = Allocator.arrayListWithCapacityFor(imageData);
         for(final GifImageData id : imageData) {
             final DisposalMethod disposalMethod = createDisposalMethodFromIntValue(id.gce.dispose);
             metadataItems.add(new GifImageMetadataItem(id.gce.delay, id.descriptor.imageLeftPosition, id.descriptor.imageTopPosition, disposalMethod));

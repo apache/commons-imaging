@@ -158,7 +158,7 @@ public class DcxImageParser extends ImageParser<PcxImagingParameters> {
         try (InputStream is = byteSource.getInputStream()) {
             final int id = read4Bytes("Id", is, "Not a Valid DCX File", getByteOrder());
             final int size = 1024;
-            final List<Long> pageTable = Allocator.arrayList(size);
+            final List<Long> pageTable = Allocator.arrayListTrusted(size);
             for (int i = 0; i < size; i++) {
                 final long pageOffset = 0xFFFFffffL & read4Bytes("PageTable", is, "Not a Valid DCX File", getByteOrder());
                 if (pageOffset == 0) {

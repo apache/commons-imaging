@@ -39,7 +39,6 @@ public class SosSegmentTest{
   public void testGetComponentsTakingNoArguments() throws IOException {
       final byte[] byteArray = new byte[5];
       final SosSegment sosSegment = new SosSegment((-1044), byteArray);
-      sosSegment.getComponents();
 
       assertEquals(0, sosSegment.successiveApproximationBitHigh);
       assertEquals(0, sosSegment.successiveApproximationBitLow);

@@ -507,7 +507,8 @@ public class XpmImageParser extends ImageParser<XpmImagingParameters> {
         WritableRaster raster;
         int bpp;
         if (xpmHeader.palette.size() <= (1 << 8)) {
-            final int[] palette = Allocator.intArray(xpmHeader.palette.size());
+            // Trusted because length is based on size of existing Map
+            final int[] palette = Allocator.intArrayTrusted(xpmHeader.palette.size());
             for (final Entry<Object, PaletteEntry> entry : xpmHeader.palette.entrySet()) {
                 final PaletteEntry paletteEntry = entry.getValue();
                 palette[paletteEntry.index] = paletteEntry.getBestArgb();
@@ -519,11 +520,12 @@ public class XpmImageParser extends ImageParser<XpmImagingParameters> {
             int pixelStride = bands;
             int size = scanlineStride * (xpmHeader.height - 1) + // first (h - 1) scans
                     pixelStride * xpmHeader.width; // last scan
-            Allocator.check(Byte.SIZE, size);
+            Allocator.check(size, Byte.SIZE);
             raster = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE, xpmHeader.width, xpmHeader.height, bands, null);
             bpp = 8;
         } else if (xpmHeader.palette.size() <= (1 << 16)) {
-            final int[] palette = Allocator.intArray(xpmHeader.palette.size());
+            // Trusted because length is based on size of existing Map
+            final int[] palette = Allocator.intArrayTrusted(xpmHeader.palette.size());
             for (final Entry<Object, PaletteEntry> entry : xpmHeader.palette.entrySet()) {
                 final PaletteEntry paletteEntry = entry.getValue();
                 palette[paletteEntry.index] = paletteEntry.getBestArgb();
@@ -535,12 +537,12 @@ public class XpmImageParser extends ImageParser<XpmImagingParameters> {
             int pixelStride = bands;
             int size = scanlineStride * (xpmHeader.height - 1) + // first (h - 1) scans
                     pixelStride * xpmHeader.width; // last scan
-            Allocator.check(Short.SIZE, size);
+            Allocator.check(size, Short.SIZE);
             raster = Raster.createInterleavedRaster(DataBuffer.TYPE_USHORT, xpmHeader.width, xpmHeader.height, bands, null);
             bpp = 16;
         } else {
             colorModel = new DirectColorModel(32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
-            Allocator.check(Integer.SIZE, xpmHeader.width * xpmHeader.height);
+            Allocator.check(Math.multiplyExact(xpmHeader.width, xpmHeader.height), Integer.SIZE);
             raster = Raster.createPackedRaster(DataBuffer.TYPE_INT, xpmHeader.width, xpmHeader.height,
                     new int[] { 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000 }, null);
             bpp = 32;
@@ -587,7 +589,8 @@ public class XpmImageParser extends ImageParser<XpmImagingParameters> {
     private String toColor(final int color) {
         final String hex = Integer.toHexString(color);
         if (hex.length() < 6) {
-            final char[] zeroes = Allocator.charArray(6 - hex.length());
+            // Trusted because length is based on length of existing String
+            final char[] zeroes = Allocator.charArrayTrusted(6 - hex.length());
             Arrays.fill(zeroes, '0');
             return "#" + new String(zeroes) + hex;
         }

@@ -108,7 +108,8 @@ class RgbeInfo implements Closeable {
         final byte[] scanLineBytes = ByteConversions.toBytes((short) wd,
                 ByteOrder.BIG_ENDIAN);
         final byte[] rgbe = Allocator.byteArray(wd * 4);
-        final float[][] out = new float[3][Allocator.check(wd * ht)];
+        Allocator.check(Math.multiplyExact(3, Math.multiplyExact(wd, ht)), Float.BYTES);
+        final float[][] out = new float[3][wd * ht];
 
         for (int i = 0; i < ht; i++) {
             BinaryFunctions.readAndVerifyBytes(in, TWO_TWO, "Scan line " + i + " expected to start with 0x2 0x2");

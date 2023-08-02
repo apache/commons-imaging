@@ -50,7 +50,8 @@ public class FieldTypeShort extends FieldType {
             throw new ImagingException("Invalid data", o);
         }
         final Short[] numbers = (Short[]) o;
-        final short[] values = Allocator.shortArray(numbers.length);
+        // Trusted because length is based on length of existing array
+        final short[] values = Allocator.shortArrayTrusted(numbers.length);
         for (int i = 0; i < values.length; i++) {
             values[i] = numbers[i].shortValue();
         }

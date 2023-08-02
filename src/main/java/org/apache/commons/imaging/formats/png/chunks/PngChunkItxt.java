@@ -77,7 +77,8 @@ public class PngChunkItxt extends PngTextChunk {
         if (compressed) {
             final int compressedTextLength = bytes.length - index;
 
-            final byte[] compressedText = Allocator.byteArray(compressedTextLength);
+            // Trusted because length is based on length of existing array
+            final byte[] compressedText = Allocator.byteArrayTrusted(compressedTextLength);
             System.arraycopy(bytes, index, compressedText, 0, compressedTextLength);
 
             text = new String(IOUtils.toByteArray(new InflaterInputStream(new ByteArrayInputStream(compressedText))), StandardCharsets.UTF_8);

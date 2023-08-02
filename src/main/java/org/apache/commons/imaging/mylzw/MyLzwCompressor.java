@@ -176,7 +176,7 @@ public class MyLzwCompressor {
     }
 
     public byte[] compress(final byte[] bytes) throws IOException {
-        try (ByteArrayOutputStream baos = new ByteArrayOutputStream(Allocator.checkByteArray(bytes.length));
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream(Allocator.checkByteArrayTrusted(bytes.length));
                 MyBitOutputStream bos = new MyBitOutputStream(baos, byteOrder)) {
 
             initializeStringTable();

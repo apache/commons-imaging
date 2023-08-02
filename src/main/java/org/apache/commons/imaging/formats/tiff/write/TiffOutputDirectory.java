@@ -635,8 +635,9 @@ public final class TiffOutputDirectory extends TiffOutputItem implements Iterabl
 
             // TiffOutputField imageDataOffsetsField = null;
 
-            final int[] imageDataOffsets = Allocator.intArray(imageData.length);
-            final int[] imageDataByteCounts = Allocator.intArray(imageData.length);
+            // Trusted because length is based on length of existing array
+            final int[] imageDataOffsets = Allocator.intArrayTrusted(imageData.length);
+            final int[] imageDataByteCounts = Allocator.intArrayTrusted(imageData.length);
             Arrays.setAll(imageDataByteCounts, i -> imageData[i].length);
 
             // Append imageData-related fields to first directory

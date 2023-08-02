@@ -109,7 +109,8 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
         final List<Integer> intervalStarts = getIntervalStartPositions(scanPayload);
         // get number of intervals in payload to init an array of appropriate length
         final int intervalCount = intervalStarts.size();
-        final JpegInputStream[] streams = Allocator.array(intervalCount, JpegInputStream[]::new, JpegInputStream.SHALLOW_SIZE);
+        // Trusted because length is based on size of existing List
+        final JpegInputStream[] streams = Allocator.arrayTrusted(intervalCount, JpegInputStream[]::new, JpegInputStream.SHALLOW_SIZE);
         for (int i = 0; i < intervalCount; i++) {
             final int from = intervalStarts.get(i);
             int to;
@@ -144,7 +145,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
     private Block[] allocateMcuMemory() throws ImagingException {
         final Block[] mcu = Allocator.array(sosSegment.numberOfComponents, Block[]::new, Block.SHALLOW_SIZE);
         for (int i = 0; i < sosSegment.numberOfComponents; i++) {
-            final SosSegment.Component scanComponent = sosSegment.getComponents(i);
+            final SosSegment.Component scanComponent = sosSegment.getComponent(i);
             SofnSegment.Component frameComponent = null;
             for (int j = 0; j < sofnSegment.numberOfComponents; j++) {
                 if (sofnSegment.getComponents(j).componentIdentifier == scanComponent.scanComponentSelector) {
@@ -208,7 +209,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
     private void readMcu(final JpegInputStream is, final int[] preds, final Block[] mcu)
             throws ImagingException {
         for (int i = 0; i < sosSegment.numberOfComponents; i++) {
-            final SosSegment.Component scanComponent = sosSegment.getComponents(i);
+            final SosSegment.Component scanComponent = sosSegment.getComponent(i);
             SofnSegment.Component frameComponent = null;
             for (int j = 0; j < sofnSegment.numberOfComponents; j++) {
                 if (sofnSegment.getComponents(j).componentIdentifier == scanComponent.scanComponentSelector) {
@@ -379,9 +380,9 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                 }
                 quantizationTables[table.destinationIdentifier] = table;
                 final int mSize = 64;
-                final int[] quantizationMatrixInt = Allocator.intArray(mSize);
+                final int[] quantizationMatrixInt = Allocator.intArrayTrusted(mSize);
                 ZigZag.zigZagToBlock(table.getElements(), quantizationMatrixInt);
-                final float[] quantizationMatrixFloat = Allocator.floatArray(mSize);
+                final float[] quantizationMatrixFloat = Allocator.floatArrayTrusted(mSize);
                 for (int j = 0; j < mSize; j++) {
                     quantizationMatrixFloat[j] = quantizationMatrixInt[j];
                 }
@@ -423,7 +424,8 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             // the payload contains the entropy-encoded segments (or ECS) divided by RST markers
             // or only one ECS if the entropy-encoded data is not divided by RST markers
             // length of payload = length of image data - length of data already read
-            final int[] scanPayload = Allocator.intArray(imageData.length - segmentLength);
+            // Trusted because length is based on length of existing array
+            final int[] scanPayload = Allocator.intArrayTrusted(imageData.length - segmentLength);
             int payloadReadCount = 0;
             while (payloadReadCount < scanPayload.length) {
                 scanPayload[payloadReadCount] = is.read();
@@ -444,7 +446,8 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             final int xMCUs = (sofnSegment.width + hSize - 1) / hSize;
             final int yMCUs = (sofnSegment.height + vSize - 1) / vSize;
             final Block[] mcu = allocateMcuMemory();
-            final Block[] scaledMCU = Allocator.array(mcu.length, Block[]::new, Block.SHALLOW_SIZE);
+            // Trusted because length is based on length of existing array
+            final Block[] scaledMCU = Allocator.arrayTrusted(mcu.length, Block[]::new, Block.SHALLOW_SIZE);
             Arrays.setAll(scaledMCU, i -> new Block(hSize, vSize));
             final int[] preds = Allocator.intArray(sofnSegment.numberOfComponents);
             ColorModel colorModel;

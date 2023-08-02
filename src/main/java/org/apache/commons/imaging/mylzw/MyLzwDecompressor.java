@@ -16,7 +16,6 @@
  */
 package org.apache.commons.imaging.mylzw;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -24,7 +23,7 @@ import java.nio.ByteOrder;
 import java.util.Arrays;
 
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.common.Allocator;
+import org.apache.commons.imaging.common.KnownSizeByteArrayBuilder;
 
 public final class MyLzwDecompressor {
 
@@ -106,8 +105,11 @@ public final class MyLzwDecompressor {
     public byte[] decompress(final InputStream is, final int expectedLength) throws IOException {
         int code;
         int oldCode = -1;
-        try (MyBitInputStream mbis = new MyBitInputStream(is, byteOrder, tiffLZWMode);
-                ByteArrayOutputStream baos = new ByteArrayOutputStream(Allocator.checkByteArray(expectedLength))) {
+
+        KnownSizeByteArrayBuilder byteArrayBuilder = new KnownSizeByteArrayBuilder(expectedLength);
+        OutputStream out = byteArrayBuilder.asOutputStream();
+
+        try (MyBitInputStream mbis = new MyBitInputStream(is, byteOrder, tiffLZWMode)) {
 
             clearTable();
 
@@ -123,14 +125,14 @@ public final class MyLzwDecompressor {
                     if (code == eoiCode) {
                         break;
                     }
-                    writeToResult(baos, stringFromCode(code));
+                    writeToResult(out, stringFromCode(code));
                 } else if (isInTable(code)) {
-                    writeToResult(baos, stringFromCode(code));
+                    writeToResult(out, stringFromCode(code));
 
                     addStringToTable(appendBytes(stringFromCode(oldCode), firstChar(stringFromCode(code))));
                 } else {
                     final byte[] outString = appendBytes(stringFromCode(oldCode), firstChar(stringFromCode(oldCode)));
-                    writeToResult(baos, outString);
+                    writeToResult(out, outString);
                     addStringToTable(outString);
                 }
                 oldCode = code;
@@ -140,7 +142,8 @@ public final class MyLzwDecompressor {
                 }
             }
 
-            return baos.toByteArray();
+            // Byte array may be smaller than originally requested length
+            return byteArrayBuilder.createByteArray(true);
         }
     }
 

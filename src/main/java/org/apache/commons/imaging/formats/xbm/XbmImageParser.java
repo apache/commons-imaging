@@ -42,9 +42,9 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
-import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BasicCParser;
 import org.apache.commons.imaging.common.ImageMetadata;
+import org.apache.commons.imaging.common.KnownSizeByteArrayBuilder;
 
 public class XbmImageParser extends ImageParser<XbmImagingParameters> {
 
@@ -297,8 +297,8 @@ public class XbmImageParser extends ImageParser<XbmImagingParameters> {
         }
 
         final int rowLength = (xbmHeader.width + 7) / 8;
-        final byte[] imageData = Allocator.byteArray(rowLength * xbmHeader.height);
-        int i = 0;
+        final int expectedImageDataSize = rowLength * xbmHeader.height;
+        final KnownSizeByteArrayBuilder imageDataBuilder = new KnownSizeByteArrayBuilder(expectedImageDataSize);
         for (int y = 0; y < xbmHeader.height; y++) {
             for (int x = 0; x < xbmHeader.width; x += inputWidth) {
                 token = cParser.nextToken();
@@ -313,12 +313,12 @@ public class XbmImageParser extends ImageParser<XbmImagingParameters> {
                 final int value = Integer.parseInt(token.substring(2), 16);
                 final int flipped = Integer.reverse(value) >>> (32 - inputWidth);
                 if (inputWidth == 16) {
-                    imageData[i++] = (byte) (flipped >>> 8);
+                    imageDataBuilder.addByte((byte) (flipped >>> 8));
                     if ((x + 8) < xbmHeader.width) {
-                        imageData[i++] = (byte) flipped;
+                        imageDataBuilder.addByte((byte) flipped);
                     }
                 } else {
-                    imageData[i++] = (byte) flipped;
+                    imageDataBuilder.addByte((byte) flipped);
                 }
 
                 token = cParser.nextToken();
@@ -327,7 +327,7 @@ public class XbmImageParser extends ImageParser<XbmImagingParameters> {
                             + "premature end of file");
                 }
                 if (!",".equals(token)
-                        && ((i < imageData.length) || !"}".equals(token))) {
+                        && ((imageDataBuilder.getAddedBytesCount() < expectedImageDataSize) || !"}".equals(token))) {
                     throw new ImagingException("Parsing XBM file failed, "
                             + "punctuation error");
                 }
@@ -336,6 +336,7 @@ public class XbmImageParser extends ImageParser<XbmImagingParameters> {
 
         final int[] palette = { 0xffffff, 0x000000 };
         final ColorModel colorModel = new IndexColorModel(1, 2, palette, 0, false, -1, DataBuffer.TYPE_BYTE);
+        final byte[] imageData = imageDataBuilder.createByteArray();
         final DataBufferByte dataBuffer = new DataBufferByte(imageData, imageData.length);
         final WritableRaster raster = Raster.createPackedRaster(dataBuffer, xbmHeader.width, xbmHeader.height, 1, null);
 

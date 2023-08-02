@@ -17,16 +17,18 @@
 
 package org.apache.commons.imaging.formats.png;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.EOFException;
 import java.io.IOException;
 
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.common.AllocationRequestException;
 import org.junit.jupiter.api.Test;
 
 public class PngImageParserTest extends PngBaseTest {
@@ -38,17 +40,32 @@ public class PngImageParserTest extends PngBaseTest {
         }
     }
 
+    /**
+     * Gets the byte at the specified {@code index} from the int value.
+     */
+    private static byte intByte(int value, int index) {
+        return (byte) ((value >> (index * Byte.SIZE)) & 0xFF);
+    }
+
     @Test
     public void testGetImageSize() {
+        // org.apache.commons.imaging.common.Allocator.DEFAULT
+        final int length = 1_073_741_824;
+
         final byte[] bytes = {
             // Header
             (byte) 0x89, 'P', 'N', 'G', '\r', '\n', 0x1A, '\n',
             // (Too large) Length
-            (byte) 0b0111_1111 , (byte) 0xFF, (byte) 0xFF, (byte) 0xFF - 10,
+            intByte(length, 3), intByte(length, 2), intByte(length, 1), intByte(length, 0),
             // Chunk type
             'I', 'H', 'D', 'R',
         };
-        assertThrows(AllocationRequestException.class, () -> new PngImageParser().getImageSize(bytes));
+        IOException e = assertThrows(IOException.class, () -> new PngImageParser().getImageSize(bytes));
+        assertEquals("Not a Valid PNG File: Couldn't read Chunk Data., name: Chunk Data, length: 1073741824", e.getMessage());
+
+        Throwable cause = e.getCause();
+        assertInstanceOf(EOFException.class, cause);
+        assertEquals("Unexpected EOF; was expecting more bytes", cause.getMessage());
     }
 
     @Test

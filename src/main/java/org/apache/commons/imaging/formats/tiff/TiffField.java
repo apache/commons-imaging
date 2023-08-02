@@ -156,25 +156,29 @@ public class TiffField {
         }
         if (o instanceof Number[]) {
             final Number[] numbers = (Number[]) o;
-            final double[] result = Allocator.doubleArray(numbers.length);
+            // Trusted because length is based on length of existing array
+            final double[] result = Allocator.doubleArrayTrusted(numbers.length);
             Arrays.setAll(result, i -> numbers[i].doubleValue());
             return result;
         }
         if (o instanceof short[]) {
             final short[] numbers = (short[]) o;
-            final double[] result = Allocator.doubleArray(numbers.length);
+            // Trusted because length is based on length of existing array
+            final double[] result = Allocator.doubleArrayTrusted(numbers.length);
             Arrays.setAll(result, i -> numbers[i]);
             return result;
         }
         if (o instanceof int[]) {
             final int[] numbers = (int[]) o;
-            final double[] result = Allocator.doubleArray(numbers.length);
+            // Trusted because length is based on length of existing array
+            final double[] result = Allocator.doubleArrayTrusted(numbers.length);
             Arrays.setAll(result, i -> numbers[i]);
             return result;
         }
         if (o instanceof float[]) {
             final float[] numbers = (float[]) o;
-            final double[] result = Allocator.doubleArray(numbers.length);
+            // Trusted because length is based on length of existing array
+            final double[] result = Allocator.doubleArrayTrusted(numbers.length);
             Arrays.setAll(result, i -> numbers[i]);
             return result;
         }
@@ -220,13 +224,15 @@ public class TiffField {
         }
         if (o instanceof Number[]) {
             final Number[] numbers = (Number[]) o;
-            final int[] result = Allocator.intArray(numbers.length);
+            // Trusted because length is based on length of existing array
+            final int[] result = Allocator.intArrayTrusted(numbers.length);
             Arrays.setAll(result, i -> numbers[i].intValue());
             return result;
         }
         if (o instanceof short[]) {
             final short[] numbers = (short[]) o;
-            final int[] result = Allocator.intArray(numbers.length);
+            // Trusted because length is based on length of existing array
+            final int[] result = Allocator.intArrayTrusted(numbers.length);
             Arrays.setAll(result, i ->  0xffff & numbers[i]);
             return result;
         }

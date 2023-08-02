@@ -127,14 +127,14 @@ public class ImageBuilder {
         if (x < 0 || x >= width) {
             throw new RasterFormatException("subimage x is outside raster");
         }
-        if (x + w > width) {
+        if (width - w < x) {
             throw new RasterFormatException(
                 "subimage (x+width) is outside raster");
         }
         if (y < 0 || y >= height) {
             throw new RasterFormatException("subimage y is outside raster");
         }
-        if (y + h > height) {
+        if (height - h < y) {
             throw new RasterFormatException(
                 "subimage (y+height) is outside raster");
         }
@@ -145,7 +145,7 @@ public class ImageBuilder {
      *
      * @param width image width (must be greater than zero)
      * @param height image height (must be greater than zero)
-     * @throws RasterFormatException if {@code width} or {@code height} are equal or less than zero
+     * @throws RasterFormatException if {@code width} or {@code height} are equal or less than zero, or if they are too large
      */
     private void checkDimensions(final int width, final int height) {
         if (width <= 0) {
@@ -153,6 +153,10 @@ public class ImageBuilder {
         }
         if (height <= 0) {
             throw new RasterFormatException("zero or negative height value");
+        }
+        // Check for overflow
+        if (width * height < 0) {
+            throw new RasterFormatException("too large width or height value");
         }
     }
 

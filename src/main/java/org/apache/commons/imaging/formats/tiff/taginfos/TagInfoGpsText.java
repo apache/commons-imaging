@@ -90,7 +90,8 @@ public final class TagInfoGpsText extends TagInfo {
             final String decodedAscii = new String(asciiBytes, TEXT_ENCODING_ASCII.encodingName);
             if (decodedAscii.equals(s)) {
                 // no unicode/non-ascii values.
-                final byte[] result = Allocator.byteArray(asciiBytes.length + TEXT_ENCODING_ASCII.prefix.length);
+                // Trusted because length is based on length of existing arrays
+                final byte[] result = Allocator.byteArrayTrusted(asciiBytes.length + TEXT_ENCODING_ASCII.prefix.length);
                 System.arraycopy(TEXT_ENCODING_ASCII.prefix, 0, result, 0, TEXT_ENCODING_ASCII.prefix.length);
                 System.arraycopy(asciiBytes, 0, result, TEXT_ENCODING_ASCII.prefix.length, asciiBytes.length);
                 return result;
@@ -103,7 +104,8 @@ public final class TagInfoGpsText extends TagInfo {
                 encoding = TEXT_ENCODING_UNICODE_LE;
             }
             final byte[] unicodeBytes = s.getBytes(encoding.encodingName);
-            final byte[] result = Allocator.byteArray(unicodeBytes.length + encoding.prefix.length);
+            // Trusted because length is based on length of existing arrays
+            final byte[] result = Allocator.byteArrayTrusted(unicodeBytes.length + encoding.prefix.length);
             System.arraycopy(encoding.prefix, 0, result, 0, encoding.prefix.length);
             System.arraycopy(unicodeBytes, 0, result, encoding.prefix.length, unicodeBytes.length);
             return result;

@@ -210,7 +210,8 @@ abstract class ScanExpediter {
             final int bytesPerPixel) throws ImagingException, IOException {
         final ScanlineFilter filter = getScanlineFilter(filterType, bytesPerPixel);
 
-        final byte[] dst = Allocator.byteArray(src.length);
+        // Trusted because length is based on length of existing array
+        final byte[] dst = Allocator.byteArrayTrusted(src.length);
         filter.unfilter(src, dst, prev);
         return dst;
     }

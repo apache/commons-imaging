@@ -19,7 +19,6 @@ package org.apache.commons.imaging.formats.tiff;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.ByteOrder;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -172,8 +171,11 @@ public class TiffDirectory extends TiffElement implements Iterable<TiffField> {
         return headerByteOrder;
     }
 
+    /**
+     * Returns an unmodifiable list of all directory entries.
+     */
     public List<TiffField> getDirectoryEntries() {
-        return new ArrayList<>(entries);
+        return Collections.unmodifiableList(entries);
     }
 
     @Override
@@ -733,7 +735,7 @@ public class TiffDirectory extends TiffElement implements Iterable<TiffField> {
                     + ") != byteCounts.length(" + byteCounts.length + ")");
         }
 
-        final List<ImageDataElement> result = Allocator.arrayList(offsets.length);
+        final List<ImageDataElement> result = Allocator.arrayListTrusted(offsets.length);
         for (int i = 0; i < offsets.length; i++) {
             result.add(new ImageDataElement(offsets[i], byteCounts[i]));
         }

@@ -21,6 +21,8 @@ import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -44,7 +46,7 @@ public class SosSegment extends Segment {
 
     private static final Logger LOGGER = Logger.getLogger(SosSegment.class.getName());
     public final int numberOfComponents;
-    private final Component[] components;
+    private final List<Component> components;
     public final int startOfSpectralSelection;
     public final int endOfSpectralSelection;
     public final int successiveApproximationBitHigh;
@@ -69,7 +71,7 @@ public class SosSegment extends Segment {
         // Debug.debug("number_of_components_in_scan",
         // numberOfComponents);
 
-        components = Allocator.array(numberOfComponents, Component[]::new, Component.SHALLOW_SIZE);
+        List<Component> components = Allocator.arrayList(numberOfComponents);
         for (int i = 0; i < numberOfComponents; i++) {
             final int scanComponentSelector = readByte("scanComponentSelector", is, "Not a Valid JPEG File");
             // Debug.debug("scanComponentSelector", scanComponentSelector);
@@ -82,9 +84,10 @@ public class SosSegment extends Segment {
 
             final int dcCodingTableSelector = (acDcEntropyCodingTableSelector >> 4) & 0xf;
             final int acCodingTableSelector = acDcEntropyCodingTableSelector & 0xf;
-            components[i] = new Component(scanComponentSelector,
-                    dcCodingTableSelector, acCodingTableSelector);
+            components.add(new Component(scanComponentSelector,
+                    dcCodingTableSelector, acCodingTableSelector));
         }
+        this.components = Collections.unmodifiableList(components);
 
         startOfSpectralSelection = readByte("startOfSpectralSelection", is,
                 "Not a Valid JPEG File");
@@ -102,11 +105,11 @@ public class SosSegment extends Segment {
     }
 
     /**
-     * Returns a copy of all the components.
+     * Returns an unmodifiable list of all components.
      * @return all the components
      */
-    public Component[] getComponents() {
-        return components.clone();
+    public List<Component> getComponents() {
+        return Collections.unmodifiableList(components);
     }
 
     /**
@@ -114,8 +117,8 @@ public class SosSegment extends Segment {
      * @param index the component index
      * @return the component
      */
-    public Component getComponents(final int index) {
-        return components[index];
+    public Component getComponent(final int index) {
+        return components.get(index);
     }
 
     @Override

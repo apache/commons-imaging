@@ -508,7 +508,8 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
         final int bitsPerPixel = bitsPerSample; // assume grayscale;
         // dunno if this handles colormapped images correctly.
 
-        final List<String> comments = Allocator.arrayList(directory.size());
+        // Trusted because `TiffDirectory.size()` reports size of existing List
+        final List<String> comments = Allocator.arrayListTrusted(directory.size());
         for (final TiffField field : directory) {
             final String comment = field.toString();
             comments.add(comment);

@@ -266,7 +266,8 @@ class PcxWriter {
     private void writePixels32(final BufferedImage src, final int bytesPerLine,
             final BinaryOutputStream bos) throws IOException {
 
-        final int[] rgbs = Allocator.intArray(src.getWidth());
+        // Trusted because length is based on size of existing image
+        final int[] rgbs = Allocator.intArrayTrusted(src.getWidth());
         final byte[] plane = Allocator.byteArray(4 * bytesPerLine);
         for (int y = 0; y < src.getHeight(); y++) {
             src.getRGB(0, y, src.getWidth(), 1, rgbs, 0, src.getWidth());
