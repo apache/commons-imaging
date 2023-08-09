@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
@@ -139,11 +140,15 @@ public class GifReadTest extends GifBaseTest {
         // TODO assert more
     }
 
-    @Disabled(value = "RoundtripTest has to be fixed before implementation can throw UnsupportedOperationException")
     @ParameterizedTest
     @MethodSource("data")
-    public void testMetadata(final File imageFile) {
-        Assertions.assertThrows(UnsupportedOperationException.class, () -> Imaging.getMetadata(imageFile));
+    public void testMetadata(final File imageFile) throws IOException {
+        ImageMetadata metadata = Imaging.getMetadata(imageFile);
+        assertNotNull(metadata);
+        assertTrue(metadata instanceof GifImageMetadata);
+        assertTrue(((GifImageMetadata)metadata).getWidth() > 0);
+        assertTrue(((GifImageMetadata)metadata).getHeight() > 0);
+        assertNotNull(metadata.getItems());
     }
 
     /**
