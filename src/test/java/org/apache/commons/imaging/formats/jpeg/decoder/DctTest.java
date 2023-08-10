@@ -23,10 +23,10 @@ import org.junit.jupiter.api.Test;
 
 public class DctTest {
 
-    private static float[] REFERENCE_forwardDCT(final float[] vector) {
-        final float[] ret = new float[8];
+    private static double[] REFERENCE_forwardDCT(final float[] vector) {
+        final double[] ret = new double[8];
         for (int u = 0; u < 8; u++) {
-            float sum = 0;
+            double sum = 0;
             final float cu = (u == 0) ? ((float) (1.0 / Math.sqrt(2))) : 1;
             for (int x = 0; x < 8; x++) {
                 sum += vector[x] * Math.cos((2 * x + 1) * u * Math.PI / 16);
@@ -36,11 +36,11 @@ public class DctTest {
         return ret;
     }
 
-    private static float[][] REFERENCE_forwardDCT(final float[][] matrix) {
-        final float[][] ret = new float[8][8];
+    private static double[][] REFERENCE_forwardDCT(final float[][] matrix) {
+        final double[][] ret = new double[8][8];
         for (int u = 0; u < 8; u++) {
             for (int v = 0; v < 8; v++) {
-                float sum = 0;
+                double sum = 0;
                 final float cu = (u == 0) ? ((float) (1.0 / Math.sqrt(2))) : 1;
                 final float cv = (v == 0) ? ((float) (1.0 / Math.sqrt(2))) : 1;
                 for (int x = 0; x < 8; x++) {
@@ -56,10 +56,10 @@ public class DctTest {
         return ret;
     }
 
-    private static float[] REFERENCE_inverseDCT(final float[] vector) {
-        final float[] ret = new float[8];
+    private static double[] REFERENCE_inverseDCT(final double[] vector) {
+        final double[] ret = new double[8];
         for (int x = 0; x < 8; x++) {
-            float sum = 0;
+            double sum = 0;
             for (int u = 0; u < 8; u++) {
                 final float cu = (u == 0) ? ((float) (1.0 / Math.sqrt(2))) : 1;
                 sum += cu * vector[u]
@@ -70,11 +70,11 @@ public class DctTest {
         return ret;
     }
 
-    private static float[][] REFERENCE_inverseDCT(final float[][] matrix) {
-        final float[][] ret = new float[8][8];
+    private static double[][] REFERENCE_inverseDCT(final double[][] matrix) {
+        final double[][] ret = new double[8][8];
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
-                float sum = 0;
+                double sum = 0;
                 for (int u = 0; u < 8; u++) {
                     for (int v = 0; v < 8; v++) {
                         final float cu = (u == 0) ? ((float) (1.0 / Math.sqrt(2)))
@@ -104,8 +104,8 @@ public class DctTest {
             }
         }
 
-        final float[][] transformed8x8 = REFERENCE_forwardDCT(originalData8x8);
-        final float[][] reversed8x8 = REFERENCE_inverseDCT(transformed8x8);
+        final double[][] transformed8x8 = REFERENCE_forwardDCT(originalData8x8);
+        final double[][] reversed8x8 = REFERENCE_inverseDCT(transformed8x8);
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
                 assertEquals(originalData8x8[y][x], reversed8x8[y][x], 0.001);
@@ -137,8 +137,8 @@ public class DctTest {
             originalData[i] = i;
         }
 
-        final float[] transformed = REFERENCE_forwardDCT(originalData);
-        final float[] reversed = REFERENCE_inverseDCT(transformed);
+        final double[] transformed = REFERENCE_forwardDCT(originalData);
+        final double[] reversed = REFERENCE_inverseDCT(transformed);
         for (int i = 0; i < 8; i++) {
             assertEquals(originalData[i], reversed[i], 0.001);
         }

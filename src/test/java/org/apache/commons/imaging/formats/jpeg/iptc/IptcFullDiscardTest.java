@@ -17,6 +17,8 @@
 
 package org.apache.commons.imaging.formats.jpeg.iptc;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -24,7 +26,6 @@ import java.util.Collections;
 
 import javax.imageio.ImageIO;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class IptcFullDiscardTest {
@@ -51,7 +52,7 @@ public class IptcFullDiscardTest {
         final byte[] originalImage = generateImage();
         final byte[] taggedImage = addMetaData(originalImage);
         final byte[] untaggedImage = removeMetaData(taggedImage, false);
-        Assertions.assertEquals(18, untaggedImage.length - originalImage.length);
+        assertEquals(18, untaggedImage.length - originalImage.length);
     }
 
     @Test
@@ -59,7 +60,7 @@ public class IptcFullDiscardTest {
         final byte[] originalImage = generateImage();
         final byte[] taggedImage = addMetaData(originalImage);
         final byte[] untaggedImage = removeMetaData(taggedImage, true);
-        Assertions.assertEquals(originalImage.length, untaggedImage.length);
+        assertEquals(originalImage.length, untaggedImage.length);
     }
 
     private byte[] removeMetaData(final byte[] bytes, final boolean removeApp13Segment) throws Exception {

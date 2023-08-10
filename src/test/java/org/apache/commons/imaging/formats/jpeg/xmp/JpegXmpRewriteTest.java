@@ -19,6 +19,7 @@ package org.apache.commons.imaging.formats.jpeg.xmp;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -27,7 +28,6 @@ import java.util.stream.Stream;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -59,7 +59,7 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
 
             final String outXmp = new JpegImageParser().getXmpXml(
                     ByteSource.array(noXmpFile, "test.jpg"), params);
-            Assertions.assertNull(outXmp);
+            assertNull(outXmp);
         }
 
         {

@@ -89,7 +89,7 @@ public class TestImageInfo {
 
     @Test
     public void testToStringEmptyComments() {
-        final ImageInfo imageInfo = new ImageInfo(null, 0, new ArrayList<String>(), ImageFormats.DCX, null, 0, null, 0, 0, 0.0f, 0, 0.0f, 0, false,
+        final ImageInfo imageInfo = new ImageInfo(null, 0, new ArrayList<>(), ImageFormats.DCX, null, 0, null, 0, 0, 0.0f, 0, 0.0f, 0, false,
                 false, false, ColorType.BW, null);
         final String expected = "Format Details: null\n" +
                 "Bits Per Pixel: 0\n" +

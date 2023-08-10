@@ -22,7 +22,7 @@
   <parent>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-parent</artifactId>
-    <version>58</version>
+    <version>59</version>
   </parent>
 
   <artifactId>commons-imaging</artifactId>
@@ -238,7 +238,7 @@
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.12.0</version>
+      <version>3.13.0</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

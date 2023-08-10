@@ -17,11 +17,13 @@
 
 package org.apache.commons.imaging.formats.jpeg;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.File;
 
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
-import org.junit.jupiter.api.Assertions;
+import org.apache.commons.imaging.test.TestResources;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -34,9 +36,7 @@ public class JpegWithInvalidDhtSegmentTest {
     public void testSingleImage() {
         // we cannot use ImagingTest and getImageByFileName, as it would cause others
         // tests to fail
-        final File imageFile = new File(JpegWithInvalidDhtSegmentTest.class
-                .getResource("/IMAGING-215/ArrayIndexOutOfBoundsException_DhtSegment_79.jpeg")
-                .getFile());
-        Assertions.assertThrows(ImagingException.class, () -> Imaging.getMetadata(imageFile));
+        final File imageFile = TestResources.resourceToFile("/IMAGING-215/ArrayIndexOutOfBoundsException_DhtSegment_79.jpeg");
+        assertThrows(ImagingException.class, () -> Imaging.getMetadata(imageFile));
     }
 }

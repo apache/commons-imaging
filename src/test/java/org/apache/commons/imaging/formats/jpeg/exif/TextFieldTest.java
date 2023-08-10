@@ -17,6 +17,8 @@
 
 package org.apache.commons.imaging.formats.jpeg.exif;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -26,7 +28,6 @@ import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.internal.Debug;
-import org.junit.jupiter.api.Assertions;
 
 public class TextFieldTest extends SpecificExifTagTest {
 
@@ -45,7 +46,7 @@ public class TextFieldTest extends SpecificExifTagTest {
 
         try {
             final Object textFieldValue = field.getValue();
-            Assertions.assertNotNull(textFieldValue);
+            assertNotNull(textFieldValue);
             // TODO what else to assert?
         } catch (final ImagingException e) {
             Debug.debug("imageFile", imageFile.getAbsoluteFile());

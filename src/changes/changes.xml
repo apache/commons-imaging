@@ -62,23 +62,29 @@ The <action> type attribute can be add,update,fix,remove.
       </action>
       <action dev="ggregory" type="fix" due-to="step-security-bot, Gary Gregory">
         [StepSecurity] ci: Harden GitHub Actions #297.
-      </action>            
+      </action>
+      <action dev="ggregory" type="fix" due-to="Marcono1234, Gary Gregory">
+        Use static imports for JUnit Assertions methods #307.
+      </action>
+      <action dev="ggregory" type="fix" issue="IMAGING-359" due-to="Marcono1234, Gary Gregory">
+        Fix test resource file paths not being constructed properly #306.
+      </action>
       <!-- ADD -->
       <action issue="IMAGING-352" dev="ggregory" type="update" due-to="Jeroen van der Vegt, Gary Gregory">
         [PngWriter] Allow custom PaletteFactory #294.
       </action>
       <!-- UPDATE -->
       <action dev="kinow" type="update" due-to="Dependabot, Gary Gregory">
-        Bump actions/cache from 3.0.4 to 3.0.10 #225, #228, #239, #240.
+        Bump actions/cache #225, #228, #239, #240.
       </action>
       <action dev="ggregory" type="update" due-to="Gary Gregory, Dependabot">
-        Bump actions/checkout from 3 to 3.1.0 #241.
+        Bump actions/checkout #241.
       </action>
       <action dev="ggregory" type="update" due-to="Gary Gregory">
-        Bump actions/setup-java from 3 to 3.5.1.
+        Bump actions/setup-java.
       </action>
       <action dev="ggregory" type="update" due-to="Dependabot, Gary Gregory">
-        Bump commons-parent from 52 to 58 #238, #252, #262, #293.
+        Bump commons-parent from 52 to 59 #238, #252, #262, #293.
       </action>
       <action dev="kinow" type="update" due-to="Dependabot">
         Bump spotbugs-maven-plugin from 4.6.0.0 to 4.7.3.0 #221, #224, #226, #236, #242, #247, #248.
@@ -100,6 +106,9 @@ The <action> type attribute can be add,update,fix,remove.
       </action>
       <action type="update" due-to="Gary Gregory">
         Bump commons-io:commons-io 2.6 to 2.13.0.
+      </action>
+      <action dev="ggregory" type="update" due-to="Gary Gregory">
+        Bump commons-lang3 from 3.12.0 to 3.13.0.
       </action>
       <action issue="IMAGING-347" dev="kinow" type="update" due-to="snumlautoken">
         Refactor BasicCParser::unescapeString().

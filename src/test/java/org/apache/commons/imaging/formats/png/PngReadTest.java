@@ -18,6 +18,7 @@
 package org.apache.commons.imaging.formats.png;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -33,7 +34,7 @@ import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.GenericImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.internal.Debug;
-import org.junit.jupiter.api.Assertions;
+import org.apache.commons.imaging.test.TestResources;
 import org.junit.jupiter.api.Test;
 
 public class PngReadTest extends PngBaseTest {
@@ -54,19 +55,19 @@ public class PngReadTest extends PngBaseTest {
                 );
 
                 assertThrows(
-                        Exception.class,
-                        () -> Imaging.getImageInfo(imageFile),
-                        "Image read should have failed."
+                    Exception.class,
+                    () -> Imaging.getImageInfo(imageFile),
+                    "Image read should have failed."
                 );
 
                 assertThrows(
-                        Exception.class,
-                        () -> Imaging.getBufferedImage(imageFile),
-                        "Image read should have failed."
+                    Exception.class,
+                    () -> Imaging.getBufferedImage(imageFile),
+                    "Image read should have failed."
                 );
             } else {
                 final ImageMetadata metadata = Imaging.getMetadata(imageFile);
-                Assertions.assertFalse(metadata instanceof File); // Dummy check to avoid unused warning (it may be null)
+                assertFalse(metadata instanceof File); // Dummy check to avoid unused warning (it may be null)
 
                 final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
                 assertNotNull(imageInfo);
@@ -88,11 +89,10 @@ public class PngReadTest extends PngBaseTest {
      */
     @Test
     public void testReadMetadataFromItxtChunk() throws IOException, ImagingException {
-        final String input = "/images/png/IMAGING-342/utf8-comment.png";
-        final String file = PngReadTest.class.getResource(input).getFile();
+        final File file = TestResources.resourceToFile("/images/png/IMAGING-342/utf8-comment.png");
         final PngImageParser parser = new PngImageParser();
 
-        final ImageMetadata metadata = parser.getMetadata(new File(file));
+        final ImageMetadata metadata = parser.getMetadata(file);
         final List<?> items = metadata.getItems();
         assertEquals(1, items.size());
 
@@ -112,10 +112,9 @@ public class PngReadTest extends PngBaseTest {
      */
     @Test
     public void testUncaughtExceptionOssFuzz33691() throws IOException {
-        final String input = "/images/png/oss-fuzz-33691/clusterfuzz-testcase-minimized-ImagingPngFuzzer-6177282101215232";
-        final String file = PngReadTest.class.getResource(input).getFile();
+        final File file = TestResources.resourceToFile("/images/png/oss-fuzz-33691/clusterfuzz-testcase-minimized-ImagingPngFuzzer-6177282101215232");
         final PngImageParser parser = new PngImageParser();
-        assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(new File(file)), new PngImagingParameters()));
+        assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(file), new PngImagingParameters()));
     }
 
     /**
@@ -128,9 +127,8 @@ public class PngReadTest extends PngBaseTest {
      */
     @Test
     public void testUncaughtExceptionOssFuzz37607() throws IOException {
-        final String input = "/images/png/IMAGING-317/clusterfuzz-testcase-minimized-ImagingPngFuzzer-6242400830357504";
-        final String file = PngReadTest.class.getResource(input).getFile();
+        final File file = TestResources.resourceToFile("/images/png/IMAGING-317/clusterfuzz-testcase-minimized-ImagingPngFuzzer-6242400830357504");
         final PngImageParser parser = new PngImageParser();
-        assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(new File(file)), new PngImagingParameters()));
+        assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(file), new PngImagingParameters()));
     }
 }

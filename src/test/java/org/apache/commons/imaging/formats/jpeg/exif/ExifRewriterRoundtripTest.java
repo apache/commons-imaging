@@ -16,6 +16,8 @@
  */
 package org.apache.commons.imaging.formats.jpeg.exif;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -33,8 +35,8 @@ import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputField;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -54,25 +56,25 @@ public class ExifRewriterRoundtripTest extends ExifBaseTest {
 
     private File duplicateFile;
 
-    private void assertEquals(final TiffOutputSet tiffOutputSet, final TiffOutputSet tiffOutputSet1) {
+    private void assertTiffEquals(final TiffOutputSet tiffOutputSet, final TiffOutputSet tiffOutputSet1) {
         final List<TiffOutputDirectory> directories = tiffOutputSet.getDirectories();
         final List<TiffOutputDirectory> directories1 = tiffOutputSet1.getDirectories();
-        Assertions.assertEquals(directories.size(), directories1.size(),
+        assertEquals(directories.size(), directories1.size(),
                 "The TiffOutputSets have different numbers of directories.");
 
         for (int i = 0; i < directories.size(); i++) {
             final List<TiffOutputField> fields = directories.get(i).getFields();
             final List<TiffOutputField> fields1 = directories1.get(i).getFields();
-            Assertions.assertEquals(fields.size(), fields1.size(),
+            assertEquals(fields.size(), fields1.size(),
                     "The TiffOutputDirectories have different numbers of fields.");
 
             for (int j = 0; j < fields.size(); j++) {
                 final TiffOutputField field = fields.get(j);
                 final TiffOutputField field1 = fields1.get(j);
-                Assertions.assertEquals(field.tag, field1.tag, "TiffOutputField tag mismatch.");
-                Assertions.assertEquals(field.tagInfo, field1.tagInfo, "TiffOutputField tagInfo mismatch.");
-                Assertions.assertEquals(field.fieldType, field1.fieldType, "TiffOutputField fieldType mismatch.");
-                Assertions.assertEquals(field.count, field1.count, "TiffOutputField count mismatch.");
+                assertEquals(field.tag, field1.tag, "TiffOutputField tag mismatch.");
+                assertEquals(field.tagInfo, field1.tagInfo, "TiffOutputField tagInfo mismatch.");
+                assertEquals(field.fieldType, field1.fieldType, "TiffOutputField fieldType mismatch.");
+                assertEquals(field.count, field1.count, "TiffOutputField count mismatch.");
             }
         }
     }
@@ -87,7 +89,7 @@ public class ExifRewriterRoundtripTest extends ExifBaseTest {
     }
 
     private File createTempFile() {
-        final String tempDir = System.getProperty("java.io.tmpdir");
+        final String tempDir = FileUtils.getTempDirectoryPath();
         final String tempFileName = this.getClass().getName() + "-" + random.nextLong() + ".tmp";
         return new File(tempDir, tempFileName);
     }
@@ -164,13 +166,13 @@ public class ExifRewriterRoundtripTest extends ExifBaseTest {
          */
         final List<? extends ImageMetadata.ImageMetadataItem> imageMetadataItems = sourceTiffImageMetadata.getItems();
         final List<? extends ImageMetadata.ImageMetadataItem> imageMetadataItems1 = duplicateTiffImageMetadata.getItems();
-        Assertions.assertEquals(imageMetadataItems.size(), imageMetadataItems1.size(),
+        assertEquals(imageMetadataItems.size(), imageMetadataItems1.size(),
                 "The TiffImageMetadata have different numbers of imageMetadataItems.");
 
         for (int i = 0; i < imageMetadataItems.size(); i++) {
             final ImageMetadata.ImageMetadataItem imageMetadataItem = imageMetadataItems.get(i);
             final ImageMetadata.ImageMetadataItem imageMetadataItem1 = imageMetadataItems1.get(i);
-            Assertions.assertEquals(imageMetadataItem.toString(), imageMetadataItem1.toString(),
+            assertEquals(imageMetadataItem.toString(), imageMetadataItem1.toString(),
                     "ImageMetadataItem toString mismatch.");
         }
     }
@@ -194,7 +196,7 @@ public class ExifRewriterRoundtripTest extends ExifBaseTest {
         /*
          * Compare the two TiffOutputSets
          */
-        assertEquals(sourceTiffOutputSet, duplicateTiffOutputSet);
+        assertTiffEquals(sourceTiffOutputSet, duplicateTiffOutputSet);
 
         /*
          * Copy the file to a duplicate file, using updateExifMetadataLossless and the duplicate TiffOutputSet
@@ -211,6 +213,6 @@ public class ExifRewriterRoundtripTest extends ExifBaseTest {
         /*
          * Compare the source TiffOutputSet to the one loaded from the duplicate file. This fails!
          */
-        assertEquals(sourceTiffOutputSet, duplicateTiffOutputSet);
+        assertTiffEquals(sourceTiffOutputSet, duplicateTiffOutputSet);
     }
 }

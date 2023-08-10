@@ -33,6 +33,7 @@ import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.formats.jpeg.JpegPhotoshopMetadata;
+import org.apache.commons.imaging.test.TestResources;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -49,7 +50,7 @@ public class IptcParserTest {
     @Test
     public void testEncodingSupport() throws IOException, ImagingException {
         // NOTE: We use the JpegParser, so it will send only the block/segment that IptcParser needs for the test image
-        final File file = new File(IptcParserTest.class.getResource("/images/jpeg/iptc/IMAGING-168/111083453-c07f1880-851e-11eb-8b61-2757f7d934bf.jpg").getFile());
+        final File file = TestResources.resourceToFile("/images/jpeg/iptc/IMAGING-168/111083453-c07f1880-851e-11eb-8b61-2757f7d934bf.jpg");
         final JpegImageParser parser = new JpegImageParser();
         final JpegImageMetadata metadata = (JpegImageMetadata) parser.getMetadata(file);
         final JpegPhotoshopMetadata photoshopMetadata = metadata.getPhotoshop();
@@ -81,10 +82,7 @@ public class IptcParserTest {
      */
     @Test
     public void testSkipBlockTypes() throws ImagingException, IOException {
-        final String location = IptcParserTest.class
-                .getResource("/images/jpeg/photoshop/IMAGING-246/FallHarvestKitKat_07610.jpg")
-                .getFile();
-        final File imageFile = new File(location);
+        final File imageFile = TestResources.resourceToFile("/images/jpeg/photoshop/IMAGING-246/FallHarvestKitKat_07610.jpg");
         final JpegImageMetadata metadata = (JpegImageMetadata) new JpegImageParser()
                 .getMetadata(ByteSource.file(imageFile), new JpegImagingParameters());
         final JpegPhotoshopMetadata photoshopMetadata = metadata.getPhotoshop();

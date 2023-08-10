@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.bytesource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -28,7 +29,6 @@ import java.nio.file.Files;
 
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.ImagingTest;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public abstract class ByteSourceTest extends ImagingTest {
@@ -71,7 +71,7 @@ public abstract class ByteSourceTest extends ImagingTest {
 
     @Test
     public void testGetInputStreamThrowsNullPointerException() {
-        Assertions.assertThrows(NullPointerException.class, () -> ByteSource.array(null));
+        assertThrows(NullPointerException.class, () -> ByteSource.array(null));
     }
 
 }

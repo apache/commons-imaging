@@ -46,7 +46,6 @@ import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.imaging.internal.Debug;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class ExifRewriteTest extends ExifBaseTest {
@@ -336,7 +335,7 @@ public class ExifRewriteTest extends ExifBaseTest {
 
             {
                 final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(imageFile);
-                Assertions.assertNotNull(metadata);
+                assertNotNull(metadata);
             }
 
             {

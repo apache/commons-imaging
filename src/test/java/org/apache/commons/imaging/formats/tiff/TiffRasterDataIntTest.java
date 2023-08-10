@@ -113,7 +113,7 @@ public class TiffRasterDataIntTest {
     @Test
     public void testGetDataType() {
         final TiffRasterDataType dataType = raster.getDataType();
-        assertTrue(dataType == TiffRasterDataType.INTEGER, "Unexpected data type " + dataType.name());
+        assertEquals(dataType, TiffRasterDataType.INTEGER, "Unexpected data type " + dataType.name());
     }
 
     /**

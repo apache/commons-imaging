@@ -17,6 +17,7 @@
 
 package org.apache.commons.imaging.roundtrip;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.image.BufferedImage;
@@ -25,17 +26,16 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.io.FileUtils;
-import org.junit.jupiter.api.Assertions;
 
 final class ImageAsserts {
 
-    static void assertEquals(final BufferedImage a, final BufferedImage b) {
-        assertEquals(a, b, 0);
+    static void assertImageEquals(final BufferedImage a, final BufferedImage b) {
+        assertImageEquals(a, b, 0);
     }
 
-    static void assertEquals(final BufferedImage a, final BufferedImage b, final int tolerance) {
-        Assertions.assertEquals(a.getWidth(), b.getWidth());
-        Assertions.assertEquals(a.getHeight(), b.getHeight());
+    static void assertImageEquals(final BufferedImage a, final BufferedImage b, final int tolerance) {
+        assertEquals(a.getWidth(), b.getWidth());
+        assertEquals(a.getHeight(), b.getHeight());
 
         for (int x = 0; x < a.getWidth(); x++) {
             for (int y = 0; y < a.getHeight(); y++) {
@@ -55,15 +55,15 @@ final class ImageAsserts {
                     Debug.debug("aArgb: " + aArgb + " (0x" + Integer.toHexString(aArgb) + ")");
                     Debug.debug("bArgb: " + bArgb + " (0x" + Integer.toHexString(bArgb) + ")");
                 }
-                Assertions.assertEquals(aArgb, bArgb);
+                assertEquals(aArgb, bArgb);
             }
         }
     }
 
-    static void assertEquals(final File a, final File b) throws IOException {
+    static void assertFileEquals(final File a, final File b) throws IOException {
         assertTrue(a.exists() && a.isFile());
         assertTrue(b.exists() && b.isFile());
-        Assertions.assertEquals(a.length(), b.length());
+        assertEquals(a.length(), b.length());
 
         final byte[] aData = FileUtils.readFileToByteArray(a);
         final byte[] bData = FileUtils.readFileToByteArray(b);
@@ -79,7 +79,7 @@ final class ImageAsserts {
                 Debug.debug("aByte: " + aByte + " (0x" + Integer.toHexString(aByte) + ")");
                 Debug.debug("bByte: " + bByte + " (0x" + Integer.toHexString(bByte) + ")");
             }
-            Assertions.assertEquals(aByte, bByte);
+            assertEquals(aByte, bByte);
         }
     }
 
