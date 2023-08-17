@@ -49,6 +49,9 @@ import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.XmpEmbeddable;
 import org.apache.commons.imaging.common.XmpImagingParameters;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory.ImageDataElement;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_DEFLATE_ADOBE;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_DEFLATE_PKZIP;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_JPEG_OBSOLETE;
 import org.apache.commons.imaging.formats.tiff.constants.TiffEpTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
@@ -558,6 +561,9 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
         case TIFF_COMPRESSION_LZW:
             compressionAlgorithm = ImageInfo.CompressionAlgorithm.LZW;
             break;
+        case TIFF_COMPRESSION_JPEG_OBSOLETE:
+            compressionAlgorithm = ImageInfo.CompressionAlgorithm.JPEG_TIFF_OBSOLETE;
+            break;
         case TIFF_COMPRESSION_JPEG:
             compressionAlgorithm = ImageInfo.CompressionAlgorithm.JPEG;
             break;
@@ -567,6 +573,10 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
         case TIFF_COMPRESSION_PACKBITS:
             compressionAlgorithm = ImageInfo.CompressionAlgorithm.PACKBITS;
             break;
+       case TIFF_COMPRESSION_DEFLATE_PKZIP:
+       case TIFF_COMPRESSION_DEFLATE_ADOBE:
+          compressionAlgorithm = ImageInfo.CompressionAlgorithm.DEFLATE;
+          break;
         default:
             compressionAlgorithm = ImageInfo.CompressionAlgorithm.UNKNOWN;
             break;
