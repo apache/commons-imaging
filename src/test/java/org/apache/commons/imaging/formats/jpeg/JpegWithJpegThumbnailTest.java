@@ -23,11 +23,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.AbstractImagingTest;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.junit.jupiter.api.Test;
 
-public class JpegWithJpegThumbnailTest extends ImagingTest {
+public class JpegWithJpegThumbnailTest extends AbstractImagingTest {
 
     @Test
     public void testSingleImage() throws Exception {

@@ -25,15 +25,15 @@ import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.AbstractImagingTest;
 
-public abstract class GifBaseTest extends ImagingTest {
+public abstract class AbstractGifTest extends AbstractImagingTest {
 
     private final static String ANIMATED_FOLDER_NAME = "animated";
 
     private final static String SINGLE_IMAGE_FOLDER_NAME = "single";
 
-    private static final ImageFilter IMAGE_FILTER = GifBaseTest::isGif;
+    private static final ImageFilter IMAGE_FILTER = AbstractGifTest::isGif;
 
     private static final ImageFilter ANIMATED_IMAGE_FILTER = file -> isGif(file) && isAnimated(file);
 

@@ -35,7 +35,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit tests for class {@link PngWriter}.
  */
-public class PngWriterTest extends PngBaseTest {
+public class PngWriterTest extends AbstractPngTest {
 
     private static int countColors(final byte[] bytes) throws IOException {
         final BufferedImage imageParsed = Imaging.getBufferedImage(bytes);

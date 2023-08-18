@@ -22,11 +22,11 @@ import java.io.File;
 import java.util.List;
 
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.AbstractImagingTest;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 
-public class XmpDumpTest extends ImagingTest {
+public class XmpDumpTest extends AbstractImagingTest {
 
     @Test
     public void test() throws Exception {

@@ -48,7 +48,7 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 
-public class ExifRewriteTest extends ExifBaseTest {
+public class ExifRewriteTest extends AbstractExifTest {
     // public ExifRewriteTest(String name)
     // {
     // super(name);

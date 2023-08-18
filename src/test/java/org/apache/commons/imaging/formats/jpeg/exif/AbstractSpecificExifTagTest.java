@@ -32,7 +32,7 @@ import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public abstract class SpecificExifTagTest extends ExifBaseTest {
+public abstract class AbstractSpecificExifTagTest extends AbstractExifTest {
 
     public static Stream<File> data() throws Exception {
         return getImagesWithExifData().stream();

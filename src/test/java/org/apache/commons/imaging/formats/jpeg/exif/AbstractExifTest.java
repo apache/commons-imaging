@@ -22,13 +22,13 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.AbstractImagingTest;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 
-public abstract class ExifBaseTest extends ImagingTest {
+public abstract class AbstractExifTest extends AbstractImagingTest {
 
-    private static final ImageFilter HAS_EXIF_IMAGE_FILTER = ExifBaseTest::hasExifData;
+    private static final ImageFilter HAS_EXIF_IMAGE_FILTER = AbstractExifTest::hasExifData;
 
     private static final ImageFilter JPEG_IMAGE_FILTER = file -> file.getName().toLowerCase().endsWith(".jpg");
 

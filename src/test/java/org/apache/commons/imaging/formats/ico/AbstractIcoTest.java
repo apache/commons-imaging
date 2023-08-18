@@ -15,24 +15,26 @@
  * limitations under the License.
  */
 
-package org.apache.commons.imaging.formats.pcx;
+package org.apache.commons.imaging.formats.ico;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.AbstractImagingTest;
 
-public abstract class PcxBaseTest extends ImagingTest {
+public abstract class AbstractIcoTest extends AbstractImagingTest {
 
-    private static final ImageFilter IMAGE_FILTER = PcxBaseTest::isPcx;
+    private static final ImageFilter IMAGE_FILTER = AbstractIcoTest::isIco;
 
-    private static boolean isPcx(final File file) {
-        return file.getName().toLowerCase().endsWith(".pcx");
-    }
-
-    protected List<File> getPcxImages() throws IOException, ImagingException {
+    protected static List<File> getIcoImages() throws IOException, ImagingException {
         return getTestImages(IMAGE_FILTER);
     }
+
+    private static boolean isIco(final File file) {
+        return file.getName().toLowerCase().endsWith(".ico")
+                || file.getName().toLowerCase().endsWith(".cur");
+    }
+
 }

@@ -14,27 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package org.apache.commons.imaging.formats.ico;
+package org.apache.commons.imaging.formats.psd;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.AbstractImagingTest;
 
-public abstract class IcoBaseTest extends ImagingTest {
+public abstract class AbstractPsdTest extends AbstractImagingTest {
+    private static final ImageFilter IMAGE_FILTER = AbstractPsdTest::isPsd;
 
-    private static final ImageFilter IMAGE_FILTER = IcoBaseTest::isIco;
-
-    protected static List<File> getIcoImages() throws IOException, ImagingException {
-        return getTestImages(IMAGE_FILTER);
+    private static boolean isPsd(final File file) throws IOException {
+        final ImageFormat format = Imaging.guessFormat(file);
+        return format == ImageFormats.PSD;
     }
 
-    private static boolean isIco(final File file) {
-        return file.getName().toLowerCase().endsWith(".ico")
-                || file.getName().toLowerCase().endsWith(".cur");
+    protected List<File> getPsdImages() throws IOException, ImagingException {
+        return getTestImages(IMAGE_FILTER);
     }
 
 }

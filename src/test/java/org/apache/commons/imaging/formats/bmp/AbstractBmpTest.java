@@ -14,8 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package org.apache.commons.imaging.formats.dcx;
+package org.apache.commons.imaging.formats.bmp;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,18 +24,19 @@ import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.AbstractImagingTest;
 
-public abstract class DcxBaseTest extends ImagingTest {
+public abstract class AbstractBmpTest extends AbstractImagingTest {
 
-    private static final ImageFilter IMAGE_FILTER = DcxBaseTest::isDcx;
+    private static final ImageFilter IMAGE_FILTER = AbstractBmpTest::isBmp;
 
-    protected static List<File> getDcxImages() throws IOException, ImagingException {
+    protected static List<File> getBmpImages() throws IOException, ImagingException {
         return getTestImages(IMAGE_FILTER);
     }
 
-    private static boolean isDcx(final File file) throws IOException {
+    private static boolean isBmp(final File file) throws IOException {
         final ImageFormat format = Imaging.guessFormat(file);
-        return format == ImageFormats.DCX;
+        return format == ImageFormats.BMP;
     }
+
 }

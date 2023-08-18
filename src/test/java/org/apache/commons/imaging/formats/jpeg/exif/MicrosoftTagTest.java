@@ -41,7 +41,7 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.junit.jupiter.api.Test;
 
-public class MicrosoftTagTest extends ExifBaseTest {
+public class MicrosoftTagTest extends AbstractExifTest {
     private static final String AUTHOR = "author";
     private static final String COMMENT = "comment";
     private static final String SUBJECT = "subject";

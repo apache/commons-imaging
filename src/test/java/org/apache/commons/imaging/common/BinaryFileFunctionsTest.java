@@ -19,10 +19,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.nio.ByteOrder;
 
-import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.AbstractImagingTest;
 import org.junit.jupiter.api.Test;
 
-public class BinaryFileFunctionsTest extends ImagingTest {
+public class BinaryFileFunctionsTest extends AbstractImagingTest {
 
     @Test
     public void testDoubleToByteConversion() {

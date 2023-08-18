@@ -28,7 +28,7 @@ import java.util.List;
 import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.imaging.test.FileSystemTraversal;
 
-public abstract class ImagingTest {
+public abstract class AbstractImagingTest {
 
     public interface ImageFilter {
         boolean accept(File file) throws IOException, ImagingException;

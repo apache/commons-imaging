@@ -46,7 +46,7 @@ import org.opentest4j.TestSkippedException;
  * Read and write EXIF data, and verify that it's identical, and no data corruption occurred.
  */
 @Disabled
-public class ExifRewriterRoundtripTest extends ExifBaseTest {
+public class ExifRewriterRoundtripTest extends AbstractExifTest {
 
     public static Stream<File> data() throws Exception {
         return getImagesWithExifData().stream();

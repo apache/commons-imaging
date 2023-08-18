@@ -22,11 +22,11 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.AbstractImagingTest;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 
-public abstract class IptcBaseTest extends ImagingTest {
+public abstract class IptcBaseTest extends AbstractImagingTest {
     private static final ImageFilter HAS_IPTC_IMAGE_FILTER = IptcBaseTest::hasIptcData;
 
     private static final ImageFilter JPEG_IMAGE_FILTER = file -> file.getName().toLowerCase().endsWith(".jpg");

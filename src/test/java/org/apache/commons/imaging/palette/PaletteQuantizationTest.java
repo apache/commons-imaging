@@ -21,10 +21,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.awt.image.BufferedImage;
 
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.AbstractImagingTest;
 import org.junit.jupiter.api.Test;
 
-public class PaletteQuantizationTest extends ImagingTest {
+public class PaletteQuantizationTest extends AbstractImagingTest {
 
     private void checkPaletteDetails(final BufferedImage image, final int limit, final int expectedSize) throws ImagingException {
         final PaletteFactory paletteFactory = new PaletteFactory();

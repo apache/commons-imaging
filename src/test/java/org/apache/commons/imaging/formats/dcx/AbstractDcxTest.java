@@ -14,7 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.formats.psd;
+
+package org.apache.commons.imaging.formats.dcx;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,18 +25,18 @@ import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.AbstractImagingTest;
 
-public abstract class PsdBaseTest extends ImagingTest {
-    private static final ImageFilter IMAGE_FILTER = PsdBaseTest::isPsd;
+public abstract class AbstractDcxTest extends AbstractImagingTest {
 
-    private static boolean isPsd(final File file) throws IOException {
-        final ImageFormat format = Imaging.guessFormat(file);
-        return format == ImageFormats.PSD;
-    }
+    private static final ImageFilter IMAGE_FILTER = AbstractDcxTest::isDcx;
 
-    protected List<File> getPsdImages() throws IOException, ImagingException {
+    protected static List<File> getDcxImages() throws IOException, ImagingException {
         return getTestImages(IMAGE_FILTER);
     }
 
+    private static boolean isDcx(final File file) throws IOException {
+        final ImageFormat format = Imaging.guessFormat(file);
+        return format == ImageFormats.DCX;
+    }
 }

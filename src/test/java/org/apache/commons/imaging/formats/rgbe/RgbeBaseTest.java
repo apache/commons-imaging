@@ -24,9 +24,9 @@ import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.AbstractImagingTest;
 
-public abstract class RgbeBaseTest extends ImagingTest {
+public abstract class RgbeBaseTest extends AbstractImagingTest {
 
     private static final ImageFilter IMAGE_FILTER = RgbeBaseTest::isRgbe;
 

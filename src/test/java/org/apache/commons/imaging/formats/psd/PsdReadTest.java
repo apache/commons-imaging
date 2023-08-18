@@ -29,7 +29,7 @@ import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 
-public class PsdReadTest extends PsdBaseTest {
+public class PsdReadTest extends AbstractPsdTest {
 
     @Test
     public void test() throws Exception {

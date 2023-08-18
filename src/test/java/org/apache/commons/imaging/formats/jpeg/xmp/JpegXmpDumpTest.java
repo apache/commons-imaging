@@ -28,7 +28,7 @@ import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class JpegXmpDumpTest extends JpegXmpBaseTest {
+public class JpegXmpDumpTest extends AbstractJpegXmpTest {
 
     public static Stream<File> data() throws Exception {
         return getImagesWithXmpData().stream();

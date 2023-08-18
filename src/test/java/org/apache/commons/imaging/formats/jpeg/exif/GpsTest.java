@@ -27,7 +27,7 @@ import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class GpsTest extends ExifBaseTest {
+public class GpsTest extends AbstractExifTest {
 
     public static Stream<File> data() throws Exception {
         return getImagesWithExifData().stream();

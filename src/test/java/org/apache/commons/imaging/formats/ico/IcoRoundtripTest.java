@@ -36,7 +36,7 @@ import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 
-public class IcoRoundtripTest extends IcoBaseTest {
+public class IcoRoundtripTest extends AbstractIcoTest {
     private interface BitmapGenerator {
         byte[] generateBitmap(int foreground, int background, int paletteSize)
                 throws IOException, ImagingException;

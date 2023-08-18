@@ -14,7 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.formats.bmp;
+
+package org.apache.commons.imaging.formats.png;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,19 +25,19 @@ import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.AbstractImagingTest;
 
-public abstract class BmpBaseTest extends ImagingTest {
+public abstract class AbstractPngTest extends AbstractImagingTest {
 
-    private static final ImageFilter IMAGE_FILTER = BmpBaseTest::isBmp;
+    private static final ImageFilter IMAGE_FILTER = AbstractPngTest::isPng;
 
-    protected static List<File> getBmpImages() throws IOException, ImagingException {
-        return getTestImages(IMAGE_FILTER);
+    private static boolean isPng(final File file) throws IOException {
+        final ImageFormat format = Imaging.guessFormat(file);
+        return format == ImageFormats.PNG;
     }
 
-    private static boolean isBmp(final File file) throws IOException {
-        final ImageFormat format = Imaging.guessFormat(file);
-        return format == ImageFormats.BMP;
+    protected List<File> getPngImages() throws IOException, ImagingException {
+        return getTestImages(IMAGE_FILTER);
     }
 
 }

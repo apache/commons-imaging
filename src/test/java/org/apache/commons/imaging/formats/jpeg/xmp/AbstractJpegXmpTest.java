@@ -22,13 +22,13 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.AbstractImagingTest;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 
-public abstract class JpegXmpBaseTest extends ImagingTest {
+public abstract class AbstractJpegXmpTest extends AbstractImagingTest {
 
-    private static final ImageFilter HAS_JPEG_XMP_IMAGE_FILTER = JpegXmpBaseTest::hasJpegXmpData;
+    private static final ImageFilter HAS_JPEG_XMP_IMAGE_FILTER = AbstractJpegXmpTest::hasJpegXmpData;
 
     protected static List<File> getImagesWithXmpData() throws IOException,
             ImagingException {

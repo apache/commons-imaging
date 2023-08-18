@@ -19,11 +19,11 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.AbstractImagingTest;
 
-public abstract class XpmBaseTest extends ImagingTest {
+public abstract class AbstractXpmTest extends AbstractImagingTest {
 
-    private static final ImageFilter IMAGE_FILTER = XpmBaseTest::isXpm;
+    private static final ImageFilter IMAGE_FILTER = AbstractXpmTest::isXpm;
 
     private static boolean isXpm(final File file) {
         return file.getName().toLowerCase().endsWith(".xpm");

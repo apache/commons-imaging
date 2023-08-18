@@ -32,12 +32,12 @@ import java.util.Random;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.AbstractImagingTest;
 import org.apache.commons.imaging.common.GenericImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.junit.jupiter.api.Test;
 
-public class PngWriteReadTest extends ImagingTest {
+public class PngWriteReadTest extends AbstractImagingTest {
 
     private int[][] bufferedImageToImageData(final BufferedImage image) {
         final int width = image.getWidth();

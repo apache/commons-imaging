@@ -30,7 +30,7 @@ import java.util.List;
 import org.apache.commons.imaging.Imaging;
 import org.junit.jupiter.api.Test;
 
-public class PngTextTest extends PngBaseTest {
+public class PngTextTest extends AbstractPngTest {
 
     @Test
     public void test() throws Exception {

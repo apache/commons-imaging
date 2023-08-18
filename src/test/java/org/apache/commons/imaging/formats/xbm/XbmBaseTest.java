@@ -19,9 +19,9 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.AbstractImagingTest;
 
-public abstract class XbmBaseTest extends ImagingTest {
+public abstract class XbmBaseTest extends AbstractImagingTest {
 
     private static final ImageFilter IMAGE_FILTER = XbmBaseTest::isXbm;
 

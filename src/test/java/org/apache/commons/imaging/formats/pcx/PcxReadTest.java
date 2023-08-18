@@ -30,7 +30,7 @@ import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 
-public class PcxReadTest extends PcxBaseTest {
+public class PcxReadTest extends AbstractPcxTest {
 
     @Test
     public void test() throws Exception {

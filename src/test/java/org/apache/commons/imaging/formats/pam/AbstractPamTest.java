@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.commons.imaging.formats.png;
+package org.apache.commons.imaging.formats.pam;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,19 +25,18 @@ import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.AbstractImagingTest;
 
-public abstract class PngBaseTest extends ImagingTest {
+public abstract class AbstractPamTest extends AbstractImagingTest {
 
-    private static final ImageFilter IMAGE_FILTER = PngBaseTest::isPng;
+    private static final ImageFilter IMAGE_FILTER = AbstractPamTest::isPam;
 
-    private static boolean isPng(final File file) throws IOException {
+    private static boolean isPam(final File file) throws IOException {
         final ImageFormat format = Imaging.guessFormat(file);
-        return format == ImageFormats.PNG;
+        return format == ImageFormats.PAM;
     }
 
-    protected List<File> getPngImages() throws IOException, ImagingException {
+    protected List<File> getPamImages() throws IOException, ImagingException {
         return getTestImages(IMAGE_FILTER);
     }
-
 }

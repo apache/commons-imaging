@@ -24,13 +24,13 @@ import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.AbstractImagingTest;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class RationalNumberTest extends ImagingTest {
+public class RationalNumberTest extends AbstractImagingTest {
 
     public static Stream<Double> data() {
         return Arrays.asList(

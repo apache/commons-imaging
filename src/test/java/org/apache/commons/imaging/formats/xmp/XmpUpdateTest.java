@@ -29,13 +29,13 @@ import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.AbstractImagingTest;
 import org.apache.commons.imaging.common.XmpImagingParameters;
 import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.imaging.internal.ImageParserFactory;
 import org.junit.jupiter.api.Test;
 
-public class XmpUpdateTest<E extends XmpImagingParameters<E>> extends ImagingTest {
+public class XmpUpdateTest<E extends XmpImagingParameters<E>> extends AbstractImagingTest {
 
     @Test
     public void test() throws Exception {

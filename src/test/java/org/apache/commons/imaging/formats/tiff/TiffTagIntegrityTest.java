@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.AbstractImagingTest;
 import org.apache.commons.imaging.formats.tiff.constants.AdobePageMaker6TagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.AdobePhotoshopTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.AliasSketchbookProTagConstants;
@@ -47,7 +47,7 @@ import org.apache.commons.imaging.formats.tiff.constants.WangTagConstants;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.junit.jupiter.api.Test;
 
-public class TiffTagIntegrityTest extends ImagingTest {
+public class TiffTagIntegrityTest extends AbstractImagingTest {
 
     @Test
     public void testTagIntegrity() {

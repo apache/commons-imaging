@@ -27,7 +27,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class ImagingGuessFormatTest extends ImagingTest {
+public class ImagingGuessFormatTest extends AbstractImagingTest {
 
     public static final String BMP_IMAGE_FILE = "bmp\\1\\Oregon Scientific DS6639 - DSC_0307 - small.bmp";
     public static final String PNG_IMAGE_FILE = "png\\1\\Oregon Scientific DS6639 - DSC_0307 - small.png";
