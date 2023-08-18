@@ -49,7 +49,7 @@
     <Bug pattern="EI_EXPOSE_REP2" />
   </Match>
   <Match>
-    <Class name="org.apache.commons.imaging.formats.tiff.TiffElement$DataElement" />
+    <Class name="org.apache.commons.imaging.formats.tiff.AbstractTiffElement$DataElement" />
     <Bug pattern="EI_EXPOSE_REP2" />
   </Match>
   <Match>
@@ -57,12 +57,12 @@
     <Bug pattern="EI_EXPOSE_REP2" />
   </Match>
   <Match>
-    <Class name="org.apache.commons.imaging.formats.tiff.TiffImageData$Strips" />
+    <Class name="org.apache.commons.imaging.formats.tiff.AbstractTiffImageData$Strips" />
     <Method name="getImageData" />
     <Bug pattern="EI_EXPOSE_REP" />
   </Match>
   <Match>
-    <Class name="org.apache.commons.imaging.formats.tiff.TiffImageData$Strips" />
+    <Class name="org.apache.commons.imaging.formats.tiff.AbstractTiffImageData$Strips" />
     <Bug pattern="EI_EXPOSE_REP2" />
   </Match>
   <Match>
