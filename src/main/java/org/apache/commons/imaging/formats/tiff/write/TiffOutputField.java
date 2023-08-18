@@ -39,7 +39,7 @@ public class TiffOutputField {
     public final FieldType fieldType;
     public final int count;
     private byte[] bytes;
-    private final TiffOutputItem.Value separateValueItem;
+    private final AbstractTiffOutputItem.Value separateValueItem;
 
     private int sortHint = -1;
 
@@ -56,7 +56,7 @@ public class TiffOutputField {
         } else {
             final String name = "Field Separate value (" + tagInfo.getDescription()
                     + ")";
-            separateValueItem = new TiffOutputItem.Value(name, bytes);
+            separateValueItem = new AbstractTiffOutputItem.Value(name, bytes);
         }
     }
 
@@ -69,7 +69,7 @@ public class TiffOutputField {
         return Arrays.equals(bytes, data);
     }
 
-    protected TiffOutputItem getSeperateValue() {
+    protected AbstractTiffOutputItem getSeperateValue() {
         return separateValueItem;
     }
 

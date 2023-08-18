@@ -91,7 +91,7 @@ public class PnmImageParser extends ImageParser<PnmImagingParameters> {
     public BufferedImage getBufferedImage(final ByteSource byteSource, final PnmImagingParameters params)
             throws ImagingException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
-            final FileInfo info = readHeader(is);
+            final AbstractFileInfo info = readHeader(is);
 
             final int width = info.width;
             final int height = info.height;
@@ -124,7 +124,7 @@ public class PnmImageParser extends ImageParser<PnmImagingParameters> {
     @Override
     public ImageInfo getImageInfo(final ByteSource byteSource, final PnmImagingParameters params)
             throws ImagingException, IOException {
-        final FileInfo info = readHeader(byteSource);
+        final AbstractFileInfo info = readHeader(byteSource);
 
         final List<String> comments = new ArrayList<>();
 
@@ -160,7 +160,7 @@ public class PnmImageParser extends ImageParser<PnmImagingParameters> {
     @Override
     public Dimension getImageSize(final ByteSource byteSource, final PnmImagingParameters params)
             throws ImagingException, IOException {
-        final FileInfo info = readHeader(byteSource);
+        final AbstractFileInfo info = readHeader(byteSource);
 
         return new Dimension(info.width, info.height);
     }
@@ -176,14 +176,14 @@ public class PnmImageParser extends ImageParser<PnmImagingParameters> {
         return "Pbm-Custom";
     }
 
-    private FileInfo readHeader(final ByteSource byteSource)
+    private AbstractFileInfo readHeader(final ByteSource byteSource)
             throws ImagingException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             return readHeader(is);
         }
     }
 
-    private FileInfo readHeader(final InputStream is) throws ImagingException,
+    private AbstractFileInfo readHeader(final InputStream is) throws ImagingException,
             IOException {
         final byte identifier1 = readByte("Identifier1", is, "Not a Valid PNM File");
         final byte identifier2 = readByte("Identifier2", is, "Not a Valid PNM File");

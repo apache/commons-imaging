@@ -74,7 +74,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         }
     }
     private static final Comparator<TiffElement> ELEMENT_SIZE_COMPARATOR = Comparator.comparingInt(e -> e.length);
-    private static final Comparator<TiffOutputItem> ITEM_SIZE_COMPARATOR = Comparator.comparingInt(TiffOutputItem::getItemLength);
+    private static final Comparator<AbstractTiffOutputItem> ITEM_SIZE_COMPARATOR = Comparator.comparingInt(AbstractTiffOutputItem::getItemLength);
 
     private final byte[] exifBytes;
 
@@ -156,7 +156,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
     }
 
     private long updateOffsetsStep(final List<TiffElement> analysis,
-            final List<TiffOutputItem> outputItems) {
+            final List<AbstractTiffOutputItem> outputItems) {
         // items we cannot fit into a gap, we shall append to tail.
         long overflowIndex = exifBytes.length;
 
@@ -183,14 +183,14 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         Collections.reverse(unusedElements);
 
         // make copy.
-        final List<TiffOutputItem> unplacedItems = new ArrayList<>(
+        final List<AbstractTiffOutputItem> unplacedItems = new ArrayList<>(
                 outputItems);
         unplacedItems.sort(ITEM_SIZE_COMPARATOR);
         Collections.reverse(unplacedItems);
 
         while (!unplacedItems.isEmpty()) {
             // pop off largest unplaced item.
-            final TiffOutputItem outputItem = unplacedItems.remove(0);
+            final AbstractTiffOutputItem outputItem = unplacedItems.remove(0);
             final int outputItemLength = outputItem.getItemLength();
             // search for the smallest possible element large enough to hold the
             // item.
@@ -260,16 +260,16 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         final Map<Long, TiffOutputField> frozenFieldOffsets = new HashMap<>();
         for (final Map.Entry<Integer, TiffOutputField> entry : frozenFields.entrySet()) {
             final TiffOutputField frozenField = entry.getValue();
-            if (frozenField.getSeperateValue().getOffset() != TiffOutputItem.UNDEFINED_VALUE) {
+            if (frozenField.getSeperateValue().getOffset() != AbstractTiffOutputItem.UNDEFINED_VALUE) {
                 frozenFieldOffsets.put(frozenField.getSeperateValue().getOffset(), frozenField);
             }
         }
 
         final TiffOutputSummary outputSummary = validateDirectories(outputSet);
 
-        final List<TiffOutputItem> allOutputItems = outputSet.getOutputItems(outputSummary);
-        final List<TiffOutputItem> outputItems = new ArrayList<>();
-        for (final TiffOutputItem outputItem : allOutputItems) {
+        final List<AbstractTiffOutputItem> allOutputItems = outputSet.getOutputItems(outputSummary);
+        final List<AbstractTiffOutputItem> outputItems = new ArrayList<>();
+        for (final AbstractTiffOutputItem outputItem : allOutputItems) {
             if (!frozenFieldOffsets.containsKey(outputItem.getOffset())) {
                 outputItems.add(outputItem);
             }
@@ -284,7 +284,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
     }
 
     private void writeStep(final OutputStream os, final TiffOutputSet outputSet,
-            final List<TiffElement> analysis, final List<TiffOutputItem> outputItems,
+            final List<TiffElement> analysis, final List<AbstractTiffOutputItem> outputItems,
             final long outputLength) throws IOException, ImagingException {
         final TiffOutputDirectory rootDirectory = outputSet.getRootDirectory();
 
@@ -306,7 +306,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         }
 
         // write in the new items
-        for (final TiffOutputItem outputItem : outputItems) {
+        for (final AbstractTiffOutputItem outputItem : outputItems) {
             try (BinaryOutputStream bos = BinaryOutputStream
                     .create(new BufferOutputStream(output, (int) outputItem.getOffset()), byteOrder)) {
                 outputItem.writeItem(bos);

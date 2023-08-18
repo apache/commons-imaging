@@ -284,16 +284,16 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
             final ByteArrayInputStream bais = new ByteArrayInputStream(compressed);
             final InflaterInputStream iis = new InflaterInputStream(bais);
 
-            ScanExpediter scanExpediter;
+            AbstractScanExpediter abstractScanExpediter;
 
             switch (pngChunkIHDR.getInterlaceMethod()) {
                 case NONE:
-                    scanExpediter = new ScanExpediterSimple(width, height, iis,
+                    abstractScanExpediter = new ScanExpediterSimple(width, height, iis,
                             result, pngColorType, bitDepth, bitsPerPixel,
                             pngChunkPLTE, gammaCorrection, transparencyFilter);
                     break;
                 case ADAM7:
-                    scanExpediter = new ScanExpediterInterlaced(width, height, iis,
+                    abstractScanExpediter = new ScanExpediterInterlaced(width, height, iis,
                             result, pngColorType, bitDepth, bitsPerPixel,
                             pngChunkPLTE, gammaCorrection, transparencyFilter);
                     break;
@@ -301,7 +301,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
                     throw new ImagingException("Unknown InterlaceMethod: " + pngChunkIHDR.getInterlaceMethod());
             }
 
-            scanExpediter.drive();
+            abstractScanExpediter.drive();
 
             if (iccProfile != null) {
                 final boolean isSrgb = new IccProfileParser().isSrgb(iccProfile);

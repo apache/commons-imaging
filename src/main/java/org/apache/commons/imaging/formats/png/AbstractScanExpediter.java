@@ -33,7 +33,7 @@ import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilterSub;
 import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilterUp;
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilter;
 
-abstract class ScanExpediter {
+abstract class AbstractScanExpediter {
 
     final int width;
     final int height;
@@ -47,7 +47,7 @@ abstract class ScanExpediter {
     final GammaCorrection gammaCorrection;
     final TransparencyFilter transparencyFilter;
 
-    ScanExpediter(final int width, final int height, final InputStream is,
+    AbstractScanExpediter(final int width, final int height, final InputStream is,
             final BufferedImage bi, final PngColorType pngColorType, final int bitDepth, final int bitsPerPixel,
             final PngChunkPlte pngChunkPLTE, final GammaCorrection gammaCorrection,
             final TransparencyFilter transparencyFilter) {

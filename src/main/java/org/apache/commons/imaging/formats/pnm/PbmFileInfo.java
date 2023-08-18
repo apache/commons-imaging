@@ -24,7 +24,7 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImagingException;
 
-class PbmFileInfo extends FileInfo {
+class PbmFileInfo extends AbstractFileInfo {
     private int bitCache;
     private int bitsInCache;
 

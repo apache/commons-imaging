@@ -26,10 +26,10 @@ import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
 class TiffOutputSummary {
     private static class OffsetItem {
-        public final TiffOutputItem item;
+        public final AbstractTiffOutputItem item;
         public final TiffOutputField itemOffsetField;
 
-        OffsetItem(final TiffOutputItem item, final TiffOutputField itemOffsetField) {
+        OffsetItem(final AbstractTiffOutputItem item, final TiffOutputField itemOffsetField) {
             this.itemOffsetField = itemOffsetField;
             this.item = item;
         }
@@ -49,7 +49,7 @@ class TiffOutputSummary {
         this.directoryTypeMap = directoryTypeMap;
     }
 
-    public void add(final TiffOutputItem item,
+    public void add(final AbstractTiffOutputItem item,
             final TiffOutputField itemOffsetField) {
         offsetItems.add(new OffsetItem(item, itemOffsetField));
     }
@@ -67,7 +67,7 @@ class TiffOutputSummary {
 
         for (final ImageDataOffsets imageDataInfo : imageDataItems) {
             for (int j = 0; j < imageDataInfo.outputItems.length; j++) {
-                final TiffOutputItem item = imageDataInfo.outputItems[j];
+                final AbstractTiffOutputItem item = imageDataInfo.outputItems[j];
                 imageDataInfo.imageDataOffsets[j] = (int) item.getOffset();
             }
 

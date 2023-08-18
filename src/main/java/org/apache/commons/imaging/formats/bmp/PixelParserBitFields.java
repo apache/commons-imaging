@@ -26,7 +26,7 @@ import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImagingException;
 
-class PixelParserBitFields extends PixelParserSimple {
+class PixelParserBitFields extends AbstractPixelParserSimple {
 
     private final int redShift;
     private final int greenShift;

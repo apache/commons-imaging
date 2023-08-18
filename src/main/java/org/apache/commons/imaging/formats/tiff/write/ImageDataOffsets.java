@@ -24,14 +24,14 @@ import org.apache.commons.imaging.formats.tiff.TiffElement;
 class ImageDataOffsets {
     final int[] imageDataOffsets;
     final TiffOutputField imageDataOffsetsField;
-    final TiffOutputItem[] outputItems;
+    final AbstractTiffOutputItem[] outputItems;
 
     ImageDataOffsets(final TiffElement.DataElement[] imageData, final int[] imageDataOffsets, final TiffOutputField imageDataOffsetsField) {
         this.imageDataOffsets = imageDataOffsets;
         this.imageDataOffsetsField = imageDataOffsetsField;
 
-        outputItems = Allocator.array(imageData.length, TiffOutputItem[]::new, TiffOutputItem.Value.SHALLOW_SIZE);
-        Arrays.setAll(outputItems, i -> new TiffOutputItem.Value("TIFF image data", imageData[i].getData()));
+        outputItems = Allocator.array(imageData.length, AbstractTiffOutputItem[]::new, AbstractTiffOutputItem.Value.SHALLOW_SIZE);
+        Arrays.setAll(outputItems, i -> new AbstractTiffOutputItem.Value("TIFF image data", imageData[i].getData()));
 
     }
 

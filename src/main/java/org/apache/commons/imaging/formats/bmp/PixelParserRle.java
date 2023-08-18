@@ -23,7 +23,7 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.ImageBuilder;
 
-class PixelParserRle extends PixelParser {
+class PixelParserRle extends AbstractPixelParser {
 
     private static final Logger LOGGER = Logger.getLogger(PixelParserRle.class.getName());
 

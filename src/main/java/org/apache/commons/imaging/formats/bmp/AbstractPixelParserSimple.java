@@ -16,42 +16,30 @@
  */
 package org.apache.commons.imaging.formats.bmp;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
-abstract class PixelParser {
-
-    final BmpHeaderInfo bhi;
-    final byte[] colorTable;
-    final byte[] imageData;
-
-    final InputStream is;
-
-    PixelParser(final BmpHeaderInfo bhi, final byte[] colorTable, final byte[] imageData) {
-        this.bhi = bhi;
-        this.colorTable = colorTable;
-        this.imageData = imageData;
-
-        is = new ByteArrayInputStream(imageData);
+abstract class AbstractPixelParserSimple extends AbstractPixelParser {
+    AbstractPixelParserSimple(final BmpHeaderInfo bhi, final byte[] colorTable, final byte[] imageData) {
+        super(bhi, colorTable, imageData);
     }
 
-    int getColorTableRgb(int index) {
-        index *= 4;
-        final int blue = 0xff & colorTable[index + 0];
-        final int green = 0xff & colorTable[index + 1];
-        final int red = 0xff & colorTable[index + 2];
-        final int alpha = 0xff;
+    public abstract int getNextRgb() throws ImagingException, IOException;
 
-        return (alpha << 24)
-                | (red << 16)
-                | (green << 8)
-                | (blue << 0);
+    public abstract void newline() throws ImagingException, IOException;
+
+    @Override
+    public void processImage(final ImageBuilder imageBuilder) throws ImagingException, IOException {
+        for (int y = bhi.height - 1; y >= 0; y--) {
+            for (int x = 0; x < bhi.width; x++) {
+                final int rgb = getNextRgb();
+
+                imageBuilder.setRgb(x, y, rgb);
+                // db.setElem(y * bhi.width + x, rgb);
+            }
+            newline();
+        }
     }
-
-    public abstract void processImage(ImageBuilder imageBuilder) throws ImagingException, IOException;
-
 }

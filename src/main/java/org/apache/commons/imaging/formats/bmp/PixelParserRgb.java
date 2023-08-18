@@ -24,7 +24,7 @@ import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImagingException;
 
-class PixelParserRgb extends PixelParserSimple {
+class PixelParserRgb extends AbstractPixelParserSimple {
     private int byteCount;
     private int cachedBitCount;
     private int cachedByte;

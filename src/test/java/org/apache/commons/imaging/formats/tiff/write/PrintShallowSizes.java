@@ -22,6 +22,6 @@ import org.apache.commons.imaging.test.PrintShallowObjectSizes;
 public class PrintShallowSizes {
 
     public static void main(final String[] args) {
-        PrintShallowObjectSizes.print(TiffOutputItem.class, TiffOutputItem.Value.class);
+        PrintShallowObjectSizes.print(AbstractTiffOutputItem.class, AbstractTiffOutputItem.Value.class);
     }
 }

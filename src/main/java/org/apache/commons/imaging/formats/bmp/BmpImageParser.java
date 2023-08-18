@@ -139,9 +139,9 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
             LOGGER.fine("width*height*4: " + width * height * 4);
         }
 
-        final PixelParser pixelParser = ic.pixelParser;
+        final AbstractPixelParser abstractPixelParser = ic.abstractPixelParser;
         final ImageBuilder imageBuilder = new ImageBuilder(width, height, true);
-        pixelParser.processImage(imageBuilder);
+        abstractPixelParser.processImage(imageBuilder);
 
         return imageBuilder.getBufferedImage();
 
@@ -621,25 +621,25 @@ public class BmpImageParser extends ImageParser<BmpImagingParameters> {
             debugNumber("ImageData.length", imageData.length, 4);
         }
 
-        PixelParser pixelParser;
+        AbstractPixelParser abstractPixelParser;
 
         switch (bhi.compression) {
         case BI_RLE4:
         case BI_RLE8:
-            pixelParser = new PixelParserRle(bhi, colorTable, imageData);
+            abstractPixelParser = new PixelParserRle(bhi, colorTable, imageData);
             break;
         case BI_RGB:
-            pixelParser = new PixelParserRgb(bhi, colorTable, imageData);
+            abstractPixelParser = new PixelParserRgb(bhi, colorTable, imageData);
             break;
         case BI_BITFIELDS:
-            pixelParser = new PixelParserBitFields(bhi, colorTable, imageData);
+            abstractPixelParser = new PixelParserBitFields(bhi, colorTable, imageData);
             break;
         default:
             throw new ImagingException("BMP: Unknown Compression: "
                     + bhi.compression);
         }
 
-        return new BmpImageContents(bhi, colorTable, imageData, pixelParser);
+        return new BmpImageContents(bhi, colorTable, imageData, abstractPixelParser);
     }
 
     @Override

@@ -21,9 +21,9 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 
-abstract class TiffOutputItem {
+abstract class AbstractTiffOutputItem {
 
-    public static class Value extends TiffOutputItem {
+    public static class Value extends AbstractTiffOutputItem {
 
         static final int SHALLOW_SIZE = 32;
         private final byte[] bytes;

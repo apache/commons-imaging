@@ -72,7 +72,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShortOrRational;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShorts;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoXpString;
 
-public final class TiffOutputDirectory extends TiffOutputItem implements Iterable<TiffOutputField> {
+public final class TiffOutputDirectory extends AbstractTiffOutputItem implements Iterable<TiffOutputField> {
     public static final Comparator<TiffOutputDirectory> COMPARATOR = Comparator.comparingInt(TiffOutputDirectory::getType);
     private final int type;
     private final List<TiffOutputField> fields = new ArrayList<>();
@@ -586,7 +586,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements Iterabl
                 + TIFF_DIRECTORY_FOOTER_LENGTH;
     }
 
-    protected List<TiffOutputItem> getOutputItems(
+    protected List<AbstractTiffOutputItem> getOutputItems(
             final TiffOutputSummary outputSummary) throws ImagingException {
         // first validate directory fields.
 
@@ -655,7 +655,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements Iterabl
             imageDataInfo = new ImageDataOffsets(imageData, imageDataOffsets, imageDataOffsetField);
         }
 
-        final List<TiffOutputItem> result = new ArrayList<>();
+        final List<AbstractTiffOutputItem> result = new ArrayList<>();
         result.add(this);
         sortFields();
 
@@ -664,7 +664,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements Iterabl
                 continue;
             }
 
-            final TiffOutputItem item = field.getSeperateValue();
+            final AbstractTiffOutputItem item = field.getSeperateValue();
             result.add(item);
             // outputSummary.add(item, field);
         }
@@ -676,7 +676,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements Iterabl
         }
 
         if (null != jpegImageData) {
-            final TiffOutputItem item = new TiffOutputItem.Value("JPEG image data",
+            final AbstractTiffOutputItem item = new AbstractTiffOutputItem.Value("JPEG image data",
                     jpegImageData.getData());
             result.add(item);
             outputSummary.add(item, jpegOffsetField);

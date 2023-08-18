@@ -24,7 +24,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
-abstract class FileInfo {
+abstract class AbstractFileInfo {
 
     static int readSample(final InputStream is, final int bytesPerSample) throws IOException {
         int sample = 0;
@@ -57,7 +57,7 @@ abstract class FileInfo {
 
     final boolean rawBits;
 
-    FileInfo(final int width, final int height, final boolean rawBits) {
+    AbstractFileInfo(final int width, final int height, final boolean rawBits) {
         this.width = width;
         this.height = height;
         this.rawBits = rawBits;

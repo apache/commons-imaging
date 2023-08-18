@@ -24,7 +24,7 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImagingException;
 
-class PpmFileInfo extends FileInfo {
+class PpmFileInfo extends AbstractFileInfo {
     private final int max;
     private final float scale;
     private final int bytesPerSample;

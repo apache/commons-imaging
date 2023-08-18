@@ -160,9 +160,9 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
         return addRootDirectory();
     }
 
-    protected List<TiffOutputItem> getOutputItems(
+    protected List<AbstractTiffOutputItem> getOutputItems(
             final TiffOutputSummary outputSummary) throws ImagingException {
-        final List<TiffOutputItem> result = new ArrayList<>();
+        final List<AbstractTiffOutputItem> result = new ArrayList<>();
 
         for (final TiffOutputDirectory directory : directories) {
             result.addAll(directory.getOutputItems(outputSummary));
