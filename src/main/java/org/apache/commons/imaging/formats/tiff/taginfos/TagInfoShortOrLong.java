@@ -20,15 +20,15 @@ import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
-import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
 public class TagInfoShortOrLong extends TagInfo {
     public TagInfoShortOrLong(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
-        super(name, tag, FieldType.SHORT_OR_LONG, length, directoryType, false);
+        super(name, tag, AbstractFieldType.SHORT_OR_LONG, length, directoryType, false);
     }
 
     public TagInfoShortOrLong(final String name, final int tag, final int length, final TiffDirectoryType directoryType, final boolean isOffset) {
-        super(name, tag, FieldType.SHORT_OR_LONG, length, directoryType, isOffset);
+        super(name, tag, AbstractFieldType.SHORT_OR_LONG, length, directoryType, isOffset);
     }
 
     public byte[] encodeValue(final ByteOrder byteOrder, final int... values) {

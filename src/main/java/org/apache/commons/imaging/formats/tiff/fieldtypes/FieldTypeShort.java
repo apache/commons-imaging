@@ -23,7 +23,7 @@ import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 
-public class FieldTypeShort extends FieldType {
+public class FieldTypeShort extends AbstractFieldType {
     public FieldTypeShort(final int type, final String name) {
         super(type, name, 2);
     }

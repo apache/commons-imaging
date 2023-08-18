@@ -17,11 +17,11 @@
 package org.apache.commons.imaging.formats.tiff.taginfos;
 
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
-import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
 public class TagInfoAny extends TagInfo {
     public TagInfoAny(final String name, final int tag, final int length,
             final TiffDirectoryType directoryType) {
-        super(name, tag, FieldType.ANY, length, directoryType);
+        super(name, tag, AbstractFieldType.ANY, length, directoryType);
     }
 }

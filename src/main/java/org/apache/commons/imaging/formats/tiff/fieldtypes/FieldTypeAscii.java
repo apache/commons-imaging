@@ -24,7 +24,7 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 
-public class FieldTypeAscii extends FieldType {
+public class FieldTypeAscii extends AbstractFieldType {
     public FieldTypeAscii(final int type, final String name) {
         super(type, name, 1);
     }

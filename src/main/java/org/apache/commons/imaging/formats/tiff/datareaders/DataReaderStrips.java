@@ -25,7 +25,7 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
-import org.apache.commons.imaging.formats.tiff.TiffImageData;
+import org.apache.commons.imaging.formats.tiff.AbstractTiffImageData;
 import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.TiffRasterDataFloat;
 import org.apache.commons.imaging.formats.tiff.TiffRasterDataInt;
@@ -49,7 +49,7 @@ public final class DataReaderStrips extends ImageDataReader {
     private final ByteOrder byteOrder;
     private int x;
     private int y;
-    private final TiffImageData.Strips imageData;
+    private final AbstractTiffImageData.Strips imageData;
 
     public DataReaderStrips(final TiffDirectory directory,
         final PhotometricInterpreter photometricInterpreter, final int bitsPerPixel,
@@ -58,7 +58,7 @@ public final class DataReaderStrips extends ImageDataReader {
         final int height, final int compression,
         final TiffPlanarConfiguration planarConfiguration,
         final ByteOrder byteOrder,
-        final int rowsPerStrip, final TiffImageData.Strips imageData) {
+        final int rowsPerStrip, final AbstractTiffImageData.Strips imageData) {
         super(directory, photometricInterpreter, bitsPerSample, predictor,
             samplesPerPixel, sampleFormat, width, height, planarConfiguration);
 

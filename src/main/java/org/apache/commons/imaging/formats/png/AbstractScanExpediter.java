@@ -31,7 +31,7 @@ import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilterNone
 import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilterPaeth;
 import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilterSub;
 import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilterUp;
-import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilter;
+import org.apache.commons.imaging.formats.png.transparencyfilters.AbstractTransparencyFilter;
 
 abstract class AbstractScanExpediter {
 
@@ -45,12 +45,12 @@ abstract class AbstractScanExpediter {
     final int bitsPerPixel;
     final PngChunkPlte pngChunkPlte;
     final GammaCorrection gammaCorrection;
-    final TransparencyFilter transparencyFilter;
+    final AbstractTransparencyFilter abstractTransparencyFilter;
 
     AbstractScanExpediter(final int width, final int height, final InputStream is,
             final BufferedImage bi, final PngColorType pngColorType, final int bitDepth, final int bitsPerPixel,
             final PngChunkPlte pngChunkPLTE, final GammaCorrection gammaCorrection,
-            final TransparencyFilter transparencyFilter) {
+            final AbstractTransparencyFilter abstractTransparencyFilter) {
         this.width = width;
         this.height = height;
         this.is = is;
@@ -61,7 +61,7 @@ abstract class AbstractScanExpediter {
         this.bitsPerPixel = bitsPerPixel;
         this.pngChunkPlte = pngChunkPLTE;
         this.gammaCorrection = gammaCorrection;
-        this.transparencyFilter = transparencyFilter;
+        this.abstractTransparencyFilter = abstractTransparencyFilter;
     }
 
     public abstract void drive() throws ImagingException, IOException;
@@ -110,8 +110,8 @@ abstract class AbstractScanExpediter {
 
             int rgb = getPixelRgb(sample, sample, sample);
 
-            if (transparencyFilter != null) {
-                rgb = transparencyFilter.filter(rgb, sample);
+            if (abstractTransparencyFilter != null) {
+                rgb = abstractTransparencyFilter.filter(rgb, sample);
             }
 
             return rgb;
@@ -125,8 +125,8 @@ abstract class AbstractScanExpediter {
 
             int rgb = getPixelRgb(red, green, blue);
 
-            if (transparencyFilter != null) {
-                rgb = transparencyFilter.filter(rgb, -1);
+            if (abstractTransparencyFilter != null) {
+                rgb = abstractTransparencyFilter.filter(rgb, -1);
             }
 
             if (gammaCorrection != null) {
@@ -151,8 +151,8 @@ abstract class AbstractScanExpediter {
 
             int rgb = pngChunkPlte.getRgb(index);
 
-            if (transparencyFilter != null) {
-                rgb = transparencyFilter.filter(rgb, index);
+            if (abstractTransparencyFilter != null) {
+                rgb = abstractTransparencyFilter.filter(rgb, index);
             }
 
             return rgb;

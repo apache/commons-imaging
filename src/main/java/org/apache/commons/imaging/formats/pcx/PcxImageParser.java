@@ -43,13 +43,13 @@ import java.util.Properties;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.ImageParser;
+import org.apache.commons.imaging.AbstractImageParser;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ImageMetadata;
 
-public class PcxImageParser extends ImageParser<PcxImagingParameters> {
+public class PcxImageParser extends AbstractImageParser<PcxImagingParameters> {
     // ZSoft's official spec is at [BROKEN URL] http://www.qzx.com/pc-gpe/pcx.txt
     // (among other places) but it's pretty thin. The fileformat.fine document
     // at [BROEKN URL] http://www.fileformat.fine/format/pcx/egff.htm is a little better

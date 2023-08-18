@@ -26,7 +26,7 @@ import java.util.List;
 
 import org.apache.commons.imaging.common.Allocator;
 
-public class DhtSegment extends Segment {
+public class DhtSegment extends AbstractSegment {
     public static class HuffmanTable {
         // some arrays are better off one-based
         // to avoid subtractions by one later when indexing them

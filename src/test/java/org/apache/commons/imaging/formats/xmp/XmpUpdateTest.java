@@ -27,7 +27,7 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
-import org.apache.commons.imaging.ImageParser;
+import org.apache.commons.imaging.AbstractImageParser;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.AbstractImagingTest;
 import org.apache.commons.imaging.common.XmpImagingParameters;
@@ -67,7 +67,7 @@ public class XmpUpdateTest<E extends XmpImagingParameters<E>> extends AbstractIm
             final File tempFile = Files.createTempFile(imageFile.getName() + ".", "." + imageFormat.getDefaultExtension()).toFile();
             final BufferedImage image = Imaging.getBufferedImage(imageFile);
 
-            final ImageParser<E> parser = ImageParserFactory.getImageParser("." + imageFormat.getDefaultExtension());
+            final AbstractImageParser<E> parser = ImageParserFactory.getImageParser("." + imageFormat.getDefaultExtension());
             final E params = parser.getDefaultParameters();
             params.setXmpXml(xmpXml);
             try (FileOutputStream fos = new FileOutputStream(tempFile)) {

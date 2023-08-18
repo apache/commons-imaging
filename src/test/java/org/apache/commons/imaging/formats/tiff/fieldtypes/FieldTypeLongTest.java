@@ -27,7 +27,7 @@ public class FieldTypeLongTest {
 
     @Test
     public void testWriteDataWithNonNull() {
-        final FieldTypeLong fieldTypeLong = FieldType.IFD;
+        final FieldTypeLong fieldTypeLong = AbstractFieldType.IFD;
         final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
 
         try {

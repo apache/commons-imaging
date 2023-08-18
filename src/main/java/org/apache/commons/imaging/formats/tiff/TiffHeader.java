@@ -20,7 +20,7 @@ import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 
-public class TiffHeader extends TiffElement {
+public class TiffHeader extends AbstractTiffElement {
     public final ByteOrder byteOrder;
     public final int tiffVersion;
     public final long offsetToFirstIFD;

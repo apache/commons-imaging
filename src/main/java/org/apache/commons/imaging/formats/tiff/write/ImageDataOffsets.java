@@ -19,14 +19,14 @@ package org.apache.commons.imaging.formats.tiff.write;
 import java.util.Arrays;
 
 import org.apache.commons.imaging.common.Allocator;
-import org.apache.commons.imaging.formats.tiff.TiffElement;
+import org.apache.commons.imaging.formats.tiff.AbstractTiffElement;
 
 class ImageDataOffsets {
     final int[] imageDataOffsets;
     final TiffOutputField imageDataOffsetsField;
     final AbstractTiffOutputItem[] outputItems;
 
-    ImageDataOffsets(final TiffElement.DataElement[] imageData, final int[] imageDataOffsets, final TiffOutputField imageDataOffsetsField) {
+    ImageDataOffsets(final AbstractTiffElement.DataElement[] imageData, final int[] imageDataOffsets, final TiffOutputField imageDataOffsetsField) {
         this.imageDataOffsets = imageDataOffsets;
         this.imageDataOffsetsField = imageDataOffsetsField;
 

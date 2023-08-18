@@ -21,21 +21,21 @@ import java.util.List;
 
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
-import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
 
 public class TagInfoLong extends TagInfo {
-    public TagInfoLong(final String name, final int tag, final List<FieldType> dataTypes, final int length,
+    public TagInfoLong(final String name, final int tag, final List<AbstractFieldType> dataTypes, final int length,
         final TiffDirectoryType exifDirectory, final boolean isOffset) {
         super(name, tag, dataTypes, length, exifDirectory, isOffset);
     }
 
     public TagInfoLong(final String name, final int tag, final TiffDirectoryType directoryType) {
-        super(name, tag, FieldType.LONG, 1, directoryType);
+        super(name, tag, AbstractFieldType.LONG, 1, directoryType);
     }
 
     public TagInfoLong(final String name, final int tag, final TiffDirectoryType directoryType, final boolean isOffset) {
-        super(name, tag, FieldType.LONG, 1, directoryType, isOffset);
+        super(name, tag, AbstractFieldType.LONG, 1, directoryType, isOffset);
     }
 
     public byte[] encodeValue(final ByteOrder byteOrder, final int value) {

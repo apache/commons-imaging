@@ -23,7 +23,7 @@ import java.util.Arrays;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
-import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
 /**
  * Windows XP onwards store some tags using UTF-16LE, but the field type is byte
@@ -31,11 +31,11 @@ import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
  */
 public class TagInfoXpString extends TagInfo {
     public TagInfoXpString(final String name, final int tag, final TiffDirectoryType directoryType) {
-        super(name, tag, FieldType.BYTE, LENGTH_UNKNOWN, directoryType);
+        super(name, tag, AbstractFieldType.BYTE, LENGTH_UNKNOWN, directoryType);
     }
 
     @Override
-    public byte[] encodeValue(final FieldType fieldType, final Object value, final ByteOrder byteOrder)
+    public byte[] encodeValue(final AbstractFieldType abstractFieldType, final Object value, final ByteOrder byteOrder)
             throws ImagingException {
         if (!(value instanceof String)) {
             throw new ImagingException("Text value not String", value);
@@ -47,7 +47,7 @@ public class TagInfoXpString extends TagInfo {
 
     @Override
     public String getValue(final TiffField entry) throws ImagingException {
-        if (entry.getFieldType() != FieldType.BYTE) {
+        if (entry.getFieldType() != AbstractFieldType.BYTE) {
             throw new ImagingException("Text field not encoded as bytes.");
         }
         final byte[] bytes = entry.getByteArrayValue();

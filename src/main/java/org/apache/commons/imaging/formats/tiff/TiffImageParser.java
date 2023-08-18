@@ -40,7 +40,7 @@ import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.ImageParser;
+import org.apache.commons.imaging.AbstractImageParser;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.Allocator;
@@ -63,7 +63,7 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterYCbCr;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 
-public class TiffImageParser extends ImageParser<TiffImagingParameters> implements XmpEmbeddable<TiffImagingParameters> {
+public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> implements XmpEmbeddable<TiffImagingParameters> {
 
     private static final String DEFAULT_EXTENSION = ImageFormats.TIFF.getDefaultExtension();
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.TIFF.getExtensions();
@@ -385,7 +385,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
             }
         }
 
-        final TiffImageData imageData = directory.getTiffImageData();
+        final AbstractTiffImageData imageData = directory.getTiffImageData();
 
         final ImageDataReader dataReader = imageData.getDataReader(directory,
                 photometricInterpreter, bitsPerPixel, bitsPerSample, predictor,
@@ -886,7 +886,7 @@ public class TiffImageParser extends ImageParser<TiffImagingParameters> implemen
                 = new PhotometricInterpreterBiLevel(samplesPerPixel,
                         bitsPerSample, predictor, width, height, false);
 
-        final TiffImageData imageData = directory.getTiffImageData();
+        final AbstractTiffImageData imageData = directory.getTiffImageData();
 
         final ImageDataReader dataReader = imageData.getDataReader(directory,
                 photometricInterpreter, bitsPerPixel, bitsPerSample, predictor,

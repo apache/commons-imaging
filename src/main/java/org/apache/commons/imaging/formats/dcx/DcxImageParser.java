@@ -31,7 +31,7 @@ import java.util.List;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.ImageParser;
+import org.apache.commons.imaging.AbstractImageParser;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.Allocator;
@@ -40,7 +40,7 @@ import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.formats.pcx.PcxImageParser;
 import org.apache.commons.imaging.formats.pcx.PcxImagingParameters;
 
-public class DcxImageParser extends ImageParser<PcxImagingParameters> {
+public class DcxImageParser extends AbstractImageParser<PcxImagingParameters> {
     private static class DcxHeader {
 
         public static final int DCX_ID = 0x3ADE68B1;

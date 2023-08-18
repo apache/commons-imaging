@@ -134,7 +134,7 @@ public class PngWriter {
         writeChunk(os, ChunkType.IHDR, baos.toByteArray());
     }
 
-    private void writeChunkiTXt(final OutputStream os, final PngText.Itxt text)
+    private void writeChunkiTXt(final OutputStream os, final AbstractPngText.Itxt text)
             throws IOException, ImagingException {
         if (!isValidISO_8859_1(text.keyword)) {
             throw new ImagingException("PNG tEXt chunk keyword is not ISO-8859-1: " + text.keyword);
@@ -214,7 +214,7 @@ public class PngWriter {
         writeChunk(os, ChunkType.sCAL, baos.toByteArray());
     }
 
-    private void writeChunktEXt(final OutputStream os, final PngText.Text text)
+    private void writeChunktEXt(final OutputStream os, final AbstractPngText.Text text)
             throws IOException, ImagingException {
         if (!isValidISO_8859_1(text.keyword)) {
             throw new ImagingException("PNG tEXt chunk keyword is not ISO-8859-1: " + text.keyword);
@@ -268,7 +268,7 @@ public class PngWriter {
         writeChunk(os, ChunkType.iTXt, baos.toByteArray());
     }
 
-    private void writeChunkzTXt(final OutputStream os, final PngText.Ztxt text)
+    private void writeChunkzTXt(final OutputStream os, final AbstractPngText.Ztxt text)
             throws IOException, ImagingException {
         if (!isValidISO_8859_1(text.keyword)) {
             throw new ImagingException("PNG zTXt chunk keyword is not ISO-8859-1: " + text.keyword);
@@ -449,15 +449,15 @@ public class PngWriter {
             writeChunkXmpiTXt(os, xmpXml);
         }
 
-        final List<? extends PngText> outputTexts = params.getTextChunks();
+        final List<? extends AbstractPngText> outputTexts = params.getTextChunks();
         if (outputTexts != null) {
-            for (final PngText text : outputTexts) {
-                if (text instanceof PngText.Text) {
-                    writeChunktEXt(os, (PngText.Text) text);
-                } else if (text instanceof PngText.Ztxt) {
-                    writeChunkzTXt(os, (PngText.Ztxt) text);
-                } else if (text instanceof PngText.Itxt) {
-                    writeChunkiTXt(os, (PngText.Itxt) text);
+            for (final AbstractPngText text : outputTexts) {
+                if (text instanceof AbstractPngText.Text) {
+                    writeChunktEXt(os, (AbstractPngText.Text) text);
+                } else if (text instanceof AbstractPngText.Ztxt) {
+                    writeChunkzTXt(os, (AbstractPngText.Ztxt) text);
+                } else if (text instanceof AbstractPngText.Itxt) {
+                    writeChunkiTXt(os, (AbstractPngText.Itxt) text);
                 } else {
                     throw new ImagingException("Unknown text to embed in PNG: " + text);
                 }

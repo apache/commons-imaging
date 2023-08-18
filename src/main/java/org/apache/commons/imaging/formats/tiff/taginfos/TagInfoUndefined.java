@@ -17,10 +17,10 @@
 package org.apache.commons.imaging.formats.tiff.taginfos;
 
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
-import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
 public class TagInfoUndefined extends TagInfoByte {
     public TagInfoUndefined(final String name, final int tag, final TiffDirectoryType directoryType) {
-        super(name, tag, FieldType.UNDEFINED, directoryType);
+        super(name, tag, AbstractFieldType.UNDEFINED, directoryType);
     }
 }

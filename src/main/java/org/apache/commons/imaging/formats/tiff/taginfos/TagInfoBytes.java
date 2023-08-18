@@ -20,21 +20,21 @@ import java.nio.ByteOrder;
 import java.util.List;
 
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
-import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
 public class TagInfoBytes extends TagInfo {
-    public TagInfoBytes(final String name, final int tag, final FieldType fieldType,
+    public TagInfoBytes(final String name, final int tag, final AbstractFieldType abstractFieldType,
             final int length, final TiffDirectoryType directoryType) {
-        super(name, tag, fieldType, length, directoryType);
+        super(name, tag, abstractFieldType, length, directoryType);
     }
 
     public TagInfoBytes(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
-        super(name, tag, FieldType.BYTE, length, directoryType);
+        super(name, tag, AbstractFieldType.BYTE, length, directoryType);
     }
 
-    public TagInfoBytes(final String name, final int tag, final List<FieldType> fieldTypes,
+    public TagInfoBytes(final String name, final int tag, final List<AbstractFieldType> abstractFieldTypes,
             final int length, final TiffDirectoryType directoryType) {
-        super(name, tag, fieldTypes, length, directoryType);
+        super(name, tag, abstractFieldTypes, length, directoryType);
     }
 
     public byte[] encodeValue(final ByteOrder byteOrder, final byte... values) {

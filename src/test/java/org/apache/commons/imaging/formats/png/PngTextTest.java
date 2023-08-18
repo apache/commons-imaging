@@ -42,23 +42,23 @@ public class PngTextTest extends AbstractPngTest {
 
         final PngImagingParameters writeParams = new PngImagingParameters();
 
-        final List<PngText> writeTexts = new ArrayList<>();
+        final List<AbstractPngText> writeTexts = new ArrayList<>();
         {
             final String keyword = "a";
             final String text = "b";
-            writeTexts.add(new PngText.Text(keyword, text));
+            writeTexts.add(new AbstractPngText.Text(keyword, text));
         }
         {
             final String keyword = "c";
             final String text = "d";
-            writeTexts.add(new PngText.Ztxt(keyword, text));
+            writeTexts.add(new AbstractPngText.Ztxt(keyword, text));
         }
         {
             final String keyword = "e";
             final String text = "f";
             final String languageTag = "g";
             final String translatedKeyword = "h";
-            writeTexts.add(new PngText.Itxt(keyword, text, languageTag,
+            writeTexts.add(new AbstractPngText.Itxt(keyword, text, languageTag,
                     translatedKeyword));
         }
 
@@ -74,9 +74,9 @@ public class PngTextTest extends AbstractPngTest {
         final PngImageInfo imageInfo = (PngImageInfo) Imaging.getImageInfo(bytes);
         assertNotNull(imageInfo);
 
-        final List<PngText> readTexts = imageInfo.getTextChunks();
+        final List<AbstractPngText> readTexts = imageInfo.getTextChunks();
         assertEquals(readTexts.size(), 3);
-        for (final PngText text : readTexts) {
+        for (final AbstractPngText text : readTexts) {
             if (text.keyword.equals("a")) {
                 assertEquals(text.text, "b");
             } else if (text.keyword.equals("c")) {

@@ -25,10 +25,10 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.formats.png.PngConstants;
-import org.apache.commons.imaging.formats.png.PngText;
+import org.apache.commons.imaging.formats.png.AbstractPngText;
 import org.apache.commons.io.IOUtils;
 
-public class PngChunkZtxt extends PngTextChunk {
+public class PngChunkZtxt extends AbstractPngTextChunk {
 
     private final String keyword;
     private final String text;
@@ -53,8 +53,8 @@ public class PngChunkZtxt extends PngTextChunk {
     }
 
     @Override
-    public PngText getContents() {
-        return new PngText.Ztxt(keyword, text);
+    public AbstractPngText getContents() {
+        return new AbstractPngText.Ztxt(keyword, text);
     }
 
     /**

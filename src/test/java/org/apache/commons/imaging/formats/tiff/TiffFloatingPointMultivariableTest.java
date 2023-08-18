@@ -325,20 +325,20 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
             outDir.add(TiffTagConstants.TIFF_TAG_STRIP_BYTE_COUNTS, nBytesInBlock);
         }
 
-        final TiffElement.DataElement[] imageData = new TiffElement.DataElement[blocks.length];
+        final AbstractTiffElement.DataElement[] imageData = new AbstractTiffElement.DataElement[blocks.length];
         for (int i = 0; i < blocks.length; i++) {
-            imageData[i] = new TiffImageData.Data(0, blocks[i].length, blocks[i]);
+            imageData[i] = new AbstractTiffImageData.Data(0, blocks[i].length, blocks[i]);
         }
 
-        TiffImageData tiffImageData;
+        AbstractTiffImageData abstractTiffImageData;
         if (useTiles) {
-            tiffImageData
-                = new TiffImageData.Tiles(imageData, nColsInBlock, nRowsInBlock);
+            abstractTiffImageData
+                = new AbstractTiffImageData.Tiles(imageData, nColsInBlock, nRowsInBlock);
         } else {
-            tiffImageData
-                = new TiffImageData.Strips(imageData, nRowsInBlock);
+            abstractTiffImageData
+                = new AbstractTiffImageData.Strips(imageData, nRowsInBlock);
         }
-        outDir.setTiffImageData(tiffImageData);
+        outDir.setTiffImageData(abstractTiffImageData);
 
         try (FileOutputStream fos = new FileOutputStream(outputFile);
             BufferedOutputStream bos = new BufferedOutputStream(fos)) {

@@ -35,7 +35,7 @@ import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class ByteSourceDataTest extends ByteSourceTest {
+public class ByteSourceDataTest extends AbstractByteSourceTest {
 
     private interface ByteSourceFactory {
         ByteSource getByteSource(byte[] src) throws IOException;

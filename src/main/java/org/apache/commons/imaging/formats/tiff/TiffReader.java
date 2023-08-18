@@ -39,7 +39,7 @@ import org.apache.commons.imaging.formats.tiff.TiffDirectory.ImageDataElement;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
-import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoDirectory;
 
 public class TiffReader extends BinaryFileParser {
@@ -158,16 +158,16 @@ public class TiffReader extends BinaryFileParser {
         throw new ImagingException("Invalid TIFF byte order " + (0xff & byteOrderByte));
     }
 
-    private TiffImageData getTiffRawImageData(final ByteSource byteSource,
+    private AbstractTiffImageData getTiffRawImageData(final ByteSource byteSource,
             final TiffDirectory directory) throws ImagingException, IOException {
 
         final List<ImageDataElement> elements = directory.getTiffRawImageDataElements();
-        final TiffImageData.Data[] data = new TiffImageData.Data[elements.size()];
+        final AbstractTiffImageData.Data[] data = new AbstractTiffImageData.Data[elements.size()];
 
         for (int i = 0; i < elements.size(); i++) {
             final TiffDirectory.ImageDataElement element = elements.get(i);
             final byte[] bytes = byteSource.getByteArray(element.offset, element.length);
-            data[i] = new TiffImageData.Data(element.offset, element.length, bytes);
+            data[i] = new AbstractTiffImageData.Data(element.offset, element.length, bytes);
         }
 
         if (directory.imageDataInStrips()) {
@@ -192,7 +192,7 @@ public class TiffReader extends BinaryFileParser {
 
             }
 
-            return new TiffImageData.Strips(data, rowsPerStrip);
+            return new AbstractTiffImageData.Strips(data, rowsPerStrip);
         }
         final TiffField tileWidthField = directory.findField(TiffTagConstants.TIFF_TAG_TILE_WIDTH);
         if (null == tileWidthField) {
@@ -206,7 +206,7 @@ public class TiffReader extends BinaryFileParser {
         }
         final int tileLength = tileLengthField.getIntValue();
 
-        return new TiffImageData.Tiles(data, tileWidth, tileLength);
+        return new AbstractTiffImageData.Tiles(data, tileWidth, tileLength);
     }
 
     public void read(final ByteSource byteSource, final FormatCompliance formatCompliance, final Listener listener)
@@ -317,16 +317,16 @@ public class TiffReader extends BinaryFileParser {
                     continue;
                 }
 
-                final FieldType fieldType;
+                final AbstractFieldType abstractFieldType;
                 try {
-                    fieldType = FieldType.getFieldType(type);
+                    abstractFieldType = AbstractFieldType.getFieldType(type);
                 } catch (final ImagingException imageReadEx) {
                     // skip over unknown fields types, since we
                     // can't calculate their size without
                     // knowing their type
                     continue;
                 }
-                final long valueLength = count * fieldType.getSize();
+                final long valueLength = count * abstractFieldType.getSize();
                 final byte[] value;
                 if (valueLength > TIFF_ENTRY_MAX_VALUE_LENGTH) {
                     if ((offset < 0) || (offset + valueLength) > byteSource.size()) {
@@ -345,7 +345,7 @@ public class TiffReader extends BinaryFileParser {
                     value = offsetBytes;
                 }
 
-                final TiffField field = new TiffField(tag, dirType, fieldType, count,
+                final TiffField field = new TiffField(tag, dirType, abstractFieldType, count,
                         offset, value, getByteOrder(), i);
 
                 fields.add(field);
@@ -367,7 +367,7 @@ public class TiffReader extends BinaryFileParser {
 
             if (listener.readImageData()) {
                 if (directory.hasTiffImageData()) {
-                    final TiffImageData rawImageData = getTiffRawImageData(
+                    final AbstractTiffImageData rawImageData = getTiffRawImageData(
                             byteSource, directory);
                     directory.setTiffImageData(rawImageData);
                 }

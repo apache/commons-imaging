@@ -32,14 +32,14 @@ import java.util.StringTokenizer;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.ImageParser;
+import org.apache.commons.imaging.AbstractImageParser;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.palette.PaletteFactory;
 
-public class PnmImageParser extends ImageParser<PnmImagingParameters> {
+public class PnmImageParser extends AbstractImageParser<PnmImagingParameters> {
 
     private static final String DEFAULT_EXTENSION = ImageFormats.PNM.getDefaultExtension();
     private static final String[] ACCEPTED_EXTENSIONS = {

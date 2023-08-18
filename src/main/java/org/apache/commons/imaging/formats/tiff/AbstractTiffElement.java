@@ -18,8 +18,8 @@ package org.apache.commons.imaging.formats.tiff;
 
 import java.util.Comparator;
 
-public abstract class TiffElement {
-    public abstract static class DataElement extends TiffElement {
+public abstract class AbstractTiffElement {
+    public abstract static class DataElement extends AbstractTiffElement {
         private final byte[] data;
 
         public DataElement(final long offset, final int length, final byte[] data) {
@@ -36,7 +36,7 @@ public abstract class TiffElement {
             return data.length;
         }
     }
-    public static final class Stub extends TiffElement {
+    public static final class Stub extends AbstractTiffElement {
         public Stub(final long offset, final int length) {
             super(offset, length);
         }
@@ -48,13 +48,13 @@ public abstract class TiffElement {
         }
 
     }
-    public static final Comparator<TiffElement> COMPARATOR = Comparator.comparingLong(e -> e.offset);
+    public static final Comparator<AbstractTiffElement> COMPARATOR = Comparator.comparingLong(e -> e.offset);
 
     public final long offset;
 
     public final int length;
 
-    public TiffElement(final long offset, final int length) {
+    public AbstractTiffElement(final long offset, final int length) {
         this.offset = offset;
         this.length = length;
     }

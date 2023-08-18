@@ -22,15 +22,15 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkPlte;
-import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilter;
+import org.apache.commons.imaging.formats.png.transparencyfilters.AbstractTransparencyFilter;
 
 class ScanExpediterSimple extends AbstractScanExpediter {
     ScanExpediterSimple(final int width, final int height, final InputStream is,
             final BufferedImage bi, final PngColorType pngColorType, final int bitDepth, final int bitsPerPixel,
             final PngChunkPlte pngChunkPLTE, final GammaCorrection gammaCorrection,
-            final TransparencyFilter transparencyFilter) {
+            final AbstractTransparencyFilter abstractTransparencyFilter) {
         super(width, height, is, bi, pngColorType, bitDepth, bitsPerPixel,
-                pngChunkPLTE, gammaCorrection, transparencyFilter);
+                pngChunkPLTE, gammaCorrection, abstractTransparencyFilter);
     }
 
     @Override

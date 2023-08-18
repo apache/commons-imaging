@@ -28,7 +28,7 @@ import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
-import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoByte;
@@ -100,7 +100,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
                     }
 
                     final TagInfo tagInfo = srcField.getTagInfo();
-                    final FieldType fieldType = srcField.getFieldType();
+                    final AbstractFieldType abstractFieldType = srcField.getFieldType();
                     // byte bytes[] = srcField.fieldType.getRawBytes(srcField);
 
                     // Debug.debug("tagInfo", tagInfo);
@@ -109,7 +109,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
 
                     // Debug.debug("value", Debug.getType(value));
 
-                    final byte[] bytes = tagInfo.encodeValue(fieldType, value,
+                    final byte[] bytes = tagInfo.encodeValue(abstractFieldType, value,
                             byteOrder);
 
                     // if (tagInfo.isUnknown())
@@ -118,9 +118,9 @@ public class TiffImageMetadata extends GenericImageMetadata {
                     // + Integer.toHexString(srcField.tag)
                     // + ") bytes", bytes);
 
-                    final int count = bytes.length / fieldType.getSize();
+                    final int count = bytes.length / abstractFieldType.getSize();
                     final TiffOutputField dstField = new TiffOutputField(
-                            srcField.getTag(), tagInfo, fieldType, count, bytes);
+                            srcField.getTag(), tagInfo, abstractFieldType, count, bytes);
                     dstField.setSortHint(srcField.getSortHint());
                     dstDir.add(dstField);
                 }
@@ -139,7 +139,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
             return directory.getTiffImage(byteOrder);
         }
 
-        public TiffImageData getTiffImageData() {
+        public AbstractTiffImageData getTiffImageData() {
             return directory.getTiffImageData();
         }
 

@@ -65,7 +65,7 @@ import org.apache.commons.imaging.internal.ImageParserFactory;
  * <h3>Optional parameters for image reading and writing</h3>
  *
  * <p>Many of the operations provided in this class as static calls can be accessed directly
- * using format-specific {@link ImageParser} instances. These static methods are provided
+ * using format-specific {@link AbstractImageParser} instances. These static methods are provided
  * for convenience in simple use cases.</p>
  *
  * <h3>Example code</h3>
@@ -119,7 +119,7 @@ public final class Imaging {
     }
 
     private static String dumpImageFile(final ByteSource byteSource) throws ImagingException, IOException {
-        final ImageParser<?> imageParser = ImageParserFactory.getImageParser(byteSource);
+        final AbstractImageParser<?> imageParser = ImageParserFactory.getImageParser(byteSource);
         return imageParser.dumpImageFile(byteSource);
     }
 
@@ -148,7 +148,7 @@ public final class Imaging {
     }
 
     private static List<BufferedImage> getAllBufferedImages(final ByteSource byteSource) throws ImagingException, IOException {
-        final ImageParser<?> imageParser = ImageParserFactory.getImageParser(byteSource);
+        final AbstractImageParser<?> imageParser = ImageParserFactory.getImageParser(byteSource);
         return imageParser.getAllBufferedImages(byteSource);
     }
 
@@ -197,7 +197,7 @@ public final class Imaging {
     }
 
     private static BufferedImage getBufferedImage(final ByteSource byteSource) throws ImagingException, IOException {
-        final ImageParser<?> imageParser = ImageParserFactory.getImageParser(byteSource);
+        final AbstractImageParser<?> imageParser = ImageParserFactory.getImageParser(byteSource);
         return imageParser.getBufferedImage(byteSource, null);
     }
 
@@ -274,7 +274,7 @@ public final class Imaging {
     }
 
     private static FormatCompliance getFormatCompliance(final ByteSource byteSource) throws ImagingException, IOException {
-        final ImageParser<?> imageParser = ImageParserFactory.getImageParser(byteSource);
+        final AbstractImageParser<?> imageParser = ImageParserFactory.getImageParser(byteSource);
         return imageParser.getFormatCompliance(byteSource);
     }
 
@@ -368,7 +368,7 @@ public final class Imaging {
     }
 
     private static byte[] getIccProfileBytes(final ByteSource byteSource) throws ImagingException, IOException {
-        final ImageParser<?> imageParser = ImageParserFactory.getImageParser(byteSource);
+        final AbstractImageParser<?> imageParser = ImageParserFactory.getImageParser(byteSource);
         return imageParser.getIccProfileBytes(byteSource, null);
     }
 
@@ -490,7 +490,7 @@ public final class Imaging {
      * @throws IOException if it fails to read the image data
      */
     public static Dimension getImageSize(final ByteSource byteSource) throws ImagingException, IOException {
-        final ImageParser<?> imageParser = ImageParserFactory.getImageParser(byteSource);
+        final AbstractImageParser<?> imageParser = ImageParserFactory.getImageParser(byteSource);
         return imageParser.getImageSize(byteSource, null);
     }
 
@@ -541,7 +541,7 @@ public final class Imaging {
     }
 
     private static ImageMetadata getMetadata(final ByteSource byteSource) throws ImagingException, IOException {
-        final ImageParser<?> imageParser = ImageParserFactory.getImageParser(byteSource);
+        final AbstractImageParser<?> imageParser = ImageParserFactory.getImageParser(byteSource);
         return imageParser.getMetadata(byteSource, null);
     }
 
@@ -608,7 +608,7 @@ public final class Imaging {
      * @throws IOException if it fails to read the image data
      */
     public static String getXmpXml(final ByteSource byteSource) throws ImagingException, IOException {
-        final ImageParser<?> imageParser = ImageParserFactory.getImageParser(byteSource);
+        final AbstractImageParser<?> imageParser = ImageParserFactory.getImageParser(byteSource);
         if (imageParser instanceof XmpEmbeddable) {
             return ((XmpEmbeddable<?>) imageParser).getXmpXml(byteSource, null);
         }
@@ -822,7 +822,7 @@ public final class Imaging {
 
         final String normalizedFilename = fileName.toLowerCase(Locale.ENGLISH);
 
-        for (final ImageParser<?> imageParser : ImageParser.getAllImageParsers()) {
+        for (final AbstractImageParser<?> imageParser : AbstractImageParser.getAllImageParsers()) {
             for (final String extension : imageParser.getAcceptedExtensions()) {
                 if (normalizedFilename.endsWith(extension.toLowerCase(Locale.ENGLISH))) {
                     return true;
@@ -880,7 +880,7 @@ public final class Imaging {
         Objects.requireNonNull(outputStream, "outputStream");
         Objects.requireNonNull(format, "format");
 
-        final ImageParser<?> imageParser = ImageParserFactory.getImageParser(format);
+        final AbstractImageParser<?> imageParser = ImageParserFactory.getImageParser(format);
         imageParser.writeImage(src, outputStream, null);
     }
 

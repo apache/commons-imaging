@@ -53,7 +53,7 @@ public class PngImagingParameters extends XmpImagingParameters<PngImagingParamet
      *
      * <p>Valid values: a list of WriteTexts.</p>
      */
-    private List<? extends PngText> textChunks;
+    private List<? extends AbstractPngText> textChunks;
 
     public byte getBitDepth() {
         return bitDepth;
@@ -63,7 +63,7 @@ public class PngImagingParameters extends XmpImagingParameters<PngImagingParamet
         return physicalScale;
     }
 
-    public List<? extends PngText> getTextChunks() {
+    public List<? extends AbstractPngText> getTextChunks() {
         return textChunks != null ? Collections.unmodifiableList(textChunks) : null;
     }
 
@@ -121,7 +121,7 @@ public class PngImagingParameters extends XmpImagingParameters<PngImagingParamet
         return asThis();
     }
 
-    public PngImagingParameters setTextChunks(final List<? extends PngText> textChunks) {
+    public PngImagingParameters setTextChunks(final List<? extends AbstractPngText> textChunks) {
         this.textChunks = Collections.unmodifiableList(textChunks);
         return asThis();
     }

@@ -16,8 +16,8 @@
  */
 package org.apache.commons.imaging.formats.png;
 
-public abstract class PngText {
-    public static class Itxt extends PngText {
+public abstract class AbstractPngText {
+    public static class Itxt extends AbstractPngText {
 
         /*
          * The language tag defined in [RFC-3066] indicates the human language
@@ -39,13 +39,13 @@ public abstract class PngText {
             this.translatedKeyword = translatedKeyword;
         }
     }
-    public static class Text extends PngText {
+    public static class Text extends AbstractPngText {
         public Text(final String keyword, final String text) {
             super(keyword, text);
         }
     }
 
-    public static class Ztxt extends PngText {
+    public static class Ztxt extends AbstractPngText {
         public Ztxt(final String keyword, final String text) {
             super(keyword, text);
         }
@@ -55,7 +55,7 @@ public abstract class PngText {
 
     public final String text;
 
-    public PngText(final String keyword, final String text) {
+    public AbstractPngText(final String keyword, final String text) {
         this.keyword = keyword;
         this.text = text;
     }

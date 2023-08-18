@@ -24,30 +24,30 @@ import java.util.Arrays;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
-import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 
 public class TiffOutputField {
     private static final String NEWLINE = System.lineSeparator();
     protected static TiffOutputField createOffsetField(final TagInfo tagInfo,
             final ByteOrder byteOrder) throws ImagingException {
-        return new TiffOutputField(tagInfo, FieldType.LONG, 1,
-                FieldType.LONG.writeData(0, byteOrder));
+        return new TiffOutputField(tagInfo, AbstractFieldType.LONG, 1,
+                AbstractFieldType.LONG.writeData(0, byteOrder));
     }
     public final int tag;
     public final TagInfo tagInfo;
-    public final FieldType fieldType;
+    public final AbstractFieldType abstractFieldType;
     public final int count;
     private byte[] bytes;
     private final AbstractTiffOutputItem.Value separateValueItem;
 
     private int sortHint = -1;
 
-    public TiffOutputField(final int tag, final TagInfo tagInfo, final FieldType fieldType,
+    public TiffOutputField(final int tag, final TagInfo tagInfo, final AbstractFieldType abstractFieldType,
             final int count, final byte[] bytes) {
         this.tag = tag;
         this.tagInfo = tagInfo;
-        this.fieldType = fieldType;
+        this.abstractFieldType = abstractFieldType;
         this.count = count;
         this.bytes = bytes;
 
@@ -60,9 +60,9 @@ public class TiffOutputField {
         }
     }
 
-    public TiffOutputField(final TagInfo tagInfo, final FieldType fieldType, final int count,
+    public TiffOutputField(final TagInfo tagInfo, final AbstractFieldType abstractFieldType, final int count,
             final byte[] bytes) {
-        this(tagInfo.tag, tagInfo, fieldType, count, bytes);
+        this(tagInfo.tag, tagInfo, abstractFieldType, count, bytes);
     }
 
     public boolean bytesEqual(final byte[] data) {
@@ -125,7 +125,7 @@ public class TiffOutputField {
         result.append(NEWLINE);
 
         result.append(prefix);
-        result.append(fieldType);
+        result.append(abstractFieldType);
         result.append(NEWLINE);
 
         return result.toString();
@@ -134,7 +134,7 @@ public class TiffOutputField {
     protected void writeField(final BinaryOutputStream bos) throws IOException,
             ImagingException {
         bos.write2Bytes(tag);
-        bos.write2Bytes(fieldType.getType());
+        bos.write2Bytes(abstractFieldType.getType());
         bos.write4Bytes(count);
 
         if (isLocalValue()) {

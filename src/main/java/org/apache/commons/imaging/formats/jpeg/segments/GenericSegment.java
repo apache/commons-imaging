@@ -23,7 +23,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
-public abstract class GenericSegment extends Segment {
+public abstract class GenericSegment extends AbstractSegment {
     private final byte[] segmentData;
 
     public GenericSegment(final int marker, final byte[] bytes) {

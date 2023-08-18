@@ -17,13 +17,13 @@
 package org.apache.commons.imaging.formats.tiff.taginfos;
 
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
-import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
 /**
  * A TIFF tag whose definition isn't known.
  */
 public final class TagInfoUnknown extends TagInfoByte {
     public TagInfoUnknown(final String name, final int tag, final TiffDirectoryType exifDirectory) {
-        super(name, tag, FieldType.ANY, exifDirectory);
+        super(name, tag, AbstractFieldType.ANY, exifDirectory);
     }
 }

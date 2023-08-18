@@ -34,12 +34,12 @@ import java.util.Properties;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.ImageParser;
+import org.apache.commons.imaging.AbstractImageParser;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.ImageMetadata;
 
-public class WbmpImageParser extends ImageParser<WbmpImagingParameters> {
+public class WbmpImageParser extends AbstractImageParser<WbmpImagingParameters> {
 
     static class WbmpHeader {
         final int typeField;

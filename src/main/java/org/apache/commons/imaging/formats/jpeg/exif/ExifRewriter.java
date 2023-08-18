@@ -36,7 +36,7 @@ import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.formats.jpeg.JpegUtils;
-import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterBase;
+import org.apache.commons.imaging.formats.tiff.write.AbstractTiffImageWriter;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossless;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
@@ -330,7 +330,7 @@ public class ExifRewriter extends BinaryFileParser {
         final JFIFPieces jfifPieces = analyzeJfif(byteSource);
         final List<JFIFPiece> pieces = jfifPieces.pieces;
 
-        TiffImageWriterBase writer;
+        AbstractTiffImageWriter writer;
         // Just use first APP1 segment for now.
         // Multiple APP1 segments are rare and poorly supported.
         if (!jfifPieces.exifPieces.isEmpty()) {
@@ -456,7 +456,7 @@ public class ExifRewriter extends BinaryFileParser {
         final JFIFPieces jfifPieces = analyzeJfif(byteSource);
         final List<JFIFPiece> pieces = jfifPieces.pieces;
 
-        final TiffImageWriterBase writer = new TiffImageWriterLossy(
+        final AbstractTiffImageWriter writer = new TiffImageWriterLossy(
                 outputSet.byteOrder);
 
         final boolean includeEXIFPrefix = true;
@@ -515,7 +515,7 @@ public class ExifRewriter extends BinaryFileParser {
         updateExifMetadataLossy(byteSource, os, outputSet);
     }
 
-    private byte[] writeExifSegment(final TiffImageWriterBase writer,
+    private byte[] writeExifSegment(final AbstractTiffImageWriter writer,
             final TiffOutputSet outputSet, final boolean includeEXIFPrefix)
             throws IOException, ImagingException {
         final ByteArrayOutputStream os = new ByteArrayOutputStream();

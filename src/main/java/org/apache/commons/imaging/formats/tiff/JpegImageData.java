@@ -17,7 +17,7 @@
 
 package org.apache.commons.imaging.formats.tiff;
 
-public class JpegImageData extends TiffElement.DataElement {
+public class JpegImageData extends AbstractTiffElement.DataElement {
     public JpegImageData(final long offset, final int length, final byte[] data) {
         super(offset, length, data);
     }

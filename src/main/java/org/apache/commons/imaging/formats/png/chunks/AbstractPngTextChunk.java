@@ -16,15 +16,15 @@
  */
 package org.apache.commons.imaging.formats.png.chunks;
 
-import org.apache.commons.imaging.formats.png.PngText;
+import org.apache.commons.imaging.formats.png.AbstractPngText;
 
-public abstract class PngTextChunk extends PngChunk {
+public abstract class AbstractPngTextChunk extends PngChunk {
 
-    public PngTextChunk(final int length, final int chunkType, final int crc, final byte[] bytes) {
+    public AbstractPngTextChunk(final int length, final int chunkType, final int crc, final byte[] bytes) {
         super(length, chunkType, crc, bytes);
     }
 
-    public abstract PngText getContents();
+    public abstract AbstractPngText getContents();
 
     public abstract String getKeyword();
 

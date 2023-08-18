@@ -27,9 +27,9 @@ import org.apache.commons.imaging.formats.tiff.datareaders.DataReaderTiled;
 import org.apache.commons.imaging.formats.tiff.datareaders.ImageDataReader;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 
-public abstract class TiffImageData {
+public abstract class AbstractTiffImageData {
 
-    public static class Data extends TiffElement.DataElement {
+    public static class Data extends AbstractTiffElement.DataElement {
 
         public Data(final long offset, final int length, final byte[] data) {
             super(offset, length, data);
@@ -42,13 +42,13 @@ public abstract class TiffImageData {
 
     }
 
-    public static class Strips extends TiffImageData {
+    public static class Strips extends AbstractTiffImageData {
 
-        private final TiffElement.DataElement[] strips;
+        private final AbstractTiffElement.DataElement[] strips;
         // public final byte strips[][];
         public final int rowsPerStrip;
 
-        public Strips(final TiffElement.DataElement[] strips, final int rowsPerStrip) {
+        public Strips(final AbstractTiffElement.DataElement[] strips, final int rowsPerStrip) {
             this.strips = strips;
             this.rowsPerStrip = rowsPerStrip;
         }
@@ -69,11 +69,11 @@ public abstract class TiffImageData {
         }
 
         @Override
-        public TiffElement.DataElement[] getImageData() {
+        public AbstractTiffElement.DataElement[] getImageData() {
             return strips;
         }
 
-        public TiffElement.DataElement getImageData(final int offset) {
+        public AbstractTiffElement.DataElement getImageData(final int offset) {
             return strips[offset];
         }
 
@@ -88,15 +88,15 @@ public abstract class TiffImageData {
 
     }
 
-    public static class Tiles extends TiffImageData {
+    public static class Tiles extends AbstractTiffImageData {
 
-        public final TiffElement.DataElement[] tiles;
+        public final AbstractTiffElement.DataElement[] tiles;
 
         // public final byte tiles[][];
         private final int tileWidth;
         private final int tileLength;
 
-        public Tiles(final TiffElement.DataElement[] tiles, final int tileWidth, final int tileLength) {
+        public Tiles(final AbstractTiffElement.DataElement[] tiles, final int tileWidth, final int tileLength) {
             this.tiles = tiles;
             this.tileWidth = tileWidth;
             this.tileLength = tileLength;
@@ -118,7 +118,7 @@ public abstract class TiffImageData {
         }
 
         @Override
-        public TiffElement.DataElement[] getImageData() {
+        public AbstractTiffElement.DataElement[] getImageData() {
             return tiles;
         }
 
@@ -169,7 +169,7 @@ public abstract class TiffImageData {
       TiffPlanarConfiguration planarConfiguration,
       ByteOrder byteOrder) throws IOException, ImagingException;
 
-    public abstract TiffElement.DataElement[] getImageData();
+    public abstract AbstractTiffElement.DataElement[] getImageData();
 
     public abstract boolean stripsNotTiles();
 }

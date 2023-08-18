@@ -38,7 +38,7 @@ import org.apache.commons.imaging.ColorTools;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.ImageParser;
+import org.apache.commons.imaging.AbstractImageParser;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.Allocator;
@@ -58,14 +58,14 @@ import org.apache.commons.imaging.formats.png.chunks.PngChunkPlte;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkScal;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkText;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkZtxt;
-import org.apache.commons.imaging.formats.png.chunks.PngTextChunk;
-import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilter;
+import org.apache.commons.imaging.formats.png.chunks.AbstractPngTextChunk;
+import org.apache.commons.imaging.formats.png.transparencyfilters.AbstractTransparencyFilter;
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilterGrayscale;
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilterIndexedColor;
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilterTrueColor;
 import org.apache.commons.imaging.icc.IccProfileParser;
 
-public class PngImageParser extends ImageParser<PngImagingParameters>  implements XmpEmbeddable<PngImagingParameters> {
+public class PngImageParser extends AbstractImageParser<PngImagingParameters>  implements XmpEmbeddable<PngImagingParameters> {
 
     private static final Logger LOGGER = Logger.getLogger(PngImageParser.class.getName());
 
@@ -197,12 +197,12 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
 
         baos = null;
 
-        TransparencyFilter transparencyFilter = null;
+        AbstractTransparencyFilter abstractTransparencyFilter = null;
 
         final List<PngChunk> tRNSs = filterChunks(chunks, ChunkType.tRNS);
         if (!tRNSs.isEmpty()) {
             final PngChunk pngChunktRNS = tRNSs.get(0);
-            transparencyFilter = getTransparencyFilter(pngChunkIHDR.getPngColorType(), pngChunktRNS);
+            abstractTransparencyFilter = getTransparencyFilter(pngChunkIHDR.getPngColorType(), pngChunktRNS);
         }
 
         ICC_Profile iccProfile = null;
@@ -272,7 +272,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
 
             final int bitsPerPixel = bitDepth * pngColorType.getSamplesPerPixel();
 
-            final boolean hasAlpha = pngColorType.hasAlpha() || transparencyFilter != null;
+            final boolean hasAlpha = pngColorType.hasAlpha() || abstractTransparencyFilter != null;
 
             BufferedImage result;
             if (pngColorType.isGreyscale()) {
@@ -290,12 +290,12 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
                 case NONE:
                     abstractScanExpediter = new ScanExpediterSimple(width, height, iis,
                             result, pngColorType, bitDepth, bitsPerPixel,
-                            pngChunkPLTE, gammaCorrection, transparencyFilter);
+                            pngChunkPLTE, gammaCorrection, abstractTransparencyFilter);
                     break;
                 case ADAM7:
                     abstractScanExpediter = new ScanExpediterInterlaced(width, height, iis,
                             result, pngColorType, bitDepth, bitsPerPixel,
-                            pngChunkPLTE, gammaCorrection, transparencyFilter);
+                            pngChunkPLTE, gammaCorrection, abstractTransparencyFilter);
                     break;
                 default:
                     throw new ImagingException("Unknown InterlaceMethod: " + pngChunkIHDR.getInterlaceMethod());
@@ -438,7 +438,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
 
         final int chunkCount = tEXts.size() + zTXts.size() + iTXts.size();
         final List<String> comments = Allocator.arrayList(chunkCount);
-        final List<PngText> textChunks = Allocator.arrayList(chunkCount);
+        final List<AbstractPngText> textChunks = Allocator.arrayList(chunkCount);
 
         for (final PngChunk tEXt : tEXts) {
             final PngChunkText pngChunktEXt = (PngChunkText) tEXt;
@@ -551,7 +551,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
         final GenericImageMetadata result = new GenericImageMetadata();
 
         for (final PngChunk chunk : chunks) {
-            final PngTextChunk textChunk = (PngTextChunk) chunk;
+            final AbstractPngTextChunk textChunk = (AbstractPngTextChunk) chunk;
 
             result.add(textChunk.getKeyword(), textChunk.getText());
         }
@@ -564,7 +564,7 @@ public class PngImageParser extends ImageParser<PngImagingParameters>  implement
         return "Png-Custom";
     }
 
-    private TransparencyFilter getTransparencyFilter(final PngColorType pngColorType, final PngChunk pngChunktRNS)
+    private AbstractTransparencyFilter getTransparencyFilter(final PngColorType pngColorType, final PngChunk pngChunktRNS)
             throws ImagingException, IOException {
         switch (pngColorType) {
             case GREYSCALE: // 1,2,4,8,16 Each pixel is a grayscale sample.

@@ -26,7 +26,7 @@ import java.util.List;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 
-public class TiffImageWriterLossy extends TiffImageWriterBase {
+public class TiffImageWriterLossy extends AbstractTiffImageWriter {
 
     public TiffImageWriterLossy() {
         // with default byte order

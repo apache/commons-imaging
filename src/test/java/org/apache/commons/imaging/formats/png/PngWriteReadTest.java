@@ -193,9 +193,9 @@ public class PngWriteReadTest extends AbstractImagingTest {
        ImagingException, ImagingException {
         final BufferedImage srcImage = imageDataToBufferedImage(rawData);
 
-        final List<PngText.Text> textChunks = new LinkedList<>();
-        textChunks.add(new PngText.Text("a", "b"));
-        textChunks.add(new PngText.Text("c", "d"));
+        final List<AbstractPngText.Text> textChunks = new LinkedList<>();
+        textChunks.add(new AbstractPngText.Text("a", "b"));
+        textChunks.add(new AbstractPngText.Text("c", "d"));
         final PngImagingParameters writeParams = new PngImagingParameters();
         writeParams.setTextChunks(textChunks);
 

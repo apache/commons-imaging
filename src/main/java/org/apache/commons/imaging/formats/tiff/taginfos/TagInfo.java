@@ -26,44 +26,44 @@ import java.util.List;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
-import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
 public class TagInfo {
     public static final int LENGTH_UNKNOWN = -1;
     public final String name;
     public final int tag;
-    public final List<FieldType> dataTypes;
+    public final List<AbstractFieldType> dataTypes;
     public final int length;
     public final TiffDirectoryType directoryType;
     private final boolean isOffset;
 
-    public TagInfo(final String name, final int tag, final FieldType dataType) {
+    public TagInfo(final String name, final int tag, final AbstractFieldType dataType) {
         this(name, tag, dataType, LENGTH_UNKNOWN,
                 TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     }
 
-    public TagInfo(final String name, final int tag, final FieldType dataType, final int length) {
+    public TagInfo(final String name, final int tag, final AbstractFieldType dataType, final int length) {
         this(name, tag, Arrays.asList(dataType), length,
                 TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     }
 
-    public TagInfo(final String name, final int tag, final FieldType dataType, final int length,
+    public TagInfo(final String name, final int tag, final AbstractFieldType dataType, final int length,
             final TiffDirectoryType exifDirectory) {
         this(name, tag, Arrays.asList(dataType), length, exifDirectory);
     }
 
-    public TagInfo(final String name, final int tag, final FieldType dataType, final int length,
+    public TagInfo(final String name, final int tag, final AbstractFieldType dataType, final int length,
             final TiffDirectoryType exifDirectory, final boolean isOffset) {
         this(name, tag, Arrays.asList(dataType), length, exifDirectory,
                 isOffset);
     }
 
-    public TagInfo(final String name, final int tag, final List<FieldType> dataTypes, final int length,
+    public TagInfo(final String name, final int tag, final List<AbstractFieldType> dataTypes, final int length,
             final TiffDirectoryType exifDirectory) {
         this(name, tag, dataTypes, length, exifDirectory, false);
     }
 
-    public TagInfo(final String name, final int tag, final List<FieldType> dataTypes, final int length,
+    public TagInfo(final String name, final int tag, final List<AbstractFieldType> dataTypes, final int length,
             final TiffDirectoryType exifDirectory, final boolean isOffset) {
         this.name = name;
         this.tag = tag;
@@ -74,9 +74,9 @@ public class TagInfo {
         this.isOffset = isOffset;
     }
 
-    public byte[] encodeValue(final FieldType fieldType, final Object value, final ByteOrder byteOrder)
+    public byte[] encodeValue(final AbstractFieldType abstractFieldType, final Object value, final ByteOrder byteOrder)
             throws ImagingException {
-        return fieldType.writeData(value, byteOrder);
+        return abstractFieldType.writeData(value, byteOrder);
     }
 
     public String getDescription() {

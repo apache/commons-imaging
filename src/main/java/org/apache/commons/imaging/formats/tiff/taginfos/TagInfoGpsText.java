@@ -25,7 +25,7 @@ import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
-import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 import org.apache.commons.imaging.internal.Debug;
 
 /**
@@ -73,11 +73,11 @@ public final class TagInfoGpsText extends TagInfo {
 
     public TagInfoGpsText(final String name, final int tag,
             final TiffDirectoryType exifDirectory) {
-        super(name, tag, FieldType.UNDEFINED, LENGTH_UNKNOWN, exifDirectory);
+        super(name, tag, AbstractFieldType.UNDEFINED, LENGTH_UNKNOWN, exifDirectory);
     }
 
     @Override
-    public byte[] encodeValue(final FieldType fieldType, final Object value, final ByteOrder byteOrder)
+    public byte[] encodeValue(final AbstractFieldType abstractFieldType, final Object value, final ByteOrder byteOrder)
             throws ImagingException {
         if (!(value instanceof String)) {
             throw new ImagingException("GPS text value not String", value);
@@ -114,8 +114,8 @@ public final class TagInfoGpsText extends TagInfo {
 
     @Override
     public String getValue(final TiffField entry) throws ImagingException {
-        if (entry.getFieldType() == FieldType.ASCII) {
-            final Object object = FieldType.ASCII.getValue(entry);
+        if (entry.getFieldType() == AbstractFieldType.ASCII) {
+            final Object object = AbstractFieldType.ASCII.getValue(entry);
             if (object instanceof String) {
                 return (String) object;
             }
@@ -129,9 +129,9 @@ public final class TagInfoGpsText extends TagInfo {
             }
             throw new ImagingException("Unexpected ASCII type decoded");
         }
-        if (entry.getFieldType() == FieldType.UNDEFINED) {
+        if (entry.getFieldType() == AbstractFieldType.UNDEFINED) {
             /* later */
-        } else if (entry.getFieldType() == FieldType.BYTE) {
+        } else if (entry.getFieldType() == AbstractFieldType.BYTE) {
             /* later */
         } else {
             Debug.debug("entry.type: " + entry.getFieldType());

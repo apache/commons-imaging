@@ -20,11 +20,11 @@ import java.io.PrintWriter;
 
 import org.apache.commons.imaging.common.BinaryFileParser;
 
-public abstract class Segment extends BinaryFileParser {
+public abstract class AbstractSegment extends BinaryFileParser {
     public final int marker;
     public final int length;
 
-    public Segment(final int marker, final int length) {
+    public AbstractSegment(final int marker, final int length) {
         // super();
 
         this.marker = marker;

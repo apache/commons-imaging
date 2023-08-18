@@ -30,7 +30,7 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.formats.tiff.JpegImageData;
 import org.apache.commons.imaging.formats.tiff.TiffField;
-import org.apache.commons.imaging.formats.tiff.TiffImageData;
+import org.apache.commons.imaging.formats.tiff.AbstractTiffImageData;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.internal.Debug;
@@ -183,7 +183,7 @@ public class JpegImageMetadata implements ImageMetadata {
         return photoshop;
     }
 
-    public TiffImageData getRawImageData() {
+    public AbstractTiffImageData getRawImageData() {
         if (exif == null) {
             return null;
         }
@@ -191,7 +191,7 @@ public class JpegImageMetadata implements ImageMetadata {
         for (final ImageMetadataItem d : dirs) {
             final TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) d;
             // Debug.debug("dir", dir);
-            final TiffImageData rawImageData = dir.getTiffImageData();
+            final AbstractTiffImageData rawImageData = dir.getTiffImageData();
             if (null != rawImageData) {
                 return rawImageData;
             }

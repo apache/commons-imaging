@@ -89,16 +89,16 @@ import org.apache.commons.imaging.formats.xpm.XpmImageParser;
  *
  * @param <T> type of parameters used by this image parser
  */
-public abstract class ImageParser<T extends ImagingParameters<T>> extends BinaryFileParser {
+public abstract class AbstractImageParser<T extends ImagingParameters<T>> extends BinaryFileParser {
 
-    private static final Logger LOGGER = Logger.getLogger(ImageParser.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(AbstractImageParser.class.getName());
 
     /**
      * Gets an array of new instances of all image parsers.
      *
      * @return A valid array of image parsers
      */
-    public static List<ImageParser<?>> getAllImageParsers() {
+    public static List<AbstractImageParser<?>> getAllImageParsers() {
         return Arrays.asList(
                 new BmpImageParser(),
                 new DcxImageParser(),
@@ -120,11 +120,11 @@ public abstract class ImageParser<T extends ImagingParameters<T>> extends Binary
         );
     }
 
-    public ImageParser() {
+    public AbstractImageParser() {
         // defaults to big endian
     }
 
-    public ImageParser(final ByteOrder byteOrder) {
+    public AbstractImageParser(final ByteOrder byteOrder) {
         super(byteOrder);
     }
 

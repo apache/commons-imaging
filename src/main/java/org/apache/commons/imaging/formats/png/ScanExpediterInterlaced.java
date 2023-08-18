@@ -22,7 +22,7 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkPlte;
-import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilter;
+import org.apache.commons.imaging.formats.png.transparencyfilters.AbstractTransparencyFilter;
 
 class ScanExpediterInterlaced extends AbstractScanExpediter {
     private static final int[] STARTING_ROW = { 0, 0, 4, 0, 2, 0, 1 };
@@ -37,9 +37,9 @@ class ScanExpediterInterlaced extends AbstractScanExpediter {
             final PngColorType pngColorType, final int bitDepth, final int bitsPerPixel,
             final PngChunkPlte pngChunkPLTE,
             final GammaCorrection gammaCorrection,
-            final TransparencyFilter transparencyFilter) {
+            final AbstractTransparencyFilter abstractTransparencyFilter) {
         super(width, height, is, bi, pngColorType, bitDepth, bitsPerPixel,
-                pngChunkPLTE, gammaCorrection, transparencyFilter);
+                pngChunkPLTE, gammaCorrection, abstractTransparencyFilter);
     }
 
     @Override

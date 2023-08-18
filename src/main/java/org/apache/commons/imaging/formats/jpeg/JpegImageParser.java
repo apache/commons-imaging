@@ -34,7 +34,7 @@ import java.util.logging.Logger;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.ImageParser;
+import org.apache.commons.imaging.AbstractImageParser;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.Allocator;
@@ -51,7 +51,7 @@ import org.apache.commons.imaging.formats.jpeg.segments.ComSegment;
 import org.apache.commons.imaging.formats.jpeg.segments.DqtSegment;
 import org.apache.commons.imaging.formats.jpeg.segments.GenericSegment;
 import org.apache.commons.imaging.formats.jpeg.segments.JfifSegment;
-import org.apache.commons.imaging.formats.jpeg.segments.Segment;
+import org.apache.commons.imaging.formats.jpeg.segments.AbstractSegment;
 import org.apache.commons.imaging.formats.jpeg.segments.SofnSegment;
 import org.apache.commons.imaging.formats.jpeg.segments.UnknownSegment;
 import org.apache.commons.imaging.formats.jpeg.xmp.JpegXmpParser;
@@ -62,7 +62,7 @@ import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.internal.Debug;
 
-public class JpegImageParser extends ImageParser<JpegImagingParameters> implements XmpEmbeddable<JpegImagingParameters> {
+public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> implements XmpEmbeddable<JpegImagingParameters> {
 
     private static final Logger LOGGER = Logger.getLogger(JpegImageParser.class.getName());
 
@@ -151,23 +151,23 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
         pw.println("");
 
         {
-            final List<Segment> segments = readSegments(byteSource, null, false);
+            final List<AbstractSegment> abstractSegments = readSegments(byteSource, null, false);
 
-            if (segments == null) {
+            if (abstractSegments == null) {
                 throw new ImagingException("No Segments Found.");
             }
 
-            for (int d = 0; d < segments.size(); d++) {
+            for (int d = 0; d < abstractSegments.size(); d++) {
 
-                final Segment segment = segments.get(d);
+                final AbstractSegment abstractSegment = abstractSegments.get(d);
 
                 final NumberFormat nf = NumberFormat.getIntegerInstance();
                 // this.debugNumber("found, marker: ", marker, 4);
                 pw.println(d + ": marker: "
-                        + Integer.toHexString(segment.marker) + ", "
-                        + segment.getDescription() + " (length: "
-                        + nf.format(segment.length) + ")");
-                segment.dump(pw);
+                        + Integer.toHexString(abstractSegment.marker) + ", "
+                        + abstractSegment.getDescription() + " (length: "
+                        + nf.format(abstractSegment.length) + ")");
+                abstractSegment.dump(pw);
             }
 
             pw.println("");
@@ -177,7 +177,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
     }
 
 
-    private void dumpSegments(final List<? extends Segment> v) {
+    private void dumpSegments(final List<? extends AbstractSegment> v) {
         Debug.debug();
         Debug.debug("dumpSegments: " + v.size());
 
@@ -189,10 +189,10 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
         Debug.debug();
     }
 
-    private List<Segment> filterApp1Segments(final List<Segment> segments) {
-        final List<Segment> result = new ArrayList<>();
+    private List<AbstractSegment> filterApp1Segments(final List<AbstractSegment> abstractSegments) {
+        final List<AbstractSegment> result = new ArrayList<>();
 
-        for (final Segment s : segments) {
+        for (final AbstractSegment s : abstractSegments) {
             final GenericSegment segment = (GenericSegment) s;
             if (isExifApp1Segment(segment)) {
                 result.add(segment);
@@ -247,14 +247,14 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
 
     public byte[] getExifRawData(final ByteSource byteSource)
             throws ImagingException, IOException {
-        final List<Segment> segments = readSegments(byteSource,
+        final List<AbstractSegment> abstractSegments = readSegments(byteSource,
                 new int[] { JpegConstants.JPEG_APP1_MARKER, }, false);
 
-        if ((segments == null) || (segments.isEmpty())) {
+        if ((abstractSegments == null) || (abstractSegments.isEmpty())) {
             return null;
         }
 
-        final List<Segment> exifSegments = filterApp1Segments(segments);
+        final List<AbstractSegment> exifSegments = filterApp1Segments(abstractSegments);
         if (LOGGER.isLoggable(Level.FINEST)) {
             LOGGER.finest("exifSegments.size()" + ": " + exifSegments.size());
         }
@@ -285,13 +285,13 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
     @Override
     public byte[] getIccProfileBytes(final ByteSource byteSource, final JpegImagingParameters params)
             throws ImagingException, IOException {
-        final List<Segment> segments = readSegments(byteSource,
+        final List<AbstractSegment> abstractSegments = readSegments(byteSource,
                 new int[] { JpegConstants.JPEG_APP2_MARKER, }, false);
 
         final List<App2Segment> filtered = new ArrayList<>();
-        if (segments != null) {
+        if (abstractSegments != null) {
             // throw away non-icc profile app2 segments.
-            for (final Segment s : segments) {
+            for (final AbstractSegment s : abstractSegments) {
                 final App2Segment segment = (App2Segment) s;
                 if (segment.getIccBytes() != null) {
                     filtered.add(segment);
@@ -317,7 +317,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
             throws ImagingException, IOException {
         // List allSegments = readSegments(byteSource, null, false);
 
-        final List<Segment> SOF_segments = readSegments(byteSource, new int[] {
+        final List<AbstractSegment> SOF_segments = readSegments(byteSource, new int[] {
                 // kJFIFMarker,
 
                 JpegConstants.SOF0_MARKER,
@@ -344,7 +344,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
         // System.out.println("Incoherent SOFN Data Found: "
         // + SOF_segments.size());
 
-        final List<Segment> jfifSegments = readSegments(byteSource,
+        final List<AbstractSegment> jfifSegments = readSegments(byteSource,
                 new int[] { JpegConstants.JFIF_MARKER, }, true);
 
         final SofnSegment fSOFNSegment = (SofnSegment) SOF_segments.get(0);
@@ -364,7 +364,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
             jfifSegment = (JfifSegment) jfifSegments.get(0);
         }
 
-        final List<Segment> app14Segments = readSegments(byteSource, new int[] { JpegConstants.JPEG_APP14_MARKER}, true);
+        final List<AbstractSegment> app14Segments = readSegments(byteSource, new int[] { JpegConstants.JPEG_APP14_MARKER}, true);
         App14Segment app14Segment = null;
         if (app14Segments != null && !app14Segments.isEmpty()) {
             app14Segment = (App14Segment) app14Segments.get(0);
@@ -457,10 +457,10 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
             physicalHeightInch = (float) (height / (yDensity * unitsPerInch));
         }
 
-        final List<Segment> commentSegments = readSegments(byteSource,
+        final List<AbstractSegment> commentSegments = readSegments(byteSource,
                 new int[] { JpegConstants.COM_MARKER}, false);
         final List<String> comments = Allocator.arrayList(commentSegments.size());
-        for (final Segment commentSegment : commentSegments) {
+        for (final AbstractSegment commentSegment : commentSegments) {
             final ComSegment comSegment = (ComSegment) commentSegment;
             comments.add(new String(comSegment.getComment(), StandardCharsets.UTF_8));
         }
@@ -650,7 +650,7 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
     @Override
     public Dimension getImageSize(final ByteSource byteSource, final JpegImagingParameters params)
             throws ImagingException, IOException {
-        final List<Segment> segments = readSegments(byteSource, new int[] {
+        final List<AbstractSegment> abstractSegments = readSegments(byteSource, new int[] {
                 // kJFIFMarker,
                 JpegConstants.SOF0_MARKER,
                 JpegConstants.SOF1_MARKER,
@@ -668,15 +668,15 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
 
         }, true);
 
-        if ((segments == null) || (segments.isEmpty())) {
+        if ((abstractSegments == null) || (abstractSegments.isEmpty())) {
             throw new ImagingException("No JFIF Data Found.");
         }
 
-        if (segments.size() > 1) {
+        if (abstractSegments.size() > 1) {
             throw new ImagingException("Redundant JFIF Data Found.");
         }
 
-        final SofnSegment fSOFNSegment = (SofnSegment) segments.get(0);
+        final SofnSegment fSOFNSegment = (SofnSegment) abstractSegments.get(0);
 
         return new Dimension(fSOFNSegment.width, fSOFNSegment.height);
     }
@@ -705,16 +705,16 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
 
     public JpegPhotoshopMetadata getPhotoshopMetadata(final ByteSource byteSource,
             final JpegImagingParameters params) throws ImagingException, IOException {
-        final List<Segment> segments = readSegments(byteSource,
+        final List<AbstractSegment> abstractSegments = readSegments(byteSource,
                 new int[] { JpegConstants.JPEG_APP13_MARKER, }, false);
 
-        if ((segments == null) || (segments.isEmpty())) {
+        if ((abstractSegments == null) || (abstractSegments.isEmpty())) {
             return null;
         }
 
         PhotoshopApp13Data photoshopApp13Data = null;
 
-        for (final Segment s : segments) {
+        for (final AbstractSegment s : abstractSegments) {
             final App13Segment segment = (App13Segment) s;
 
             final PhotoshopApp13Data data = segment.parsePhotoshopSegment(params);
@@ -931,8 +931,8 @@ public class JpegImageParser extends ImageParser<JpegImagingParameters> implemen
         return false;
     }
 
-    public List<Segment> readSegments(final ByteSource byteSource, final int[] markers, final boolean returnAfterFirst) throws ImagingException, IOException {
-        final List<Segment> result = new ArrayList<>();
+    public List<AbstractSegment> readSegments(final ByteSource byteSource, final int[] markers, final boolean returnAfterFirst) throws ImagingException, IOException {
+        final List<AbstractSegment> result = new ArrayList<>();
         final int[] sofnSegments = {
                 // kJFIFMarker,
                 JpegConstants.SOF0_MARKER,

@@ -24,7 +24,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.stream.Stream;
 
-import org.apache.commons.imaging.ImageParser;
+import org.apache.commons.imaging.AbstractImageParser;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.common.RgbBufferedImageFactory;
@@ -41,18 +41,18 @@ public class RoundtripBase {
                              final String tempPrefix, final boolean imageExact) throws IOException,
             ImagingException, ImagingException {
 
-        final ImageParser imageParser = ImageParserFactory.getImageParser(formatInfo.format);
+        final AbstractImageParser abstractImageParser = ImageParserFactory.getImageParser(formatInfo.format);
 
         final ImagingParameters params = ImageParserFactory.getImageParser(formatInfo.format).getDefaultParameters();
         byte[] temp1;
         try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-            imageParser.writeImage(testImage, bos, params);
+            abstractImageParser.writeImage(testImage, bos, params);
             temp1 = bos.toByteArray();
         }
 
         final ImagingParameters readParams = ImageParserFactory.getImageParser(formatInfo.format).getDefaultParameters();
         readParams.setBufferedImageFactory(new RgbBufferedImageFactory());
-        final BufferedImage image2 = imageParser.getBufferedImage(temp1, readParams);
+        final BufferedImage image2 = abstractImageParser.getBufferedImage(temp1, readParams);
         assertNotNull(image2);
 
         if (imageExact) {
@@ -64,7 +64,7 @@ public class RoundtripBase {
         if (formatInfo.identicalSecondWrite) {
             byte[] temp2;
             try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-                imageParser.writeImage(image2, bos, params);
+                abstractImageParser.writeImage(image2, bos, params);
                 temp2 = bos.toByteArray();
             }
 

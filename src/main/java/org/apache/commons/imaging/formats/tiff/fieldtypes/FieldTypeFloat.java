@@ -23,7 +23,7 @@ import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 
-public class FieldTypeFloat extends FieldType {
+public class FieldTypeFloat extends AbstractFieldType {
     public FieldTypeFloat(final int type, final String name) {
         super(type, name, 4);
     }

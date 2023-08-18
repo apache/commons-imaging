@@ -25,7 +25,7 @@ import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 
-public class FieldTypeRational extends FieldType {
+public class FieldTypeRational extends AbstractFieldType {
     public FieldTypeRational(final int type, final String name) {
         super(type, name, 8);
     }

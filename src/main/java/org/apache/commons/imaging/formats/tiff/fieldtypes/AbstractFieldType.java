@@ -27,7 +27,7 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
 /**
  * TIFF field types.
  */
-public abstract class FieldType {
+public abstract class AbstractFieldType {
     public static final FieldTypeByte BYTE = new FieldTypeByte(1, "Byte");
     public static final FieldTypeAscii ASCII = new FieldTypeAscii(2, "ASCII");
     public static final FieldTypeShort SHORT = new FieldTypeShort(3, "Short");
@@ -42,48 +42,48 @@ public abstract class FieldType {
     public static final FieldTypeDouble DOUBLE = new FieldTypeDouble(12, "Double");
     public static final FieldTypeLong IFD = new FieldTypeLong(13, "IFD");
 
-    public static final List<FieldType> ANY =
+    public static final List<AbstractFieldType> ANY =
             Collections.unmodifiableList(Arrays.asList(
                     BYTE, ASCII, SHORT,
                     LONG, RATIONAL, SBYTE,
                     UNDEFINED, SSHORT, SLONG,
                     SRATIONAL, FLOAT, DOUBLE,
                     IFD));
-    public static final List<FieldType> SHORT_OR_LONG =
+    public static final List<AbstractFieldType> SHORT_OR_LONG =
             Collections.unmodifiableList(Arrays.asList(
                     SHORT, LONG));
-    public static final List<FieldType> SHORT_OR_RATIONAL =
+    public static final List<AbstractFieldType> SHORT_OR_RATIONAL =
             Collections.unmodifiableList(Arrays.asList(
                     SHORT, RATIONAL));
 
-    public static final List<FieldType> SHORT_OR_LONG_OR_RATIONAL =
+    public static final List<AbstractFieldType> SHORT_OR_LONG_OR_RATIONAL =
             Collections.unmodifiableList(Arrays.asList(
                     SHORT, LONG, RATIONAL));
 
-    public static final List<FieldType> LONG_OR_SHORT =
+    public static final List<AbstractFieldType> LONG_OR_SHORT =
             Collections.unmodifiableList(Arrays.asList(
                     SHORT, LONG));
 
-    public static final List<FieldType> BYTE_OR_SHORT =
+    public static final List<AbstractFieldType> BYTE_OR_SHORT =
             Collections.unmodifiableList(Arrays.asList(
                     SHORT, BYTE));
 
-    public static final List<FieldType> LONG_OR_IFD =
+    public static final List<AbstractFieldType> LONG_OR_IFD =
             Collections.unmodifiableList(Arrays.asList(
-                    (FieldType) LONG, IFD));
+                    (AbstractFieldType) LONG, IFD));
 
-    public static final List<FieldType> ASCII_OR_RATIONAL =
+    public static final List<AbstractFieldType> ASCII_OR_RATIONAL =
             Collections.unmodifiableList(Arrays.asList(
                     ASCII, RATIONAL));
 
-    public static final List<FieldType> ASCII_OR_BYTE =
+    public static final List<AbstractFieldType> ASCII_OR_BYTE =
             Collections.unmodifiableList(Arrays.asList(
                     ASCII, BYTE));
 
-    public static FieldType getFieldType(final int type) throws ImagingException {
-        for (final FieldType fieldType : ANY) {
-            if (fieldType.getType() == type) {
-                return fieldType;
+    public static AbstractFieldType getFieldType(final int type) throws ImagingException {
+        for (final AbstractFieldType abstractFieldType : ANY) {
+            if (abstractFieldType.getType() == type) {
+                return abstractFieldType;
             }
         }
         throw new ImagingException("Field type " + type + " is unsupported");
@@ -96,7 +96,7 @@ public abstract class FieldType {
     private final int elementSize;
 
 
-    protected FieldType(final int type, final String name, final int elementSize) {
+    protected AbstractFieldType(final int type, final String name, final int elementSize) {
         this.type = type;
         this.name = name;
         this.elementSize = elementSize;

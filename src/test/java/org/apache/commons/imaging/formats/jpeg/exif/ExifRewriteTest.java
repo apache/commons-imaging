@@ -43,7 +43,7 @@ import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegUtils;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
-import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
@@ -127,7 +127,7 @@ public class ExifRewriteTest extends AbstractExifTest {
                 assertEquals(dirType.intValue(), newField.getDirectoryType());
                 assertEquals(oldField.getDirectoryType(), newField.getDirectoryType());
 
-                if (oldField.getFieldType() == FieldType.ASCII) {
+                if (oldField.getFieldType() == AbstractFieldType.ASCII) {
                     // Imaging currently doesn't correctly rewrite
                     // strings if any byte had the highest bit set,
                     // so if the source had that, all bets are off.

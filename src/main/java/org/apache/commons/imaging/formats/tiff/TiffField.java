@@ -33,7 +33,7 @@ import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
-import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 
 /**
@@ -41,7 +41,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
  */
 public class TiffField {
 
-    public final class OversizeValueElement extends TiffElement {
+    public final class OversizeValueElement extends AbstractTiffElement {
         public OversizeValueElement(final int offset, final int length) {
             super(offset, length);
         }
@@ -57,7 +57,7 @@ public class TiffField {
     private final TagInfo tagInfo;
     private final int tag;
     private final int directoryType;
-    private final FieldType fieldType;
+    private final AbstractFieldType abstractFieldType;
     private final long count;
     private final long offset;
     private final byte[] value;
@@ -65,13 +65,13 @@ public class TiffField {
 
     private final int sortHint;
 
-    public TiffField(final int tag, final int directoryType, final FieldType fieldType,
+    public TiffField(final int tag, final int directoryType, final AbstractFieldType abstractFieldType,
             final long count, final long offset, final byte[] value,
             final ByteOrder byteOrder, final int sortHint) {
 
         this.tag = tag;
         this.directoryType = directoryType;
-        this.fieldType = fieldType;
+        this.abstractFieldType = abstractFieldType;
         this.count = count;
         this.offset = offset;
         this.value = value;
@@ -126,7 +126,7 @@ public class TiffField {
      * @return the length, in bytes.
      */
     public int getBytesLength() {
-        return (int) count * fieldType.getSize();
+        return (int) count * abstractFieldType.getSize();
     }
 
     /**
@@ -202,8 +202,8 @@ public class TiffField {
      * Returns the field's type, derived from bytes 2-3.
      * @return the field's type, as a {@code FieldType} object.
      */
-    public FieldType getFieldType() {
-        return fieldType;
+    public AbstractFieldType getFieldType() {
+        return abstractFieldType;
     }
 
     public String getFieldTypeName() {
@@ -297,7 +297,7 @@ public class TiffField {
         return (int) offset;
     }
 
-    public TiffElement getOversizeValueElement() {
+    public AbstractTiffElement getOversizeValueElement() {
         if (isLocalValue()) {
             return null;
         }
@@ -551,7 +551,7 @@ public class TiffField {
      * @return true if the value is inlined
      */
     public boolean isLocalValue() {
-        return (count * fieldType.getSize()) <= TiffConstants.TIFF_ENTRY_MAX_VALUE_LENGTH;
+        return (count * abstractFieldType.getSize()) <= TiffConstants.TIFF_ENTRY_MAX_VALUE_LENGTH;
     }
 
     @Override

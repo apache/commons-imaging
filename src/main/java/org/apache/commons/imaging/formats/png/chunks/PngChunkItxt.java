@@ -25,10 +25,10 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.formats.png.PngConstants;
-import org.apache.commons.imaging.formats.png.PngText;
+import org.apache.commons.imaging.formats.png.AbstractPngText;
 import org.apache.commons.io.IOUtils;
 
-public class PngChunkItxt extends PngTextChunk {
+public class PngChunkItxt extends AbstractPngTextChunk {
 
     private final String keyword;
     private final String text;
@@ -88,8 +88,8 @@ public class PngChunkItxt extends PngTextChunk {
     }
 
     @Override
-    public PngText getContents() {
-        return new PngText.Itxt(keyword, text, languageTag, translatedKeyword);
+    public AbstractPngText getContents() {
+        return new AbstractPngText.Itxt(keyword, text, languageTag, translatedKeyword);
     }
 
     /**

@@ -31,7 +31,7 @@ import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.AbstractImagingTest;
 import org.junit.jupiter.api.Test;
 
-public abstract class ByteSourceTest extends AbstractImagingTest {
+public abstract class AbstractByteSourceTest extends AbstractImagingTest {
     protected static byte[][] getTestByteArrays() {
         final byte[] single = new byte[1];
         for (int i = 0; i < single.length; i++) {

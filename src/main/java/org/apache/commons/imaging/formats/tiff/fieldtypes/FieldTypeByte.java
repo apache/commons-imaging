@@ -21,7 +21,7 @@ import java.nio.ByteOrder;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 
-public class FieldTypeByte extends FieldType {
+public class FieldTypeByte extends AbstractFieldType {
     public FieldTypeByte(final int type, final String name) {
         super(type, name, 1);
     }

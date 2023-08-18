@@ -27,7 +27,7 @@ public class FieldTypeByteTest{
 
   @Test
   public void testWriteDataWithNull() {
-      final FieldTypeByte fieldTypeByte = FieldType.UNDEFINED;
+      final FieldTypeByte fieldTypeByte = AbstractFieldType.UNDEFINED;
       final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
 
       assertThrows(ImagingException.class, () -> fieldTypeByte.writeData( null, byteOrder));

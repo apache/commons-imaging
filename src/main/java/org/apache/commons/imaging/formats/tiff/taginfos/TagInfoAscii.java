@@ -22,17 +22,17 @@ import java.nio.charset.StandardCharsets;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
-import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
 public class TagInfoAscii extends TagInfo {
     public TagInfoAscii(final String name, final int tag, final int length,
             final TiffDirectoryType directoryType) {
-        super(name, tag, FieldType.ASCII, length, directoryType);
+        super(name, tag, AbstractFieldType.ASCII, length, directoryType);
     }
 
     public byte[] encodeValue(final ByteOrder byteOrder, final String... values)
             throws ImagingException {
-        return FieldType.ASCII.writeData(values, byteOrder);
+        return AbstractFieldType.ASCII.writeData(values, byteOrder);
     }
 
     public String[] getValue(final ByteOrder byteOrder, final byte[] bytes) {

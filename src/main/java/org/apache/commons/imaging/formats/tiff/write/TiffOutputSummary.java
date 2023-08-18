@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
 class TiffOutputSummary {
     private static class OffsetItem {
@@ -60,7 +60,7 @@ class TiffOutputSummary {
 
     public void updateOffsets(final ByteOrder byteOrder) throws ImagingException {
         for (final OffsetItem offset : offsetItems) {
-            final byte[] value = FieldType.LONG.writeData(
+            final byte[] value = AbstractFieldType.LONG.writeData(
                     (int) offset.item.getOffset(), byteOrder);
             offset.itemOffsetField.setData(value);
         }
@@ -72,7 +72,7 @@ class TiffOutputSummary {
             }
 
             imageDataInfo.imageDataOffsetsField.setData(
-                    FieldType.LONG.writeData(imageDataInfo.imageDataOffsets, byteOrder));
+                    AbstractFieldType.LONG.writeData(imageDataInfo.imageDataOffsets, byteOrder));
         }
     }
 

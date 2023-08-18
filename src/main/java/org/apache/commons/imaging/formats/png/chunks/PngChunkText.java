@@ -22,9 +22,9 @@ import java.util.logging.Logger;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFunctions;
-import org.apache.commons.imaging.formats.png.PngText;
+import org.apache.commons.imaging.formats.png.AbstractPngText;
 
-public class PngChunkText extends PngTextChunk {
+public class PngChunkText extends AbstractPngTextChunk {
 
     private static final Logger LOGGER = Logger.getLogger(PngChunkText.class.getName());
 
@@ -44,8 +44,8 @@ public class PngChunkText extends PngTextChunk {
     }
 
     @Override
-    public PngText getContents() {
-        return new PngText.Text(keyword, text);
+    public AbstractPngText getContents() {
+        return new AbstractPngText.Text(keyword, text);
     }
 
     /**

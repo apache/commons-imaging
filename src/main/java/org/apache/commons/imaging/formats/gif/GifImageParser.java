@@ -41,7 +41,7 @@ import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.ImageParser;
+import org.apache.commons.imaging.AbstractImageParser;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.Allocator;
@@ -55,7 +55,7 @@ import org.apache.commons.imaging.mylzw.MyLzwDecompressor;
 import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
 
-public class GifImageParser extends ImageParser<GifImagingParameters> implements XmpEmbeddable<GifImagingParameters> {
+public class GifImageParser extends AbstractImageParser<GifImagingParameters> implements XmpEmbeddable<GifImagingParameters> {
 
     private static final Logger LOGGER = Logger.getLogger(GifImageParser.class.getName());
 

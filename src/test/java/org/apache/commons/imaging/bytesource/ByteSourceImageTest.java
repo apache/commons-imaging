@@ -36,7 +36,7 @@ import java.util.stream.Stream;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.ImageParser;
+import org.apache.commons.imaging.AbstractImageParser;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingParameters;
@@ -48,7 +48,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class ByteSourceImageTest extends ByteSourceTest {
+public class ByteSourceImageTest extends AbstractByteSourceTest {
 
     public static Stream<File> data() throws Exception {
         return getTestImages().stream();
@@ -96,11 +96,11 @@ public class ByteSourceImageTest extends ByteSourceTest {
             params = new JpegImagingParameters();
         }
 
-        final ImageParser imageParser = ImageParserFactory.getImageParser(imageFormat);
+        final AbstractImageParser abstractImageParser = ImageParserFactory.getImageParser(imageFormat);
 
-        final ImageInfo imageInfoFile = imageParser.getImageInfo(imageFile, params);
+        final ImageInfo imageInfoFile = abstractImageParser.getImageInfo(imageFile, params);
 
-        final ImageInfo imageInfoBytes = imageParser.getImageInfo(imageFileBytes, params);
+        final ImageInfo imageInfoBytes = abstractImageParser.getImageInfo(imageFileBytes, params);
 
         assertNotNull(imageInfoFile);
         assertNotNull(imageInfoBytes);

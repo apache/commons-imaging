@@ -36,7 +36,7 @@ import java.util.List;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.ImageParser;
+import org.apache.commons.imaging.AbstractImageParser;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.ImageMetadata;
@@ -53,7 +53,7 @@ import org.apache.commons.imaging.formats.psd.datareaders.CompressedDataReader;
 import org.apache.commons.imaging.formats.psd.datareaders.DataReader;
 import org.apache.commons.imaging.formats.psd.datareaders.UncompressedDataReader;
 
-public class PsdImageParser extends ImageParser<PsdImagingParameters> implements XmpEmbeddable {
+public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> implements XmpEmbeddable {
 
     private static final String DEFAULT_EXTENSION = ImageFormats.PSD.getDefaultExtension();
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.PSD.getExtensions();

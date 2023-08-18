@@ -21,10 +21,10 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFileParser;
 
-public abstract class TransparencyFilter extends BinaryFileParser {
+public abstract class AbstractTransparencyFilter extends BinaryFileParser {
     private final byte[] bytes;
 
-    public TransparencyFilter(final byte[] bytes) {
+    public AbstractTransparencyFilter(final byte[] bytes) {
         this.bytes = bytes.clone();
 
     }

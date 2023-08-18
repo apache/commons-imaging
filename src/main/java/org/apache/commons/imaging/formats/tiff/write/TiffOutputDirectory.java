@@ -36,11 +36,11 @@ import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.JpegImageData;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
-import org.apache.commons.imaging.formats.tiff.TiffElement;
-import org.apache.commons.imaging.formats.tiff.TiffImageData;
+import org.apache.commons.imaging.formats.tiff.AbstractTiffElement;
+import org.apache.commons.imaging.formats.tiff.AbstractTiffImageData;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
-import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAsciiOrByte;
@@ -79,7 +79,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     private final ByteOrder byteOrder;
     private TiffOutputDirectory nextDirectory;
     private JpegImageData jpegImageData;
-    private TiffImageData tiffImageData;
+    private AbstractTiffImageData abstractTiffImageData;
 
     public TiffOutputDirectory(final int type, final ByteOrder byteOrder) {
         this.type = type;
@@ -94,7 +94,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
                     + " byte(s), not " + values.length);
         }
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.ASCII, bytes.length,
+                tagInfo, AbstractFieldType.ASCII, bytes.length,
                 bytes);
         add(tiffOutputField);
     }
@@ -102,13 +102,13 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     public void add(final TagInfoAsciiOrByte tagInfo, final String... values)
             throws ImagingException {
         final byte[] bytes = tagInfo.encodeValue(
-                FieldType.ASCII, values, byteOrder);
+                AbstractFieldType.ASCII, values, byteOrder);
         if (tagInfo.length > 0 && tagInfo.length != bytes.length) {
             throw new ImagingException("Tag expects " + tagInfo.length
                     + " byte(s), not " + values.length);
         }
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.ASCII, bytes.length,
+                tagInfo, AbstractFieldType.ASCII, bytes.length,
                 bytes);
         add(tiffOutputField);
     }
@@ -120,9 +120,9 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
                     + " value(s), not " + values.length);
         }
         final byte[] bytes = tagInfo.encodeValue(
-                FieldType.RATIONAL, values, byteOrder);
+                AbstractFieldType.RATIONAL, values, byteOrder);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.RATIONAL,
+                tagInfo, AbstractFieldType.RATIONAL,
                 bytes.length, bytes);
         add(tiffOutputField);
     }
@@ -130,13 +130,13 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     public void add(final TagInfoAsciiOrRational tagInfo, final String... values)
             throws ImagingException {
         final byte[] bytes = tagInfo.encodeValue(
-                FieldType.ASCII, values, byteOrder);
+                AbstractFieldType.ASCII, values, byteOrder);
         if (tagInfo.length > 0 && tagInfo.length != bytes.length) {
             throw new ImagingException("Tag expects " + tagInfo.length
                     + " byte(s), not " + values.length);
         }
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.ASCII, bytes.length,
+                tagInfo, AbstractFieldType.ASCII, bytes.length,
                 bytes);
         add(tiffOutputField);
     }
@@ -149,7 +149,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, value);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.BYTE, bytes.length, bytes);
+                tagInfo, AbstractFieldType.BYTE, bytes.length, bytes);
         add(tiffOutputField);
     }
 
@@ -161,7 +161,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.BYTE, values.length,
+                tagInfo, AbstractFieldType.BYTE, values.length,
                 bytes);
         add(tiffOutputField);
     }
@@ -174,7 +174,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.SHORT,
+                tagInfo, AbstractFieldType.SHORT,
                 values.length, bytes);
         add(tiffOutputField);
     }
@@ -187,7 +187,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.BYTE, values.length,
+                tagInfo, AbstractFieldType.BYTE, values.length,
                 bytes);
         add(tiffOutputField);
     }
@@ -200,7 +200,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, value);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.DOUBLE, 1, bytes);
+                tagInfo, AbstractFieldType.DOUBLE, 1, bytes);
         add(tiffOutputField);
     }
 
@@ -212,7 +212,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.DOUBLE,
+                tagInfo, AbstractFieldType.DOUBLE,
                 values.length, bytes);
         add(tiffOutputField);
     }
@@ -225,7 +225,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, value);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.FLOAT, 1, bytes);
+                tagInfo, AbstractFieldType.FLOAT, 1, bytes);
         add(tiffOutputField);
     }
 
@@ -237,7 +237,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.FLOAT,
+                tagInfo, AbstractFieldType.FLOAT,
                 values.length, bytes);
         add(tiffOutputField);
     }
@@ -245,7 +245,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     public void add(final TagInfoGpsText tagInfo, final String value)
             throws ImagingException {
         final byte[] bytes = tagInfo.encodeValue(
-                FieldType.UNDEFINED, value, byteOrder);
+                AbstractFieldType.UNDEFINED, value, byteOrder);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
                 tagInfo, tagInfo.dataTypes.get(0), bytes.length, bytes);
         add(tiffOutputField);
@@ -259,7 +259,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, value);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.LONG, 1, bytes);
+                tagInfo, AbstractFieldType.LONG, 1, bytes);
         add(tiffOutputField);
     }
 
@@ -271,7 +271,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.LONG, values.length,
+                tagInfo, AbstractFieldType.LONG, values.length,
                 bytes);
         add(tiffOutputField);
     }
@@ -284,7 +284,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, value);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.RATIONAL, 1, bytes);
+                tagInfo, AbstractFieldType.RATIONAL, 1, bytes);
         add(tiffOutputField);
     }
 
@@ -296,7 +296,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.RATIONAL,
+                tagInfo, AbstractFieldType.RATIONAL,
                 values.length, bytes);
         add(tiffOutputField);
     }
@@ -309,7 +309,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, value);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.SBYTE, 1, bytes);
+                tagInfo, AbstractFieldType.SBYTE, 1, bytes);
         add(tiffOutputField);
     }
 
@@ -321,7 +321,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.SBYTE,
+                tagInfo, AbstractFieldType.SBYTE,
                 values.length, bytes);
         add(tiffOutputField);
     }
@@ -334,7 +334,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, value);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.SHORT, 1, bytes);
+                tagInfo, AbstractFieldType.SHORT, 1, bytes);
         add(tiffOutputField);
     }
 
@@ -346,7 +346,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.LONG, values.length,
+                tagInfo, AbstractFieldType.LONG, values.length,
                 bytes);
         add(tiffOutputField);
     }
@@ -359,7 +359,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.SHORT,
+                tagInfo, AbstractFieldType.SHORT,
                 values.length, bytes);
         add(tiffOutputField);
     }
@@ -372,7 +372,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.LONG, values.length,
+                tagInfo, AbstractFieldType.LONG, values.length,
                 bytes);
         add(tiffOutputField);
     }
@@ -385,7 +385,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.RATIONAL,
+                tagInfo, AbstractFieldType.RATIONAL,
                 values.length, bytes);
         add(tiffOutputField);
     }
@@ -398,7 +398,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.SHORT,
+                tagInfo, AbstractFieldType.SHORT,
                 values.length, bytes);
         add(tiffOutputField);
     }
@@ -411,7 +411,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.RATIONAL,
+                tagInfo, AbstractFieldType.RATIONAL,
                 values.length, bytes);
         add(tiffOutputField);
     }
@@ -424,7 +424,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.SHORT,
+                tagInfo, AbstractFieldType.SHORT,
                 values.length, bytes);
         add(tiffOutputField);
     }
@@ -437,7 +437,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.SHORT,
+                tagInfo, AbstractFieldType.SHORT,
                 values.length, bytes);
         add(tiffOutputField);
     }
@@ -450,7 +450,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, value);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.SLONG, 1, bytes);
+                tagInfo, AbstractFieldType.SLONG, 1, bytes);
         add(tiffOutputField);
     }
 
@@ -462,7 +462,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.SLONG,
+                tagInfo, AbstractFieldType.SLONG,
                 values.length, bytes);
         add(tiffOutputField);
     }
@@ -475,7 +475,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, value);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.SRATIONAL, 1, bytes);
+                tagInfo, AbstractFieldType.SRATIONAL, 1, bytes);
         add(tiffOutputField);
     }
 
@@ -487,7 +487,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.SRATIONAL,
+                tagInfo, AbstractFieldType.SRATIONAL,
                 values.length, bytes);
         add(tiffOutputField);
     }
@@ -500,7 +500,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, value);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.SSHORT, 1, bytes);
+                tagInfo, AbstractFieldType.SSHORT, 1, bytes);
         add(tiffOutputField);
     }
 
@@ -512,7 +512,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         }
         final byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.SSHORT,
+                tagInfo, AbstractFieldType.SSHORT,
                 values.length, bytes);
         add(tiffOutputField);
     }
@@ -520,9 +520,9 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     public void add(final TagInfoXpString tagInfo, final String value)
             throws ImagingException {
         final byte[] bytes = tagInfo.encodeValue(
-                FieldType.BYTE, value, byteOrder);
+                AbstractFieldType.BYTE, value, byteOrder);
         final TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag,
-                tagInfo, FieldType.BYTE, bytes.length,
+                tagInfo, AbstractFieldType.BYTE, bytes.length,
                 bytes);
         add(tiffOutputField);
     }
@@ -597,16 +597,16 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         if (null != jpegImageData) {
             jpegOffsetField = new TiffOutputField(
                     TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT,
-                    FieldType.LONG, 1, new byte[TIFF_ENTRY_MAX_VALUE_LENGTH]);
+                    AbstractFieldType.LONG, 1, new byte[TIFF_ENTRY_MAX_VALUE_LENGTH]);
             add(jpegOffsetField);
 
-            final byte[] lengthValue = FieldType.LONG.writeData(
+            final byte[] lengthValue = AbstractFieldType.LONG.writeData(
                     jpegImageData.length,
                     outputSummary.byteOrder);
 
             final TiffOutputField jpegLengthField = new TiffOutputField(
                     TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT_LENGTH,
-                    FieldType.LONG, 1, lengthValue);
+                    AbstractFieldType.LONG, 1, lengthValue);
             add(jpegLengthField);
 
         }
@@ -618,8 +618,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
 
         TiffOutputField imageDataOffsetField;
         ImageDataOffsets imageDataInfo = null;
-        if (null != tiffImageData) {
-            final boolean stripsNotTiles = tiffImageData.stripsNotTiles();
+        if (null != abstractTiffImageData) {
+            final boolean stripsNotTiles = abstractTiffImageData.stripsNotTiles();
 
             TagInfo offsetTag;
             TagInfo byteCountsTag;
@@ -631,7 +631,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
                 byteCountsTag = TiffTagConstants.TIFF_TAG_TILE_BYTE_COUNTS;
             }
 
-            final TiffElement.DataElement[] imageData = tiffImageData.getImageData();
+            final AbstractTiffElement.DataElement[] imageData = abstractTiffImageData.getImageData();
 
             // TiffOutputField imageDataOffsetsField = null;
 
@@ -641,14 +641,14 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
 
             // Append imageData-related fields to first directory
             imageDataOffsetField = new TiffOutputField(offsetTag,
-                    FieldType.LONG, imageDataOffsets.length,
-                    FieldType.LONG.writeData(imageDataOffsets,
+                    AbstractFieldType.LONG, imageDataOffsets.length,
+                    AbstractFieldType.LONG.writeData(imageDataOffsets,
                             outputSummary.byteOrder));
             add(imageDataOffsetField);
 
-            final byte[] data = FieldType.LONG.writeData(imageDataByteCounts, outputSummary.byteOrder);
+            final byte[] data = AbstractFieldType.LONG.writeData(imageDataByteCounts, outputSummary.byteOrder);
             final TiffOutputField byteCountsField = new TiffOutputField(
-                    byteCountsTag, FieldType.LONG, imageDataByteCounts.length,
+                    byteCountsTag, AbstractFieldType.LONG, imageDataByteCounts.length,
                     data);
             add(byteCountsField);
 
@@ -689,8 +689,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         return jpegImageData;
     }
 
-    public TiffImageData getRawTiffImageData() {
-        return tiffImageData;
+    public AbstractTiffImageData getRawTiffImageData() {
+        return abstractTiffImageData;
     }
 
     public int getType() {
@@ -731,8 +731,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         this.nextDirectory = nextDirectory;
     }
 
-    public void setTiffImageData(final TiffImageData rawTiffImageData) {
-        this.tiffImageData = rawTiffImageData;
+    public void setTiffImageData(final AbstractTiffImageData rawTiffImageData) {
+        this.abstractTiffImageData = rawTiffImageData;
     }
 
     public void sortFields() {

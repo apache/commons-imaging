@@ -22,7 +22,7 @@ import java.util.function.Supplier;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
-import org.apache.commons.imaging.ImageParser;
+import org.apache.commons.imaging.AbstractImageParser;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.bytesource.ByteSource;
@@ -34,7 +34,7 @@ import org.apache.commons.imaging.bytesource.ByteSource;
  */
 public class ImageParserFactory {
 
-    public static <T extends ImagingParameters<T>> ImageParser<T> getImageParser(final ByteSource byteSource) throws IOException {
+    public static <T extends ImagingParameters<T>> AbstractImageParser<T> getImageParser(final ByteSource byteSource) throws IOException {
         // TODO: circular dependency between Imaging and internal Util class below.
         final ImageFormat format = Imaging.guessFormat(byteSource);
         if (!format.equals(ImageFormats.UNKNOWN)) {
@@ -49,15 +49,15 @@ public class ImageParserFactory {
         throw new IllegalArgumentException("Can't parse this format.");
     }
 
-    public static <T extends ImagingParameters<T>> ImageParser<T> getImageParser(final ImageFormat format) {
+    public static <T extends ImagingParameters<T>> AbstractImageParser<T> getImageParser(final ImageFormat format) {
         return getImageParser(parser -> parser.canAcceptType(format), () -> new IllegalArgumentException("Unknown ImageFormat: " + format));
     }
 
     // This generics suppression is as good as the predicate given. If the predicate violates a generics design,
     // then there will be an error during runtime.
     @SuppressWarnings("unchecked")
-    private static <T extends ImagingParameters<T>> ImageParser<T> getImageParser(final Predicate<ImageParser<?>> pred, final Supplier<? extends RuntimeException> supplier) {
-        return (ImageParser<T>) ImageParser
+    private static <T extends ImagingParameters<T>> AbstractImageParser<T> getImageParser(final Predicate<AbstractImageParser<?>> pred, final Supplier<? extends RuntimeException> supplier) {
+        return (AbstractImageParser<T>) AbstractImageParser
                 .getAllImageParsers()
                 .stream()
                 .filter(pred)
@@ -65,7 +65,7 @@ public class ImageParserFactory {
                 .orElseThrow(supplier);
     }
 
-    public static <T extends ImagingParameters<T>> ImageParser<T> getImageParser(final String fileExtension) {
+    public static <T extends ImagingParameters<T>> AbstractImageParser<T> getImageParser(final String fileExtension) {
         return getImageParser(parser -> parser.canAcceptExtension(fileExtension), () -> new IllegalArgumentException("Unknown extension: " + fileExtension));
     }
 

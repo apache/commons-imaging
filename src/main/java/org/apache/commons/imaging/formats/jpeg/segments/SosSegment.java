@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 
 import org.apache.commons.imaging.common.Allocator;
 
-public class SosSegment extends Segment {
+public class SosSegment extends AbstractSegment {
 
     public static class Component {
         static final int SHALLOW_SIZE = 24;

@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.ImageParser;
+import org.apache.commons.imaging.AbstractImageParser;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.ImageMetadata;
@@ -40,7 +40,7 @@ import org.apache.commons.imaging.common.ImageMetadata;
 /**
  * Parser for Radiance HDR images
  */
-public class RgbeImageParser extends ImageParser<RgbeImagingParameters> {
+public class RgbeImageParser extends AbstractImageParser<RgbeImagingParameters> {
 
     @Override
     protected String[] getAcceptedExtensions() {

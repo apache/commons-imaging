@@ -26,7 +26,7 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImagingException;
 
-public class DqtSegment extends Segment {
+public class DqtSegment extends AbstractSegment {
     public static class QuantizationTable {
         public final int precision;
         public final int destinationIdentifier;

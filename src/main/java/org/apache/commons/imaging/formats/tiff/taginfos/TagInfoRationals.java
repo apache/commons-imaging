@@ -21,11 +21,11 @@ import java.nio.ByteOrder;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
-import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
 public class TagInfoRationals extends TagInfo {
     public TagInfoRationals(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
-        super(name, tag, FieldType.RATIONAL, length, directoryType);
+        super(name, tag, AbstractFieldType.RATIONAL, length, directoryType);
     }
 
     public byte[] encodeValue(final ByteOrder byteOrder, final RationalNumber... values) {

@@ -31,7 +31,7 @@ import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
-import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoByte;
@@ -64,9 +64,9 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoXpString;
  * for individual images or sets of metadata. While not all Directories contain
  * images, images are always stored in a Directory.
  */
-public class TiffDirectory extends TiffElement implements Iterable<TiffField> {
+public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffField> {
 
-    public static final class ImageDataElement extends TiffElement {
+    public static final class ImageDataElement extends AbstractTiffElement {
         public ImageDataElement(final long offset, final int length) {
             super(offset, length);
         }
@@ -110,7 +110,7 @@ public class TiffDirectory extends TiffElement implements Iterable<TiffField> {
 
     private final long nextDirectoryOffset;
 
-    private TiffImageData tiffImageData;
+    private AbstractTiffImageData abstractTiffImageData;
 
     public final int type;
 
@@ -503,7 +503,7 @@ public class TiffDirectory extends TiffElement implements Iterable<TiffField> {
             return null;
         }
         final byte[] bytes = field.getByteArrayValue();
-        if (field.getFieldType() == FieldType.SHORT) {
+        if (field.getFieldType() == AbstractFieldType.SHORT) {
             return ByteConversions.toUInt16s(bytes, field.getByteOrder());
         }
         return ByteConversions.toInts(bytes, field.getByteOrder());
@@ -769,7 +769,7 @@ public class TiffDirectory extends TiffElement implements Iterable<TiffField> {
      * @throws IOException in the event of an I/O error.
      */
     public BufferedImage getTiffImage() throws ImagingException, IOException {
-        if (null == tiffImageData) {
+        if (null == abstractTiffImageData) {
             return null;
         }
 
@@ -815,7 +815,7 @@ public class TiffDirectory extends TiffElement implements Iterable<TiffField> {
      */
     public BufferedImage getTiffImage(final ByteOrder byteOrder, final TiffImagingParameters params)
             throws ImagingException, IOException {
-        if (null == tiffImageData) {
+        if (null == abstractTiffImageData) {
             return null;
         }
 
@@ -839,15 +839,15 @@ public class TiffDirectory extends TiffElement implements Iterable<TiffField> {
      */
     public BufferedImage getTiffImage(final TiffImagingParameters params)
         throws ImagingException, IOException {
-        if (null == tiffImageData) {
+        if (null == abstractTiffImageData) {
             return null;
         }
 
         return new TiffImageParser().getBufferedImage(this, headerByteOrder, params);
     }
 
-    public TiffImageData getTiffImageData() {
-        return tiffImageData;
+    public AbstractTiffImageData getTiffImageData() {
+        return abstractTiffImageData;
     }
 
     public List<ImageDataElement> getTiffRawImageDataElements()
@@ -947,8 +947,8 @@ public class TiffDirectory extends TiffElement implements Iterable<TiffField> {
         this.jpegImageData = value;
     }
 
-    public void setTiffImageData(final TiffImageData rawImageData) {
-        this.tiffImageData = rawImageData;
+    public void setTiffImageData(final AbstractTiffImageData rawImageData) {
+        this.abstractTiffImageData = rawImageData;
     }
 
     public int size() {

@@ -20,7 +20,7 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImagingException;
 
-public class TransparencyFilterIndexedColor extends TransparencyFilter {
+public class TransparencyFilterIndexedColor extends AbstractTransparencyFilter {
 
     public TransparencyFilterIndexedColor(final byte[] bytes) {
         super(bytes);

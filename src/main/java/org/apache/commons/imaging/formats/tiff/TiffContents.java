@@ -37,12 +37,12 @@ public class TiffContents {
     }
 
     public void dissect() throws ImagingException {
-        final List<TiffElement> elements = getElements();
+        final List<AbstractTiffElement> elements = getElements();
 
-        elements.sort(TiffElement.COMPARATOR);
+        elements.sort(AbstractTiffElement.COMPARATOR);
 
         long lastEnd = 0;
-        for (final TiffElement element : elements) {
+        for (final AbstractTiffElement element : elements) {
             if (element.offset > lastEnd) {
                 Debug.debug("\t" + "gap: " + (element.offset - lastEnd));
             }
@@ -76,8 +76,8 @@ public class TiffContents {
         return null;
     }
 
-    public List<TiffElement> getElements() throws ImagingException {
-        final List<TiffElement> result = new ArrayList<>();
+    public List<AbstractTiffElement> getElements() throws ImagingException {
+        final List<AbstractTiffElement> result = new ArrayList<>();
 
         result.add(header);
 
@@ -85,7 +85,7 @@ public class TiffContents {
             result.add(directory);
 
             for (final TiffField field : directory) {
-                final TiffElement oversizeValue = field.getOversizeValueElement();
+                final AbstractTiffElement oversizeValue = field.getOversizeValueElement();
                 if (null != oversizeValue) {
                     result.add(oversizeValue);
                 }

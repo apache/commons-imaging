@@ -29,7 +29,7 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
-public class SofnSegment extends Segment {
+public class SofnSegment extends AbstractSegment {
 
     public static class Component {
         static final int SHALLOW_SIZE = 32;

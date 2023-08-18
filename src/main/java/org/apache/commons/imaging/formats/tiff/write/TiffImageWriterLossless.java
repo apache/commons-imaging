@@ -37,15 +37,15 @@ import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.formats.tiff.JpegImageData;
 import org.apache.commons.imaging.formats.tiff.TiffContents;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
-import org.apache.commons.imaging.formats.tiff.TiffElement;
-import org.apache.commons.imaging.formats.tiff.TiffElement.DataElement;
+import org.apache.commons.imaging.formats.tiff.AbstractTiffElement;
+import org.apache.commons.imaging.formats.tiff.AbstractTiffElement.DataElement;
 import org.apache.commons.imaging.formats.tiff.TiffField;
-import org.apache.commons.imaging.formats.tiff.TiffImageData;
+import org.apache.commons.imaging.formats.tiff.AbstractTiffImageData;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.formats.tiff.TiffReader;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 
-public class TiffImageWriterLossless extends TiffImageWriterBase {
+public class TiffImageWriterLossless extends AbstractTiffImageWriter {
     private static class BufferOutputStream extends OutputStream {
         private final byte[] buffer;
         private int index;
@@ -73,7 +73,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
             buffer[index++] = (byte) b;
         }
     }
-    private static final Comparator<TiffElement> ELEMENT_SIZE_COMPARATOR = Comparator.comparingInt(e -> e.length);
+    private static final Comparator<AbstractTiffElement> ELEMENT_SIZE_COMPARATOR = Comparator.comparingInt(e -> e.length);
     private static final Comparator<AbstractTiffOutputItem> ITEM_SIZE_COMPARATOR = Comparator.comparingInt(AbstractTiffOutputItem::getItemLength);
 
     private final byte[] exifBytes;
@@ -87,7 +87,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         this.exifBytes = exifBytes;
     }
 
-    private List<TiffElement> analyzeOldTiff(final Map<Integer, TiffOutputField> frozenFields) throws ImagingException,
+    private List<AbstractTiffElement> analyzeOldTiff(final Map<Integer, TiffOutputField> frozenFields) throws ImagingException,
             IOException {
         try {
             final ByteSource byteSource = ByteSource.array(exifBytes);
@@ -95,14 +95,14 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
             final TiffContents contents = new TiffReader(false).readContents(
                     byteSource, new TiffImagingParameters(), formatCompliance);
 
-            final List<TiffElement> elements = new ArrayList<>();
+            final List<AbstractTiffElement> elements = new ArrayList<>();
 
             final List<TiffDirectory> directories = contents.directories;
             for (final TiffDirectory directory : directories) {
                 elements.add(directory);
 
                 for (final TiffField field : directory.getDirectoryEntries()) {
-                    final TiffElement oversizeValue = field.getOversizeValueElement();
+                    final AbstractTiffElement oversizeValue = field.getOversizeValueElement();
                     if (oversizeValue != null) {
                         final TiffOutputField frozenField = frozenFields.get(field.getTag());
                         if (frozenField != null
@@ -120,32 +120,32 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
                     elements.add(jpegImageData);
                 }
 
-                final TiffImageData tiffImageData = directory.getTiffImageData();
-                if (tiffImageData != null) {
-                    final DataElement[] data = tiffImageData.getImageData();
+                final AbstractTiffImageData abstractTiffImageData = directory.getTiffImageData();
+                if (abstractTiffImageData != null) {
+                    final DataElement[] data = abstractTiffImageData.getImageData();
                     Collections.addAll(elements, data);
                 }
             }
 
-            elements.sort(TiffElement.COMPARATOR);
+            elements.sort(AbstractTiffElement.COMPARATOR);
 
-            final List<TiffElement> rewritableElements = new ArrayList<>();
+            final List<AbstractTiffElement> rewritableElements = new ArrayList<>();
             final int tolerance = 3;
-            TiffElement start = null;
+            AbstractTiffElement start = null;
             long index = -1;
-            for (final TiffElement element : elements) {
+            for (final AbstractTiffElement element : elements) {
                 final long lastElementByte = element.offset + element.length;
                 if (start == null) {
                     start = element;
                 } else if (element.offset - index > tolerance) {
-                    rewritableElements.add(new TiffElement.Stub(start.offset,
+                    rewritableElements.add(new AbstractTiffElement.Stub(start.offset,
                             (int) (index - start.offset)));
                     start = element;
                 }
                 index = lastElementByte;
             }
             if (null != start) {
-                rewritableElements.add(new TiffElement.Stub(start.offset,
+                rewritableElements.add(new AbstractTiffElement.Stub(start.offset,
                         (int) (index - start.offset)));
             }
 
@@ -155,21 +155,21 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         }
     }
 
-    private long updateOffsetsStep(final List<TiffElement> analysis,
+    private long updateOffsetsStep(final List<AbstractTiffElement> analysis,
             final List<AbstractTiffOutputItem> outputItems) {
         // items we cannot fit into a gap, we shall append to tail.
         long overflowIndex = exifBytes.length;
 
         // make copy.
-        final List<TiffElement> unusedElements = new ArrayList<>(analysis);
+        final List<AbstractTiffElement> unusedElements = new ArrayList<>(analysis);
 
         // should already be in order of offset, but make sure.
-        unusedElements.sort(TiffElement.COMPARATOR);
+        unusedElements.sort(AbstractTiffElement.COMPARATOR);
         Collections.reverse(unusedElements);
         // any items that represent a gap at the end of the exif segment, can be
         // discarded.
         while (!unusedElements.isEmpty()) {
-            final TiffElement element = unusedElements.get(0);
+            final AbstractTiffElement element = unusedElements.get(0);
             final long elementEnd = element.offset + element.length;
             if (elementEnd != overflowIndex) {
                 break;
@@ -194,8 +194,8 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
             final int outputItemLength = outputItem.getItemLength();
             // search for the smallest possible element large enough to hold the
             // item.
-            TiffElement bestFit = null;
-            for (final TiffElement element : unusedElements) {
+            AbstractTiffElement bestFit = null;
+            for (final AbstractTiffElement element : unusedElements) {
                 if (element.length < outputItemLength) {
                     break;
                 }
@@ -220,7 +220,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
                     // not a perfect fit.
                     final long excessOffset = bestFit.offset + outputItemLength;
                     final int excessLength = bestFit.length - outputItemLength;
-                    unusedElements.add(new TiffElement.Stub(excessOffset,
+                    unusedElements.add(new AbstractTiffElement.Stub(excessOffset,
                             excessLength));
                     // make sure the new element is in the correct order.
                     unusedElements.sort(ELEMENT_SIZE_COMPARATOR);
@@ -242,13 +242,13 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         if (makerNoteField != null && makerNoteField.getSeperateValue() != null) {
             frozenFields.put(ExifTagConstants.EXIF_TAG_MAKER_NOTE.tag, makerNoteField);
         }
-        final List<TiffElement> analysis = analyzeOldTiff(frozenFields);
+        final List<AbstractTiffElement> analysis = analyzeOldTiff(frozenFields);
         final int oldLength = exifBytes.length;
         if (analysis.isEmpty()) {
             throw new ImagingException("Couldn't analyze old tiff data.");
         }
         if (analysis.size() == 1) {
-            final TiffElement onlyElement = analysis.get(0);
+            final AbstractTiffElement onlyElement = analysis.get(0);
             if (onlyElement.offset == TIFF_HEADER_SIZE
                     && onlyElement.offset + onlyElement.length
                             + TIFF_HEADER_SIZE == oldLength) {
@@ -284,7 +284,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
     }
 
     private void writeStep(final OutputStream os, final TiffOutputSet outputSet,
-            final List<TiffElement> analysis, final List<AbstractTiffOutputItem> outputItems,
+            final List<AbstractTiffElement> analysis, final List<AbstractTiffOutputItem> outputItems,
             final long outputLength) throws IOException, ImagingException {
         final TiffOutputDirectory rootDirectory = outputSet.getRootDirectory();
 
@@ -300,7 +300,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
 
         // zero out the parsed pieces of old exif segment, in case we don't
         // overwrite them.
-        for (final TiffElement element : analysis) {
+        for (final AbstractTiffElement element : analysis) {
             Arrays.fill(output, (int) element.offset, (int) Math.min(element.offset + element.length, output.length),
                     (byte) 0);
         }

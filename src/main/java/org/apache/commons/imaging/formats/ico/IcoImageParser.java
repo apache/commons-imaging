@@ -35,7 +35,7 @@ import java.util.List;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.ImageParser;
+import org.apache.commons.imaging.AbstractImageParser;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.PixelDensity;
@@ -47,7 +47,7 @@ import org.apache.commons.imaging.formats.bmp.BmpImageParser;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 
-public class IcoImageParser extends ImageParser<IcoImagingParameters> {
+public class IcoImageParser extends AbstractImageParser<IcoImagingParameters> {
     private static class BitmapHeader {
         public final int size;
         public final int width;

@@ -181,13 +181,13 @@ public class TiffAlphaRoundTripTest {
                 b[k++] = (byte) ((sample >> 24) & 0xff);  // A
             }
 
-            final TiffElement.DataElement[] imageData = new TiffElement.DataElement[1];
-            imageData[0] = new TiffImageData.Data(0, b.length, b);
+            final AbstractTiffElement.DataElement[] imageData = new AbstractTiffElement.DataElement[1];
+            imageData[0] = new AbstractTiffImageData.Data(0, b.length, b);
 
-            final TiffImageData tiffImageData
-                = new TiffImageData.Strips(imageData, height);
+            final AbstractTiffImageData abstractTiffImageData
+                = new AbstractTiffImageData.Strips(imageData, height);
 
-            outDir.setTiffImageData(tiffImageData);
+            outDir.setTiffImageData(abstractTiffImageData);
 
             final File outputFile = new File(tempDir.toFile(), "TestExtraSamples" + iExtra + ".tiff");
             try (FileOutputStream fos = new FileOutputStream(outputFile);

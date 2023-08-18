@@ -48,8 +48,8 @@ import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.PackBits;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.common.ZlibDeflate;
-import org.apache.commons.imaging.formats.tiff.TiffElement;
-import org.apache.commons.imaging.formats.tiff.TiffImageData;
+import org.apache.commons.imaging.formats.tiff.AbstractTiffElement;
+import org.apache.commons.imaging.formats.tiff.AbstractTiffImageData;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
@@ -57,7 +57,7 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.itu_t4.T4AndT6Compression;
 import org.apache.commons.imaging.mylzw.MyLzwCompressor;
 
-public abstract class TiffImageWriterBase {
+public abstract class AbstractTiffImageWriter {
 
     private static final int MAX_PIXELS_FOR_RGB = 1024*1024;
 
@@ -67,11 +67,11 @@ public abstract class TiffImageWriterBase {
 
     protected final ByteOrder byteOrder;
 
-    public TiffImageWriterBase() {
+    public AbstractTiffImageWriter() {
         this.byteOrder = DEFAULT_TIFF_BYTE_ORDER;
     }
 
-    public TiffImageWriterBase(final ByteOrder byteOrder) {
+    public AbstractTiffImageWriter(final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
     }
 
@@ -557,8 +557,8 @@ public abstract class TiffImageWriterBase {
                     "Invalid compression parameter (Only CCITT 1D/Group 3/Group 4, LZW, Packbits, Zlib Deflate and uncompressed supported).");
         }
 
-        final TiffElement.DataElement[] imageData = new TiffElement.DataElement[strips.length];
-        Arrays.setAll(imageData, i -> new TiffImageData.Data(0, strips[i].length, strips[i]));
+        final AbstractTiffElement.DataElement[] imageData = new AbstractTiffElement.DataElement[strips.length];
+        Arrays.setAll(imageData, i -> new AbstractTiffImageData.Data(0, strips[i].length, strips[i]));
 
         final TiffOutputSet outputSet = new TiffOutputSet(byteOrder);
         final TiffOutputDirectory directory = outputSet.addRootDirectory();
@@ -651,9 +651,9 @@ public abstract class TiffImageWriterBase {
 
         }
 
-        final TiffImageData tiffImageData = new TiffImageData.Strips(imageData,
+        final AbstractTiffImageData abstractTiffImageData = new AbstractTiffImageData.Strips(imageData,
                 rowsPerStrip);
-        directory.setTiffImageData(tiffImageData);
+        directory.setTiffImageData(abstractTiffImageData);
 
         if (userExif != null) {
             combineUserExifIntoFinalExif(userExif, outputSet);

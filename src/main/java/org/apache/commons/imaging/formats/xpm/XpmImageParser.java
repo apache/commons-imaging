@@ -42,7 +42,7 @@ import java.util.UUID;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.ImageParser;
+import org.apache.commons.imaging.AbstractImageParser;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.Allocator;
@@ -51,7 +51,7 @@ import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 
-public class XpmImageParser extends ImageParser<XpmImagingParameters> {
+public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
 
     private static class PaletteEntry {
         int colorArgb;

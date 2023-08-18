@@ -73,7 +73,7 @@ public class ExifRewriterRoundtripTest extends AbstractExifTest {
                 final TiffOutputField field1 = fields1.get(j);
                 assertEquals(field.tag, field1.tag, "TiffOutputField tag mismatch.");
                 assertEquals(field.tagInfo, field1.tagInfo, "TiffOutputField tagInfo mismatch.");
-                assertEquals(field.fieldType, field1.fieldType, "TiffOutputField fieldType mismatch.");
+                assertEquals(field.abstractFieldType, field1.abstractFieldType, "TiffOutputField fieldType mismatch.");
                 assertEquals(field.count, field1.count, "TiffOutputField count mismatch.");
             }
         }
