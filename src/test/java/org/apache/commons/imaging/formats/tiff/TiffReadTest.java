@@ -62,7 +62,7 @@ public class TiffReadTest extends TiffBaseTest {
             // the "bad offsets" file will cause an exception to be thrown.
             // It's not relevant to what this test is trying to discover.
             // So skip it.
-            if(name.toLowerCase().contains("bad")){
+            if (name.toLowerCase().contains("bad")) {
                 continue;
             }
             final ByteSource byteSource = ByteSource.file(imageFile);

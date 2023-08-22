@@ -39,7 +39,7 @@ public class ScanlineFilterSub implements ScanlineFilter {
                 dst[i] = src[i];
             }
 
-            // if(i<10)
+            // if (i<10)
             // System.out.println("\t" + i + ": " + dst[i] + " (" + src[i] +
             // ", " + prevIndex + ")");
 

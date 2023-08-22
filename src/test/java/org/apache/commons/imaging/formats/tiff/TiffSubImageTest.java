@@ -95,7 +95,7 @@ public class TiffSubImageTest extends TiffBaseTest {
             final BufferedImage referenceImage = Imaging.getBufferedImage(target);
             final int rW = referenceImage.getWidth();
             final int rH = referenceImage.getHeight();
-            if(rW<3 || rH<3){
+            if (rW<3 || rH<3) {
                 continue;
             }
             final int []rArgb = new int[rW*rH];

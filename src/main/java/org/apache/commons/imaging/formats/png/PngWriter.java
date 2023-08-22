@@ -477,7 +477,7 @@ public class PngWriter {
                 !isGrayscale && palette==null;
 
             byte[] uncompressed;
-            if(!usePredictor) {
+            if (!usePredictor) {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
                 final boolean useAlpha = pngColorType == PngColorType.GREYSCALE_WITH_ALPHA

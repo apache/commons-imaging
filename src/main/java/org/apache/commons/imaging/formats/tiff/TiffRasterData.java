@@ -60,7 +60,7 @@ public abstract class TiffRasterData {
             throw new IllegalArgumentException(
                     "Raster dimensions less than or equal to zero are not supported");
         }
-        if(samplesPerPixel <= 0){
+        if (samplesPerPixel <= 0){
             throw new IllegalArgumentException(
                     "Raster samples-per-pixel specification must be at least 1");
         }

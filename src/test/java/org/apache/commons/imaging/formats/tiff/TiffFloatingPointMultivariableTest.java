@@ -133,7 +133,7 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
         final int nBlocks = nRowsOfBlocks * nColsOfBlocks;
         final int nBytesInBlock = bytesPerPixel * nRowsInBlock * nColsInBlock;
         final byte[][] blocks = new byte[nBlocks][nBytesInBlock];
-        if(planarConfiguration == TiffPlanarConfiguration.CHUNKY){
+        if (planarConfiguration == TiffPlanarConfiguration.CHUNKY){
             for (int i = 0; i < height; i++) {
                 final int blockRow = i / nRowsInBlock;
                 final int rowInBlock = i - blockRow * nRowsInBlock;
@@ -159,12 +159,12 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
                     }
                 }
             }
-        }else{
+        } else {
             for (int i = 0; i < height; i++) {
                 final int blockRow = i / nRowsInBlock;
                 final int rowInBlock = i - blockRow * nRowsInBlock;
                 int blockPlanarOffset = nRowsInBlock*nColsInBlock;
-                if(!useTiles && (blockRow+1)*nRowsInBlock>height){
+                if (!useTiles && (blockRow+1)*nRowsInBlock>height){
                     // For TIFF files using the Strip format, the convention
                     // is to not include any extra padding in the data.  So if the
                     // height of the image is not evenly divided by the number
@@ -300,7 +300,7 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
         outDir.add(TiffTagConstants.TIFF_TAG_COMPRESSION,
             (short) TiffTagConstants.COMPRESSION_VALUE_UNCOMPRESSED);
 
-        if(useTiles && usePredictorForTiles){
+        if (useTiles && usePredictorForTiles) {
             outDir.add(TiffTagConstants.TIFF_TAG_PREDICTOR,
             (short) TiffTagConstants.PREDICTOR_VALUE_FLOATING_POINT_DIFFERENCING);
               for (final byte[] block : blocks) {
@@ -308,7 +308,7 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
               }
         }
 
-        if(planarConfiguration==TiffPlanarConfiguration.CHUNKY){
+        if (planarConfiguration==TiffPlanarConfiguration.CHUNKY) {
         outDir.add(TiffTagConstants.TIFF_TAG_PLANAR_CONFIGURATION,
             (short) TiffTagConstants.PLANAR_CONFIGURATION_VALUE_CHUNKY);
         }else{

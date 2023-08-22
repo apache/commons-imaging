@@ -757,7 +757,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
 
             // Debug.debug("\t" + "writing field (" + field.tag + ", 0x" +
             // Integer.toHexString(field.tag) + ")", field.tagInfo);
-            // if(field.tagInfo.isOffset())
+            // if (field.tagInfo.isOffset())
             // Debug.debug("\t\tOFFSET!", field.bytes);
         }
 

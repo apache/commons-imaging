@@ -34,7 +34,7 @@ public class ScanlineFilterUp implements ScanlineFilter {
                 dst[i] = src[i];
             }
 
-            // if(i<10)
+            // if (i<10)
             // System.out.println("\t" + i + ": " + dst[i]);
             // dst[i] = b;
             // dst[i] = src[i];

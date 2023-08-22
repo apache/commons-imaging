@@ -186,12 +186,12 @@ public abstract class AbstractTiffImageWriter {
                                 bitCache = 0;
                                 bitsInCache = 0;
                             }
-                        } else if(samplesPerPixel==4){
+                        } else if (samplesPerPixel==4){
                             uncompressed[counter++] = (byte) red;
                             uncompressed[counter++] = (byte) green;
                             uncompressed[counter++] = (byte) blue;
                             uncompressed[counter++] = (byte) (rgb>>24);
-                        }else {
+                        } else {
                             // samples per pixel is 3
                             uncompressed[counter++] = (byte) red;
                             uncompressed[counter++] = (byte) green;
@@ -645,7 +645,7 @@ public abstract class AbstractTiffImageWriter {
                 directory.add(TiffTagConstants.TIFF_TAG_XMP, xmpXmlBytes);
             }
 
-            if(predictor==TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING){
+            if (predictor == TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING){
                 directory.add(TiffTagConstants.TIFF_TAG_PREDICTOR, predictor);
             }
 

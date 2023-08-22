@@ -82,7 +82,7 @@ public class TiffOutputField {
     }
 
     protected void setData(final byte[] bytes) throws ImagingException {
-        // if(tagInfo.isUnknown())
+        // if (tagInfo.isUnknown())
         // Debug.debug("unknown tag(0x" + Integer.toHexString(tag)
         // + ") setData", bytes);
 

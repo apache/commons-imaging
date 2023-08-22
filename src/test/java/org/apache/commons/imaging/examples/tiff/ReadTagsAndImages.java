@@ -86,8 +86,8 @@ public class ReadTagsAndImages {
          * otherwise, a null.
          */
         static CoordinateTransformationCode getValueForKey(final int key){
-            for(final CoordinateTransformationCode v: values()){
-                if(v.key==key){
+            for (final CoordinateTransformationCode v: values()){
+                if (v.key==key){
                     return v;
                 }
             }
@@ -313,14 +313,14 @@ public class ReadTagsAndImages {
             }
                 break;
             case ProjectionGeoKey:
-                if(valueOrPosition==32767){
+                if (valueOrPosition==32767){
                     return "User-Defined";
                 }
                 break;
             case ProjCoordTransGeoKey:
                 final CoordinateTransformationCode code =
                     CoordinateTransformationCode.getValueForKey(valueOrPosition);
-                if(code!=null){
+                if (code!=null){
                     return code.name();
                 }
                 break;
