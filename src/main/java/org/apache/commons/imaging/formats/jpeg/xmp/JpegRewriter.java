@@ -300,13 +300,13 @@ public class JpegRewriter extends BinaryFileParser {
     // private void writeSegment(OutputStream os, JFIFPieceSegment piece)
     // throws ImageWriteException, IOException
     // {
-    // byte markerBytes[] = convertShortToByteArray(JPEG_APP1_MARKER,
+    // byte[] markerBytes = convertShortToByteArray(JPEG_APP1_MARKER,
     // JPEG_BYTE_ORDER);
     // if (piece.segmentData.length > 0xffff)
     // throw new JpegSegmentOverflowException("JPEG segment is too long: "
     // + piece.segmentData.length);
     // int segmentLength = piece.segmentData.length + 2;
-    // byte segmentLengthBytes[] = convertShortToByteArray(segmentLength,
+    // byte[] segmentLengthBytes = convertShortToByteArray(segmentLength,
     // JPEG_BYTE_ORDER);
     //
     // os.write(markerBytes);

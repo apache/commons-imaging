@@ -101,7 +101,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
 
                     final TagInfo tagInfo = srcField.getTagInfo();
                     final AbstractFieldType abstractFieldType = srcField.getFieldType();
-                    // byte bytes[] = srcField.fieldType.getRawBytes(srcField);
+                    // byte[] bytes = srcField.fieldType.getRawBytes(srcField);
 
                     // Debug.debug("tagInfo", tagInfo);
 

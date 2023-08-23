@@ -938,7 +938,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
         final int maxColors = hasAlpha ? 255 : 256;
 
         Palette palette2 = new PaletteFactory().makeExactRgbPaletteSimple(src, maxColors);
-        // int palette[] = new PaletteFactory().makePaletteSimple(src, 256);
+        // int[] palette = new PaletteFactory().makePaletteSimple(src, 256);
         // Map palette_map = paletteToMap(palette);
 
         if (palette2 == null) {

@@ -29,8 +29,8 @@ class ScanExpediterInterlaced extends AbstractScanExpediter {
     private static final int[] STARTING_COL = { 0, 4, 0, 2, 0, 1, 0 };
     private static final int[] ROW_INCREMENT = { 8, 8, 8, 4, 4, 2, 2 };
     private static final int[] COL_INCREMENT = { 8, 8, 4, 4, 2, 2, 1 };
-//    private static final int Block_Height[] = { 8, 8, 4, 4, 2, 2, 1 };
-//    private static final int Block_Width[] = { 8, 4, 4, 2, 2, 1, 1 };
+//    private static final int[] Block_Height = { 8, 8, 4, 4, 2, 2, 1 };
+//    private static final int[] Block_Width = { 8, 4, 4, 2, 2, 1, 1 };
 
     ScanExpediterInterlaced(final int width, final int height, final InputStream is,
             final BufferedImage bi,

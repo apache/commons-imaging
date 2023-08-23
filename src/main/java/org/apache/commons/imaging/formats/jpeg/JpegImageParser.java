@@ -275,7 +275,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
         final GenericSegment segment = (GenericSegment) exifSegments.get(0);
         final byte[] bytes = segment.getSegmentData();
 
-        // byte head[] = readBytearray("exif head", bytes, 0, 6);
+        // byte[] head = readBytearray("exif head", bytes, 0, 6);
         //
         // Debug.debug("head", head);
 

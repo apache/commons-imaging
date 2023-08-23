@@ -387,7 +387,7 @@ public class TiffField {
             return result.toString();
         // } else if (o instanceof Number[])
         // {
-        // Number numbers[] = (Number[]) o;
+        // Number[] numbers = (Number[]) o;
         // StringBuilder result = new StringBuilder();
         //
         // for (int i = 0; i < numbers.length; i++)
@@ -529,7 +529,7 @@ public class TiffField {
         }
         // else if (o instanceof short[])
         // {
-        // short numbers[] = (short[]) o;
+        // short[] numbers = (short[]) o;
         // StringBuilder result = new StringBuilder();
         //
         // for (int i = 0; i < numbers.length; i++)

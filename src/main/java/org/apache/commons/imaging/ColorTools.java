@@ -198,7 +198,7 @@ public class ColorTools {
         // // int old_mask = dcm.getRedMask() | dcm.getGreenMask()
         // // | dcm.getBlueMask() | dcm.getAlphaMask();
         //
-        // int old_masks[] = pcm.getMasks();
+        // int[] old_masks = pcm.getMasks();
         // // System.out.println("old_mask: " + old_mask);
         // int old_bits = countBitsInMask(old_masks);
         // // System.out.println("old_bits: " + old_bits);

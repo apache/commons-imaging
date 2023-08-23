@@ -507,7 +507,7 @@ public class ReadTagsAndImages {
         }
         if (contentTypeString != null) {
             ps.format("%nContent Type: %s", contentTypeString);
-            final String gdalNoDataString[] = directory.getFieldValue(
+            final String[] gdalNoDataString = directory.getFieldValue(
                 GdalLibraryTagConstants.EXIF_TAG_GDAL_NO_DATA, false);
             if (gdalNoDataString != null && gdalNoDataString.length > 0) {
                 ps.format("    GDAL No-Data value: %s", gdalNoDataString[0]);

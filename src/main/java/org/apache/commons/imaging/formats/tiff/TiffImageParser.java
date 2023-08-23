@@ -672,18 +672,18 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
             return new PhotometricInterpreterCmyk(samplesPerPixel,
                     bitsPerSample, predictor, width, height);
         case 6: {
-//            final double yCbCrCoefficients[] = directory.findField(
+//            final double[] yCbCrCoefficients = directory.findField(
 //                    TiffTagConstants.TIFF_TAG_YCBCR_COEFFICIENTS, true)
 //                    .getDoubleArrayValue();
 //
-//            final int yCbCrPositioning[] = directory.findField(
+//            final int[] yCbCrPositioning = directory.findField(
 //                    TiffTagConstants.TIFF_TAG_YCBCR_POSITIONING, true)
 //                    .getIntArrayValue();
-//            final int yCbCrSubSampling[] = directory.findField(
+//            final int[] yCbCrSubSampling = directory.findField(
 //                    TiffTagConstants.TIFF_TAG_YCBCR_SUB_SAMPLING, true)
 //                    .getIntArrayValue();
 //
-//            final double referenceBlackWhite[] = directory.findField(
+//            final double[] referenceBlackWhite = directory.findField(
 //                    TiffTagConstants.TIFF_TAG_REFERENCE_BLACK_WHITE, true)
 //                    .getDoubleArrayValue();
 

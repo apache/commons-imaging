@@ -126,8 +126,8 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
         final BmpImageContents ic = readImageContents(inputStream, FormatCompliance.getDefault());
 
         final BmpHeaderInfo bhi = ic.bhi;
-        // byte colorTable[] = ic.colorTable;
-        // byte imageData[] = ic.imageData;
+        // byte[] colorTable = ic.colorTable;
+        // byte[] imageData = ic.imageData;
 
         final int width = bhi.width;
         final int height = bhi.height;

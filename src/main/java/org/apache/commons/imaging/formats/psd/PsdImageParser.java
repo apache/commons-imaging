@@ -268,7 +268,7 @@ public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> im
             }
 
             skipBytes(is, colorModeDataLength);
-            // byte ColorModeData[] = readByteArray("ColorModeData",
+            // byte[] ColorModeData = readByteArray("ColorModeData",
             // ColorModeDataLength, is, "Not a Valid PSD File");
 
             final int imageResourcesLength = read4Bytes("ImageResourcesLength", is,
@@ -280,7 +280,7 @@ public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> im
             }
 
             skipBytes(is, imageResourcesLength);
-            // byte ImageResources[] = readByteArray("ImageResources",
+            // byte[] ImageResources = readByteArray("ImageResources",
             // ImageResourcesLength, is, "Not a Valid PSD File");
 
             final int layerAndMaskDataLength = read4Bytes("LayerAndMaskDataLength",
@@ -292,12 +292,12 @@ public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> im
             }
 
             skipBytes(is, layerAndMaskDataLength);
-            // byte LayerAndMaskData[] = readByteArray("LayerAndMaskData",
+            // byte[] LayerAndMaskData = readByteArray("LayerAndMaskData",
             // LayerAndMaskDataLength, is, "Not a Valid PSD File");
 
             read2Bytes("Compression", is, "Not a Valid PSD File", getByteOrder());
 
-            // byte ImageData[] = readByteArray("ImageData",
+            // byte[] ImageData = readByteArray("ImageData",
             // LayerAndMaskDataLength, is, "Not a Valid PSD File");
 
             // if (section == kPSD_SECTION_IMAGE_DATA)
@@ -430,7 +430,7 @@ public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> im
             }
 
             skipBytes(is, colorModeDataLength);
-            // byte ColorModeData[] = readByteArray("ColorModeData",
+            // byte[] ColorModeData = readByteArray("ColorModeData",
             // ColorModeDataLength, is, "Not a Valid PSD File");
 
             final int imageResourcesLength = read4Bytes("ImageResourcesLength", is, "Not a Valid PSD File", getByteOrder());
@@ -440,7 +440,7 @@ public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> im
             }
 
             skipBytes(is, imageResourcesLength);
-            // byte ImageResources[] = readByteArray("ImageResources",
+            // byte[] ImageResources = readByteArray("ImageResources",
             // ImageResourcesLength, is, "Not a Valid PSD File");
 
             final int layerAndMaskDataLength = read4Bytes("LayerAndMaskDataLength", is, "Not a Valid PSD File", getByteOrder());
@@ -450,12 +450,12 @@ public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> im
             }
 
             skipBytes(is, layerAndMaskDataLength);
-            // byte LayerAndMaskData[] = readByteArray("LayerAndMaskData",
+            // byte[] LayerAndMaskData = readByteArray("LayerAndMaskData",
             // LayerAndMaskDataLength, is, "Not a Valid PSD File");
 
             read2Bytes("Compression", is, "Not a Valid PSD File", getByteOrder());
 
-            // byte ImageData[] = readByteArray("ImageData",
+            // byte[] ImageData = readByteArray("ImageData",
             // LayerAndMaskDataLength, is, "Not a Valid PSD File");
 
             if (section == PSD_SECTION_IMAGE_DATA) {
@@ -587,27 +587,27 @@ public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> im
                 "Not a Valid PSD File", getByteOrder());
         skipBytes(is, colorModeDataLength);
         // is.skip(ColorModeDataLength);
-        // byte ColorModeData[] = readByteArray("ColorModeData",
+        // byte[] ColorModeData = readByteArray("ColorModeData",
         // ColorModeDataLength, is, "Not a Valid PSD File");
 
         final int imageResourcesLength = read4Bytes("ImageResourcesLength", is,
                 "Not a Valid PSD File", getByteOrder());
         skipBytes(is, imageResourcesLength);
         // long skipped = is.skip(ImageResourcesLength);
-        // byte ImageResources[] = readByteArray("ImageResources",
+        // byte[] ImageResources = readByteArray("ImageResources",
         // ImageResourcesLength, is, "Not a Valid PSD File");
 
         final int layerAndMaskDataLength = read4Bytes("LayerAndMaskDataLength", is,
                 "Not a Valid PSD File", getByteOrder());
         skipBytes(is, layerAndMaskDataLength);
         // is.skip(LayerAndMaskDataLength);
-        // byte LayerAndMaskData[] = readByteArray("LayerAndMaskData",
+        // byte[] LayerAndMaskData = readByteArray("LayerAndMaskData",
         // LayerAndMaskDataLength, is, "Not a Valid PSD File");
 
         final int compression = read2Bytes("Compression", is, "Not a Valid PSD File", getByteOrder());
 
         // skip_bytes(is, LayerAndMaskDataLength);
-        // byte ImageData[] = readByteArray("ImageData", LayerAndMaskDataLength,
+        // byte[] ImageData = readByteArray("ImageData", LayerAndMaskDataLength,
         // is, "Not a Valid PSD File");
 
         // System.out.println("Compression: " + Compression);
