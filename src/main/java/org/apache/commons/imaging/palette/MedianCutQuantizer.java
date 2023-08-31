@@ -47,7 +47,7 @@ public class MedianCutQuantizer {
                 return result;
             }
         }
-        throw new Error("");
+        throw new IllegalArgumentException();
     }
 
     private Map<Integer, ColorCount> groupColors1(final BufferedImage image, final int max,
