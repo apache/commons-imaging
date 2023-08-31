@@ -16,7 +16,6 @@
  */
 package org.apache.commons.imaging.palette;
 
-import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Objects;
 
@@ -33,9 +32,7 @@ import java.util.Objects;
  *
  * @since 1.0-alpha2
  */
-public class ColorCountComparator implements Comparator<ColorCount>, Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class ColorCountComparator implements Comparator<ColorCount> {
 
     /**
      * Color component used during the comparison.

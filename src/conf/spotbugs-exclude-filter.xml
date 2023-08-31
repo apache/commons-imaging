@@ -185,4 +185,8 @@
   <Match>
     <Bug pattern="RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE" />
   </Match>
+  <!-- Reason: We don't want to implement Serializable at all.  -->
+  <Match>
+    <Bug pattern="SE_COMPARATOR_SHOULD_BE_SERIALIZABLE" />
+  </Match>
 </FindBugsFilter>

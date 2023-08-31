@@ -16,16 +16,13 @@
  */
 package org.apache.commons.imaging.palette;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.logging.Logger;
 
 class ColorSpaceSubset {
 
-    public static class RgbComparator implements Comparator<ColorSpaceSubset>, Serializable {
-
-        private static final long serialVersionUID = -1L;
+    public static class RgbComparator implements Comparator<ColorSpaceSubset> {
 
         @Override
         public int compare(final ColorSpaceSubset c1, final ColorSpaceSubset c2) {

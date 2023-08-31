@@ -69,6 +69,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action dev="ggregory" type="fix" issue="IMAGING-359" due-to="Marcono1234, Gary Gregory">
         Fix test resource file paths not being constructed properly #306.
       </action>
+      <action dev="ggregory" type="fix" due-to="Gary Gregory">
+        Do not implement Serializable in ColorCountComparator and RgbComparator.
+      </action>
       <!-- ADD -->
       <action issue="IMAGING-352" dev="ggregory" type="update" due-to="Jeroen van der Vegt, Gary Gregory">
         [PngWriter] Allow custom PaletteFactory #294.
