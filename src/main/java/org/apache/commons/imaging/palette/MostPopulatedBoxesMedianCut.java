@@ -125,7 +125,7 @@ public class MostPopulatedBoxesMedianCut implements MedianCut {
                 limit = medianValue.blue;
                 break;
             default:
-                throw new Error("Bad mode.");
+                throw new IllegalArgumentException("Bad mode: " + bestColorComponent);
         }
         colorGroup.cut = new ColorGroupCut(lowerGroup, upperGroup, bestColorComponent, limit);
         return true;
