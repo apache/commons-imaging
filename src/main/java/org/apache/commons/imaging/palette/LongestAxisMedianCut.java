@@ -88,7 +88,7 @@ public class LongestAxisMedianCut implements MedianCut {
                 limit = medianValue.blue;
                 break;
             default:
-                throw new Error("Bad mode.");
+                throw new IllegalArgumentException("Bad mode " + mode);
         }
         colorGroup.cut = new ColorGroupCut(less, more, mode, limit);
     }
