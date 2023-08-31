@@ -18,6 +18,7 @@ package org.apache.commons.imaging.palette;
 
 import java.io.Serializable;
 import java.util.Comparator;
+import java.util.Objects;
 
 /**
  * A comparator for {#link ColorCount} elements.
@@ -33,14 +34,16 @@ import java.util.Comparator;
  * @since 1.0-alpha2
  */
 public class ColorCountComparator implements Comparator<ColorCount>, Serializable {
+
     private static final long serialVersionUID = 1L;
+
     /**
      * Color component used during the comparison.
      */
     private final ColorComponent colorComponent;
 
     public ColorCountComparator(final ColorComponent colorComponent) {
-        this.colorComponent = colorComponent;
+        this.colorComponent = Objects.requireNonNull(colorComponent, "colorComponent");
     }
 
     @Override
