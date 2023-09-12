@@ -725,7 +725,7 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
     private List<ImageDataElement> getRawImageDataElements(
             final TiffField offsetsField, final TiffField byteCountsField)
             throws ImagingException {
-        final int[] offsets = offsetsField.getIntArrayValue();
+        final long[] offsets = offsetsField.getLongArrayValue();
         final int[] byteCounts = byteCountsField.getIntArrayValue();
 
         if (offsets.length != byteCounts.length) {

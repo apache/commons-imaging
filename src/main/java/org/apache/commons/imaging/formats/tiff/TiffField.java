@@ -234,6 +234,14 @@ public class TiffField {
             final int[] numbers = (int[]) o;
             return Arrays.copyOf(numbers, numbers.length);
         }
+        if (o instanceof long[]){
+          final long[] numbers = (long[])o;
+          final int[] iNumbers = new int[numbers.length];
+          for(int i=0; i<iNumbers.length; i++){
+            iNumbers[i] = (int)numbers[i];
+          }
+          return iNumbers;
+        }
 
         throw new ImagingException("Unknown value: " + o + " for: "
                 + getTagInfo().getDescription());
@@ -287,6 +295,55 @@ public class TiffField {
                 + getTagInfo().getDescription());
         // return -1;
     }
+
+    public long[] getLongArrayValue() throws ImagingException {
+        final Object o = getValue();
+        // if (o == null)
+        // return null;
+
+        if (o instanceof Number) {
+            return new  long[] { ((Number) o).longValue() };
+        }
+        if (o instanceof Number[]) {
+            final Number[] numbers = (Number[]) o;
+            final long[] result = Allocator.longArray(numbers.length);
+            Arrays.setAll(result, i -> numbers[i].longValue());
+            return result;
+        }
+        if (o instanceof short[]) {
+            final short[] numbers = (short[]) o;
+            final long[] result = Allocator.longArray(numbers.length);
+            Arrays.setAll(result, i ->  0xffff & numbers[i]);
+            return result;
+        }
+        if (o instanceof int[]) {
+            final int[] numbers = (int[]) o;
+            final long[]result = Allocator.longArray(numbers.length);
+            Arrays.setAll(result, i ->  0xFFFFffffL & numbers[i]);
+            return result;
+        }
+        if (o instanceof long[]){
+          final long[] numbers = (long[]) o;
+          return Arrays.copyOf(numbers, numbers.length);
+        }
+
+        throw new ImagingException("Unknown value: " + o + " for: "
+                + getTagInfo().getDescription());
+        // return null;
+    }
+
+    public long getLongValue() throws ImagingException {
+        final Object o = getValue();
+        if (o == null) {
+            throw new ImagingException("Missing value: "
+                    + getTagInfo().getDescription());
+        }
+
+        return ((Number) o).longValue();
+    }
+
+
+
 
     /**
      * Returns the TIFF field's offset/value field, derived from bytes 8-11.

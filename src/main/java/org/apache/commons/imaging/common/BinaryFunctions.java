@@ -177,6 +177,44 @@ public final class BinaryFunctions {
         return result;
     }
 
+   public static long read8Bytes(final String name,
+    final InputStream is,
+    final String exception,
+    final ByteOrder byteOrder) throws IOException {
+
+    final long byte0 = is.read();
+    final long byte1 = is.read();
+    final long byte2 = is.read();
+    final long byte3 = is.read();
+    final long byte4 = is.read();
+    final long byte5 = is.read();
+    final long byte6 = is.read();
+    final long byte7 = is.read();
+
+    if ((byte0 | byte1 | byte2 | byte3
+      | byte4 | byte5 | byte6 | byte7) < 0) {
+      throw new IOException(exception);
+    }
+
+    final long result;
+    if (byteOrder == ByteOrder.BIG_ENDIAN) {
+      result =
+          (byte0 << 56) | (byte1 << 48) | (byte2 << 40)
+        | (byte3 << 32) | (byte4 << 24) | (byte5 << 16)
+        | (byte6 << 8) | (byte7 << 0);
+    } else {
+      result =
+          (byte7 << 56) | (byte6 << 48) | (byte5 << 40)
+        | (byte4 << 32) | (byte3 << 24) | (byte2 << 16)
+        | (byte1 << 8) | (byte0 << 0);
+    }
+
+    return result;
+  }
+
+
+
+
     public static void readAndVerifyBytes(final InputStream is,
             final BinaryConstant expected, final String exception)
             throws ImagingException, IOException {

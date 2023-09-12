@@ -399,6 +399,43 @@ public final class ByteConversions {
         return result;
     }
 
+     public static long toLong(final byte[] bytes, final ByteOrder byteOrder) {
+        return toLong(bytes, 0, byteOrder);
+    }
+
+    private static long toLong(final byte[] bytes, final int offset, final ByteOrder byteOrder) {
+        final long byte0 = 0xffL & bytes[offset + 0];
+        final long byte1 = 0xffL & bytes[offset + 1];
+        final long byte2 = 0xffL & bytes[offset + 2];
+        final long byte3 = 0xffL & bytes[offset + 3];
+        final long byte4 = 0xffL & bytes[offset + 4];
+        final long byte5 = 0xffL & bytes[offset + 5];
+        final long byte6 = 0xffL & bytes[offset + 6];
+        final long byte7 = 0xffL & bytes[offset + 7];
+
+        if (byteOrder == ByteOrder.BIG_ENDIAN) {
+            return  (byte0 << 56) | (byte1 << 48) | (byte2 << 40)
+                    | (byte3 << 32) | (byte4 << 24) | (byte5 << 16)
+                    | (byte6 << 8) | byte7  ;
+        } else {
+           return (byte7 << 56) | (byte6 << 48) | (byte5 << 40)
+                    | (byte4 << 32) | (byte3 << 24) | (byte2 << 16)
+                    | (byte1 << 8) | byte0;
+        }
+    }
+
+    public static long[] toLongs(final byte[] bytes, final ByteOrder byteOrder) {
+      return toLongs(bytes, 0, bytes.length, byteOrder);
+    }
+
+    private static long[] toLongs(final byte[] bytes, final int offset, final int length,
+      final ByteOrder byteOrder) {
+      final long[] result = Allocator.longArray(length / 8);
+      Arrays.setAll(result, i -> toInt(bytes, offset + 8 * i, byteOrder));
+      return result;
+    }
+
+
     private ByteConversions() {
     }
 }

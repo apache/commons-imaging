@@ -41,6 +41,9 @@ public abstract class AbstractFieldType {
     public static final FieldTypeFloat FLOAT = new FieldTypeFloat(11, "Float");
     public static final FieldTypeDouble DOUBLE = new FieldTypeDouble(12, "Double");
     public static final FieldTypeLong IFD = new FieldTypeLong(13, "IFD");
+    public static final FieldTypeLong8 LONG8 = new FieldTypeLong8(16, "Long8");
+    public static final FieldTypeLong8 SLONG8 = new FieldTypeLong8(17, "Long8");
+    public static final FieldTypeLong8 IFD8 = new FieldTypeLong8(18, "Long8");
 
     public static final List<AbstractFieldType> ANY =
             Collections.unmodifiableList(Arrays.asList(
@@ -48,7 +51,7 @@ public abstract class AbstractFieldType {
                     LONG, RATIONAL, SBYTE,
                     UNDEFINED, SSHORT, SLONG,
                     SRATIONAL, FLOAT, DOUBLE,
-                    IFD));
+                    IFD, LONG8, SLONG8, IFD8));
     public static final List<AbstractFieldType> SHORT_OR_LONG =
             Collections.unmodifiableList(Arrays.asList(
                     SHORT, LONG));
