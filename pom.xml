@@ -152,10 +152,12 @@
         </configuration>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <configuration>
-          <configLocation>${commons.conf.dir}/checkstyle.xml</configLocation>
-          <suppressionsLocation>src/conf/checkstyle-suppressions.xml</suppressionsLocation>
+          <configLocation>${basedir}/src/conf/checkstyle.xml</configLocation>
+          <!-- <suppressionsLocation>${basedir}/src/conf/checkstyle-suppressions.xml</suppressionsLocation> -->
+          <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
           <includeTestSourceDirectory>false</includeTestSourceDirectory>
           <enableRulesSummary>false</enableRulesSummary>
           <excludes>target/**</excludes>
@@ -249,8 +251,8 @@
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <configuration>
-          <configLocation>${commons.conf.dir}/checkstyle.xml</configLocation>
-          <suppressionsLocation>src/conf/checkstyle-suppressions.xml</suppressionsLocation>
+          <!-- <suppressionsLocation>${basedir}/src/conf/checkstyle-suppressions.xml</suppressionsLocation> -->
+          <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
           <includeTestSourceDirectory>false</includeTestSourceDirectory>
           <enableRulesSummary>false</enableRulesSummary>
         </configuration>
