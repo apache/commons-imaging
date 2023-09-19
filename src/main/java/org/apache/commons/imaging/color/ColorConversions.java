@@ -124,7 +124,8 @@ public final class ColorConversions {
      *
      * @param cie CIE color.
      * @return CIELab colors converted to DIN99oLab color space.
-     * @see <a href="https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum">https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum</a>
+     * @see <a href=
+     *      "https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum">https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum</a>
      */
     public static ColorDin99Lab convertCieLabToDin99oLab(final ColorCieLab cie) {
         return convertCieLabToDin99oLab(cie.l, cie.a, cie.b);
@@ -137,7 +138,8 @@ public final class ColorConversions {
      * @param a position between red and green.
      * @param b position between yellow and blue.
      * @return CIBELab colors converted to DIN99oLab color space.
-     * @see <a href="https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum">https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum</a>
+     * @see <a href=
+     *      "https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum">https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum</a>
      */
     public static ColorDin99Lab convertCieLabToDin99oLab(final double l, final double a, final double b) {
         final double kE = 1.0; // brightness factor, 1.0 for CIE reference conditions
@@ -326,7 +328,8 @@ public final class ColorConversions {
      *
      * @param dino color in the DIN99 color space.
      * @return DIN99o colors converted to CIELab color space.
-     * @see <a href="https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum">https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum</a>
+     * @see <a href=
+     *      "https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum">https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum</a>
      */
     public static ColorCieLab convertDin99oLabToCieLab(final ColorDin99Lab dino) {
         return convertDin99oLabToCieLab(dino.l99, dino.a99, dino.b99);
@@ -339,7 +342,8 @@ public final class ColorConversions {
      * @param a99o position between red and green.
      * @param b99o position between yellow and blue.
      * @return DIN99o colors converted to CIELab color space.
-     * @see <a href="https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum">https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum</a>
+     * @see <a href=
+     *      "https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum">https://de.wikipedia.org/w/index.php?title=Diskussion:DIN99-Farbraum</a>
      */
     public static ColorCieLab convertDin99oLabToCieLab(final double l99o, final double a99o, final double b99o) {
         final double kE = 1.0; // brightness factor, 1.0 for CIE reference conditions

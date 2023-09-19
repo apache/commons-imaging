@@ -931,7 +931,8 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
         return false;
     }
 
-    public List<AbstractSegment> readSegments(final ByteSource byteSource, final int[] markers, final boolean returnAfterFirst) throws ImagingException, IOException {
+    public List<AbstractSegment> readSegments(final ByteSource byteSource, final int[] markers, final boolean returnAfterFirst)
+            throws ImagingException, IOException {
         final List<AbstractSegment> result = new ArrayList<>();
         final int[] sofnSegments = {
                 // kJFIFMarker,

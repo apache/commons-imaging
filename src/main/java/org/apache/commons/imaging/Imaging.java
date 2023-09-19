@@ -74,7 +74,8 @@ import org.apache.commons.imaging.internal.ImageParserFactory;
  * org.apache.commons.imaging.examples package for examples.</p>
  *
  * @see <a
- *      href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/SampleUsage.java">org.apache.commons.imaging.examples.SampleUsage</a>
+ *      href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/SampleUsage.java">
+ *      org.apache.commons.imaging.examples.SampleUsage</a>
  * @see <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a>
  */
 public final class Imaging {
