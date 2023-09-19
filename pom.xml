@@ -52,7 +52,7 @@
     <commons.release-plugin.version>1.8.0</commons.release-plugin.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <conf.dir>src/conf</conf.dir>
+    <commons.conf.dir>src/conf</commons.conf.dir>
 
     <!-- Commons Release Plugin -->
     <commons.release.version>1.0-alpha3</commons.release.version>
@@ -154,8 +154,8 @@
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <configuration>
-          <configLocation>${conf.dir}/checkstyle.xml</configLocation>
-          <suppressionsLocation>${conf.dir}/checkstyle-suppressions.xml</suppressionsLocation>
+          <configLocation>${commons.conf.dir}/checkstyle.xml</configLocation>
+          <suppressionsLocation>${commons.conf.dir}/checkstyle-suppressions.xml</suppressionsLocation>
           <includeTestSourceDirectory>false</includeTestSourceDirectory>
           <enableRulesSummary>false</enableRulesSummary>
           <excludes>target/**</excludes>
@@ -165,7 +165,7 @@
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
         <configuration>
-          <excludeFilterFile>${conf.dir}/spotbugs-exclude-filter.xml</excludeFilterFile>
+          <excludeFilterFile>${commons.conf.dir}/spotbugs-exclude-filter.xml</excludeFilterFile>
         </configuration>
       </plugin>
     </plugins>
@@ -249,8 +249,8 @@
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <configuration>
-          <configLocation>${conf.dir}/checkstyle.xml</configLocation>
-          <suppressionsLocation>${conf.dir}/checkstyle-suppressions.xml</suppressionsLocation>
+          <configLocation>${commons.conf.dir}/checkstyle.xml</configLocation>
+          <suppressionsLocation>${commons.conf.dir}/checkstyle-suppressions.xml</suppressionsLocation>
           <includeTestSourceDirectory>false</includeTestSourceDirectory>
           <enableRulesSummary>false</enableRulesSummary>
         </configuration>
@@ -267,7 +267,7 @@
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
         <configuration>
-          <excludeFilterFile>${conf.dir}/spotbugs-exclude-filter.xml</excludeFilterFile>
+          <excludeFilterFile>${commons.conf.dir}/spotbugs-exclude-filter.xml</excludeFilterFile>
         </configuration>
       </plugin>
       <plugin>
@@ -292,7 +292,7 @@
         <configuration>
           <targetJdk>${maven.compiler.target}</targetJdk>
           <rulesets>
-            <ruleset>${conf.dir}/pmd-ruleset.xml</ruleset>
+            <ruleset>${commons.conf.dir}/pmd-ruleset.xml</ruleset>
           </rulesets>
         </configuration>
       </plugin>
