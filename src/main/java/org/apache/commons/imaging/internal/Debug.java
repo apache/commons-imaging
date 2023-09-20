@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -105,7 +106,7 @@ public final class Debug {
     }
 
     private static void debug(final String message, final ICC_Profile value) {
-        debug("ICC_Profile " + message + ": " + ((value == null) ? "null" : value.toString()));
+        debug("ICC_Profile " + message + ": " + Objects.toString(value));
         if (value != null) {
             debug("\t getProfileClass: " + byteQuadToString(value.getProfileClass()));
             debug("\t getPCSType: " + byteQuadToString(value.getPCSType()));
