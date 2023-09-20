@@ -44,10 +44,13 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 /**
  * Interface for Exif write/update/remove functionality for Jpeg/JFIF images.
  *
- * <p>See the source of the ExifMetadataUpdateExample class for example usage.</p>
+ * <p>
+ * See the source of the ExifMetadataUpdateExample class for example usage.
+ * </p>
  *
- * @see <a
- *      href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/WriteExifMetadataExample.java">org.apache.commons.imaging.examples.WriteExifMetadataExample</a>
+ * @see <a href=
+ *      "https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/WriteExifMetadataExample.java">
+ *      org.apache.commons.imaging.examples.WriteExifMetadataExample</a>
  */
 public class ExifRewriter extends BinaryFileParser {
 

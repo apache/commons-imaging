@@ -57,4 +57,7 @@ limitations under the License.
     <module name="NeedBraces"/>
     <module name="RightCurly"/>
  </module>
+ <module name="LineLength">
+   <property name="max" value="160" />
+  </module>
 </module>

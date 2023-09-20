@@ -322,11 +322,13 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
 
             for (int x = 0; x < width; x++) {
                 if (counter >= id.imageData.length) {
-                    throw new ImagingException(String.format("Invalid GIF image data length [%d], greater than the image data length [%d]", id.imageData.length, width));
+                    throw new ImagingException(
+                            String.format("Invalid GIF image data length [%d], greater than the image data length [%d]", id.imageData.length, width));
                 }
                 final int index = 0xff & id.imageData[counter++];
                 if (index >= colorTable.length) {
-                    throw new ImagingException(String.format("Invalid GIF color table index [%d], greater than the color table length [%d]", index, colorTable.length));
+                    throw new ImagingException(
+                            String.format("Invalid GIF color table index [%d], greater than the color table length [%d]", index, colorTable.length));
                 }
                 int rgb = colorTable[index];
 
