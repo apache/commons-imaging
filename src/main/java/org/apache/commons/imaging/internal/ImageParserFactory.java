@@ -56,7 +56,8 @@ public class ImageParserFactory {
     // This generics suppression is as good as the predicate given. If the predicate violates a generics design,
     // then there will be an error during runtime.
     @SuppressWarnings("unchecked")
-    private static <T extends ImagingParameters<T>> AbstractImageParser<T> getImageParser(final Predicate<AbstractImageParser<?>> pred, final Supplier<? extends RuntimeException> supplier) {
+    private static <T extends ImagingParameters<T>> AbstractImageParser<T> getImageParser(final Predicate<AbstractImageParser<?>> pred,
+            final Supplier<? extends RuntimeException> supplier) {
         return (AbstractImageParser<T>) AbstractImageParser
                 .getAllImageParsers()
                 .stream()
