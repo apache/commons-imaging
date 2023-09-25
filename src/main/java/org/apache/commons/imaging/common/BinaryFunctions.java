@@ -177,6 +177,18 @@ public final class BinaryFunctions {
         return result;
     }
 
+    /**
+    * Read eight bytes from the specified input stream, adjust for
+    * byte order, and return a long integer.
+    * @param name a descriptive identifier used for diagnostic purposes
+    * @param is a valid input stream
+    * @param exception application-defined message to be used for constructing an exception
+    * if an error condition is triggered.
+    * @param byteOrder the order in which the InputStream marshals data
+    * @return a long integer interpreted from next 8 bytes in the InputStream
+    * @throws IOException in the event of a non-recoverable error, such
+    * as an attempt to read past the end of file.
+    */
    public static long read8Bytes(final String name,
     final InputStream is,
     final String exception,

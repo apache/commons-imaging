@@ -494,26 +494,18 @@ public class TiffReader extends BinaryFileParser {
       bigTiff = false;
       standardTiff = true;
       entryMaxValueLength = TIFF_ENTRY_MAX_VALUE_LENGTH;
-      offsetToFirstIFD
-        = 0xFFFFffffL & read4Bytes(
-          "offsetToFirstIFD", is, "Not a Valid TIFF File", getByteOrder());
+      offsetToFirstIFD = 0xFFFFffffL & read4Bytes("offsetToFirstIFD", is, "Not a Valid TIFF File", getByteOrder());
     } else if (tiffVersion == TIFF_VERSION_BIG) {
       bigTiff = true;
       standardTiff = false;
-       entryMaxValueLength = TIFF_ENTRY_MAX_VALUE_LENGTH_BIG;
-      int byteSize
-        = read2Bytes(
-          "bytesizeOfOffset", is, "Not a Valid TIFF File", getByteOrder());
-      int expectedZero
-        = read2Bytes(
-          "expectedZero", is, "Not a Valid TIFF File", getByteOrder());
+      entryMaxValueLength = TIFF_ENTRY_MAX_VALUE_LENGTH_BIG;
+      int byteSize = read2Bytes("bytesizeOfOffset", is, "Not a Valid TIFF File", getByteOrder());
+      int expectedZero  = read2Bytes("expectedZero", is, "Not a Valid TIFF File", getByteOrder());
       if (byteSize != 8 || expectedZero != 0) {
         throw new ImagingException(
           "Misformed Big-TIFF header: " + tiffVersion);
       }
-      offsetToFirstIFD
-        = read8Bytes(
-          "offsetToFirstIFD", is, "Not a Valid TIFF File", getByteOrder());
+      offsetToFirstIFD  = read8Bytes("offsetToFirstIFD", is, "Not a Valid TIFF File", getByteOrder());
     } else {
       throw new ImagingException(
         "Unknown TIFF Version: " + tiffVersion);
