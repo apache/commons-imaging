@@ -76,6 +76,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="IMAGING-352" dev="ggregory" type="update" due-to="Jeroen van der Vegt, Gary Gregory">
         [PngWriter] Allow custom PaletteFactory #294.
       </action>
+      <action issue="IMAGING-360" dev="ggregory" type="update" due-to="Gary Lucas, Gary Gregory">
+      Add more TIFF compression entries to ImageInfo #311.
+      </action>
       <!-- UPDATE -->
       <action dev="kinow" type="update" due-to="Dependabot, Gary Gregory">
         Bump actions/cache #225, #228, #239, #240.
