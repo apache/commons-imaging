@@ -43,7 +43,8 @@ public final class TiffConstants {
     public static final int TIFF_COMPRESSION_CCITT_GROUP_3 = 3;
     public static final int TIFF_COMPRESSION_CCITT_GROUP_4 = 4;
     public static final int TIFF_COMPRESSION_LZW = 5;
-    public static final int TIFF_COMPRESSION_JPEG = 6;
+    public static final int TIFF_COMPRESSION_JPEG_OBSOLETE = 6;
+    public static final int TIFF_COMPRESSION_JPEG = 7;
     public static final int TIFF_COMPRESSION_UNCOMPRESSED_2 = 32771;
     public static final int TIFF_COMPRESSION_PACKBITS = 32773;
     public static final int TIFF_COMPRESSION_DEFLATE_PKZIP = 32946;
