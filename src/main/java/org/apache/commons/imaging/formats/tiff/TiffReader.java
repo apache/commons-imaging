@@ -473,47 +473,46 @@ public class TiffReader extends BinaryFileParser {
         }
     }
 
-   private TiffHeader readTiffHeader(final InputStream is) throws ImagingException, IOException {
-    final int byteOrder1 = readByte("BYTE_ORDER_1", is, "Not a Valid TIFF File");
-    final int byteOrder2 = readByte("BYTE_ORDER_2", is, "Not a Valid TIFF File");
-    if (byteOrder1 != byteOrder2) {
-      throw new ImagingException("Byte Order bytes don't match (" + byteOrder1 + ", " + byteOrder2 + ").");
+    private TiffHeader readTiffHeader(final InputStream is) throws ImagingException, IOException {
+        final int byteOrder1 = readByte("BYTE_ORDER_1", is, "Not a Valid TIFF File");
+        final int byteOrder2 = readByte("BYTE_ORDER_2", is, "Not a Valid TIFF File");
+        if (byteOrder1 != byteOrder2) {
+            throw new ImagingException("Byte Order bytes don't match (" + byteOrder1 + ", " + byteOrder2 + ").");
+        }
+
+        final ByteOrder byteOrder = getTiffByteOrder(byteOrder1);
+        setByteOrder(byteOrder);
+
+        // verify that the file is a supported TIFF format using
+        // the numeric indentifier
+        //     Classic TIFF (32 bit):    42
+        //     Big TIFF (64 bit):        43
+        //
+        final long offsetToFirstIFD;
+        final int tiffVersion = read2Bytes("tiffVersion", is, "Not a Valid TIFF File", getByteOrder());
+        if (tiffVersion == TIFF_VERSION_STANDARD) {
+            bigTiff = false;
+            standardTiff = true;
+            entryMaxValueLength = TIFF_ENTRY_MAX_VALUE_LENGTH;
+            offsetToFirstIFD = 0xFFFFffffL & read4Bytes("offsetToFirstIFD", is, "Not a Valid TIFF File", getByteOrder());
+        } else if (tiffVersion == TIFF_VERSION_BIG) {
+            bigTiff = true;
+            standardTiff = false;
+            entryMaxValueLength = TIFF_ENTRY_MAX_VALUE_LENGTH_BIG;
+            int byteSize = read2Bytes("bytesizeOfOffset", is, "Not a Valid TIFF File", getByteOrder());
+            int expectedZero = read2Bytes("expectedZero", is, "Not a Valid TIFF File", getByteOrder());
+            if (byteSize != 8 || expectedZero != 0) {
+                throw new ImagingException(
+                  "Misformed Big-TIFF header: " + tiffVersion);
+            }
+            offsetToFirstIFD = read8Bytes("offsetToFirstIFD", is, "Not a Valid TIFF File", getByteOrder());
+        } else {
+            throw new ImagingException(
+              "Unknown TIFF Version: " + tiffVersion);
+        }
+
+        skipBytes(is, offsetToFirstIFD - 8, "Not a Valid TIFF File: couldn't find IFDs");
+
+        return new TiffHeader(byteOrder, tiffVersion, offsetToFirstIFD, bigTiff);
     }
-
-    final ByteOrder byteOrder = getTiffByteOrder(byteOrder1);
-    setByteOrder(byteOrder);
-
-    // verify that the file is a supported TIFF format using
-    // the numeric indentifier
-    //     Classic TIFF (32 bit):    42
-    //     Big TIFF (64 bit):        43
-    //
-    final long offsetToFirstIFD;
-    final int tiffVersion = read2Bytes("tiffVersion", is, "Not a Valid TIFF File", getByteOrder());
-    if (tiffVersion == TIFF_VERSION_STANDARD) {
-      bigTiff = false;
-      standardTiff = true;
-      entryMaxValueLength = TIFF_ENTRY_MAX_VALUE_LENGTH;
-      offsetToFirstIFD = 0xFFFFffffL & read4Bytes("offsetToFirstIFD", is, "Not a Valid TIFF File", getByteOrder());
-    } else if (tiffVersion == TIFF_VERSION_BIG) {
-      bigTiff = true;
-      standardTiff = false;
-      entryMaxValueLength = TIFF_ENTRY_MAX_VALUE_LENGTH_BIG;
-      int byteSize = read2Bytes("bytesizeOfOffset", is, "Not a Valid TIFF File", getByteOrder());
-      int expectedZero  = read2Bytes("expectedZero", is, "Not a Valid TIFF File", getByteOrder());
-      if (byteSize != 8 || expectedZero != 0) {
-        throw new ImagingException(
-          "Misformed Big-TIFF header: " + tiffVersion);
-      }
-      offsetToFirstIFD  = read8Bytes("offsetToFirstIFD", is, "Not a Valid TIFF File", getByteOrder());
-    } else {
-      throw new ImagingException(
-        "Unknown TIFF Version: " + tiffVersion);
-    }
-
-    skipBytes(is, offsetToFirstIFD - 8, "Not a Valid TIFF File: couldn't find IFDs");
-
-    return new TiffHeader(byteOrder, tiffVersion, offsetToFirstIFD, bigTiff);
-  }
-
 }

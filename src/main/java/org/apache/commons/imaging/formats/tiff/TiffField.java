@@ -234,13 +234,13 @@ public class TiffField {
             final int[] numbers = (int[]) o;
             return Arrays.copyOf(numbers, numbers.length);
         }
-        if (o instanceof long[]){
-          final long[] numbers = (long[])o;
-          final int[] iNumbers = new int[numbers.length];
-          for(int i=0; i<iNumbers.length; i++){
-            iNumbers[i] = (int)numbers[i];
-          }
-          return iNumbers;
+        if (o instanceof long[]) {
+            final long[] numbers = (long[]) o;
+            final int[] iNumbers = new int[numbers.length];
+            for (int i = 0; i < iNumbers.length; i++) {
+                iNumbers[i] = (int) numbers[i];
+            }
+            return iNumbers;
         }
 
         throw new ImagingException("Unknown value: " + o + " for: "
@@ -296,11 +296,16 @@ public class TiffField {
         // return -1;
     }
 
+    /**
+     * Gets the value of the field in the form of an array of eight-byte
+     * (long) integers.
+     * @return an valid array of size zero or larger giving signed long integer
+     * values.
+     * @throws ImagingException if the field instance is of an incompatible type
+     * or does not contain a valid data element.
+     */
     public long[] getLongArrayValue() throws ImagingException {
         final Object o = getValue();
-        // if (o == null)
-        // return null;
-
         if (o instanceof Number) {
             return new  long[] { ((Number) o).longValue() };
         }
@@ -329,9 +334,14 @@ public class TiffField {
 
         throw new ImagingException("Unknown value: " + o + " for: "
                 + getTagInfo().getDescription());
-        // return null;
     }
 
+     /**
+     * Gets the value of the field in the form of an eight-byte (long) integer.
+     * @return a signed long integer value.
+     * @throws ImagingException if the field instance is of an incompatible type
+     * or does not contain a valid data element.
+     */
     public long getLongValue() throws ImagingException {
         final Object o = getValue();
         if (o == null) {
