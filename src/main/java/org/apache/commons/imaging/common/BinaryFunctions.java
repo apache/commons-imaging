@@ -177,7 +177,7 @@ public final class BinaryFunctions {
         return result;
     }
 
-    /**
+   /**
     * Read eight bytes from the specified input stream, adjust for
     * byte order, and return a long integer.
     * @param name a descriptive identifier used for diagnostic purposes
