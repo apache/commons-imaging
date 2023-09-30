@@ -319,13 +319,13 @@ public class TiffReader extends BinaryFileParser {
                 final byte[] offsetBytes;
                 final long offset;
                 if (standardTiff) {
-                 count = 0xFFFFffffL & read4Bytes("Count", is, "Not a Valid TIFF File", getByteOrder());
-                 offsetBytes = readBytes("Offset", is, 4, "Not a Valid TIFF File");
-                 offset = 0xFFFFffffL & ByteConversions.toInt(offsetBytes, getByteOrder());
+                  count = 0xFFFFffffL & read4Bytes("Count", is, "Not a Valid TIFF File", getByteOrder());
+                  offsetBytes = readBytes("Offset", is, 4, "Not a Valid TIFF File");
+                  offset = 0xFFFFffffL & ByteConversions.toInt(offsetBytes, getByteOrder());
                 } else {
-                 count = read8Bytes("Count", is, "Not a Valid TIFF File", getByteOrder());
-                 offsetBytes = readBytes("Offset", is, 8, "Not a Valid TIFF File");
-                 offset = ByteConversions.toLong(offsetBytes, getByteOrder());
+                  count = read8Bytes("Count", is, "Not a Valid TIFF File", getByteOrder());
+                  offsetBytes = readBytes("Offset", is, 8, "Not a Valid TIFF File");
+                  offset = ByteConversions.toLong(offsetBytes, getByteOrder());
                 }
 
                 if (tag == 0) {
