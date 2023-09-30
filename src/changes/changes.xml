@@ -77,7 +77,10 @@ The <action> type attribute can be add,update,fix,remove.
         [PngWriter] Allow custom PaletteFactory #294.
       </action>
       <action issue="IMAGING-360" dev="ggregory" type="update" due-to="Gary Lucas, Gary Gregory">
-      Add more TIFF compression entries to ImageInfo #311.
+        Add more TIFF compression entries to ImageInfo #311.
+      </action>
+      <action issue="IMAGING-316" dev="ggregory" type="update" due-to="Gary Lucas, Gary Gregory">
+        Add support for BigTIFF format #318.
       </action>
       <!-- UPDATE -->
       <action dev="kinow" type="update" due-to="Dependabot, Gary Gregory">
