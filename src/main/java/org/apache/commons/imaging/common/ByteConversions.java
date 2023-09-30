@@ -201,6 +201,43 @@ public final class ByteConversions {
         return result;
     }
 
+    /**
+     * Encodes an eight-byte (long) into an array of bytes based on
+     * the specified byte order.
+     *
+     * @param value a standard data primitive of type long
+     * @param byteOrder the byte order to be used for encoding
+     * @return an array of length 8
+     */
+    public static byte[] toBytes(final long value, final ByteOrder byteOrder) {
+        final byte[] result = new byte[8];
+        toBytes(value, byteOrder, result, 0);
+        return result;
+    }
+
+    private static void toBytes(final long value, final ByteOrder byteOrder, final byte[] result, final int offset) {
+        if (byteOrder == ByteOrder.BIG_ENDIAN) {
+            result[offset + 0] = (byte) (value >> 56);
+            result[offset + 1] = (byte) (value >> 48);
+            result[offset + 2] = (byte) (value >> 40);
+            result[offset + 3] = (byte) (value >> 32);
+            result[offset + 4] = (byte) (value >> 24);
+            result[offset + 5] = (byte) (value >> 16);
+            result[offset + 6] = (byte) (value >> 8);
+            result[offset + 7] = (byte) value;
+        } else {
+            result[offset + 7] = (byte) (value >> 56);
+            result[offset + 6] = (byte) (value >> 48);
+            result[offset + 5] = (byte) (value >> 40);
+            result[offset + 4] = (byte) (value >> 32);
+            result[offset + 3] = (byte) (value >> 24);
+            result[offset + 2] = (byte) (value >> 16);
+            result[offset + 1] = (byte) (value >> 8);
+            result[offset + 0] = (byte) value;
+        }
+    }
+
+
     public static double toDouble(final byte[] bytes, final ByteOrder byteOrder) {
         return toDouble(bytes, 0, byteOrder);
     }
@@ -398,6 +435,59 @@ public final class ByteConversions {
         Arrays.setAll(result, i -> toUInt16(bytes, offset + 2 * i, byteOrder));
         return result;
     }
+
+    /**
+     * Extracts an eight-byte long integer from the specified byte array.
+     * This method assumes that the byte array is of sufficiently large size
+     * to encode a long integer.
+     * @param bytes an array of size at least 8
+     * @param byteOrder the byte-order for interpreting the input bytes
+     * @return an eight-byte signed integer
+     */
+    public static long toLong(final byte[] bytes, final ByteOrder byteOrder) {
+        return toLong(bytes, 0, byteOrder);
+    }
+
+    private static long toLong(final byte[] bytes, final int offset, final ByteOrder byteOrder) {
+        final long byte0 = 0xffL & bytes[offset + 0];
+        final long byte1 = 0xffL & bytes[offset + 1];
+        final long byte2 = 0xffL & bytes[offset + 2];
+        final long byte3 = 0xffL & bytes[offset + 3];
+        final long byte4 = 0xffL & bytes[offset + 4];
+        final long byte5 = 0xffL & bytes[offset + 5];
+        final long byte6 = 0xffL & bytes[offset + 6];
+        final long byte7 = 0xffL & bytes[offset + 7];
+
+        if (byteOrder == ByteOrder.BIG_ENDIAN) {
+            return  (byte0 << 56) | (byte1 << 48) | (byte2 << 40)
+                    | (byte3 << 32) | (byte4 << 24) | (byte5 << 16)
+                    | (byte6 << 8) | byte7  ;
+        } else {
+           return (byte7 << 56) | (byte6 << 48) | (byte5 << 40)
+                    | (byte4 << 32) | (byte3 << 24) | (byte2 << 16)
+                    | (byte1 << 8) | byte0;
+        }
+    }
+
+    /**
+     * Extracts an array of eight-byte long integers from the specified array
+     * of bytes.  The size of the result array is computed based on the
+     * size of the input byte array.
+     * @param bytes a valid array
+     * @param byteOrder the byte-order for interpreting the input bytes
+     * @return an array of zero or more eight-byte signed integers
+     */
+    public static long[] toLongs(final byte[] bytes, final ByteOrder byteOrder) {
+      return toLongs(bytes, 0, bytes.length, byteOrder);
+    }
+
+    private static long[] toLongs(final byte[] bytes, final int offset, final int length,
+      final ByteOrder byteOrder) {
+      final long[] result = Allocator.longArray(length / 8);
+      Arrays.setAll(result, i -> toLong(bytes, offset + 8 * i, byteOrder));
+      return result;
+    }
+
 
     private ByteConversions() {
     }
