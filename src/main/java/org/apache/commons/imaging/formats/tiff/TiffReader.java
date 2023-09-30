@@ -16,6 +16,17 @@
  */
 package org.apache.commons.imaging.formats.tiff;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.read2Bytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.read8Bytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
+import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.skipBytes;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_ENTRY_MAX_VALUE_LENGTH;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_ENTRY_MAX_VALUE_LENGTH_BIG;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_VERSION_BIG;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_VERSION_STANDARD;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteOrder;
@@ -25,20 +36,10 @@ import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.BinaryFileParser;
-import static org.apache.commons.imaging.common.BinaryFunctions.read2Bytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.read8Bytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
-import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.skipBytes;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory.ImageDataElement;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_ENTRY_MAX_VALUE_LENGTH;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_ENTRY_MAX_VALUE_LENGTH_BIG;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_VERSION_BIG;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_VERSION_STANDARD;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
