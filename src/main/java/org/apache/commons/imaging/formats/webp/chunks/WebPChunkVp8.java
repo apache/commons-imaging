@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
+ * VP8 (bitstream) chunk.
+ *
  * <pre>{@code
  *  0                   1                   2                   3
  *  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -35,17 +37,24 @@ import java.io.PrintWriter;
  *
  * @see <a href="https://developers.google.com/speed/webp/docs/riff_container#simple_file_format_lossy">Simple File Format (Lossy)</a>
  * @see <a href="https://datatracker.ietf.org/doc/html/rfc6386">VP8 Data Format and Decoding Guide</a>
- *
  * @since 1.0-alpha4
  */
-public final class WebPChunkVP8 extends WebPChunk {
+public final class WebPChunkVp8 extends WebPChunk {
     private final int versionNumber;
     private final int width;
     private final int height;
     private final int horizontalScale;
     private final int verticalScale;
 
-    public WebPChunkVP8(int type, int size, byte[] bytes) throws ImagingException {
+    /**
+     * Create a VP8 chunk.
+     *
+     * @param type  chunk type.
+     * @param size  chunk size.
+     * @param bytes chunk data.
+     * @throws ImagingException if the chunk data and the size provided do not match.
+     */
+    public WebPChunkVp8(int type, int size, byte[] bytes) throws ImagingException {
         super(type, size, bytes);
 
         if (size < 10) {
@@ -116,22 +125,37 @@ public final class WebPChunkVP8 extends WebPChunk {
         this.verticalScale = b9 >> 6;
     }
 
+    /**
+     * @return the version number.
+     */
     public int getVersionNumber() {
         return versionNumber;
     }
 
+    /**
+     * @return the horizontal scale.
+     */
     public int getHorizontalScale() {
         return horizontalScale;
     }
 
+    /**
+     * @return the vertical scale.
+     */
     public int getVerticalScale() {
         return verticalScale;
     }
 
+    /**
+     * @return the width.
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * @return the height.
+     */
     public int getHeight() {
         return height;
     }
@@ -139,9 +163,10 @@ public final class WebPChunkVP8 extends WebPChunk {
     @Override
     public void dump(PrintWriter pw, int offset) throws ImagingException, IOException {
         super.dump(pw, offset);
-        pw.println("  Width: " + width);
-        pw.println("  Height: " + height);
-        pw.println("  Horizontal Scale: " + horizontalScale);
-        pw.println("  Vertical Scale: " + verticalScale);
+        pw.println("  Version Number: " + getVersionNumber());
+        pw.println("  Width: " + getWidth());
+        pw.println("  Height: " + getHeight());
+        pw.println("  Horizontal Scale: " + getHorizontalScale());
+        pw.println("  Vertical Scale: " + getVerticalScale());
     }
 }

@@ -18,6 +18,7 @@ package org.apache.commons.imaging.formats.webp.chunks;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFileParser;
+import org.apache.commons.imaging.internal.SafeOperations;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -29,30 +30,50 @@ import java.nio.charset.StandardCharsets;
  * used by the parser.
  *
  * @see <a href="https://developers.google.com/speed/webp/docs/riff_container">WebP Container Specification</a>
- *
  * @since 1.0-alpha4
  */
 public abstract class WebPChunk extends BinaryFileParser {
     private final int type;
     private final int size;
     protected final byte[] bytes;
+    private final int chunkSize;
 
+    /**
+     * Create a new WebP chunk.
+     *
+     * @param type  chunk type.
+     * @param size  chunk size.
+     * @param bytes chunk data.
+     * @throws ImagingException if the chunk data and the size provided do not match.
+     */
     WebPChunk(int type, int size, byte[] bytes) throws ImagingException {
         super(ByteOrder.LITTLE_ENDIAN);
 
         if (size != bytes.length) {
-            throw new IllegalArgumentException("Chunk size must match bytes length");
+            throw new ImagingException("Chunk size must match bytes length");
         }
 
         this.type = type;
         this.size = size;
         this.bytes = bytes;
+
+        // if chunk size is odd, a single padding byte is added
+        int padding = (size % 2) != 0 ? 1 : 0;
+
+        // Chunk FourCC (4 bytes) + Chunk Size (4 bytes) + Chunk Payload (n bytes) + Padding
+        this.chunkSize = SafeOperations.add(4, 4, size, padding);
     }
 
+    /**
+     * @return the chunk type.
+     */
     public int getType() {
         return type;
     }
 
+    /**
+     * @return the description of the chunk type.
+     */
     public String getTypeDescription() {
         return new String(new byte[]{
                 (byte) (type & 0xff),
@@ -61,23 +82,41 @@ public abstract class WebPChunk extends BinaryFileParser {
                 (byte) ((type >> 24) & 0xff)}, StandardCharsets.UTF_8);
     }
 
+    /**
+     * @return the payload size.
+     */
     public int getPayloadSize() {
         return size;
     }
 
+    /**
+     * @return the chunk size.
+     */
     public int getChunkSize() {
-        // if chunk size is odd, a single padding byte is added
-        int padding = (size % 2) != 0 ? 1 : 0;
-
-        // Chunk FourCC (4 bytes) + Chunk Size (4 bytes) + Chunk Payload (n bytes) + Padding
-        return 4 + 4 + size + padding;
+        return chunkSize;
     }
 
+    /**
+     * @return a copy of the chunk data as bytes.
+     */
     public byte[] getBytes() {
         return bytes.clone();
     }
 
+    /**
+     * Print the chunk to the given stream.
+     *
+     * @param pw     a stream to write to.
+     * @param offset chunk offset.
+     * @throws ImagingException if the image is invalid.
+     * @throws IOException      if it fails to write to the given stream.
+     */
     public void dump(PrintWriter pw, int offset) throws ImagingException, IOException {
-        pw.printf("Chunk %s at offset %s, length %d%n", getTypeDescription(), offset >= 0 ? String.valueOf(offset) : "unknown", getChunkSize());
+        pw.printf(
+                "Chunk %s at offset %s, length %d%n, payload size %d%n",
+                getTypeDescription(),
+                offset >= 0 ? String.valueOf(offset) : "unknown",
+                getChunkSize(),
+                getPayloadSize());
     }
 }

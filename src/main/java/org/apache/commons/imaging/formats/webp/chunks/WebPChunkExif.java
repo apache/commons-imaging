@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
+ * Exif (metadata) chunk.
+ *
  * <pre>{@code
  *  0                   1                   2                   3
  *  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -37,11 +39,19 @@ import java.io.PrintWriter;
  * }</pre>
  *
  * @see <a href="https://developers.google.com/speed/webp/docs/riff_container#metadata">Extended File Format#Metadata</a>
- *
  * @since 1.0-alpha4
  */
-public final class WebPChunkEXIF extends WebPChunk {
-    public WebPChunkEXIF(int type, int size, byte[] bytes) throws ImagingException {
+public final class WebPChunkExif extends WebPChunk {
+
+    /**
+     * Create an Exif chunk.
+     *
+     * @param type  chunk type.
+     * @param size  chunk size.
+     * @param bytes chunk data.
+     * @throws ImagingException if the chunk data and the size provided do not match.
+     */
+    public WebPChunkExif(int type, int size, byte[] bytes) throws ImagingException {
         super(type, size, bytes);
     }
 

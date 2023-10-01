@@ -19,62 +19,70 @@ package org.apache.commons.imaging.formats.webp;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.formats.webp.chunks.WebPChunk;
-import org.apache.commons.imaging.formats.webp.chunks.WebPChunkANIM;
-import org.apache.commons.imaging.formats.webp.chunks.WebPChunkANMF;
-import org.apache.commons.imaging.formats.webp.chunks.WebPChunkEXIF;
-import org.apache.commons.imaging.formats.webp.chunks.WebPChunkICCP;
-import org.apache.commons.imaging.formats.webp.chunks.WebPChunkVP8;
-import org.apache.commons.imaging.formats.webp.chunks.WebPChunkVP8L;
-import org.apache.commons.imaging.formats.webp.chunks.WebPChunkVP8X;
-import org.apache.commons.imaging.formats.webp.chunks.WebPChunkXMP;
-import org.apache.commons.imaging.formats.webp.chunks.WebPChunkXYZW;
+import org.apache.commons.imaging.formats.webp.chunks.WebPChunkAlph;
+import org.apache.commons.imaging.formats.webp.chunks.WebPChunkAnim;
+import org.apache.commons.imaging.formats.webp.chunks.WebPChunkAnmf;
+import org.apache.commons.imaging.formats.webp.chunks.WebPChunkExif;
+import org.apache.commons.imaging.formats.webp.chunks.WebPChunkIccp;
+import org.apache.commons.imaging.formats.webp.chunks.WebPChunkVp8;
+import org.apache.commons.imaging.formats.webp.chunks.WebPChunkVp8l;
+import org.apache.commons.imaging.formats.webp.chunks.WebPChunkVp8x;
+import org.apache.commons.imaging.formats.webp.chunks.WebPChunkXml;
+import org.apache.commons.imaging.formats.webp.chunks.WebPChunkXyzw;
 
 import java.io.IOException;
 
 /**
+ * WebP chunk type.
+ *
  * @since 1.0-alpha4
  */
 public enum WebPChunkType {
 
     /**
-     * @see WebPChunkVP8
+     * @see WebPChunkAlph
      */
-    VP8(WebPChunkVP8::new),
+    ALPH(WebPChunkAlph::new),
 
     /**
-     * @see WebPChunkVP8L
+     * @see WebPChunkVp8
      */
-    VP8L(WebPChunkVP8L::new),
+    VP8(WebPChunkVp8::new),
 
     /**
-     * @see WebPChunkVP8X
+     * @see WebPChunkVp8l
      */
-    VP8X(WebPChunkVP8X::new),
+    VP8L(WebPChunkVp8l::new),
 
     /**
-     * @see WebPChunkANIM
+     * @see WebPChunkVp8x
      */
-    ANIM(WebPChunkANIM::new),
+    VP8X(WebPChunkVp8x::new),
 
     /**
-     * @see WebPChunkANMF
+     * @see WebPChunkAnim
      */
-    ANMF(WebPChunkANMF::new),
+    ANIM(WebPChunkAnim::new),
 
     /**
-     * @see WebPChunkICCP
+     * @see WebPChunkAnmf
      */
-    ICCP(WebPChunkICCP::new),
+    ANMF(WebPChunkAnmf::new),
 
     /**
-     * @see WebPChunkEXIF
+     * @see WebPChunkIccp
      */
-    EXIF(WebPChunkEXIF::new),
+    ICCP(WebPChunkIccp::new),
 
     /**
-     * @see WebPChunkXMP
+     * @see WebPChunkExif
      */
-    XMP(WebPChunkXMP::new);
+    EXIF(WebPChunkExif::new),
+
+    /**
+     * @see WebPChunkXml
+     */
+    XMP(WebPChunkXml::new);
 
     private interface ChunkConstructor {
         WebPChunk make(int type, int size, byte[] bytes) throws IOException, ImagingException;
@@ -95,7 +103,7 @@ public enum WebPChunkType {
         WebPChunkType type = findType(chunkType);
         return type != null
                 ? type.constructor.make(chunkType, size, bytes)
-                : new WebPChunkXYZW(chunkType, size, bytes);
+                : new WebPChunkXyzw(chunkType, size, bytes);
     }
 
     private final ChunkConstructor constructor;

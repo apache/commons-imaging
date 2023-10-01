@@ -27,10 +27,11 @@ import org.apache.commons.imaging.common.XmpImagingParameters;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 import org.apache.commons.imaging.formats.webp.chunks.WebPChunk;
-import org.apache.commons.imaging.formats.webp.chunks.WebPChunkVP8;
-import org.apache.commons.imaging.formats.webp.chunks.WebPChunkVP8L;
-import org.apache.commons.imaging.formats.webp.chunks.WebPChunkVP8X;
-import org.apache.commons.imaging.formats.webp.chunks.WebPChunkXMP;
+import org.apache.commons.imaging.formats.webp.chunks.WebPChunkVp8;
+import org.apache.commons.imaging.formats.webp.chunks.WebPChunkVp8l;
+import org.apache.commons.imaging.formats.webp.chunks.WebPChunkVp8x;
+import org.apache.commons.imaging.formats.webp.chunks.WebPChunkXml;
+import org.apache.commons.imaging.internal.SafeOperations;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
@@ -46,6 +47,8 @@ import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
 import static org.apache.commons.imaging.common.BinaryFunctions.skipBytes;
 
 /**
+ * WebP image parser.
+ *
  * @since 1.0-alpha4
  */
 public class WebPImageParser extends AbstractImageParser<WebPImagingParameters> implements XmpEmbeddable<WebPImagingParameters> {
@@ -87,16 +90,16 @@ public class WebPImageParser extends AbstractImageParser<WebPImagingParameters> 
     private static int readFileHeader(InputStream is) throws IOException, ImagingException {
         byte[] buffer = new byte[4];
         if (is.read(buffer) < 4 || !WebPConstants.RIFF_SIGNATURE.equals(buffer)) {
-            throw new ImagingException("Not a Valid WebP File");
+            throw new ImagingException("Not a valid WebP file");
         }
 
-        int fileSize = read4Bytes("File Size", is, "Not a Valid WebP File", ByteOrder.LITTLE_ENDIAN);
+        int fileSize = read4Bytes("File Size", is, "Not a valid WebP file", ByteOrder.LITTLE_ENDIAN);
         if (fileSize < 0) {
-            throw new ImagingException("File Size is too long:" + fileSize);
+            throw new ImagingException("File size is too long:" + fileSize);
         }
 
         if (is.read(buffer) < 4 || !WebPConstants.WEBP_SIGNATURE.equals(buffer)) {
-            throw new ImagingException("Not a Valid WebP File");
+            throw new ImagingException("Not a valid WebP file");
         }
 
         return fileSize;
@@ -113,7 +116,7 @@ public class WebPImageParser extends AbstractImageParser<WebPImagingParameters> 
     @Override
     public String getXmpXml(ByteSource byteSource, XmpImagingParameters<WebPImagingParameters> params) throws ImagingException, IOException {
         try (ChunksReader reader = new ChunksReader(byteSource, WebPChunkType.XMP)) {
-            WebPChunkXMP chunk = (WebPChunkXMP) reader.readChunk();
+            WebPChunkXml chunk = (WebPChunkXml) reader.readChunk();
             return chunk == null ? null : chunk.getXml();
         }
     }
@@ -130,28 +133,28 @@ public class WebPImageParser extends AbstractImageParser<WebPImagingParameters> 
             ImageInfo.ColorType colorType = ImageInfo.ColorType.RGB;
 
             WebPChunk chunk = reader.readChunk();
-            if (chunk instanceof WebPChunkVP8) {
+            if (chunk instanceof WebPChunkVp8) {
                 formatDetails = "WebP/Lossy";
                 numberOfImages = 1;
 
-                WebPChunkVP8 vp8 = (WebPChunkVP8) chunk;
+                WebPChunkVp8 vp8 = (WebPChunkVp8) chunk;
                 width = vp8.getWidth();
                 height = vp8.getHeight();
                 colorType = ImageInfo.ColorType.YCbCr;
-            } else if (chunk instanceof WebPChunkVP8L) {
+            } else if (chunk instanceof WebPChunkVp8l) {
                 formatDetails = "WebP/Lossless";
                 numberOfImages = 1;
 
-                WebPChunkVP8L vp8l = (WebPChunkVP8L) chunk;
+                WebPChunkVp8l vp8l = (WebPChunkVp8l) chunk;
                 width = vp8l.getImageWidth();
                 height = vp8l.getImageHeight();
-            } else if (chunk instanceof WebPChunkVP8X) {
-                WebPChunkVP8X vp8x = (WebPChunkVP8X) chunk;
+            } else if (chunk instanceof WebPChunkVp8x) {
+                WebPChunkVp8x vp8x = (WebPChunkVp8x) chunk;
                 width = vp8x.getCanvasWidth();
                 height = vp8x.getCanvasHeight();
-                hasAlpha = ((WebPChunkVP8X) chunk).isHasAlpha();
+                hasAlpha = ((WebPChunkVp8x) chunk).hasAlpha();
 
-                if (vp8x.isAnimation()) {
+                if (vp8x.hasAnimation()) {
                     formatDetails = "WebP/Animation";
 
                     numberOfImages = 0;
@@ -200,14 +203,14 @@ public class WebPImageParser extends AbstractImageParser<WebPImagingParameters> 
     public Dimension getImageSize(ByteSource byteSource, WebPImagingParameters params) throws ImagingException, IOException {
         try (ChunksReader reader = new ChunksReader(byteSource)) {
             WebPChunk chunk = reader.readChunk();
-            if (chunk instanceof WebPChunkVP8) {
-                WebPChunkVP8 vp8 = (WebPChunkVP8) chunk;
+            if (chunk instanceof WebPChunkVp8) {
+                WebPChunkVp8 vp8 = (WebPChunkVp8) chunk;
                 return new Dimension(vp8.getWidth(), vp8.getHeight());
-            } else if (chunk instanceof WebPChunkVP8L) {
-                WebPChunkVP8L vp8l = (WebPChunkVP8L) chunk;
+            } else if (chunk instanceof WebPChunkVp8l) {
+                WebPChunkVp8l vp8l = (WebPChunkVp8l) chunk;
                 return new Dimension(vp8l.getImageWidth(), vp8l.getImageHeight());
-            } else if (chunk instanceof WebPChunkVP8X) {
-                WebPChunkVP8X vp8x = (WebPChunkVP8X) chunk;
+            } else if (chunk instanceof WebPChunkVp8x) {
+                WebPChunkVp8x vp8x = (WebPChunkVp8x) chunk;
                 return new Dimension(vp8x.getCanvasWidth(), vp8x.getCanvasHeight());
             } else {
                 throw new ImagingException("Unknown WebP chunk type: " + chunk);
@@ -238,6 +241,10 @@ public class WebPImageParser extends AbstractImageParser<WebPImagingParameters> 
                 throw new ImagingException("No WebP chunks found");
             }
 
+            // TODO: this does not look too risky; a user could craft an image
+            //       with millions of chunks, that are really expensive to dump,
+            //       but that should result in a large image, where we can short-
+            //       -circuit the operation somewhere else - if needed.
             do {
                 chunk.dump(pw, offset);
 
@@ -267,7 +274,7 @@ public class WebPImageParser extends AbstractImageParser<WebPImagingParameters> 
         }
 
         int getOffset() {
-            return sizeCount + 8; // File Header
+            return SafeOperations.add(sizeCount, 8); // File Header
         }
 
         @Override
@@ -277,13 +284,13 @@ public class WebPImageParser extends AbstractImageParser<WebPImagingParameters> 
 
         WebPChunk readChunk() throws ImagingException, IOException {
             while (sizeCount < fileSize) {
-                int type = read4Bytes("Chunk Type", is, "Not a Valid WebP File", ByteOrder.LITTLE_ENDIAN);
-                int payloadSize = read4Bytes("Chunk Size", is, "Not a Valid WebP File", ByteOrder.LITTLE_ENDIAN);
+                int type = read4Bytes("Chunk Type", is, "Not a valid WebP file", ByteOrder.LITTLE_ENDIAN);
+                int payloadSize = read4Bytes("Chunk Size", is, "Not a valid WebP file", ByteOrder.LITTLE_ENDIAN);
                 if (payloadSize < 0) {
                     throw new ImagingException("Chunk Payload is too long:" + payloadSize);
                 }
                 boolean padding = (payloadSize % 2) != 0;
-                int chunkSize = payloadSize + 8 + (padding ? 1 : 0);
+                int chunkSize = SafeOperations.add(8, (padding ? 1 : 0), payloadSize);
 
                 if (firstChunk) {
                     firstChunk = false;
@@ -302,7 +309,7 @@ public class WebPImageParser extends AbstractImageParser<WebPImagingParameters> 
                     }
                     if (skip) {
                         skipBytes(is, payloadSize + (padding ? 1 : 0));
-                        sizeCount += chunkSize;
+                        sizeCount = SafeOperations.add(sizeCount, chunkSize);
                         continue;
                     }
                 }
@@ -313,7 +320,7 @@ public class WebPImageParser extends AbstractImageParser<WebPImagingParameters> 
                     skipBytes(is, 1);
                 }
 
-                sizeCount += chunkSize;
+                sizeCount = SafeOperations.add(sizeCount, chunkSize);
                 return chunk;
             }
 

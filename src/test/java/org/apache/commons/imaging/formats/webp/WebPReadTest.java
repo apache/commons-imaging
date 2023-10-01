@@ -18,33 +18,82 @@ package org.apache.commons.imaging.formats.webp;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
+import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.ImageMetadata;
+import org.apache.commons.imaging.formats.webp.chunks.WebPChunkIccp;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.File;
-import java.util.List;
+import java.io.IOException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Tests that read WebP images.
+ */
 public class WebPReadTest extends WebPBaseTest {
-    @Test
-    public void test() throws Exception {
+
+    /**
+     * @param imageFile parameterized test image.
+     * @throws Exception if it cannot open the images.
+     */
+    @ParameterizedTest
+    @MethodSource("images")
+    public void testRead(File imageFile) throws Exception {
         Debug.debug("start");
 
-        final List<File> images = getWebPImages();
-        for (final File imageFile : images) {
+        Debug.debug("imageFile", imageFile);
 
-            Debug.debug("imageFile", imageFile);
+        final ImageMetadata metadata = Imaging.getMetadata(imageFile);
+        Assertions.assertFalse(metadata instanceof File); // Dummy check to avoid unused warning (it may be null)
 
-            final ImageMetadata metadata = Imaging.getMetadata(imageFile);
-            Assertions.assertFalse(metadata instanceof File); // Dummy check to avoid unused warning (it may be null)
+        final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
+        assertNotNull(imageInfo);
 
-            final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
-            assertNotNull(imageInfo);
+        Debug.debug("ICC profile", Imaging.getIccProfileBytes(imageFile));
+    }
 
-            Debug.debug("ICC profile", Imaging.getIccProfileBytes(imageFile));
-        }
+    /**
+     * Not implemented yet.
+     *
+     * @throws IOException if it failed to read the image.
+     */
+    @Test
+    public void testBufferedImageNotSupported() throws IOException {
+        File emptyWebP = new File(WebPReadTest.class.getResource("/images/webp/empty/empty-100x100.webp").getFile());
+        WebPImageParser parser = new WebPImageParser();
+        ImagingException exception = assertThrows(ImagingException.class, () -> {
+            parser.getBufferedImage(ByteSource.file(emptyWebP), parser.getDefaultParameters());
+        });
+        assertTrue(exception.getMessage().contains("Reading WebP files is currently not supported"));
+    }
+
+    /**
+     * Basic features of the parser.
+     */
+    @Test
+    public void testParser() {
+        WebPImageParser parser = new WebPImageParser();
+        assertEquals("WebP-Custom", parser.getName());
+        assertEquals("webp", parser.getDefaultExtension());
+    }
+
+    /**
+     * Test that the given size, and the byte array length match.
+     */
+    @Test
+    public void testWebPChunkInvalidSizeBytes() {
+        ImagingException exception = assertThrows(ImagingException.class, () -> {
+            new WebPChunkIccp(0, 10, new byte[]{});
+        });
+        assertEquals("Chunk size must match bytes length", exception.getMessage());
     }
 }

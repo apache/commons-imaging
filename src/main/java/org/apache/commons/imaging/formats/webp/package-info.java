@@ -17,9 +17,9 @@
 
 /**
  * The WebP image format.
- * <p>
- * Currently, it only supports parsing the WebP container format and extracting metadata from image file,
- * but does not support encoding or decoding the content of the image.
+ *
+ * <p>Currently, it only supports parsing the WebP container format and extracting metadata from image file,
+ * but does not support encoding or decoding the content of the image.</p>
  *
  * @see <a href="https://developers.google.com/speed/webp/docs/riff_container">WebP Container Specification</a>
  *

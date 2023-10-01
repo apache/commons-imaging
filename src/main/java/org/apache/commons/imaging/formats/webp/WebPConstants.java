@@ -19,6 +19,8 @@ package org.apache.commons.imaging.formats.webp;
 import org.apache.commons.imaging.common.BinaryConstant;
 
 /**
+ * Constants used for the WebP image format.
+ *
  * @since 1.0-alpha4
  */
 public final class WebPConstants {
@@ -40,7 +42,6 @@ public final class WebPConstants {
      * The WebP signature.
      */
     public static final BinaryConstant WEBP_SIGNATURE = new BinaryConstant(new byte[]{'W', 'E', 'B', 'P'});
-
 
     private WebPConstants() {
     }

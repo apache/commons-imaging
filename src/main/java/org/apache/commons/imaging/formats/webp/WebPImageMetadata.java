@@ -24,11 +24,22 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * WebP image metadata.
+ *
  * @since 1.0-alpha4
  */
 public final class WebPImageMetadata extends GenericImageMetadata {
+
+    /**
+     * TIFF Exif metadata.
+     */
     private final TiffImageMetadata exif;
 
+    /**
+     * Create a new WebP image metadata object.
+     *
+     * @param exif the Exif metadata.
+     */
     public WebPImageMetadata(TiffImageMetadata exif) {
         this.exif = exif;
     }

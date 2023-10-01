@@ -17,11 +17,14 @@
 package org.apache.commons.imaging.formats.webp.chunks;
 
 import org.apache.commons.imaging.ImagingException;
+import org.apache.commons.imaging.internal.SafeOperations;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
+ * VP8L (lossless bitstream) chunk.
+ *
  * <pre>{@code
  *  0                   1                   2                   3
  *  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -34,16 +37,23 @@ import java.io.PrintWriter;
  * }</pre>
  *
  * @see <a href="https://developers.google.com/speed/webp/docs/riff_container#simple_file_format_lossless">Simple File Format (Lossless)</a>
- *
  * @since 1.0-alpha4
  */
-public final class WebPChunkVP8L extends WebPChunk {
+public final class WebPChunkVp8l extends WebPChunk {
     private final int imageWidth;
     private final int imageHeight;
-    private final boolean isAlphaUsed;
+    private final boolean hasAlpha;
     private final int versionNumber;
 
-    public WebPChunkVP8L(int type, int size, byte[] bytes) throws ImagingException {
+    /**
+     * Create a VP8L chunk.
+     *
+     * @param type  chunk type.
+     * @param size  chunk size.
+     * @param bytes chunk data.
+     * @throws ImagingException if the chunk data and the size provided do not match.
+     */
+    public WebPChunkVp8l(int type, int size, byte[] bytes) throws ImagingException {
         super(type, size, bytes);
 
         if (bytes[0] != 0x2f || size < 5) {
@@ -56,8 +66,8 @@ public final class WebPChunkVP8L extends WebPChunk {
         int b4 = bytes[4] & 0xFF;
 
         this.imageWidth = b1 + ((b2 & 0b0011_1111) << 8) + 1;
-        this.imageHeight = ((b2 & 0b1100_0000) >> 6) + (b3 << 2) + ((b4 & 0b1111) << 8) + 1;
-        this.isAlphaUsed = (b4 & 0b0001_0000) != 0;
+        this.imageHeight = SafeOperations.add(((b2 & 0b1100_0000) >> 6), (b3 << 2), ((b4 & 0b1111) << 8), 1);
+        this.hasAlpha = (b4 & 0b0001_0000) != 0;
         this.versionNumber = b4 >> 5;
 
         if (versionNumber != 0) {
@@ -65,18 +75,30 @@ public final class WebPChunkVP8L extends WebPChunk {
         }
     }
 
+    /**
+     * @return the image width.
+     */
     public int getImageWidth() {
         return imageWidth;
     }
 
+    /**
+     * @return the image height.
+     */
     public int getImageHeight() {
         return imageHeight;
     }
 
-    public boolean isAlphaUsed() {
-        return isAlphaUsed;
+    /**
+     * @return whether the image has an alpha channel or not.
+     */
+    public boolean hasAlpha() {
+        return hasAlpha;
     }
 
+    /**
+     * @return the version number.
+     */
     public int getVersionNumber() {
         return versionNumber;
     }
@@ -84,8 +106,9 @@ public final class WebPChunkVP8L extends WebPChunk {
     @Override
     public void dump(PrintWriter pw, int offset) throws ImagingException, IOException {
         super.dump(pw, offset);
-        pw.println("  Image Width: " + imageWidth);
-        pw.println("  Image Height: " + imageHeight);
-        pw.println("  Alpha: " + isAlphaUsed);
+        pw.println("  Version Number: " + getVersionNumber());
+        pw.println("  Image Width: " + getImageWidth());
+        pw.println("  Image Height: " + getImageHeight());
+        pw.println("  Alpha: " + hasAlpha());
     }
 }

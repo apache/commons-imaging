@@ -19,23 +19,35 @@ package org.apache.commons.imaging.formats.webp.chunks;
 import org.apache.commons.imaging.ImagingException;
 
 /**
+ * ANIM (animation) chunk.
+ *
  * <pre>{@code
  *  0                   1                   2                   3
  *  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
  * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
- * |                      ChunkHeader('ICCP')                      |
+ * |                      ChunkHeader('ANIM')                      |
  * |                                                               |
  * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
- * :                       Color Profile                           :
+ * |                       Background Color                        |
  * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ * |          Loop Count           |
+ * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
  * }</pre>
  *
- * @see <a href="https://developers.google.com/speed/webp/docs/riff_container#color_profile">Extended File Format#Color Profile</a>
- *
+ * @see <a href="https://developers.google.com/speed/webp/docs/riff_container#animation">Extended File Format#Animation</a>
  * @since 1.0-alpha4
  */
-public final class WebPChunkICCP extends WebPChunk {
-    public WebPChunkICCP(int type, int size, byte[] bytes) throws ImagingException {
+public final class WebPChunkAnim extends WebPChunk {
+
+    /**
+     * Create an ANIM chunk.
+     *
+     * @param type  chunk type.
+     * @param size  chunk size.
+     * @param bytes chunk data.
+     * @throws ImagingException if the chunk data and the size provided do not match.
+     */
+    public WebPChunkAnim(int type, int size, byte[] bytes) throws ImagingException {
         super(type, size, bytes);
     }
 }

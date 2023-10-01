@@ -14,17 +14,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.formats.webp.chunks;
+package org.apache.commons.imaging.internal;
 
-import org.apache.commons.imaging.ImagingException;
+import java.util.Arrays;
 
 /**
- * Unknown chunk.
+ * Provides safe arithmetic operations to avoid, for example,
+ * numeric overflows.
  *
  * @since 1.0-alpha4
  */
-public final class WebPChunkXYZW extends WebPChunk {
-    public WebPChunkXYZW(int type, int size, byte[] bytes) throws ImagingException {
-        super(type, size, bytes);
+public class SafeOperations {
+
+    /**
+     * Applies {@link Math#addExact(int, int)} to a variable
+     * length array of integers.
+     *
+     * @param values variable length array of integers.
+     * @return the values safely added.
+     */
+    public static int add(int... values) {
+        if (values == null || values.length < 2) {
+            throw new IllegalArgumentException("You must provide at least two elements to be added");
+        }
+        return Arrays
+                .stream(values)
+                .reduce(0, Math::addExact)
+                ;
     }
+
+    private SafeOperations() {
+    }
+
 }

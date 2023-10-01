@@ -18,32 +18,45 @@ package org.apache.commons.imaging.formats.webp.chunks;
 
 import org.apache.commons.imaging.ImagingException;
 
+import java.nio.charset.StandardCharsets;
+
 /**
+ * XML chunk.
+ *
  * <pre>{@code
  *  0                   1                   2                   3
  *  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
  * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
- * |                      ChunkHeader('ANMF')                      |
+ * |                      ChunkHeader('XMP ')                      |
  * |                                                               |
  * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
- * |                        Frame X                |             ...
- * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
- * ...          Frame Y            |   Frame Width Minus One     ...
- * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
- * ...             |           Frame Height Minus One              |
- * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
- * |                 Frame Duration                |  Reserved |B|D|
- * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
- * :                         Frame Data                            :
+ * :                        XMP Metadata                           :
  * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
  * }</pre>
  *
- * @see <a href="https://developers.google.com/speed/webp/docs/riff_container#animation">Extended File Format#Animation</a>
- *
+ * @see <a href="https://developers.google.com/speed/webp/docs/riff_container#metadata">Extended File Format#Metadata</a>
  * @since 1.0-alpha4
  */
-public final class WebPChunkANMF extends WebPChunk {
-    public WebPChunkANMF(int type, int size, byte[] bytes) throws ImagingException {
+public final class WebPChunkXml extends WebPChunk {
+    private final String xml;
+
+    /**
+     * Create a XML chunk.
+     *
+     * @param type  chunk type.
+     * @param size  chunk size.
+     * @param bytes chunk data.
+     * @throws ImagingException if the chunk data and the size provided do not match.
+     */
+    public WebPChunkXml(int type, int size, byte[] bytes) throws ImagingException {
         super(type, size, bytes);
+        this.xml = new String(bytes, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * @return the XML.
+     */
+    public String getXml() {
+        return xml;
     }
 }
