@@ -60,8 +60,6 @@
     <commons.rc.version>RC2</commons.rc.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/imaging</commons.distSvnStagingUrl>
-    <commons.releaseManagerName>Bruno P. Kinoshita</commons.releaseManagerName>
-    <commons.releaseManagerKey>33C6E01240C5468C2B7A556954E2764B48A42DF0</commons.releaseManagerKey>
   </properties>
 
   <scm>
