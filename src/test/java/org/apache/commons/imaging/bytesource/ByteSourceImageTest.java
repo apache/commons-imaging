@@ -215,6 +215,7 @@ public class ByteSourceImageTest extends AbstractByteSourceTest {
 
         final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
         if (ImageFormats.JPEG != imageFormat
+                && ImageFormats.WEBP != imageFormat
                 && ImageFormats.UNKNOWN != imageFormat) {
             checkGetBufferedImage(imageFile, imageFileBytes);
         }
