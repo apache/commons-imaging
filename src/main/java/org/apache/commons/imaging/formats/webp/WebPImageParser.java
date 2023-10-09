@@ -16,6 +16,19 @@
  */
 package org.apache.commons.imaging.formats.webp;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.skipBytes;
+
+import java.awt.Dimension;
+import java.awt.image.BufferedImage;
+import java.io.Closeable;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.nio.ByteOrder;
+import java.util.ArrayList;
+
 import org.apache.commons.imaging.AbstractImageParser;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
@@ -32,19 +45,6 @@ import org.apache.commons.imaging.formats.webp.chunks.WebPChunkVp8l;
 import org.apache.commons.imaging.formats.webp.chunks.WebPChunkVp8x;
 import org.apache.commons.imaging.formats.webp.chunks.WebPChunkXml;
 import org.apache.commons.imaging.internal.SafeOperations;
-
-import java.awt.Dimension;
-import java.awt.image.BufferedImage;
-import java.io.Closeable;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.nio.ByteOrder;
-import java.util.ArrayList;
-
-import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.skipBytes;
 
 /**
  * WebP image parser.

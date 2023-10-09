@@ -25,11 +25,11 @@ import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.util.List;
 
+import org.apache.commons.imaging.AbstractImageParser;
+import org.apache.commons.imaging.AbstractImagingTest;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
-import org.apache.commons.imaging.AbstractImageParser;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.AbstractImagingTest;
 import org.apache.commons.imaging.common.XmpImagingParameters;
 import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.imaging.internal.ImageParserFactory;

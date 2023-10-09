@@ -16,14 +16,14 @@
  */
 package org.apache.commons.imaging.formats.webp.chunks;
 
-import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.common.BinaryFileParser;
-import org.apache.commons.imaging.internal.SafeOperations;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
+
+import org.apache.commons.imaging.ImagingException;
+import org.apache.commons.imaging.common.BinaryFileParser;
+import org.apache.commons.imaging.internal.SafeOperations;
 
 /**
  * A WebP image is composed of several chunks. This is the base class for the chunks,

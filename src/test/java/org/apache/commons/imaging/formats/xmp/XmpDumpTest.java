@@ -21,8 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.io.File;
 import java.util.List;
 
-import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.AbstractImagingTest;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 

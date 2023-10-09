@@ -20,8 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.awt.image.BufferedImage;
 
-import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.AbstractImagingTest;
+import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Test;
 
 public class PaletteQuantizationTest extends AbstractImagingTest {

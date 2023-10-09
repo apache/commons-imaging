@@ -16,6 +16,8 @@
  */
 package org.apache.commons.imaging.formats.webp;
 
+import java.io.IOException;
+
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.formats.webp.chunks.WebPChunk;
@@ -29,8 +31,6 @@ import org.apache.commons.imaging.formats.webp.chunks.WebPChunkVp8l;
 import org.apache.commons.imaging.formats.webp.chunks.WebPChunkVp8x;
 import org.apache.commons.imaging.formats.webp.chunks.WebPChunkXml;
 import org.apache.commons.imaging.formats.webp.chunks.WebPChunkXyzw;
-
-import java.io.IOException;
 
 /**
  * WebP chunk type.

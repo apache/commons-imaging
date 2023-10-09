@@ -24,8 +24,8 @@ import java.util.zip.InflaterInputStream;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFunctions;
-import org.apache.commons.imaging.formats.png.PngConstants;
 import org.apache.commons.imaging.formats.png.AbstractPngText;
+import org.apache.commons.imaging.formats.png.PngConstants;
 import org.apache.commons.io.IOUtils;
 
 public class PngChunkItxt extends AbstractPngTextChunk {

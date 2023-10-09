@@ -16,12 +16,12 @@
  */
 package org.apache.commons.imaging.formats.webp;
 
-import org.apache.commons.imaging.common.GenericImageMetadata;
-import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import org.apache.commons.imaging.common.GenericImageMetadata;
+import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 
 /**
  * WebP image metadata.

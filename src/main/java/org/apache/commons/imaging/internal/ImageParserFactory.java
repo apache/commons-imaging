@@ -20,9 +20,9 @@ import java.io.IOException;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
+import org.apache.commons.imaging.AbstractImageParser;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
-import org.apache.commons.imaging.AbstractImageParser;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.bytesource.ByteSource;

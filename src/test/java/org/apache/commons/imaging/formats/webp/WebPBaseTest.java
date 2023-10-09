@@ -17,16 +17,16 @@
 
 package org.apache.commons.imaging.formats.webp;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Stream;
+
 import org.apache.commons.imaging.AbstractImagingTest;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.stream.Stream;
 
 public abstract class WebPBaseTest extends AbstractImagingTest {
 

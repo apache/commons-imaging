@@ -16,9 +16,9 @@
  */
 package org.apache.commons.imaging.formats.webp.chunks;
 
-import org.apache.commons.imaging.ImagingException;
-
 import java.nio.charset.StandardCharsets;
+
+import org.apache.commons.imaging.ImagingException;
 
 /**
  * XML chunk.

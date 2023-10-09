@@ -16,11 +16,11 @@
  */
 package org.apache.commons.imaging.formats.webp.chunks;
 
-import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.internal.SafeOperations;
-
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import org.apache.commons.imaging.ImagingException;
+import org.apache.commons.imaging.internal.SafeOperations;
 
 /**
  * VP8L (lossless bitstream) chunk.

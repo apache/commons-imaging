@@ -16,18 +16,18 @@
  */
 package org.apache.commons.imaging.formats.webp;
 
-import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.bytesource.ByteSource;
-import org.apache.commons.imaging.internal.Debug;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Dimension;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.bytesource.ByteSource;
+import org.apache.commons.imaging.internal.Debug;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Test the methods that dump data into streams.

@@ -56,6 +56,12 @@ limitations under the License.
     <module name="LeftCurly"/>
     <module name="NeedBraces"/>
     <module name="RightCurly"/>
+    <module name="ImportOrder">
+      <property name="option" value="top"/>
+      <property name="groups" value="java,javax,org"/>
+      <property name="ordered" value="true"/>
+      <property name="separated" value="true"/>
+    </module>
  </module>
  <module name="LineLength">
    <property name="max" value="160" />

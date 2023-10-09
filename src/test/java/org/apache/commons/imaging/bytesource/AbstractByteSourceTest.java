@@ -27,8 +27,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
 
-import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.AbstractImagingTest;
+import org.apache.commons.imaging.ImagingConstants;
 import org.junit.jupiter.api.Test;
 
 public abstract class AbstractByteSourceTest extends AbstractImagingTest {

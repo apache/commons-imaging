@@ -16,10 +16,10 @@
  */
 package org.apache.commons.imaging.formats.webp.chunks;
 
-import org.apache.commons.imaging.ImagingException;
-
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import org.apache.commons.imaging.ImagingException;
 
 /**
  * VP8X (descriptions of features used) chunk.
