@@ -49,7 +49,7 @@ public class PngWriter {
      5. Time information: tIME (see 11.3.6: Time stamp information).
     */
 
-    private static class ImageHeader {
+    private static final class ImageHeader {
         public final int width;
         public final int height;
         public final byte bitDepth;

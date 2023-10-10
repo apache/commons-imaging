@@ -46,7 +46,7 @@ import org.apache.commons.imaging.formats.tiff.TiffReader;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 
 public class TiffImageWriterLossless extends AbstractTiffImageWriter {
-    private static class BufferOutputStream extends OutputStream {
+    private static final class BufferOutputStream extends OutputStream {
         private final byte[] buffer;
         private int index;
 

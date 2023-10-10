@@ -96,7 +96,7 @@ public class TiffReader extends BinaryFileParser {
         }
     }
 
-    private static class FirstDirectoryCollector extends Collector {
+    private static final class FirstDirectoryCollector extends Collector {
         private final boolean readImageData;
 
         FirstDirectoryCollector(final boolean readImageData) {
@@ -246,7 +246,7 @@ public class TiffReader extends BinaryFileParser {
     }
 
 //    NOT USED
-//    private static class DirectoryCollector extends Collector {
+//    private static final class DirectoryCollector extends Collector {
 //        private final boolean readImageData;
 //
 //        public DirectoryCollector(final boolean readImageData) {

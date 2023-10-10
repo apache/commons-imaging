@@ -48,7 +48,7 @@ import org.apache.commons.imaging.common.ImageMetadata;
 
 public class XbmImageParser extends AbstractImageParser<XbmImagingParameters> {
 
-    private static class XbmHeader {
+    private static final class XbmHeader {
         final int height;
         final int width;
         int xHot = -1;
@@ -72,7 +72,7 @@ public class XbmImageParser extends AbstractImageParser<XbmImagingParameters> {
         }
     }
 
-    private static class XbmParseResult {
+    private static final class XbmParseResult {
         BasicCParser cParser;
         XbmHeader xbmHeader;
     }

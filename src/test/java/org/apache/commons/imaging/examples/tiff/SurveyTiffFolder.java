@@ -41,7 +41,7 @@ import java.util.List;
  */
 public class SurveyTiffFolder {
 
-    private static class PathComparator implements Comparator<String[]> {
+    private static final class PathComparator implements Comparator<String[]> {
 
         @Override
         public int compare(final String[] a, final String[] b) {

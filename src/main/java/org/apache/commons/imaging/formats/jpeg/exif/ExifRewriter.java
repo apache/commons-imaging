@@ -58,7 +58,7 @@ public class ExifRewriter extends BinaryFileParser {
         protected abstract void write(OutputStream os) throws IOException;
     }
 
-    private static class JFIFPieceImageData extends JFIFPiece {
+    private static final class JFIFPieceImageData extends JFIFPiece {
         public final byte[] markerBytes;
         public final byte[] imageData;
 
@@ -74,7 +74,7 @@ public class ExifRewriter extends BinaryFileParser {
         }
     }
 
-    private static class JFIFPieces {
+    private static final class JFIFPieces {
         public final List<JFIFPiece> pieces;
         public final List<JFIFPiece> exifPieces;
 
@@ -108,7 +108,7 @@ public class ExifRewriter extends BinaryFileParser {
         }
     }
 
-    private static class JFIFPieceSegmentExif extends JFIFPieceSegment {
+    private static final class JFIFPieceSegmentExif extends JFIFPieceSegment {
 
         JFIFPieceSegmentExif(final int marker, final byte[] markerBytes,
                 final byte[] markerLengthBytes, final byte[] segmentData) {

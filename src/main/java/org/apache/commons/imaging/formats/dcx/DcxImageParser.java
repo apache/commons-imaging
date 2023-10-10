@@ -41,7 +41,7 @@ import org.apache.commons.imaging.formats.pcx.PcxImageParser;
 import org.apache.commons.imaging.formats.pcx.PcxImagingParameters;
 
 public class DcxImageParser extends AbstractImageParser<PcxImagingParameters> {
-    private static class DcxHeader {
+    private static final class DcxHeader {
 
         public static final int DCX_ID = 0x3ADE68B1;
         public final int id;

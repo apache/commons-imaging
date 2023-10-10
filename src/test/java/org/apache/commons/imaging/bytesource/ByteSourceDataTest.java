@@ -64,7 +64,7 @@ public class ByteSourceDataTest extends AbstractByteSourceTest {
         }
     }
 
-    private static class ByteSourceInputStreamRawFactory implements ByteSourceFactory {
+    private static final class ByteSourceInputStreamRawFactory implements ByteSourceFactory {
         @Override
         public ByteSource getByteSource(final byte[] src) throws IOException {
             final ByteArrayInputStream is = new ByteArrayInputStream(src);

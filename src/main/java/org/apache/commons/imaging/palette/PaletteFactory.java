@@ -35,7 +35,7 @@ import org.apache.commons.imaging.common.Allocator;
  */
 public class PaletteFactory {
 
-    private static class DivisionCandidate {
+    private static final class DivisionCandidate {
         // private final ColorSpaceSubset src;
         private final ColorSpaceSubset dstA;
         private final ColorSpaceSubset dstB;

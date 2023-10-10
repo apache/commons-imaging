@@ -38,7 +38,7 @@ import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ImageMetadata;
 
 public class IcnsImageParser extends AbstractImageParser<IcnsImagingParameters> {
-    private static class IcnsContents {
+    private static final class IcnsContents {
         public final IcnsHeader icnsHeader;
         public final IcnsElement[] icnsElements;
 
@@ -74,7 +74,7 @@ public class IcnsImageParser extends AbstractImageParser<IcnsImagingParameters> 
             pw.println("");
         }
     }
-    private static class IcnsHeader {
+    private static final class IcnsHeader {
         public final int magic; // Magic literal (4 bytes), always "icns"
         public final int fileSize; // Length of file (4 bytes), in bytes.
 

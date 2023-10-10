@@ -48,7 +48,7 @@ import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 
 public class IcoImageParser extends AbstractImageParser<IcoImagingParameters> {
-    private static class BitmapHeader {
+    private static final class BitmapHeader {
         public final int size;
         public final int width;
         public final int height;
@@ -95,7 +95,7 @@ public class IcoImageParser extends AbstractImageParser<IcoImagingParameters> {
             pw.println("ColorsImportant: " + colorsImportant);
         }
     }
-    private static class BitmapIconData extends IconData {
+    private static final class BitmapIconData extends IconData {
         public final BitmapHeader header;
         public final BufferedImage bufferedImage;
 
@@ -119,7 +119,7 @@ public class IcoImageParser extends AbstractImageParser<IcoImagingParameters> {
         }
     }
 
-    private static class FileHeader {
+    private static final class FileHeader {
         public final int reserved; // Reserved (2 bytes), always 0
         public final int iconType; // IconType (2 bytes), if the image is an
                                    // icon it?s 1, for cursors the value is 2.
@@ -199,7 +199,7 @@ public class IcoImageParser extends AbstractImageParser<IcoImagingParameters> {
         }
     }
 
-    private static class ImageContents {
+    private static final class ImageContents {
         public final FileHeader fileHeader;
         public final IconData[] iconDatas;
 
@@ -209,7 +209,7 @@ public class IcoImageParser extends AbstractImageParser<IcoImagingParameters> {
         }
     }
 
-    private static class PngIconData extends IconData {
+    private static final class PngIconData extends IconData {
         public final BufferedImage bufferedImage;
 
         PngIconData(final IconInfo iconInfo,

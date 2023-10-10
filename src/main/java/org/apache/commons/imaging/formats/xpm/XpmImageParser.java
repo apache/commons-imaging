@@ -53,7 +53,7 @@ import org.apache.commons.imaging.palette.SimplePalette;
 
 public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
 
-    private static class PaletteEntry {
+    private static final class PaletteEntry {
         int colorArgb;
         int gray4LevelArgb;
         int grayArgb;
@@ -81,7 +81,7 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
         }
     }
 
-    private static class XpmHeader {
+    private static final class XpmHeader {
         final int height;
         final int numCharsPerPixel;
         final int numColors;
@@ -117,7 +117,7 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
         }
     }
 
-    private static class XpmParseResult {
+    private static final class XpmParseResult {
         BasicCParser cParser;
         XpmHeader xpmHeader;
     }
