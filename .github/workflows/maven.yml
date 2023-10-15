@@ -29,7 +29,7 @@ jobs:
 #        os: [windows-latest, ubuntu-latest]
 #        os: [windows-latest, macos-latest]
         os: [windows-latest]
-        java: [ 8, 11, 17 ]
+        java: [ 8, 11, 17, 21 ]
         experimental: [false]
 #        include:
 #          - java: 18-ea
