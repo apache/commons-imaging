@@ -43,12 +43,12 @@ public class NullParametersRoundtripTest extends RoundtripBase {
             Imaging.writeImage(testImage, byteArrayOutputStream, formatInfo.format);
             temp1 = byteArrayOutputStream.toByteArray();
         }
-        final String filename = "nullParameters." + formatInfo.format.getDefaultExtension();
-        Imaging.getImageInfo(new ByteArrayInputStream(temp1), filename);
-        Imaging.getImageSize(new ByteArrayInputStream(temp1), filename);
-        Imaging.getMetadata(new ByteArrayInputStream(temp1), filename);
-        Imaging.getIccProfile(new ByteArrayInputStream(temp1), filename);
-        final BufferedImage imageRead = Imaging.getBufferedImage(new ByteArrayInputStream(temp1), filename);
+        final String fileName = "nullParameters." + formatInfo.format.getDefaultExtension();
+        Imaging.getImageInfo(new ByteArrayInputStream(temp1), fileName);
+        Imaging.getImageSize(new ByteArrayInputStream(temp1), fileName);
+        Imaging.getMetadata(new ByteArrayInputStream(temp1), fileName);
+        Imaging.getIccProfile(new ByteArrayInputStream(temp1), fileName);
+        final BufferedImage imageRead = Imaging.getBufferedImage(new ByteArrayInputStream(temp1), fileName);
 
         assertNotNull(imageRead);
     }
