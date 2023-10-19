@@ -173,7 +173,7 @@ public final class Imaging {
      * Gets all images specified by the InputStream  (some formats may include multiple images within a single data source).
      *
      * @param is A valid InputStream
-     * @param fileName Filename associated with image data (optional).
+     * @param fileName File name associated with image data (optional).
      * @return A valid (potentially empty) list of BufferedImage objects.
      * @throws ImagingException In the event that the specified content does not conform to the format of the specific parser implementation.
      * @throws IOException In the event of unsuccessful read or access operation.
@@ -344,7 +344,7 @@ public final class Imaging {
      * Extracts an ICC Profile (if present) from JPEG, PNG, PSD (Photoshop) and TIFF images.
      *
      * @param is InputStream from which to read image data.
-     * @param fileName Filename associated with image data (optional).
+     * @param fileName File name associated with image data (optional).
      * @return An instance of ICC_Profile or null if the image contains no ICC profile.
      * @throws ImagingException if it fails to parse the image
      * @throws IOException if it fails to read the image data
@@ -445,7 +445,7 @@ public final class Imaging {
      * <p>Not to be confused with "image metadata."</p>
      *
      * @param is InputStream from which to read image data.
-     * @param fileName Filename associated with image data (optional).
+     * @param fileName File name associated with image data (optional).
      * @return An instance of ImageInfo.
      * @see ImageInfo
      * @throws ImagingException if it fails to parse the image
@@ -515,7 +515,7 @@ public final class Imaging {
      * Determines the width and height of an image.
      *
      * @param is InputStream from which to read image data.
-     * @param fileName Filename associated with image data (optional).
+     * @param fileName File name associated with image data (optional).
      * @return The width and height of the image.
      * @throws ImagingException if it fails to parse the image
      * @throws IOException if it fails to read the image data
@@ -582,7 +582,7 @@ public final class Imaging {
      * <p>Not to be confused with "image info."</p>
      *
      * @param is InputStream from which to read image data.
-     * @param fileName Filename associated with image data (optional).
+     * @param fileName File name associated with image data (optional).
      * @return An instance of IImageMetadata.
      * @see org.apache.commons.imaging.common.ImageMetadata
      * @throws ImagingException if it fails to read the image metadata
@@ -636,7 +636,7 @@ public final class Imaging {
      * Extracts the embedded XML metadata as an XML string.
      *
      * @param is InputStream from which to read image data.
-     * @param fileName Filename associated with image data (optional).
+     * @param fileName File name associated with image data (optional).
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      * @throws ImagingException if it fails to parse the image
      * @throws IOException if it fails to read the image data
@@ -845,11 +845,11 @@ public final class Imaging {
             return false;
         }
 
-        final String normalizedFilename = fileName.toLowerCase(Locale.ENGLISH);
+        final String normalizedFileName = fileName.toLowerCase(Locale.ENGLISH);
 
         for (final AbstractImageParser<?> imageParser : AbstractImageParser.getAllImageParsers()) {
             for (final String extension : imageParser.getAcceptedExtensions()) {
-                if (normalizedFilename.endsWith(extension.toLowerCase(Locale.ENGLISH))) {
+                if (normalizedFileName.endsWith(extension.toLowerCase(Locale.ENGLISH))) {
                     return true;
                 }
             }
