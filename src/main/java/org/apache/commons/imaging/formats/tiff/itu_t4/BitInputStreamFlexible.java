@@ -28,8 +28,8 @@ import org.apache.commons.imaging.ImagingException;
  * bit first order.
  */
 class BitInputStreamFlexible extends FilterInputStream {
-    // TODO should be byte order conscious, ie TIFF for reading
-    // samples size<8 - shouldn't that effect their order within byte?
+    // TODO should be byte order conscious, that is, TIFF for reading
+    // samples size < 8 - shouldn't that effect their order within byte?
 
     private int cache;
     private int cacheBitsRemaining;

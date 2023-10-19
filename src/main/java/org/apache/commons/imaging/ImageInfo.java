@@ -82,7 +82,7 @@ public class ImageInfo {
 
     private static final Logger LOGGER = Logger.getLogger(ImageInfo.class.getName());
 
-    private final String formatDetails; // ie version
+    private final String formatDetails; // version
 
     private final int bitsPerPixel;
     private final List<String> comments;
