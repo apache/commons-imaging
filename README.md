@@ -43,12 +43,12 @@
 Apache Commons Imaging
 ===================
 
-[![GitHub Actions Status](https://github.com/apache/commons-imaging/workflows/Java%20CI/badge.svg)](https://github.com/apache/commons-imaging/actions)
+[![Java CI](https://github.com/apache/commons-imaging/actions/workflows/maven.yml/badge.svg)](https://github.com/apache/commons-imaging/actions/workflows/maven.yml)
 [![Coverage Status](https://codecov.io/gh/apache/commons-imaging/branch/master/graph/badge.svg)](https://app.codecov.io/gh/apache/commons-imaging/branch/master)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-imaging/badge.svg?gav=true)](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-imaging/?gav=true)
 [![Javadocs](https://javadoc.io/badge/org.apache.commons/commons-imaging/1.0-alpha3.svg)](https://javadoc.io/doc/org.apache.commons/commons-imaging/1.0-alpha3)
 [![Fuzzing Status](https://oss-fuzz-build-logs.storage.googleapis.com/badges/apache-commons.svg)](https://bugs.chromium.org/p/oss-fuzz/issues/list?sort=-opened&can=1&q=proj:apache-commons)
-[![CodeQL](https://github.com/apache/commons-imaging/workflows/CodeQL/badge.svg)](https://github.com/apache/commons-imaging/actions/workflows/codeql-analysis.yml?query=workflow%3ACodeQL)
+[![CodeQL](https://github.com/apache/commons-imaging/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/apache/commons-imaging/actions/workflows/codeql-analysis.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/apache/commons-imaging/badge)](https://api.securityscorecards.dev/projects/github.com/apache/commons-imaging)
 
 Apache Commons Imaging (previously Sanselan) is a pure-Java image library.
