@@ -101,7 +101,7 @@ final class Dct {
      * "JPEG still image data compression standard", by Pennebaker and Mitchell,
      * chapter 4, figure "4-8".
      *
-     * @param vector vector. 
+     * @param vector vector.
      */
     public static void forwardDct8(final float[] vector) {
         final float a00 = vector[0] + vector[7];
@@ -225,7 +225,7 @@ final class Dct {
      * easy equations and properly explains constants and scaling factors. Terms
      * have been inlined and the negation optimized out of existence.
      *
-     * @param vector vector. 
+     * @param vector vector.
      */
     public static void inverseDct8(final float[] vector) {
         // B1
