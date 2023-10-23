@@ -25,6 +25,11 @@ public abstract class AbstractTransparencyFilter extends BinaryFileParser {
 
     private final byte[] bytes;
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param bytes bytes.
+     */
     public AbstractTransparencyFilter(final byte[] bytes) {
         this.bytes = bytes.clone();
     }
@@ -32,13 +37,18 @@ public abstract class AbstractTransparencyFilter extends BinaryFileParser {
     public abstract int filter(int rgb, int index) throws ImagingException, IOException;
 
     /**
-     * @return a byte
+     * Gets the byte at the given offset.
+     *
+     * @param offset offset. 
+     * @return a byte.
      */
     public byte getByte(final int offset) {
         return bytes[offset];
     }
 
     /**
+     * Gets the length.
+     *
      * @return the length
      */
     public int getLength() {
