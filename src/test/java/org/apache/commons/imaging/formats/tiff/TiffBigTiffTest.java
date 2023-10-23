@@ -33,6 +33,22 @@ import org.junit.jupiter.api.Test;
  */
 public class TiffBigTiffTest extends TiffBaseTest {
 
+  private boolean doImagesMatch(int w, int h, int[] classicRgb, BufferedImage image) {
+    int iW = image.getWidth();
+    int iH = image.getHeight();
+    if (iW != w || iH != h) {
+      return false;
+    }
+    int[] argb = new int[w * h];
+    image.getRGB(0, 0, w, h, argb, 0, w);
+    for (int i = 0; i < argb.length; i++) {
+      if ((argb[i] & 0x00ffffff) != (classicRgb[i] & 0x00ffffff)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   @Test
   public void test() throws IOException {
     final File tiffFolder = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, "tiff");
@@ -61,22 +77,6 @@ public class TiffBigTiffTest extends TiffBaseTest {
     }
 
     assertTrue(nTest>0, "JUnit test failed to find sample BigTIFF files");
-  }
-
-  private boolean doImagesMatch(int w, int h, int[] classicRgb, BufferedImage image) {
-    int iW = image.getWidth();
-    int iH = image.getHeight();
-    if (iW != w || iH != h) {
-      return false;
-    }
-    int[] argb = new int[w * h];
-    image.getRGB(0, 0, w, h, argb, 0, w);
-    for (int i = 0; i < argb.length; i++) {
-      if ((argb[i] & 0x00ffffff) != (classicRgb[i] & 0x00ffffff)) {
-        return false;
-      }
-    }
-    return true;
   }
 
 }

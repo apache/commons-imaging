@@ -38,6 +38,17 @@ public class WebPMetadataTest extends WebPBaseTest {
      * @throws Exception if it cannot open the images.
      */
     @Test
+    public void testReadAlpha() throws Exception {
+        File imageFile = new File(WebPMetadataTest.class.getResource("/images/webp/alpha/alpha.webp").getFile());
+        WebPImageParser parser = new WebPImageParser();
+        ImageInfo imageInfo = parser.getImageInfo(ByteSource.file(imageFile), parser.getDefaultParameters());
+        assertNotNull(imageInfo);
+    }
+
+    /**
+     * @throws Exception if it cannot open the images.
+     */
+    @Test
     public void testReadMetadata() throws Exception {
         File imageFile = new File(WebPMetadataTest.class.getResource("/images/webp/exif/_DSC6099.webp").getFile());
         WebPImageParser parser = new WebPImageParser();
@@ -63,16 +74,5 @@ public class WebPMetadataTest extends WebPBaseTest {
 
         String xml = parser.getXmpXml(ByteSource.file(imageFile), parser.getDefaultParameters());
         assertTrue(xml.contains("Apache License"));
-    }
-
-    /**
-     * @throws Exception if it cannot open the images.
-     */
-    @Test
-    public void testReadAlpha() throws Exception {
-        File imageFile = new File(WebPMetadataTest.class.getResource("/images/webp/alpha/alpha.webp").getFile());
-        WebPImageParser parser = new WebPImageParser();
-        ImageInfo imageInfo = parser.getImageInfo(ByteSource.file(imageFile), parser.getDefaultParameters());
-        assertNotNull(imageInfo);
     }
 }

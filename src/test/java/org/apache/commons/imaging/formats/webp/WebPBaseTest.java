@@ -30,11 +30,6 @@ import org.apache.commons.imaging.ImagingException;
 
 public abstract class WebPBaseTest extends AbstractImagingTest {
 
-    private static boolean isWebP(final File file) throws IOException {
-        final ImageFormat format = Imaging.guessFormat(file);
-        return format == ImageFormats.WEBP;
-    }
-
     private static final ImageFilter IMAGE_FILTER = WebPBaseTest::isWebP;
 
     protected static List<File> getWebPImages() throws IOException, ImagingException {
@@ -50,5 +45,10 @@ public abstract class WebPBaseTest extends AbstractImagingTest {
                 images.stream(),
                 Stream.of(emptyWebP, animationWebP, exifWebP)
         );
+    }
+
+    private static boolean isWebP(final File file) throws IOException {
+        final ImageFormat format = Imaging.guessFormat(file);
+        return format == ImageFormats.WEBP;
     }
 }

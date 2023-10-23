@@ -125,11 +125,21 @@ public final class WebPChunkVp8 extends WebPChunk {
         this.verticalScale = b9 >> 6;
     }
 
+    @Override
+    public void dump(PrintWriter pw, int offset) throws ImagingException, IOException {
+        super.dump(pw, offset);
+        pw.println("  Version Number: " + getVersionNumber());
+        pw.println("  Width: " + getWidth());
+        pw.println("  Height: " + getHeight());
+        pw.println("  Horizontal Scale: " + getHorizontalScale());
+        pw.println("  Vertical Scale: " + getVerticalScale());
+    }
+
     /**
-     * @return the version number.
+     * @return the height.
      */
-    public int getVersionNumber() {
-        return versionNumber;
+    public int getHeight() {
+        return height;
     }
 
     /**
@@ -137,6 +147,13 @@ public final class WebPChunkVp8 extends WebPChunk {
      */
     public int getHorizontalScale() {
         return horizontalScale;
+    }
+
+    /**
+     * @return the version number.
+     */
+    public int getVersionNumber() {
+        return versionNumber;
     }
 
     /**
@@ -151,22 +168,5 @@ public final class WebPChunkVp8 extends WebPChunk {
      */
     public int getWidth() {
         return width;
-    }
-
-    /**
-     * @return the height.
-     */
-    public int getHeight() {
-        return height;
-    }
-
-    @Override
-    public void dump(PrintWriter pw, int offset) throws ImagingException, IOException {
-        super.dump(pw, offset);
-        pw.println("  Version Number: " + getVersionNumber());
-        pw.println("  Width: " + getWidth());
-        pw.println("  Height: " + getHeight());
-        pw.println("  Horizontal Scale: " + getHorizontalScale());
-        pw.println("  Vertical Scale: " + getVerticalScale());
     }
 }

@@ -86,55 +86,6 @@ public final class WebPChunkVp8x extends WebPChunk {
         }
     }
 
-    /**
-     * @return whether the chunk has ICC enabled.
-     */
-    public boolean hasIcc() {
-        return hasIcc;
-    }
-
-    /**
-     * @return whether the chunk has alpha enabled.
-     */
-    public boolean hasAlpha() {
-        return hasAlpha;
-    }
-
-    /**
-     * @return whether the chunk has EXIF data.
-     */
-    public boolean hasExif() {
-        return hasExif;
-    }
-
-    /**
-     * @return whether the chunk has XMP.
-     */
-    public boolean hasXmp() {
-        return hasXmp;
-    }
-
-    /**
-     * @return if the chunk contains an animation.
-     */
-    public boolean hasAnimation() {
-        return hasAnimation;
-    }
-
-    /**
-     * @return the canvas width.
-     */
-    public int getCanvasWidth() {
-        return canvasWidth;
-    }
-
-    /**
-     * @return the canvas height.
-     */
-    public int getCanvasHeight() {
-        return canvasHeight;
-    }
-
     @Override
     public void dump(PrintWriter pw, int offset) throws ImagingException, IOException {
         super.dump(pw, offset);
@@ -145,5 +96,54 @@ public final class WebPChunkVp8x extends WebPChunk {
         pw.println("  Animation: " + hasAnimation());
         pw.println("  Canvas Width: " + getCanvasWidth());
         pw.println("  Canvas Height: " + getCanvasHeight());
+    }
+
+    /**
+     * @return the canvas height.
+     */
+    public int getCanvasHeight() {
+        return canvasHeight;
+    }
+
+    /**
+     * @return the canvas width.
+     */
+    public int getCanvasWidth() {
+        return canvasWidth;
+    }
+
+    /**
+     * @return whether the chunk has alpha enabled.
+     */
+    public boolean hasAlpha() {
+        return hasAlpha;
+    }
+
+    /**
+     * @return if the chunk contains an animation.
+     */
+    public boolean hasAnimation() {
+        return hasAnimation;
+    }
+
+    /**
+     * @return whether the chunk has EXIF data.
+     */
+    public boolean hasExif() {
+        return hasExif;
+    }
+
+    /**
+     * @return whether the chunk has ICC enabled.
+     */
+    public boolean hasIcc() {
+        return hasIcc;
+    }
+
+    /**
+     * @return whether the chunk has XMP.
+     */
+    public boolean hasXmp() {
+        return hasXmp;
     }
 }

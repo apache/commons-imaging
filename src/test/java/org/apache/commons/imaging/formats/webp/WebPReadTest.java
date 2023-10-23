@@ -42,26 +42,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class WebPReadTest extends WebPBaseTest {
 
     /**
-     * @param imageFile parameterized test image.
-     * @throws Exception if it cannot open the images.
-     */
-    @ParameterizedTest
-    @MethodSource("images")
-    public void testRead(File imageFile) throws Exception {
-        Debug.debug("start");
-
-        Debug.debug("imageFile", imageFile);
-
-        final ImageMetadata metadata = Imaging.getMetadata(imageFile);
-        Assertions.assertFalse(metadata instanceof File); // Dummy check to avoid unused warning (it may be null)
-
-        final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
-        assertNotNull(imageInfo);
-
-        Debug.debug("ICC profile", Imaging.getIccProfileBytes(imageFile));
-    }
-
-    /**
      * Not implemented yet.
      *
      * @throws IOException if it failed to read the image.
@@ -84,6 +64,26 @@ public class WebPReadTest extends WebPBaseTest {
         WebPImageParser parser = new WebPImageParser();
         assertEquals("WebP-Custom", parser.getName());
         assertEquals("webp", parser.getDefaultExtension());
+    }
+
+    /**
+     * @param imageFile parameterized test image.
+     * @throws Exception if it cannot open the images.
+     */
+    @ParameterizedTest
+    @MethodSource("images")
+    public void testRead(File imageFile) throws Exception {
+        Debug.debug("start");
+
+        Debug.debug("imageFile", imageFile);
+
+        final ImageMetadata metadata = Imaging.getMetadata(imageFile);
+        Assertions.assertFalse(metadata instanceof File); // Dummy check to avoid unused warning (it may be null)
+
+        final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
+        assertNotNull(imageInfo);
+
+        Debug.debug("ICC profile", Imaging.getIccProfileBytes(imageFile));
     }
 
     /**

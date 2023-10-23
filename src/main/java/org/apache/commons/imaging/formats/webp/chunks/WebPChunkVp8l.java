@@ -75,11 +75,13 @@ public final class WebPChunkVp8l extends WebPChunk {
         }
     }
 
-    /**
-     * @return the image width.
-     */
-    public int getImageWidth() {
-        return imageWidth;
+    @Override
+    public void dump(PrintWriter pw, int offset) throws ImagingException, IOException {
+        super.dump(pw, offset);
+        pw.println("  Version Number: " + getVersionNumber());
+        pw.println("  Image Width: " + getImageWidth());
+        pw.println("  Image Height: " + getImageHeight());
+        pw.println("  Alpha: " + hasAlpha());
     }
 
     /**
@@ -90,10 +92,10 @@ public final class WebPChunkVp8l extends WebPChunk {
     }
 
     /**
-     * @return whether the image has an alpha channel or not.
+     * @return the image width.
      */
-    public boolean hasAlpha() {
-        return hasAlpha;
+    public int getImageWidth() {
+        return imageWidth;
     }
 
     /**
@@ -103,12 +105,10 @@ public final class WebPChunkVp8l extends WebPChunk {
         return versionNumber;
     }
 
-    @Override
-    public void dump(PrintWriter pw, int offset) throws ImagingException, IOException {
-        super.dump(pw, offset);
-        pw.println("  Version Number: " + getVersionNumber());
-        pw.println("  Image Width: " + getImageWidth());
-        pw.println("  Image Height: " + getImageHeight());
-        pw.println("  Alpha: " + hasAlpha());
+    /**
+     * @return whether the image has an alpha channel or not.
+     */
+    public boolean hasAlpha() {
+        return hasAlpha;
     }
 }

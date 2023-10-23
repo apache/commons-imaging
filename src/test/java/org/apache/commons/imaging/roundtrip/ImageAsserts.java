@@ -29,6 +29,29 @@ import org.apache.commons.io.FileUtils;
 
 final class ImageAsserts {
 
+    static void assertFileEquals(final File a, final File b) throws IOException {
+        assertTrue(a.exists() && a.isFile());
+        assertTrue(b.exists() && b.isFile());
+        assertEquals(a.length(), b.length());
+
+        final byte[] aData = FileUtils.readFileToByteArray(a);
+        final byte[] bData = FileUtils.readFileToByteArray(b);
+
+        for (int i = 0; i < a.length(); i++) {
+            final int aByte = 0xff & aData[i];
+            final int bByte = 0xff & bData[i];
+
+            if (aByte != bByte) {
+                Debug.debug("a: " + a);
+                Debug.debug("b: " + b);
+                Debug.debug("i: " + i);
+                Debug.debug("aByte: " + aByte + " (0x" + Integer.toHexString(aByte) + ")");
+                Debug.debug("bByte: " + bByte + " (0x" + Integer.toHexString(bByte) + ")");
+            }
+            assertEquals(aByte, bByte);
+        }
+    }
+
     static void assertImageEquals(final BufferedImage a, final BufferedImage b) {
         assertImageEquals(a, b, 0);
     }
@@ -57,29 +80,6 @@ final class ImageAsserts {
                 }
                 assertEquals(aArgb, bArgb);
             }
-        }
-    }
-
-    static void assertFileEquals(final File a, final File b) throws IOException {
-        assertTrue(a.exists() && a.isFile());
-        assertTrue(b.exists() && b.isFile());
-        assertEquals(a.length(), b.length());
-
-        final byte[] aData = FileUtils.readFileToByteArray(a);
-        final byte[] bData = FileUtils.readFileToByteArray(b);
-
-        for (int i = 0; i < a.length(); i++) {
-            final int aByte = 0xff & aData[i];
-            final int bByte = 0xff & bData[i];
-
-            if (aByte != bByte) {
-                Debug.debug("a: " + a);
-                Debug.debug("b: " + b);
-                Debug.debug("i: " + i);
-                Debug.debug("aByte: " + aByte + " (0x" + Integer.toHexString(aByte) + ")");
-                Debug.debug("bByte: " + bByte + " (0x" + Integer.toHexString(bByte) + ")");
-            }
-            assertEquals(aByte, bByte);
         }
     }
 

@@ -65,6 +65,44 @@ public abstract class WebPChunk extends BinaryFileParser {
     }
 
     /**
+     * Print the chunk to the given stream.
+     *
+     * @param pw     a stream to write to.
+     * @param offset chunk offset.
+     * @throws ImagingException if the image is invalid.
+     * @throws IOException      if it fails to write to the given stream.
+     */
+    public void dump(PrintWriter pw, int offset) throws ImagingException, IOException {
+        pw.printf(
+                "Chunk %s at offset %s, length %d%n, payload size %d%n",
+                getTypeDescription(),
+                offset >= 0 ? String.valueOf(offset) : "unknown",
+                getChunkSize(),
+                getPayloadSize());
+    }
+
+    /**
+     * @return a copy of the chunk data as bytes.
+     */
+    public byte[] getBytes() {
+        return bytes.clone();
+    }
+
+    /**
+     * @return the chunk size.
+     */
+    public int getChunkSize() {
+        return chunkSize;
+    }
+
+    /**
+     * @return the payload size.
+     */
+    public int getPayloadSize() {
+        return size;
+    }
+
+    /**
      * @return the chunk type.
      */
     public int getType() {
@@ -80,43 +118,5 @@ public abstract class WebPChunk extends BinaryFileParser {
                 (byte) ((type >> 8) & 0xff),
                 (byte) ((type >> 16) & 0xff),
                 (byte) ((type >> 24) & 0xff)}, StandardCharsets.UTF_8);
-    }
-
-    /**
-     * @return the payload size.
-     */
-    public int getPayloadSize() {
-        return size;
-    }
-
-    /**
-     * @return the chunk size.
-     */
-    public int getChunkSize() {
-        return chunkSize;
-    }
-
-    /**
-     * @return a copy of the chunk data as bytes.
-     */
-    public byte[] getBytes() {
-        return bytes.clone();
-    }
-
-    /**
-     * Print the chunk to the given stream.
-     *
-     * @param pw     a stream to write to.
-     * @param offset chunk offset.
-     * @throws ImagingException if the image is invalid.
-     * @throws IOException      if it fails to write to the given stream.
-     */
-    public void dump(PrintWriter pw, int offset) throws ImagingException, IOException {
-        pw.printf(
-                "Chunk %s at offset %s, length %d%n, payload size %d%n",
-                getTypeDescription(),
-                offset >= 0 ? String.valueOf(offset) : "unknown",
-                getChunkSize(),
-                getPayloadSize());
     }
 }

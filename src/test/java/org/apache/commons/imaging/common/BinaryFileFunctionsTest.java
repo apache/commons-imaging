@@ -24,6 +24,8 @@ import org.junit.jupiter.api.Test;
 
 public class BinaryFileFunctionsTest extends AbstractImagingTest {
 
+    private static final long TARGET_LONG = 0x01020304_05060708L;
+
     @Test
     public void testDoubleToByteConversion() {
         final byte[] bytesLE = ByteConversions.toBytes(1.0, ByteOrder.LITTLE_ENDIAN);
@@ -41,8 +43,6 @@ public class BinaryFileFunctionsTest extends AbstractImagingTest {
         final byte[] bytesBE = ByteConversions.toBytes(1.0f, ByteOrder.BIG_ENDIAN);
         assertEquals(ByteConversions.toFloat(bytesBE, ByteOrder.BIG_ENDIAN), 1.0f, 0f);
     }
-
-    private static final long TARGET_LONG = 0x01020304_05060708L;
 
     @Test
     public void testLongToByteConversion() {
