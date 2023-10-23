@@ -358,11 +358,10 @@ public final class ByteConversions {
             return  (byte0 << 56) | (byte1 << 48) | (byte2 << 40)
                     | (byte3 << 32) | (byte4 << 24) | (byte5 << 16)
                     | (byte6 << 8) | byte7  ;
-        } else {
-           return (byte7 << 56) | (byte6 << 48) | (byte5 << 40)
+        }
+        return (byte7 << 56) | (byte6 << 48) | (byte5 << 40)
                     | (byte4 << 32) | (byte3 << 24) | (byte2 << 16)
                     | (byte1 << 8) | byte0;
-        }
     }
 
     /**
