@@ -61,7 +61,7 @@ public class IptcParser extends BinaryFileParser {
      * Block types (or Image Resource IDs) that are not recommended to be
      * interpreted when libraries process Photoshop IPTC metadata.
      *
-     * @see <a href="https://www.adobe.com/devnet-apps/photoshop/fileformatashtml/"> Adobe Photoshop File Formats Specification</a>
+     * @see <a href="https://www.adobe.com/devnet-apps/photoshop/fileformatashtml/">Adobe Photoshop File Formats Specification</a>
      * @see <a href="https://issues.apache.org/jira/browse/IMAGING-246>IMAGING-246</a>
      * @since 1.0-alpha2
      */
