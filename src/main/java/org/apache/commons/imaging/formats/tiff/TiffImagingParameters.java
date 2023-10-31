@@ -208,7 +208,7 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
     }
 
     /**
-     * Set the TIFF output set for writing TIFF files.  An output set
+     * Sets the TIFF output set for writing TIFF files.  An output set
      * may contain various types of TiffDirectories including image directories,
      * EXIF directories, GPS-related directories, etc.
      *
