@@ -35,10 +35,10 @@ import org.apache.commons.imaging.palette.PaletteFactory;
 public class PngWriter {
 
     /*
-     1. IHDR: image header, which is the first chunk in a PNG datastream.
+     1. IHDR: image header, which is the first chunk in a PNG data stream.
      2. PLTE: palette table associated with indexed PNG images.
      3. IDAT: image data chunks.
-     4. IEND: image trailer, which is the last chunk in a PNG datastream.
+     4. IEND: image trailer, which is the last chunk in a PNG data stream.
 
      The remaining 14 chunk types are termed ancillary chunk types, which encoders may generate and decoders may interpret.
 
