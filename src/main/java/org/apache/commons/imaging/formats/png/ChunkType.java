@@ -54,7 +54,7 @@ public enum ChunkType {
     /** Significant bits*/
     sBIT,
 
-    /** Standard RGB colour space */
+    /** Standard RGB color space */
     sRGB,
 
     /** Textual data */
@@ -66,7 +66,7 @@ public enum ChunkType {
     /** International textual data */
     iTXt,
 
-    /** Background colour */
+    /** Background color */
     bKGD,
 
     /** Image histogram */

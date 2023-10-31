@@ -631,7 +631,7 @@ public class PngWriter {
 
         os.close();
     } // todo: filter types
-      // proper colour types
+      // proper color types
       // srgb, etc.
 
     private void writeInt(final OutputStream os, final int value) throws IOException {

@@ -29,20 +29,20 @@ public final class PngConstants {
     public static final byte FILTER_METHOD_ADAPTIVE = 0;
 
     /*
-     * Background colour Solid background colour to be used when presenting the
+     * Background color Solid background color to be used when presenting the
      * image if no better option is available. Gamma and chromaticity Gamma
      * characteristic of the image with respect to the desired output intensity,
      * and chromaticity characteristics of the RGB values used in the image. ICC
-     * profile Description of the colour space (in the form of an International
+     * profile Description of the color space (in the form of an International
      * Color Consortium (ICC) profile) to which the samples in the image
      * conform. Image histogram Estimates of how frequently the image uses each
      * palette entry. Physical pixel dimensions Intended pixel size and aspect
      * ratio to be used in presenting the PNG image. Significant bits The number
-     * of bits that are significant in the samples. sRGB colour space A
+     * of bits that are significant in the samples. sRGB color space A
      * rendering intent (as defined by the International Color Consortium) and
-     * an indication that the image samples conform to this colour space.
+     * an indication that the image samples conform to this color space.
      * Suggested palette A reduced palette that may be used when the display
-     * device is not capable of displaying the full range of colours in the
+     * device is not capable of displaying the full range of colors in the
      * image. Textual data Textual information (which may be compressed)
      * associated with the image. Time The time when the PNG image was last
      * modified. Transparency Alpha information that allows the reference image
