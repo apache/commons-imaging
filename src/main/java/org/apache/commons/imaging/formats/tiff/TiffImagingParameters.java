@@ -122,7 +122,7 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
     }
 
     /**
-     * Get the TIFF output set for writing TIFF files.
+     * Gets the TIFF output set for writing TIFF files.
      * @return if set, a valid instance; otherwise, a null reference.
      */
     public TiffOutputSet getOutputSet() {

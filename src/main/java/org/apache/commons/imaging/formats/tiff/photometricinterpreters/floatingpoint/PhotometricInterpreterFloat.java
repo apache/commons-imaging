@@ -182,7 +182,7 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
     }
 
     /**
-     * Get the mean of the values found while processing
+     * Gets the mean of the values found while processing
      *
      * @return if data was processed, a valid mean value; otherwise, a zero.
      */

@@ -263,14 +263,14 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     }
 
     /**
-     * Get an array of all accepted extensions
+     * Gets an array of all accepted extensions
      *
      * @return A valid array of one or more elements.
      */
     protected abstract String[] getAcceptedExtensions();
 
     /**
-     * Get an array of ImageFormat objects describing all accepted types
+     * Gets an array of ImageFormat objects describing all accepted types
      *
      * @return A valid array of one or more elements.
      */
@@ -397,7 +397,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     }
 
     /**
-     * Get an instance of IBufferedImageFactory based on the presence
+     * Gets an instance of IBufferedImageFactory based on the presence
      * of a specification for ImagingConstants.&#46;BUFFERED_IMAGE_FACTORY
      * within the supplied params.
      *
@@ -419,7 +419,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     }
 
     /**
-     * Get the default extension for the format specified by an implementation
+     * Gets the default extension for the format specified by an implementation
      * of ImageParser.  Some parsers can support more than one extension
      * (i.e. .JPEG, .JPG;  .TIF, .TIFF, etc.).
      *
@@ -428,7 +428,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     public abstract String getDefaultExtension();
 
     /**
-     * Get a default parameters instance for this parser.
+     * Gets a default parameters instance for this parser.
      * @return default parameters instance
      */
     public abstract T getDefaultParameters();
@@ -481,7 +481,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     }
 
     /**
-     * Get an array of bytes describing the International Color Consortium (ICC)
+     * Gets an array of bytes describing the International Color Consortium (ICC)
      * specification for the color space of the image contained in the
      * input byte array. Not all formats support ICC profiles.
      *
@@ -497,7 +497,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     }
 
     /**
-     * Get an array of bytes describing the International Color Consortium (ICC)
+     * Gets an array of bytes describing the International Color Consortium (ICC)
      * specification for the color space of the image contained in the
      * input byte array. Not all formats support ICC profiles.
      *
@@ -516,7 +516,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     }
 
     /**
-     * Get an array of bytes describing the International Color Consortium (ICC)
+     * Gets an array of bytes describing the International Color Consortium (ICC)
      * specification for the color space of the image contained in the
      * input byteSource. Not all formats support ICC profiles.
      *
@@ -533,7 +533,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
             throws ImagingException, IOException;
 
     /**
-     * Get an array of bytes describing the International Color Consortium (ICC)
+     * Gets an array of bytes describing the International Color Consortium (ICC)
      * specification for the color space of the image contained in the
      * input file. Not all formats support ICC profiles.
      *
@@ -549,7 +549,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     }
 
     /**
-     * Get an array of bytes describing the International Color Consortium (ICC)
+     * Gets an array of bytes describing the International Color Consortium (ICC)
      * specification for the color space of the image contained in the
      * input file. Not all formats support ICC profiles.
      *
@@ -576,7 +576,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     }
 
     /**
-     * Get image information from the specified array of bytes.  Format-specific
+     * Gets image information from the specified array of bytes.  Format-specific
      * ImageParser implementations are expected to return a valid
      * ImageInfo object or to throw an ImageReadException if unable
      * to process the specified data.
@@ -605,7 +605,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     }
 
     /**
-     * Get image information from the specified ByteSource.  Format-specific
+     * Gets image information from the specified ByteSource.  Format-specific
      * ImageParser implementations are expected to return a valid
      * ImageInfo object or to throw an ImageReadException if unable
      * to process the specified data.
@@ -624,7 +624,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     }
 
     /**
-     * Get image information from the specified ByteSource. Format-specific
+     * Gets image information from the specified ByteSource. Format-specific
      * ImageParser implementations are expected to return a valid
      * ImageInfo object or to throw an ImageReadException if unable
      * to process the specified data.
@@ -651,7 +651,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
             throws ImagingException, IOException;
 
     /**
-     * Get image information from the specified file  Format-specific
+     * Gets image information from the specified file  Format-specific
      * ImageParser implementations are expected to return a valid
      * ImageInfo object or to throw an ImageReadException if unable
      * to process the specified data.
@@ -684,7 +684,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     }
 
     /**
-     * Get the size of the image described by the specified byte array.
+     * Gets the size of the image described by the specified byte array.
      *
      * @param bytes A valid byte array.
      * @return A valid instance of Dimension.
@@ -698,7 +698,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     }
 
     /**
-     * Get the size of the image described by the specified byte array.
+     * Gets the size of the image described by the specified byte array.
      *
      * @param bytes  A valid byte array.
      * @param params Optional instructions for special-handling or
@@ -716,7 +716,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
 
 
     /**
-     * Get the size of the image described by the specified ByteSource.
+     * Gets the size of the image described by the specified ByteSource.
      *
      * @param byteSource A valid reference to a ByteSource.
      * @param params     Optional instructions for special-handling or
@@ -731,7 +731,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
             throws ImagingException, IOException;
 
     /**
-     * Get the size of the image described by the specified file.
+     * Gets the size of the image described by the specified file.
      *
      * @param file A valid reference to a file.
      * @return A valid instance of Dimension.
@@ -745,7 +745,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     }
 
     /**
-     * Get the size of the image described by the specified file.
+     * Gets the size of the image described by the specified file.
      *
      * @param file   A valid reference to a file.
      * @param params Optional instructions for special-handling or
@@ -768,7 +768,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
 
 
     /**
-     * Get image metadata from the specified array of bytes.  Format-specific
+     * Gets image metadata from the specified array of bytes.  Format-specific
      * ImageParser implementations are expected to return a valid
      * IImageMetadata object or to throw an ImageReadException if unable
      * to process the specified data.
@@ -787,7 +787,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     }
 
     /**
-     * Get image metadata from the specified array of bytes.  Format-specific
+     * Gets image metadata from the specified array of bytes.  Format-specific
      * ImageParser implementations are expected to return a valid
      * IImageMetadata object or to throw an ImageReadException if unable
      * to process the specified data.
@@ -816,7 +816,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     }
 
     /**
-     * Get image metadata from the specified byte source.  Format-specific
+     * Gets image metadata from the specified byte source.  Format-specific
      * ImageParser implementations are expected to return a valid
      * IImageMetadata object or to throw an ImageReadException if unable
      * to process the specified byte source.
@@ -835,7 +835,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     }
 
     /**
-     * Get image metadata from the specified byte source.  Format-specific
+     * Gets image metadata from the specified byte source.  Format-specific
      * ImageParser implementations are expected to return a valid
      * IImageMetadata object or to throw an ImageReadException if unable
      * to process the specified byte source.
@@ -863,7 +863,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
             throws ImagingException, IOException;
 
     /**
-     * Get image metadata from the specified file.  Format-specific
+     * Gets image metadata from the specified file.  Format-specific
      * ImageParser implementations are expected to return a valid
      * IImageMetadata object or to throw an ImageReadException if unable
      * to process the specified data.
@@ -882,7 +882,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     }
 
     /**
-     * Get image metadata from the specified file.  Format-specific
+     * Gets image metadata from the specified file.  Format-specific
      * ImageParser implementations are expected to return a valid
      * IImageMetadata object or to throw an ImageReadException if unable
      * to process the specified data.
@@ -920,7 +920,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     }
 
     /**
-     * Get a descriptive name for the implementation of an ImageParser.
+     * Gets a descriptive name for the implementation of an ImageParser.
      *
      * @return a valid, subject-matter-specific string.
      */

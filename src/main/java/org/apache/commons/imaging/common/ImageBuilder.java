@@ -249,7 +249,7 @@ public class ImageBuilder {
      }
 
      /**
-      * Get the width of the ImageBuilder pixel field
+      * Gets the width of the ImageBuilder pixel field
       *
       * @return a positive integer
       */

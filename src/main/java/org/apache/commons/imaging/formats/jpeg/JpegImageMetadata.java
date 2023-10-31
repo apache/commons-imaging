@@ -71,7 +71,7 @@ public class JpegImageMetadata implements ImageMetadata {
     }
 
     /**
-     * Get the thumbnail image if available.
+     * Gets the thumbnail image if available.
      *
      * @return the thumbnail image. May be {@code null} if no image could
      *         be found.

@@ -75,7 +75,7 @@ public class TiffRasterStatistics {
     }
 
     /**
-     * Get the count of the number of null samples in the collection.
+     * Gets the count of the number of null samples in the collection.
      *
      * @return the a positive number, potentially zero
      */
@@ -84,7 +84,7 @@ public class TiffRasterStatistics {
     }
 
     /**
-     * Get the count of the number of non-null and non-excluded samples in the
+     * Gets the count of the number of non-null and non-excluded samples in the
      * collection.
      *
      * @return the a positive number, potentially zero
@@ -94,7 +94,7 @@ public class TiffRasterStatistics {
     }
 
     /**
-     * Get the value that was set for exclusion, or a Float&#46;NaN if not was
+     * Gets the value that was set for exclusion, or a Float&#46;NaN if not was
      * set.
      *
      * @return the excluded value (if any).
@@ -104,7 +104,7 @@ public class TiffRasterStatistics {
     }
 
     /**
-     * Get the maximum value found in the source data
+     * Gets the maximum value found in the source data
      *
      * @return the maximum value found in the source data
      */
@@ -113,7 +113,7 @@ public class TiffRasterStatistics {
     }
 
     /**
-     * Get the mean value for all sample values in the raster. Null-data values
+     * Gets the mean value for all sample values in the raster. Null-data values
      * and excluded values are not considered.
      *
      * @return the mean value of the samples
@@ -123,7 +123,7 @@ public class TiffRasterStatistics {
     }
 
     /**
-     * Get the minimum value found in the source data
+     * Gets the minimum value found in the source data
      *
      * @return the minimum value found in the source data
      */
