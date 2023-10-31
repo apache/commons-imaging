@@ -194,6 +194,7 @@
           <configuration>
             <excludes>
               <exclude>report/**</exclude>
+              <exclude>.github/workflows/sonar_cloud.yml</exclude>
               <exclude>src/test/resources/images/**/*</exclude>
               <exclude>src/test/resources/IMAGING-*/*</exclude>
               <exclude>src/test/data/**/*.xpm</exclude>
