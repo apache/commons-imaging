@@ -48,7 +48,7 @@ public class IptcFullDiscardTest {
     }
 
     @Test
-    public void leaveApp13Segment() throws Exception {
+    public void testLeaveApp13Segment() throws Exception {
         final byte[] originalImage = generateImage();
         final byte[] taggedImage = addMetaData(originalImage);
         final byte[] untaggedImage = removeMetaData(taggedImage, false);
@@ -56,7 +56,7 @@ public class IptcFullDiscardTest {
     }
 
     @Test
-    public void removeApp13Segment() throws Exception {
+    public void testRemoveApp13Segment() throws Exception {
         final byte[] originalImage = generateImage();
         final byte[] taggedImage = addMetaData(originalImage);
         final byte[] untaggedImage = removeMetaData(taggedImage, true);
