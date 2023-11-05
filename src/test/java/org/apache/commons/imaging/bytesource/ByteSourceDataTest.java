@@ -41,7 +41,7 @@ public class ByteSourceDataTest extends AbstractByteSourceTest {
         ByteSource getByteSource(byte[] src) throws IOException;
     }
 
-    private class ByteSourceFileFactory implements ByteSourceFactory {
+    private final class ByteSourceFileFactory implements ByteSourceFactory {
         @Override
         public ByteSource getByteSource(final byte[] src) throws IOException {
             final File file = createTempFile(src);
@@ -53,7 +53,7 @@ public class ByteSourceDataTest extends AbstractByteSourceTest {
         }
     }
 
-    private class ByteSourceInputStreamFileFactory implements ByteSourceFactory {
+    private final class ByteSourceInputStreamFileFactory implements ByteSourceFactory {
         @Override
         public ByteSource getByteSource(final byte[] src) throws IOException {
             final File file = createTempFile(src);
@@ -74,7 +74,7 @@ public class ByteSourceDataTest extends AbstractByteSourceTest {
 
     }
 
-    private class ByteSourcePathFactory implements ByteSourceFactory {
+    private final class ByteSourcePathFactory implements ByteSourceFactory {
         @Override
         public ByteSource getByteSource(final byte[] src) throws IOException {
             final Path file = createTempFile(src).toPath();

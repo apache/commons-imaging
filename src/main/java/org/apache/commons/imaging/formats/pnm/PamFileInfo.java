@@ -26,7 +26,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImagingException;
 
 final class PamFileInfo extends AbstractFileInfo {
-    private class ColorTupleReader extends TupleReader {
+    private final class ColorTupleReader extends TupleReader {
         @Override
         public ImageInfo.ColorType getColorType() {
             return ImageInfo.ColorType.RGB;
@@ -54,7 +54,7 @@ final class PamFileInfo extends AbstractFileInfo {
                  | ((0xff & blue)  << 0);
         }
     }
-    private class GrayscaleTupleReader extends TupleReader {
+    private final class GrayscaleTupleReader extends TupleReader {
         private final ImageInfo.ColorType colorType;
 
         GrayscaleTupleReader(final ImageInfo.ColorType colorType) {
