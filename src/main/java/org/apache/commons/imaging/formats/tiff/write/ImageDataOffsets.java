@@ -21,7 +21,7 @@ import java.util.Arrays;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.formats.tiff.AbstractTiffElement;
 
-class ImageDataOffsets {
+final class ImageDataOffsets {
     final int[] imageDataOffsets;
     final TiffOutputField imageDataOffsetsField;
     final AbstractTiffOutputItem[] outputItems;

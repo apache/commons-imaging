@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.gif;
 
-class GraphicControlExtension extends GifBlock {
+final class GraphicControlExtension extends GifBlock {
 
     public final int packed;
     public final int dispose;

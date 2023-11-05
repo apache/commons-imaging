@@ -30,7 +30,7 @@ import org.apache.commons.imaging.ImagingTestConstants;
 import org.apache.commons.io.FilenameUtils;
 import org.junit.jupiter.api.Test;
 
-class ByteSourceInputStreamTest {
+final class ByteSourceInputStreamTest {
 
     public static final String ICO_IMAGE_FILE = "ico\\1\\Oregon Scientific DS6639 - DSC_0307 - small.ico";
     public static final int ICO_IMAGE_WIDTH = 300;

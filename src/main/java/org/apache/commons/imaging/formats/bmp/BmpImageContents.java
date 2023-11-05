@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.bmp;
 
-class BmpImageContents {
+final class BmpImageContents {
 
     final BmpHeaderInfo bhi;
     final byte[] colorTable;

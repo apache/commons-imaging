@@ -19,7 +19,7 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.common.BinaryOutputStream;
 
-class RleWriter {
+final class RleWriter {
     private final boolean isCompressed;
     private int previousByte = -1;
     private int repeatCount;

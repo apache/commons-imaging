@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.tiff.itu_t4;
 
-class T4_T6_Tables {
+final class T4_T6_Tables {
     public static class Entry {
         final String bitString;
         final Integer value;

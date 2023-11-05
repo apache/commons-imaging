@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.gif;
 
-class GifHeaderInfo {
+final class GifHeaderInfo {
     public final byte identifier1;
     public final byte identifier2;
     public final byte identifier3;

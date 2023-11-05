@@ -20,7 +20,7 @@ package org.apache.commons.imaging.roundtrip;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 
-class FormatInfo {
+final class FormatInfo {
 
     static final int COLOR_FULL_RGB = 0;
     static final int COLOR_LIMITED_INDEX = 1;

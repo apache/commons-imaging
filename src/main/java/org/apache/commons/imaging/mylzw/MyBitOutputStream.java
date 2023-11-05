@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteOrder;
 
-class MyBitOutputStream extends FilterOutputStream {
+final class MyBitOutputStream extends FilterOutputStream {
 
     private final ByteOrder byteOrder;
     private int bitsInCache;

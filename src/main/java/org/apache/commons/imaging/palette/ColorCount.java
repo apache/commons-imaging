@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.palette;
 
-class ColorCount {
+final class ColorCount {
     public final int argb;
     public int count;
     public final int alpha;

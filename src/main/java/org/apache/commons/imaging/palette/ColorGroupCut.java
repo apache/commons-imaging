@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.palette;
 
-class ColorGroupCut {
+final class ColorGroupCut {
     public final ColorGroup less;
     public final ColorGroup more;
     public final ColorComponent mode;

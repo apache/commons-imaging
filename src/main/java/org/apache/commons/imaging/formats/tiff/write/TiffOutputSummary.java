@@ -24,7 +24,7 @@ import java.util.Map;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
-class TiffOutputSummary {
+final class TiffOutputSummary {
     private static final class OffsetItem {
         public final AbstractTiffOutputItem item;
         public final TiffOutputField itemOffsetField;

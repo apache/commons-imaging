@@ -31,7 +31,7 @@ import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.GenericImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
 
-class RgbeInfo implements Closeable {
+final class RgbeInfo implements Closeable {
     // #?RADIANCE
     private static final byte[] HEADER = {
         0x23, 0x3F, 0x52, 0x41, 0x44, 0x49, 0x41, 0x4E, 0x43, 0x45

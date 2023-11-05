@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.gif;
 
-class GifImageData {
+final class GifImageData {
     final ImageDescriptor descriptor;
     final GraphicControlExtension gce;
 

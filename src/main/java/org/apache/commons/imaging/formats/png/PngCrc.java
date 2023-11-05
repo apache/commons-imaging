@@ -17,7 +17,7 @@
 package org.apache.commons.imaging.formats.png;
 
 // should just use ints, not longs
-class PngCrc {
+final class PngCrc {
 
     /* Table of CRCs of all 8-bit messages. */
     private final long[] crcTable = new long[256];
@@ -25,7 +25,7 @@ class PngCrc {
     /* Flag: has the table been computed? Initially false. */
     private boolean crcTableComputed;
 
-    public final long continuePartialCrc(final long oldCrc, final byte[] buf, final int len) {
+    public long continuePartialCrc(final long oldCrc, final byte[] buf, final int len) {
         return updateCrc(oldCrc, buf);
     }
 
@@ -36,11 +36,11 @@ class PngCrc {
      */
 
     /* Return the CRC of the bytes buf[0..len-1]. */
-    public final int crc(final byte[] buf, final int len) {
+    public int crc(final byte[] buf, final int len) {
         return (int) (updateCrc(0xffffffffL, buf) ^ 0xffffffffL);
     }
 
-    public final long finishPartialCrc(final long oldCrc) {
+    public long finishPartialCrc(final long oldCrc) {
         return (oldCrc ^ 0xffffffffL);
     }
 
@@ -64,7 +64,7 @@ class PngCrc {
         crcTableComputed = true;
     }
 
-    public final long startPartialCrc(final byte[] buf, final int len) {
+    public long startPartialCrc(final byte[] buf, final int len) {
         return updateCrc(0xffffffffL, buf);
     }
 

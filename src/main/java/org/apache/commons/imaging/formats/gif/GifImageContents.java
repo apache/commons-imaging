@@ -18,7 +18,7 @@ package org.apache.commons.imaging.formats.gif;
 
 import java.util.List;
 
-class GifImageContents {
+final class GifImageContents {
     final GifHeaderInfo gifHeaderInfo;
 
     final List<GifBlock> blocks;

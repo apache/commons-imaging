@@ -25,7 +25,7 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImagingException;
 
-class PamFileInfo extends AbstractFileInfo {
+final class PamFileInfo extends AbstractFileInfo {
     private class ColorTupleReader extends TupleReader {
         @Override
         public ImageInfo.ColorType getColorType() {

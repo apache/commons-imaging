@@ -21,7 +21,7 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.ImagingException;
 
-class InfoHeaderReader {
+final class InfoHeaderReader {
     private final InputStream is;
 
     InfoHeaderReader(final InputStream is) {

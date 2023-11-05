@@ -25,15 +25,15 @@ import org.apache.commons.imaging.ImagingException;
 /**
  * A Huffman tree implemented as 1 array for high locality of reference.
  */
-class HuffmanTree<T> {
+final class HuffmanTree<T> {
     private static final class Node<T> {
         boolean empty = true;
         T value;
     }
 
-    private final List<Node<T>> nodes = new ArrayList<>();
+    private List<Node<T>> nodes = new ArrayList<>();
 
-    public final T decode(final BitInputStreamFlexible bitStream) throws ImagingException {
+    public T decode(final BitInputStreamFlexible bitStream) throws ImagingException {
         int position = 0;
         Node<T> node = nodes.get(0);
         while (node.value == null) {
@@ -69,7 +69,7 @@ class HuffmanTree<T> {
         return node;
     }
 
-    public final void insert(final String pattern, final T value) throws ImagingException {
+    public void insert(final String pattern, final T value) throws ImagingException {
         int position = 0;
         Node<T> node = growAndGetNode(position);
         if (node.value != null) {

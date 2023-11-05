@@ -27,7 +27,7 @@ import org.apache.commons.imaging.ImagingException;
  * across byte boundaries in most significant
  * bit first order.
  */
-class BitInputStreamFlexible extends FilterInputStream {
+final class BitInputStreamFlexible extends FilterInputStream {
     // TODO should be byte order conscious, that is, TIFF for reading
     // samples size < 8 - shouldn't that effect their order within byte?
 
@@ -55,7 +55,7 @@ class BitInputStreamFlexible extends FilterInputStream {
         return in.read();
     }
 
-    public final int readBits(int count) throws IOException {
+    public int readBits(int count) throws IOException {
 
         if (count <= 32)  {
             // catch-all

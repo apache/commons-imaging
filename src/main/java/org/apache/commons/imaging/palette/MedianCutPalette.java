@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.palette;
 
-class MedianCutPalette extends SimplePalette {
+final class MedianCutPalette extends SimplePalette {
     private final ColorGroup root;
 
     MedianCutPalette(final ColorGroup root, final int[] palette) {

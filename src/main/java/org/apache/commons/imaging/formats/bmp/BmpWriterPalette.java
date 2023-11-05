@@ -23,7 +23,7 @@ import java.io.IOException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.palette.SimplePalette;
 
-class BmpWriterPalette implements BmpWriter {
+final class BmpWriterPalette implements BmpWriter {
 
     private final SimplePalette palette;
     private final int bitsPerSample;

@@ -23,7 +23,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.imaging.ImagingException;
 
-class PpmWriter implements PnmWriter {
+final class PpmWriter implements PnmWriter {
 
     private final boolean rawbits;
 

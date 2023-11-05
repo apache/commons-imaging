@@ -24,7 +24,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.imaging.ImagingException;
 
-class PamWriter implements PnmWriter {
+final class PamWriter implements PnmWriter {
 
     @Override
     public void writeImage(final BufferedImage src, final OutputStream os,

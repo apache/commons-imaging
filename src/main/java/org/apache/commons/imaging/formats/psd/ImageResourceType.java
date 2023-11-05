@@ -22,7 +22,7 @@ package org.apache.commons.imaging.formats.psd;
  * @see <a href="https://www.adobe.com/devnet-apps/photoshop/fileformatashtml/#50577409_pgfId-1037727">Photoshop File Formats Specification - Image Resource
  *      IDs</a>
  */
-class ImageResourceType {
+final class ImageResourceType {
 
     private static final ImageResourceType[] TYPES = {
             new ImageResourceType(1000, "Number of channels, rows, columns, depth, and mode."),

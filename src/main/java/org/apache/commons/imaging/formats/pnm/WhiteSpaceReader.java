@@ -21,7 +21,7 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.ImagingException;
 
-class WhiteSpaceReader {
+final class WhiteSpaceReader {
     private final InputStream is;
 
     WhiteSpaceReader(final InputStream is) {

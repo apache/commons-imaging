@@ -26,7 +26,7 @@ import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 
-class PcxWriter {
+final class PcxWriter {
     private int encoding;
     private int bitDepthWanted = -1;
     private int planesWanted = -1;

@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.gif;
 
-class ImageDescriptor extends GifBlock {
+final class ImageDescriptor extends GifBlock {
 
     final int imageLeftPosition;
     final int imageTopPosition;

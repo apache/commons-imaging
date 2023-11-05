@@ -20,7 +20,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-class GenericGifBlock extends GifBlock {
+final class GenericGifBlock extends GifBlock {
     final List<byte[]> subBlocks;
 
     GenericGifBlock(final int blockCode, final List<byte[]> subBlocks) {

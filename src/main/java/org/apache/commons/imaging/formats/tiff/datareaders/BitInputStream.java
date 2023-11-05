@@ -27,7 +27,7 @@ import org.apache.commons.imaging.ImagingException;
  * Input stream reading 1-8, 16, 24 or 32 bits, starting from the most significant bit, but incapable of reading
  * non-aligned and < 8 bit fields across byte boundaries.
  */
-class BitInputStream extends FilterInputStream {
+final class BitInputStream extends FilterInputStream {
     private final ByteOrder byteOrder;
     private int cache;
     private int cacheBitsRemaining;
@@ -54,7 +54,7 @@ class BitInputStream extends FilterInputStream {
         return in.read();
     }
 
-    public final int readBits(final int count) throws IOException {
+    public int readBits(final int count) throws IOException {
         if (count < 8) {
             if (cacheBitsRemaining == 0) {
                 // fill cache

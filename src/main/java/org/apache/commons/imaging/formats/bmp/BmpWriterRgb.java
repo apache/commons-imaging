@@ -22,7 +22,7 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.common.BinaryOutputStream;
 
-class BmpWriterRgb implements BmpWriter {
+final class BmpWriterRgb implements BmpWriter {
     // private final boolean alpha;
     //
     // public BmpWriterRgb(boolean alpha)

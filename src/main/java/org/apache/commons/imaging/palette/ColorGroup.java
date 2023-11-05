@@ -21,7 +21,7 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImagingException;
 
-class ColorGroup {
+final class ColorGroup {
 
     // final ColorGroup parent;
     ColorGroupCut cut;

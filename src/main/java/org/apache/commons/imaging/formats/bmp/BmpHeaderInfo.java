@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.bmp;
 
-class BmpHeaderInfo {
+final class BmpHeaderInfo {
     static class ColorSpace {
         ColorSpaceCoordinate red;
         ColorSpaceCoordinate green;

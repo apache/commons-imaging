@@ -22,7 +22,7 @@ import java.util.Arrays;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFunctions;
 
-class RleReader {
+final class RleReader {
     private final boolean isCompressed;
     private int count;
     private byte sample;

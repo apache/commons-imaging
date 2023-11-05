@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.logging.Logger;
 
-class ColorSpaceSubset {
+final class ColorSpaceSubset {
 
     public static class RgbComparator implements Comparator<ColorSpaceSubset> {
 
@@ -65,7 +65,7 @@ class ColorSpaceSubset {
         rgb = -1;
     }
 
-    public final boolean contains(int red, int green, int blue) {
+    public boolean contains(int red, int green, int blue) {
         red >>= (8 - precision);
         if (mins[0] > red) {
             return false;
@@ -139,7 +139,7 @@ class ColorSpaceSubset {
 
     }
 
-    public final int getIndex() {
+    public int getIndex() {
         return index;
     }
 
@@ -169,7 +169,7 @@ class ColorSpaceSubset {
         rgb = (int) (((redsum & 0xff) << 16) | ((greensum & 0xff) << 8) | ((bluesum & 0xff) << 0));
     }
 
-    public final void setIndex(final int i) {
+    public void setIndex(final int i) {
         index = i;
     }
 }

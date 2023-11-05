@@ -20,7 +20,7 @@ import java.util.Arrays;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
-class JpegInputStream {
+final class JpegInputStream {
     static final int SHALLOW_SIZE = 32;
     // Figure F.18, F.2.2.5, page 111 of ITU-T T.81
     private final int[] interval;

@@ -20,7 +20,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-class CachingInputStream extends InputStream {
+final class CachingInputStream extends InputStream {
     private final InputStream is;
     private final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 

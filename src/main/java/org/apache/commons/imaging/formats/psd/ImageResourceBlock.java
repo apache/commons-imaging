@@ -20,7 +20,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.imaging.internal.Debug;
 
-class ImageResourceBlock {
+final class ImageResourceBlock {
     final int id;
     final byte[] nameData;
     final byte[] data;
