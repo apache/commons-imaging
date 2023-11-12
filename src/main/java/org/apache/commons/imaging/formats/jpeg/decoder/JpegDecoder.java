@@ -141,6 +141,8 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
 
     private final float[] block = new float[64];
 
+    private boolean useTiffRgb;
+
     private Block[] allocateMcuMemory() throws ImagingException {
         final Block[] mcu = Allocator.array(sosSegment.numberOfComponents, Block[]::new, Block.SHALLOW_SIZE);
         for (int i = 0; i < sosSegment.numberOfComponents; i++) {
@@ -452,9 +454,21 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             Allocator.check(Integer.BYTES * sofnSegment.width * sofnSegment.height);
             switch (sofnSegment.numberOfComponents) {
             case 4:
-                colorModel = new DirectColorModel(24, 0x00ff0000, 0x0000ff00, 0x000000ff);
-                final int[] bandMasks = { 0x00ff0000, 0x0000ff00, 0x000000ff };
-                raster = Raster.createPackedRaster(DataBuffer.TYPE_INT, sofnSegment.width, sofnSegment.height, bandMasks, null);
+                // Special handling for the application-RGB case:  TIFF files with
+                // JPEG compression can support an alpha channel.  This extension
+                // to the JPEG standard is implemented by specifying a color model
+                // with a fourth channel for alpha.
+                if (useTiffRgb) {
+                    colorModel = new DirectColorModel(32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
+                    final int[] bandMasks = {0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000};
+                    raster = Raster.createPackedRaster(DataBuffer.TYPE_INT, sofnSegment.width, sofnSegment.height, bandMasks, null);
+                } else {
+                    colorModel = new DirectColorModel(24, 0x00ff0000, 0x0000ff00, 0x000000ff);
+                    final int[] bandMasks = {0x00ff0000, 0x0000ff00, 0x000000ff};
+                    raster = Raster.createPackedRaster(DataBuffer.TYPE_INT, sofnSegment.width, sofnSegment.height, bandMasks, null);
+                }
+
+
                 break;
             case 3:
                 colorModel = new DirectColorModel(24, 0x00ff0000, 0x0000ff00, 0x000000ff);
@@ -496,35 +510,90 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                     rescaleMcu(mcu, hSize, vSize, scaledMCU);
                     int srcRowOffset = 0;
                     int dstRowOffset = y1 * sofnSegment.width + x1;
-                    for (int y2 = 0; y2 < vSize && y1 + y2 < sofnSegment.height; y2++) {
-                        for (int x2 = 0; x2 < hSize
-                                && x1 + x2 < sofnSegment.width; x2++) {
-                            if (scaledMCU.length == 4) {
-                                final int c = scaledMCU[0].samples[srcRowOffset + x2];
-                                final int m = scaledMCU[1].samples[srcRowOffset + x2];
-                                final int y = scaledMCU[2].samples[srcRowOffset + x2];
-                                final int k = scaledMCU[3].samples[srcRowOffset + x2];
-                                final int rgb = ColorConversions.convertCmykToRgb(c, m, y, k);
-                                dataBuffer.setElem(dstRowOffset + x2, rgb);
-                            } else if (scaledMCU.length == 3) {
-                                final int y = scaledMCU[0].samples[srcRowOffset + x2];
-                                final int cb = scaledMCU[1].samples[srcRowOffset + x2];
-                                final int cr = scaledMCU[2].samples[srcRowOffset + x2];
-                                final int rgb = YCbCrConverter.convertYCbCrToRgb(y,
-                                        cb, cr);
-                                dataBuffer.setElem(dstRowOffset + x2, rgb);
-                            } else if (mcu.length == 1) {
-                                final int y = scaledMCU[0].samples[srcRowOffset + x2];
-                                dataBuffer.setElem(dstRowOffset + x2, (y << 16)
-                                        | (y << 8) | y);
-                            } else {
-                                throw new ImagingException(
-                                        "Unsupported JPEG with " + mcu.length
-                                                + " components");
+
+                    // The TIFF-RGB logic was adapted from the original x2,y2 loops
+                    // but special handling was added for TIFF-JPEG RGB colorspace
+                    // and conditional checks were reorganized for efficiency
+                    if (useTiffRgb && (scaledMCU.length == 3 || scaledMCU.length == 4)) {
+                        // pre-compute the maximum allowed value for the
+                        // x2 index in the loops below.
+                        final int x2Limit;
+                        if (x1 + hSize <= sofnSegment.width) {
+                            x2Limit = hSize;
+                        } else {
+                            x2Limit = sofnSegment.width - hSize;
+                        }
+                        final int y2Limit;
+                        if (y1 + vSize <= sofnSegment.height) {
+                            y2Limit = vSize;
+                        } else {
+                            y2Limit = sofnSegment.height - vSize;
+                        }
+                        if (scaledMCU.length == 4) {
+                            // RGBA colorspace
+                            // Although conventional JPEGs don't include an alpha channel
+                            // TIFF images that use JPEG encoding may do so.  For example,
+                            // we have seen this variation in some false-color satellite images
+                            // from the U.S. National Weather Service. Ordinary JPEG files
+                            // may include an APP14 marker of type Unknowm indicating that
+                            // the scaledMCU.length of 3 should be interpreted as the RGB colorspace
+                            // and the 4-channel variation is interpreted as CYMK.  But TIFF files
+                            // use their own tags to specify colorspace and do not include the APP14 marker.
+                            for (int y2 = 0; y2 < y2Limit; y2++) {
+                                for (int x2 = 0; x2 < x2Limit; x2++) {
+                                    final int r = scaledMCU[0].samples[srcRowOffset + x2];
+                                    final int g = scaledMCU[1].samples[srcRowOffset + x2];
+                                    final int b = scaledMCU[2].samples[srcRowOffset + x2];
+                                    final int a = scaledMCU[3].samples[srcRowOffset + x2];
+                                    final int rgb = (a << 24) | (r << 16) | (g << 8) | b;
+                                    dataBuffer.setElem(dstRowOffset + x2, rgb);
+                                }
+                                srcRowOffset += hSize;
+                                dstRowOffset += sofnSegment.width;
+                            }
+                        } else {
+                            // scaledMCU.length == 3, standard RGB
+                            for (int y2 = 0; y2 < y2Limit; y2++) {
+                                for (int x2 = 0; x2 < x2Limit; x2++) {
+                                    final int r = scaledMCU[0].samples[srcRowOffset + x2];
+                                    final int g = scaledMCU[1].samples[srcRowOffset + x2];
+                                    final int b = scaledMCU[2].samples[srcRowOffset + x2];
+                                    final int rgb = (r << 16) | (g << 8) | b;
+                                    dataBuffer.setElem(dstRowOffset + x2, rgb);
+                                }
+                                srcRowOffset += hSize;
+                                dstRowOffset += sofnSegment.width;
                             }
                         }
-                        srcRowOffset += hSize;
-                        dstRowOffset += sofnSegment.width;
+                    } else {
+                        for (int y2 = 0; y2 < vSize && y1 + y2 < sofnSegment.height; y2++) {
+                            for (int x2 = 0; x2 < hSize
+                              && x1 + x2 < sofnSegment.width; x2++) {
+                                if (scaledMCU.length == 4) {
+                                    final int c = scaledMCU[0].samples[srcRowOffset + x2];
+                                    final int m = scaledMCU[1].samples[srcRowOffset + x2];
+                                    final int y = scaledMCU[2].samples[srcRowOffset + x2];
+                                    final int k = scaledMCU[3].samples[srcRowOffset + x2];
+                                    final int rgb = ColorConversions.convertCmykToRgb(c, m, y, k);
+                                    dataBuffer.setElem(dstRowOffset + x2, rgb);
+                                } else if (scaledMCU.length == 3) {
+                                    final int y = scaledMCU[0].samples[srcRowOffset + x2];
+                                    final int cb = scaledMCU[1].samples[srcRowOffset + x2];
+                                    final int cr = scaledMCU[2].samples[srcRowOffset + x2];
+                                    final int rgb = YCbCrConverter.convertYCbCrToRgb(y, cb, cr);
+                                    dataBuffer.setElem(dstRowOffset + x2, rgb);
+                                } else if (mcu.length == 1) {
+                                    final int y = scaledMCU[0].samples[srcRowOffset + x2];
+                                    dataBuffer.setElem(dstRowOffset + x2, (y << 16) | (y << 8) | y);
+                                } else {
+                                    throw new ImagingException(
+                                      "Unsupported JPEG with " + mcu.length
+                                      + " components");
+                                }
+                            }
+                            srcRowOffset += hSize;
+                            dstRowOffset += sofnSegment.width;
+                        }
                     }
                 }
             }
@@ -544,5 +613,14 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             // Corrupt images can throw NPE and IOOBE
             imageReadException = new ImagingException("Error parsing JPEG", ex);
         }
+    }
+
+    /**
+     * Sets the decoder to treat incoming data as using the RGB color model.
+     * This extension to the JPEG specification is intended to support
+     * TIFF files that use JPEG compression.
+     */
+    public void setTiffRgb(){
+        useTiffRgb = true;
     }
 }
