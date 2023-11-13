@@ -83,7 +83,7 @@ public class PngWriterTest extends AbstractPngTest {
 
         final byte[] bytes = getImageBytes(image, params, null);
         final int numColors = countColors(bytes);
-        assertTrue(numColors > 1);
+        assertTrue(numColors > 1, imageFile::toString);
 
         final PaletteFactory factory = new PaletteFactory() {
             @Override
