@@ -464,11 +464,9 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                 // with a fourth channel for alpha.
                 if (useTiffRgb) {
                     colorModel = new DirectColorModel(32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
-                    final int[] bandMasks = {0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000};
                     raster = Raster.createPackedRaster(DataBuffer.TYPE_INT, sofnSegment.width, sofnSegment.height, BAND_MASK_ARGB, null);
                 } else {
                     colorModel = new DirectColorModel(24, 0x00ff0000, 0x0000ff00, 0x000000ff);
-                    final int[] bandMasks = {0x00ff0000, 0x0000ff00, 0x000000ff};
                     raster = Raster.createPackedRaster(DataBuffer.TYPE_INT, sofnSegment.width, sofnSegment.height, BAND_MASK_RGB, null);
                 }
 
