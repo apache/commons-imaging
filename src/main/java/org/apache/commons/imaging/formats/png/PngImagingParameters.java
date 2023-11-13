@@ -80,7 +80,7 @@ public class PngImagingParameters extends XmpImagingParameters<PngImagingParamet
      * the predictor.
      * @return true if the predictor is enabled; otherwise, false.
      */
-    public boolean isPredictorEnabled(){
+    public boolean isPredictorEnabled() {
         return predictorEnabled;
     }
 
@@ -116,7 +116,7 @@ public class PngImagingParameters extends XmpImagingParameters<PngImagingParamet
      * @param predictorEnabled true if a predictor is enabled; otherwise, false.
      * @return this
      */
-    public PngImagingParameters setPredictorEnabled(final boolean predictorEnabled){
+    public PngImagingParameters setPredictorEnabled(final boolean predictorEnabled) {
         this.predictorEnabled = predictorEnabled;
         return asThis();
     }

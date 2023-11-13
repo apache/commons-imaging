@@ -59,7 +59,7 @@ import org.apache.commons.imaging.mylzw.MyLzwCompressor;
 
 public abstract class AbstractTiffImageWriter {
 
-    private static final int MAX_PIXELS_FOR_RGB = 1024*1024;
+    private static final int MAX_PIXELS_FOR_RGB = 1024 * 1024;
 
     protected static int imageDataPaddingLength(final int dataLength) {
         return (4 - (dataLength % 4)) % 4;
@@ -135,8 +135,7 @@ public abstract class AbstractTiffImageWriter {
         }
     }
 
-    private byte[][] getStrips(final BufferedImage src, final int samplesPerPixel,
-            final int bitsPerSample, final int rowsPerStrip) {
+    private byte[][] getStrips(final BufferedImage src, final int samplesPerPixel, final int bitsPerSample, final int rowsPerStrip) {
         final int width = src.getWidth();
         final int height = src.getHeight();
 
@@ -186,11 +185,11 @@ public abstract class AbstractTiffImageWriter {
                                 bitCache = 0;
                                 bitsInCache = 0;
                             }
-                        } else if (samplesPerPixel==4){
+                        } else if (samplesPerPixel == 4) {
                             uncompressed[counter++] = (byte) red;
                             uncompressed[counter++] = (byte) green;
                             uncompressed[counter++] = (byte) blue;
-                            uncompressed[counter++] = (byte) (rgb>>24);
+                            uncompressed[counter++] = (byte) (rgb >> 24);
                         } else {
                             // samples per pixel is 3
                             uncompressed[counter++] = (byte) red;
@@ -422,12 +421,11 @@ public abstract class AbstractTiffImageWriter {
         final ColorModel cModel = src.getColorModel();
         final boolean hasAlpha = cModel.hasAlpha() && checkForActualAlpha(src);
 
-
         // 10/2020: In the case of an image with pre-multiplied alpha
         // (what the TIFF specification calls "associated alpha"), the
         // Java getRGB method adjusts the value to a non-premultiplied
-        // alpha state.  However, this class could access the pre-multiplied
-        // alpha data by obtaining the underlying raster.  At this time,
+        // alpha state. However, this class could access the pre-multiplied
+        // alpha data by obtaining the underlying raster. At this time,
         // the value of such a little-used feature does not seem
         // commensurate with the complexity of the extra code it would require.
 
@@ -441,9 +439,7 @@ public abstract class AbstractTiffImageWriter {
             final Integer stripSizeInBytes = params.getLzwCompressionBlockSize();
             if (stripSizeInBytes != null) {
                 if (stripSizeInBytes < 8000) {
-                    throw new ImagingException(
-                            "Block size parameter " + stripSizeInBytes
-                            + " is less than 8000 minimum");
+                    throw new ImagingException("Block size parameter " + stripSizeInBytes + " is less than 8000 minimum");
                 }
                 stripSizeInBits = stripSizeInBytes * 8;
             }
@@ -452,14 +448,12 @@ public abstract class AbstractTiffImageWriter {
         int samplesPerPixel;
         int bitsPerSample;
         int photometricInterpretation;
-        if (compression == TIFF_COMPRESSION_CCITT_1D
-                || compression == TIFF_COMPRESSION_CCITT_GROUP_3
-                || compression == TIFF_COMPRESSION_CCITT_GROUP_4) {
+        if (compression == TIFF_COMPRESSION_CCITT_1D || compression == TIFF_COMPRESSION_CCITT_GROUP_3 || compression == TIFF_COMPRESSION_CCITT_GROUP_4) {
             samplesPerPixel = 1;
             bitsPerSample = 1;
             photometricInterpretation = 0;
         } else {
-            samplesPerPixel = hasAlpha? 4: 3;
+            samplesPerPixel = hasAlpha ? 4 : 3;
             bitsPerSample = 8;
             photometricInterpretation = 2;
         }
@@ -492,19 +486,14 @@ public abstract class AbstractTiffImageWriter {
             final boolean is2D = (t4Options & 1) != 0;
             final boolean usesUncompressedMode = (t4Options & 2) != 0;
             if (usesUncompressedMode) {
-                throw new ImagingException(
-                        "T.4 compression with the uncompressed mode extension is not yet supported");
+                throw new ImagingException("T.4 compression with the uncompressed mode extension is not yet supported");
             }
             final boolean hasFillBitsBeforeEOL = (t4Options & 4) != 0;
             for (int i = 0; i < strips.length; i++) {
                 if (is2D) {
-                    strips[i] = T4AndT6Compression.compressT4_2D(strips[i],
-                            width, strips[i].length / ((width + 7) / 8),
-                            hasFillBitsBeforeEOL, rowsPerStrip);
+                    strips[i] = T4AndT6Compression.compressT4_2D(strips[i], width, strips[i].length / ((width + 7) / 8), hasFillBitsBeforeEOL, rowsPerStrip);
                 } else {
-                    strips[i] = T4AndT6Compression.compressT4_1D(strips[i],
-                            width, strips[i].length / ((width + 7) / 8),
-                            hasFillBitsBeforeEOL);
+                    strips[i] = T4AndT6Compression.compressT4_1D(strips[i], width, strips[i].length / ((width + 7) / 8), hasFillBitsBeforeEOL);
                 }
             }
             break;
@@ -517,8 +506,7 @@ public abstract class AbstractTiffImageWriter {
             t6Options &= 0x4;
             final boolean usesUncompressedMode = (t6Options & TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE) != 0;
             if (usesUncompressedMode) {
-                throw new ImagingException(
-                        "T.6 compression with the uncompressed mode extension is not yet supported");
+                throw new ImagingException("T.6 compression with the uncompressed mode extension is not yet supported");
             }
             for (int i = 0; i < strips.length; i++) {
                 strips[i] = T4AndT6Compression.compressT6(strips[i], width, strips[i].length / ((width + 7) / 8));
@@ -531,14 +519,13 @@ public abstract class AbstractTiffImageWriter {
             }
             break;
         case TIFF_COMPRESSION_LZW:
-            predictor =  TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING;
+            predictor = TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING;
             for (int i = 0; i < strips.length; i++) {
                 final byte[] uncompressed = strips[i];
                 this.applyPredictor(width, samplesPerPixel, strips[i]);
 
                 final int LZW_MINIMUM_CODE_SIZE = 8;
-                final MyLzwCompressor compressor = new MyLzwCompressor(
-                        LZW_MINIMUM_CODE_SIZE, ByteOrder.BIG_ENDIAN, true);
+                final MyLzwCompressor compressor = new MyLzwCompressor(LZW_MINIMUM_CODE_SIZE, ByteOrder.BIG_ENDIAN, true);
                 final byte[] compressed = compressor.compress(uncompressed);
                 strips[i] = compressed;
             }
@@ -569,29 +556,21 @@ public abstract class AbstractTiffImageWriter {
 
             directory.add(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH, width);
             directory.add(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH, height);
-            directory.add(TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION,
-                    (short) photometricInterpretation);
-            directory.add(TiffTagConstants.TIFF_TAG_COMPRESSION,
-                    (short) compression);
-            directory.add(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL,
-                    (short) samplesPerPixel);
+            directory.add(TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION, (short) photometricInterpretation);
+            directory.add(TiffTagConstants.TIFF_TAG_COMPRESSION, (short) compression);
+            directory.add(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL, (short) samplesPerPixel);
 
             switch (samplesPerPixel) {
             case 3:
-                directory.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE,
-                        (short) bitsPerSample, (short) bitsPerSample,
-                        (short) bitsPerSample);
+                directory.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE, (short) bitsPerSample, (short) bitsPerSample, (short) bitsPerSample);
                 break;
             case 4:
-                directory.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE,
-                        (short) bitsPerSample, (short) bitsPerSample,
-                        (short) bitsPerSample, (short) bitsPerSample);
-                directory.add(TiffTagConstants.TIFF_TAG_EXTRA_SAMPLES,
-                    (short)TiffTagConstants.EXTRA_SAMPLE_UNASSOCIATED_ALPHA);
+                directory.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE, (short) bitsPerSample, (short) bitsPerSample, (short) bitsPerSample,
+                        (short) bitsPerSample);
+                directory.add(TiffTagConstants.TIFF_TAG_EXTRA_SAMPLES, (short) TiffTagConstants.EXTRA_SAMPLE_UNASSOCIATED_ALPHA);
                 break;
             case 1:
-                directory.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE,
-                        (short) bitsPerSample);
+                directory.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE, (short) bitsPerSample);
                 break;
             default:
                 break;
@@ -609,29 +588,19 @@ public abstract class AbstractTiffImageWriter {
             // WRITE_BYTE_ORDER));
             // directory.add(field);
             // }
-            directory.add(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP,
-                    rowsPerStrip);
+            directory.add(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP, rowsPerStrip);
             if (pixelDensity.isUnitless()) {
-                directory.add(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT,
-                        (short) 0);
-                directory.add(TiffTagConstants.TIFF_TAG_XRESOLUTION,
-                        RationalNumber.valueOf(pixelDensity.getRawHorizontalDensity()));
-                directory.add(TiffTagConstants.TIFF_TAG_YRESOLUTION,
-                        RationalNumber.valueOf(pixelDensity.getRawVerticalDensity()));
+                directory.add(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT, (short) 0);
+                directory.add(TiffTagConstants.TIFF_TAG_XRESOLUTION, RationalNumber.valueOf(pixelDensity.getRawHorizontalDensity()));
+                directory.add(TiffTagConstants.TIFF_TAG_YRESOLUTION, RationalNumber.valueOf(pixelDensity.getRawVerticalDensity()));
             } else if (pixelDensity.isInInches()) {
-                directory.add(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT,
-                        (short) 2);
-                directory.add(TiffTagConstants.TIFF_TAG_XRESOLUTION,
-                        RationalNumber.valueOf(pixelDensity.horizontalDensityInches()));
-                directory.add(TiffTagConstants.TIFF_TAG_YRESOLUTION,
-                        RationalNumber.valueOf(pixelDensity.verticalDensityInches()));
+                directory.add(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT, (short) 2);
+                directory.add(TiffTagConstants.TIFF_TAG_XRESOLUTION, RationalNumber.valueOf(pixelDensity.horizontalDensityInches()));
+                directory.add(TiffTagConstants.TIFF_TAG_YRESOLUTION, RationalNumber.valueOf(pixelDensity.verticalDensityInches()));
             } else {
-                directory.add(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT,
-                        (short) 1);
-                directory.add(TiffTagConstants.TIFF_TAG_XRESOLUTION,
-                        RationalNumber.valueOf(pixelDensity.horizontalDensityCentimetres()));
-                directory.add(TiffTagConstants.TIFF_TAG_YRESOLUTION,
-                        RationalNumber.valueOf(pixelDensity.verticalDensityCentimetres()));
+                directory.add(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT, (short) 1);
+                directory.add(TiffTagConstants.TIFF_TAG_XRESOLUTION, RationalNumber.valueOf(pixelDensity.horizontalDensityCentimetres()));
+                directory.add(TiffTagConstants.TIFF_TAG_YRESOLUTION, RationalNumber.valueOf(pixelDensity.verticalDensityCentimetres()));
             }
             if (t4Options != 0) {
                 directory.add(TiffTagConstants.TIFF_TAG_T4_OPTIONS, t4Options);
@@ -645,14 +614,13 @@ public abstract class AbstractTiffImageWriter {
                 directory.add(TiffTagConstants.TIFF_TAG_XMP, xmpXmlBytes);
             }
 
-            if (predictor == TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING){
+            if (predictor == TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING) {
                 directory.add(TiffTagConstants.TIFF_TAG_PREDICTOR, predictor);
             }
 
         }
 
-        final AbstractTiffImageData abstractTiffImageData = new AbstractTiffImageData.Strips(imageData,
-                rowsPerStrip);
+        final AbstractTiffImageData abstractTiffImageData = new AbstractTiffImageData.Strips(imageData, rowsPerStrip);
         directory.setTiffImageData(abstractTiffImageData);
 
         if (userExif != null) {

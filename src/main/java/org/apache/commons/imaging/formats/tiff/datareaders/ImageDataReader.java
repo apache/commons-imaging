@@ -216,13 +216,13 @@ public abstract class ImageDataReader {
         return samples;
     }
 
-    protected void applyPredictorToBlock(final int width, final int height, final int nSamplesPerPixel, final byte []p ){
-        final int k = width*nSamplesPerPixel;
-        for(int i=0; i<height; i++){
-            final int j0  = i*k+nSamplesPerPixel;
-            final int j1 = (i+1)*k;
-            for(int j=j0; j<j1; j++){
-                p[j]+=p[j-nSamplesPerPixel];
+    protected void applyPredictorToBlock(final int width, final int height, final int nSamplesPerPixel, final byte[] p) {
+        final int k = width * nSamplesPerPixel;
+        for (int i = 0; i < height; i++) {
+            final int j0 = i * k + nSamplesPerPixel;
+            final int j1 = (i + 1) * k;
+            for (int j = j0; j < j1; j++) {
+                p[j] += p[j - nSamplesPerPixel];
             }
         }
     }

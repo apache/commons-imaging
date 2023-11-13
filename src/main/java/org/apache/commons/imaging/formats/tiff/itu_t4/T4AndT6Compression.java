@@ -130,11 +130,11 @@ public final class T4AndT6Compression {
     }
 
     private static int compressT(final int a0, final int a1, final int b1, final BitArrayOutputStream outputStream, final int codingA0Color,
-            final int[] codingLine){
-          final int a1b1 = a1 - b1;
-          if (-3 <= a1b1 && a1b1 <= 3) {
-              T4_T6_Tables.Entry entry;
-              switch (a1b1) {
+            final int[] codingLine) {
+        final int a1b1 = a1 - b1;
+        if (-3 <= a1b1 && a1b1 <= 3) {
+            T4_T6_Tables.Entry entry;
+            switch (a1b1) {
             case -3:
                 entry = T4_T6_Tables.VL3;
                 break;
@@ -157,17 +157,16 @@ public final class T4AndT6Compression {
                 entry = T4_T6_Tables.VR3;
                 break;
             }
-              entry.writeBits(outputStream);
-              return a1;
-
-          }
+            entry.writeBits(outputStream);
+            return a1;
+        }
         final int a2 = nextChangingElement(codingLine, 1 - codingA0Color, a1 + 1);
-          final int a0a1 = a1 - a0;
-          final int a1a2 = a2 - a1;
-          T4_T6_Tables.H.writeBits(outputStream);
-          writeRunLength(outputStream, a0a1, codingA0Color);
-          writeRunLength(outputStream, a1a2, 1 - codingA0Color);
-          return a2;
+        final int a0a1 = a1 - a0;
+        final int a1a2 = a2 - a1;
+        T4_T6_Tables.H.writeBits(outputStream);
+        writeRunLength(outputStream, a0a1, codingA0Color);
+        writeRunLength(outputStream, a1a2, 1 - codingA0Color);
+        return a2;
     }
 
     public static byte[] compressT4_1D(final byte[] uncompressed, final int width,

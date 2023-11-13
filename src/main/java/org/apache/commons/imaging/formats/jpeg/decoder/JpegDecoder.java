@@ -622,7 +622,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
      * This extension to the JPEG specification is intended to support
      * TIFF files that use JPEG compression.
      */
-    public void setTiffRgb(){
+    public void setTiffRgb() {
         useTiffRgb = true;
     }
 }

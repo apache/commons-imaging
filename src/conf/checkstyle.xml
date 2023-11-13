@@ -62,6 +62,7 @@ limitations under the License.
       <property name="ordered" value="true"/>
       <property name="separated" value="true"/>
     </module>
+    <module name="WhitespaceAroundCheck"/>
  </module>
  <module name="LineLength">
    <property name="max" value="160" />

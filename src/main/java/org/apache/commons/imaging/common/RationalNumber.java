@@ -221,9 +221,9 @@ public class RationalNumber extends Number {
      * @param unsignedType indicates how numerator and divisor values
      * are to be interpreted.
      */
-    private RationalNumber(final long numerator, final long divisor, final boolean unsignedType){
+    private RationalNumber(final long numerator, final long divisor, final boolean unsignedType) {
         this.numerator = numerator;
-        this.divisor   = divisor;
+        this.divisor = divisor;
         this.unsignedType = unsignedType;
     }
 

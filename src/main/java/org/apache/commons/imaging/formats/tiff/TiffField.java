@@ -307,7 +307,7 @@ public class TiffField {
     public long[] getLongArrayValue() throws ImagingException {
         final Object o = getValue();
         if (o instanceof Number) {
-            return new  long[] { ((Number) o).longValue() };
+            return new long[] { ((Number) o).longValue() };
         }
         if (o instanceof Number[]) {
             final Number[] numbers = (Number[]) o;
@@ -318,22 +318,21 @@ public class TiffField {
         if (o instanceof short[]) {
             final short[] numbers = (short[]) o;
             final long[] result = Allocator.longArray(numbers.length);
-            Arrays.setAll(result, i ->  0xffff & numbers[i]);
+            Arrays.setAll(result, i -> 0xffff & numbers[i]);
             return result;
         }
         if (o instanceof int[]) {
             final int[] numbers = (int[]) o;
-            final long[]result = Allocator.longArray(numbers.length);
-            Arrays.setAll(result, i ->  0xFFFFffffL & numbers[i]);
+            final long[] result = Allocator.longArray(numbers.length);
+            Arrays.setAll(result, i -> 0xFFFFffffL & numbers[i]);
             return result;
         }
-        if (o instanceof long[]){
-          final long[] numbers = (long[]) o;
-          return Arrays.copyOf(numbers, numbers.length);
+        if (o instanceof long[]) {
+            final long[] numbers = (long[]) o;
+            return Arrays.copyOf(numbers, numbers.length);
         }
 
-        throw new ImagingException("Unknown value: " + o + " for: "
-                + getTagInfo().getDescription());
+        throw new ImagingException("Unknown value: " + o + " for: " + getTagInfo().getDescription());
     }
 
      /**
@@ -342,15 +341,13 @@ public class TiffField {
      * @throws ImagingException if the field instance is of an incompatible type
      * or does not contain a valid data element.
      */
-    public long getLongValue() throws ImagingException {
-        final Object o = getValue();
-        if (o == null) {
-            throw new ImagingException("Missing value: "
-                    + getTagInfo().getDescription());
-        }
-
-        return ((Number) o).longValue();
-    }
+     public long getLongValue() throws ImagingException {
+         final Object o = getValue();
+         if (o == null) {
+             throw new ImagingException("Missing value: " + getTagInfo().getDescription());
+         }
+         return ((Number) o).longValue();
+     }
 
 
 

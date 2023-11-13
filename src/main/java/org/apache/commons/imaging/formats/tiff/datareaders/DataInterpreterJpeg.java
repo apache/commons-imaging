@@ -136,7 +136,7 @@ final class DataInterpreterJpeg {
         // Limit iHeight and iWidth in case the JPEG block
         // extends past the output image size
         final int i1 = iHeight > blockHeight ? blockHeight : iHeight;
-        final int j1 = iWidth > blockWidth? blockWidth : iWidth;
+        final int j1 = iWidth > blockWidth ? blockWidth : iWidth;
 
         for (int i = 0; i < i1; i++) {
             for (int j = 0; j < j1; j++) {

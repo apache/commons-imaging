@@ -176,7 +176,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
         }
 
         final List<GifImageData> imageData = Allocator.arrayList(descriptors.size());
-        for(int i = 0; i < descriptors.size(); i++) {
+        for (int i = 0; i < descriptors.size(); i++) {
             final ImageDescriptor descriptor = descriptors.get(i);
             if (descriptor == null) {
                 throw new ImagingException(String.format("GIF: Couldn't read Image Descriptor of image number %d", i));
@@ -236,7 +236,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
 
         final List<GifImageData> imageData = findAllImageData(imageContents);
         final List<BufferedImage> result = Allocator.arrayList(imageData.size());
-        for(final GifImageData id : imageData) {
+        for (final GifImageData id : imageData) {
             result.add(getBufferedImage(ghi, id, imageContents.globalColorTable));
         }
         return result;
@@ -493,7 +493,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
 
         final List<GifImageData> imageData = findAllImageData(imageContents);
         final List<GifImageMetadataItem> metadataItems = Allocator.arrayList(imageData.size());
-        for(final GifImageData id : imageData) {
+        for (final GifImageData id : imageData) {
             final DisposalMethod disposalMethod = createDisposalMethodFromIntValue(id.gce.dispose);
             metadataItems.add(new GifImageMetadataItem(id.gce.delay, id.descriptor.imageLeftPosition, id.descriptor.imageTopPosition, disposalMethod));
         }

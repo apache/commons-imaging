@@ -70,5 +70,6 @@ public class ImageParserFactory {
         return getImageParser(parser -> parser.canAcceptExtension(fileExtension), () -> new IllegalArgumentException("Unknown extension: " + fileExtension));
     }
 
-    private ImageParserFactory() {}
+    private ImageParserFactory() {
+    }
 }

@@ -474,8 +474,7 @@ public class PngWriter {
             // for non-grayscale, true-color images.  This choice is made
             // out of caution and is not necessarily required by the PNG
             // spec.  We may broaden the use of predictors in future versions.
-            final boolean usePredictor = params.isPredictorEnabled() &&
-                !isGrayscale && palette==null;
+            final boolean usePredictor = params.isPredictorEnabled() && !isGrayscale && palette == null;
 
             byte[] uncompressed;
             if (!usePredictor) {

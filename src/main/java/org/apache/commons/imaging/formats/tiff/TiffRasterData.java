@@ -57,17 +57,15 @@ public abstract class TiffRasterData {
      */
     public TiffRasterData(final int width, final int height, final int samplesPerPixel) {
         if (width <= 0 || height <= 0) {
-            throw new IllegalArgumentException(
-                    "Raster dimensions less than or equal to zero are not supported");
+            throw new IllegalArgumentException("Raster dimensions less than or equal to zero are not supported");
         }
-        if (samplesPerPixel <= 0){
-            throw new IllegalArgumentException(
-                    "Raster samples-per-pixel specification must be at least 1");
+        if (samplesPerPixel <= 0) {
+            throw new IllegalArgumentException("Raster samples-per-pixel specification must be at least 1");
         }
         this.width = width;
         this.height = height;
         this.samplesPerPixel = samplesPerPixel;
-        nCells = width*height*samplesPerPixel;
+        nCells = width * height * samplesPerPixel;
         planarOffset = width * height;
     }
 
