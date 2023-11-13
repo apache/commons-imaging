@@ -65,7 +65,7 @@ final class DataInterpreterJpeg {
      * JPEG-specific encoding error
      * @throws IOException in the event of an unrecoverable I/O error
      */
-    void intepretBlock(final TiffDirectory directory,
+    static void intepretBlock(final TiffDirectory directory,
       final ImageBuilder workingBuilder,
       final int xBlock,
       final int yBlock,

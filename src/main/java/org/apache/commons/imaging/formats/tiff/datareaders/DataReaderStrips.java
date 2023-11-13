@@ -308,10 +308,9 @@ public final class DataReaderStrips extends ImageDataReader {
                 final byte[] compressed = imageData.getImageData(strip).getData();
 
                  if (compression == TIFF_COMPRESSION_JPEG) {
-                     DataInterpreterJpeg dij = new DataInterpreterJpeg();
                      int yBlock = strip*rowsPerStrip;
                      int yWork = yBlock-y0;
-                     dij.intepretBlock(directory, workingBuilder,
+                     DataInterpreterJpeg.intepretBlock(directory, workingBuilder,
                        0, yWork, width, (int)rowsInThisStrip, compressed);
                      continue;
                  }
