@@ -50,6 +50,7 @@ final class DataInterpreterJpeg {
      * definition from the source. The reason for that approach
      * is to simplify some of the logic in the legacy code by
      * eliminating bounds-checking in the transfer loops.
+     * </p>
      *
      * @param directory the source directory containing JPEG tables
      * @param workingBuilder the output image-builder to receive pixels.
