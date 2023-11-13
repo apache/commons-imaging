@@ -103,13 +103,6 @@ public class PngWriteReadTest extends AbstractImagingTest {
     }
 
     @Test
-    public void testMultipletEXt() throws Exception {
-        final int[][] smallBlackPixels = getSimpleRawData(256, 256, 0);
-
-        writeAndReadMultipleEXt(smallBlackPixels);
-    }
-
-    @Test
     public void test() throws Exception {
         final int[][] smallBlackPixels = getSimpleRawData(256, 256, 0);
         final int[][] singleBlackPixel = getSimpleRawData(1, 1, 0);
@@ -125,6 +118,13 @@ public class PngWriteReadTest extends AbstractImagingTest {
         for (final int[][] rawData : testData) {
             writeAndReadImageData(rawData);
         }
+    }
+
+    @Test
+    public void testMultipletEXt() throws Exception {
+        final int[][] smallBlackPixels = getSimpleRawData(256, 256, 0);
+
+        writeAndReadMultipleEXt(smallBlackPixels);
     }
 
     @Test

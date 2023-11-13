@@ -348,6 +348,15 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
         }
     }
 
+    /**
+     * Sets the decoder to treat incoming data as using the RGB color model.
+     * This extension to the JPEG specification is intended to support
+     * TIFF files that use JPEG compression.
+     */
+    public void setTiffRgb() {
+        useTiffRgb = true;
+    }
+
     @Override
     public boolean visitSegment(final int marker, final byte[] markerBytes,
             final int segmentLength, final byte[] segmentLengthBytes, final byte[] segmentData)
@@ -615,14 +624,5 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             // Corrupt images can throw NPE and IOOBE
             imageReadException = new ImagingException("Error parsing JPEG", ex);
         }
-    }
-
-    /**
-     * Sets the decoder to treat incoming data as using the RGB color model.
-     * This extension to the JPEG specification is intended to support
-     * TIFF files that use JPEG compression.
-     */
-    public void setTiffRgb() {
-        useTiffRgb = true;
     }
 }

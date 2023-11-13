@@ -63,6 +63,40 @@ public class TiffJpegTest extends TiffBaseTest {
         return (int) (0.299 * r + 0.587 * g + 0.114 * b + 0.5);
     }
 
+    void performSubImageTest(String name) throws IOException {
+        // get the full image to be used as a basis for comparison
+        File target = getTiffFile(name);
+        BufferedImage master = Imaging.getBufferedImage(target);
+        int w = master.getWidth();
+        int h = master.getHeight();
+        int[] masterArgb = new int[w * h];
+        master.getRGB(0, 0, w, h, masterArgb, 0, w);
+
+        // Get a subimage
+        TiffImageParser tiffImageParser = new TiffImageParser();
+        TiffImagingParameters params = new TiffImagingParameters();
+        int testX0 = 11;
+        int testY0 = 11;
+        int testW = w - testX0 - 1;
+        int testH = h - testY0 - 1;
+        params.setSubImage(testX0, testY0, testW, testH);
+
+        BufferedImage test = tiffImageParser.getBufferedImage(target, params);
+        int[] testArgb = new int[testW * testH];
+        test.getRGB(0, 0, testW, testH, testArgb, 0, testW);
+        String label = "Pixel mismatch for " + name;
+        for (int i = 0; i < testH; i++) {
+            for (int j = 0; j < testH; j++) {
+                int masterIndex = (i + testY0) * w + (j + testX0);
+                int testIndex = i * testW + j;
+                int masterPixel = masterArgb[masterIndex];
+                int testPixel = testArgb[testIndex];
+                assertEquals(masterPixel, testPixel, label);
+            }
+        }
+
+    }
+
     /**
      * Process a set of files using the first name in the array as
      * the master image and comparing all subsequent files against its
@@ -109,40 +143,6 @@ public class TiffJpegTest extends TiffBaseTest {
                 assertEquals(masterGray[i], testGray, 4, label);
             }
         }
-    }
-
-    void performSubImageTest(String name) throws IOException {
-        // get the full image to be used as a basis for comparison
-        File target = getTiffFile(name);
-        BufferedImage master = Imaging.getBufferedImage(target);
-        int w = master.getWidth();
-        int h = master.getHeight();
-        int[] masterArgb = new int[w * h];
-        master.getRGB(0, 0, w, h, masterArgb, 0, w);
-
-        // Get a subimage
-        TiffImageParser tiffImageParser = new TiffImageParser();
-        TiffImagingParameters params = new TiffImagingParameters();
-        int testX0 = 11;
-        int testY0 = 11;
-        int testW = w - testX0 - 1;
-        int testH = h - testY0 - 1;
-        params.setSubImage(testX0, testY0, testW, testH);
-
-        BufferedImage test = tiffImageParser.getBufferedImage(target, params);
-        int[] testArgb = new int[testW * testH];
-        test.getRGB(0, 0, testW, testH, testArgb, 0, testW);
-        String label = "Pixel mismatch for " + name;
-        for (int i = 0; i < testH; i++) {
-            for (int j = 0; j < testH; j++) {
-                int masterIndex = (i + testY0) * w + (j + testX0);
-                int testIndex = i * testW + j;
-                int masterPixel = masterArgb[masterIndex];
-                int testPixel = testArgb[testIndex];
-                assertEquals(masterPixel, testPixel, label);
-            }
-        }
-
     }
 
     /**
