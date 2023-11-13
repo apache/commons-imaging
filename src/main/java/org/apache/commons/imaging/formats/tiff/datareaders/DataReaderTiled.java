@@ -22,6 +22,8 @@
  */
 package org.apache.commons.imaging.formats.tiff.datareaders;
 
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_JPEG;
+
 import java.awt.Rectangle;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -250,6 +252,12 @@ public final class DataReaderTiled extends ImageDataReader {
         final int x0 = col0 * tileWidth;
         final int y0 = row0 * tileLength;
 
+        // When processing a subimage, the workingBuilder width and height
+        // are set to be integral multiples of the tile width and height.
+        // So the working image  may be larger than the specified size of the subimage.
+        // If necessary, the subimage is extracted from the workingBuilder
+        // at the end of this method. This approach avoids the need for the
+        // interpretTile method to implement bounds checking for a subimage.
         final ImageBuilder workingBuilder
             = new ImageBuilder(workingWidth, workingHeight,
                 hasAlpha, isAlphaPreMultiplied);
@@ -258,10 +266,24 @@ public final class DataReaderTiled extends ImageDataReader {
             for (int iCol = col0; iCol <= col1; iCol++) {
                 final int tile = iRow * nColumnsOfTiles + iCol;
                 final byte[] compressed = imageData.tiles[tile].getData();
-                final byte[] decompressed = decompress(compressed, compression,
-                        bytesPerTile, tileWidth, tileLength);
                 final int x = iCol * tileWidth - x0;
                 final int y = iRow * tileLength - y0;
+                // Handle JPEG based compression
+                if (compression == TIFF_COMPRESSION_JPEG) {
+                    if (planarConfiguration == TiffPlanarConfiguration.PLANAR) {
+                        throw new ImagingException(
+                          "TIFF file in non-supported configuration: JPEG compression used in planar configuration.");
+                    }
+                    DataInterpreterJpeg dij = new DataInterpreterJpeg();
+
+                    dij.intepretBlock(directory, workingBuilder,
+                      x, y, tileWidth, (int) tileLength, compressed);
+                    continue;
+                }
+
+                final byte[] decompressed = decompress(compressed, compression,
+                        bytesPerTile, tileWidth, tileLength);
+
                 interpretTile(workingBuilder, decompressed, x, y, width, height);
             }
         }

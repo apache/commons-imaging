@@ -16,6 +16,8 @@
  */
 package org.apache.commons.imaging.formats.tiff.datareaders;
 
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_JPEG;
+
 import java.awt.Rectangle;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -277,10 +279,24 @@ public final class DataReaderStrips extends ImageDataReader {
         final int y0 = strip0 * rowsPerStrip;
         final int yLimit = subImage.y - y0 + subImage.height;
 
+        // When processing a subimage, the workingBuilder height is set
+        // to be an integral multiple of the rowsPerStrip and
+        // the full width of the strips.  So the working image may be larger than
+        // the specified size of the subimage.  If necessary, the subimage
+        // is extracted from the workingBuilder at the end of this method.
+        // This approach avoids the need for the interpretStrips method
+        // to implement bounds checking for a subimage.
         final ImageBuilder workingBuilder
             = new ImageBuilder(width, workingHeight,
                 hasAlpha, isAlphaPreMultiplied);
-        if (planarConfiguration != TiffPlanarConfiguration.PLANAR) {
+
+        // the following statement accounts for cases where planar configuration
+        // is not specified and the default (CHUNKY) is assumed.
+        boolean interleaved = (planarConfiguration != TiffPlanarConfiguration.PLANAR);
+        if (interleaved) {
+            // Pixel definitions are organized in an interleaved format
+            // For example, red-green-blue values for each pixel
+            // would appear contiguous in input sequence.
             for (int strip = strip0; strip <= strip1; strip++) {
                 final long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
                 final long rowsRemaining = height - (strip * rowsPerStripLong);
@@ -290,6 +306,15 @@ public final class DataReaderStrips extends ImageDataReader {
                 final long pixelsPerStrip = rowsInThisStrip * width;
 
                 final byte[] compressed = imageData.getImageData(strip).getData();
+
+                 if (compression == TIFF_COMPRESSION_JPEG) {
+                     DataInterpreterJpeg dij = new DataInterpreterJpeg();
+                     int yBlock = strip*rowsPerStrip;
+                     int yWork = yBlock-y0;
+                     dij.intepretBlock(directory, workingBuilder,
+                       0, yWork, width, (int)rowsInThisStrip, compressed);
+                     continue;
+                 }
 
                 final byte[] decompressed = decompress(compressed, compression,
                         (int) bytesPerStrip, width, (int) rowsInThisStrip);
@@ -301,6 +326,14 @@ public final class DataReaderStrips extends ImageDataReader {
                     yLimit);
             }
         } else {
+            // pixel definitions are organized in a 3 separate sections of input
+            // sequence.  For example, red-green-blue values would be given as
+            // red values for all pixels, followed by green values for all pixels,
+            // etc.
+            if (compression == TIFF_COMPRESSION_JPEG) {
+                throw new ImagingException(
+                  "TIFF file in non-supported configuration: JPEG compression used in planar configuration.");
+            }
             final int nStripsInPlane = imageData.getImageDataLength() / 3;
             for (int strip = strip0; strip <= strip1; strip++) {
                 final long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
