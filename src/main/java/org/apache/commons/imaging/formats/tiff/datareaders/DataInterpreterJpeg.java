@@ -35,7 +35,7 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
  * Provides logic for obtaining image data from a JPEG-encoded TIFF strip
  * or tile (the "block") from the source file.
  */
-class DataInterpreterJpeg {
+final class DataInterpreterJpeg {
 
     /**
      * Interpret the content of a TIFF strip or tile obtained from the
