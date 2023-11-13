@@ -72,6 +72,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action dev="ggregory" type="fix" due-to="Gary Gregory">
         Do not implement Serializable in ColorCountComparator and RgbComparator.
       </action>
+      <action dev="ggregory" type="fix" due-to="Gary Gregory">
+        Avoid java.lang.NullPointerException in org.apache.commons.imaging.formats.pcx.PcxWriter.writeImage().  
+      </action>
       <!-- ADD -->
       <action issue="IMAGING-352" dev="ggregory" type="add" due-to="Jeroen van der Vegt, Gary Gregory">
         [PngWriter] Allow custom PaletteFactory #294.
