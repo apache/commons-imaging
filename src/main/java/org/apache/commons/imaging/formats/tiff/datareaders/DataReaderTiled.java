@@ -268,7 +268,7 @@ public final class DataReaderTiled extends ImageDataReader {
                 final byte[] compressed = imageData.tiles[tile].getData();
                 final int x = iCol * tileWidth - x0;
                 final int y = iRow * tileLength - y0;
-                // November 2023 changes to handle JPEG based compression
+                // Handle JPEG based compression
                 if (compression == TIFF_COMPRESSION_JPEG) {
                     if (planarConfiguration == TiffPlanarConfiguration.PLANAR) {
                         throw new ImagingException(

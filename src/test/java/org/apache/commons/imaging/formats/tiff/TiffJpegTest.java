@@ -23,7 +23,6 @@ import org.apache.commons.imaging.Imaging;
 
 import org.apache.commons.imaging.ImagingTestConstants;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -151,21 +150,16 @@ public class TiffJpegTest extends TiffBaseTest {
      * match with source files that use a lossless compression.
      */
     @Test
-    public void fullPixelMatchTest() {
+    public void testFullPixelMatch() throws IOException {
 
-        try {
-            // testSet1 is more comprehensive than testSet0 and
-            // would be sufficient to cover all cases.  The test files for testSet0
-            // are simpler and might be more useful for debugging
-            processTestSet(testSet0);
-            processTestSet(testSet1);
+        // testSet1 is more comprehensive than testSet0 and
+        // would be sufficient to cover all cases.  The test files for testSet0
+        // are simpler and might be more useful for debugging
+        processTestSet(testSet0);
+        processTestSet(testSet1);
 
-            // test set 2 includes a TIFF-specific alpha channel
-            processTestSet(testSet2);
-        } catch (IOException ioex) {
-            fail("I/O Exception during test " + ioex.getMessage());
-        }
-
+        // test set 2 includes a TIFF-specific alpha channel
+        processTestSet(testSet2);
     }
 
     /**
@@ -173,13 +167,9 @@ public class TiffJpegTest extends TiffBaseTest {
      * with the full image extraction.
      */
     @Test
-    public void subImageTest() {
-        try {
-            performSubImageTest("TestJpegProgressive.tiff"); // strips
-            performSubImageTest("TestJpegTiles264x264.tiff"); // tiles
-        } catch (IOException ioex) {
-            fail("I/O Exception during test " + ioex.getMessage());
-        }
+    public void testSubImage() throws IOException {
+        performSubImageTest("TestJpegProgressive.tiff"); // strips
+        performSubImageTest("TestJpegTiles264x264.tiff"); // tiles
     }
 
 }

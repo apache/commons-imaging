@@ -46,6 +46,10 @@ import org.apache.commons.imaging.formats.jpeg.segments.SofnSegment;
 import org.apache.commons.imaging.formats.jpeg.segments.SosSegment;
 
 public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
+
+    private static final int [] BAND_MASK_ARGB = {0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000};
+    private static final int [] BAND_MASK_RGB = {0x00ff0000, 0x0000ff00, 0x000000ff};
+
     /*
      * JPEG is an advanced image format that takes significant computation to
      * decode. Keep decoding fast: - Don't allocate memory inside loops,
@@ -461,11 +465,11 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                 if (useTiffRgb) {
                     colorModel = new DirectColorModel(32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
                     final int[] bandMasks = {0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000};
-                    raster = Raster.createPackedRaster(DataBuffer.TYPE_INT, sofnSegment.width, sofnSegment.height, bandMasks, null);
+                    raster = Raster.createPackedRaster(DataBuffer.TYPE_INT, sofnSegment.width, sofnSegment.height, BAND_MASK_ARGB, null);
                 } else {
                     colorModel = new DirectColorModel(24, 0x00ff0000, 0x0000ff00, 0x000000ff);
                     final int[] bandMasks = {0x00ff0000, 0x0000ff00, 0x000000ff};
-                    raster = Raster.createPackedRaster(DataBuffer.TYPE_INT, sofnSegment.width, sofnSegment.height, bandMasks, null);
+                    raster = Raster.createPackedRaster(DataBuffer.TYPE_INT, sofnSegment.width, sofnSegment.height, BAND_MASK_RGB, null);
                 }
 
 
