@@ -23,14 +23,11 @@ import org.apache.commons.io.FilenameUtils;
 
 public class ImagingTestConstants {
 
-    public static final File PHIL_HARVEY_TEST_IMAGE_FOLDER = new File(
-            FilenameUtils.separatorsToSystem(
-                    "src\\test\\data\\images\\exif\\philHarvey\\"));
-
     public static final File SOURCE_FOLDER = new File("src");
     public static final File TEST_SOURCE_FOLDER = new File(SOURCE_FOLDER, "test");
-    public static final File TEST_DATA_SOURCE_FOLDER = new File(TEST_SOURCE_FOLDER,
-            "data");
-    public static final File TEST_IMAGE_FOLDER = new File(TEST_DATA_SOURCE_FOLDER,
-            "images");
+    public static final File TEST_DATA_SOURCE_FOLDER = new File(TEST_SOURCE_FOLDER, "resources/data");
+    public static final File TEST_IMAGE_FOLDER = new File(TEST_DATA_SOURCE_FOLDER, "images");
+    public static final File PHIL_HARVEY_TEST_IMAGE_FOLDER = new File(
+            FilenameUtils.separatorsToSystem(new File(TEST_DATA_SOURCE_FOLDER, "data/images/exif/philHarvey/").toString()));
+
 }
