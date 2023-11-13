@@ -126,9 +126,11 @@ final class PcxWriter {
         }
 
         final byte[] palette16 = new byte[16 * 3];
+        // TODO What's the right thing to do here for a null palette?
+        final int paletteLen = palette != null ? palette.length() : 0;
         for (int i = 0; i < 16; i++) {
             int rgb;
-            if (i < palette.length()) {
+            if (i < paletteLen) {
                 rgb = palette.getEntry(i);
             } else {
                 rgb = 0;
