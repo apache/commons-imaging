@@ -596,10 +596,10 @@ public class ReadTagsAndImages {
         // Note:  The y coordinate of the model pixel scale is backwards.
         //        GeoTIFF images are stored  from upper-left corner downward
         //        (following the conventional graphics standards). In cases
-        //        where the rows in the image or rster run from north to south,
+        //        where the rows in the image or raster run from north to south,
         //        one might expect that the delta-Y between rows would be
         //        a negative number.  But by the GeoTIFF standard,
-        //        the verical spacing is given as a postive   number.
+        //        the vertical spacing is given as a positive   number.
         final TiffField pixelScaleField = directory.findField(
             GeoTiffTagConstants.EXIF_TAG_MODEL_PIXEL_SCALE_TAG);
         double[] pixelScale;
