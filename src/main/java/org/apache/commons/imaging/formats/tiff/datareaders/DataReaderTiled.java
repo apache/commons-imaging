@@ -275,7 +275,7 @@ public final class DataReaderTiled extends ImageDataReader {
                           "TIFF file in non-supported configuration: JPEG compression used in planar configuration.");
                     }
                     DataInterpreterJpeg.intepretBlock(directory, workingBuilder,
-                      x, y, tileWidth, (int) tileLength, compressed);
+                      x, y, tileWidth, tileLength, compressed);
                     continue;
                 }
 
