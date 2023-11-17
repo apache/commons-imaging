@@ -51,6 +51,11 @@ public class TiffJpegTest extends TiffBaseTest {
         "TestSampleArgb.tiff",
         "TestJpegArgb.tiff",};
 
+      static final String[] testSet3 = {
+        "TestSampleRgb127x127.tiff",
+        "TestJpegRgb127x127.tiff",};
+
+
     private File getTiffFile(String name) {
         final File tiffFolder = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, "tiff");
         final File tiffJpegFolder = new File(tiffFolder, "14");
@@ -161,6 +166,11 @@ public class TiffJpegTest extends TiffBaseTest {
 
         // test set 2 includes a TIFF-specific alpha channel
         processTestSet(testSet2);
+
+        // test set 3 includes an add-valued width and height that does
+        // not evently fit a block of JPEG data. It is used to test
+        // for the proper handling of edge-cases.
+         processTestSet(testSet3);
     }
 
     /**
@@ -171,6 +181,7 @@ public class TiffJpegTest extends TiffBaseTest {
     public void testSubImage() throws IOException {
         performSubImageTest("TestJpegProgressive.tiff"); // strips
         performSubImageTest("TestJpegTiles264x264.tiff"); // tiles
+        performSubImageTest("TestJpegRgb127x127.tiff");
     }
 
 }
