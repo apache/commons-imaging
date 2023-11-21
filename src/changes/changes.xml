@@ -85,6 +85,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="IMAGING-316" dev="ggregory" type="add" due-to="Gary Lucas, Gary Gregory">
         Add support for BigTIFF format #318.
       </action>
+      <action issue="IMAGING-369" dev="ggregory" type="add" due-to="Gary Lucas, Gary Gregory">
+        TIFF JPEG reader encounters array bounds exception on edge cases.
+      </action>
       <action issue="IMAGING-339" dev="kinow" type="add" due-to="Glavo">
         Basic WebP Support #254.
       </action>
