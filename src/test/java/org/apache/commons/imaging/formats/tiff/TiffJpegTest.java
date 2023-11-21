@@ -38,18 +38,23 @@ public class TiffJpegTest extends TiffBaseTest {
         "TestJpegTiles.tiff",
         "TestJpegStripsRgb.tiff",
         "TestJpegTilesRgb.tiff",
-        "TestJpegCMYK.tiff",};
+        "TestJpegCMYK.tiff"};
 
     static final String[] testSet1 = {
         "TestSample264x264.tiff",
         "TestJpegStrips264x264.tiff",
         "TestJpegStrips264x264BigEndian.tiff",
         "TestJpegTiles264x264.tiff",
-        "TestJpegTiles264x264BigEndian.tiff",};
+        "TestJpegTiles264x264BigEndian.tiff"};
 
     static final String[] testSet2 = {
         "TestSampleArgb.tiff",
-        "TestJpegArgb.tiff",};
+        "TestJpegArgb.tiff"};
+
+      static final String[] testSet3 = {
+        "TestSampleRgb127x127.tiff",
+        "TestJpegRgb127x127.tiff"};
+
 
     private File getTiffFile(String name) {
         final File tiffFolder = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, "tiff");
@@ -161,6 +166,11 @@ public class TiffJpegTest extends TiffBaseTest {
 
         // test set 2 includes a TIFF-specific alpha channel
         processTestSet(testSet2);
+
+        // test set 3 includes an add-valued width and height that does
+        // not evently fit a block of JPEG data. It is used to test
+        // for the proper handling of edge-cases.
+        processTestSet(testSet3);
     }
 
     /**
@@ -171,6 +181,7 @@ public class TiffJpegTest extends TiffBaseTest {
     public void testSubImage() throws IOException {
         performSubImageTest("TestJpegProgressive.tiff"); // strips
         performSubImageTest("TestJpegTiles264x264.tiff"); // tiles
+        performSubImageTest("TestJpegRgb127x127.tiff");
     }
 
 }

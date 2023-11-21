@@ -526,20 +526,24 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                     // but special handling was added for TIFF-JPEG RGB colorspace
                     // and conditional checks were reorganized for efficiency
                     if (useTiffRgb && (scaledMCU.length == 3 || scaledMCU.length == 4)) {
-                        // pre-compute the maximum allowed value for the
-                        // x2 index in the loops below.
+                        // The original (legacy) coding for the x2 and y2 loop was:
+                        //    for(y2 = 0; y2 < vSize && y1 + y2 < sofnSegment.height; y2++)
+                        //    for(x2 = 0; x2 < hSize  && x1 + x2 < sofnSegment.width; x2++)
+                        // Here, we pre-compute the limits of the loop to reduce the
+                        // overhead for the loop conditional evaluation.
                         final int x2Limit;
                         if (x1 + hSize <= sofnSegment.width) {
                             x2Limit = hSize;
                         } else {
-                            x2Limit = sofnSegment.width - hSize;
+                            x2Limit = sofnSegment.width - x1;
                         }
                         final int y2Limit;
                         if (y1 + vSize <= sofnSegment.height) {
                             y2Limit = vSize;
                         } else {
-                            y2Limit = sofnSegment.height - vSize;
+                            y2Limit = sofnSegment.height - y1;
                         }
+
                         if (scaledMCU.length == 4) {
                             // RGBA colorspace
                             // Although conventional JPEGs don't include an alpha channel
