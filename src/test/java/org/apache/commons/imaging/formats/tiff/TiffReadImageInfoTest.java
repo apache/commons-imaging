@@ -77,10 +77,10 @@ public class TiffReadImageInfoTest extends TiffBaseTest {
     @Test
     public void testImageInfoElements() throws Exception {
         for (String[] testTarget : testSet) {
-            File targetFile = getTiffFile(testTarget[0]);
-            ImageInfo info = Imaging.getImageInfo(targetFile);
-            String value = getValue(info, testTarget[1]);
-            String identifier = targetFile.getName() + ": " + testTarget[1];
+            final File targetFile = getTiffFile(testTarget[0]);
+            final ImageInfo info = Imaging.getImageInfo(targetFile);
+            final String value = getValue(info, testTarget[1]);
+            final String identifier = targetFile.getName() + ": " + testTarget[1];
             assertEquals(value.toLowerCase(), testTarget[2].toLowerCase(), identifier);
         }
     }
