@@ -66,6 +66,12 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterYCbCr;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 
+/**
+ * Implements methods for reading and writing TIFF files. Instances of this
+ * class are invoked from the general Imaging class. Applications that
+ * require the use of TIFF-specific features may instantiate and access
+ * this class directly.
+ */
 public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> implements XmpEmbeddable<TiffImagingParameters> {
 
     private static final String DEFAULT_EXTENSION = ImageFormats.TIFF.getDefaultExtension();
@@ -527,14 +533,57 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
 
         final String formatDetails = "TIFF v." + contents.header.tiffVersion;
 
-        final boolean transparent = false; // TODO: wrong
+        boolean transparent = false; // TODO: wrong
         boolean usesPalette = false;
         final TiffField colorMapField = directory.findField(TiffTagConstants.TIFF_TAG_COLOR_MAP);
         if (colorMapField != null) {
             usesPalette = true;
         }
 
-        final ImageInfo.ColorType colorType = ImageInfo.ColorType.RGB;
+        final int photoInterp = 0xffff & directory.getFieldValue(TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION);
+        final TiffField extraSamplesField = directory.findField(TiffTagConstants.TIFF_TAG_EXTRA_SAMPLES);
+        final int extraSamples;
+        if (extraSamplesField == null) {
+            extraSamples = 0; // no extra samples value
+        } else {
+            extraSamples = extraSamplesField.getIntValue();
+        }
+        final TiffField samplesPerPixelField = directory.findField(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL);
+        final int samplesPerPixel;
+        if (samplesPerPixelField == null) {
+            samplesPerPixel = 1;
+        } else {
+            samplesPerPixel = samplesPerPixelField.getIntValue();
+        }
+
+        final ImageInfo.ColorType colorType;
+        switch (photoInterp) {
+            case TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_BLACK_IS_ZERO:
+            case TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_WHITE_IS_ZERO:
+                // the ImageInfo.ColorType enumeration does not distinguish
+                // between monotone white is zero or black is zero
+                colorType = ImageInfo.ColorType.BW;
+                break;
+            case TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_RGB:
+                colorType = ImageInfo.ColorType.RGB;
+                // even if 4 samples per pixel are included, TIFF
+                // doesn't specify transparent unless the optional "extra samples"
+                // field is supplied with a non-zero value
+                transparent = samplesPerPixel == 4 && extraSamples != 0;
+                break;
+            case TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_RGB_PALETTE:
+                colorType = ImageInfo.ColorType.RGB;
+                usesPalette = true;
+                break;
+            case TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_CMYK:
+                colorType = ImageInfo.ColorType.CMYK;
+                break;
+            case TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_YCB_CR:
+                colorType = ImageInfo.ColorType.YCbCr;
+                break;
+            default:
+                colorType = ImageInfo.ColorType.UNKNOWN;
+        }
 
         final short compressionFieldValue;
         if (directory.findField(TiffTagConstants.TIFF_TAG_COMPRESSION) != null) {
@@ -573,10 +622,10 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
         case TIFF_COMPRESSION_PACKBITS:
             compressionAlgorithm = ImageInfo.CompressionAlgorithm.PACKBITS;
             break;
-       case TIFF_COMPRESSION_DEFLATE_PKZIP:
-       case TIFF_COMPRESSION_DEFLATE_ADOBE:
-          compressionAlgorithm = ImageInfo.CompressionAlgorithm.DEFLATE;
-          break;
+        case TIFF_COMPRESSION_DEFLATE_PKZIP:
+        case TIFF_COMPRESSION_DEFLATE_ADOBE:
+            compressionAlgorithm = ImageInfo.CompressionAlgorithm.DEFLATE;
+            break;
         default:
             compressionAlgorithm = ImageInfo.CompressionAlgorithm.UNKNOWN;
             break;
