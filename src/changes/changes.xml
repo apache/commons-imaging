@@ -75,6 +75,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action dev="ggregory" type="fix" due-to="Gary Gregory">
         Avoid java.lang.NullPointerException in org.apache.commons.imaging.formats.pcx.PcxWriter.writeImage().  
       </action>
+      <action issue="IMAGING-337" dev="ggregory" type="fix" due-to="Gary Lucas, Gary Gregory">
+        Make ImageInfo state correct color type #337.
+      </action>
       <!-- ADD -->
       <action issue="IMAGING-352" dev="ggregory" type="add" due-to="Jeroen van der Vegt, Gary Gregory">
         [PngWriter] Allow custom PaletteFactory #294.
