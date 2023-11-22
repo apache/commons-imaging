@@ -41,7 +41,6 @@ public class TiffReadImageInfoTest extends TiffBaseTest {
         {"10/Imaging247.tiff", "Uses Palette", "true"},
         {"12/TransparencyTestStripAssociated.tif", "Is Transparent", "true"},
         {"14/TestJpegStrips.tiff", "Color Type", "YCbCr"}
-
     };
 
     /**
@@ -54,7 +53,7 @@ public class TiffReadImageInfoTest extends TiffBaseTest {
      * @return the value
      */
     private String getValue(ImageInfo info, String target) {
-        String s = info.toString();
+        final String s = info.toString();
         int i = s.indexOf(target);
         if (i < 0) {
             return "";
@@ -67,8 +66,7 @@ public class TiffReadImageInfoTest extends TiffBaseTest {
         if (k < j) {
             return "";
         }
-        String q = s.substring(j + 1, k).trim();
-        return q;
+        return s.substring(j + 1, k).trim();
     }
 
     private File getTiffFile(String name) {
