@@ -66,6 +66,12 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterYCbCr;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 
+/**
+ * Implements methods for reading and writing TIFF files. Instances of this
+ * class are invoked from the general Imaging class. Applications that
+ * require the use of TIFF-specific features may instantiate and access
+ * this class directly.
+ */
 public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> implements XmpEmbeddable<TiffImagingParameters> {
 
     private static final String DEFAULT_EXTENSION = ImageFormats.TIFF.getDefaultExtension();
@@ -537,9 +543,9 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
         final int photoInterp = 0xffff & directory.getFieldValue(TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION);
         final TiffField extraSamplesField = directory.findField(TiffTagConstants.TIFF_TAG_EXTRA_SAMPLES);
         final int extraSamples;
-        if(extraSamplesField == null){
+        if (extraSamplesField == null) {
             extraSamples = 0; // no extra samples value
-        }else{
+        } else {
             extraSamples = extraSamplesField.getIntValue();
         }
         final TiffField samplesPerPixelField = directory.findField(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL);
