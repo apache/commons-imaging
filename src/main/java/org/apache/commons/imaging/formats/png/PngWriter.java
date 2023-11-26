@@ -567,7 +567,6 @@ public class PngWriter {
                 uncompressed = baos.toByteArray();
             }
 
-
             // Debug.debug("uncompressed", uncompressed.length);
 
             final ByteArrayOutputStream baos = new ByteArrayOutputStream();

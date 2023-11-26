@@ -109,7 +109,6 @@ public class SofnSegment extends AbstractSegment {
         return components[index];
     }
 
-
     @Override
     public String getDescription() {
         return "SOFN (SOF" + (marker - JpegConstants.SOF0_MARKER) + ") ("

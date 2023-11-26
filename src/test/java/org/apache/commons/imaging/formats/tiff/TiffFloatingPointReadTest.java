@@ -138,7 +138,6 @@ public class TiffFloatingPointReadTest {
         return directory.getRasterData(params);
     }
 
-
     @Test
     public void test() throws ImagingException, IOException {
         // These TIFF sample data includes files that contain known

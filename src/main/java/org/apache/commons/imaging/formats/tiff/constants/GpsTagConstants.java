@@ -37,7 +37,6 @@ public final class GpsTagConstants {
 
     private static final byte[] GPS_VERSION = { (byte)2, (byte)3, (byte)0, (byte)0 };
 
-
     public static final TagInfoAscii GPS_TAG_GPS_LATITUDE_REF = new TagInfoAscii(
             "GPSLatitudeRef", 0x0001, 2,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
@@ -78,11 +77,9 @@ public final class GpsTagConstants {
             "GPSTimeStamp", 0x0007, 3,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
-
     public static final TagInfoAscii GPS_TAG_GPS_SATELLITES = new TagInfoAscii(
             "GPSSatellites", 0x0008, -1,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
-
 
     public static final TagInfoAscii GPS_TAG_GPS_STATUS = new TagInfoAscii(
             "GPSStatus", 0x0009, 2,
@@ -144,7 +141,6 @@ public final class GpsTagConstants {
             "GPSMapDatum", 0x0012, -1,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
-
     public static final TagInfoAscii GPS_TAG_GPS_DEST_LATITUDE_REF = new TagInfoAscii(
             "GPSDestLatitudeRef", 0x0013, 2,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
@@ -198,16 +194,13 @@ public final class GpsTagConstants {
             "GPSProcessingMethod", 0x001b,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
-
     public static final TagInfoGpsText GPS_TAG_GPS_AREA_INFORMATION = new TagInfoGpsText(
             "GPSAreaInformation", 0x001c,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
-
     public static final TagInfoAscii GPS_TAG_GPS_DATE_STAMP = new TagInfoAscii(
             "GPSDateStamp", 0x001d, 11,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
-
 
     public static final TagInfoShort GPS_TAG_GPS_DIFFERENTIAL = new TagInfoShort(
             "GPSDifferential", 0x001e,

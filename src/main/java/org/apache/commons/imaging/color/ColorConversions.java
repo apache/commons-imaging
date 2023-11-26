@@ -16,7 +16,6 @@
  */
 package org.apache.commons.imaging.color;
 
-
 public final class ColorConversions {
 
     // White reference
@@ -183,7 +182,6 @@ public final class ColorConversions {
 
         return new ColorXyz(x, y, z);
     }
-
 
     public static ColorCieLab convertCieLchToCieLab(final ColorCieLch cielch) {
         return convertCieLchToCieLab(cielch.l, cielch.c, cielch.h);

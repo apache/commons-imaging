@@ -119,5 +119,4 @@ public class TiffSubImageTest extends TiffBaseTest {
         }
     }
 
-
 }

@@ -329,7 +329,6 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
                     + bitsPerSample.length + ")");
         }
 
-
         final int photometricInterpretation = 0xffff & directory.getFieldValue(
                 TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION);
 

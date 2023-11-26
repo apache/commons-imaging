@@ -16,7 +16,6 @@
  */
 package org.apache.commons.imaging;
 
-
 /**
  * Simple image format interface.
  */

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 package org.apache.commons.imaging.common;
 
 import java.awt.color.ColorSpace;
@@ -81,7 +80,6 @@ public class ImageBuilder {
         this.hasAlpha = hasAlpha;
         this.isAlphaPremultiplied = false;
     }
-
 
     /**
      * Constructs an ImageBuilder instance.

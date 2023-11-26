@@ -224,9 +224,6 @@ public final class BinaryFunctions {
     return result;
   }
 
-
-
-
     public static void readAndVerifyBytes(final InputStream is,
             final BinaryConstant expected, final String exception)
             throws ImagingException, IOException {

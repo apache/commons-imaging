@@ -16,7 +16,6 @@
  */
 package org.apache.commons.imaging.formats.jpeg.iptc;
 
-
 public final class IptcConstants {
     public static final int IPTC_NON_EXTENDED_RECORD_MAXIMUM_SIZE = 32767;
 

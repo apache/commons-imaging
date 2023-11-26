@@ -172,7 +172,6 @@ public class TiffRasterDataTest {
         }
     }
 
-
     /**
      * Test of getWidth method, of class TiffRasterData.
      */
@@ -180,7 +179,6 @@ public class TiffRasterDataTest {
     public void testGetWidth() {
         assertEquals(width, raster.getWidth(), "Improper width stored");
     }
-
 
     /**
      * Test of setValue method, of class TiffRasterData.

@@ -98,7 +98,6 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
             32 // pro format height value
         );
 
-
         if (valueWhite > valueBlack) {
             final PaletteEntryForRange entry
                 = new PaletteEntryForRange(valueBlack, valueWhite, Color.black, Color.white);

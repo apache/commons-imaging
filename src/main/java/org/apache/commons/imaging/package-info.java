@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 /**
  * The main package for Apache Commons Imaging.
  */
