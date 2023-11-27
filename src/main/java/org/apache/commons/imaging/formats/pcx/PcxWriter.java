@@ -29,7 +29,7 @@ import org.apache.commons.imaging.palette.SimplePalette;
 final class PcxWriter {
     private final int encoding;
     private final int bitDepthWanted;
-    private int planesWanted = -1;
+    private final int planesWanted;
     private final PixelDensity pixelDensity;
     private final RleWriter rleWriter;
 
