@@ -32,7 +32,7 @@ import org.apache.commons.imaging.bytesource.ByteSource;
  *
  * @since 1.0-alpha3
  */
-public class ImageParserFactory {
+public final class ImageParserFactory {
 
     public static <T extends ImagingParameters<T>> AbstractImageParser<T> getImageParser(final ByteSource byteSource) throws IOException {
         // TODO: circular dependency between Imaging and internal Util class below.
