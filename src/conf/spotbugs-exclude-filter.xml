@@ -191,12 +191,13 @@
     <Method name="&lt;init&gt;" />
     <Bug pattern="EI_EXPOSE_REP2" />
   </Match>
-  <!-- Reason: false positives with JVM >= 14 - https://github.com/spotbugs/spotbugs/issues/868 -->
-  <Match>
-    <Bug pattern="RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE" />
-  </Match>
   <!-- Reason: We don't want to implement Serializable at all.  -->
   <Match>
     <Bug pattern="SE_COMPARATOR_SHOULD_BE_SERIALIZABLE" />
+  </Match>
+  <!-- https://github.com/spotbugs/spotbugs/issues/2710 -->
+  <Match>
+    <Class name="~.*" />
+    <Bug pattern="CT_CONSTRUCTOR_THROW" />
   </Match>
 </FindBugsFilter>
