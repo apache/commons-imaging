@@ -19,16 +19,14 @@ package org.apache.commons.imaging.internal;
 import java.util.Arrays;
 
 /**
- * Provides safe arithmetic operations to avoid, for example,
- * numeric overflows.
+ * Provides safe arithmetic operations to avoid, for example, numeric overflows.
  *
  * @since 1.0-alpha4
  */
 public final class SafeOperations {
 
     /**
-     * Applies {@link Math#addExact(int, int)} to a variable
-     * length array of integers.
+     * Applies {@link Math#addExact(int, int)} to a variable length array of integers.
      *
      * @param values variable length array of integers.
      * @return the values safely added.
@@ -37,10 +35,7 @@ public final class SafeOperations {
         if (values == null || values.length < 2) {
             throw new IllegalArgumentException("You must provide at least two elements to be added");
         }
-        return Arrays
-                .stream(values)
-                .reduce(0, Math::addExact)
-                ;
+        return Arrays.stream(values).reduce(0, Math::addExact);
     }
 
     private SafeOperations() {
