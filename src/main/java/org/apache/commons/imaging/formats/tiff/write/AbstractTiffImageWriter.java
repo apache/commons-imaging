@@ -141,71 +141,68 @@ public abstract class AbstractTiffImageWriter {
 
         final int stripCount = (height + rowsPerStrip - 1) / rowsPerStrip;
 
-        byte[][] result;
-        { // Write Strips
-            result = new byte[Allocator.check(stripCount)][];
+        // Write Strips
+        byte[][] result = new byte[Allocator.check(stripCount)][];
 
-            int remainingRows = height;
+        int remainingRows = height;
 
-            for (int i = 0; i < stripCount; i++) {
-                final int rowsInStrip = Math.min(rowsPerStrip, remainingRows);
-                remainingRows -= rowsInStrip;
+        for (int i = 0; i < stripCount; i++) {
+            final int rowsInStrip = Math.min(rowsPerStrip, remainingRows);
+            remainingRows -= rowsInStrip;
 
-                final int bitsInRow = bitsPerSample * samplesPerPixel * width;
-                final int bytesPerRow = (bitsInRow + 7) / 8;
-                final int bytesInStrip = rowsInStrip * bytesPerRow;
+            final int bitsInRow = bitsPerSample * samplesPerPixel * width;
+            final int bytesPerRow = (bitsInRow + 7) / 8;
+            final int bytesInStrip = rowsInStrip * bytesPerRow;
 
-                final byte[] uncompressed = Allocator.byteArray(bytesInStrip);
+            final byte[] uncompressed = Allocator.byteArray(bytesInStrip);
 
-                int counter = 0;
-                int y = i * rowsPerStrip;
-                final int stop = i * rowsPerStrip + rowsPerStrip;
+            int counter = 0;
+            int y = i * rowsPerStrip;
+            final int stop = i * rowsPerStrip + rowsPerStrip;
 
-                for (; (y < height) && (y < stop); y++) {
-                    int bitCache = 0;
-                    int bitsInCache = 0;
-                    for (int x = 0; x < width; x++) {
-                        final int rgb = src.getRGB(x, y);
-                        final int red = 0xff & (rgb >> 16);
-                        final int green = 0xff & (rgb >> 8);
-                        final int blue = 0xff & (rgb >> 0);
+            for (; (y < height) && (y < stop); y++) {
+                int bitCache = 0;
+                int bitsInCache = 0;
+                for (int x = 0; x < width; x++) {
+                    final int rgb = src.getRGB(x, y);
+                    final int red = 0xff & (rgb >> 16);
+                    final int green = 0xff & (rgb >> 8);
+                    final int blue = 0xff & (rgb >> 0);
 
-                        if (bitsPerSample == 1) {
-                            int sample = (red + green + blue) / 3;
-                            if (sample > 127) {
-                                sample = 0;
-                            } else {
-                                sample = 1;
-                            }
-                            bitCache <<= 1;
-                            bitCache |= sample;
-                            bitsInCache++;
-                            if (bitsInCache == 8) {
-                                uncompressed[counter++] = (byte) bitCache;
-                                bitCache = 0;
-                                bitsInCache = 0;
-                            }
-                        } else if (samplesPerPixel == 4) {
-                            uncompressed[counter++] = (byte) red;
-                            uncompressed[counter++] = (byte) green;
-                            uncompressed[counter++] = (byte) blue;
-                            uncompressed[counter++] = (byte) (rgb >> 24);
+                    if (bitsPerSample == 1) {
+                        int sample = (red + green + blue) / 3;
+                        if (sample > 127) {
+                            sample = 0;
                         } else {
-                            // samples per pixel is 3
-                            uncompressed[counter++] = (byte) red;
-                            uncompressed[counter++] = (byte) green;
-                            uncompressed[counter++] = (byte) blue;
+                            sample = 1;
                         }
-                    }
-                    if (bitsInCache > 0) {
-                        bitCache <<= (8 - bitsInCache);
-                        uncompressed[counter++] = (byte) bitCache;
+                        bitCache <<= 1;
+                        bitCache |= sample;
+                        bitsInCache++;
+                        if (bitsInCache == 8) {
+                            uncompressed[counter++] = (byte) bitCache;
+                            bitCache = 0;
+                            bitsInCache = 0;
+                        }
+                    } else if (samplesPerPixel == 4) {
+                        uncompressed[counter++] = (byte) red;
+                        uncompressed[counter++] = (byte) green;
+                        uncompressed[counter++] = (byte) blue;
+                        uncompressed[counter++] = (byte) (rgb >> 24);
+                    } else {
+                        // samples per pixel is 3
+                        uncompressed[counter++] = (byte) red;
+                        uncompressed[counter++] = (byte) green;
+                        uncompressed[counter++] = (byte) blue;
                     }
                 }
-
-                result[i] = uncompressed;
+                if (bitsInCache > 0) {
+                    bitCache <<= (8 - bitsInCache);
+                    uncompressed[counter++] = (byte) bitCache;
+                }
             }
 
+            result[i] = uncompressed;
         }
 
         return result;
@@ -552,72 +549,68 @@ public abstract class AbstractTiffImageWriter {
 
         // WriteField stripOffsetsField;
 
-        {
+        directory.add(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH, width);
+        directory.add(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH, height);
+        directory.add(TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION, (short) photometricInterpretation);
+        directory.add(TiffTagConstants.TIFF_TAG_COMPRESSION, (short) compression);
+        directory.add(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL, (short) samplesPerPixel);
 
-            directory.add(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH, width);
-            directory.add(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH, height);
-            directory.add(TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION, (short) photometricInterpretation);
-            directory.add(TiffTagConstants.TIFF_TAG_COMPRESSION, (short) compression);
-            directory.add(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL, (short) samplesPerPixel);
+        switch (samplesPerPixel) {
+        case 3:
+            directory.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE, (short) bitsPerSample, (short) bitsPerSample, (short) bitsPerSample);
+            break;
+        case 4:
+            directory.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE, (short) bitsPerSample, (short) bitsPerSample, (short) bitsPerSample,
+                    (short) bitsPerSample);
+            directory.add(TiffTagConstants.TIFF_TAG_EXTRA_SAMPLES, (short) TiffTagConstants.EXTRA_SAMPLE_UNASSOCIATED_ALPHA);
+            break;
+        case 1:
+            directory.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE, (short) bitsPerSample);
+            break;
+        default:
+            break;
+        }
+        // {
+        // stripOffsetsField = new WriteField(TIFF_TAG_STRIP_OFFSETS,
+        // FIELD_TYPE_LONG, stripOffsets.length, FIELD_TYPE_LONG
+        // .writeData(stripOffsets, byteOrder));
+        // directory.add(stripOffsetsField);
+        // }
+        // {
+        // WriteField field = new WriteField(TIFF_TAG_STRIP_BYTE_COUNTS,
+        // FIELD_TYPE_LONG, stripByteCounts.length,
+        // FIELD_TYPE_LONG.writeData(stripByteCounts,
+        // WRITE_BYTE_ORDER));
+        // directory.add(field);
+        // }
+        directory.add(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP, rowsPerStrip);
+        if (pixelDensity.isUnitless()) {
+            directory.add(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT, (short) 0);
+            directory.add(TiffTagConstants.TIFF_TAG_XRESOLUTION, RationalNumber.valueOf(pixelDensity.getRawHorizontalDensity()));
+            directory.add(TiffTagConstants.TIFF_TAG_YRESOLUTION, RationalNumber.valueOf(pixelDensity.getRawVerticalDensity()));
+        } else if (pixelDensity.isInInches()) {
+            directory.add(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT, (short) 2);
+            directory.add(TiffTagConstants.TIFF_TAG_XRESOLUTION, RationalNumber.valueOf(pixelDensity.horizontalDensityInches()));
+            directory.add(TiffTagConstants.TIFF_TAG_YRESOLUTION, RationalNumber.valueOf(pixelDensity.verticalDensityInches()));
+        } else {
+            directory.add(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT, (short) 1);
+            directory.add(TiffTagConstants.TIFF_TAG_XRESOLUTION, RationalNumber.valueOf(pixelDensity.horizontalDensityCentimetres()));
+            directory.add(TiffTagConstants.TIFF_TAG_YRESOLUTION, RationalNumber.valueOf(pixelDensity.verticalDensityCentimetres()));
+        }
+        if (t4Options != 0) {
+            directory.add(TiffTagConstants.TIFF_TAG_T4_OPTIONS, t4Options);
+        }
+        if (t6Options != 0) {
+            directory.add(TiffTagConstants.TIFF_TAG_T6_OPTIONS, t6Options);
+        }
 
-            switch (samplesPerPixel) {
-            case 3:
-                directory.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE, (short) bitsPerSample, (short) bitsPerSample, (short) bitsPerSample);
-                break;
-            case 4:
-                directory.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE, (short) bitsPerSample, (short) bitsPerSample, (short) bitsPerSample,
-                        (short) bitsPerSample);
-                directory.add(TiffTagConstants.TIFF_TAG_EXTRA_SAMPLES, (short) TiffTagConstants.EXTRA_SAMPLE_UNASSOCIATED_ALPHA);
-                break;
-            case 1:
-                directory.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE, (short) bitsPerSample);
-                break;
-            default:
-                break;
-            }
-            // {
-            // stripOffsetsField = new WriteField(TIFF_TAG_STRIP_OFFSETS,
-            // FIELD_TYPE_LONG, stripOffsets.length, FIELD_TYPE_LONG
-            // .writeData(stripOffsets, byteOrder));
-            // directory.add(stripOffsetsField);
-            // }
-            // {
-            // WriteField field = new WriteField(TIFF_TAG_STRIP_BYTE_COUNTS,
-            // FIELD_TYPE_LONG, stripByteCounts.length,
-            // FIELD_TYPE_LONG.writeData(stripByteCounts,
-            // WRITE_BYTE_ORDER));
-            // directory.add(field);
-            // }
-            directory.add(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP, rowsPerStrip);
-            if (pixelDensity.isUnitless()) {
-                directory.add(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT, (short) 0);
-                directory.add(TiffTagConstants.TIFF_TAG_XRESOLUTION, RationalNumber.valueOf(pixelDensity.getRawHorizontalDensity()));
-                directory.add(TiffTagConstants.TIFF_TAG_YRESOLUTION, RationalNumber.valueOf(pixelDensity.getRawVerticalDensity()));
-            } else if (pixelDensity.isInInches()) {
-                directory.add(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT, (short) 2);
-                directory.add(TiffTagConstants.TIFF_TAG_XRESOLUTION, RationalNumber.valueOf(pixelDensity.horizontalDensityInches()));
-                directory.add(TiffTagConstants.TIFF_TAG_YRESOLUTION, RationalNumber.valueOf(pixelDensity.verticalDensityInches()));
-            } else {
-                directory.add(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT, (short) 1);
-                directory.add(TiffTagConstants.TIFF_TAG_XRESOLUTION, RationalNumber.valueOf(pixelDensity.horizontalDensityCentimetres()));
-                directory.add(TiffTagConstants.TIFF_TAG_YRESOLUTION, RationalNumber.valueOf(pixelDensity.verticalDensityCentimetres()));
-            }
-            if (t4Options != 0) {
-                directory.add(TiffTagConstants.TIFF_TAG_T4_OPTIONS, t4Options);
-            }
-            if (t6Options != 0) {
-                directory.add(TiffTagConstants.TIFF_TAG_T6_OPTIONS, t6Options);
-            }
+        if (null != xmpXml) {
+            final byte[] xmpXmlBytes = xmpXml.getBytes(StandardCharsets.UTF_8);
+            directory.add(TiffTagConstants.TIFF_TAG_XMP, xmpXmlBytes);
+        }
 
-            if (null != xmpXml) {
-                final byte[] xmpXmlBytes = xmpXml.getBytes(StandardCharsets.UTF_8);
-                directory.add(TiffTagConstants.TIFF_TAG_XMP, xmpXmlBytes);
-            }
-
-            if (predictor == TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING) {
-                directory.add(TiffTagConstants.TIFF_TAG_PREDICTOR, predictor);
-            }
-
+        if (predictor == TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING) {
+            directory.add(TiffTagConstants.TIFF_TAG_PREDICTOR, predictor);
         }
 
         final AbstractTiffImageData abstractTiffImageData = new AbstractTiffImageData.Strips(imageData, rowsPerStrip);
