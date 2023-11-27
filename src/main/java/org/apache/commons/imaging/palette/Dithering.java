@@ -24,39 +24,35 @@ import org.apache.commons.imaging.ImagingException;
  * Dithering algorithms to use when quantizing an image to palette form.
  */
 public final class Dithering {
-    private static int adjustPixel(final int argb, final int errA, final int errR, final int errG, final int errB, final int mul) {
-        int a = (argb >> 24) & 0xff;
-        int r = (argb >> 16) & 0xff;
-        int g = (argb >> 8) & 0xff;
-        int b = argb & 0xff;
+    private static final int MAX_COLOR_VALUE = 0xff;
+    private static final int DITHER_FACTOR = 16;
+    private static final int[] DITHER_WEIGHTS = {7, 1, 5, 3};
 
-        a += errA * mul / 16;
-        r += errR * mul / 16;
-        g += errG * mul / 16;
-        b += errB * mul / 16;
+    private Dithering() {
+    }
 
-        if (a < 0) {
-            a = 0;
-        } else if (a > 0xff) {
-            a = 0xff;
-        }
-        if (r < 0) {
-            r = 0;
-        } else if (r > 0xff) {
-            r = 0xff;
-        }
-        if (g < 0) {
-            g = 0;
-        } else if (g > 0xff) {
-            g = 0xff;
-        }
-        if (b < 0) {
-            b = 0;
-        } else if (b > 0xff) {
-            b = 0xff;
-        }
+    private static int adjustPixelComponent(int component, int errorComponent, int weight) {
+        int adjustedComponent = component + errorComponent * weight / DITHER_FACTOR;
+        return Math.min(Math.max(adjustedComponent, 0), MAX_COLOR_VALUE);
+    }
+
+    private static int adjustPixel(int argb, int errA, int errR, int errG, int errB, int mul) {
+        int a = (argb >> 24) & MAX_COLOR_VALUE;
+        int r = (argb >> 16) & MAX_COLOR_VALUE;
+        int g = (argb >> 8) & MAX_COLOR_VALUE;
+        int b = argb & MAX_COLOR_VALUE;
+
+        a = adjustPixelComponent(a, errA, mul);
+        r = adjustPixelComponent(r, errR, mul);
+        g = adjustPixelComponent(g, errG, mul);
+        b = adjustPixelComponent(b, errB, mul);
 
         return (a << 24) | (r << 16) | (g << 8) | b;
+    }
+
+    private static void updateImagePixel(BufferedImage image, int x, int y, int errorA, int errorR, int errorG, int errorB, int weightIndex) {
+        int update = adjustPixel(image.getRGB(x, y), errorA, errorR, errorG, errorB, DITHER_WEIGHTS[weightIndex]);
+        image.setRGB(x, y, update);
     }
 
     /**
@@ -76,42 +72,33 @@ public final class Dithering {
                 final int nextArgb = palette.getEntry(index);
                 image.setRGB(x, y, nextArgb);
 
-                final int a = (argb >> 24) & 0xff;
-                final int r = (argb >> 16) & 0xff;
-                final int g = (argb >> 8) & 0xff;
-                final int b = argb & 0xff;
+                final int a = (argb >> 24) & MAX_COLOR_VALUE;
+                final int r = (argb >> 16) & MAX_COLOR_VALUE;
+                final int g = (argb >> 8) & MAX_COLOR_VALUE;
+                final int b = argb & MAX_COLOR_VALUE;
 
-                final int na = (nextArgb >> 24) & 0xff;
-                final int nr = (nextArgb >> 16) & 0xff;
-                final int ng = (nextArgb >> 8) & 0xff;
-                final int nb = nextArgb & 0xff;
+                final int na = (nextArgb >> 24) & MAX_COLOR_VALUE;
+                final int nr = (nextArgb >> 16) & MAX_COLOR_VALUE;
+                final int ng = (nextArgb >> 8) & MAX_COLOR_VALUE;
+                final int nb = nextArgb & MAX_COLOR_VALUE;
 
                 final int errA = a - na;
                 final int errR = r - nr;
                 final int errG = g - ng;
                 final int errB = b - nb;
 
-                if (x + 1 < image.getWidth()) {
-                    int update = adjustPixel(image.getRGB(x + 1, y), errA, errR, errG, errB, 7);
-                    image.setRGB(x + 1, y, update);
+                for (int weightIndex = 0; weightIndex < DITHER_WEIGHTS.length; weightIndex++) {
+                    if (x + 1 < image.getWidth() && y + DITHER_WEIGHTS[weightIndex] < image.getHeight()) {
+                        updateImagePixel(image, x + 1, y + DITHER_WEIGHTS[weightIndex], errA, errR, errG, errB, weightIndex);
+                    }
                     if (y + 1 < image.getHeight()) {
-                        update = adjustPixel(image.getRGB(x + 1, y + 1), errA, errR, errG, errB, 1);
-                        image.setRGB(x + 1, y + 1, update);
+                        updateImagePixel(image, x, y + 1, errA, errR, errG, errB, weightIndex);
+                        if (x - 1 >= 0 && y + DITHER_WEIGHTS[weightIndex] < image.getHeight()) {
+                            updateImagePixel(image, x - 1, y + DITHER_WEIGHTS[weightIndex], errA, errR, errG, errB, weightIndex);
+                        }
                     }
-                }
-                if (y + 1 < image.getHeight()) {
-                    int update = adjustPixel(image.getRGB(x, y + 1), errA, errR, errG, errB, 5);
-                    image.setRGB(x, y + 1, update);
-                    if (x - 1 >= 0) {
-                        update = adjustPixel(image.getRGB(x - 1, y + 1), errA, errR, errG, errB, 3);
-                        image.setRGB(x - 1, y + 1, update);
-                    }
-
                 }
             }
         }
-    }
-
-    private Dithering() {
     }
 }
