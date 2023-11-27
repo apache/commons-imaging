@@ -31,7 +31,7 @@ final class HuffmanTree<T> {
         T value;
     }
 
-    private List<Node<T>> nodes = new ArrayList<>();
+    private final List<Node<T>> nodes = new ArrayList<>();
 
     public T decode(final BitInputStreamFlexible bitStream) throws ImagingException {
         int position = 0;
