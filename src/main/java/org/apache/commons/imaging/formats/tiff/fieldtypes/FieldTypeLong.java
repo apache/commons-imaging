@@ -52,9 +52,7 @@ public class FieldTypeLong extends AbstractFieldType {
         }
         final Integer[] numbers = (Integer[]) o;
         final int[] values = Allocator.intArray(numbers.length);
-        for (int i = 0; i < values.length; i++) {
-            values[i] = numbers[i];
-        }
+        System.arraycopy(numbers, 0, values, 0, values.length);
         return ByteConversions.toBytes(values, byteOrder);
     }
 
