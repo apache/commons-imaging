@@ -30,7 +30,7 @@ final class PcxWriter {
     private final int encoding;
     private int bitDepthWanted = -1;
     private int planesWanted = -1;
-    private PixelDensity pixelDensity;
+    private final PixelDensity pixelDensity;
     private final RleWriter rleWriter;
 
     PcxWriter(PcxImagingParameters params) {
@@ -41,19 +41,12 @@ final class PcxWriter {
         }
         encoding = params.getCompression() == PcxConstants.PCX_COMPRESSION_UNCOMPRESSED ? PcxImageParser.PcxHeader.ENCODING_UNCOMPRESSED
                 : PcxImageParser.PcxHeader.ENCODING_RLE;
-        if (encoding == PcxImageParser.PcxHeader.ENCODING_UNCOMPRESSED) {
-            rleWriter = new RleWriter(false);
-        } else {
-            rleWriter = new RleWriter(true);
-        }
-
+        rleWriter = new RleWriter(encoding != PcxImageParser.PcxHeader.ENCODING_UNCOMPRESSED);
         bitDepthWanted = params.getBitDepth();
         planesWanted = params.getPlanes();
-        pixelDensity = params.getPixelDensity();
-        if (pixelDensity == null) {
-            // DPI is mandatory, so we have to invent something
-            pixelDensity = PixelDensity.createFromPixelsPerInch(72, 72);
-        }
+        final PixelDensity pixelDensityParam = params.getPixelDensity();
+        // DPI is mandatory, so we have to invent something
+        pixelDensity = pixelDensityParam != null ? pixelDensityParam : PixelDensity.createFromPixelsPerInch(72, 72);
     }
 
     public void writeImage(final BufferedImage src, final OutputStream os)
