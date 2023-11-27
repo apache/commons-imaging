@@ -24,7 +24,7 @@ import java.util.Arrays;
  *
  * @since 1.0-alpha4
  */
-public class SafeOperations {
+public final class SafeOperations {
 
     /**
      * Applies {@link Math#addExact(int, int)} to a variable
