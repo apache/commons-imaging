@@ -27,7 +27,7 @@ import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 
 final class PcxWriter {
-    private int encoding;
+    private final int encoding;
     private int bitDepthWanted = -1;
     private int planesWanted = -1;
     private PixelDensity pixelDensity;
@@ -39,11 +39,8 @@ final class PcxWriter {
         if (params == null) {
             params = new PcxImagingParameters();
         }
-        encoding = PcxImageParser.PcxHeader.ENCODING_RLE;
-        final int compression = params.getCompression();
-        if (compression == PcxConstants.PCX_COMPRESSION_UNCOMPRESSED) {
-            encoding = PcxImageParser.PcxHeader.ENCODING_UNCOMPRESSED;
-        }
+        encoding = params.getCompression() == PcxConstants.PCX_COMPRESSION_UNCOMPRESSED ? PcxImageParser.PcxHeader.ENCODING_UNCOMPRESSED
+                : PcxImageParser.PcxHeader.ENCODING_RLE;
         if (encoding == PcxImageParser.PcxHeader.ENCODING_UNCOMPRESSED) {
             rleWriter = new RleWriter(false);
         } else {
