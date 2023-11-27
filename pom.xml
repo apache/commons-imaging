@@ -152,14 +152,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <configuration>
-          <configLocation>${basedir}/src/conf/checkstyle.xml</configLocation>
-          <!-- <suppressionsLocation>${basedir}/src/conf/checkstyle-suppressions.xml</suppressionsLocation> -->
-          <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
-          <includeTestSourceDirectory>false</includeTestSourceDirectory>
-          <enableRulesSummary>false</enableRulesSummary>
-          <excludes>target/**</excludes>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>com.github.spotbugs</groupId>
@@ -168,9 +160,25 @@
           <excludeFilterFile>${commons.conf.dir}/spotbugs-exclude-filter.xml</excludeFilterFile>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+      </plugin>
     </plugins>
     <pluginManagement>
       <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <configuration>
+            <configLocation>${basedir}/src/conf/checkstyle.xml</configLocation>
+            <!-- <suppressionsLocation>${basedir}/src/conf/checkstyle-suppressions.xml</suppressionsLocation> -->
+            <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
+            <includeTestSourceDirectory>false</includeTestSourceDirectory>
+            <enableRulesSummary>false</enableRulesSummary>
+           <excludes>target/**</excludes>
+          </configuration>
+        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-scm-publish-plugin</artifactId>
@@ -207,6 +215,16 @@
               <exclude>src/main/resources/org/apache/commons/imaging/formats/xpm/rgb.txt</exclude>
               <exclude>.asf.yaml</exclude>
             </excludes>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-pmd-plugin</artifactId>
+          <configuration>
+            <targetJdk>${maven.compiler.target}</targetJdk>
+            <rulesets>
+              <ruleset>${commons.conf.dir}/pmd-ruleset.xml</ruleset>
+            </rulesets>
           </configuration>
         </plugin>
       </plugins>
@@ -253,12 +271,6 @@
     <plugins>
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <configuration>
-          <!-- <suppressionsLocation>${basedir}/src/conf/checkstyle-suppressions.xml</suppressionsLocation> -->
-          <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
-          <includeTestSourceDirectory>false</includeTestSourceDirectory>
-          <enableRulesSummary>false</enableRulesSummary>
-        </configuration>
         <reportSets>
           <reportSet>
             <reports>
@@ -271,9 +283,6 @@
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <configuration>
-          <excludeFilterFile>${commons.conf.dir}/spotbugs-exclude-filter.xml</excludeFilterFile>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -294,12 +303,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
-        <configuration>
-          <targetJdk>${maven.compiler.target}</targetJdk>
-          <rulesets>
-            <ruleset>${commons.conf.dir}/pmd-ruleset.xml</ruleset>
-          </rulesets>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
