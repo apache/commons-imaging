@@ -82,7 +82,6 @@ public class ExifRewriteTest extends AbstractExifTest {
 
         for (final Integer dirType : oldDirectoryTypes) {
 
-
             // Debug.debug("dirType", dirType);
 
             final TiffImageMetadata.Directory oldDirectory = oldDirectoryMap.get(dirType);

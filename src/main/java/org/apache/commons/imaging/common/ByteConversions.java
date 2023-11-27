@@ -237,7 +237,6 @@ public final class ByteConversions {
         return result;
     }
 
-
     public static double toDouble(final byte[] bytes, final ByteOrder byteOrder) {
         return toDouble(bytes, 0, byteOrder);
     }
@@ -486,7 +485,6 @@ public final class ByteConversions {
         Arrays.setAll(result, i -> toUInt16(bytes, offset + 2 * i, byteOrder));
         return result;
     }
-
 
     private ByteConversions() {
     }

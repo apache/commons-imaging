@@ -176,7 +176,6 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
         return true;
     }
 
-
     private void dumpSegments(final List<? extends AbstractSegment> v) {
         Debug.debug();
         Debug.debug("dumpSegments: " + v.size());

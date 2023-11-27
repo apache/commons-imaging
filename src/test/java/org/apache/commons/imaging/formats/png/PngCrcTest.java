@@ -29,7 +29,6 @@ import org.junit.jupiter.api.Test;
  **/
 public class PngCrcTest{
 
-
     @Test
     public void testCrc() {
 
@@ -40,6 +39,5 @@ public class PngCrcTest{
         assertEquals(3736805603L, pngCrc.startPartialCrc(byteArray, 0));
 
     }
-
 
 }

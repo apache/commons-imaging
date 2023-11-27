@@ -140,7 +140,6 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         }
     }
 
-
     public TiffField findField(final TagInfo tag) throws ImagingException {
         final boolean failIfMissing = false;
         return findField(tag, failIfMissing);
@@ -238,8 +237,6 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         }
         return field.getByteArrayValue()[0];
     }
-
-
 
     public byte[] getFieldValue(final TagInfoBytes tag, final boolean mustExist)
             throws ImagingException {

@@ -22,7 +22,6 @@ import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
-
 public class TagInfoLongOrIfd extends TagInfo {
     public TagInfoLongOrIfd(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
         super(name, tag, AbstractFieldType.LONG_OR_IFD, length, directoryType);

@@ -22,7 +22,6 @@ import org.junit.jupiter.api.Test;
 
 public class SimplePaletteTest{
 
-
     @Test
     public void testGetPaletteIndexReturningNegative() {
 
@@ -33,6 +32,5 @@ public class SimplePaletteTest{
         assertEquals(1, simplePalette.length() );
 
     }
-
 
 }

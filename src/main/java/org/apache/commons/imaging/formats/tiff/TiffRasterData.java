@@ -47,7 +47,6 @@ public abstract class TiffRasterData {
     protected final int nCells;
     protected final int planarOffset;
 
-
     /**
      * Constructs an instance allocating memory for the specified dimensions.
      *

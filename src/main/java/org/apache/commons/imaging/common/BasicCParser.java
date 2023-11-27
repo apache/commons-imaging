@@ -401,7 +401,6 @@ public class BasicCParser {
         this.is = new PushbackInputStream(is);
     }
 
-
     public String nextToken() throws IOException, ImagingException {
         // I don't know how complete the C parsing in an XPM file
         // is meant to be, this is just the very basics...

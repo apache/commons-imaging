@@ -29,7 +29,6 @@ public class TiffHeader extends AbstractTiffElement {
     public TiffHeader(final ByteOrder byteOrder, final int tiffVersion, final long offsetToFirstIFD, final boolean bigTiff) {
         super(0, TiffConstants.TIFF_HEADER_SIZE);
 
-
         this.byteOrder = byteOrder;
         this.tiffVersion = tiffVersion;
         this.offsetToFirstIFD = offsetToFirstIFD;

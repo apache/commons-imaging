@@ -98,7 +98,6 @@ public abstract class AbstractFieldType {
 
     private final int elementSize;
 
-
     protected AbstractFieldType(final int type, final String name, final int elementSize) {
         this.type = type;
         this.name = name;

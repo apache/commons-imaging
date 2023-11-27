@@ -55,7 +55,6 @@ public class TiffJpegTest extends TiffBaseTest {
         "TestSampleRgb127x127.tiff",
         "TestJpegRgb127x127.tiff"};
 
-
     private File getTiffFile(String name) {
         final File tiffFolder = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, "tiff");
         final File tiffJpegFolder = new File(tiffFolder, "14");

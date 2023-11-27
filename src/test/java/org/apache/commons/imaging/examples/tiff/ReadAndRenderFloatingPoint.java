@@ -95,7 +95,6 @@ public class ReadAndRenderFloatingPoint {
             true, // indicates that application should read image data, if present
             FormatCompliance.getDefault());
 
-
         // Render the first directory in the file.  A practical implementation
         // could use any of the directories in the file. This demo uses the
         // first one just for simplicity.

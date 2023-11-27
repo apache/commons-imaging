@@ -14,7 +14,6 @@
  */
 package org.apache.commons.imaging.formats.pcx;
 
-
 public final class PcxConstants {
     public static final int PCX_COMPRESSION_UNCOMPRESSED = 0;
     public static final int PCX_COMPRESSION_RLE = 1;

@@ -461,7 +461,6 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
         return null;
     }
 
-
     /**
      * Determines the format compliance of the specified file based on
      * rules provided by a specific implementation.
@@ -714,7 +713,6 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
         return getImageSize(ByteSource.array(bytes), params);
     }
 
-
     /**
      * Gets the size of the image described by the specified ByteSource.
      *
@@ -765,7 +763,6 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
 
         return getImageSize(ByteSource.file(file), params);
     }
-
 
     /**
      * Gets image metadata from the specified array of bytes.  Format-specific

@@ -63,8 +63,6 @@ public class TiffRoundTripInt32Test extends TiffBaseTest {
         }
     }
 
-
-
     /**
      * Gets the bytes for output for a 16 bit floating point format. Note that
      * this method operates over "blocks" of data which may represent either
@@ -187,7 +185,6 @@ public class TiffRoundTripInt32Test extends TiffBaseTest {
         byte[][] blocks;
         blocks = this.getBytesForOutput32(sample, width, height, nRowsInBlock, nColsInBlock, byteOrder);
 
-
         // NOTE:  At this time, Tile format is not supported.
         // When it is, modify the tags below to populate
         // TIFF_TAG_TILE_* appropriately.
@@ -239,6 +236,5 @@ public class TiffRoundTripInt32Test extends TiffBaseTest {
         }
         return outputFile;
     }
-
 
 }

@@ -23,7 +23,6 @@ import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
-
 public class TagInfoLong extends TagInfo {
     public TagInfoLong(final String name, final int tag, final List<AbstractFieldType> dataTypes, final int length,
         final TiffDirectoryType exifDirectory, final boolean isOffset) {
