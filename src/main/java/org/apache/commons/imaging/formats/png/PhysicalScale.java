@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.png;
 /**
  * Used to specify physical scale when reading or storing image information.
  */
-public class PhysicalScale {
+public final class PhysicalScale {
    private static final int METER_UNITS = 1;
    private static final int RADIAN_UNITS = 2;
    public static final PhysicalScale UNDEFINED = createFromMeters(-1.0, -1.0);
