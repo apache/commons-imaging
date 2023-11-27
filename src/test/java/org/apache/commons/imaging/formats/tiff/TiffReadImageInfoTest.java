@@ -43,6 +43,11 @@ public class TiffReadImageInfoTest extends TiffBaseTest {
         {"14/TestJpegStrips.tiff", "Color Type", "YCbCr"}
     };
 
+    private File getTiffFile(String name) {
+        final File tiffFolder = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, "tiff");
+        return new File(tiffFolder, name);
+    }
+
     /**
      * Gets the value for the target data field within the ImageInfo string.
      * This method expects data fields to be given in the form:
@@ -67,11 +72,6 @@ public class TiffReadImageInfoTest extends TiffBaseTest {
             return "";
         }
         return s.substring(j + 1, k).trim();
-    }
-
-    private File getTiffFile(String name) {
-        final File tiffFolder = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, "tiff");
-        return new File(tiffFolder, name);
     }
 
     @Test
