@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -166,7 +167,7 @@ public class SurveyTiffFolder {
             final File reportFile = new File(args[1]);
             try (FileOutputStream fos = new FileOutputStream(reportFile);
                 BufferedOutputStream bos = new BufferedOutputStream(fos);
-                PrintStream ps = new PrintStream(bos, true, "UTF-8")) {
+                PrintStream ps = new PrintStream(bos, true, StandardCharsets.UTF_8.name())) {
                 surveyFiles(topLevelDir, pathList, maxLen, csv, ps);
             } catch (final IOException ioex) {
                 System.err.println("IOException writing report to " + args[1]);
