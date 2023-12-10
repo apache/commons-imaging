@@ -31,7 +31,7 @@ public class ComSegment extends GenericSegment {
 
     /**
      * Returns a copy of the comment.
-     * 
+     *
      * @return a copy of the comment's bytes
      */
     public byte[] getComment() {
