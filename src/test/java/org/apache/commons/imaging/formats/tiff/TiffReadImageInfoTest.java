@@ -16,11 +16,13 @@
  */
 package org.apache.commons.imaging.formats.tiff;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.File;
+
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTestConstants;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 /**
