@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 
 public abstract class GenericSegment extends AbstractSegment {
     private final byte[] segmentData;
@@ -75,14 +76,9 @@ public abstract class GenericSegment extends AbstractSegment {
      * Convert the bytes to a String
      * @param encoding segment encoding
      * @return the encoded bytes
-     * @throws UnsupportedEncodingException if the encoding provided is not supported
      */
-    public String getSegmentDataAsString(final String encoding) throws UnsupportedEncodingException {
+    public String getSegmentDataAsString(final Charset encoding) {
         return new String(segmentData, encoding);
     }
 
-    // public String getDescription()
-    // {
-    // return "Unknown";
-    // }
 }

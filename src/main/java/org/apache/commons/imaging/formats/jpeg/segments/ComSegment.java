@@ -19,6 +19,7 @@ package org.apache.commons.imaging.formats.jpeg.segments;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 public class ComSegment extends GenericSegment {
     public ComSegment(final int marker, final byte[] segmentData) {
@@ -31,6 +32,7 @@ public class ComSegment extends GenericSegment {
 
     /**
      * Returns a copy of the comment.
+     * 
      * @return a copy of the comment's bytes
      */
     public byte[] getComment() {
@@ -39,12 +41,7 @@ public class ComSegment extends GenericSegment {
 
     @Override
     public String getDescription() {
-        String commentString = "";
-        try {
-            commentString = getSegmentDataAsString("UTF-8");
-        } catch (final UnsupportedEncodingException cannotHappen) { // NOPMD
-        }
-        return "COM (" + commentString + ")";
+        return "COM (" + getSegmentDataAsString(StandardCharsets.UTF_8) + ")";
     }
 
 }
