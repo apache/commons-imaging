@@ -255,11 +255,11 @@ public final class ByteConversions {
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
             bits = (byte0 << 56) | (byte1 << 48) | (byte2 << 40)
                     | (byte3 << 32) | (byte4 << 24) | (byte5 << 16)
-                    | (byte6 << 8) | (byte7 << 0);
+                    | (byte6 << 8) | byte7;
         } else {
             bits = (byte7 << 56) | (byte6 << 48) | (byte5 << 40)
                     | (byte4 << 32) | (byte3 << 24) | (byte2 << 16)
-                    | (byte1 << 8) | (byte0 << 0);
+                    | (byte1 << 8) | byte0;
         }
         return Double.longBitsToDouble(bits);
     }
@@ -286,9 +286,9 @@ public final class ByteConversions {
         final int byte3 = 0xff & bytes[offset + 3];
         final int bits;
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
-            bits = (byte0 << 24) | (byte1 << 16) | (byte2 << 8) | (byte3 << 0);
+            bits = (byte0 << 24) | (byte1 << 16) | (byte2 << 8) | byte3;
         } else {
-            bits = (byte3 << 24) | (byte2 << 16) | (byte1 << 8) | (byte0 << 0);
+            bits = (byte3 << 24) | (byte2 << 16) | (byte1 << 8) | byte0;
         }
         return Float.intBitsToFloat(bits);
     }
