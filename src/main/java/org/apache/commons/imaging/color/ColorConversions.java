@@ -653,7 +653,7 @@ public final class ColorConversions {
 
         final int alpha = 0xff;
 
-        return (alpha << 24) | (red << 16) | (green << 8) | (blue);
+        return (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
     }
 
     private static int convertRgbToRgb(int red, int green, int blue) {
@@ -663,7 +663,7 @@ public final class ColorConversions {
 
         final int alpha = 0xff;
 
-        return (alpha << 24) | (red << 16) | (green << 8) | (blue);
+        return (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
     }
 
     // See also c# implementation:
