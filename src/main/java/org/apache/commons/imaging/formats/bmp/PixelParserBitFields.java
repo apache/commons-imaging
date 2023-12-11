@@ -111,7 +111,7 @@ class PixelParserBitFields extends AbstractPixelParserSimple {
         blue = (blueShift >= 0) ? blue >> blueShift : blue << -blueShift;
         alpha = (alphaShift >= 0) ? alpha >> alphaShift : alpha << -alphaShift;
 
-        return (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+        return (alpha << 24) | (red << 16) | (green << 8) | (blue);
     }
 
     @Override

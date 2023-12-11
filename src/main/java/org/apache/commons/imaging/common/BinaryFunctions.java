@@ -35,7 +35,7 @@ public final class BinaryFunctions {
     private static final Logger LOGGER = Logger.getLogger(BinaryFunctions.class.getName());
 
     public static int charsToQuad(final char c1, final char c2, final char c3, final char c4) {
-        return (((0xff & c1) << 24) | ((0xff & c2) << 16) | ((0xff & c3) << 8) | ((0xff & c4) << 0));
+        return (((0xff & c1) << 24) | ((0xff & c2) << 16) | ((0xff & c3) << 8) | ((0xff & c4)));
     }
 
     public static boolean compareBytes(final byte[] a, final int aStart, final byte[] b,
