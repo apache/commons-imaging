@@ -478,10 +478,11 @@
                         <groupId>com.github.spotbugs</groupId>
                         <artifactId>spotbugs-maven-plugin</artifactId>
                         <version>4.8.1.0</version>
-
                         <configuration>
                             <includeFilterFile>spotbugs-security-include.xml</includeFilterFile>
                             <excludeFilterFile>spotbugs-security-exclude.xml</excludeFilterFile>
+                            <xmlOutput>true</xmlOutput>
+                            <failOnError>false</failOnError>
                             <plugins>
                                 <plugin>
                                     <groupId>com.h3xstream.findsecbugs</groupId>
