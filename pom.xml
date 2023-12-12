@@ -244,6 +244,7 @@
                             <exclude>.asf.yaml</exclude>
                             <exclude>spotbugs-security-exclude.xml</exclude>
                             <exclude>spotbugs-security-include.xml</exclude>
+                            <exclude>.github/workflows/spotbug-analysis.yml</exclude>
                         </excludes>
                     </configuration>
                 </plugin>
@@ -417,6 +418,7 @@
                         <exclude>.asf.yaml</exclude>
                         <exclude>spotbugs-security-exclude.xml</exclude>
                         <exclude>spotbugs-security-include.xml</exclude>
+                        <exclude>.github/workflows/spotbug-analysis.yml</exclude>
                     </excludes>
                 </configuration>
             </plugin>
