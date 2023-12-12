@@ -242,6 +242,8 @@
                             <exclude>src/test/data/**/*.hdr</exclude>
                             <exclude>src/main/resources/org/apache/commons/imaging/formats/xpm/rgb.txt</exclude>
                             <exclude>.asf.yaml</exclude>
+                            <exclude>spotbugs-security-exclude.xml</exclude>
+                            <exclude>spotbugs-security-include.xml</exclude>
                         </excludes>
                     </configuration>
                 </plugin>
@@ -413,6 +415,8 @@
                         <exclude>src/test/data/**/*.hdr</exclude>
                         <exclude>src/main/resources/org/apache/commons/imaging/formats/xpm/rgb.txt</exclude>
                         <exclude>.asf.yaml</exclude>
+                        <exclude>spotbugs-security-exclude.xml</exclude>
+                        <exclude>spotbugs-security-include.xml</exclude>
                     </excludes>
                 </configuration>
             </plugin>
