@@ -15,4 +15,5 @@ release.properties
 /nbproject/
 /commons-imaging.iml
 
+.mvn/wrapper/maven-wrapper.jar
 .idea
