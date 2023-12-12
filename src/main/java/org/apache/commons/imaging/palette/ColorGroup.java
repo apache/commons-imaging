@@ -125,11 +125,21 @@ class ColorGroup {
             blueTotal += color.count * color.blue;
         }
 
-        final int alpha = ignoreAlpha ? 0xff : (int) Math.round((double) alphaTotal / countTotal);
-        final int red = (int) Math.round((double) redTotal / countTotal);
-        final int green = (int) Math.round((double) greenTotal / countTotal);
-        final int blue = (int) Math.round((double) blueTotal / countTotal);
-
+        int alpha = 0;
+        int red = 0;
+        int green = 0;
+        int blue = 0;
+        try {
+            if (countTotal == 0) {
+                throw new RuntimeException("countTotal cannot be 0");
+            }
+            alpha = ignoreAlpha ? 0xff : (int) Math.round((double) alphaTotal / countTotal);
+            red = (int) Math.round((double) redTotal / countTotal);
+            green = (int) Math.round((double) greenTotal / countTotal);
+            blue = (int) Math.round((double) blueTotal / countTotal);
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+        }
         return alpha << 24 | red << 16 | green << 8 | blue;
     }
 
