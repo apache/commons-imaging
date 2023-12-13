@@ -170,6 +170,7 @@ class PcxWriter {
             bos.write(12);
             for (int i = 0; i < 256; i++) {
                 int rgb;
+                assert palette != null;
                 if (i < palette.length()) {
                     rgb = palette.getEntry(i);
                 } else {
