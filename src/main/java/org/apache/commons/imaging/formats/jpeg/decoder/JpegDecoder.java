@@ -442,7 +442,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             final int hSize = 8 * hMax;
             final int vSize = 8 * vMax;
             if (hSize == 0 || vSize == 0) {
-                throw new RuntimeException("hSize or vSize cannot be 0 like divisor");
+                throw new ArithmeticException("hSize or vSize cannot be 0 like divisor");
             }
             final int xMCUs = (sofnSegment.width + hSize - 1) / hSize;
             final int yMCUs = (sofnSegment.height + vSize - 1) / vSize;
