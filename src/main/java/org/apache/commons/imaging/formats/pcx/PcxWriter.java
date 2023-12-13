@@ -128,12 +128,13 @@ class PcxWriter {
         final byte[] palette16 = new byte[16 * 3];
         for (int i = 0; i < 16; i++) {
             int rgb;
+            assert palette != null;
             if (i < palette.length()) {
                 rgb = palette.getEntry(i);
             } else {
                 rgb = 0;
             }
-            palette16[3 * i + 0] = (byte) (0xff & (rgb >> 16));
+            palette16[3 * i] = (byte) (0xff & (rgb >> 16));
             palette16[3 * i + 1] = (byte) (0xff & (rgb >> 8));
             palette16[3 * i + 2] = (byte) (0xff & rgb);
         }
