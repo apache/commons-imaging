@@ -124,12 +124,13 @@ class ColorGroup {
             greenTotal += color.count * color.green;
             blueTotal += color.count * color.blue;
         }
-
+        if (countTotal == 0) {
+            throw new ArithmeticException("countTotal cannot be 0 like divisor");
+        }
         final int alpha = ignoreAlpha ? 0xff : (int) Math.round((double) alphaTotal / countTotal);
         final int red = (int) Math.round((double) redTotal / countTotal);
         final int green = (int) Math.round((double) greenTotal / countTotal);
         final int blue = (int) Math.round((double) blueTotal / countTotal);
-
         return alpha << 24 | red << 16 | green << 8 | blue;
     }
 
