@@ -37,7 +37,6 @@ jobs:
             java: 8
             experimental: true
         # Did not fail for my local macOS test; try GH
-        include:
           - os: macos-latest
             java: 8
             experimental: true
