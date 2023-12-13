@@ -31,6 +31,11 @@ jobs:
         os: [windows-latest]
         java: [ 8, 11, 17, 21 ]
         experimental: [false]
+        # we need to fix non-Windows tests; start with just the one
+        include:
+          - os: ubuntu-latest
+            java: 8
+            experimental: true
 #        include:
 #          - java: 22-ea
 #            os: ubuntu-latest
