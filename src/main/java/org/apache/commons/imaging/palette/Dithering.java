@@ -113,5 +113,6 @@ public final class Dithering {
     }
 
     private Dithering() {
+        // no instances.
     }
 }
