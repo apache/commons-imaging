@@ -299,6 +299,12 @@
             <version>3.13.0</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.owasp</groupId>
+            <artifactId>dependency-check-maven</artifactId>
+            <version>9.0.4</version>
+        </dependency>
+
     </dependencies>
 
     <reporting>
