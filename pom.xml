@@ -299,12 +299,6 @@
             <version>3.13.0</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.owasp</groupId>
-            <artifactId>dependency-check-maven</artifactId>
-            <version>9.0.4</version>
-        </dependency>
-
     </dependencies>
 
     <reporting>
@@ -430,6 +424,7 @@
             </plugin>
 
         </plugins>
+
     </reporting>
 
     <profiles>
@@ -499,6 +494,18 @@
                                 </plugin>
                             </plugins>
                         </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.owasp</groupId>
+                        <artifactId>dependency-check-maven</artifactId>
+                        <version>9.0.4</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
