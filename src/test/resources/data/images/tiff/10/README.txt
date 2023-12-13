@@ -1,4 +1,4 @@
-Imaging247.tiff is a copy of the file neutre.TIFF that was supplied by the user for 
+Imaging247.TIFF is a copy of the file neutre.TIFF that was supplied by the user for 
 JIRA issue IMAGING-247. 
 
 Imaging258.tiff is a test file in which an offset field is given as type IFD rather
