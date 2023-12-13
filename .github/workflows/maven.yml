@@ -26,20 +26,9 @@ jobs:
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
-#        os: [windows-latest, ubuntu-latest]
-#        os: [windows-latest, macos-latest]
-        os: [windows-latest]
+        os: [windows-latest, macos-latest, ubuntu-latest]
         java: [ 8, 11, 17, 21 ]
         experimental: [false]
-        # we need to fix non-Windows tests; start with just the one
-        include:
-          - os: ubuntu-latest
-            java: 8
-            experimental: true
-        # Did not fail for my local macOS test; try GH
-          - os: macos-latest
-            java: 8
-            experimental: true
 #        include:
 #          - java: 22-ea
 #            os: ubuntu-latest
