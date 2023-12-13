@@ -15,527 +15,589 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-  <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-parent</artifactId>
-    <version>64</version>
-  </parent>
+    <parent>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-parent</artifactId>
+        <version>64</version>
+    </parent>
 
-  <artifactId>commons-imaging</artifactId>
-  <name>Apache Commons Imaging</name>
-  <version>1.0-SNAPSHOT</version>
+    <artifactId>commons-imaging</artifactId>
+    <name>Apache Commons Imaging</name>
+    <version>1.0-SNAPSHOT</version>
 
-  <!--
-    Keep the description on a single line. Otherwise Maven might generate
-    a corrupted MANIFEST.MF (see https://issues.apache.org/jira/browse/MJAR-4)
-   -->
-  <description>Apache Commons Imaging (previously Sanselan) is a pure-Java image library.</description>
-  <url>https://commons.apache.org/proper/commons-imaging/</url>
+    <!--
+      Keep the description on a single line. Otherwise Maven might generate
+      a corrupted MANIFEST.MF (see https://issues.apache.org/jira/browse/MJAR-4)
+     -->
+    <description>Apache Commons Imaging (previously Sanselan) is a pure-Java image library.</description>
+    <url>https://commons.apache.org/proper/commons-imaging/</url>
 
-  <properties>
-    <argLine>-Xmx512m</argLine>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <commons.componentid>imaging</commons.componentid>
-    <commons.module.name>org.apache.commons.imaging</commons.module.name>
-    <commons.jira.id>IMAGING</commons.jira.id>
-    <commons.jira.pid>12313421</commons.jira.pid>
-    <commons.osgi.export>org.apache.commons.imaging.*;version=${project.version};-noimport:=true</commons.osgi.export>
-    <commons.site.path>imaging</commons.site.path>
-    <commons.scmPubUrl>https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-imaging</commons.scmPubUrl>
-    <commons.scmPubCheckoutDirectory>site-content</commons.scmPubCheckoutDirectory>
-    <!-- TODO: remove when we upgrade it to commons-parent 53 due to https://issues.apache.org/jira/browse/MNG-7316 -->
-    <commons.release-plugin.version>1.8.0</commons.release-plugin.version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <commons.conf.dir>src/conf</commons.conf.dir>
+    <properties>
+        <argLine>-Xmx512m</argLine>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <commons.componentid>imaging</commons.componentid>
+        <commons.module.name>org.apache.commons.imaging</commons.module.name>
+        <commons.jira.id>IMAGING</commons.jira.id>
+        <commons.jira.pid>12313421</commons.jira.pid>
+        <commons.osgi.export>org.apache.commons.imaging.*;version=${project.version};-noimport:=true
+        </commons.osgi.export>
+        <commons.site.path>imaging</commons.site.path>
+        <commons.scmPubUrl>
+            https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-imaging
+        </commons.scmPubUrl>
+        <commons.scmPubCheckoutDirectory>site-content</commons.scmPubCheckoutDirectory>
+        <!-- TODO: remove when we upgrade it to commons-parent 53 due to https://issues.apache.org/jira/browse/MNG-7316 -->
+        <commons.release-plugin.version>1.8.0</commons.release-plugin.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <commons.conf.dir>src/conf</commons.conf.dir>
 
-    <!-- Commons Release Plugin -->
-    <commons.release.version>1.0-alpha3</commons.release.version>
-    <commons.bc.version>1.0-alpha2</commons.bc.version>
-    <commons.rc.version>RC2</commons.rc.version>
-    <commons.release.isDistModule>true</commons.release.isDistModule>
-    <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/imaging</commons.distSvnStagingUrl>
+        <!-- Commons Release Plugin -->
+        <commons.release.version>1.0-alpha3</commons.release.version>
+        <commons.bc.version>1.0-alpha2</commons.bc.version>
+        <commons.rc.version>RC2</commons.rc.version>
+        <commons.release.isDistModule>true</commons.release.isDistModule>
+        <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/imaging
+        </commons.distSvnStagingUrl>
 
-    <!-- Sonar Cloud IO -->
-    <sonar.organization>merendafrancon</sonar.organization>
-    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <!-- Sonar Cloud IO -->
+        <sonar.organization>merendafrancon</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
-  </properties>
+    </properties>
 
-  <scm>
-    <connection>scm:git:http://gitbox.apache.org/repos/asf/commons-imaging.git</connection>
-    <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/commons-imaging.git</developerConnection>
-    <url>https://gitbox.apache.org/repos/asf?p=commons-imaging.git</url>
-    <tag>HEAD</tag>
-  </scm>
+    <scm>
+        <connection>scm:git:http://gitbox.apache.org/repos/asf/commons-imaging.git</connection>
+        <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/commons-imaging.git</developerConnection>
+        <url>https://gitbox.apache.org/repos/asf?p=commons-imaging.git</url>
+        <tag>HEAD</tag>
+    </scm>
 
-  <distributionManagement>
-    <site>
-      <id>apache.website</id>
-      <name>Apache Commons Site</name>
-      <url>scm:svn:https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-imaging/</url>
-    </site>
-  </distributionManagement>
+    <distributionManagement>
+        <site>
+            <id>apache.website</id>
+            <name>Apache Commons Site</name>
+            <url>
+                scm:svn:https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-imaging/
+            </url>
+        </site>
+    </distributionManagement>
 
-  <issueManagement>
-    <system>jira</system>
-    <url>https://issues.apache.org/jira/browse/IMAGING</url>
-  </issueManagement>
-  <inceptionYear>2007</inceptionYear>
+    <issueManagement>
+        <system>jira</system>
+        <url>https://issues.apache.org/jira/browse/IMAGING</url>
+    </issueManagement>
+    <inceptionYear>2007</inceptionYear>
 
-  <build>
-    <defaultGoal>clean verify apache-rat:check checkstyle:check spotbugs:check javadoc:javadoc</defaultGoal>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <configuration>
-          <descriptors>
-            <descriptor>src/assembly/bin.xml</descriptor>
-            <descriptor>src/assembly/src.xml</descriptor>
-          </descriptors>
-          <tarLongFileMode>gnu</tarLongFileMode>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>animal-sniffer-maven-plugin</artifactId>
-        <version>1.23</version>
-        <configuration>
-          <signature>
-            <groupId>org.codehaus.mojo.signature</groupId>
-            <artifactId>java18</artifactId>
-            <version>1.0</version>
-          </signature>
-        </configuration>
-        <executions>
-          <execution>
-            <id>check-java-api</id>
-            <phase>test</phase>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>test-jar</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <archive combine.children="append">
-            <manifestEntries>
-              <Automatic-Module-Name>${commons.module.name}</Automatic-Module-Name>
-            </manifestEntries>
-          </archive>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-scm-publish-plugin</artifactId>
-        <configuration>
-          <ignorePathsToDelete>
-            <ignorePathToDelete>javadocs</ignorePathToDelete>
-          </ignorePathsToDelete>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <configuration>
-          <configLocation>${basedir}/src/conf/checkstyle.xml</configLocation>
-          <!-- <suppressionsLocation>${basedir}/src/conf/checkstyle-suppressions.xml</suppressionsLocation> -->
-          <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
-          <includeTestSourceDirectory>false</includeTestSourceDirectory>
-          <enableRulesSummary>false</enableRulesSummary>
-          <excludes>target/**</excludes>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.github.spotbugs</groupId>
-        <artifactId>spotbugs-maven-plugin</artifactId>
-        <configuration>
-          <excludeFilterFile>${commons.conf.dir}/spotbugs-exclude-filter.xml</excludeFilterFile>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.pitest</groupId>
-        <artifactId>pitest-maven</artifactId>
-        <version>1.15.2</version>
-        <dependencies>
-          <dependency>
-            <groupId>org.pitest</groupId>
-            <artifactId>pitest-junit5-plugin</artifactId>
-            <version>1.2.1</version>
-          </dependency>
-        </dependencies>
-        <configuration>
-          <targetClasses>
-            <param>org.apache.commons.imaging.*</param>
-          </targetClasses>
-          <targetTests>
-            <param>org.apache.commons.imaging.test.*</param>
-          </targetTests>
-        </configuration>
-      </plugin>
-    </plugins>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-scm-publish-plugin</artifactId>
-          <configuration>
-            <ignorePathsToDelete>
-              <ignorePathToDelete>javadocs**</ignorePathToDelete>
-            </ignorePathsToDelete>
-          </configuration>
-        </plugin>     
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <configuration>
-            <excludePackageNames>org.apache.commons.imaging.formats.psd.*:org.apache.commons.imaging.formats.png.*</excludePackageNames>
-            <source>8</source>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.rat</groupId>
-          <artifactId>apache-rat-plugin</artifactId>
-          <configuration>
-            <excludes>
-              <exclude>report/**</exclude>
-              <exclude>.github/workflows/sonar_cloud.yml</exclude>
-              <exclude>src/test/resources/images/**/*</exclude>
-              <exclude>src/test/resources/IMAGING-*/*</exclude>
-              <exclude>src/test/data/**/*.xpm</exclude>
-              <exclude>src/test/data/**/*.pam</exclude>
-              <exclude>src/test/data/**/*.pbm</exclude>
-              <exclude>src/test/data/**/*.pgm</exclude>
-              <exclude>src/test/data/**/*.ppm</exclude>
-              <exclude>src/test/data/**/*.xbm</exclude>
-              <exclude>src/test/data/**/*.bmp</exclude>
-              <exclude>src/test/data/**/*.tga</exclude>
-              <exclude>src/test/data/**/*.hdr</exclude>
-              <exclude>src/main/resources/org/apache/commons/imaging/formats/xpm/rgb.txt</exclude>
-              <exclude>.asf.yaml</exclude>
-            </excludes>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
-
-  <dependencies>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-params</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.hamcrest</groupId>
-      <artifactId>hamcrest</artifactId>
-      <version>2.2</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>2.15.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.openjdk.jol</groupId>
-      <artifactId>jol-core</artifactId>
-      <version>0.17</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-      <version>3.13.0</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-
-  <reporting>
-    <plugins>
-      <plugin>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <configuration>
-          <!-- <suppressionsLocation>${basedir}/src/conf/checkstyle-suppressions.xml</suppressionsLocation> -->
-          <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
-          <includeTestSourceDirectory>false</includeTestSourceDirectory>
-          <enableRulesSummary>false</enableRulesSummary>
-        </configuration>
-        <reportSets>
-          <reportSet>
-            <reports>
-              <report>checkstyle</report>
-            </reports>
-          </reportSet>
-        </reportSets>
-      </plugin>
-      <!-- Requires setting 'export MAVEN_OPTS="-Xmx512m -XX:MaxPermSize=128m" ' -->
-      <plugin>
-        <groupId>com.github.spotbugs</groupId>
-        <artifactId>spotbugs-maven-plugin</artifactId>
-        <configuration>
-          <excludeFilterFile>${commons.conf.dir}/spotbugs-exclude-filter.xml</excludeFilterFile>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-changes-plugin</artifactId>
-        <version>${commons.changes.version}</version>
-        <configuration>
-          <issueLinkTemplate>%URL%/%ISSUE%</issueLinkTemplate>
-        </configuration>
-        <reportSets>
-          <reportSet>
-            <reports>
-              <report>changes-report</report>
-              <report>jira-report</report>
-            </reports>
-          </reportSet>
-        </reportSets>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-pmd-plugin</artifactId>
-        <configuration>
-          <targetJdk>${maven.compiler.target}</targetJdk>
-          <rulesets>
-            <ruleset>${commons.conf.dir}/pmd-ruleset.xml</ruleset>
-          </rulesets>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>taglist-maven-plugin</artifactId>
-        <version>3.0.0</version>
-        <configuration>
-          <tagListOptions>
-            <tagClasses>
-              <tagClass>
-                <displayName>Needs Work</displayName>
-                <tags>
-                  <tag>
-                    <matchString>TODO</matchString>
-                    <matchType>exact</matchType>
-                  </tag>
-                  <tag>
-                    <matchString>FIXME</matchString>
-                    <matchType>exact</matchType>
-                  </tag>
-                  <tag>
-                    <matchString>XXX</matchString>
-                    <matchType>exact</matchType>
-                  </tag>
-                </tags>
-              </tagClass>
-              <tagClass>
-                <displayName>Noteable Markers</displayName>
-                <tags>
-                  <tag>
-                    <matchString>NOTE</matchString>
-                    <matchType>exact</matchType>
-                  </tag>
-                  <tag>
-                    <matchString>NOPMD</matchString>
-                    <matchType>exact</matchType>
-                  </tag>
-                  <tag>
-                    <matchString>NOSONAR</matchString>
-                    <matchType>exact</matchType>
-                  </tag>
-                </tags>
-              </tagClass>
-            </tagClasses>
-          </tagListOptions>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.rat</groupId>
-        <artifactId>apache-rat-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>src/test/resources/images/**/*</exclude>
-            <exclude>src/test/resources/IMAGING-*/*</exclude>
-            <exclude>src/test/data/**/*.xpm</exclude>
-            <exclude>src/test/data/**/*.pam</exclude>
-            <exclude>src/test/data/**/*.pbm</exclude>
-            <exclude>src/test/data/**/*.pgm</exclude>
-            <exclude>src/test/data/**/*.ppm</exclude>
-            <exclude>src/test/data/**/*.xbm</exclude>
-            <exclude>src/test/data/**/*.bmp</exclude>
-            <exclude>src/test/data/**/*.tga</exclude>
-            <exclude>src/test/data/**/*.hdr</exclude>
-            <exclude>src/main/resources/org/apache/commons/imaging/formats/xpm/rgb.txt</exclude>
-            <exclude>.asf.yaml</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-
-    </plugins>
-  </reporting>
-
-  <profiles>
-    <profile>
-      <id>jdk8-javadoc</id>
-      <activation>
-        <jdk>[1.8,)</jdk>
-      </activation>
-      <properties>
-        <additionalparam>-Xdoclint:none</additionalparam>
-      </properties>
-    </profile>
-    <profile>
-      <id>setup-checkout</id>
-      <activation>
-        <file>
-          <missing>site-content</missing>
-        </file>
-      </activation>
-      <build>
+    <build>
+        <defaultGoal>clean verify apache-rat:check checkstyle:check spotbugs:check javadoc:javadoc</defaultGoal>
         <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>prepare-checkout</id>
-                <phase>pre-site</phase>
-                <goals>
-                  <goal>run</goal>
-                </goals>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                  <target>
-                    <exec executable="svn">
-                      <arg line="checkout --depth immediates ${commons.scmPubUrl} ${commons.scmPubCheckoutDirectory}" />
-                    </exec>
-
-                    <exec executable="svn">
-                      <arg line="update --set-depth exclude ${commons.scmPubCheckoutDirectory}/javadocs" />
-                    </exec>
-
-                    <pathconvert pathsep=" " property="dirs">
-                      <dirset dir="${commons.scmPubCheckoutDirectory}" includes="*" />
-                    </pathconvert>
-                    <exec executable="svn">
-                      <arg line="update --set-depth infinity ${dirs}" />
-                    </exec>
-                  </target>
+                    <descriptors>
+                        <descriptor>src/assembly/bin.xml</descriptor>
+                        <descriptor>src/assembly/src.xml</descriptor>
+                    </descriptors>
+                    <tarLongFileMode>gnu</tarLongFileMode>
                 </configuration>
-              </execution>
-            </executions>
-          </plugin>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>animal-sniffer-maven-plugin</artifactId>
+                <version>1.23</version>
+                <configuration>
+                    <signature>
+                        <groupId>org.codehaus.mojo.signature</groupId>
+                        <artifactId>java18</artifactId>
+                        <version>1.0</version>
+                    </signature>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>check-java-api</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <archive combine.children="append">
+                        <manifestEntries>
+                            <Automatic-Module-Name>${commons.module.name}</Automatic-Module-Name>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-publish-plugin</artifactId>
+                <configuration>
+                    <ignorePathsToDelete>
+                        <ignorePathToDelete>javadocs</ignorePathToDelete>
+                    </ignorePathsToDelete>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <configuration>
+                    <configLocation>${basedir}/src/conf/checkstyle.xml</configLocation>
+                    <!-- <suppressionsLocation>${basedir}/src/conf/checkstyle-suppressions.xml</suppressionsLocation> -->
+                    <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
+                    <includeTestSourceDirectory>false</includeTestSourceDirectory>
+                    <enableRulesSummary>false</enableRulesSummary>
+                    <excludes>target/**</excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <configuration>
+                    <excludeFilterFile>${commons.conf.dir}/spotbugs-exclude-filter.xml</excludeFilterFile>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.15.2</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-junit5-plugin</artifactId>
+                        <version>1.2.1</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <targetClasses>
+                        <param>org.apache.commons.imaging.*</param>
+                    </targetClasses>
+                    <targetTests>
+                        <param>org.apache.commons.imaging.test.*</param>
+                    </targetTests>
+                </configuration>
+            </plugin>
         </plugins>
-      </build>
-    </profile>
-  </profiles>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-scm-publish-plugin</artifactId>
+                    <configuration>
+                        <ignorePathsToDelete>
+                            <ignorePathToDelete>javadocs**</ignorePathToDelete>
+                        </ignorePathsToDelete>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <configuration>
+                        <excludePackageNames>
+                            org.apache.commons.imaging.formats.psd.*:org.apache.commons.imaging.formats.png.*
+                        </excludePackageNames>
+                        <source>8</source>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.rat</groupId>
+                    <artifactId>apache-rat-plugin</artifactId>
+                    <configuration>
+                        <excludes>
+                            <exclude>report/**</exclude>
+                            <exclude>.github/workflows/sonar_cloud.yml</exclude>
+                            <exclude>src/test/resources/images/**/*</exclude>
+                            <exclude>src/test/resources/IMAGING-*/*</exclude>
+                            <exclude>src/test/data/**/*.xpm</exclude>
+                            <exclude>src/test/data/**/*.pam</exclude>
+                            <exclude>src/test/data/**/*.pbm</exclude>
+                            <exclude>src/test/data/**/*.pgm</exclude>
+                            <exclude>src/test/data/**/*.ppm</exclude>
+                            <exclude>src/test/data/**/*.xbm</exclude>
+                            <exclude>src/test/data/**/*.bmp</exclude>
+                            <exclude>src/test/data/**/*.tga</exclude>
+                            <exclude>src/test/data/**/*.hdr</exclude>
+                            <exclude>src/main/resources/org/apache/commons/imaging/formats/xpm/rgb.txt</exclude>
+                            <exclude>.asf.yaml</exclude>
+                            <exclude>spotbugs-security-exclude.xml</exclude>
+                            <exclude>spotbugs-security-include.xml</exclude>
+                            <exclude>.github/workflows/spotbug-analysis.yml</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>com.github.spotbugs</groupId>
+                    <artifactId>spotbugs-maven-plugin</artifactId>
+                    <version>4.8.1.0</version>
+                    <dependencies>
+                        <!-- overwrite dependency on spotbugs if you want to specify the version of spotbugs -->
+                        <dependency>
+                            <groupId>com.github.spotbugs</groupId>
+                            <artifactId>spotbugs</artifactId>
+                            <version>4.8.2</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
-  <developers>
-    <developer>
-      <name>Charles M. Chen</name>
-      <id>cmchen</id>
-    </developer>
-    <developer>
-      <name>Philipp Koch</name>
-      <id>pkoch</id>
-    </developer>
-    <developer>
-      <name>Jeremias Maerki</name>
-      <id>jeremias</id>
-    </developer>
-    <developer>
-      <name>Craig Russell</name>
-      <id>clr</id>
-    </developer>
-    <developer>
-      <name>Yoav Shapira</name>
-      <id>yoavs</id>
-    </developer>
-    <developer>
-      <name>Carsten Ziegeler</name>
-      <id>cziegeler</id>
-    </developer>
-    <developer>
-      <name>Damjan Jovanovic</name>
-      <id>damjan</id>
-    </developer>
-    <developer>
-      <name>Matt Benson</name>
-      <id>mbenson</id>
-    </developer>
-    <developer>
-      <id>ggregory</id>
-      <name>Gary Gregory</name>
-      <email>ggregory at apache.org</email>
-      <url>https://www.garygregory.com</url>
-      <organization>The Apache Software Foundation</organization>
-      <organizationUrl>https://www.apache.org/</organizationUrl>      
-      <roles>
-        <role>PMC Member</role>
-      </roles>
-      <timezone>America/New_York</timezone>
-      <properties>
-        <picUrl>https://people.apache.org/~ggregory/img/garydgregory80.png</picUrl>
-      </properties>
-    </developer>
-  </developers>
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>2.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.15.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jol</groupId>
+            <artifactId>jol-core</artifactId>
+            <version>0.17</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.13.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
-  <contributors>
-    <contributor>
-      <name>Adrian Moerchen</name>
-    </contributor>
-    <contributor>
-      <name>Alex Vigdor</name>
-    </contributor>
-    <contributor>
-      <name>Craig Kelly</name>
-    </contributor>
-    <contributor>
-      <name>Gary Lucas</name>
-    </contributor>
-    <contributor>
-      <name>Gavin Shiels</name>
-    </contributor>
-    <contributor>
-      <name>Peter Royal</name>
-    </contributor>
-    <contributor>
-      <name>Piyush Kapoor</name>
-    </contributor>
-    <contributor>
-      <name>Tars Joris</name>
-    </contributor>
-    <contributor>
-      <name>VVD</name>
-    </contributor>
-    <contributor>
-      <name>Wanja Gayk</name>
-    </contributor>
-    <contributor>
-      <name>Arturo Bernal</name>
-    </contributor>
-  </contributors>
+    <reporting>
+        <plugins>
+            <plugin>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <configuration>
+                    <!-- <suppressionsLocation>${basedir}/src/conf/checkstyle-suppressions.xml</suppressionsLocation> -->
+                    <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
+                    <includeTestSourceDirectory>false</includeTestSourceDirectory>
+                    <enableRulesSummary>false</enableRulesSummary>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>checkstyle</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <!-- Requires setting 'export MAVEN_OPTS="-Xmx512m -XX:MaxPermSize=128m" ' -->
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <configuration>
+                    <excludeFilterFile>${commons.conf.dir}/spotbugs-exclude-filter.xml</excludeFilterFile>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-changes-plugin</artifactId>
+                <version>${commons.changes.version}</version>
+                <configuration>
+                    <issueLinkTemplate>%URL%/%ISSUE%</issueLinkTemplate>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>changes-report</report>
+                            <report>jira-report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <configuration>
+                    <targetJdk>${maven.compiler.target}</targetJdk>
+                    <rulesets>
+                        <ruleset>${commons.conf.dir}/pmd-ruleset.xml</ruleset>
+                    </rulesets>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>taglist-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <tagListOptions>
+                        <tagClasses>
+                            <tagClass>
+                                <displayName>Needs Work</displayName>
+                                <tags>
+                                    <tag>
+                                        <matchString>TODO</matchString>
+                                        <matchType>exact</matchType>
+                                    </tag>
+                                    <tag>
+                                        <matchString>FIXME</matchString>
+                                        <matchType>exact</matchType>
+                                    </tag>
+                                    <tag>
+                                        <matchString>XXX</matchString>
+                                        <matchType>exact</matchType>
+                                    </tag>
+                                </tags>
+                            </tagClass>
+                            <tagClass>
+                                <displayName>Noteable Markers</displayName>
+                                <tags>
+                                    <tag>
+                                        <matchString>NOTE</matchString>
+                                        <matchType>exact</matchType>
+                                    </tag>
+                                    <tag>
+                                        <matchString>NOPMD</matchString>
+                                        <matchType>exact</matchType>
+                                    </tag>
+                                    <tag>
+                                        <matchString>NOSONAR</matchString>
+                                        <matchType>exact</matchType>
+                                    </tag>
+                                </tags>
+                            </tagClass>
+                        </tagClasses>
+                    </tagListOptions>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.rat</groupId>
+                <artifactId>apache-rat-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>src/test/resources/images/**/*</exclude>
+                        <exclude>src/test/resources/IMAGING-*/*</exclude>
+                        <exclude>src/test/data/**/*.xpm</exclude>
+                        <exclude>src/test/data/**/*.pam</exclude>
+                        <exclude>src/test/data/**/*.pbm</exclude>
+                        <exclude>src/test/data/**/*.pgm</exclude>
+                        <exclude>src/test/data/**/*.ppm</exclude>
+                        <exclude>src/test/data/**/*.xbm</exclude>
+                        <exclude>src/test/data/**/*.bmp</exclude>
+                        <exclude>src/test/data/**/*.tga</exclude>
+                        <exclude>src/test/data/**/*.hdr</exclude>
+                        <exclude>src/main/resources/org/apache/commons/imaging/formats/xpm/rgb.txt</exclude>
+                        <exclude>.asf.yaml</exclude>
+                        <exclude>spotbugs-security-exclude.xml</exclude>
+                        <exclude>spotbugs-security-include.xml</exclude>
+                        <exclude>.github/workflows/spotbug-analysis.yml</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+        </plugins>
+
+    </reporting>
+
+    <profiles>
+        <profile>
+            <id>jdk8-javadoc</id>
+            <activation>
+                <jdk>[1.8,)</jdk>
+            </activation>
+            <properties>
+                <additionalparam>-Xdoclint:none</additionalparam>
+            </properties>
+        </profile>
+        <profile>
+            <id>setup-checkout</id>
+            <activation>
+                <file>
+                    <missing>site-content</missing>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>prepare-checkout</id>
+                                <phase>pre-site</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+                                        <exec executable="svn">
+                                            <arg line="checkout --depth immediates ${commons.scmPubUrl} ${commons.scmPubCheckoutDirectory}"/>
+                                        </exec>
+
+                                        <exec executable="svn">
+                                            <arg line="update --set-depth exclude ${commons.scmPubCheckoutDirectory}/javadocs"/>
+                                        </exec>
+
+                                        <pathconvert pathsep=" " property="dirs">
+                                            <dirset dir="${commons.scmPubCheckoutDirectory}" includes="*"/>
+                                        </pathconvert>
+                                        <exec executable="svn">
+                                            <arg line="update --set-depth infinity ${dirs}"/>
+                                        </exec>
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.github.spotbugs</groupId>
+                        <artifactId>spotbugs-maven-plugin</artifactId>
+                        <version>4.8.1.0</version>
+                        <configuration>
+                            <includeFilterFile>spotbugs-security-include.xml</includeFilterFile>
+                            <excludeFilterFile>spotbugs-security-exclude.xml</excludeFilterFile>
+                            <xmlOutput>true</xmlOutput>
+                            <failOnError>false</failOnError>
+                            <plugins>
+                                <plugin>
+                                    <groupId>com.h3xstream.findsecbugs</groupId>
+                                    <artifactId>findsecbugs-plugin</artifactId>
+                                    <version>1.12.0</version>
+                                </plugin>
+                            </plugins>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.owasp</groupId>
+                        <artifactId>dependency-check-maven</artifactId>
+                        <version>9.0.4</version>
+                        <configuration>
+                            <skip>${skipDependencyCheck}</skip>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <developers>
+        <developer>
+            <name>Charles M. Chen</name>
+            <id>cmchen</id>
+        </developer>
+        <developer>
+            <name>Philipp Koch</name>
+            <id>pkoch</id>
+        </developer>
+        <developer>
+            <name>Jeremias Maerki</name>
+            <id>jeremias</id>
+        </developer>
+        <developer>
+            <name>Craig Russell</name>
+            <id>clr</id>
+        </developer>
+        <developer>
+            <name>Yoav Shapira</name>
+            <id>yoavs</id>
+        </developer>
+        <developer>
+            <name>Carsten Ziegeler</name>
+            <id>cziegeler</id>
+        </developer>
+        <developer>
+            <name>Damjan Jovanovic</name>
+            <id>damjan</id>
+        </developer>
+        <developer>
+            <name>Matt Benson</name>
+            <id>mbenson</id>
+        </developer>
+        <developer>
+            <id>ggregory</id>
+            <name>Gary Gregory</name>
+            <email>ggregory at apache.org</email>
+            <url>https://www.garygregory.com</url>
+            <organization>The Apache Software Foundation</organization>
+            <organizationUrl>https://www.apache.org/</organizationUrl>
+            <roles>
+                <role>PMC Member</role>
+            </roles>
+            <timezone>America/New_York</timezone>
+            <properties>
+                <picUrl>https://people.apache.org/~ggregory/img/garydgregory80.png</picUrl>
+            </properties>
+        </developer>
+    </developers>
+
+    <contributors>
+        <contributor>
+            <name>Adrian Moerchen</name>
+        </contributor>
+        <contributor>
+            <name>Alex Vigdor</name>
+        </contributor>
+        <contributor>
+            <name>Craig Kelly</name>
+        </contributor>
+        <contributor>
+            <name>Gary Lucas</name>
+        </contributor>
+        <contributor>
+            <name>Gavin Shiels</name>
+        </contributor>
+        <contributor>
+            <name>Peter Royal</name>
+        </contributor>
+        <contributor>
+            <name>Piyush Kapoor</name>
+        </contributor>
+        <contributor>
+            <name>Tars Joris</name>
+        </contributor>
+        <contributor>
+            <name>VVD</name>
+        </contributor>
+        <contributor>
+            <name>Wanja Gayk</name>
+        </contributor>
+        <contributor>
+            <name>Arturo Bernal</name>
+        </contributor>
+    </contributors>
 </project>
