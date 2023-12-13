@@ -499,6 +499,9 @@
                         <groupId>org.owasp</groupId>
                         <artifactId>dependency-check-maven</artifactId>
                         <version>9.0.4</version>
+                        <configuration>
+                            <skip>${skipDependencyCheck}</skip>
+                        </configuration>
                         <executions>
                             <execution>
                                 <goals>
