@@ -23,10 +23,9 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingTestConstants;
 import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
@@ -49,51 +48,69 @@ public class PngWriterTest extends AbstractPngTest {
         }
     }
 
-    private List<File> getValidPngImages() throws IOException {
-        final List<File> result = new ArrayList<>();
-        for (final File imageFile : getPngImages()) {
-            if (!isInvalidPngTestFile(imageFile)) {
-                result.add(imageFile);
-            }
-        }
-        return result;
+    private File getPngFile(String name) {
+        final File pngFolder = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, "png");
+        return new File(pngFolder, name);
     }
+
+    // The form of the test set is
+    //    0.   target file name
+    //    1.   Expected colour count (as String) - for testPaletteFactory
+    private static String [][] testSet = {
+        {"1/Oregon Scientific DS6639 - DSC_0307 - small.png", "1"},
+        {"2/12118.png", "1"},
+        {"2/28569-4.png", "1"},
+        {"2/28569-8.png", "1"},
+        {"2/28569.png", "1"},
+        {"3/testImage.png", "116"},
+        {"3/testImageNoAlpha.png", "1"},
+        {"4/buttons_level_menu_down.ipad.png", "2"},
+        {"5/trns-gray.png", "26"},
+        {"5/trns-palette8.png", "18"},
+        {"5/trns-rgb.png", "26"},
+    };
 
     @Test
     public void testNullParameters() throws IOException {
-        final File imageFile = getValidPngImages().get(0);
+        for (String[] testTarget : testSet) {
+            final String filePath = testTarget[0];
+            final File imageFile = getPngFile(filePath);
 
-        final BufferedImage image = Imaging.getBufferedImage(imageFile);
+            final BufferedImage image = Imaging.getBufferedImage(imageFile);
 
-        try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
-            new PngWriter().writeImage(image, os, null, null);
-            final byte[] bytes = os.toByteArray();
-            final int numColors = countColors(bytes);
-            assertTrue(numColors > 1);
+            try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
+                new PngWriter().writeImage(image, os, null, null);
+                final byte[] bytes = os.toByteArray();
+                final int numColors = countColors(bytes);
+                assertTrue(numColors > 1);
+            }
         }
     }
 
     @Test
     public void testPaletteFactory() throws IOException {
-        final File imageFile = getValidPngImages().get(0);
+        for (String[] testTarget : testSet) {
+            final String filePath = testTarget[0];
+            final File imageFile = getPngFile(filePath);
+            final int colourCount = Integer.parseInt(testTarget[1]);
 
-        final BufferedImage image = Imaging.getBufferedImage(imageFile);
-        final PngImagingParameters params = new PngImagingParameters();
-        params.setForceIndexedColor(true);
+            final BufferedImage image = Imaging.getBufferedImage(imageFile);
+            final PngImagingParameters params = new PngImagingParameters();
+            params.setForceIndexedColor(true);
 
-        final byte[] bytes = getImageBytes(image, params, null);
-        final int numColors = countColors(bytes);
-        assertTrue(numColors > 1, imageFile::toString);
+            final byte[] bytes = getImageBytes(image, params, null);
+            final int numColors = countColors(bytes);
+            assertTrue(numColors > 1, imageFile::toString);
 
-        final PaletteFactory factory = new PaletteFactory() {
-            @Override
-            public Palette makeQuantizedRgbPalette(final BufferedImage src, final int max) {
-                // Force a palette containing nothing but black (all zero's).
-                return new SimplePalette(new int[max]);
-            }
-        };
-        final byte[] palettedBytes = getImageBytes(image, params, factory);
-
-        assertEquals(1, countColors(palettedBytes));
+            final PaletteFactory factory = new PaletteFactory() {
+                @Override
+                public Palette makeQuantizedRgbPalette(final BufferedImage src, final int max) {
+                    // Force a palette containing nothing but black (all zero's).
+                    return new SimplePalette(new int[max]);
+                }
+            };
+            final byte[] palettedBytes = getImageBytes(image, params, factory);
+            assertEquals(colourCount, countColors(palettedBytes), filePath);
+        }
     }
 }
