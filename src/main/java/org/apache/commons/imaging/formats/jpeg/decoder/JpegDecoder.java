@@ -416,7 +416,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
     public void visitSos(final int marker, final byte[] markerBytes, final byte[] imageData) {
         try (ByteArrayInputStream is = new ByteArrayInputStream(imageData)) {
             // read the scan header
-            final int segmentLength = read2Bytes("segmentLength", is, "Not a Valid JPEG File", getByteOrder());
+            final int segmentLength = read2Bytes("segmentLength", is,"Not a Valid JPEG File", getByteOrder());
             final byte[] sosSegmentBytes = readBytes("SosSegment", is, segmentLength - 2, "Not a Valid JPEG File");
             sosSegment = new SosSegment(marker, sosSegmentBytes);
             // read the payload of the scan, this is the remainder of image data after the header
@@ -441,18 +441,11 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
 
             final int hSize = 8 * hMax;
             final int vSize = 8 * vMax;
-            int xMCUs = 0;
-            int yMCUs = 0;
-            try {
-                if (hSize == 0 || vSize == 0) {
-                    throw new RuntimeException("hSize or vSize cannot be 0");
-                }
-                xMCUs = (sofnSegment.width + hSize - 1) / hSize;
-                yMCUs = (sofnSegment.height + vSize - 1) / vSize;
-            } catch (Exception e) {
-                System.err.println("Error: " + e.getMessage());
+            if (hSize == 0 || vSize == 0) {
+                throw new RuntimeException("hSize or vSize cannot be 0 like divisor");
             }
-
+            final int xMCUs = (sofnSegment.width + hSize - 1) / hSize;
+            final int yMCUs = (sofnSegment.height + vSize - 1) / vSize;
             final Block[] mcu = allocateMcuMemory();
             final Block[] scaledMCU = Allocator.array(mcu.length, Block[]::new, Block.SHALLOW_SIZE);
             Arrays.setAll(scaledMCU, i -> new Block(hSize, vSize));
