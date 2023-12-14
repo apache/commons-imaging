@@ -234,7 +234,7 @@ As we look towards the future, the principles of software dependability will con
 
 The ongoing advancements in technology, rising complexity of software, and its critical role in societal functions, as highlighted by B. Randell and J.C. Laprie, make the study of software dependability more relevant than ever [9][10]. Today, as software systems become increasingly intricate and integral to all aspects of life, from personal devices to global networks, the principles of software dependability continue to evolve, necessitating ongoing research and adaptation.
 
-\section{Template Overview}
+\section{Apache Commons Imaging}
 As noted in the introduction, the ``\verb|acmart|'' document class can
 be used to prepare many different kinds of documentation --- a
 dual-anonymous initial submission of a full-length technical paper, a
@@ -308,13 +308,43 @@ vertical spacing between elements of your work --- is not allowed.
 {\bfseries Your document will be returned to you for revision if
   modifications are discovered.}
 
-\section{Typefaces}
+\section{SonarCloud}
 
-The ``\verb|acmart|'' document class requires the use of the
-``Libertine'' typeface family. Your \TeX\ installation should include
-this set of packages. Please do not substitute other typefaces. The
-``\verb|lmodern|'' and ``\verb|ltimes|'' packages should not be used,
-as they will override the built-in typeface families.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\linewidth]{reportSonarCloud.png}
+    \caption{Report before fix}
+    \label{fig:enter-label}
+\end{figure}
+
+
+\subsection{Analyzing SonarCloud}
+
+After analyzing the commons-imaging-dependability project on SonarCloud, we found the following issues in the code:
+
+\textbf{High → 109}
+
+In the high category, several errors are related to divisions where the divisor is not checked for the possibility of being 0. Therefore, if the divisor is 0, the code would throw an exception. There are also errors of the type where referencing a static member of a subclass from its parent during class initialization makes the code more fragile and prone to future errors. The program's execution will largely depend on the order of class and static member initialization.
+
+\textbf{Medium → 2}
+
+In the medium category, there are only 2 errors where an attempt is made to get the length of a palette that could be null.
+
+\textbf{Low → 63}
+
+Out of these 63 errors, most are related to the suggestion to remove a left shift, explaining that an int is a 32-bit variable and specifying that shifting an int by 32 is the same as shifting by 0, and shifting by 33 is the same as shifting by 1. Additionally, there are some errors related to number casting.
+
+\subsection{Bugs Fixed}
+
+To organize our tasks based on the errors found in \textbf{SonarCloud}, we created tasks in \textbf{JIRA}, and each of them was assigned to the three members of the group. We attempted to address the majority of the 119 issues related to reliability, of which we were able to fix XX.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\linewidth]{reportSonarCloudFixed.png}
+    \caption{Bugs Fixed}
+    \label{fig:enter-label}
+\end{figure}
+
 
 \section{Title Information}
 
