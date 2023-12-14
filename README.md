@@ -106,3 +106,79 @@ Additional Resources
 + `#apache-commons` IRC channel on `irc.freenode.org`
 
 [ml]:https://commons.apache.org/mail-lists.html
+
+
+# Software Dependability Tools - Usage
+
+## 1. SonarCloud
+- Link to access data: https://sonarcloud.io/project/overview?id=MerendaFrancoN_commons-imaging-dependability
+
+## 2. Code Coverage Tools
+### 1. Cobertura
+
+### 2. JaCoCo
+- Run  Jacoco Code Coverage Report:
+  - `mvn clean test jacoco:report`
+
+- **Check** -> Output Folder: `target/site/jacoco`
+  - -> Output Report in HTML: `target/site/jacoco/index.html`
+  - -> Output Report in CSV: `target/site/jacoco/index.html`
+
+### 3. [CodeCov](https://about.codecov.io/)
+- Link to access data: https://app.codecov.io/gh/MerendaFrancoN/commons-imaging-dependability
+  - Data is uploaded when a commit is pushed to `master` or for each PR.
+
+## 3. Mutation Testing Tool
+### 1. [PiTest](https://pitest.org/quickstart/maven/) 
+1. Run Mutation Coverage and generate report in html: 
+ - **Run**: `mvn org.pitest:pitest-maven:mutationCoverage -DoutputFormats=HTML`
+ - **Check**: `target/pit-reports/index.html`
+2. Run Mutation Coverage with specific mutation operator:mvn org.pitest:pitest-maven:mutationCoverage -DmutationOperators=YOUR_CUSTOM_OPERATOR
+   - Syntax: `mvn org.pitest:pitest-maven:mutationCoverage -DmutationOperators=YOUR_CUSTOM_OPERATOR`
+   - Example: `mvn org.pitest:pitest-maven:mutationCoverage -Dmutators=ALL` - Tries with all mutation operators.
+
+## 4. Benchmarking Tools
+#### 1. Java Microbenchmarking Tool (JMH)
+--> Usage info - https://www.baeldung.com/java-microbenchmark-harness
+
+1. Mark all the tests that you could need to benchmark using Java Microbenchmark annotations.
+2. Run `src/test/java/org/apache/commons/imaging/BenchmarkRunner.java` - `Main` function to run benchmarks.
+
+
+## 5. Automated Testing Generation Tools
+### 1. [EvoSuite](https://www.evosuite.org/) - Use Java 8
+- EvoSuite Tests Generation for all classes - Only Runs with **`Java 8`** !
+- Syntax:
+  - `mvn -DmemoryInMB=<amount_mb> -Dcores=<number_of_cores> evosuite:generate evosuite:export test`
+- Example: 
+  - `mvn -DmemoryInMB=8000 -Dcores=6 evosuite:generate evosuite:export test`
+
+
+- EvoSuite Tests Generation for specific classes - Only Runs with **`Java 8`** !
+  - Syntax: `mvn -DmemoryInMB=<amount_mb> -Dcores=<number_of_cores> evosuite:generate evosuite:export test -DcutsFile=<path_to_file_where_specific_classes_are_defined.txt>`
+- Example:
+  - `mvn -DmemoryInMB=2000 -Dcores=2 evosuite:generate evosuite:export test -DcutsFile=.evosuite/cutsFile.txt`
+
+Example of `cutsFile.txt`:
+
+`org.apache.commons.imaging.ImageInfo, org.apache.commons.imaging.ImageFormats`
+
+### 2. [Randoop](https://randoop.github.io/randoop/) - Use Java 8 
+1. Download last version [jar](https://randoop.github.io/randoop/manual/index.html#getting_randoop)
+2. Example for generating tests with randoop : 
+```bash 
+java -Xmx3000m -classpath /Users/stormtrooper/SoftwareProjects/commons-imaging/target/commons-imaging-1.0-SNAPSHOT.jar:/Users/stormtrooper/Downloads/randoop-4.3.2/randoop-all-4.3.2.jar randoop.main.Main gentests --testclass=org.apache.commons.imaging.ImageInfo --output-limit=10
+```
+
+More on: [Randoop - Getting Started](https://randoop.github.io/randoop/manual/index.html#getting_randoop)
+
+## Security - Related Tools
+### 1. [SpotBug](https://spotbugs.github.io/)
+1. Run -> `mvn spotbugs:check`
+2. Run -> `mvn spotbugs:gui` - To run a graphical ui to see the report graphically.
+
+--> It's also configured as an action in the CI, you can see it in the github actions as well.
+
+### 2. [Owasp DC](https://owasp.org/www-project-dependency-check/)
+1. Run -> `mvn org.owasp:dependency-check-maven:check`
+2. Check the report in `target/dependency-check-report.html`
