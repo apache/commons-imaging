@@ -127,7 +127,7 @@ class RgbeInfo implements Closeable {
                     if (0 == mantissa) {
                         out[channel][pos] = 0;
                     } else {
-                        final float mult = (float) Math.pow(2, mantissa - (128 + 8));
+                        final float mult = (float) Math.pow(2, (double)mantissa - (128 + 8));
                         out[channel][pos] = ((rgbe[p + channelOffset] & 0xff) + 0.5f) * mult;
                     }
                 }
