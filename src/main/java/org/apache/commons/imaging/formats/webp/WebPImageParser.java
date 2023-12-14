@@ -106,7 +106,7 @@ public class WebPImageParser extends AbstractImageParser<WebPImagingParameters> 
                         }
                     }
                     if (skip) {
-                        skipBytes(is, payloadSize + (padding ? 1 : 0));
+                        skipBytes(is, (long) payloadSize + (padding ? 1 : 0));
                         sizeCount = SafeOperations.add(sizeCount, chunkSize);
                         continue;
                     }
