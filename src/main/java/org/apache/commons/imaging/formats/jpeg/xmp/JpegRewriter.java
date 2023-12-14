@@ -162,7 +162,7 @@ public class JpegRewriter extends BinaryFileParser {
     private static final SegmentFilter PHOTOSHOP_APP13_SEGMENT_FILTER = JFIFPieceSegment::isPhotoshopApp13Segment;
 
     /**
-     * Constructor. to guess whether a file contains an image based on its file
+     * Constructs a new instance. to guess whether a file contains an image based on its file
      * extension.
      */
     public JpegRewriter() {

@@ -117,7 +117,7 @@ public class ExifRewriter extends BinaryFileParser {
     }
 
     /**
-     * Constructor. to guess whether a file contains an image based on its file
+     * Constructs a new instance. to guess whether a file contains an image based on its file
      * extension.
      */
     public ExifRewriter() {
@@ -125,7 +125,7 @@ public class ExifRewriter extends BinaryFileParser {
     }
 
     /**
-     * Constructor.
+     * Constructs a new instance.
      * <p>
      *
      * @param byteOrder
