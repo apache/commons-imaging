@@ -606,8 +606,8 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
 
             // leave the loop if numbers would go beyond Integer.MAX_VALUE to avoid infinite loops
             // test every operation from below if it would increase an int value beyond Integer.MAX_VALUE
-            final long nextMaxColors = maxColors * WRITE_PALETTE.length;
-            final long nextCharsPerPixel = charsPerPixel + 1;
+            final long nextMaxColors = (long)maxColors * WRITE_PALETTE.length;
+            final long nextCharsPerPixel = (long)charsPerPixel + 1;
             if (nextMaxColors > Integer.MAX_VALUE) {
                 throw new ImagingException("Xpm: Can't write images with more than Integer.MAX_VALUE colors.");
             }

@@ -110,11 +110,11 @@ public class IccProfileParser extends BinaryFileParser {
             // if (length != ProfileSize)
             // return null;
 
-            skipBytes(is, 4 * 5);
+            skipBytes(is, (long)4 * 5);
 
             skipBytes(is, 12, "Not a Valid ICC Profile");
 
-            skipBytes(is, 4 * 3);
+            skipBytes(is, (long)4 * 3);
 
             final int deviceManufacturer = read4Bytes("ProfileFileSignature", is, "Not a Valid ICC Profile", getByteOrder());
             if (LOGGER.isLoggable(Level.FINEST)) {
