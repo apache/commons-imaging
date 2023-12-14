@@ -19,19 +19,19 @@ package org.apache.commons.imaging.color;
 public final class ColorConversions {
 
     // White reference
-    /** see: https://en.wikipedia.org/wiki/CIELAB_color_space#From_CIEXYZ_to_CIELAB[10] */
+    /** See: https://en.wikipedia.org/wiki/CIELAB_color_space#From_CIEXYZ_to_CIELAB[10] */
     private static final double REF_X = 95.047; // Observer= 2°, Illuminant= D65
 
-    /** see: https://en.wikipedia.org/wiki/CIELAB_color_space#From_CIEXYZ_to_CIELAB[10] */
+    /** See: https://en.wikipedia.org/wiki/CIELAB_color_space#From_CIEXYZ_to_CIELAB[10] */
     private static final double REF_Y = 100.000;
 
-    /** see: https://en.wikipedia.org/wiki/CIELAB_color_space#From_CIEXYZ_to_CIELAB[10] */
+    /** See: https://en.wikipedia.org/wiki/CIELAB_color_space#From_CIEXYZ_to_CIELAB[10] */
     private static final double REF_Z = 108.883;
 
-    /** see: https://en.wikipedia.org/wiki/CIELAB_color_space#From_CIEXYZ_to_CIELAB[10] */
+    /** See: https://en.wikipedia.org/wiki/CIELAB_color_space#From_CIEXYZ_to_CIELAB[10] */
     private static final double XYZ_m = 7.787037; // match in slope. Note commonly seen 7.787 gives worse results
 
-    /** see: https://en.wikipedia.org/wiki/CIELAB_color_space#From_CIEXYZ_to_CIELAB[10] */
+    /** See: https://en.wikipedia.org/wiki/CIELAB_color_space#From_CIEXYZ_to_CIELAB[10] */
     private static final double XYZ_t0 = 0.008856;
 
     public static int convertCieLabToArgbTest(final int cieL, final int cieA, final int cieB) {
