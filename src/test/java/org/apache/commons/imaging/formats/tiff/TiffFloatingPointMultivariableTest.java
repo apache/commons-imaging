@@ -120,7 +120,7 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
      * @param height the height of the overall image
      * @param nRowsInBlock the number of rows in the Strip or Tile
      * @param nColsInBlock the number of columns in the Strip or Tile
-     * @param byteOrder little endian or big endian
+     * @param byteOrder little-endian or big endian
      * @return a valid array of equally sized array.
      */
     private byte[][] getBytesForOutput32(
