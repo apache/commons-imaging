@@ -409,7 +409,11 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
     @Override
     public ImageInfo getImageInfo(final ByteSource byteSource, final GifImagingParameters params)
             throws ImagingException, IOException {
-        final GifImageContents blocks = readFile(byteSource, false);
+        boolean stopReadingBeforeImageData = true;
+        if (params != null) {
+            stopReadingBeforeImageData = params.getStopReadingBeforeImageData();
+        }
+        final GifImageContents blocks = readFile(byteSource, stopReadingBeforeImageData);
 
         final GifHeaderInfo bhi = blocks.gifHeaderInfo;
         if (bhi == null) {
@@ -484,7 +488,11 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
     @Override
     public ImageMetadata getMetadata(final ByteSource byteSource, final GifImagingParameters params)
             throws ImagingException, IOException {
-        final GifImageContents imageContents = readFile(byteSource, false);
+        boolean stopReadingBeforeImageData = true;
+        if (params != null) {
+            stopReadingBeforeImageData = params.getStopReadingBeforeImageData();
+        }
+        final GifImageContents imageContents = readFile(byteSource, stopReadingBeforeImageData);
 
         final GifHeaderInfo bhi = imageContents.gifHeaderInfo;
         if (bhi == null) {
