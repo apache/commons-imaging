@@ -22,9 +22,5 @@ package org.apache.commons.imaging.formats.png;
  * @see <a href="https://www.w3.org/TR/png/#9Filters">Portable Network Graphics Specification - Filtering</a>
  */
 enum FilterType {
-    NONE,
-    SUB,
-    UP,
-    AVERAGE,
-    PAETH
+    NONE, SUB, UP, AVERAGE, PAETH
 }

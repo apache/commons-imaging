@@ -156,7 +156,7 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
                             final int green = Integer.parseInt(line.substring(4, 7).trim());
                             final int blue = Integer.parseInt(line.substring(8, 11).trim());
                             final String colorName = line.substring(11).trim();
-                            colors.put(colorName.toLowerCase(Locale.ENGLISH), 0xff000000 | (red << 16) | (green << 8) | blue);
+                            colors.put(colorName.toLowerCase(Locale.ENGLISH), 0xff000000 | red << 16 | green << 8 | blue);
                         } catch (final NumberFormatException nfe) {
                             throw new ImagingException("Couldn't parse color in rgb.txt", nfe);
                         }
@@ -250,7 +250,7 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
                 final int red = Integer.parseInt(color.substring(0, 1), 16);
                 final int green = Integer.parseInt(color.substring(1, 2), 16);
                 final int blue = Integer.parseInt(color.substring(2, 3), 16);
-                return 0xff000000 | (red << 20) | (green << 12) | (blue << 4);
+                return 0xff000000 | red << 20 | green << 12 | blue << 4;
             }
             if (color.length() == 6) {
                 return 0xff000000 | Integer.parseInt(color, 16);
@@ -259,19 +259,19 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
                 final int red = Integer.parseInt(color.substring(0, 1), 16);
                 final int green = Integer.parseInt(color.substring(3, 4), 16);
                 final int blue = Integer.parseInt(color.substring(6, 7), 16);
-                return 0xff000000 | (red << 16) | (green << 8) | blue;
+                return 0xff000000 | red << 16 | green << 8 | blue;
             }
             if (color.length() == 12) {
                 final int red = Integer.parseInt(color.substring(0, 1), 16);
                 final int green = Integer.parseInt(color.substring(4, 5), 16);
                 final int blue = Integer.parseInt(color.substring(8, 9), 16);
-                return 0xff000000 | (red << 16) | (green << 8) | blue;
+                return 0xff000000 | red << 16 | green << 8 | blue;
             }
             if (color.length() == 24) {
                 final int red = Integer.parseInt(color.substring(0, 1), 16);
                 final int green = Integer.parseInt(color.substring(8, 9), 16);
                 final int blue = Integer.parseInt(color.substring(16, 17), 16);
-                return 0xff000000 | (red << 16) | (green << 8) | blue;
+                return 0xff000000 | red << 16 | green << 8 | blue;
             }
             return 0x00000000;
         }
@@ -322,7 +322,7 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
             for (int j = 0; j < tokens.length; j++) {
                 final String token = tokens[j];
                 boolean isKey = false;
-                if (previousKeyIndex < (j - 1) && "m".equals(token) || "g4".equals(token) || "g".equals(token) || "c".equals(token) || "s".equals(token)) {
+                if (previousKeyIndex < j - 1 && "m".equals(token) || "g4".equals(token) || "g".equals(token) || "c".equals(token) || "s".equals(token)) {
                     isKey = true;
                 }
                 if (isKey) {
@@ -460,7 +460,7 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
         }
         for (int i = 0; i < charsPerPixel; i++) {
             final int multiple = index / highestPower;
-            index -= (multiple * highestPower);
+            index -= multiple * highestPower;
             highestPower /= WRITE_PALETTE.length;
             stringBuilder.append(WRITE_PALETTE[multiple]);
         }
@@ -489,11 +489,11 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
         long bits = uuid.getMostSignificantBits();
         // Long.toHexString() breaks for very big numbers
         for (int i = 64 - 8; i >= 0; i -= 8) {
-            stringBuilder.append(Integer.toHexString((int) ((bits >> i) & 0xff)));
+            stringBuilder.append(Integer.toHexString((int) (bits >> i & 0xff)));
         }
         bits = uuid.getLeastSignificantBits();
         for (int i = 64 - 8; i >= 0; i -= 8) {
-            stringBuilder.append(Integer.toHexString((int) ((bits >> i) & 0xff)));
+            stringBuilder.append(Integer.toHexString((int) (bits >> i & 0xff)));
         }
         return stringBuilder.toString();
     }
@@ -506,7 +506,7 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
         ColorModel colorModel;
         WritableRaster raster;
         int bpp;
-        if (xpmHeader.palette.size() <= (1 << 8)) {
+        if (xpmHeader.palette.size() <= 1 << 8) {
             final int[] palette = Allocator.intArray(xpmHeader.palette.size());
             for (final Entry<Object, PaletteEntry> entry : xpmHeader.palette.entrySet()) {
                 final PaletteEntry paletteEntry = entry.getValue();
@@ -514,15 +514,15 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
             }
             colorModel = new IndexColorModel(8, xpmHeader.palette.size(), palette, 0, true, -1, DataBuffer.TYPE_BYTE);
             // Check allocation
-            int bands = 1;
-            int scanlineStride = xpmHeader.width * bands;
-            int pixelStride = bands;
-            int size = scanlineStride * (xpmHeader.height - 1) + // first (h - 1) scans
+            final int bands = 1;
+            final int scanlineStride = xpmHeader.width * bands;
+            final int pixelStride = bands;
+            final int size = scanlineStride * (xpmHeader.height - 1) + // first (h - 1) scans
                     pixelStride * xpmHeader.width; // last scan
             Allocator.check(Byte.SIZE, size);
             raster = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE, xpmHeader.width, xpmHeader.height, bands, null);
             bpp = 8;
-        } else if (xpmHeader.palette.size() <= (1 << 16)) {
+        } else if (xpmHeader.palette.size() <= 1 << 16) {
             final int[] palette = Allocator.intArray(xpmHeader.palette.size());
             for (final Entry<Object, PaletteEntry> entry : xpmHeader.palette.entrySet()) {
                 final PaletteEntry paletteEntry = entry.getValue();
@@ -530,10 +530,10 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
             }
             colorModel = new IndexColorModel(16, xpmHeader.palette.size(), palette, 0, true, -1, DataBuffer.TYPE_USHORT);
             // Check allocation
-            int bands = 1;
-            int scanlineStride = xpmHeader.width * bands;
-            int pixelStride = bands;
-            int size = scanlineStride * (xpmHeader.height - 1) + // first (h - 1) scans
+            final int bands = 1;
+            final int scanlineStride = xpmHeader.width * bands;
+            final int pixelStride = bands;
+            final int size = scanlineStride * (xpmHeader.height - 1) + // first (h - 1) scans
                     pixelStride * xpmHeader.width; // last scan
             Allocator.check(Short.SIZE, size);
             raster = Raster.createInterleavedRaster(DataBuffer.TYPE_USHORT, xpmHeader.width, xpmHeader.height, bands, null);
@@ -553,7 +553,7 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
         for (int y = 0; y < xpmHeader.height; y++) {
             row.setLength(0);
             hasMore = parseNextString(cParser, row);
-            if (y < (xpmHeader.height - 1) && !hasMore) {
+            if (y < xpmHeader.height - 1 && !hasMore) {
                 throw new ImagingException("Parsing XPM file failed, " + "insufficient image rows in file");
             }
             final int rowOffset = y * xpmHeader.width;

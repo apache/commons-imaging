@@ -26,8 +26,7 @@ import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.internal.SafeOperations;
 
 /**
- * A WebP image is composed of several chunks. This is the base class for the chunks,
- * used by the parser.
+ * A WebP image is composed of several chunks. This is the base class for the chunks, used by the parser.
  *
  * @see <a href="https://developers.google.com/speed/webp/docs/riff_container">WebP Container Specification</a>
  * @since 1.0-alpha4
@@ -46,7 +45,7 @@ public abstract class WebPChunk extends BinaryFileParser {
      * @param bytes chunk data.
      * @throws ImagingException if the chunk data and the size provided do not match.
      */
-    WebPChunk(int type, int size, byte[] bytes) throws ImagingException {
+    WebPChunk(final int type, final int size, final byte[] bytes) throws ImagingException {
         super(ByteOrder.LITTLE_ENDIAN);
 
         if (size != bytes.length) {
@@ -58,7 +57,7 @@ public abstract class WebPChunk extends BinaryFileParser {
         this.bytes = bytes;
 
         // if chunk size is odd, a single padding byte is added
-        int padding = (size % 2) != 0 ? 1 : 0;
+        final int padding = size % 2 != 0 ? 1 : 0;
 
         // Chunk FourCC (4 bytes) + Chunk Size (4 bytes) + Chunk Payload (n bytes) + Padding
         this.chunkSize = SafeOperations.add(4, 4, size, padding);
@@ -72,13 +71,9 @@ public abstract class WebPChunk extends BinaryFileParser {
      * @throws ImagingException if the image is invalid.
      * @throws IOException      if it fails to write to the given stream.
      */
-    public void dump(PrintWriter pw, int offset) throws ImagingException, IOException {
-        pw.printf(
-                "Chunk %s at offset %s, length %d%n, payload size %d%n",
-                getTypeDescription(),
-                offset >= 0 ? String.valueOf(offset) : "unknown",
-                getChunkSize(),
-                getPayloadSize());
+    public void dump(final PrintWriter pw, final int offset) throws ImagingException, IOException {
+        pw.printf("Chunk %s at offset %s, length %d%n, payload size %d%n", getTypeDescription(), offset >= 0 ? String.valueOf(offset) : "unknown",
+                getChunkSize(), getPayloadSize());
     }
 
     /**
@@ -113,10 +108,7 @@ public abstract class WebPChunk extends BinaryFileParser {
      * @return the description of the chunk type.
      */
     public String getTypeDescription() {
-        return new String(new byte[]{
-                (byte) (type & 0xff),
-                (byte) ((type >> 8) & 0xff),
-                (byte) ((type >> 16) & 0xff),
-                (byte) ((type >> 24) & 0xff)}, StandardCharsets.UTF_8);
+        return new String(new byte[] { (byte) (type & 0xff), (byte) (type >> 8 & 0xff), (byte) (type >> 16 & 0xff), (byte) (type >> 24 & 0xff) },
+                StandardCharsets.UTF_8);
     }
 }

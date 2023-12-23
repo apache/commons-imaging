@@ -67,12 +67,8 @@ public class TiffReadTest extends TiffBaseTest {
             }
             final ByteSource byteSource = ByteSource.file(imageFile);
             final TiffReader tiffReader = new TiffReader(true);
-            final TiffContents contents = tiffReader.readDirectories(
-                byteSource,
-                true,
-                FormatCompliance.getDefault());
-                assertNotNull(contents);
+            final TiffContents contents = tiffReader.readDirectories(byteSource, true, FormatCompliance.getDefault());
+            assertNotNull(contents);
         }
     }
 }
-

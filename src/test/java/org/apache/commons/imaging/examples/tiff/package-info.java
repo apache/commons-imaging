@@ -16,7 +16,6 @@
  */
 
 /**
- * Provides example applications that access features that are specific
- * to the TIFF file format and supporting API.
+ * Provides example applications that access features that are specific to the TIFF file format and supporting API.
  */
 package org.apache.commons.imaging.examples.tiff;

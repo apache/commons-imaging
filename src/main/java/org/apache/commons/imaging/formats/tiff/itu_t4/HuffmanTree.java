@@ -41,13 +41,12 @@ final class HuffmanTree<T> {
             try {
                 nextBit = bitStream.readBits(1);
             } catch (final IOException ioEx) {
-                throw new ImagingException(
-                        "Error reading stream for huffman tree", ioEx);
+                throw new ImagingException("Error reading stream for huffman tree", ioEx);
             }
             if (nextBit == 0) {
                 position = (position << 1) + 1;
             } else {
-                position = (position + 1) << 1;
+                position = position + 1 << 1;
             }
             if (position >= nodes.size()) {
                 throw new ImagingException("Invalid bit pattern");
@@ -80,7 +79,7 @@ final class HuffmanTree<T> {
             if (nextChar == '0') {
                 position = (position << 1) + 1;
             } else {
-                position = (position + 1) << 1;
+                position = position + 1 << 1;
             }
             node = growAndGetNode(position);
             if (node.value != null) {

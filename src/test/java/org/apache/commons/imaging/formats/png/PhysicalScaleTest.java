@@ -23,25 +23,25 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 public class PhysicalScaleTest {
-   private static final double delta = 0.01;
+    private static final double delta = 0.01;
 
-   @Test
-   public void testCreateFromMeters() {
-      final PhysicalScale physicalScale = PhysicalScale.createFromMeters(1.0, 2.0);
+    @Test
+    public void testCreateFromMeters() {
+        final PhysicalScale physicalScale = PhysicalScale.createFromMeters(1.0, 2.0);
 
-      assertTrue(physicalScale.isInMeters());
-      assertFalse(physicalScale.isInRadians());
-      assertEquals(physicalScale.getHorizontalUnitsPerPixel(), 1.0, delta);
-      assertEquals(physicalScale.getVerticalUnitsPerPixel(), 2.0, delta);
-   }
+        assertTrue(physicalScale.isInMeters());
+        assertFalse(physicalScale.isInRadians());
+        assertEquals(physicalScale.getHorizontalUnitsPerPixel(), 1.0, delta);
+        assertEquals(physicalScale.getVerticalUnitsPerPixel(), 2.0, delta);
+    }
 
-   @Test
-   public void testCreateFromRadians() {
-      final PhysicalScale physicalScale = PhysicalScale.createFromRadians(2.0, 1.0);
+    @Test
+    public void testCreateFromRadians() {
+        final PhysicalScale physicalScale = PhysicalScale.createFromRadians(2.0, 1.0);
 
-      assertFalse(physicalScale.isInMeters());
-      assertTrue(physicalScale.isInRadians());
-      assertEquals(physicalScale.getHorizontalUnitsPerPixel(), 2.0, delta);
-      assertEquals(physicalScale.getVerticalUnitsPerPixel(), 1.0, delta);
-   }
+        assertFalse(physicalScale.isInMeters());
+        assertTrue(physicalScale.isInRadians());
+        assertEquals(physicalScale.getHorizontalUnitsPerPixel(), 2.0, delta);
+        assertEquals(physicalScale.getVerticalUnitsPerPixel(), 1.0, delta);
+    }
 }

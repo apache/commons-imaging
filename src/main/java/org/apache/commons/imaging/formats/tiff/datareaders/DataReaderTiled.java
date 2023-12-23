@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
- /*
- * Implementation notes:
- *    See ImageDataReader and DataReaderStrips for notes on development
- * with particular emphasis on run-time performance.
- */
+/*
+* Implementation notes:
+*    See ImageDataReader and DataReaderStrips for notes on development
+* with particular emphasis on run-time performance.
+*/
 package org.apache.commons.imaging.formats.tiff.datareaders;
 
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_JPEG;
@@ -57,16 +57,11 @@ public final class DataReaderTiled extends ImageDataReader {
 
     private final AbstractTiffImageData.Tiles imageData;
 
-    public DataReaderTiled(final TiffDirectory directory,
-        final PhotometricInterpreter photometricInterpreter, final int tileWidth,
-        final int tileLength, final int bitsPerPixel, final int[] bitsPerSample,
-        final int predictor, final int samplesPerPixel, final int sampleFormat,
-        final int width, final int height,
-        final int compression,
-        final TiffPlanarConfiguration planarConfiguration,
-        final ByteOrder byteOrder, final AbstractTiffImageData.Tiles imageData) {
-        super(directory, photometricInterpreter, bitsPerSample, predictor,
-            samplesPerPixel, sampleFormat, width, height, planarConfiguration);
+    public DataReaderTiled(final TiffDirectory directory, final PhotometricInterpreter photometricInterpreter, final int tileWidth, final int tileLength,
+            final int bitsPerPixel, final int[] bitsPerSample, final int predictor, final int samplesPerPixel, final int sampleFormat, final int width,
+            final int height, final int compression, final TiffPlanarConfiguration planarConfiguration, final ByteOrder byteOrder,
+            final AbstractTiffImageData.Tiles imageData) {
+        super(directory, photometricInterpreter, bitsPerSample, predictor, samplesPerPixel, sampleFormat, width, height, planarConfiguration);
 
         this.tileWidth = tileWidth;
         this.tileLength = tileLength;
@@ -78,17 +73,17 @@ public final class DataReaderTiled extends ImageDataReader {
         this.byteOrder = byteOrder;
     }
 
-    private void interpretTile(final ImageBuilder imageBuilder, final byte[] bytes,
-        final int startX, final int startY, final int xLimit, final int yLimit) throws ImagingException, IOException {
+    private void interpretTile(final ImageBuilder imageBuilder, final byte[] bytes, final int startX, final int startY, final int xLimit, final int yLimit)
+            throws ImagingException, IOException {
 
         // March 2020 change to handle floating-point with compression
         // for the compressed floating-point, there is a standard that allows
         // 16 bit floats (which is an IEEE 754 standard) and 24 bits (which is
-        // a non-standard format implemented for TIFF).  At this time, this
+        // a non-standard format implemented for TIFF). At this time, this
         // code only supports the 32-bit and 64-bit formats.
         if (sampleFormat == TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT) {
             // tileLength: number of rows in tile
-            // tileWidth:  number of columns in tile
+            // tileWidth: number of columns in tile
             final int i0 = startY;
             int i1 = startY + tileLength;
             if (i1 > yLimit) {
@@ -102,9 +97,7 @@ public final class DataReaderTiled extends ImageDataReader {
                 j1 = xLimit;
             }
             final int[] samples = new int[4];
-            final int[] b = unpackFloatingPointSamples(
-                j1 - j0, i1 - i0, tileWidth, bytes,
-                bitsPerPixel, byteOrder);
+            final int[] b = unpackFloatingPointSamples(j1 - j0, i1 - i0, tileWidth, bytes, bitsPerPixel, byteOrder);
             for (int i = i0; i < i1; i++) {
                 final int row = i - startY;
                 final int rowOffset = row * tileWidth;
@@ -112,8 +105,7 @@ public final class DataReaderTiled extends ImageDataReader {
                     final int column = j - startX;
                     final int k = (rowOffset + column) * samplesPerPixel;
                     samples[0] = b[k];
-                    photometricInterpreter.interpretPixel(
-                        imageBuilder, samples, j, i);
+                    photometricInterpreter.interpretPixel(imageBuilder, samples, j, i);
                 }
             }
             return;
@@ -130,8 +122,7 @@ public final class DataReaderTiled extends ImageDataReader {
         // verify that all samples are one byte in size
         final boolean allSamplesAreOneByte = isHomogenous(8);
 
-        if ((bitsPerPixel == 24 || bitsPerPixel == 32) && allSamplesAreOneByte
-            && photometricInterpreter instanceof PhotometricInterpreterRgb) {
+        if ((bitsPerPixel == 24 || bitsPerPixel == 32) && allSamplesAreOneByte && photometricInterpreter instanceof PhotometricInterpreterRgb) {
             int i1 = startY + tileLength;
             if (i1 > yLimit) {
                 // the tile is padded past bottom of image
@@ -153,10 +144,7 @@ public final class DataReaderTiled extends ImageDataReader {
                 for (int i = startY; i < i1; i++) {
                     int k = (i - startY) * tileWidth * 3;
                     for (int j = startX; j < j1; j++, k += 3) {
-                        final int rgb = 0xff000000
-                            | (bytes[k] << 16)
-                            | ((bytes[k + 1] & 0xff) << 8)
-                            | (bytes[k + 2] & 0xff);
+                        final int rgb = 0xff000000 | bytes[k] << 16 | (bytes[k + 1] & 0xff) << 8 | bytes[k + 2] & 0xff;
                         imageBuilder.setRgb(j, i, rgb);
                     }
                 }
@@ -166,11 +154,7 @@ public final class DataReaderTiled extends ImageDataReader {
                 for (int i = startY; i < i1; i++) {
                     int k = (i - startY) * tileWidth * 4;
                     for (int j = startX; j < j1; j++, k += 4) {
-                        final int rgb
-                            = ((bytes[k] & 0xff) << 16)
-                            | ((bytes[k + 1] & 0xff) << 8)
-                            | (bytes[k + 2] & 0xff)
-                            | (bytes[k + 3] << 24);
+                        final int rgb = (bytes[k] & 0xff) << 16 | (bytes[k + 1] & 0xff) << 8 | bytes[k + 2] & 0xff | bytes[k + 3] << 24;
                         imageBuilder.setRgb(j, i, rgb);
                     }
                 }
@@ -218,9 +202,7 @@ public final class DataReaderTiled extends ImageDataReader {
     }
 
     @Override
-    public ImageBuilder readImageData(final Rectangle subImageSpecification,
-        final boolean hasAlpha,
-        final boolean isAlphaPreMultiplied)
+    public ImageBuilder readImageData(final Rectangle subImageSpecification, final boolean hasAlpha, final boolean isAlphaPreMultiplied)
             throws IOException, ImagingException {
 
         final Rectangle subImage;
@@ -254,13 +236,11 @@ public final class DataReaderTiled extends ImageDataReader {
 
         // When processing a subimage, the workingBuilder width and height
         // are set to be integral multiples of the tile width and height.
-        // So the working image  may be larger than the specified size of the subimage.
+        // So the working image may be larger than the specified size of the subimage.
         // If necessary, the subimage is extracted from the workingBuilder
         // at the end of this method. This approach avoids the need for the
         // interpretTile method to implement bounds checking for a subimage.
-        final ImageBuilder workingBuilder
-            = new ImageBuilder(workingWidth, workingHeight,
-                hasAlpha, isAlphaPreMultiplied);
+        final ImageBuilder workingBuilder = new ImageBuilder(workingWidth, workingHeight, hasAlpha, isAlphaPreMultiplied);
 
         for (int iRow = row0; iRow <= row1; iRow++) {
             for (int iCol = col0; iCol <= col1; iCol++) {
@@ -271,51 +251,38 @@ public final class DataReaderTiled extends ImageDataReader {
                 // Handle JPEG based compression
                 if (compression == TIFF_COMPRESSION_JPEG) {
                     if (planarConfiguration == TiffPlanarConfiguration.PLANAR) {
-                        throw new ImagingException(
-                          "TIFF file in non-supported configuration: JPEG compression used in planar configuration.");
+                        throw new ImagingException("TIFF file in non-supported configuration: JPEG compression used in planar configuration.");
                     }
-                    DataInterpreterJpeg.intepretBlock(directory, workingBuilder,
-                      x, y, tileWidth, tileLength, compressed);
+                    DataInterpreterJpeg.intepretBlock(directory, workingBuilder, x, y, tileWidth, tileLength, compressed);
                     continue;
                 }
 
-                final byte[] decompressed = decompress(compressed, compression,
-                        bytesPerTile, tileWidth, tileLength);
+                final byte[] decompressed = decompress(compressed, compression, bytesPerTile, tileWidth, tileLength);
 
                 interpretTile(workingBuilder, decompressed, x, y, width, height);
             }
         }
 
-        if (subImage.x == x0
-                && subImage.y == y0
-                && subImage.width == workingWidth
-                && subImage.height == workingHeight) {
+        if (subImage.x == x0 && subImage.y == y0 && subImage.width == workingWidth && subImage.height == workingHeight) {
             return workingBuilder;
         }
 
-        return workingBuilder.getSubset(
-            subImage.x - x0,
-            subImage.y - y0,
-            subImage.width,
-            subImage.height);
+        return workingBuilder.getSubset(subImage.x - x0, subImage.y - y0, subImage.width, subImage.height);
     }
 
     @Override
-    public TiffRasterData readRasterData(final Rectangle subImage)
-            throws ImagingException, IOException {
+    public TiffRasterData readRasterData(final Rectangle subImage) throws ImagingException, IOException {
         switch (sampleFormat) {
-            case TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT:
-                return readRasterDataFloat(subImage);
-            case TiffTagConstants.SAMPLE_FORMAT_VALUE_TWOS_COMPLEMENT_SIGNED_INTEGER:
-                return readRasterDataInt(subImage);
-            default:
-                throw new ImagingException("Unsupported sample format, value="
-                        + sampleFormat);
+        case TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT:
+            return readRasterDataFloat(subImage);
+        case TiffTagConstants.SAMPLE_FORMAT_VALUE_TWOS_COMPLEMENT_SIGNED_INTEGER:
+            return readRasterDataInt(subImage);
+        default:
+            throw new ImagingException("Unsupported sample format, value=" + sampleFormat);
         }
     }
 
-    private TiffRasterData readRasterDataFloat(final Rectangle subImage)
-            throws ImagingException, IOException {
+    private TiffRasterData readRasterDataFloat(final Rectangle subImage) throws ImagingException, IOException {
         final int bitsPerRow = tileWidth * bitsPerPixel;
         final int bytesPerRow = (bitsPerRow + 7) / 8;
         final int bytesPerTile = bytesPerRow * tileLength;
@@ -349,25 +316,19 @@ public final class DataReaderTiled extends ImageDataReader {
             for (int iCol = col0; iCol <= col1; iCol++) {
                 final int tile = iRow * nColumnsOfTiles + iCol;
                 final byte[] compressed = imageData.tiles[tile].getData();
-                final byte[] decompressed = decompress(compressed, compression,
-                        bytesPerTile, tileWidth, tileLength);
+                final byte[] decompressed = decompress(compressed, compression, bytesPerTile, tileWidth, tileLength);
                 final int x = iCol * tileWidth;
                 final int y = iRow * tileLength;
 
-                final int[] blockData = unpackFloatingPointSamples(
-                        tileWidth, tileLength, tileWidth,
-                        decompressed,
-                        bitsPerPixel, byteOrder);
-                transferBlockToRaster(x, y, tileWidth, tileLength, blockData,
-                        xRaster, yRaster, rasterWidth, rasterHeight, samplesPerPixel, rasterDataFloat);
+                final int[] blockData = unpackFloatingPointSamples(tileWidth, tileLength, tileWidth, decompressed, bitsPerPixel, byteOrder);
+                transferBlockToRaster(x, y, tileWidth, tileLength, blockData, xRaster, yRaster, rasterWidth, rasterHeight, samplesPerPixel, rasterDataFloat);
             }
         }
 
         return new TiffRasterDataFloat(rasterWidth, rasterHeight, samplesPerPixel, rasterDataFloat);
     }
 
-    private TiffRasterData readRasterDataInt(final Rectangle subImage)
-            throws ImagingException, IOException {
+    private TiffRasterData readRasterDataInt(final Rectangle subImage) throws ImagingException, IOException {
         final int bitsPerRow = tileWidth * bitsPerPixel;
         final int bytesPerRow = (bitsPerRow + 7) / 8;
         final int bytesPerTile = bytesPerRow * tileLength;
@@ -401,16 +362,11 @@ public final class DataReaderTiled extends ImageDataReader {
             for (int iCol = col0; iCol <= col1; iCol++) {
                 final int tile = iRow * nColumnsOfTiles + iCol;
                 final byte[] compressed = imageData.tiles[tile].getData();
-                final byte[] decompressed = decompress(compressed, compression,
-                        bytesPerTile, tileWidth, tileLength);
+                final byte[] decompressed = decompress(compressed, compression, bytesPerTile, tileWidth, tileLength);
                 final int x = iCol * tileWidth;
                 final int y = iRow * tileLength;
-                final int[] blockData = unpackIntSamples(
-                        tileWidth, tileLength, tileWidth,
-                        decompressed,
-                        predictor, bitsPerPixel, byteOrder);
-                transferBlockToRaster(x, y, tileWidth, tileLength, blockData,
-                        xRaster, yRaster, rasterWidth, rasterHeight, rasterDataInt);
+                final int[] blockData = unpackIntSamples(tileWidth, tileLength, tileWidth, decompressed, predictor, bitsPerPixel, byteOrder);
+                transferBlockToRaster(x, y, tileWidth, tileLength, blockData, xRaster, yRaster, rasterWidth, rasterHeight, rasterDataInt);
             }
         }
         return new TiffRasterDataInt(rasterWidth, rasterHeight, rasterDataInt);

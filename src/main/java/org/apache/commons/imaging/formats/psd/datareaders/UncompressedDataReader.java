@@ -39,8 +39,7 @@ public class UncompressedDataReader implements DataReader {
     }
 
     @Override
-    public void readData(final InputStream is, final BufferedImage bi,
-            final PsdImageContents imageContents, final BinaryFileParser bfp)
+    public void readData(final InputStream is, final BufferedImage bi, final PsdImageContents imageContents, final BinaryFileParser bfp)
             throws ImagingException, IOException {
         final PsdHeaderInfo header = imageContents.header;
         final int width = header.columns;
@@ -51,8 +50,7 @@ public class UncompressedDataReader implements DataReader {
         final MyBitInputStream mbis = new MyBitInputStream(is, ByteOrder.BIG_ENDIAN, false);
         // we want all samples to be bytes
         try (BitsToByteInputStream bbis = new BitsToByteInputStream(mbis, 8)) {
-            final int[][][] data = new int[Allocator.check(channelCount)][Allocator
-                    .check(height)][Allocator.check(width)];
+            final int[][][] data = new int[Allocator.check(channelCount)][Allocator.check(height)][Allocator.check(width)];
             for (int channel = 0; channel < channelCount; channel++) {
                 for (int y = 0; y < height; y++) {
                     for (int x = 0; x < width; x++) {

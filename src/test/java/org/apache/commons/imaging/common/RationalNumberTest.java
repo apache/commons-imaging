@@ -33,8 +33,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class RationalNumberTest extends AbstractImagingTest {
 
     public static Stream<Double> data() {
-        return Arrays.asList(
-                0d, //
+        return Arrays.asList(0d, //
                 0.1d, //
                 0.01d, //
                 0.001d, //
@@ -94,14 +93,14 @@ public class RationalNumberTest extends AbstractImagingTest {
                 (double) Integer.MAX_VALUE, //
                 Integer.MAX_VALUE + 0.1, //
                 Integer.MAX_VALUE - 0.1, //
-                (double) -(Integer.MAX_VALUE), //
+                (double) -Integer.MAX_VALUE, //
                 -(Integer.MAX_VALUE + 0.1), //
                 -(Integer.MAX_VALUE - 0.1), //
 
                 (double) Long.MAX_VALUE, //
                 Long.MAX_VALUE + 0.1, //
                 Long.MAX_VALUE - 0.1, //
-                (double) -(Long.MAX_VALUE), //
+                (double) -Long.MAX_VALUE, //
                 -(Long.MAX_VALUE + 0.1), //
                 -(Long.MAX_VALUE - 0.1) //
         ).stream();
@@ -125,7 +124,7 @@ public class RationalNumberTest extends AbstractImagingTest {
     }
 
     @Test
-    public void testSpecialRationalNumber(){
+    public void testSpecialRationalNumber() {
         final RationalNumber test = new RationalNumber(0xF5937B1F, 70_000_000, true);
         assertEquals(58.858331871428570, test.doubleValue(), 1.0e-14, "Unsigned integer support failed for double conversion");
         assertEquals(58.858334f, test.floatValue(), 1.0e-6f, "Float conversion failed");

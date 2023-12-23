@@ -20,13 +20,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-public class DataParserGrayscaleTest{
+public class DataParserGrayscaleTest {
 
-  @Test
-  public void testGetBasicChannelsCount() {
-      final DataParserGrayscale dataParserGrayscale = new DataParserGrayscale();
+    @Test
+    public void testGetBasicChannelsCount() {
+        final DataParserGrayscale dataParserGrayscale = new DataParserGrayscale();
 
-      assertEquals(1, dataParserGrayscale.getBasicChannelsCount());
-  }
+        assertEquals(1, dataParserGrayscale.getBasicChannelsCount());
+    }
 
 }

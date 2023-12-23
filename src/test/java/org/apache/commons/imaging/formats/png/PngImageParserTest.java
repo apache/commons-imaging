@@ -41,13 +41,12 @@ public class PngImageParserTest extends AbstractPngTest {
     @Test
     public void testGetImageSize() {
         final byte[] bytes = {
-            // Header
-            (byte) 0x89, 'P', 'N', 'G', '\r', '\n', 0x1A, '\n',
-            // (Too large) Length
-            (byte) 0b0111_1111 , (byte) 0xFF, (byte) 0xFF, (byte) 0xFF - 10,
-            // Chunk type
-            'I', 'H', 'D', 'R',
-        };
+                // Header
+                (byte) 0x89, 'P', 'N', 'G', '\r', '\n', 0x1A, '\n',
+                // (Too large) Length
+                (byte) 0b0111_1111, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF - 10,
+                // Chunk type
+                'I', 'H', 'D', 'R', };
         assertThrows(AllocationRequestException.class, () -> new PngImageParser().getImageSize(bytes));
     }
 

@@ -19,4 +19,3 @@
  * The Wireless Application Protocol Bitmap Format image format.
  */
 package org.apache.commons.imaging.formats.wbmp;
-

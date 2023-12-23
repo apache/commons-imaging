@@ -58,12 +58,7 @@ public final class ImageParserFactory {
     @SuppressWarnings("unchecked")
     private static <T extends ImagingParameters<T>> AbstractImageParser<T> getImageParser(final Predicate<AbstractImageParser<?>> pred,
             final Supplier<? extends RuntimeException> supplier) {
-        return (AbstractImageParser<T>) AbstractImageParser
-                .getAllImageParsers()
-                .stream()
-                .filter(pred)
-                .findFirst()
-                .orElseThrow(supplier);
+        return (AbstractImageParser<T>) AbstractImageParser.getAllImageParsers().stream().filter(pred).findFirst().orElseThrow(supplier);
     }
 
     public static <T extends ImagingParameters<T>> AbstractImageParser<T> getImageParser(final String fileExtension) {

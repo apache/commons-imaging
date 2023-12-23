@@ -50,6 +50,7 @@ final class TiffTags {
 
     private static final Map<Integer, List<TagInfo>> ALL_TAG_MAP = makeTagMap(TiffTags.ALL_TAGS);
     private static final Map<Integer, Integer> TAG_COUNTS = countTags(TiffTags.ALL_TAGS);
+
     private static Map<Integer, Integer> countTags(final List<TagInfo> tags) {
         final Map<Integer, Integer> map = new HashMap<>();
 
@@ -94,12 +95,10 @@ final class TiffTags {
                 // pass
                 continue;
             }
-            if (directoryType >= 0
-                    && tagInfo.directoryType.isImageDirectory()) {
+            if (directoryType >= 0 && tagInfo.directoryType.isImageDirectory()) {
                 return tagInfo;
             }
-            if (directoryType < 0
-                    && !tagInfo.directoryType.isImageDirectory()) {
+            if (directoryType < 0 && !tagInfo.directoryType.isImageDirectory()) {
                 return tagInfo;
             }
         }
@@ -142,8 +141,7 @@ final class TiffTags {
         return Collections.unmodifiableList(result);
     }
 
-    private static Map<Integer, List<TagInfo>> makeTagMap(
-            final List<TagInfo> tags) {
+    private static Map<Integer, List<TagInfo>> makeTagMap(final List<TagInfo> tags) {
         // make sure to use the thread-safe version; this is shared state.
         final Map<Integer, List<TagInfo>> map = new HashMap<>();
 

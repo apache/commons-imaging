@@ -55,13 +55,10 @@ public class ExifRewriteTest extends AbstractExifTest {
     // }
 
     private interface Rewriter {
-        void rewrite(ByteSource byteSource, OutputStream os,
-                TiffOutputSet outputSet) throws ImagingException,
-                IOException, ImagingException;
+        void rewrite(ByteSource byteSource, OutputStream os, TiffOutputSet outputSet) throws ImagingException, IOException, ImagingException;
     }
 
-    private void compare(final File imageFile, final TiffImageMetadata oldExifMetadata,
-            final TiffImageMetadata newExifMetadata) throws ImagingException {
+    private void compare(final File imageFile, final TiffImageMetadata oldExifMetadata, final TiffImageMetadata newExifMetadata) throws ImagingException {
         assertNotNull(oldExifMetadata);
         assertNotNull(newExifMetadata);
 
@@ -70,8 +67,8 @@ public class ExifRewriteTest extends AbstractExifTest {
 
         assertEquals(oldDirectories.size(), newDirectories.size());
 
-        final Map<Integer,TiffImageMetadata.Directory> oldDirectoryMap = makeDirectoryMap(oldDirectories);
-        final Map<Integer,TiffImageMetadata.Directory> newDirectoryMap = makeDirectoryMap(newDirectories);
+        final Map<Integer, TiffImageMetadata.Directory> oldDirectoryMap = makeDirectoryMap(oldDirectories);
+        final Map<Integer, TiffImageMetadata.Directory> newDirectoryMap = makeDirectoryMap(newDirectories);
 
         assertEquals(oldDirectories.size(), oldDirectoryMap.size());
         final List<Integer> oldDirectoryTypes = new ArrayList<>(oldDirectoryMap.keySet());
@@ -92,8 +89,8 @@ public class ExifRewriteTest extends AbstractExifTest {
             final List<? extends ImageMetadataItem> oldItems = oldDirectory.getItems();
             final List<? extends ImageMetadataItem> newItems = newDirectory.getItems();
 
-            final Map<Integer,TiffField> oldFieldMap = makeFieldMap(oldItems);
-            final Map<Integer,TiffField> newFieldMap = makeFieldMap(newItems);
+            final Map<Integer, TiffField> oldFieldMap = makeFieldMap(oldItems);
+            final Map<Integer, TiffField> newFieldMap = makeFieldMap(newItems);
 
             final Set<Integer> missingInNew = new HashSet<>(oldFieldMap.keySet());
             missingInNew.removeAll(newFieldMap.keySet());
@@ -170,8 +167,8 @@ public class ExifRewriteTest extends AbstractExifTest {
         }
     }
 
-    private Map<Integer,TiffImageMetadata.Directory> makeDirectoryMap(final List<? extends ImageMetadataItem> directories) {
-        final Map<Integer,TiffImageMetadata.Directory> directoryMap = new HashMap<>();
+    private Map<Integer, TiffImageMetadata.Directory> makeDirectoryMap(final List<? extends ImageMetadataItem> directories) {
+        final Map<Integer, TiffImageMetadata.Directory> directoryMap = new HashMap<>();
         for (final ImageMetadataItem element : directories) {
             final TiffImageMetadata.Directory directory = (TiffImageMetadata.Directory) element;
             directoryMap.put(directory.type, directory);
@@ -179,8 +176,8 @@ public class ExifRewriteTest extends AbstractExifTest {
         return directoryMap;
     }
 
-    private Map<Integer,TiffField> makeFieldMap(final List<? extends ImageMetadataItem> items) {
-        final Map<Integer,TiffField> fieldMap = new HashMap<>();
+    private Map<Integer, TiffField> makeFieldMap(final List<? extends ImageMetadataItem> items) {
+        final Map<Integer, TiffField> fieldMap = new HashMap<>();
         for (final ImageMetadataItem item2 : items) {
             final TiffImageMetadata.TiffMetadataItem item = (TiffImageMetadata.TiffMetadataItem) item2;
             final TiffField field = item.getTiffField();
@@ -191,8 +188,7 @@ public class ExifRewriteTest extends AbstractExifTest {
         return fieldMap;
     }
 
-    private void rewrite(final Rewriter rewriter, final String name) throws IOException,
-            ImagingException {
+    private void rewrite(final Rewriter rewriter, final String name) throws IOException, ImagingException {
         final List<File> images = getImagesWithExifData();
         for (final File imageFile : images) {
 
@@ -294,8 +290,7 @@ public class ExifRewriteTest extends AbstractExifTest {
 
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-                new ExifRewriter().updateExifMetadataLossy(stripped, baos,
-                        outputSet);
+                new ExifRewriter().updateExifMetadataLossy(stripped, baos, outputSet);
 
                 final byte[] bytes = baos.toByteArray();
 
@@ -352,16 +347,14 @@ public class ExifRewriteTest extends AbstractExifTest {
 
     @Test
     public void testRewriteLossless() throws Exception {
-        final Rewriter rewriter = (byteSource, os, outputSet) -> new ExifRewriter().updateExifMetadataLossless(byteSource, os,
-                outputSet);
+        final Rewriter rewriter = (byteSource, os, outputSet) -> new ExifRewriter().updateExifMetadataLossless(byteSource, os, outputSet);
 
         rewrite(rewriter, "lossless");
     }
 
     @Test
     public void testRewriteLossy() throws Exception {
-        final Rewriter rewriter = (byteSource, os, outputSet) -> new ExifRewriter().updateExifMetadataLossy(byteSource, os,
-                outputSet);
+        final Rewriter rewriter = (byteSource, os, outputSet) -> new ExifRewriter().updateExifMetadataLossy(byteSource, os, outputSet);
 
         rewrite(rewriter, "lossy");
     }

@@ -29,7 +29,7 @@ final class PnmConstants {
 
     public static final byte PNM_SEPARATOR = 0x20; // Space
     public static final byte PNM_NEWLINE = 0x0A; // "usually a newline"
-                             // (https://netpbm.sourceforge.net/doc/pbm.html)
+    // (https://netpbm.sourceforge.net/doc/pbm.html)
 
     private PnmConstants() {
     }

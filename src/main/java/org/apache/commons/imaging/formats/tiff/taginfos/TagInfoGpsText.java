@@ -29,10 +29,8 @@ import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 import org.apache.commons.imaging.internal.Debug;
 
 /**
- * Used by some GPS tags and the EXIF user comment tag,
- * this badly documented value is meant to contain
- * the text encoding in the first 8 bytes followed by
- * the non-null-terminated text in an unknown byte order.
+ * Used by some GPS tags and the EXIF user comment tag, this badly documented value is meant to contain the text encoding in the first 8 bytes followed by the
+ * non-null-terminated text in an unknown byte order.
  */
 public final class TagInfoGpsText extends TagInfo {
 
@@ -46,39 +44,31 @@ public final class TagInfoGpsText extends TagInfo {
         }
     }
 
-    private static final TagInfoGpsText.TextEncoding TEXT_ENCODING_ASCII = new TextEncoding(
-            new byte[] { 0x41, 0x53, 0x43, 0x49, 0x49, 0x00, 0x00, 0x00, },
+    private static final TagInfoGpsText.TextEncoding TEXT_ENCODING_ASCII = new TextEncoding(new byte[] { 0x41, 0x53, 0x43, 0x49, 0x49, 0x00, 0x00, 0x00, },
             StandardCharsets.US_ASCII.name()); // ITU-T T.50 IA5
-    private static final TagInfoGpsText.TextEncoding TEXT_ENCODING_JIS = new TextEncoding(
-            new byte[] { 0x4A, 0x49, 0x53, 0x00, 0x00, 0x00, 0x00, 0x00, },
+    private static final TagInfoGpsText.TextEncoding TEXT_ENCODING_JIS = new TextEncoding(new byte[] { 0x4A, 0x49, 0x53, 0x00, 0x00, 0x00, 0x00, 0x00, },
             "JIS"); // JIS X208-1990
-    private static final TagInfoGpsText.TextEncoding TEXT_ENCODING_UNICODE_LE = new TextEncoding(
-            new byte[] { 0x55, 0x4E, 0x49, 0x43, 0x4F, 0x44, 0x45, 0x00},
+    private static final TagInfoGpsText.TextEncoding TEXT_ENCODING_UNICODE_LE = new TextEncoding(new byte[] { 0x55, 0x4E, 0x49, 0x43, 0x4F, 0x44, 0x45, 0x00 },
             StandardCharsets.UTF_16LE.name()); // Unicode Standard
-    private static final TagInfoGpsText.TextEncoding TEXT_ENCODING_UNICODE_BE = new TextEncoding(
-            new byte[] { 0x55, 0x4E, 0x49, 0x43, 0x4F, 0x44, 0x45, 0x00},
+    private static final TagInfoGpsText.TextEncoding TEXT_ENCODING_UNICODE_BE = new TextEncoding(new byte[] { 0x55, 0x4E, 0x49, 0x43, 0x4F, 0x44, 0x45, 0x00 },
             StandardCharsets.UTF_16BE.name()); // Unicode Standard
-    private static final TagInfoGpsText.TextEncoding TEXT_ENCODING_UNDEFINED = new TextEncoding(
-            new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
+    private static final TagInfoGpsText.TextEncoding TEXT_ENCODING_UNDEFINED = new TextEncoding(new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
             // Try to interpret an undefined text as ISO-8859-1 (Latin)
             StandardCharsets.ISO_8859_1.name()); // Undefined
 
-    private static final TagInfoGpsText.TextEncoding[] TEXT_ENCODINGS = {
-            TEXT_ENCODING_ASCII, //
+    private static final TagInfoGpsText.TextEncoding[] TEXT_ENCODINGS = { TEXT_ENCODING_ASCII, //
             TEXT_ENCODING_JIS, //
             TEXT_ENCODING_UNICODE_LE, //
             TEXT_ENCODING_UNICODE_BE, //
             TEXT_ENCODING_UNDEFINED, //
     };
 
-    public TagInfoGpsText(final String name, final int tag,
-            final TiffDirectoryType exifDirectory) {
+    public TagInfoGpsText(final String name, final int tag, final TiffDirectoryType exifDirectory) {
         super(name, tag, AbstractFieldType.UNDEFINED, LENGTH_UNKNOWN, exifDirectory);
     }
 
     @Override
-    public byte[] encodeValue(final AbstractFieldType abstractFieldType, final Object value, final ByteOrder byteOrder)
-            throws ImagingException {
+    public byte[] encodeValue(final AbstractFieldType abstractFieldType, final Object value, final ByteOrder byteOrder) throws ImagingException {
         if (!(value instanceof String)) {
             throw new ImagingException("GPS text value not String", value);
         }
@@ -129,11 +119,7 @@ public final class TagInfoGpsText extends TagInfo {
             }
             throw new ImagingException("Unexpected ASCII type decoded");
         }
-        if (entry.getFieldType() == AbstractFieldType.UNDEFINED) {
-            /* later */
-        } else if (entry.getFieldType() == AbstractFieldType.BYTE) {
-            /* later */
-        } else {
+        if (entry.getFieldType() != AbstractFieldType.UNDEFINED && entry.getFieldType() != AbstractFieldType.BYTE) {
             Debug.debug("entry.type: " + entry.getFieldType());
             Debug.debug("entry.directoryType: " + entry.getDirectoryType());
             Debug.debug("entry.type: " + entry.getDescriptionWithoutValue());
@@ -148,18 +134,11 @@ public final class TagInfoGpsText extends TagInfo {
         }
 
         for (final TextEncoding encoding : TEXT_ENCODINGS) {
-            if (BinaryFunctions.compareBytes(bytes, 0, encoding.prefix, 0,
-                    encoding.prefix.length)) {
+            if (BinaryFunctions.compareBytes(bytes, 0, encoding.prefix, 0, encoding.prefix.length)) {
                 try {
-                    final String decodedString = new String(
-                            bytes, encoding.prefix.length,
-                            bytes.length - encoding.prefix.length,
-                            encoding.encodingName);
-                    final byte[] reEncodedBytes = decodedString.getBytes(
-                            encoding.encodingName);
-                    if (BinaryFunctions.compareBytes(bytes, encoding.prefix.length,
-                            reEncodedBytes, 0,
-                            reEncodedBytes.length)) {
+                    final String decodedString = new String(bytes, encoding.prefix.length, bytes.length - encoding.prefix.length, encoding.encodingName);
+                    final byte[] reEncodedBytes = decodedString.getBytes(encoding.encodingName);
+                    if (BinaryFunctions.compareBytes(bytes, encoding.prefix.length, reEncodedBytes, 0, reEncodedBytes.length)) {
                         return decodedString;
                     }
                 } catch (final UnsupportedEncodingException e) {

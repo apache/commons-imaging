@@ -26,13 +26,11 @@ import org.apache.commons.imaging.ImagingException;
 
 /**
  * <p>
- * Utility class to compress/decompress bytes using the ZLIB deflate/inflate
- * compression.
+ * Utility class to compress/decompress bytes using the ZLIB deflate/inflate compression.
  * </p>
  *
  * <p>
- * <a href="https://www.ietf.org/rfc/rfc1951.txt">RFC 1951 - DEFLATE Compressed
- * Data Format Specification version 1.3</a>
+ * <a href="https://www.ietf.org/rfc/rfc1951.txt">RFC 1951 - DEFLATE Compressed Data Format Specification version 1.3</a>
  * </p>
  */
 public class ZlibDeflate {
@@ -59,7 +57,7 @@ public class ZlibDeflate {
     /**
      * Compress the byte[] using ZLIB deflate decompression.
      *
-     * @param bytes The bytes to decompress
+     * @param bytes        The bytes to decompress
      * @param expectedSize The expected size of the decompressed byte[].
      *
      * @return The decompressed bytes.

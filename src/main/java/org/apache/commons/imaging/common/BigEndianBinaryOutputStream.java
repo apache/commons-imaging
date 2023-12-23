@@ -28,22 +28,22 @@ final class BigEndianBinaryOutputStream extends BinaryOutputStream {
 
     @Override
     public void write2Bytes(final int value) throws IOException {
-        write(0xff & (value >> 8));
+        write(0xff & value >> 8);
         write(0xff & value);
     }
 
     @Override
     public void write3Bytes(final int value) throws IOException {
-        write(0xff & (value >> 16));
-        write(0xff & (value >> 8));
+        write(0xff & value >> 16);
+        write(0xff & value >> 8);
         write(0xff & value);
     }
 
     @Override
     public void write4Bytes(final int value) throws IOException {
-        write(0xff & (value >> 24));
-        write(0xff & (value >> 16));
-        write(0xff & (value >> 8));
+        write(0xff & value >> 24);
+        write(0xff & value >> 16);
+        write(0xff & value >> 8);
         write(0xff & value);
     }
 

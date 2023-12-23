@@ -33,12 +33,11 @@ public class TransparencyFilterIndexedColor extends AbstractTransparencyFilter {
             return rgb;
         }
 
-        if ((index < 0) || (index > length)) { // TODO check for > length cannot be true because of check above
-            throw new ImagingException(
-                    "TransparencyFilterIndexedColor index: " + index + ", bytes.length: " + length);
+        if (index < 0 || index > length) { // TODO check for > length cannot be true because of check above
+            throw new ImagingException("TransparencyFilterIndexedColor index: " + index + ", bytes.length: " + length);
         }
 
         final int alpha = getByte(index);
-        return ((0xff & alpha) << 24) | (0x00ffffff & rgb);
+        return (0xff & alpha) << 24 | 0x00ffffff & rgb;
     }
 }

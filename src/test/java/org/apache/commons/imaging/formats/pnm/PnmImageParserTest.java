@@ -57,8 +57,7 @@ public class PnmImageParserTest {
     }
 
     /**
-     * If an invalid width is specified, should throw {@link ImagingException} rather than
-     * {@link NumberFormatException}.
+     * If an invalid width is specified, should throw {@link ImagingException} rather than {@link NumberFormatException}.
      */
     @Test
     public void testGetImageInfo_invalidWidth() {
@@ -77,8 +76,7 @@ public class PnmImageParserTest {
     }
 
     @Test
-    public void testWriteImageRaw_happyCase() throws ImagingException,
-                                                     ImagingException, IOException {
+    public void testWriteImageRaw_happyCase() throws ImagingException, ImagingException, IOException {
         final BufferedImage srcImage = new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
 
         final byte[] dstBytes = Imaging.writeImageToBytes(srcImage, ImageFormats.PNM);

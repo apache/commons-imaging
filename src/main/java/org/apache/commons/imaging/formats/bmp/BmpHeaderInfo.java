@@ -22,6 +22,7 @@ final class BmpHeaderInfo {
         ColorSpaceCoordinate green;
         ColorSpaceCoordinate blue;
     }
+
     static class ColorSpaceCoordinate {
         int x;
         int y;
@@ -69,14 +70,11 @@ final class BmpHeaderInfo {
 
     public final int reservedV5;
 
-    BmpHeaderInfo(final byte identifier1, final byte identifier2, final int fileSize,
-            final int reserved, final int bitmapDataOffset, final int bitmapHeaderSize,
-            final int width, final int height, final int planes, final int bitsPerPixel,
-            final int compression, final int bitmapDataSize, final int hResolution,
-            final int vResolution, final int colorsUsed, final int colorsImportant, final int redMask,
-            final int greenMask, final int blueMask, final int alphaMask, final int colorSpaceType,
-            final ColorSpace colorSpace, final int gammaRed, final int gammaGreen, final int gammaBlue,
-            final int intent, final int profileData, final int profileSize, final int reservedV5) {
+    BmpHeaderInfo(final byte identifier1, final byte identifier2, final int fileSize, final int reserved, final int bitmapDataOffset,
+            final int bitmapHeaderSize, final int width, final int height, final int planes, final int bitsPerPixel, final int compression,
+            final int bitmapDataSize, final int hResolution, final int vResolution, final int colorsUsed, final int colorsImportant, final int redMask,
+            final int greenMask, final int blueMask, final int alphaMask, final int colorSpaceType, final ColorSpace colorSpace, final int gammaRed,
+            final int gammaGreen, final int gammaBlue, final int intent, final int profileData, final int profileSize, final int reservedV5) {
         this.identifier1 = identifier1;
         this.identifier2 = identifier2;
         this.fileSize = fileSize;

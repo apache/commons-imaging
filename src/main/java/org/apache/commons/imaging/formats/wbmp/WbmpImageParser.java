@@ -47,8 +47,7 @@ public class WbmpImageParser extends AbstractImageParser<WbmpImagingParameters> 
         final int width;
         final int height;
 
-        WbmpHeader(final int typeField, final byte fixHeaderField, final int width,
-                final int height) {
+        WbmpHeader(final int typeField, final byte fixHeaderField, final int width, final int height) {
             this.typeField = typeField;
             this.fixHeaderField = fixHeaderField;
             this.width = width;
@@ -58,19 +57,18 @@ public class WbmpImageParser extends AbstractImageParser<WbmpImagingParameters> 
         public void dump(final PrintWriter pw) {
             pw.println("WbmpHeader");
             pw.println("TypeField: " + typeField);
-            pw.println("FixHeaderField: 0x"
-                    + Integer.toHexString(0xff & fixHeaderField));
+            pw.println("FixHeaderField: 0x" + Integer.toHexString(0xff & fixHeaderField));
             pw.println("Width: " + width);
             pw.println("Height: " + height);
         }
     }
+
     private static final String DEFAULT_EXTENSION = ImageFormats.WBMP.getDefaultExtension();
 
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.WBMP.getExtensions();
 
     @Override
-    public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
-            throws ImagingException, IOException {
+    public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource) throws ImagingException, IOException {
         readWbmpHeader(byteSource).dump(pw);
         return true;
     }
@@ -87,8 +85,7 @@ public class WbmpImageParser extends AbstractImageParser<WbmpImagingParameters> 
     }
 
     @Override
-    public final BufferedImage getBufferedImage(final ByteSource byteSource,
-            final WbmpImagingParameters params) throws ImagingException, IOException {
+    public final BufferedImage getBufferedImage(final ByteSource byteSource, final WbmpImagingParameters params) throws ImagingException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             final WbmpHeader wbmpHeader = readWbmpHeader(is);
             return readImage(wbmpHeader, is);
@@ -106,33 +103,25 @@ public class WbmpImageParser extends AbstractImageParser<WbmpImagingParameters> 
     }
 
     @Override
-    public byte[] getIccProfileBytes(final ByteSource byteSource, final WbmpImagingParameters params)
-            throws ImagingException, IOException {
+    public byte[] getIccProfileBytes(final ByteSource byteSource, final WbmpImagingParameters params) throws ImagingException, IOException {
         return null;
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final WbmpImagingParameters params)
-            throws ImagingException, IOException {
+    public ImageInfo getImageInfo(final ByteSource byteSource, final WbmpImagingParameters params) throws ImagingException, IOException {
         final WbmpHeader wbmpHeader = readWbmpHeader(byteSource);
-        return new ImageInfo("WBMP", 1, new ArrayList<>(),
-                ImageFormats.WBMP,
-                "Wireless Application Protocol Bitmap", wbmpHeader.height,
-                "image/vnd.wap.wbmp", 1, 0, 0, 0, 0, wbmpHeader.width, false,
-                false, false, ImageInfo.ColorType.BW,
-                ImageInfo.CompressionAlgorithm.NONE);
+        return new ImageInfo("WBMP", 1, new ArrayList<>(), ImageFormats.WBMP, "Wireless Application Protocol Bitmap", wbmpHeader.height, "image/vnd.wap.wbmp",
+                1, 0, 0, 0, 0, wbmpHeader.width, false, false, false, ImageInfo.ColorType.BW, ImageInfo.CompressionAlgorithm.NONE);
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final WbmpImagingParameters params)
-            throws ImagingException, IOException {
+    public Dimension getImageSize(final ByteSource byteSource, final WbmpImagingParameters params) throws ImagingException, IOException {
         final WbmpHeader wbmpHeader = readWbmpHeader(byteSource);
         return new Dimension(wbmpHeader.width, wbmpHeader.height);
     }
 
     @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final WbmpImagingParameters params)
-            throws ImagingException, IOException {
+    public ImageMetadata getMetadata(final ByteSource byteSource, final WbmpImagingParameters params) throws ImagingException, IOException {
         return null;
     }
 
@@ -141,23 +130,17 @@ public class WbmpImageParser extends AbstractImageParser<WbmpImagingParameters> 
         return "Wireless Application Protocol Bitmap Format";
     }
 
-    private BufferedImage readImage(final WbmpHeader wbmpHeader, final InputStream is)
-            throws IOException {
+    private BufferedImage readImage(final WbmpHeader wbmpHeader, final InputStream is) throws IOException {
         final int rowLength = (wbmpHeader.width + 7) / 8;
-        final byte[] image = readBytes("Pixels", is,
-                rowLength * wbmpHeader.height, "Error reading image pixels");
+        final byte[] image = readBytes("Pixels", is, rowLength * wbmpHeader.height, "Error reading image pixels");
         final DataBufferByte dataBuffer = new DataBufferByte(image, image.length);
-        final WritableRaster raster = Raster.createPackedRaster(dataBuffer,
-                wbmpHeader.width, wbmpHeader.height, 1, null);
+        final WritableRaster raster = Raster.createPackedRaster(dataBuffer, wbmpHeader.width, wbmpHeader.height, 1, null);
         final int[] palette = { 0x000000, 0xffffff };
-        final IndexColorModel colorModel = new IndexColorModel(1, 2, palette, 0,
-                false, -1, DataBuffer.TYPE_BYTE);
-        return new BufferedImage(colorModel, raster,
-                colorModel.isAlphaPremultiplied(), new Properties());
+        final IndexColorModel colorModel = new IndexColorModel(1, 2, palette, 0, false, -1, DataBuffer.TYPE_BYTE);
+        return new BufferedImage(colorModel, raster, colorModel.isAlphaPremultiplied(), new Properties());
     }
 
-    private int readMultiByteInteger(final InputStream is) throws ImagingException,
-            IOException {
+    private int readMultiByteInteger(final InputStream is) throws ImagingException, IOException {
         int value = 0;
         int nextByte;
         int totalBits = 0;
@@ -167,34 +150,27 @@ public class WbmpImageParser extends AbstractImageParser<WbmpImagingParameters> 
             value |= nextByte & 0x7f;
             totalBits += 7;
             if (totalBits > 31) {
-                throw new ImagingException(
-                        "Overflow reading WBMP multi-byte field");
+                throw new ImagingException("Overflow reading WBMP multi-byte field");
             }
         } while ((nextByte & 0x80) != 0);
         return value;
     }
 
-    private WbmpHeader readWbmpHeader(final ByteSource byteSource)
-            throws ImagingException, IOException {
+    private WbmpHeader readWbmpHeader(final ByteSource byteSource) throws ImagingException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             return readWbmpHeader(is);
         }
     }
 
-    private WbmpHeader readWbmpHeader(final InputStream is)
-            throws ImagingException, IOException {
+    private WbmpHeader readWbmpHeader(final InputStream is) throws ImagingException, IOException {
         final int typeField = readMultiByteInteger(is);
         if (typeField != 0) {
-            throw new ImagingException("Invalid/unsupported WBMP type "
-                    + typeField);
+            throw new ImagingException("Invalid/unsupported WBMP type " + typeField);
         }
 
-        final byte fixHeaderField = readByte("FixHeaderField", is,
-                "Invalid WBMP File");
+        final byte fixHeaderField = readByte("FixHeaderField", is, "Invalid WBMP File");
         if ((fixHeaderField & 0x9f) != 0) {
-            throw new ImagingException(
-                    "Invalid/unsupported WBMP FixHeaderField 0x"
-                            + Integer.toHexString(0xff & fixHeaderField));
+            throw new ImagingException("Invalid/unsupported WBMP FixHeaderField 0x" + Integer.toHexString(0xff & fixHeaderField));
         }
 
         final int width = readMultiByteInteger(is);
@@ -205,8 +181,7 @@ public class WbmpImageParser extends AbstractImageParser<WbmpImagingParameters> 
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, final WbmpImagingParameters params)
-            throws ImagingException, IOException {
+    public void writeImage(final BufferedImage src, final OutputStream os, final WbmpImagingParameters params) throws ImagingException, IOException {
         writeMultiByteInteger(os, 0); // typeField
         os.write(0); // fixHeaderField
         writeMultiByteInteger(os, src.getWidth());
@@ -217,9 +192,9 @@ public class WbmpImageParser extends AbstractImageParser<WbmpImagingParameters> 
             int nextBit = 0x80;
             for (int x = 0; x < src.getWidth(); x++) {
                 final int argb = src.getRGB(x, y);
-                final int red = 0xff & (argb >> 16);
-                final int green = 0xff & (argb >> 8);
-                final int blue = 0xff & (argb >> 0);
+                final int red = 0xff & argb >> 16;
+                final int green = 0xff & argb >> 8;
+                final int blue = 0xff & argb >> 0;
                 final int sample = (red + green + blue) / 3;
                 if (sample > 127) {
                     pixel |= nextBit;
@@ -237,11 +212,10 @@ public class WbmpImageParser extends AbstractImageParser<WbmpImagingParameters> 
         }
     }
 
-    private void writeMultiByteInteger(final OutputStream os, final int value)
-            throws IOException {
+    private void writeMultiByteInteger(final OutputStream os, final int value) throws IOException {
         boolean wroteYet = false;
         for (int position = 4 * 7; position > 0; position -= 7) {
-            final int next7Bits = 0x7f & (value >>> position);
+            final int next7Bits = 0x7f & value >>> position;
             if (next7Bits != 0 || wroteYet) {
                 os.write(0x80 | next7Bits);
                 wroteYet = true;

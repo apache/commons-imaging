@@ -29,12 +29,10 @@ public class TiffRasterStatistics {
     private final float excludedValue;
 
     /**
-     * Constructs an instance of this class, tabulating results from the input
-     * raster data.
+     * Constructs an instance of this class, tabulating results from the input raster data.
      *
-     * @param raster the input data
-     * @param excludedValue an optional value to ignore; use Float&#46;NaN if no
-     * value is to be ignored.
+     * @param raster        the input data
+     * @param excludedValue an optional value to ignore; use Float&#46;NaN if no value is to be ignored.
      */
     TiffRasterStatistics(final TiffRasterData raster, final float excludedValue) {
         this.excludedValue = excludedValue;
@@ -84,8 +82,7 @@ public class TiffRasterStatistics {
     }
 
     /**
-     * Gets the count of the number of non-null and non-excluded samples in the
-     * collection.
+     * Gets the count of the number of non-null and non-excluded samples in the collection.
      *
      * @return the a positive number, potentially zero
      */
@@ -94,8 +91,7 @@ public class TiffRasterStatistics {
     }
 
     /**
-     * Gets the value that was set for exclusion, or a Float&#46;NaN if not was
-     * set.
+     * Gets the value that was set for exclusion, or a Float&#46;NaN if not was set.
      *
      * @return the excluded value (if any).
      */
@@ -113,8 +109,7 @@ public class TiffRasterStatistics {
     }
 
     /**
-     * Gets the mean value for all sample values in the raster. Null-data values
-     * and excluded values are not considered.
+     * Gets the mean value for all sample values in the raster. Null-data values and excluded values are not considered.
      *
      * @return the mean value of the samples
      */
@@ -132,8 +127,7 @@ public class TiffRasterStatistics {
     }
 
     /**
-     * Indicates if a sample value was set to be deliberately excluded from the
-     * statistics.
+     * Indicates if a sample value was set to be deliberately excluded from the statistics.
      *
      * @return true if a value was set for exclusion; otherwise, false
      */

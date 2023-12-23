@@ -39,7 +39,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class JpegReadTest extends JpegBaseTest {
 
-    public static Stream<File> data() throws Exception{
+    public static Stream<File> data() throws Exception {
         return getJpegImages().stream();
     }
 
@@ -49,7 +49,7 @@ public class JpegReadTest extends JpegBaseTest {
         final JpegImageParser jpegImageParser = new JpegImageParser();
         final ImageMetadata metadata = jpegImageParser.getExifMetadata(ByteSource.file(imageFile), new TiffImagingParameters());
         // TODO only run this tests with images that have metadata...
-        //assertNotNull(metadata);
+        // assertNotNull(metadata);
         Debug.debug("metadata", metadata);
 
         Debug.debug("ICC profile", Imaging.getIccProfile(imageFile));
@@ -61,19 +61,20 @@ public class JpegReadTest extends JpegBaseTest {
             final BufferedImage image = Imaging.getBufferedImage(imageFile);
             assertNotNull(image);
         } catch (final ImagingException imageReadException) {
-            assertEquals("Only sequential, baseline JPEGs are supported at the moment",
-                    imageReadException.getMessage());
+            assertEquals("Only sequential, baseline JPEGs are supported at the moment", imageReadException.getMessage());
         }
     }
 
     /**
-     * The JPEG image data may contain a negative number of segments,
-     * in which case the parser could throw a NegativeArraySizeException.
+     * The JPEG image data may contain a negative number of segments, in which case the parser could throw a NegativeArraySizeException.
      *
-     * <p>This test case verifies that we are handling that scenario, and
-     * throwing an ImageReadException instead.</p>
+     * <p>
+     * This test case verifies that we are handling that scenario, and throwing an ImageReadException instead.
+     * </p>
      *
-     * <p>See Google OSS Fuzz issue 33458</p>
+     * <p>
+     * See Google OSS Fuzz issue 33458
+     * </p>
      */
     @Test
     public void testUncaughtExceptionOssFuzz33458() {

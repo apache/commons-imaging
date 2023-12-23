@@ -26,8 +26,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class FullColorRoundtrip extends RoundtripBase {
 
-    public static final BufferedImage[] images = {
-            TestImages.createFullColorImage(1, 1), // minimal
+    public static final BufferedImage[] images = { TestImages.createFullColorImage(1, 1), // minimal
             TestImages.createFullColorImage(2, 2), //
             TestImages.createFullColorImage(10, 10), // larger than 8
             TestImages.createFullColorImage(300, 300), // larger than 256

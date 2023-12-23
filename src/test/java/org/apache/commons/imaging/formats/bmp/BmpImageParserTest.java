@@ -29,12 +29,14 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the {@link BmpImageParser}.
+ *
  * @since 1.0-alpha3
  */
 public class BmpImageParserTest {
 
     /**
      * For https://issues.apache.org/jira/browse/IMAGING-279.
+     *
      * @throws IOException
      * @throws ImagingException
      */
@@ -47,6 +49,7 @@ public class BmpImageParserTest {
 
     /**
      * For https://issues.apache.org/jira/browse/IMAGING-264.
+     *
      * @throws IOException
      * @throws ImagingException
      */

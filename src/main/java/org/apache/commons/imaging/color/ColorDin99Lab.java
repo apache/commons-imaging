@@ -18,9 +18,8 @@ package org.apache.commons.imaging.color;
  * Represents a color in the DIN99 color space, a derivation of the CIE LAB color space.
  *
  * @see <a href="de.wikipedia.org/wiki/DIN99-Farbraum">de.wikipedia.org/wiki/DIN99-Farbraum</a>
- * @see <a href=
- *      "https://pdfs.semanticscholar.org/647b/20bda458133ff2b883041746bc8cb75527fc.pdf">Comparison of the metrics between the CIELAB and the DIN99 uniform
- *      color spaces</a>
+ * @see <a href= "https://pdfs.semanticscholar.org/647b/20bda458133ff2b883041746bc8cb75527fc.pdf">Comparison of the metrics between the CIELAB and the DIN99
+ *      uniform color spaces</a>
  * @see <a href="https://www.researchgate.net/publication/229891006_Uniform_colour_spaces_based_on_the_DIN99_colour-difference_formula">DIN99b P.284:
  *      Uniform_colour_spaces_based_on_the_DIN99_colour-difference_formula</a>
  * @since 1.0-alpha3

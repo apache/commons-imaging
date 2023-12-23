@@ -23,28 +23,29 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests for class {@link JpegInputStream}.
+ *
  * @see JpegInputStream
  **/
 public class JpegInputStreamTest {
 
-  @Test
-  public void testNextBitThrowsImageReadExceptionOne() {
-    final int[] byteArray = new int[6];
-    byteArray[0] = (byte) (-1);
-    byteArray[1] = (byte) 74;
-    final JpegInputStream jpegInputStream = new JpegInputStream(byteArray);
+    @Test
+    public void testNextBitThrowsImageReadExceptionOne() {
+        final int[] byteArray = new int[6];
+        byteArray[0] = (byte) -1;
+        byteArray[1] = (byte) 74;
+        final JpegInputStream jpegInputStream = new JpegInputStream(byteArray);
 
-    assertThrows(ImagingException.class, jpegInputStream::nextBit);
+        assertThrows(ImagingException.class, jpegInputStream::nextBit);
 
-  }
+    }
 
-  @Test
-  public void testNextBitThrowsImageReadExceptionTwo() {
-    final int[] byteArray = {};
-    final JpegInputStream jpegInputStream = new JpegInputStream(byteArray);
+    @Test
+    public void testNextBitThrowsImageReadExceptionTwo() {
+        final int[] byteArray = {};
+        final JpegInputStream jpegInputStream = new JpegInputStream(byteArray);
 
-    assertThrows(IllegalStateException.class, jpegInputStream::nextBit);
+        assertThrows(IllegalStateException.class, jpegInputStream::nextBit);
 
-  }
+    }
 
 }

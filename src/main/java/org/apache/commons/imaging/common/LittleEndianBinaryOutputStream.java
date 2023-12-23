@@ -29,22 +29,22 @@ final class LittleEndianBinaryOutputStream extends BinaryOutputStream {
     @Override
     public void write2Bytes(final int value) throws IOException {
         write(0xff & value);
-        write(0xff & (value >> 8));
+        write(0xff & value >> 8);
     }
 
     @Override
     public void write3Bytes(final int value) throws IOException {
         write(0xff & value);
-        write(0xff & (value >> 8));
-        write(0xff & (value >> 16));
+        write(0xff & value >> 8);
+        write(0xff & value >> 16);
     }
 
     @Override
     public void write4Bytes(final int value) throws IOException {
         write(0xff & value);
-        write(0xff & (value >> 8));
-        write(0xff & (value >> 16));
-        write(0xff & (value >> 24));
+        write(0xff & value >> 8);
+        write(0xff & value >> 16);
+        write(0xff & value >> 24);
     }
 
 }

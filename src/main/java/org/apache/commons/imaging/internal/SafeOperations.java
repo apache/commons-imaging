@@ -31,7 +31,7 @@ public final class SafeOperations {
      * @param values variable length array of integers.
      * @return the values safely added.
      */
-    public static int add(int... values) {
+    public static int add(final int... values) {
         if (values == null || values.length < 2) {
             throw new IllegalArgumentException("You must provide at least two elements to be added");
         }

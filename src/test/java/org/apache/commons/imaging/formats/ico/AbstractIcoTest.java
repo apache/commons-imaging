@@ -33,8 +33,7 @@ public abstract class AbstractIcoTest extends AbstractImagingTest {
     }
 
     private static boolean isIco(final File file) {
-        return file.getName().toLowerCase().endsWith(".ico")
-                || file.getName().toLowerCase().endsWith(".cur");
+        return file.getName().toLowerCase().endsWith(".ico") || file.getName().toLowerCase().endsWith(".cur");
     }
 
 }

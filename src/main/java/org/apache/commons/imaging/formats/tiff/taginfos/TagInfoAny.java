@@ -20,8 +20,7 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
 public class TagInfoAny extends TagInfo {
-    public TagInfoAny(final String name, final int tag, final int length,
-            final TiffDirectoryType directoryType) {
+    public TagInfoAny(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
         super(name, tag, AbstractFieldType.ANY, length, directoryType);
     }
 }

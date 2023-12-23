@@ -20,9 +20,7 @@ package org.apache.commons.imaging.common;
 import java.awt.image.BufferedImage;
 
 public interface BufferedImageFactory {
-    BufferedImage getColorBufferedImage(int width, int height,
-            boolean hasAlpha);
+    BufferedImage getColorBufferedImage(int width, int height, boolean hasAlpha);
 
-    BufferedImage getGrayscaleBufferedImage(int width, int height,
-            boolean hasAlpha);
+    BufferedImage getGrayscaleBufferedImage(int width, int height, boolean hasAlpha);
 }

@@ -57,8 +57,8 @@ public class PhotometricInterpreterFloatTest {
             final int i1 = i + 31;
             final float f0 = i / 256f;
             final float f1 = (i + 32) / 256f;
-            final int argb0 = 0xff000000 | (i << 8) | i;
-            final int argb1 = 0xff000000 | (i1 << 8) | i;
+            final int argb0 = 0xff000000 | i << 8 | i;
+            final int argb1 = 0xff000000 | i1 << 8 | i;
             final Color c0 = new Color(argb0);
             final Color c1 = new Color(argb1);
             final PaletteEntryForRange entry = new PaletteEntryForRange(f0, f1, c0, c1);
@@ -119,8 +119,7 @@ public class PhotometricInterpreterFloatTest {
         new PhotometricInterpreterFloat(0, 1);
         new PhotometricInterpreterFloat(1, 0);
 
-        assertThrows(IllegalArgumentException.class, () -> new PhotometricInterpreterFloat(null),
-                "Constructor failed to detect null arguments");
+        assertThrows(IllegalArgumentException.class, () -> new PhotometricInterpreterFloat(null), "Constructor failed to detect null arguments");
 
         assertThrows(IllegalArgumentException.class, () -> new PhotometricInterpreterFloat(0.1f, 0.1f),
                 "Constructor failed to detect bad-range argument values");
@@ -183,7 +182,7 @@ public class PhotometricInterpreterFloatTest {
     @Test
     public void testInterpretPixel() {
         for (int i = 0; i < 256; i++) {
-            final int lowTest = (i / 32) * 32;
+            final int lowTest = i / 32 * 32;
             final int argb = imageBuilder.getRgb(i, i);
             final int b = argb & 0xff;
             assertEquals(b, lowTest, "Invalid conversion for level " + i);

@@ -41,7 +41,7 @@ final class ByteSourceInputStreamTest {
 
         final String imagePath = FilenameUtils.separatorsToSystem(ICO_IMAGE_FILE);
         final File imageFile = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, imagePath);
-        try(BufferedInputStream imageStream = new BufferedInputStream(new FileInputStream(imageFile))) {
+        try (BufferedInputStream imageStream = new BufferedInputStream(new FileInputStream(imageFile))) {
             // InputStreamByteSource is created inside of following method
             final BufferedImage bufferedImage = Imaging.getBufferedImage(imageStream, ICO_IMAGE_FILE);
 

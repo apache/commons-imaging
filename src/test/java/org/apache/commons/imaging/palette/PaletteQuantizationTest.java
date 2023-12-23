@@ -35,11 +35,11 @@ public class PaletteQuantizationTest extends AbstractImagingTest {
         boolean exact = false;
         if (palette != null) {
             assertEquals(expectedSize, palette.length());
-            //checkUniqueColors(image, palette);
+            // checkUniqueColors(image, palette);
             exact = true;
         }
         if (exact) {
-            //checkDithering(image, palette);
+            // checkDithering(image, palette);
         }
 
         palette = paletteFactory.makeQuantizedRgbaPalette(image, false, limit);
@@ -51,14 +51,13 @@ public class PaletteQuantizationTest extends AbstractImagingTest {
 
         palette = paletteFactory.makeQuantizedRgbPalette(image, limit);
         assertEquals(expectedSize, palette.length());
-        //checkUniqueColors(image, palette);
+        // checkUniqueColors(image, palette);
         if (exact) {
-            //checkDithering(image, palette);
+            // checkDithering(image, palette);
         }
 
         final MedianCutQuantizer medianCutQuantizer = new MedianCutQuantizer(true);
-        palette = medianCutQuantizer.process(
-                image, limit, new MostPopulatedBoxesMedianCut());
+        palette = medianCutQuantizer.process(image, limit, new MostPopulatedBoxesMedianCut());
         assertEquals(expectedSize, palette.length());
         checkUniqueColors(image, palette);
         if (exact) {

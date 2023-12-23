@@ -19,4 +19,3 @@
  * PNG image format scan-line filters.
  */
 package org.apache.commons.imaging.formats.png.scanlinefilters;
-

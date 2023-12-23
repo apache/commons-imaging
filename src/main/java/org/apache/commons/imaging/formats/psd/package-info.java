@@ -19,4 +19,3 @@
  * The PSD image format.
  */
 package org.apache.commons.imaging.formats.psd;
-

@@ -78,8 +78,7 @@ public class ExifRewriter extends BinaryFileParser {
         public final List<JFIFPiece> pieces;
         public final List<JFIFPiece> exifPieces;
 
-        JFIFPieces(final List<JFIFPiece> pieces,
-                final List<JFIFPiece> exifPieces) {
+        JFIFPieces(final List<JFIFPiece> pieces, final List<JFIFPiece> exifPieces) {
             this.pieces = pieces;
             this.exifPieces = exifPieces;
         }
@@ -92,8 +91,7 @@ public class ExifRewriter extends BinaryFileParser {
         public final byte[] markerLengthBytes;
         public final byte[] segmentData;
 
-        JFIFPieceSegment(final int marker, final byte[] markerBytes,
-                final byte[] markerLengthBytes, final byte[] segmentData) {
+        JFIFPieceSegment(final int marker, final byte[] markerBytes, final byte[] markerLengthBytes, final byte[] segmentData) {
             this.marker = marker;
             this.markerBytes = markerBytes;
             this.markerLengthBytes = markerLengthBytes;
@@ -110,15 +108,13 @@ public class ExifRewriter extends BinaryFileParser {
 
     private static final class JFIFPieceSegmentExif extends JFIFPieceSegment {
 
-        JFIFPieceSegmentExif(final int marker, final byte[] markerBytes,
-                final byte[] markerLengthBytes, final byte[] segmentData) {
+        JFIFPieceSegmentExif(final int marker, final byte[] markerBytes, final byte[] markerLengthBytes, final byte[] segmentData) {
             super(marker, markerBytes, markerLengthBytes, segmentData);
         }
     }
 
     /**
-     * Constructs a new instance. to guess whether a file contains an image based on its file
-     * extension.
+     * Constructs a new instance. to guess whether a file contains an image based on its file extension.
      */
     public ExifRewriter() {
         this(ByteOrder.BIG_ENDIAN);
@@ -128,8 +124,7 @@ public class ExifRewriter extends BinaryFileParser {
      * Constructs a new instance.
      * <p>
      *
-     * @param byteOrder
-     *            byte order of EXIF segment.
+     * @param byteOrder byte order of EXIF segment.
      */
     public ExifRewriter(final ByteOrder byteOrder) {
         super(byteOrder);
@@ -148,25 +143,14 @@ public class ExifRewriter extends BinaryFileParser {
 
             // return false to exit traversal.
             @Override
-            public boolean visitSegment(final int marker, final byte[] markerBytes,
-                    final int markerLength, final byte[] markerLengthBytes,
+            public boolean visitSegment(final int marker, final byte[] markerBytes, final int markerLength, final byte[] markerLengthBytes,
                     final byte[] segmentData) throws
             // ImageWriteException,
-                    ImagingException, IOException {
-                if (marker != JpegConstants.JPEG_APP1_MARKER) {
-                    pieces.add(new JFIFPieceSegment(marker, markerBytes,
-                            markerLengthBytes, segmentData));
-                } else if (!startsWith(segmentData,
-                        JpegConstants.EXIF_IDENTIFIER_CODE)) {
-                    pieces.add(new JFIFPieceSegment(marker, markerBytes,
-                            markerLengthBytes, segmentData));
-                // } else if (exifSegmentArray[0] != null) {
-                // // TODO: add support for multiple segments
-                // throw new ImageReadException(
-                // "More than one APP1 EXIF segment.");
+            ImagingException, IOException {
+                if (marker != JpegConstants.JPEG_APP1_MARKER || !startsWith(segmentData, JpegConstants.EXIF_IDENTIFIER_CODE)) {
+                    pieces.add(new JFIFPieceSegment(marker, markerBytes, markerLengthBytes, segmentData));
                 } else {
-                    final JFIFPiece piece = new JFIFPieceSegmentExif(marker,
-                            markerBytes, markerLengthBytes, segmentData);
+                    final JFIFPiece piece = new JFIFPieceSegmentExif(marker, markerBytes, markerLengthBytes, segmentData);
                     pieces.add(piece);
                     exifPieces.add(piece);
                 }
@@ -192,37 +176,29 @@ public class ExifRewriter extends BinaryFileParser {
     }
 
     /**
-     * Reads a JPEG image, removes all EXIF metadata (by removing the APP1
-     * segment), and writes the result to a stream.
+     * Reads a JPEG image, removes all EXIF metadata (by removing the APP1 segment), and writes the result to a stream.
      *
-     * @param src
-     *            Byte array containing JPEG image data.
-     * @param os
-     *            OutputStream to write the image to.
+     * @param src Byte array containing JPEG image data.
+     * @param os  OutputStream to write the image to.
      * @throws ImagingException if it fails to read the JFIF segments
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      * @throws ImagingException if it fails to write the updated data
      */
-    public void removeExifMetadata(final byte[] src, final OutputStream os)
-            throws ImagingException, IOException, ImagingException {
+    public void removeExifMetadata(final byte[] src, final OutputStream os) throws ImagingException, IOException, ImagingException {
         final ByteSource byteSource = ByteSource.array(src);
         removeExifMetadata(byteSource, os);
     }
 
     /**
-     * Reads a JPEG image, removes all EXIF metadata (by removing the APP1
-     * segment), and writes the result to a stream.
+     * Reads a JPEG image, removes all EXIF metadata (by removing the APP1 segment), and writes the result to a stream.
      *
-     * @param byteSource
-     *            ByteSource containing JPEG image data.
-     * @param os
-     *            OutputStream to write the image to.
+     * @param byteSource ByteSource containing JPEG image data.
+     * @param os         OutputStream to write the image to.
      * @throws ImagingException if it fails to read the JFIF segments
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      * @throws ImagingException if it fails to write the updated data
      */
-    public void removeExifMetadata(final ByteSource byteSource, final OutputStream os)
-            throws ImagingException, IOException, ImagingException {
+    public void removeExifMetadata(final ByteSource byteSource, final OutputStream os) throws ImagingException, IOException, ImagingException {
         final JFIFPieces jfifPieces = analyzeJfif(byteSource);
         final List<JFIFPiece> pieces = jfifPieces.pieces;
 
@@ -236,98 +212,78 @@ public class ExifRewriter extends BinaryFileParser {
     }
 
     /**
-     * Reads a JPEG image, removes all EXIF metadata (by removing the APP1
-     * segment), and writes the result to a stream.
+     * Reads a JPEG image, removes all EXIF metadata (by removing the APP1 segment), and writes the result to a stream.
      * <p>
      *
-     * @param src
-     *            Image file.
-     * @param os
-     *            OutputStream to write the image to.
+     * @param src Image file.
+     * @param os  OutputStream to write the image to.
      *
      * @throws ImagingException if it fails to read the JFIF segments
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      * @throws ImagingException if it fails to write the updated data
      * @see java.io.File
      * @see java.io.OutputStream
      * @see java.io.File
      * @see java.io.OutputStream
      */
-    public void removeExifMetadata(final File src, final OutputStream os)
-            throws ImagingException, IOException, ImagingException {
+    public void removeExifMetadata(final File src, final OutputStream os) throws ImagingException, IOException, ImagingException {
         final ByteSource byteSource = ByteSource.file(src);
         removeExifMetadata(byteSource, os);
     }
 
     /**
-     * Reads a JPEG image, removes all EXIF metadata (by removing the APP1
-     * segment), and writes the result to a stream.
+     * Reads a JPEG image, removes all EXIF metadata (by removing the APP1 segment), and writes the result to a stream.
      *
-     * @param src
-     *            InputStream containing JPEG image data.
-     * @param os
-     *            OutputStream to write the image to.
+     * @param src InputStream containing JPEG image data.
+     * @param os  OutputStream to write the image to.
      * @throws ImagingException if it fails to read the JFIF segments
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      * @throws ImagingException if it fails to write the updated data
      */
-    public void removeExifMetadata(final InputStream src, final OutputStream os)
-            throws ImagingException, IOException, ImagingException {
+    public void removeExifMetadata(final InputStream src, final OutputStream os) throws ImagingException, IOException, ImagingException {
         final ByteSource byteSource = ByteSource.inputStream(src, null);
         removeExifMetadata(byteSource, os);
     }
 
     /**
-     * Reads a JPEG image, replaces the EXIF metadata and writes the result to a
-     * stream.
+     * Reads a JPEG image, replaces the EXIF metadata and writes the result to a stream.
      *
-     * <p>Note that this uses the "Lossless" approach - in order to preserve data
-     * embedded in the EXIF segment that it can't parse (such as Maker Notes),
-     * this algorithm avoids overwriting any part of the original segment that
-     * it couldn't parse. This can cause the EXIF segment to grow with each
-     * update, which is a serious issue, since all EXIF data must fit in a
-     * single APP1 segment of the JPEG image.</p>
+     * <p>
+     * Note that this uses the "Lossless" approach - in order to preserve data embedded in the EXIF segment that it can't parse (such as Maker Notes), this
+     * algorithm avoids overwriting any part of the original segment that it couldn't parse. This can cause the EXIF segment to grow with each update, which is
+     * a serious issue, since all EXIF data must fit in a single APP1 segment of the JPEG image.
+     * </p>
      *
-     * @param src
-     *            Byte array containing JPEG image data.
-     * @param os
-     *            OutputStream to write the image to.
-     * @param outputSet
-     *            TiffOutputSet containing the EXIF data to write.
+     * @param src       Byte array containing JPEG image data.
+     * @param os        OutputStream to write the image to.
+     * @param outputSet TiffOutputSet containing the EXIF data to write.
      * @throws ImagingException if it fails to read the JFIF segments
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      * @throws ImagingException if it fails to write the updated data
      */
-    public void updateExifMetadataLossless(final byte[] src, final OutputStream os,
-            final TiffOutputSet outputSet) throws ImagingException, IOException,
-            ImagingException {
+    public void updateExifMetadataLossless(final byte[] src, final OutputStream os, final TiffOutputSet outputSet)
+            throws ImagingException, IOException, ImagingException {
         final ByteSource byteSource = ByteSource.array(src);
         updateExifMetadataLossless(byteSource, os, outputSet);
     }
 
     /**
-     * Reads a JPEG image, replaces the EXIF metadata and writes the result to a
-     * stream.
+     * Reads a JPEG image, replaces the EXIF metadata and writes the result to a stream.
      *
-     * <p>Note that this uses the "Lossless" approach - in order to preserve data
-     * embedded in the EXIF segment that it can't parse (such as Maker Notes),
-     * this algorithm avoids overwriting any part of the original segment that
-     * it couldn't parse. This can cause the EXIF segment to grow with each
-     * update, which is a serious issue, since all EXIF data must fit in a
-     * single APP1 segment of the JPEG image.</p>
+     * <p>
+     * Note that this uses the "Lossless" approach - in order to preserve data embedded in the EXIF segment that it can't parse (such as Maker Notes), this
+     * algorithm avoids overwriting any part of the original segment that it couldn't parse. This can cause the EXIF segment to grow with each update, which is
+     * a serious issue, since all EXIF data must fit in a single APP1 segment of the JPEG image.
+     * </p>
      *
-     * @param byteSource
-     *            ByteSource containing JPEG image data.
-     * @param os
-     *            OutputStream to write the image to.
-     * @param outputSet
-     *            TiffOutputSet containing the EXIF data to write.
+     * @param byteSource ByteSource containing JPEG image data.
+     * @param os         OutputStream to write the image to.
+     * @param outputSet  TiffOutputSet containing the EXIF data to write.
      * @throws ImagingException if it fails to read the JFIF segments
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      * @throws ImagingException if it fails to write the updated data
      */
-    public void updateExifMetadataLossless(final ByteSource byteSource,
-            final OutputStream os, final TiffOutputSet outputSet)
+    public void updateExifMetadataLossless(final ByteSource byteSource, final OutputStream os, final TiffOutputSet outputSet)
             throws ImagingException, IOException, ImagingException {
         // List outputDirectories = outputSet.getDirectories();
         final JFIFPieces jfifPieces = analyzeJfif(byteSource);
@@ -355,112 +311,91 @@ public class ExifRewriter extends BinaryFileParser {
     }
 
     /**
-     * Reads a JPEG image, replaces the EXIF metadata and writes the result to a
-     * stream.
+     * Reads a JPEG image, replaces the EXIF metadata and writes the result to a stream.
      *
-     * <p>Note that this uses the "Lossless" approach - in order to preserve data
-     * embedded in the EXIF segment that it can't parse (such as Maker Notes),
-     * this algorithm avoids overwriting any part of the original segment that
-     * it couldn't parse. This can cause the EXIF segment to grow with each
-     * update, which is a serious issue, since all EXIF data must fit in a
-     * single APP1 segment of the JPEG image.</p>
+     * <p>
+     * Note that this uses the "Lossless" approach - in order to preserve data embedded in the EXIF segment that it can't parse (such as Maker Notes), this
+     * algorithm avoids overwriting any part of the original segment that it couldn't parse. This can cause the EXIF segment to grow with each update, which is
+     * a serious issue, since all EXIF data must fit in a single APP1 segment of the JPEG image.
+     * </p>
      *
-     * @param src
-     *            Image file.
-     * @param os
-     *            OutputStream to write the image to.
-     * @param outputSet
-     *            TiffOutputSet containing the EXIF data to write.
+     * @param src       Image file.
+     * @param os        OutputStream to write the image to.
+     * @param outputSet TiffOutputSet containing the EXIF data to write.
      * @throws ImagingException if it fails to read the JFIF segments
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      * @throws ImagingException if it fails to write the updated data
      */
-    public void updateExifMetadataLossless(final File src, final OutputStream os,
-            final TiffOutputSet outputSet) throws ImagingException, IOException,
-            ImagingException {
+    public void updateExifMetadataLossless(final File src, final OutputStream os, final TiffOutputSet outputSet)
+            throws ImagingException, IOException, ImagingException {
         final ByteSource byteSource = ByteSource.file(src);
         updateExifMetadataLossless(byteSource, os, outputSet);
     }
 
     /**
-     * Reads a JPEG image, replaces the EXIF metadata and writes the result to a
-     * stream.
+     * Reads a JPEG image, replaces the EXIF metadata and writes the result to a stream.
      *
-     * <p>Note that this uses the "Lossless" approach - in order to preserve data
-     * embedded in the EXIF segment that it can't parse (such as Maker Notes),
-     * this algorithm avoids overwriting any part of the original segment that
-     * it couldn't parse. This can cause the EXIF segment to grow with each
-     * update, which is a serious issue, since all EXIF data must fit in a
-     * single APP1 segment of the JPEG image.</p>
+     * <p>
+     * Note that this uses the "Lossless" approach - in order to preserve data embedded in the EXIF segment that it can't parse (such as Maker Notes), this
+     * algorithm avoids overwriting any part of the original segment that it couldn't parse. This can cause the EXIF segment to grow with each update, which is
+     * a serious issue, since all EXIF data must fit in a single APP1 segment of the JPEG image.
+     * </p>
      *
-     * @param src
-     *            InputStream containing JPEG image data.
-     * @param os
-     *            OutputStream to write the image to.
-     * @param outputSet
-     *            TiffOutputSet containing the EXIF data to write.
+     * @param src       InputStream containing JPEG image data.
+     * @param os        OutputStream to write the image to.
+     * @param outputSet TiffOutputSet containing the EXIF data to write.
      * @throws ImagingException if it fails to read the JFIF segments
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      * @throws ImagingException if it fails to write the updated data
      */
-    public void updateExifMetadataLossless(final InputStream src, final OutputStream os,
-            final TiffOutputSet outputSet) throws ImagingException, IOException,
-            ImagingException {
+    public void updateExifMetadataLossless(final InputStream src, final OutputStream os, final TiffOutputSet outputSet)
+            throws ImagingException, IOException, ImagingException {
         final ByteSource byteSource = ByteSource.inputStream(src, null);
         updateExifMetadataLossless(byteSource, os, outputSet);
     }
 
     /**
-     * Reads a JPEG image, replaces the EXIF metadata and writes the result to a
-     * stream.
+     * Reads a JPEG image, replaces the EXIF metadata and writes the result to a stream.
      *
-     * <p>Note that this uses the "Lossy" approach - the algorithm overwrites the
-     * entire EXIF segment, ignoring the possibility that it may be discarding
-     * data it couldn't parse (such as Maker Notes).</p>
+     * <p>
+     * Note that this uses the "Lossy" approach - the algorithm overwrites the entire EXIF segment, ignoring the possibility that it may be discarding data it
+     * couldn't parse (such as Maker Notes).
+     * </p>
      *
-     * @param src
-     *            Byte array containing JPEG image data.
-     * @param os
-     *            OutputStream to write the image to.
-     * @param outputSet
-     *            TiffOutputSet containing the EXIF data to write.
+     * @param src       Byte array containing JPEG image data.
+     * @param os        OutputStream to write the image to.
+     * @param outputSet TiffOutputSet containing the EXIF data to write.
      * @throws ImagingException if it fails to read the JFIF segments
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      * @throws ImagingException if it fails to write the updated data
      */
-    public void updateExifMetadataLossy(final byte[] src, final OutputStream os,
-            final TiffOutputSet outputSet) throws ImagingException, IOException,
-            ImagingException {
+    public void updateExifMetadataLossy(final byte[] src, final OutputStream os, final TiffOutputSet outputSet)
+            throws ImagingException, IOException, ImagingException {
         final ByteSource byteSource = ByteSource.array(src);
         updateExifMetadataLossy(byteSource, os, outputSet);
     }
 
     /**
-     * Reads a JPEG image, replaces the EXIF metadata and writes the result to a
-     * stream.
+     * Reads a JPEG image, replaces the EXIF metadata and writes the result to a stream.
      *
-     * <p>Note that this uses the "Lossy" approach - the algorithm overwrites the
-     * entire EXIF segment, ignoring the possibility that it may be discarding
-     * data it couldn't parse (such as Maker Notes).</p>
+     * <p>
+     * Note that this uses the "Lossy" approach - the algorithm overwrites the entire EXIF segment, ignoring the possibility that it may be discarding data it
+     * couldn't parse (such as Maker Notes).
+     * </p>
      *
-     * @param byteSource
-     *            ByteSource containing JPEG image data.
-     * @param os
-     *            OutputStream to write the image to.
-     * @param outputSet
-     *            TiffOutputSet containing the EXIF data to write.
+     * @param byteSource ByteSource containing JPEG image data.
+     * @param os         OutputStream to write the image to.
+     * @param outputSet  TiffOutputSet containing the EXIF data to write.
      * @throws ImagingException if it fails to read the JFIF segments
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      * @throws ImagingException if it fails to write the updated data
      */
-    public void updateExifMetadataLossy(final ByteSource byteSource, final OutputStream os,
-            final TiffOutputSet outputSet) throws ImagingException, IOException,
-            ImagingException {
+    public void updateExifMetadataLossy(final ByteSource byteSource, final OutputStream os, final TiffOutputSet outputSet)
+            throws ImagingException, IOException, ImagingException {
         final JFIFPieces jfifPieces = analyzeJfif(byteSource);
         final List<JFIFPiece> pieces = jfifPieces.pieces;
 
-        final AbstractTiffImageWriter writer = new TiffImageWriterLossy(
-                outputSet.byteOrder);
+        final AbstractTiffImageWriter writer = new TiffImageWriterLossy(outputSet.byteOrder);
 
         final boolean includeEXIFPrefix = true;
         final byte[] newBytes = writeExifSegment(writer, outputSet, includeEXIFPrefix);
@@ -469,57 +404,48 @@ public class ExifRewriter extends BinaryFileParser {
     }
 
     /**
-     * Reads a JPEG image, replaces the EXIF metadata and writes the result to a
-     * stream.
+     * Reads a JPEG image, replaces the EXIF metadata and writes the result to a stream.
      *
-     * <p>Note that this uses the "Lossy" approach - the algorithm overwrites the
-     * entire EXIF segment, ignoring the possibility that it may be discarding
-     * data it couldn't parse (such as Maker Notes).</p>
+     * <p>
+     * Note that this uses the "Lossy" approach - the algorithm overwrites the entire EXIF segment, ignoring the possibility that it may be discarding data it
+     * couldn't parse (such as Maker Notes).
+     * </p>
      *
-     * @param src
-     *            Image file.
-     * @param os
-     *            OutputStream to write the image to.
-     * @param outputSet
-     *            TiffOutputSet containing the EXIF data to write.
+     * @param src       Image file.
+     * @param os        OutputStream to write the image to.
+     * @param outputSet TiffOutputSet containing the EXIF data to write.
      * @throws ImagingException if it fails to read the JFIF segments
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      * @throws ImagingException if it fails to write the updated data
      */
-    public void updateExifMetadataLossy(final File src, final OutputStream os,
-            final TiffOutputSet outputSet) throws ImagingException, IOException,
-            ImagingException {
+    public void updateExifMetadataLossy(final File src, final OutputStream os, final TiffOutputSet outputSet)
+            throws ImagingException, IOException, ImagingException {
         final ByteSource byteSource = ByteSource.file(src);
         updateExifMetadataLossy(byteSource, os, outputSet);
     }
 
     /**
-     * Reads a JPEG image, replaces the EXIF metadata and writes the result to a
-     * stream.
+     * Reads a JPEG image, replaces the EXIF metadata and writes the result to a stream.
      *
-     * <p>Note that this uses the "Lossy" approach - the algorithm overwrites the
-     * entire EXIF segment, ignoring the possibility that it may be discarding
-     * data it couldn't parse (such as Maker Notes).</p>
+     * <p>
+     * Note that this uses the "Lossy" approach - the algorithm overwrites the entire EXIF segment, ignoring the possibility that it may be discarding data it
+     * couldn't parse (such as Maker Notes).
+     * </p>
      *
-     * @param src
-     *            InputStream containing JPEG image data.
-     * @param os
-     *            OutputStream to write the image to.
-     * @param outputSet
-     *            TiffOutputSet containing the EXIF data to write.
+     * @param src       InputStream containing JPEG image data.
+     * @param os        OutputStream to write the image to.
+     * @param outputSet TiffOutputSet containing the EXIF data to write.
      * @throws ImagingException if it fails to read the JFIF segments
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      * @throws ImagingException if it fails to write the updated data
      */
-    public void updateExifMetadataLossy(final InputStream src, final OutputStream os,
-            final TiffOutputSet outputSet) throws ImagingException, IOException,
-            ImagingException {
+    public void updateExifMetadataLossy(final InputStream src, final OutputStream os, final TiffOutputSet outputSet)
+            throws ImagingException, IOException, ImagingException {
         final ByteSource byteSource = ByteSource.inputStream(src, null);
         updateExifMetadataLossy(byteSource, os, outputSet);
     }
 
-    private byte[] writeExifSegment(final AbstractTiffImageWriter writer,
-            final TiffOutputSet outputSet, final boolean includeEXIFPrefix)
+    private byte[] writeExifSegment(final AbstractTiffImageWriter writer, final TiffOutputSet outputSet, final boolean includeEXIFPrefix)
             throws IOException, ImagingException {
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
 
@@ -534,8 +460,7 @@ public class ExifRewriter extends BinaryFileParser {
         return os.toByteArray();
     }
 
-    private void writeSegmentsReplacingExif(final OutputStream outputStream,
-            final List<JFIFPiece> segments, final byte[] newBytes)
+    private void writeSegmentsReplacingExif(final OutputStream outputStream, final List<JFIFPiece> segments, final byte[] newBytes)
             throws ImagingException, IOException {
 
         try (DataOutputStream os = new DataOutputStream(outputStream)) {
@@ -553,8 +478,7 @@ public class ExifRewriter extends BinaryFileParser {
             if (!hasExif && newBytes != null) {
                 final byte[] markerBytes = ByteConversions.toBytes((short) JpegConstants.JPEG_APP1_MARKER, getByteOrder());
                 if (newBytes.length > 0xffff) {
-                    throw new ImagingOverflowException(
-                            "APP1 Segment is too long: " + newBytes.length);
+                    throw new ImagingOverflowException("APP1 Segment is too long: " + newBytes.length);
                 }
                 final int markerLength = newBytes.length + 2;
                 final byte[] markerLengthBytes = ByteConversions.toBytes((short) markerLength, getByteOrder());
@@ -564,8 +488,7 @@ public class ExifRewriter extends BinaryFileParser {
                 if (firstSegment.marker == JpegConstants.JFIF_MARKER) {
                     index = 1;
                 }
-                segments.add(index, new JFIFPieceSegmentExif(JpegConstants.JPEG_APP1_MARKER,
-                        markerBytes, markerLengthBytes, newBytes));
+                segments.add(index, new JFIFPieceSegmentExif(JpegConstants.JPEG_APP1_MARKER, markerBytes, markerLengthBytes, newBytes));
             }
 
             boolean APP1Written = false;
@@ -584,8 +507,7 @@ public class ExifRewriter extends BinaryFileParser {
 
                     final byte[] markerBytes = ByteConversions.toBytes((short) JpegConstants.JPEG_APP1_MARKER, getByteOrder());
                     if (newBytes.length > 0xffff) {
-                        throw new ImagingOverflowException(
-                                "APP1 Segment is too long: " + newBytes.length);
+                        throw new ImagingOverflowException("APP1 Segment is too long: " + newBytes.length);
                     }
                     final int markerLength = newBytes.length + 2;
                     final byte[] markerLengthBytes = ByteConversions.toBytes((short) markerLength, getByteOrder());

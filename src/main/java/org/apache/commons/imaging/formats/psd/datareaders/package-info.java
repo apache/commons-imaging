@@ -19,4 +19,3 @@
  * PSD image format data readers.
  */
 package org.apache.commons.imaging.formats.psd.datareaders;
-

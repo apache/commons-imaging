@@ -19,4 +19,3 @@
  * The GIF image format.
  */
 package org.apache.commons.imaging.formats.gif;
-

@@ -20,13 +20,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-public class DataParserLabTest{
+public class DataParserLabTest {
 
-  @Test
-  public void testGetBasicChannelsCount() {
-      final DataParserLab dataParserLab = new DataParserLab();
+    @Test
+    public void testGetBasicChannelsCount() {
+        final DataParserLab dataParserLab = new DataParserLab();
 
-      assertEquals(3, dataParserLab.getBasicChannelsCount());
-  }
+        assertEquals(3, dataParserLab.getBasicChannelsCount());
+    }
 
 }

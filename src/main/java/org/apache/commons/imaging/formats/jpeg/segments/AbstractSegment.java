@@ -110,27 +110,27 @@ public abstract class AbstractSegment extends BinaryFileParser {
             return "Define hierarchical progression";
         case 0xffdf:
             return "Expand reference component(s)";
-            // case 0xffd8 :
-            // return "Reserved for application segments";
-            // case 0xffd8 :
-            // return "Reserved for JPEG extensions";
+        // case 0xffd8 :
+        // return "Reserved for application segments";
+        // case 0xffd8 :
+        // return "Reserved for JPEG extensions";
         case 0xfffe:
             return "Comment";
         case 0xff01:
             return "For temporary private use in arithmetic coding";
-            // case 0xffd8 :
-            // return "Reserved";
+        // case 0xffd8 :
+        // return "Reserved";
 
         default:
         }
 
-        if ((marker >= 0xff02) && (marker <= 0xffbf)) {
+        if (marker >= 0xff02 && marker <= 0xffbf) {
             return "Reserved";
         }
-        if ((marker >= 0xffe0) && (marker <= 0xffef)) {
+        if (marker >= 0xffe0 && marker <= 0xffef) {
             return "APP" + (marker - 0xffe0);
         }
-        if ((marker >= 0xfff0) && (marker <= 0xfffd)) {
+        if (marker >= 0xfff0 && marker <= 0xfffd) {
             return "JPG" + (marker - 0xffe0);
         }
 

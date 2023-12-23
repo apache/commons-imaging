@@ -23,8 +23,7 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
 public class TagInfoBytes extends TagInfo {
-    public TagInfoBytes(final String name, final int tag, final AbstractFieldType abstractFieldType,
-            final int length, final TiffDirectoryType directoryType) {
+    public TagInfoBytes(final String name, final int tag, final AbstractFieldType abstractFieldType, final int length, final TiffDirectoryType directoryType) {
         super(name, tag, abstractFieldType, length, directoryType);
     }
 
@@ -32,8 +31,8 @@ public class TagInfoBytes extends TagInfo {
         super(name, tag, AbstractFieldType.BYTE, length, directoryType);
     }
 
-    public TagInfoBytes(final String name, final int tag, final List<AbstractFieldType> abstractFieldTypes,
-            final int length, final TiffDirectoryType directoryType) {
+    public TagInfoBytes(final String name, final int tag, final List<AbstractFieldType> abstractFieldTypes, final int length,
+            final TiffDirectoryType directoryType) {
         super(name, tag, abstractFieldTypes, length, directoryType);
     }
 

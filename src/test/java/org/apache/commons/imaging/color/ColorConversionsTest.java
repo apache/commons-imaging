@@ -23,9 +23,8 @@ import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 
 public class ColorConversionsTest {
-    private static final int[] SAMPLE_RGBS = { 0xffffffff, 0xff000000,
-            0xffff0000, 0xff00ff00, 0xff0000ff, 0xffff00ff, 0xfff0ff00,
-            0xff00ffff, 0x00000000, 0xff7f7f7f, };
+    private static final int[] SAMPLE_RGBS = { 0xffffffff, 0xff000000, 0xffff0000, 0xff00ff00, 0xff0000ff, 0xffff00ff, 0xfff0ff00, 0xff00ffff, 0x00000000,
+            0xff7f7f7f, };
 
     @Test
     public void testRgbToCmyk() {
@@ -113,7 +112,7 @@ public class ColorConversionsTest {
             Debug.debug("xyz: " + xyz);
             Debug.debug("xyzRgb: " + xyzRgb + " (" + Integer.toHexString(xyzRgb) + ")");
 
-            assertEquals(toHexString(0xffffff & rgb), toHexString(0xffffff & xyzRgb), "rgb "+toHexString(rgb)+", "+xyz);
+            assertEquals(toHexString(0xffffff & rgb), toHexString(0xffffff & xyzRgb), "rgb " + toHexString(rgb) + ", " + xyz);
 
             final ColorCieLab cielab = ColorConversions.convertXyzToCieLab(xyz);
             final ColorXyz cielabXyz = ColorConversions.convertCieLabToXyz(cielab);
@@ -131,8 +130,7 @@ public class ColorConversionsTest {
 
             Debug.debug("hunterlab: " + hunterlab);
             Debug.debug("hunterlabXyz: " + hunterlabXyz);
-            Debug.debug("hunterlabXyzRgb: " + hunterlabXyzRgb + " ("
-                            + Integer.toHexString(hunterlabXyzRgb) + ")");
+            Debug.debug("hunterlabXyzRgb: " + hunterlabXyzRgb + " (" + Integer.toHexString(hunterlabXyzRgb) + ")");
 
             assertEquals(toHexString(0xffffff & rgb), toHexString(0xffffff & hunterlabXyzRgb));
 

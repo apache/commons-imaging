@@ -32,8 +32,7 @@ final class PgmWriter implements PnmWriter {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, final PnmImagingParameters params)
-            throws ImagingException, IOException {
+    public void writeImage(final BufferedImage src, final OutputStream os, final PnmImagingParameters params) throws ImagingException, IOException {
         // System.out.println
         // (b1 == 0x50 && b2 == 0x36)
         os.write(0x50);
@@ -55,9 +54,9 @@ final class PgmWriter implements PnmWriter {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 final int argb = src.getRGB(x, y);
-                final int red = 0xff & (argb >> 16);
-                final int green = 0xff & (argb >> 8);
-                final int blue = 0xff & (argb >> 0);
+                final int red = 0xff & argb >> 16;
+                final int green = 0xff & argb >> 8;
+                final int blue = 0xff & argb >> 0;
                 final int sample = (red + green + blue) / 3;
 
                 if (rawBits) {

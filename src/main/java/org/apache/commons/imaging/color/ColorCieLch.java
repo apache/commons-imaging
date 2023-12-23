@@ -20,8 +20,7 @@ package org.apache.commons.imaging.color;
  * Represents a color in the CIELCH color space.
  *
  * <p>
- * Contains the constant values for black, white, red,
- * green, and blue.
+ * Contains the constant values for black, white, red, green, and blue.
  * </p>
  *
  * @see <a href=
@@ -32,6 +31,7 @@ public final class ColorCieLch {
 
     /**
      * A constant for color black. Color components are:
+     *
      * <pre>
      *     L: 0
      *     c: 0
@@ -42,6 +42,7 @@ public final class ColorCieLch {
 
     /**
      * A constant for color white. Color components are:
+     *
      * <pre>
      *     L: 100
      *     c:   0
@@ -52,6 +53,7 @@ public final class ColorCieLch {
 
     /**
      * A constant for color red. Color components are:
+     *
      * <pre>
      *     L: 53
      *     c: 80
@@ -62,6 +64,7 @@ public final class ColorCieLch {
 
     /**
      * A constant for color green. Color components are:
+     *
      * <pre>
      *     L:  88
      *     c: -86
@@ -72,6 +75,7 @@ public final class ColorCieLch {
 
     /**
      * A constant for color blue. Color components are:
+     *
      * <pre>
      *     L:   32
      *     c:   79
@@ -118,11 +122,11 @@ public final class ColorCieLch {
         int result;
         long temp;
         temp = Double.doubleToLongBits(l);
-        result = (int) (temp ^ (temp >>> 32));
+        result = (int) (temp ^ temp >>> 32);
         temp = Double.doubleToLongBits(c);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) (temp ^ temp >>> 32);
         temp = Double.doubleToLongBits(h);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) (temp ^ temp >>> 32);
         return result;
     }
 

@@ -37,8 +37,7 @@ public class ConvertPngToGifTest extends AbstractPngTest {
         final List<File> images = getPngImages();
         for (final File imageFile : images) {
 
-            if (isInvalidPngTestFile(imageFile))
-             {
+            if (isInvalidPngTestFile(imageFile)) {
                 continue;
             }
 

@@ -19,8 +19,9 @@ package org.apache.commons.imaging.color;
 /**
  * Represents a color in the Hunter Lab color space.
  *
- * <p>Contains the constant values for black, white, red,
- * green, and blue.</p>
+ * <p>
+ * Contains the constant values for black, white, red, green, and blue.
+ * </p>
  *
  * @see <a href="https://en.wikipedia.org/wiki/CIELAB_color_space#Hunter_Lab">https://en.wikipedia.org/wiki/CIELAB_color_space#Hunter_Lab</a>
  * @since 1.0-alpha1
@@ -29,6 +30,7 @@ public final class ColorHunterLab {
 
     /**
      * A constant for color black. Color components are:
+     *
      * <pre>
      *     L: 0
      *     a: 0
@@ -39,6 +41,7 @@ public final class ColorHunterLab {
 
     /**
      * A constant for color white. Color components are:
+     *
      * <pre>
      *     L: 100.000
      *     a:  -5.336
@@ -49,6 +52,7 @@ public final class ColorHunterLab {
 
     /**
      * A constant for color red. Color components are:
+     *
      * <pre>
      *     L: 46.109
      *     a: 78.962
@@ -59,6 +63,7 @@ public final class ColorHunterLab {
 
     /**
      * A constant for color green. Color components are:
+     *
      * <pre>
      *     L:  84.569
      *     a: -72.518
@@ -69,6 +74,7 @@ public final class ColorHunterLab {
 
     /**
      * A constant for color blue. Color components are:
+     *
      * <pre>
      *     L:   26.870
      *     a:   72.885
@@ -115,11 +121,11 @@ public final class ColorHunterLab {
         int result;
         long temp;
         temp = Double.doubleToLongBits(l);
-        result = (int) (temp ^ (temp >>> 32));
+        result = (int) (temp ^ temp >>> 32);
         temp = Double.doubleToLongBits(a);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) (temp ^ temp >>> 32);
         temp = Double.doubleToLongBits(b);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) (temp ^ temp >>> 32);
         return result;
     }
 

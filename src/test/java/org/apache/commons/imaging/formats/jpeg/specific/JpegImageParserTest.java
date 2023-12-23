@@ -34,6 +34,7 @@ import org.junit.jupiter.api.Test;
 public class JpegImageParserTest {
     /**
      * Image created with The Gimp 2.8
+     *
      * @throws ImagingException
      * @throws IOException
      */

@@ -20,33 +20,13 @@ package org.apache.commons.imaging;
  * Enum of known image formats.
  */
 public enum ImageFormats implements ImageFormat {
-    UNKNOWN(),
-    BMP("bmp", "dib"),
-    DCX("dcx"),
-    GIF("gif"),
-    ICNS("icns"),
-    ICO("ico"),
-    JBIG2(),
-    JPEG("jpg", "jpeg"),
-    PAM("pam"),
-    PSD("psd"),
-    PBM("pbm"),
-    PGM("pgm"),
-    PNM("pnm"),
-    PPM("ppm"),
-    PCX("pcx", "pcc"),
-    PNG("png"),
-    RGBE("hdr", "pic"),
-    TGA(),
-    TIFF("tif", "tiff"),
-    WBMP("wbmp"),
-    WEBP("webp"),
-    XBM("xbm"),
+    UNKNOWN(), BMP("bmp", "dib"), DCX("dcx"), GIF("gif"), ICNS("icns"), ICO("ico"), JBIG2(), JPEG("jpg", "jpeg"), PAM("pam"), PSD("psd"), PBM("pbm"),
+    PGM("pgm"), PNM("pnm"), PPM("ppm"), PCX("pcx", "pcc"), PNG("png"), RGBE("hdr", "pic"), TGA(), TIFF("tif", "tiff"), WBMP("wbmp"), WEBP("webp"), XBM("xbm"),
     XPM("xpm");
 
     private final String[] extensions;
 
-    ImageFormats(final String ...extensions) {
+    ImageFormats(final String... extensions) {
         this.extensions = extensions;
     }
 

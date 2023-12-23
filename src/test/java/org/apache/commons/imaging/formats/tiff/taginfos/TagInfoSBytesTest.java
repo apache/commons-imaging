@@ -23,17 +23,17 @@ import java.nio.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.junit.jupiter.api.Test;
 
-public class TagInfoSBytesTest{
+public class TagInfoSBytesTest {
 
-  @Test
-  public void testCreatesTagInfoSBytesAndCallsEncodeValue() {
-      final TiffDirectoryType tiffDirectoryType = TiffDirectoryType.TIFF_DIRECTORY_IFD3;
-      final TagInfoSBytes tagInfoSBytes = new TagInfoSBytes("", (-198), 10, tiffDirectoryType);
-      final ByteOrder byteOrder = ByteOrder.LITTLE_ENDIAN;
-      final byte[] byteArray = new byte[2];
-      final byte[] byteArrayTwo = tagInfoSBytes.encodeValue(byteOrder, byteArray);
+    @Test
+    public void testCreatesTagInfoSBytesAndCallsEncodeValue() {
+        final TiffDirectoryType tiffDirectoryType = TiffDirectoryType.TIFF_DIRECTORY_IFD3;
+        final TagInfoSBytes tagInfoSBytes = new TagInfoSBytes("", -198, 10, tiffDirectoryType);
+        final ByteOrder byteOrder = ByteOrder.LITTLE_ENDIAN;
+        final byte[] byteArray = new byte[2];
+        final byte[] byteArrayTwo = tagInfoSBytes.encodeValue(byteOrder, byteArray);
 
-      assertSame(byteArrayTwo, byteArray);
-  }
+        assertSame(byteArrayTwo, byteArray);
+    }
 
 }

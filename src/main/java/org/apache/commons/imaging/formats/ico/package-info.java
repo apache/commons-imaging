@@ -19,4 +19,3 @@
  * The ICO/CUR image formats.
  */
 package org.apache.commons.imaging.formats.ico;
-

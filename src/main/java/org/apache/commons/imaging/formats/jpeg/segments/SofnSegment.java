@@ -38,8 +38,7 @@ public class SofnSegment extends AbstractSegment {
         public final int verticalSamplingFactor;
         public final int quantTabDestSelector;
 
-        public Component(final int componentIdentifier, final int horizontalSamplingFactor,
-                final int veritcalSamplingFactor, final int quantTabDestSelector) {
+        public Component(final int componentIdentifier, final int horizontalSamplingFactor, final int veritcalSamplingFactor, final int quantTabDestSelector) {
             this.componentIdentifier = componentIdentifier;
             this.horizontalSamplingFactor = horizontalSamplingFactor;
             this.verticalSamplingFactor = veritcalSamplingFactor;
@@ -59,8 +58,7 @@ public class SofnSegment extends AbstractSegment {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
-    public SofnSegment(final int marker, final int markerLength, final InputStream is)
-            throws IOException, ImagingException {
+    public SofnSegment(final int marker, final int markerLength, final InputStream is) throws IOException, ImagingException {
         super(marker, markerLength);
 
         if (LOGGER.isLoggable(Level.FINEST)) {
@@ -70,30 +68,25 @@ public class SofnSegment extends AbstractSegment {
         precision = readByte("precision", is, "Not a Valid JPEG File");
         height = read2Bytes("height", is, "Not a Valid JPEG File", getByteOrder());
         width = read2Bytes("width", is, "Not a Valid JPEG File", getByteOrder());
-        numberOfComponents = readByte("numberOfComponents", is,
-                "Not a Valid JPEG File");
+        numberOfComponents = readByte("numberOfComponents", is, "Not a Valid JPEG File");
         if (numberOfComponents < 0) {
             throw new ImagingException("The number of components in a SOF0Segment cannot be less than 0!");
         }
         components = Allocator.array(numberOfComponents, Component[]::new, Component.SHALLOW_SIZE);
         for (int i = 0; i < numberOfComponents; i++) {
-            final int componentIdentifier = readByte("ComponentIdentifier", is,
-                    "Not a Valid JPEG File");
+            final int componentIdentifier = readByte("ComponentIdentifier", is, "Not a Valid JPEG File");
 
-            final int hvSamplingFactors = readByte("SamplingFactors", is,
-                    "Not a Valid JPEG File");
-            final int horizontalSamplingFactor = (hvSamplingFactors >> 4) & 0xf;
+            final int hvSamplingFactors = readByte("SamplingFactors", is, "Not a Valid JPEG File");
+            final int horizontalSamplingFactor = hvSamplingFactors >> 4 & 0xf;
             final int verticalSamplingFactor = hvSamplingFactors & 0xf;
-            final int quantTabDestSelector = readByte("QuantTabDestSel", is,
-                    "Not a Valid JPEG File");
-            components[i] = new Component(componentIdentifier,
-                    horizontalSamplingFactor, verticalSamplingFactor,
-                    quantTabDestSelector);
+            final int quantTabDestSelector = readByte("QuantTabDestSel", is, "Not a Valid JPEG File");
+            components[i] = new Component(componentIdentifier, horizontalSamplingFactor, verticalSamplingFactor, quantTabDestSelector);
         }
     }
 
     /**
      * Returns a copy of all the components.
+     *
      * @return the components
      */
     public Component[] getComponents() {
@@ -102,6 +95,7 @@ public class SofnSegment extends AbstractSegment {
 
     /**
      * Returns the component at the specified index.
+     *
      * @param index the array index
      * @return the component
      */
@@ -111,8 +105,7 @@ public class SofnSegment extends AbstractSegment {
 
     @Override
     public String getDescription() {
-        return "SOFN (SOF" + (marker - JpegConstants.SOF0_MARKER) + ") ("
-                + getSegmentType() + ")";
+        return "SOFN (SOF" + (marker - JpegConstants.SOF0_MARKER) + ") (" + getSegmentType() + ")";
     }
 
 }

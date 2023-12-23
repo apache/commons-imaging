@@ -40,14 +40,14 @@ public final class WebPImageMetadata extends GenericImageMetadata {
      *
      * @param exif the Exif metadata.
      */
-    public WebPImageMetadata(TiffImageMetadata exif) {
+    public WebPImageMetadata(final TiffImageMetadata exif) {
         this.exif = exif;
     }
 
     /**
      * Returns the Exif metadata.
-     * @return {@code null} if no Exif metadata is available;
-     * otherwise, returns the Exif metadata.
+     *
+     * @return {@code null} if no Exif metadata is available; otherwise, returns the Exif metadata.
      */
     public TiffImageMetadata getExif() {
         return exif;
@@ -55,7 +55,7 @@ public final class WebPImageMetadata extends GenericImageMetadata {
 
     @Override
     public List<? extends ImageMetadataItem> getItems() {
-        ArrayList<ImageMetadataItem> items = new ArrayList<>(super.getItems());
+        final ArrayList<ImageMetadataItem> items = new ArrayList<>(super.getItems());
         if (exif != null) {
             items.addAll(exif.getItems());
         }

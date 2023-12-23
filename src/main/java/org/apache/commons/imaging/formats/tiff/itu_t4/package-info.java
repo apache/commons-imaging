@@ -19,4 +19,3 @@
  * Provides ITU-T T.4 and T.6 compression classes.
  */
 package org.apache.commons.imaging.formats.tiff.itu_t4;
-

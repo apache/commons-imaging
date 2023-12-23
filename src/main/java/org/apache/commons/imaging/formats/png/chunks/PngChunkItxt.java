@@ -34,20 +34,16 @@ public class PngChunkItxt extends AbstractPngTextChunk {
     private final String text;
 
     /**
-     * The language tag defined in [RFC-3066] indicates the human language used
-     * by the translated keyword and the text. Unlike the keyword, the language
-     * tag is case-insensitive. It is an ISO 646.IRV:1991 [ISO 646] string
-     * consisting of hyphen-separated words of 1-8 alphanumeric characters each
-     * (for example cn, en-uk, no-bok, x-klingon, x-KlInGoN). If the first word
-     * is two or three letters long, it is an ISO language code [ISO-639]. If
-     * the language tag is empty, the language is unspecified.
+     * The language tag defined in [RFC-3066] indicates the human language used by the translated keyword and the text. Unlike the keyword, the language tag is
+     * case-insensitive. It is an ISO 646.IRV:1991 [ISO 646] string consisting of hyphen-separated words of 1-8 alphanumeric characters each (for example cn,
+     * en-uk, no-bok, x-klingon, x-KlInGoN). If the first word is two or three letters long, it is an ISO language code [ISO-639]. If the language tag is empty,
+     * the language is unspecified.
      */
     private final String languageTag;
 
     private final String translatedKeyword;
 
-    public PngChunkItxt(final int length, final int chunkType, final int crc, final byte[] bytes)
-            throws ImagingException, IOException {
+    public PngChunkItxt(final int length, final int chunkType, final int crc, final byte[] bytes) throws ImagingException, IOException {
         super(length, chunkType, crc, bytes);
         int terminator = BinaryFunctions.findNull(bytes, "PNG iTXt chunk keyword is not terminated.");
 

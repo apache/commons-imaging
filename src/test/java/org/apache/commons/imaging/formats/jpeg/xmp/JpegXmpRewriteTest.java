@@ -57,8 +57,7 @@ public class JpegXmpRewriteTest extends AbstractJpegXmpTest {
             // Debug.debug("Source Segments:");
             // new JpegUtils().dumpJFIF(ByteSource.file(noXmpFile));
 
-            final String outXmp = new JpegImageParser().getXmpXml(
-                    ByteSource.array(noXmpFile, "test.jpg"), params);
+            final String outXmp = new JpegImageParser().getXmpXml(ByteSource.array(noXmpFile, "test.jpg"), params);
             assertNull(outXmp);
         }
 
@@ -75,8 +74,7 @@ public class JpegXmpRewriteTest extends AbstractJpegXmpTest {
             // Debug.debug("Source Segments:");
             // new JpegUtils().dumpJFIF(ByteSource.file(updated));
 
-            final String outXmp = new JpegImageParser().getXmpXml(
-                    ByteSource.array(updated, "test.jpg"), params);
+            final String outXmp = new JpegImageParser().getXmpXml(ByteSource.array(updated, "test.jpg"), params);
             assertNotNull(outXmp);
             assertEquals(outXmp, newXmpXml);
         }
@@ -87,16 +85,14 @@ public class JpegXmpRewriteTest extends AbstractJpegXmpTest {
             final String newXmpXml = "test";
             final byte[] updated;
             try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
-                new JpegXmpRewriter().updateXmpXml(ByteSource.array(noXmpFile,
-                        "test.jpg"), os, newXmpXml);
+                new JpegXmpRewriter().updateXmpXml(ByteSource.array(noXmpFile, "test.jpg"), os, newXmpXml);
                 updated = os.toByteArray();
             }
 
             // Debug.debug("Source Segments:");
             // new JpegUtils().dumpJFIF(ByteSource.file(updated));
 
-            final String outXmp = new JpegImageParser().getXmpXml(
-                    ByteSource.array(updated, "test.jpg"), params);
+            final String outXmp = new JpegImageParser().getXmpXml(ByteSource.array(updated, "test.jpg"), params);
             assertNotNull(outXmp);
             assertEquals(outXmp, newXmpXml);
         }

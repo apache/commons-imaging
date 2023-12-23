@@ -51,7 +51,7 @@ public enum ChunkType {
     /** Embedded ICC profile */
     iCCP,
 
-    /** Significant bits*/
+    /** Significant bits */
     sBIT,
 
     /** Standard RGB color space */

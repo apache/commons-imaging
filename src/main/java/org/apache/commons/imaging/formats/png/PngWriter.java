@@ -35,19 +35,15 @@ import org.apache.commons.imaging.palette.PaletteFactory;
 public class PngWriter {
 
     /*
-     1. IHDR: image header, which is the first chunk in a PNG data stream.
-     2. PLTE: palette table associated with indexed PNG images.
-     3. IDAT: image data chunks.
-     4. IEND: image trailer, which is the last chunk in a PNG data stream.
-
-     The remaining 14 chunk types are termed ancillary chunk types, which encoders may generate and decoders may interpret.
-
-     1. Transparency information: tRNS (see 11.3.2: Transparency information).
-     2. Color space information: cHRM, gAMA, iCCP, sBIT, sRGB (see 11.3.3: Color space information).
-     3. Textual information: iTXt, tEXt, zTXt (see 11.3.4: Textual information).
-     4. Miscellaneous information: bKGD, hIST, pHYs, sPLT (see 11.3.5: Miscellaneous information).
-     5. Time information: tIME (see 11.3.6: Time stamp information).
-    */
+     * 1. IHDR: image header, which is the first chunk in a PNG data stream. 2. PLTE: palette table associated with indexed PNG images. 3. IDAT: image data
+     * chunks. 4. IEND: image trailer, which is the last chunk in a PNG data stream.
+     *
+     * The remaining 14 chunk types are termed ancillary chunk types, which encoders may generate and decoders may interpret.
+     *
+     * 1. Transparency information: tRNS (see 11.3.2: Transparency information). 2. Color space information: cHRM, gAMA, iCCP, sBIT, sRGB (see 11.3.3: Color
+     * space information). 3. Textual information: iTXt, tEXt, zTXt (see 11.3.4: Textual information). 4. Miscellaneous information: bKGD, hIST, pHYs, sPLT (see
+     * 11.3.5: Miscellaneous information). 5. Time information: tIME (see 11.3.6: Time stamp information).
+     */
 
     private static final class ImageHeader {
         public final int width;
@@ -58,9 +54,8 @@ public class PngWriter {
         public final byte filterMethod;
         public final InterlaceMethod interlaceMethod;
 
-        ImageHeader(final int width, final int height, final byte bitDepth,
-                final PngColorType pngColorType, final byte compressionMethod, final byte filterMethod,
-                final InterlaceMethod interlaceMethod) {
+        ImageHeader(final int width, final int height, final byte bitDepth, final PngColorType pngColorType, final byte compressionMethod,
+                final byte filterMethod, final InterlaceMethod interlaceMethod) {
             this.width = width;
             this.height = height;
             this.bitDepth = bitDepth;
@@ -93,8 +88,7 @@ public class PngWriter {
         return s.equals(roundtrip);
     }
 
-    private void writeChunk(final OutputStream os, final ChunkType chunkType,
-            final byte[] data) throws IOException {
+    private void writeChunk(final OutputStream os, final ChunkType chunkType, final byte[] data) throws IOException {
         final int dataLength = data == null ? 0 : data.length;
         writeInt(os, dataLength);
         os.write(chunkType.array);
@@ -105,15 +99,13 @@ public class PngWriter {
         final PngCrc pngCrc = new PngCrc();
 
         final long crc1 = pngCrc.startPartialCrc(chunkType.array, chunkType.array.length);
-        final long crc2 = data == null ? crc1 : pngCrc.continuePartialCrc(
-                crc1, data, data.length);
+        final long crc2 = data == null ? crc1 : pngCrc.continuePartialCrc(crc1, data, data.length);
         final int crc = (int) pngCrc.finishPartialCrc(crc2);
 
         writeInt(os, crc);
     }
 
-    private void writeChunkIDAT(final OutputStream os, final byte[] bytes)
-            throws IOException {
+    private void writeChunkIDAT(final OutputStream os, final byte[] bytes) throws IOException {
         writeChunk(os, ChunkType.IDAT, bytes);
     }
 
@@ -134,8 +126,7 @@ public class PngWriter {
         writeChunk(os, ChunkType.IHDR, baos.toByteArray());
     }
 
-    private void writeChunkiTXt(final OutputStream os, final AbstractPngText.Itxt text)
-            throws IOException, ImagingException {
+    private void writeChunkiTXt(final OutputStream os, final AbstractPngText.Itxt text) throws IOException, ImagingException {
         if (!isValidISO_8859_1(text.keyword)) {
             throw new ImagingException("PNG tEXt chunk keyword is not ISO-8859-1: " + text.keyword);
         }
@@ -165,23 +156,21 @@ public class PngWriter {
         writeChunk(os, ChunkType.iTXt, baos.toByteArray());
     }
 
-    private void writeChunkPHYS(final OutputStream os, final int xPPU, final int yPPU, final byte units)
-            throws IOException {
+    private void writeChunkPHYS(final OutputStream os, final int xPPU, final int yPPU, final byte units) throws IOException {
         final byte[] bytes = new byte[9];
-        bytes[0] = (byte) (0xff & (xPPU >> 24));
-        bytes[1] = (byte) (0xff & (xPPU >> 16));
-        bytes[2] = (byte) (0xff & (xPPU >> 8));
-        bytes[3] = (byte) (0xff & (xPPU >> 0));
-        bytes[4] = (byte) (0xff & (yPPU >> 24));
-        bytes[5] = (byte) (0xff & (yPPU >> 16));
-        bytes[6] = (byte) (0xff & (yPPU >> 8));
-        bytes[7] = (byte) (0xff & (yPPU >> 0));
+        bytes[0] = (byte) (0xff & xPPU >> 24);
+        bytes[1] = (byte) (0xff & xPPU >> 16);
+        bytes[2] = (byte) (0xff & xPPU >> 8);
+        bytes[3] = (byte) (0xff & xPPU >> 0);
+        bytes[4] = (byte) (0xff & yPPU >> 24);
+        bytes[5] = (byte) (0xff & yPPU >> 16);
+        bytes[6] = (byte) (0xff & yPPU >> 8);
+        bytes[7] = (byte) (0xff & yPPU >> 0);
         bytes[8] = units;
         writeChunk(os, ChunkType.pHYs, bytes);
     }
 
-    private void writeChunkPLTE(final OutputStream os, final Palette palette)
-            throws IOException {
+    private void writeChunkPLTE(final OutputStream os, final Palette palette) throws IOException {
         final int length = palette.length();
         final byte[] bytes = Allocator.byteArray(length * 3);
 
@@ -190,16 +179,15 @@ public class PngWriter {
             final int rgb = palette.getEntry(i);
             final int index = i * 3;
             // Debug.debug("index", index);
-            bytes[index + 0] = (byte) (0xff & (rgb >> 16));
-            bytes[index + 1] = (byte) (0xff & (rgb >> 8));
-            bytes[index + 2] = (byte) (0xff & (rgb >> 0));
+            bytes[index + 0] = (byte) (0xff & rgb >> 16);
+            bytes[index + 1] = (byte) (0xff & rgb >> 8);
+            bytes[index + 2] = (byte) (0xff & rgb >> 0);
         }
 
         writeChunk(os, ChunkType.PLTE, bytes);
     }
 
-    private void writeChunkSCAL(final OutputStream os, final double xUPP, final double yUPP, final byte units)
-          throws IOException {
+    private void writeChunkSCAL(final OutputStream os, final double xUPP, final double yUPP, final byte units) throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         // unit specifier
@@ -214,8 +202,7 @@ public class PngWriter {
         writeChunk(os, ChunkType.sCAL, baos.toByteArray());
     }
 
-    private void writeChunktEXt(final OutputStream os, final AbstractPngText.Text text)
-            throws IOException, ImagingException {
+    private void writeChunktEXt(final OutputStream os, final AbstractPngText.Text text) throws IOException, ImagingException {
         if (!isValidISO_8859_1(text.keyword)) {
             throw new ImagingException("PNG tEXt chunk keyword is not ISO-8859-1: " + text.keyword);
         }
@@ -239,14 +226,13 @@ public class PngWriter {
         final byte[] bytes = Allocator.byteArray(palette.length());
 
         for (int i = 0; i < bytes.length; i++) {
-            bytes[i] = (byte) (0xff & (palette.getEntry(i) >> 24));
+            bytes[i] = (byte) (0xff & palette.getEntry(i) >> 24);
         }
 
         writeChunk(os, ChunkType.tRNS, bytes);
     }
 
-    private void writeChunkXmpiTXt(final OutputStream os, final String xmpXml)
-            throws IOException {
+    private void writeChunkXmpiTXt(final OutputStream os, final String xmpXml) throws IOException {
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
@@ -268,8 +254,7 @@ public class PngWriter {
         writeChunk(os, ChunkType.iTXt, baos.toByteArray());
     }
 
-    private void writeChunkzTXt(final OutputStream os, final AbstractPngText.Ztxt text)
-            throws IOException, ImagingException {
+    private void writeChunkzTXt(final OutputStream os, final AbstractPngText.Ztxt text) throws IOException, ImagingException {
         if (!isValidISO_8859_1(text.keyword)) {
             throw new ImagingException("PNG zTXt chunk keyword is not ISO-8859-1: " + text.keyword);
         }
@@ -293,44 +278,23 @@ public class PngWriter {
     }
 
     /*
-     between two chunk types indicates alternatives.
-     Table 5.3 - Chunk ordering rules
-     Critical chunks
-     (shall appear in this order, except PLTE is optional)
-     Chunk name     Multiple allowed    Ordering constraints
-     IHDR   No  Shall be first
-     PLTE   No  Before first IDAT
-     IDAT   Yes Multiple IDAT chunks shall be consecutive
-     IEND   No  Shall be last
-     Ancillary chunks
-     (need not appear in this order)
-     Chunk name     Multiple allowed    Ordering constraints
-     cHRM   No  Before PLTE and IDAT
-     gAMA   No  Before PLTE and IDAT
-     iCCP   No  Before PLTE and IDAT. If the iCCP chunk is present, the sRGB chunk should not be present.
-     sBIT   No  Before PLTE and IDAT
-     sRGB   No  Before PLTE and IDAT. If the sRGB chunk is present, the iCCP chunk should not be present.
-     bKGD   No  After PLTE; before IDAT
-     hIST   No  After PLTE; before IDAT
-     tRNS   No  After PLTE; before IDAT
-     pHYs   No  Before IDAT
-     sCAL   No  Before IDAT
-     sPLT   Yes Before IDAT
-     tIME   No  None
-     iTXt   Yes None
-     tEXt   Yes None
-     zTXt   Yes None
+     * between two chunk types indicates alternatives. Table 5.3 - Chunk ordering rules Critical chunks (shall appear in this order, except PLTE is optional)
+     * Chunk name Multiple allowed Ordering constraints IHDR No Shall be first PLTE No Before first IDAT IDAT Yes Multiple IDAT chunks shall be consecutive IEND
+     * No Shall be last Ancillary chunks (need not appear in this order) Chunk name Multiple allowed Ordering constraints cHRM No Before PLTE and IDAT gAMA No
+     * Before PLTE and IDAT iCCP No Before PLTE and IDAT. If the iCCP chunk is present, the sRGB chunk should not be present. sBIT No Before PLTE and IDAT sRGB
+     * No Before PLTE and IDAT. If the sRGB chunk is present, the iCCP chunk should not be present. bKGD No After PLTE; before IDAT hIST No After PLTE; before
+     * IDAT tRNS No After PLTE; before IDAT pHYs No Before IDAT sCAL No Before IDAT sPLT Yes Before IDAT tIME No None iTXt Yes None tEXt Yes None zTXt Yes None
      */
 
     /**
      * Writes an image to an output stream.
      *
-     * @param src The image to write.
-     * @param os The output stream to write to.
-     * @param params The parameters to use (can be {@code NULL} to use the default {@link PngImagingParameters}).
+     * @param src            The image to write.
+     * @param os             The output stream to write to.
+     * @param params         The parameters to use (can be {@code NULL} to use the default {@link PngImagingParameters}).
      * @param paletteFactory The palette factory to use (can be {@code NULL} to use the default {@link PaletteFactory}).
      * @throws ImagingException When errors are detected.
-     * @throws IOException When IO problems occur.
+     * @throws IOException      When IO problems occur.
      */
     public void writeImage(final BufferedImage src, final OutputStream os, PngImagingParameters params, PaletteFactory paletteFactory)
             throws ImagingException, IOException {
@@ -354,17 +318,16 @@ public class PngWriter {
 
         PngColorType pngColorType;
         {
-            final boolean forceIndexedColor =  params.isForceIndexedColor();
+            final boolean forceIndexedColor = params.isForceIndexedColor();
             final boolean forceTrueColor = params.isForceTrueColor();
 
             if (forceIndexedColor && forceTrueColor) {
-                throw new ImagingException(
-                        "Params: Cannot force both indexed and true color modes");
+                throw new ImagingException("Params: Cannot force both indexed and true color modes");
             }
             if (forceIndexedColor) {
                 pngColorType = PngColorType.INDEXED_COLOR;
             } else if (forceTrueColor) {
-                pngColorType = (hasAlpha ? PngColorType.TRUE_COLOR_WITH_ALPHA : PngColorType.TRUE_COLOR);
+                pngColorType = hasAlpha ? PngColorType.TRUE_COLOR_WITH_ALPHA : PngColorType.TRUE_COLOR;
                 isGrayscale = false;
             } else {
                 pngColorType = PngColorType.getColorType(hasAlpha, isGrayscale);
@@ -393,18 +356,17 @@ public class PngWriter {
             final byte filterMethod = PngConstants.FILTER_METHOD_ADAPTIVE;
             final InterlaceMethod interlaceMethod = InterlaceMethod.NONE;
 
-            final ImageHeader imageHeader = new ImageHeader(width, height, bitDepth,
-                    pngColorType, compressionMethod, filterMethod, interlaceMethod);
+            final ImageHeader imageHeader = new ImageHeader(width, height, bitDepth, pngColorType, compressionMethod, filterMethod, interlaceMethod);
 
             writeChunkIHDR(os, imageHeader);
         }
 
-        //{
-            // sRGB No Before PLTE and IDAT. If the sRGB chunk is present, the
-            // iCCP chunk should not be present.
+        // {
+        // sRGB No Before PLTE and IDAT. If the sRGB chunk is present, the
+        // iCCP chunk should not be present.
 
-            // charles
-        //}
+        // charles
+        // }
 
         Palette palette = null;
         if (pngColorType == PngColorType.INDEXED_COLOR) {
@@ -426,22 +388,15 @@ public class PngWriter {
         if (pixelDensityObj != null) {
             final PixelDensity pixelDensity = (PixelDensity) pixelDensityObj;
             if (pixelDensity.isUnitless()) {
-                writeChunkPHYS(os, (int) Math.round(pixelDensity.getRawHorizontalDensity()),
-                        (int) Math.round(pixelDensity.getRawVerticalDensity()),
-                        (byte) 0);
+                writeChunkPHYS(os, (int) Math.round(pixelDensity.getRawHorizontalDensity()), (int) Math.round(pixelDensity.getRawVerticalDensity()), (byte) 0);
             } else {
-                writeChunkPHYS(os, (int) Math.round(pixelDensity.horizontalDensityMetres()),
-                        (int) Math.round(pixelDensity.verticalDensityMetres()),
-                        (byte) 1);
+                writeChunkPHYS(os, (int) Math.round(pixelDensity.horizontalDensityMetres()), (int) Math.round(pixelDensity.verticalDensityMetres()), (byte) 1);
             }
         }
 
         final PhysicalScale physicalScale = params.getPhysicalScale();
         if (physicalScale != null) {
-            writeChunkSCAL(
-                    os,
-                    physicalScale.getHorizontalUnitsPerPixel(),
-                    physicalScale.getVerticalUnitsPerPixel(),
+            writeChunkSCAL(os, physicalScale.getHorizontalUnitsPerPixel(), physicalScale.getVerticalUnitsPerPixel(),
                     physicalScale.isInMeters() ? (byte) 1 : (byte) 2);
         }
 
@@ -470,18 +425,17 @@ public class PngWriter {
 
             // IDAT Yes Multiple IDAT chunks shall be consecutive
 
-            // 28 March 2022.  At this time, we only apply the predictor
-            // for non-grayscale, true-color images.  This choice is made
+            // 28 March 2022. At this time, we only apply the predictor
+            // for non-grayscale, true-color images. This choice is made
             // out of caution and is not necessarily required by the PNG
-            // spec.  We may broaden the use of predictors in future versions.
+            // spec. We may broaden the use of predictors in future versions.
             final boolean usePredictor = params.isPredictorEnabled() && !isGrayscale && palette == null;
 
             byte[] uncompressed;
             if (!usePredictor) {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-                final boolean useAlpha = pngColorType == PngColorType.GREYSCALE_WITH_ALPHA
-                        || pngColorType == PngColorType.TRUE_COLOR_WITH_ALPHA;
+                final boolean useAlpha = pngColorType == PngColorType.GREYSCALE_WITH_ALPHA || pngColorType == PngColorType.TRUE_COLOR_WITH_ALPHA;
 
                 final int[] row = Allocator.intArray(width);
                 for (int y = 0; y < height; y++) {
@@ -496,10 +450,10 @@ public class PngWriter {
                             final int index = palette.getPaletteIndex(argb);
                             baos.write(0xff & index);
                         } else {
-                            final int alpha = 0xff & (argb >> 24);
-                            final int red = 0xff & (argb >> 16);
-                            final int green = 0xff & (argb >> 8);
-                            final int blue = 0xff & (argb >> 0);
+                            final int alpha = 0xff & argb >> 24;
+                            final int red = 0xff & argb >> 16;
+                            final int green = 0xff & argb >> 8;
+                            final int blue = 0xff & argb >> 0;
 
                             if (isGrayscale) {
                                 final int gray = (red + green + blue) / 3;
@@ -531,8 +485,7 @@ public class PngWriter {
             } else {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-                final boolean useAlpha = pngColorType == PngColorType.GREYSCALE_WITH_ALPHA
-                        || pngColorType == PngColorType.TRUE_COLOR_WITH_ALPHA;
+                final boolean useAlpha = pngColorType == PngColorType.GREYSCALE_WITH_ALPHA || pngColorType == PngColorType.TRUE_COLOR_WITH_ALPHA;
 
                 final int[] row = Allocator.intArray(width);
                 for (int y = 0; y < height; y++) {
@@ -545,23 +498,23 @@ public class PngWriter {
                     int priorB = 0;
                     baos.write(FilterType.SUB.ordinal());
                     for (int x = 0; x < width; x++) {
-                      final int argb  = row[x];
-                      final int alpha = 0xff & (argb >> 24);
-                      final int red   = 0xff & (argb >> 16);
-                      final int green = 0xff & (argb >> 8);
-                      final int blue  = 0xff & argb;
+                        final int argb = row[x];
+                        final int alpha = 0xff & argb >> 24;
+                        final int red = 0xff & argb >> 16;
+                        final int green = 0xff & argb >> 8;
+                        final int blue = 0xff & argb;
 
-                      baos.write(red   - priorR);
-                      baos.write(green - priorG);
-                      baos.write(blue  - priorB);
-                      priorR = red;
-                      priorG = green;
-                      priorB = blue;
+                        baos.write(red - priorR);
+                        baos.write(green - priorG);
+                        baos.write(blue - priorB);
+                        priorR = red;
+                        priorG = green;
+                        priorB = blue;
 
-                      if (useAlpha) {
-                          baos.write(alpha - priorA);
-                          priorA = alpha;
-                      }
+                        if (useAlpha) {
+                            baos.write(alpha - priorA);
+                            priorA = alpha;
+                        }
                     }
                 }
                 uncompressed = baos.toByteArray();
@@ -607,24 +560,11 @@ public class PngWriter {
         }
 
         /*
-         Ancillary chunks
-         (need not appear in this order)
-         Chunk name     Multiple allowed    Ordering constraints
-         cHRM           No                  Before PLTE and IDAT
-         gAMA           No                  Before PLTE and IDAT
-         iCCP           No                  Before PLTE and IDAT. If the iCCP chunk is present, the sRGB chunk should not be present.
-         sBIT           No                  Before PLTE and IDAT
-         sRGB           No                  Before PLTE and IDAT. If the sRGB chunk is present, the iCCP chunk should not be present.
-         bKGD           No                  After PLTE; before IDAT
-         hIST           No                  After PLTE; before IDAT
-         tRNS           No                  After PLTE; before IDAT
-         pHYs           No                  Before IDAT
-         sCAL           No                  Before IDAT
-         sPLT           Yes                 Before IDAT
-         tIME           No                  None
-         iTXt           Yes                 None
-         tEXt           Yes                 None
-         zTXt           Yes                 None
+         * Ancillary chunks (need not appear in this order) Chunk name Multiple allowed Ordering constraints cHRM No Before PLTE and IDAT gAMA No Before PLTE
+         * and IDAT iCCP No Before PLTE and IDAT. If the iCCP chunk is present, the sRGB chunk should not be present. sBIT No Before PLTE and IDAT sRGB No
+         * Before PLTE and IDAT. If the sRGB chunk is present, the iCCP chunk should not be present. bKGD No After PLTE; before IDAT hIST No After PLTE; before
+         * IDAT tRNS No After PLTE; before IDAT pHYs No Before IDAT sCAL No Before IDAT sPLT Yes Before IDAT tIME No None iTXt Yes None tEXt Yes None zTXt Yes
+         * None
          */
 
         os.close();
@@ -633,9 +573,9 @@ public class PngWriter {
       // srgb, etc.
 
     private void writeInt(final OutputStream os, final int value) throws IOException {
-        os.write(0xff & (value >> 24));
-        os.write(0xff & (value >> 16));
-        os.write(0xff & (value >> 8));
-        os.write(0xff & (value >> 0));
+        os.write(0xff & value >> 24);
+        os.write(0xff & value >> 16);
+        os.write(0xff & value >> 8);
+        os.write(0xff & value >> 0);
     }
 }

@@ -68,7 +68,7 @@ final class BmpWriterPalette implements BmpWriter {
                     byteCount++;
                 } else {
                     // 4 or 1
-                    bitCache = (bitCache << bitsPerSample) | index;
+                    bitCache = bitCache << bitsPerSample | index;
                     bitsInCache += bitsPerSample;
                     if (bitsInCache >= 8) {
                         baos.write(0xff & bitCache);
@@ -80,7 +80,7 @@ final class BmpWriterPalette implements BmpWriter {
             }
 
             if (bitsInCache > 0) {
-                bitCache = (bitCache << (8 - bitsInCache));
+                bitCache = bitCache << 8 - bitsInCache;
 
                 baos.write(0xff & bitCache);
                 byteCount++;
@@ -88,7 +88,7 @@ final class BmpWriterPalette implements BmpWriter {
                 bitsInCache = 0;
             }
 
-            while ((byteCount % 4) != 0) {
+            while (byteCount % 4 != 0) {
                 baos.write(0);
                 byteCount++;
             }
@@ -107,9 +107,9 @@ final class BmpWriterPalette implements BmpWriter {
         for (int i = 0; i < palette.length(); i++) {
             final int rgb = palette.getEntry(i);
 
-            final int red = 0xff & (rgb >> 16);
-            final int green = 0xff & (rgb >> 8);
-            final int blue = 0xff & (rgb >> 0);
+            final int red = 0xff & rgb >> 16;
+            final int green = 0xff & rgb >> 8;
+            final int blue = 0xff & rgb >> 0;
 
             bos.write(blue);
             bos.write(green);

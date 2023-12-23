@@ -19,4 +19,3 @@
  * The PNM image format family.
  */
 package org.apache.commons.imaging.formats.pnm;
-

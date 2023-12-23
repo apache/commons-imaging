@@ -25,17 +25,13 @@ public class DataParserRgb extends DataParser {
     }
 
     @Override
-    protected int getRgb(final int[][][] data, final int x, final int y,
-            final PsdImageContents imageContents) {
+    protected int getRgb(final int[][][] data, final int x, final int y, final PsdImageContents imageContents) {
         final int red = 0xff & data[0][y][x];
         final int green = 0xff & data[1][y][x];
         final int blue = 0xff & data[2][y][x];
         final int alpha = 0xff;
 
-        return ((0xff & alpha) << 24)
-             | ((0xff & red)   << 16)
-             | ((0xff & green) << 8)
-             | ((0xff & blue)  << 0);
+        return (0xff & alpha) << 24 | (0xff & red) << 16 | (0xff & green) << 8 | (0xff & blue) << 0;
     }
 
 }

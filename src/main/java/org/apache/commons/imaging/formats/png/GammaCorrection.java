@@ -42,16 +42,16 @@ public class GammaCorrection {
     }
 
     public int correctArgb(final int pixel) {
-        final int alpha = (0xff000000) & pixel;
-        int red = (pixel >> 16) & 0xff;
-        int green = (pixel >> 8) & 0xff;
-        int blue = (pixel >> 0) & 0xff;
+        final int alpha = 0xff000000 & pixel;
+        int red = pixel >> 16 & 0xff;
+        int green = pixel >> 8 & 0xff;
+        int blue = pixel >> 0 & 0xff;
 
         red = correctSample(red);
         green = correctSample(green);
         blue = correctSample(blue);
 
-        return alpha | ((0xff & red) << 16) | ((0xff & green) << 8) | ((0xff & blue) << 0);
+        return alpha | (0xff & red) << 16 | (0xff & green) << 8 | (0xff & blue) << 0;
     }
 
     public int correctSample(final int sample) {
@@ -66,7 +66,7 @@ public class GammaCorrection {
         // return (int) (sample * slope);
         // }
 
-        return (int) Math.round(255.0d * Math.pow((sample / 255.0d), srcGamma / dstGamma));
+        return (int) Math.round(255.0d * Math.pow(sample / 255.0d, srcGamma / dstGamma));
     }
 
 }

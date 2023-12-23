@@ -69,8 +69,7 @@ public class TiffLzwTest extends TiffBaseTest {
             }
         };
 
-        final MyLzwCompressor compressor = new MyLzwCompressor(LZW_MINIMUM_CODE_SIZE,
-                ByteOrder.BIG_ENDIAN, true, compressionListener);
+        final MyLzwCompressor compressor = new MyLzwCompressor(LZW_MINIMUM_CODE_SIZE, ByteOrder.BIG_ENDIAN, true, compressionListener);
         final byte[] compressed = compressor.compress(src);
 
         final MyLzwDecompressor.Listener decompressionListener = new MyLzwDecompressor.Listener() {
@@ -93,19 +92,10 @@ public class TiffLzwTest extends TiffBaseTest {
                 final Integer expectedCode = codes.get(index++);
                 if (code != expectedCode) {
                     Debug.debug("bad code: " + index + "/" + codes.size());
-                    Debug.debug("code: " + code + " (0x"
-                            + Integer.toHexString(code) + ") "
-                            + Integer.toBinaryString(code));
-                    Debug.debug("expected: " + expectedCode + " (0x"
-                            + Integer.toHexString(expectedCode)
-                            + ") "
-                            + Integer.toBinaryString(expectedCode));
-                    Debug.debug("clearCode: " + clearCode + " (0x"
-                            + Integer.toHexString(clearCode) + ") "
-                            + Integer.toBinaryString(clearCode));
-                    Debug.debug("eoiCode: " + eoiCode + " (0x"
-                            + Integer.toHexString(eoiCode) + ") "
-                            + Integer.toBinaryString(eoiCode));
+                    Debug.debug("code: " + code + " (0x" + Integer.toHexString(code) + ") " + Integer.toBinaryString(code));
+                    Debug.debug("expected: " + expectedCode + " (0x" + Integer.toHexString(expectedCode) + ") " + Integer.toBinaryString(expectedCode));
+                    Debug.debug("clearCode: " + clearCode + " (0x" + Integer.toHexString(clearCode) + ") " + Integer.toBinaryString(clearCode));
+                    Debug.debug("eoiCode: " + eoiCode + " (0x" + Integer.toHexString(eoiCode) + ") " + Integer.toBinaryString(eoiCode));
                     Debug.debug();
                 }
             }
@@ -118,9 +108,7 @@ public class TiffLzwTest extends TiffBaseTest {
 
         };
         final InputStream is = new ByteArrayInputStream(compressed);
-        final MyLzwDecompressor decompressor = new MyLzwDecompressor(
-                LZW_MINIMUM_CODE_SIZE, ByteOrder.BIG_ENDIAN,
-                true, decompressionListener);
+        final MyLzwDecompressor decompressor = new MyLzwDecompressor(LZW_MINIMUM_CODE_SIZE, ByteOrder.BIG_ENDIAN, true, decompressionListener);
         final byte[] decompressed = decompressor.decompress(is, src.length);
 
         assertEquals(src.length, decompressed.length);
@@ -141,10 +129,7 @@ public class TiffLzwTest extends TiffBaseTest {
 
             @Override
             public void code(final int code) {
-                Debug.debug("listener code: " + code + " (0x"
-                        + Integer.toHexString(code) + ") "
-                        + Integer.toBinaryString(code) + ", index: "
-                        + codes.size());
+                Debug.debug("listener code: " + code + " (0x" + Integer.toHexString(code) + ") " + Integer.toBinaryString(code) + ", index: " + codes.size());
                 codes.add(code);
             }
 
@@ -154,9 +139,7 @@ public class TiffLzwTest extends TiffBaseTest {
 
         };
         final InputStream is = new ByteArrayInputStream(src);
-        final MyLzwDecompressor decompressor = new MyLzwDecompressor(
-                LZW_MINIMUM_CODE_SIZE, ByteOrder.BIG_ENDIAN,
-                true, decompressionListener);
+        final MyLzwDecompressor decompressor = new MyLzwDecompressor(LZW_MINIMUM_CODE_SIZE, ByteOrder.BIG_ENDIAN, true, decompressionListener);
         final byte[] decompressed = decompressor.decompress(is, src.length);
 
         final MyLzwCompressor.Listener compressionListener = new MyLzwCompressor.Listener() {
@@ -183,19 +166,10 @@ public class TiffLzwTest extends TiffBaseTest {
                 final Integer expectedCode = codes.get(index++);
                 if (code != expectedCode) {
                     Debug.debug("bad code: " + index + "/" + codes.size());
-                    Debug.debug("code: " + code + " (0x"
-                            + Integer.toHexString(code) + ") "
-                            + Integer.toBinaryString(code));
-                    Debug.debug("expected: " + expectedCode + " (0x"
-                            + Integer.toHexString(expectedCode)
-                            + ") "
-                            + Integer.toBinaryString(expectedCode));
-                    Debug.debug("clearCode: " + clearCode + " (0x"
-                            + Integer.toHexString(clearCode) + ") "
-                            + Integer.toBinaryString(clearCode));
-                    Debug.debug("eoiCode: " + eoiCode + " (0x"
-                            + Integer.toHexString(eoiCode) + ") "
-                            + Integer.toBinaryString(eoiCode));
+                    Debug.debug("code: " + code + " (0x" + Integer.toHexString(code) + ") " + Integer.toBinaryString(code));
+                    Debug.debug("expected: " + expectedCode + " (0x" + Integer.toHexString(expectedCode) + ") " + Integer.toBinaryString(expectedCode));
+                    Debug.debug("clearCode: " + clearCode + " (0x" + Integer.toHexString(clearCode) + ") " + Integer.toBinaryString(clearCode));
+                    Debug.debug("eoiCode: " + eoiCode + " (0x" + Integer.toHexString(eoiCode) + ") " + Integer.toBinaryString(eoiCode));
                     Debug.debug();
                 }
             }
@@ -218,8 +192,7 @@ public class TiffLzwTest extends TiffBaseTest {
 
         };
 
-        final MyLzwCompressor compressor = new MyLzwCompressor(LZW_MINIMUM_CODE_SIZE,
-                ByteOrder.BIG_ENDIAN, true, compressionListener);
+        final MyLzwCompressor compressor = new MyLzwCompressor(LZW_MINIMUM_CODE_SIZE, ByteOrder.BIG_ENDIAN, true, compressionListener);
         final byte[] compressed = compressor.compress(decompressed);
 
         assertEquals(src.length, compressed.length);
@@ -234,7 +207,7 @@ public class TiffLzwTest extends TiffBaseTest {
         final byte[] bytes = new byte[LENGTH];
         for (int modulator = 1; modulator < 255; modulator += 3) {
             for (int i = 0; i < LENGTH; i++) {
-                bytes[i] = (byte) (0xff & (i % modulator));
+                bytes[i] = (byte) (0xff & i % modulator);
             }
 
             compressRoundtripAndValidate(bytes);

@@ -32,8 +32,7 @@ final class PpmWriter implements PnmWriter {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, final PnmImagingParameters params)
-            throws ImagingException, IOException {
+    public void writeImage(final BufferedImage src, final OutputStream os, final PnmImagingParameters params) throws ImagingException, IOException {
         // System.out.println
         // (b1 == 0x50 && b2 == 0x36)
         os.write(0x50);
@@ -55,9 +54,9 @@ final class PpmWriter implements PnmWriter {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 final int argb = src.getRGB(x, y);
-                final int red = 0xff & (argb >> 16);
-                final int green = 0xff & (argb >> 8);
-                final int blue = 0xff & (argb >> 0);
+                final int red = 0xff & argb >> 16;
+                final int green = 0xff & argb >> 8;
+                final int blue = 0xff & argb >> 0;
 
                 if (rawbits) {
                     os.write((byte) red);
@@ -65,14 +64,14 @@ final class PpmWriter implements PnmWriter {
                     os.write((byte) blue);
                 } else {
                     os.write(Integer.toString(red).getBytes(StandardCharsets.US_ASCII)); // max component
-                                                               // value
+                    // value
                     os.write(PnmConstants.PNM_SEPARATOR);
                     os.write(Integer.toString(green).getBytes(StandardCharsets.US_ASCII)); // max
-                                                                 // component
-                                                                 // value
+                    // component
+                    // value
                     os.write(PnmConstants.PNM_SEPARATOR);
                     os.write(Integer.toString(blue).getBytes(StandardCharsets.US_ASCII)); // max component
-                                                                // value
+                    // value
                     os.write(PnmConstants.PNM_SEPARATOR);
                 }
             }

@@ -19,14 +19,11 @@ package org.apache.commons.imaging.formats.tiff.photometricinterpreters.floating
 import java.awt.Color;
 
 /**
- * Provides a palette entry for colors associated with a range of values. The
- * return value will be interpolated between the minimum and maximum value for
- * this entry.
+ * Provides a palette entry for colors associated with a range of values. The return value will be interpolated between the minimum and maximum value for this
+ * entry.
  * <p>
- * In keeping with the conventions of many Geographic Information Systems (GIS)
- * and art applications, this instance "covered" values in the range v0 &le; f
- * &lt; v1. Thus, a value that exactly matches the upper bound of the range is
- * not considered "covered".
+ * In keeping with the conventions of many Geographic Information Systems (GIS) and art applications, this instance "covered" values in the range v0 &le; f &lt;
+ * v1. Thus, a value that exactly matches the upper bound of the range is not considered "covered".
  */
 public class PaletteEntryForRange implements PaletteEntry {
 
@@ -42,11 +39,10 @@ public class PaletteEntryForRange implements PaletteEntry {
     private final float a1;
 
     /**
-     * Constructs a palette entry for the range of values v0 &le; f &lt; v1. A
-     * single color will be returned for all values in range
+     * Constructs a palette entry for the range of values v0 &le; f &lt; v1. A single color will be returned for all values in range
      *
-     * @param v0 the lower bounds (inclusive) of the covered range of values
-     * @param v1 the upper bounds (non-inclusive) of the covered range of value
+     * @param v0    the lower bounds (inclusive) of the covered range of values
+     * @param v1    the upper bounds (non-inclusive) of the covered range of value
      * @param color the color assigned to value v0
      */
     public PaletteEntryForRange(final float v0, final float v1, final Color color) {
@@ -62,24 +58,23 @@ public class PaletteEntryForRange implements PaletteEntry {
         }
 
         final int argb0 = color.getRGB();
-        a0 = (argb0 >> 24) & 0xff;
-        r0 = (argb0 >> 16) & 0xff;
-        g0 = (argb0 >> 8) & 0xff;
+        a0 = argb0 >> 24 & 0xff;
+        r0 = argb0 >> 16 & 0xff;
+        g0 = argb0 >> 8 & 0xff;
         b0 = argb0 & 0xff;
 
         final int argb1 = color.getRGB();
-        a1 = (argb1 >> 24) & 0xff;
-        r1 = (argb1 >> 16) & 0xff;
-        g1 = (argb1 >> 8) & 0xff;
+        a1 = argb1 >> 24 & 0xff;
+        r1 = argb1 >> 16 & 0xff;
+        g1 = argb1 >> 8 & 0xff;
         b1 = argb1 & 0xff;
     }
 
     /**
-     * Constructs a palette entry for the range of values v0 &le; f &lt; v1. The
-     * return color value will be interpolated between the two specified colors.
+     * Constructs a palette entry for the range of values v0 &le; f &lt; v1. The return color value will be interpolated between the two specified colors.
      *
-     * @param v0 the lower bounds (inclusive) of the covered range of values
-     * @param v1 the upper bounds (non-inclusive) of the covered range of value
+     * @param v0     the lower bounds (inclusive) of the covered range of values
+     * @param v1     the upper bounds (non-inclusive) of the covered range of value
      * @param color0 the color assigned to value v0
      * @param color1 the color assigned to value v1
      */
@@ -95,15 +90,15 @@ public class PaletteEntryForRange implements PaletteEntry {
             throw new IllegalArgumentException("Null colors not allowed");
         }
         final int argb0 = color0.getRGB();
-        a0 = (argb0 >> 24) & 0xff;
-        r0 = (argb0 >> 16) & 0xff;
-        g0 = (argb0 >> 8) & 0xff;
+        a0 = argb0 >> 24 & 0xff;
+        r0 = argb0 >> 16 & 0xff;
+        g0 = argb0 >> 8 & 0xff;
         b0 = argb0 & 0xff;
 
         final int argb1 = color1.getRGB();
-        a1 = (argb1 >> 24) & 0xff;
-        r1 = (argb1 >> 16) & 0xff;
-        g1 = (argb1 >> 8) & 0xff;
+        a1 = argb1 >> 24 & 0xff;
+        r1 = argb1 >> 16 & 0xff;
+        g1 = argb1 >> 8 & 0xff;
         b1 = argb1 & 0xff;
     }
 
@@ -120,7 +115,7 @@ public class PaletteEntryForRange implements PaletteEntry {
             final int r = (int) (t * (r1 - r0) + r0 + 0.5);
             final int g = (int) (t * (g1 - g0) + g0 + 0.5);
             final int b = (int) (t * (b1 - b0) + b0 + 0.5);
-            return (((((a << 8) | r) << 8) | g) << 8) | b;
+            return ((a << 8 | r) << 8 | g) << 8 | b;
         }
         return 0;
     }

@@ -37,8 +37,8 @@ public class MedianCutQuantizer {
         final int max = Integer.MAX_VALUE;
 
         for (int i = 0; i < 8; i++) {
-            int mask = 0xff & (0xff << i);
-            mask = mask | (mask << 8) | (mask << 16) | (mask << 24);
+            int mask = 0xff & 0xff << i;
+            mask = mask | mask << 8 | mask << 16 | mask << 24;
 
             Debug.debug("mask(" + i + "): " + mask + " (" + Integer.toHexString(mask) + ")");
 
@@ -50,8 +50,7 @@ public class MedianCutQuantizer {
         throw new IllegalArgumentException();
     }
 
-    private Map<Integer, ColorCount> groupColors1(final BufferedImage image, final int max,
-            final int mask) {
+    private Map<Integer, ColorCount> groupColors1(final BufferedImage image, final int max, final int mask) {
         final Map<Integer, ColorCount> colorMap = new HashMap<>();
 
         final int width = image.getWidth();
@@ -83,9 +82,7 @@ public class MedianCutQuantizer {
         return colorMap;
     }
 
-    public Palette process(final BufferedImage image, final int maxColors,
-            final MedianCut medianCut)
-            throws ImagingException {
+    public Palette process(final BufferedImage image, final int maxColors, final MedianCut medianCut) throws ImagingException {
         final Map<Integer, ColorCount> colorMap = groupColors(image, maxColors);
 
         final int discreteColors = colorMap.size();
@@ -93,8 +90,7 @@ public class MedianCutQuantizer {
             Debug.debug("lossless palette: " + discreteColors);
 
             final int[] palette = Allocator.intArray(discreteColors);
-            final List<ColorCount> colorCounts = new ArrayList<>(
-                    colorMap.values());
+            final List<ColorCount> colorCounts = new ArrayList<>(colorMap.values());
 
             for (int i = 0; i < colorCounts.size(); i++) {
                 final ColorCount colorCount = colorCounts.get(i);
@@ -132,8 +128,7 @@ public class MedianCutQuantizer {
             colorGroup.paletteIndex = i;
 
             if (colorGroup.getColorCounts().isEmpty()) {
-                throw new ImagingException("Empty colorGroup: "
-                        + colorGroup);
+                throw new ImagingException("Empty colorGroup: " + colorGroup);
             }
         }
 

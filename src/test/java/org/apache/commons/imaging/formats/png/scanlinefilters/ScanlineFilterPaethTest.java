@@ -23,15 +23,15 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Test;
 
-public class ScanlineFilterPaethTest{
+public class ScanlineFilterPaethTest {
 
-  @Test
-  public void testUnfilter() throws IOException, ImagingException {
-      final ScanlineFilterPaeth scanlineFilterPaeth = new ScanlineFilterPaeth(0);
-      final byte[] byteArray = new byte[5];
-      scanlineFilterPaeth.unfilter(byteArray, byteArray, null);
+    @Test
+    public void testUnfilter() throws IOException, ImagingException {
+        final ScanlineFilterPaeth scanlineFilterPaeth = new ScanlineFilterPaeth(0);
+        final byte[] byteArray = new byte[5];
+        scanlineFilterPaeth.unfilter(byteArray, byteArray, null);
 
-      assertArrayEquals(new byte[] {(byte)0, (byte)0, (byte)0, (byte)0, (byte)0}, byteArray);
-  }
+        assertArrayEquals(new byte[] { (byte) 0, (byte) 0, (byte) 0, (byte) 0, (byte) 0 }, byteArray);
+    }
 
 }

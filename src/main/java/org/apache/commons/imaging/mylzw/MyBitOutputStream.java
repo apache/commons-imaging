@@ -46,11 +46,8 @@ final class MyBitOutputStream extends FilterOutputStream {
             if (byteOrder == ByteOrder.BIG_ENDIAN) {
                 // MSB, so write from left
                 b <<= 8 - bitsInCache; // left align fragment.
-                out.write(b);
-            } else {
-                // LSB, so write from right
-                out.write(b);
             }
+            out.write(b);
         }
 
         bitsInCache = 0;
@@ -58,7 +55,7 @@ final class MyBitOutputStream extends FilterOutputStream {
     }
 
     public int getBytesWritten() {
-        return bytesWritten + ((bitsInCache > 0) ? 1 : 0);
+        return bytesWritten + (bitsInCache > 0 ? 1 : 0);
     }
 
     @Override
@@ -74,28 +71,26 @@ final class MyBitOutputStream extends FilterOutputStream {
 
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
             // MSB, so add to right
-            bitCache = (bitCache << sampleBits) | value;
+            bitCache = bitCache << sampleBits | value;
         } else {
             // LSB, so add to left
-            bitCache = bitCache | (value << bitsInCache);
+            bitCache = bitCache | value << bitsInCache;
         }
         bitsInCache += sampleBits;
 
         while (bitsInCache >= 8) {
             if (byteOrder == ByteOrder.BIG_ENDIAN) {
                 // MSB, so write from left
-                final int b = 0xff & (bitCache >> (bitsInCache - 8));
+                final int b = 0xff & bitCache >> bitsInCache - 8;
                 actualWrite(b);
-
-                bitsInCache -= 8;
             } else {
                 // LSB, so write from right
                 final int b = 0xff & bitCache;
                 actualWrite(b);
 
                 bitCache >>= 8;
-                bitsInCache -= 8;
             }
+            bitsInCache -= 8;
             final int remainderMask = (1 << bitsInCache) - 1; // unnecessary
             bitCache &= remainderMask; // unnecessary
         }

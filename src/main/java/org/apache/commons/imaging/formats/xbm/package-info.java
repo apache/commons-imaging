@@ -19,4 +19,3 @@
  * The X BitMap image format.
  */
 package org.apache.commons.imaging.formats.xbm;
-

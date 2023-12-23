@@ -35,8 +35,7 @@ public class PsdImageContents {
 
     public PsdImageContents(final PsdHeaderInfo header,
 
-    final int colorModeDataLength, final int imageResourcesLength,
-            final int layerAndMaskDataLength, final int compression) {
+            final int colorModeDataLength, final int imageResourcesLength, final int layerAndMaskDataLength, final int compression) {
         this.header = header;
         this.colorModeDataLength = colorModeDataLength;
         this.imageResourcesLength = imageResourcesLength;
@@ -45,7 +44,8 @@ public class PsdImageContents {
     }
 
     public void dump() {
-        try (StringWriter sw = new StringWriter(); PrintWriter pw = new PrintWriter(sw)) {
+        try (StringWriter sw = new StringWriter();
+                PrintWriter pw = new PrintWriter(sw)) {
             dump(pw);
             pw.flush();
             sw.flush();
@@ -58,14 +58,10 @@ public class PsdImageContents {
     public void dump(final PrintWriter pw) {
         pw.println("");
         pw.println("ImageContents");
-        pw.println("Compression: " + compression + " ("
-                + Integer.toHexString(compression) + ")");
-        pw.println("ColorModeDataLength: " + colorModeDataLength + " ("
-                + Integer.toHexString(colorModeDataLength) + ")");
-        pw.println("ImageResourcesLength: " + imageResourcesLength + " ("
-                + Integer.toHexString(imageResourcesLength) + ")");
-        pw.println("LayerAndMaskDataLength: " + layerAndMaskDataLength + " ("
-                + Integer.toHexString(layerAndMaskDataLength) + ")");
+        pw.println("Compression: " + compression + " (" + Integer.toHexString(compression) + ")");
+        pw.println("ColorModeDataLength: " + colorModeDataLength + " (" + Integer.toHexString(colorModeDataLength) + ")");
+        pw.println("ImageResourcesLength: " + imageResourcesLength + " (" + Integer.toHexString(imageResourcesLength) + ")");
+        pw.println("LayerAndMaskDataLength: " + layerAndMaskDataLength + " (" + Integer.toHexString(layerAndMaskDataLength) + ")");
         // System.out.println("Depth: " + Depth + " ("
         // + Integer.toHexString(Depth) + ")");
         // System.out.println("Mode: " + Mode + " (" + Integer.toHexString(Mode)

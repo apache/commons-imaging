@@ -28,8 +28,7 @@ public class ScanlineFilterAverage implements ScanlineFilter {
     }
 
     @Override
-    public void unfilter(final byte[] src, final byte[] dst, final byte[] up)
-            throws ImagingException, IOException {
+    public void unfilter(final byte[] src, final byte[] dst, final byte[] up) throws ImagingException, IOException {
         for (int i = 0; i < src.length; i++) {
             int raw = 0;
             final int prevIndex = i - bytesPerPixel;

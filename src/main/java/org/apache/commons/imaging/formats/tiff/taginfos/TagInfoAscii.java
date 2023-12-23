@@ -25,13 +25,11 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
 public class TagInfoAscii extends TagInfo {
-    public TagInfoAscii(final String name, final int tag, final int length,
-            final TiffDirectoryType directoryType) {
+    public TagInfoAscii(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
         super(name, tag, AbstractFieldType.ASCII, length, directoryType);
     }
 
-    public byte[] encodeValue(final ByteOrder byteOrder, final String... values)
-            throws ImagingException {
+    public byte[] encodeValue(final ByteOrder byteOrder, final String... values) throws ImagingException {
         return AbstractFieldType.ASCII.writeData(values, byteOrder);
     }
 
@@ -51,16 +49,14 @@ public class TagInfoAscii extends TagInfo {
         // Exiftool however allows you to configure the charset used.
         for (int i = 0; i < bytes.length; i++) {
             if (bytes[i] == 0) {
-                final String string = new String(bytes, nextStringPos, i
-                        - nextStringPos, StandardCharsets.UTF_8);
+                final String string = new String(bytes, nextStringPos, i - nextStringPos, StandardCharsets.UTF_8);
                 strings[stringsAdded++] = string;
                 nextStringPos = i + 1;
             }
         }
         if (nextStringPos < bytes.length) {
             // Buggy file, string wasn't null terminated
-            final String string = new String(bytes, nextStringPos, bytes.length
-                    - nextStringPos, StandardCharsets.UTF_8);
+            final String string = new String(bytes, nextStringPos, bytes.length - nextStringPos, StandardCharsets.UTF_8);
             strings[stringsAdded++] = string;
         }
         return strings;

@@ -58,8 +58,7 @@ public class PngWriteReadTest extends AbstractImagingTest {
             for (int x = 0; x < width; x++) {
                 final int alpha = (x + y) % 256;
                 final int value = (x + y) % 256;
-                final int argb = (0xff & alpha) << 24 | (0xff & value) << 16
-                        | (0xff & value) << 8 | (0xff & value) << 0;
+                final int argb = (0xff & alpha) << 24 | (0xff & value) << 16 | (0xff & value) << 8 | (0xff & value) << 0;
 
                 result[y][x] = argb;
             }
@@ -80,8 +79,7 @@ public class PngWriteReadTest extends AbstractImagingTest {
     private BufferedImage imageDataToBufferedImage(final int[][] rawData) {
         final int width = rawData[0].length;
         final int height = rawData.length;
-        final BufferedImage image = new BufferedImage(width, height,
-                BufferedImage.TYPE_INT_ARGB);
+        final BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 image.setRGB(x, y, rawData[y][x]);
@@ -111,9 +109,7 @@ public class PngWriteReadTest extends AbstractImagingTest {
         final int[][] smallAscendingPixels = getAscendingRawData(256, 256);
         final int[][] smallRandomPixels = randomRawData(256, 256);
 
-        final int[][][] testData = { smallBlackPixels, singleBlackPixel,
-                smallRedPixels, singleRedPixel, smallAscendingPixels,
-                smallRandomPixels, };
+        final int[][][] testData = { smallBlackPixels, singleBlackPixel, smallRedPixels, singleRedPixel, smallAscendingPixels, smallRandomPixels, };
 
         for (final int[][] rawData : testData) {
             writeAndReadImageData(rawData);
@@ -173,8 +169,7 @@ public class PngWriteReadTest extends AbstractImagingTest {
         assertTrue(Imaging.getImageInfo(pngBytes).isTransparent());
     }
 
-    private void writeAndReadImageData(final int[][] rawData) throws IOException,
-            ImagingException, ImagingException {
+    private void writeAndReadImageData(final int[][] rawData) throws IOException, ImagingException, ImagingException {
         final BufferedImage srcImage = imageDataToBufferedImage(rawData);
 
         final byte[] bytes = Imaging.writeImageToBytes(srcImage, ImageFormats.PNG);
@@ -189,8 +184,7 @@ public class PngWriteReadTest extends AbstractImagingTest {
         assertArrayEquals(rawData, dstData);
     }
 
-    private void writeAndReadMultipleEXt(final int[][] rawData) throws IOException,
-       ImagingException, ImagingException {
+    private void writeAndReadMultipleEXt(final int[][] rawData) throws IOException, ImagingException, ImagingException {
         final BufferedImage srcImage = imageDataToBufferedImage(rawData);
 
         final List<AbstractPngText.Text> textChunks = new LinkedList<>();
@@ -217,12 +211,10 @@ public class PngWriteReadTest extends AbstractImagingTest {
 
         final ImageMetadata imageMetadata = Imaging.getMetadata(bytes);
         assertEquals(imageMetadata.getItems().size(), 2);
-        final GenericImageMetadata.GenericImageMetadataItem item0
-           = (GenericImageMetadata.GenericImageMetadataItem)imageMetadata.getItems().get(0);
+        final GenericImageMetadata.GenericImageMetadataItem item0 = (GenericImageMetadata.GenericImageMetadataItem) imageMetadata.getItems().get(0);
         assertEquals(item0.getKeyword(), "a");
         assertEquals(item0.getText(), "b");
-        final GenericImageMetadata.GenericImageMetadataItem item1
-           = (GenericImageMetadata.GenericImageMetadataItem)imageMetadata.getItems().get(1);
+        final GenericImageMetadata.GenericImageMetadataItem item1 = (GenericImageMetadata.GenericImageMetadataItem) imageMetadata.getItems().get(1);
         assertEquals(item1.getKeyword(), "c");
         assertEquals(item1.getText(), "d");
     }

@@ -16,10 +16,7 @@
  */
 
 /**
- * Provides classes and methods for reading and writing
- * Tagged Image File Format (TIFF) files.   TIFF files are
- * widely used in applications for which supplemental
+ * Provides classes and methods for reading and writing Tagged Image File Format (TIFF) files. TIFF files are widely used in applications for which supplemental
  * metadata is added to images in the form of "tags".
  */
 package org.apache.commons.imaging.formats.tiff;
-

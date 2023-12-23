@@ -37,9 +37,9 @@ public class BitsToByteInputStream extends FilterInputStream {
     public int readBits(final int bitCount) throws IOException {
         int i = ((MyBitInputStream) in).readBits(bitCount);
         if (bitCount < desiredDepth) {
-            i <<= (desiredDepth - bitCount);
+            i <<= desiredDepth - bitCount;
         } else if (bitCount > desiredDepth) {
-            i >>= (bitCount - desiredDepth);
+            i >>= bitCount - desiredDepth;
         }
 
         return i;

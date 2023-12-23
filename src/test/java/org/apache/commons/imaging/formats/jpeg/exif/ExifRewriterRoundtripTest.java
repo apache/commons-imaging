@@ -59,14 +59,12 @@ public class ExifRewriterRoundtripTest extends AbstractExifTest {
     private void assertTiffEquals(final TiffOutputSet tiffOutputSet, final TiffOutputSet tiffOutputSet1) {
         final List<TiffOutputDirectory> directories = tiffOutputSet.getDirectories();
         final List<TiffOutputDirectory> directories1 = tiffOutputSet1.getDirectories();
-        assertEquals(directories.size(), directories1.size(),
-                "The TiffOutputSets have different numbers of directories.");
+        assertEquals(directories.size(), directories1.size(), "The TiffOutputSets have different numbers of directories.");
 
         for (int i = 0; i < directories.size(); i++) {
             final List<TiffOutputField> fields = directories.get(i).getFields();
             final List<TiffOutputField> fields1 = directories1.get(i).getFields();
-            assertEquals(fields.size(), fields1.size(),
-                    "The TiffOutputDirectories have different numbers of fields.");
+            assertEquals(fields.size(), fields1.size(), "The TiffOutputDirectories have different numbers of fields.");
 
             for (int j = 0; j < fields.size(); j++) {
                 final TiffOutputField field = fields.get(j);
@@ -79,8 +77,7 @@ public class ExifRewriterRoundtripTest extends AbstractExifTest {
         }
     }
 
-    private void copyToDuplicateFile(final File sourceFile, final TiffOutputSet duplicateTiffOutputSet) throws IOException,
-            ImagingException, ImagingException {
+    private void copyToDuplicateFile(final File sourceFile, final TiffOutputSet duplicateTiffOutputSet) throws IOException, ImagingException, ImagingException {
         final ExifRewriter exifRewriter = new ExifRewriter();
         duplicateFile = createTempFile();
         try (OutputStream duplicateOutputStream = new BufferedOutputStream(new FileOutputStream(duplicateFile))) {
@@ -136,8 +133,7 @@ public class ExifRewriterRoundtripTest extends AbstractExifTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void updateExifMetadataLossless_copyWithoutChanges_TiffImageMetadataIsIdentical(final File sourceFile)
-            throws Exception {
+    public void updateExifMetadataLossless_copyWithoutChanges_TiffImageMetadataIsIdentical(final File sourceFile) throws Exception {
         /*
          * Load EXIF data from source file, skipping over any test images without any EXIF data
          */
@@ -166,21 +162,18 @@ public class ExifRewriterRoundtripTest extends AbstractExifTest {
          */
         final List<? extends ImageMetadata.ImageMetadataItem> imageMetadataItems = sourceTiffImageMetadata.getItems();
         final List<? extends ImageMetadata.ImageMetadataItem> imageMetadataItems1 = duplicateTiffImageMetadata.getItems();
-        assertEquals(imageMetadataItems.size(), imageMetadataItems1.size(),
-                "The TiffImageMetadata have different numbers of imageMetadataItems.");
+        assertEquals(imageMetadataItems.size(), imageMetadataItems1.size(), "The TiffImageMetadata have different numbers of imageMetadataItems.");
 
         for (int i = 0; i < imageMetadataItems.size(); i++) {
             final ImageMetadata.ImageMetadataItem imageMetadataItem = imageMetadataItems.get(i);
             final ImageMetadata.ImageMetadataItem imageMetadataItem1 = imageMetadataItems1.get(i);
-            assertEquals(imageMetadataItem.toString(), imageMetadataItem1.toString(),
-                    "ImageMetadataItem toString mismatch.");
+            assertEquals(imageMetadataItem.toString(), imageMetadataItem1.toString(), "ImageMetadataItem toString mismatch.");
         }
     }
 
     @ParameterizedTest
     @MethodSource("data")
-    public void updateExifMetadataLossless_copyWithoutChanges_TiffOutputSetsAreIdentical(final File sourceFile)
-            throws Exception {
+    public void updateExifMetadataLossless_copyWithoutChanges_TiffOutputSetsAreIdentical(final File sourceFile) throws Exception {
         /*
          * Load EXIF data from source file, skipping over any test images without any EXIF data
          */

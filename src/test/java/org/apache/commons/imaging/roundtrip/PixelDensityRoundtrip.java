@@ -54,10 +54,8 @@ public class PixelDensityRoundtrip extends RoundtripBase {
             final int xReadDPI = imageInfo.getPhysicalWidthDpi();
             final int yReadDPI = imageInfo.getPhysicalHeightDpi();
             // allow a 5% margin of error in storage and conversion
-            assertTrue(Math.abs((xReadDPI - pixelDensity.horizontalDensityInches()) /
-                            pixelDensity.horizontalDensityInches()) <= 0.05);
-            assertTrue(Math.abs((yReadDPI - pixelDensity.verticalDensityInches()) /
-                            pixelDensity.verticalDensityInches()) <= 0.05);
+            assertTrue(Math.abs((xReadDPI - pixelDensity.horizontalDensityInches()) / pixelDensity.horizontalDensityInches()) <= 0.05);
+            assertTrue(Math.abs((yReadDPI - pixelDensity.verticalDensityInches()) / pixelDensity.verticalDensityInches()) <= 0.05);
         }
     }
 

@@ -43,12 +43,12 @@ public class ColorCmyTest {
 
     @Test
     public void testCreatesColorCmy() {
-        final ColorCmy colorCmy = new ColorCmy(0.0, (-1668.733868772), (-1568.733868772));
+        final ColorCmy colorCmy = new ColorCmy(0.0, -1668.733868772, -1568.733868772);
         final ColorCmy colorCmyTwo = ColorCmy.YELLOW;
 
         assertNotEquals(colorCmy, colorCmyTwo);
-        assertEquals((-1568.733868772), colorCmy.y, 0.01);
-        assertEquals((-1668.733868772), colorCmy.m, 0.01);
+        assertEquals(-1568.733868772, colorCmy.y, 0.01);
+        assertEquals(-1668.733868772, colorCmy.m, 0.01);
     }
 
     @Test

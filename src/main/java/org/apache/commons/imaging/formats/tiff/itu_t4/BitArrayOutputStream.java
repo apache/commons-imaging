@@ -22,8 +22,7 @@ import java.util.Arrays;
 import org.apache.commons.imaging.common.Allocator;
 
 /**
- * Output stream writing to a byte array, and capable
- * of writing 1 bit at a time, starting from the most significant bit.
+ * Output stream writing to a byte array, and capable of writing 1 bit at a time, starting from the most significant bit.
  */
 final class BitArrayOutputStream extends OutputStream {
     private byte[] buffer;

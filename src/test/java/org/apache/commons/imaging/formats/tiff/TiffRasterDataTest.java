@@ -92,7 +92,7 @@ public class TiffRasterDataTest {
     @Test
     public void testGetDataType() {
         final TiffRasterDataType dataType = raster.getDataType();
-        assertTrue(dataType == TiffRasterDataType.FLOAT, "Unexpected data type "+dataType.name());
+        assertTrue(dataType == TiffRasterDataType.FLOAT, "Unexpected data type " + dataType.name());
     }
 
     /**
@@ -134,7 +134,7 @@ public class TiffRasterDataTest {
      */
     @Test
     public void testGetSimpleStatistics_float() {
-        // exclude the maximum value (width*height-1).  This will result
+        // exclude the maximum value (width*height-1). This will result
         // in a max value of width*height-2
         final TiffRasterStatistics result = raster.getSimpleStatistics(width * height - 1);
         assertEquals(width * height - 2, result.getMaxValue(), "Max value failure");

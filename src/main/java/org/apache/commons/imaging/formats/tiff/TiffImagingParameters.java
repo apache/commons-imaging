@@ -29,13 +29,14 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
     /**
      * Indicates whether to read embedded thumbnails or not. Only applies to read EXIF metadata from JPEG/JFIF files.
      *
-     * <p>Default value is {@code true}.</p>
+     * <p>
+     * Default value is {@code true}.
+     * </p>
      */
     private boolean readThumbnails = true;
 
     /**
-     * User provided {@code TiffOutputSet} used to write into
-     * the image's metadata including standard directory and EXIF tags.
+     * User provided {@code TiffOutputSet} used to write into the image's metadata including standard directory and EXIF tags.
      */
     private TiffOutputSet tiffOutputSet;
 
@@ -60,12 +61,12 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
     private int subImageHeight;
 
     /**
-     * Specifies that an application-specified photometric interpreter
-     * is to be used when reading TIFF files to convert raster data samples
-     * to RGB values for the output image.
+     * Specifies that an application-specified photometric interpreter is to be used when reading TIFF files to convert raster data samples to RGB values for
+     * the output image.
      *
-     * <p>The value supplied with this key should be a valid instance of
-     * a class that implements PhotometricInterpreter.</p>
+     * <p>
+     * The value supplied with this key should be a valid instance of a class that implements PhotometricInterpreter.
+     * </p>
      */
     private PhotometricInterpreter customPhotometricInterpreter;
 
@@ -75,34 +76,32 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
     private Integer compression;
 
     /**
-     * Specifies the amount of memory in bytes to be used for a strip
-     * or tile size when employing LZW compression.  The default is
-     * 8000 (roughly 8K). Minimum value is 8000.
+     * Specifies the amount of memory in bytes to be used for a strip or tile size when employing LZW compression. The default is 8000 (roughly 8K). Minimum
+     * value is 8000.
      */
     private Integer lzwCompressionBlockSize;
 
     /**
-     * Used in write operations to indicate the desired T.4 options to
-     * use when using TIFF_COMPRESSION_CCITT_GROUP_3.
+     * Used in write operations to indicate the desired T.4 options to use when using TIFF_COMPRESSION_CCITT_GROUP_3.
      *
-     * <p>Valid values: any Integer containing a mixture of the
-     * TIFF_FLAG_T4_OPTIONS_2D, TIFF_FLAG_T4_OPTIONS_UNCOMPRESSED_MODE,
-     * and TIFF_FLAG_T4_OPTIONS_FILL flags.</p>
+     * <p>
+     * Valid values: any Integer containing a mixture of the TIFF_FLAG_T4_OPTIONS_2D, TIFF_FLAG_T4_OPTIONS_UNCOMPRESSED_MODE, and TIFF_FLAG_T4_OPTIONS_FILL
+     * flags.
+     * </p>
      */
     private Integer t4Options;
 
     /**
-     * Used in write operations to indicate the desired T.6 options to
-     * use when using TIFF_COMPRESSION_CCITT_GROUP_4.
+     * Used in write operations to indicate the desired T.6 options to use when using TIFF_COMPRESSION_CCITT_GROUP_4.
      *
-     * <p>Valid values: any Integer containing either zero or
-     * TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE.</p>
+     * <p>
+     * Valid values: any Integer containing either zero or TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE.
+     * </p>
      */
     private Integer t6Options;
 
     /**
-     * Clears settings for sub-image. Subsequent read operations will retrieve
-     * the entire image.
+     * Clears settings for sub-image. Subsequent read operations will retrieve the entire image.
      */
     public void clearSubImage() {
         subImageWidth = 0;
@@ -123,6 +122,7 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
 
     /**
      * Gets the TIFF output set for writing TIFF files.
+     *
      * @return if set, a valid instance; otherwise, a null reference.
      */
     public TiffOutputSet getOutputSet() {
@@ -130,30 +130,25 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
     }
 
     /**
-     * Gets the height for a sub-image setting. For a sub-image setting to be
-     * meaningful, both the width and height must be set.
+     * Gets the height for a sub-image setting. For a sub-image setting to be meaningful, both the width and height must be set.
      *
-     * @return if the sub-image feature is enabled, a value greater than zero;
-     * otherwise, zero.
+     * @return if the sub-image feature is enabled, a value greater than zero; otherwise, zero.
      */
     public int getSubImageHeight() {
         return subImageHeight;
     }
 
     /**
-     * Gets the width for a sub-image setting. For a sub-image setting to be
-     * meaningful, both the width and height must be set.
+     * Gets the width for a sub-image setting. For a sub-image setting to be meaningful, both the width and height must be set.
      *
-     * @return if the sub-image feature is enabled, a value greater than zero;
-     * otherwise, zero.
+     * @return if the sub-image feature is enabled, a value greater than zero; otherwise, zero.
      */
     public int getSubImageWidth() {
         return subImageWidth;
     }
 
     /**
-     * Gets the X coordinate of a sub-image. This setting is meaningful only if
-     * a sub-image is set.
+     * Gets the X coordinate of a sub-image. This setting is meaningful only if a sub-image is set.
      *
      * @return a positive integer
      */
@@ -162,8 +157,7 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
     }
 
     /**
-     * Gets the Y coordinate of a sub-image. This setting is meaningful only if
-     * a sub-image is set.
+     * Gets the Y coordinate of a sub-image. This setting is meaningful only if a sub-image is set.
      *
      * @return a positive integer
      */
@@ -208,9 +202,8 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
     }
 
     /**
-     * Sets the TIFF output set for writing TIFF files.  An output set
-     * may contain various types of TiffDirectories including image directories,
-     * EXIF directories, GPS-related directories, etc.
+     * Sets the TIFF output set for writing TIFF files. An output set may contain various types of TiffDirectories including image directories, EXIF
+     * directories, GPS-related directories, etc.
      *
      * @param tiffOutputSet A valid instance.
      * @return this
@@ -226,31 +219,23 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
     }
 
     /**
-     * Sets parameters for performing a partial read operation on an image. This
-     * method is useful for reducing memory and run-time overhead when accessing
-     * large source images.
+     * Sets parameters for performing a partial read operation on an image. This method is useful for reducing memory and run-time overhead when accessing large
+     * source images.
      * <p>
-     * Note that the corner x and y coordinates must be positive integers (zero
-     * or greater). The width and height must be greater than zero.
+     * Note that the corner x and y coordinates must be positive integers (zero or greater). The width and height must be greater than zero.
      *
-     * @param x pixel coordinate of the upper-left corner of the source image,
-     * must be zero or greater.
-     * @param y pixel coordinate of the upper-left corner of the source image,
-     * must be zero or greater.
-     * @param width width of the image subset to be read, must be greater than
-     * zero.
-     * @param height height of the image subset to be read, must be greater than
-     * zero.
+     * @param x      pixel coordinate of the upper-left corner of the source image, must be zero or greater.
+     * @param y      pixel coordinate of the upper-left corner of the source image, must be zero or greater.
+     * @param width  width of the image subset to be read, must be greater than zero.
+     * @param height height of the image subset to be read, must be greater than zero.
      * @return this
      */
     public TiffImagingParameters setSubImage(final int x, final int y, final int width, final int height) {
         if (x < 0 || y < 0) {
-            throw new IllegalArgumentException(
-                    "Invalid sub-image specification: negative x and y values not allowed");
+            throw new IllegalArgumentException("Invalid sub-image specification: negative x and y values not allowed");
         }
         if (width <= 0 || height <= 0) {
-            throw new IllegalArgumentException(
-                    "Invalid sub-image specification width and height must be greater than zero");
+            throw new IllegalArgumentException("Invalid sub-image specification width and height must be greater than zero");
         }
         subImageX = x;
         subImageY = y;

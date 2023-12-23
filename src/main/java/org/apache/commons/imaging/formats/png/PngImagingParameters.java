@@ -22,6 +22,7 @@ import org.apache.commons.imaging.common.XmpImagingParameters;
 
 /**
  * PNG format parameters.
+ *
  * @since 1.0-alpha3
  */
 public class PngImagingParameters extends XmpImagingParameters<PngImagingParameters> {
@@ -42,16 +43,22 @@ public class PngImagingParameters extends XmpImagingParameters<PngImagingParamet
     /**
      * Used in write operations to indicate the Physical Scale - sCAL.
      *
-     * <p>Valid values: PhysicalScale</p>
+     * <p>
+     * Valid values: PhysicalScale
+     * </p>
      *
      * @see org.apache.commons.imaging.formats.png.PhysicalScale
      */
     private PhysicalScale physicalScale;
 
     /**
-     * <p>Only used when writing PNG images.</p>
+     * <p>
+     * Only used when writing PNG images.
+     * </p>
      *
-     * <p>Valid values: a list of WriteTexts.</p>
+     * <p>
+     * Valid values: a list of WriteTexts.
+     * </p>
      */
     private List<? extends AbstractPngText> textChunks;
 
@@ -76,8 +83,8 @@ public class PngImagingParameters extends XmpImagingParameters<PngImagingParamet
     }
 
     /**
-     * Indicates that the PNG write operation should enable
-     * the predictor.
+     * Indicates that the PNG write operation should enable the predictor.
+     *
      * @return true if the predictor is enabled; otherwise, false.
      */
     public boolean isPredictorEnabled() {
@@ -105,13 +112,9 @@ public class PngImagingParameters extends XmpImagingParameters<PngImagingParamet
     }
 
     /**
-     * Sets the enabled status of the predictor. When performing
-     * data compression on an image, a PNG predictor often results in a
-     * reduced file size. Predictors are particularly effective on
-     * photographic images, but may also work on graphics.
-     * The specification of a predictor may result in an increased
-     * processing time when writing an image, but will not affect the
-     * time required to read an image.
+     * Sets the enabled status of the predictor. When performing data compression on an image, a PNG predictor often results in a reduced file size. Predictors
+     * are particularly effective on photographic images, but may also work on graphics. The specification of a predictor may result in an increased processing
+     * time when writing an image, but will not affect the time required to read an image.
      *
      * @param predictorEnabled true if a predictor is enabled; otherwise, false.
      * @return this

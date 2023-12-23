@@ -21,6 +21,7 @@ import org.apache.commons.imaging.ImagingParameters;
 
 /**
  * Pnm format parameters.
+ *
  * @since 1.0-alpha3
  */
 public class PnmImagingParameters extends ImagingParameters<PnmImagingParameters> {

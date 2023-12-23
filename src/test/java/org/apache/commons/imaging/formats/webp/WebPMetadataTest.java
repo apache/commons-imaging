@@ -39,9 +39,9 @@ public class WebPMetadataTest extends WebPBaseTest {
      */
     @Test
     public void testReadAlpha() throws Exception {
-        File imageFile = new File(WebPMetadataTest.class.getResource("/images/webp/alpha/alpha.webp").getFile());
-        WebPImageParser parser = new WebPImageParser();
-        ImageInfo imageInfo = parser.getImageInfo(ByteSource.file(imageFile), parser.getDefaultParameters());
+        final File imageFile = new File(WebPMetadataTest.class.getResource("/images/webp/alpha/alpha.webp").getFile());
+        final WebPImageParser parser = new WebPImageParser();
+        final ImageInfo imageInfo = parser.getImageInfo(ByteSource.file(imageFile), parser.getDefaultParameters());
         assertNotNull(imageInfo);
     }
 
@@ -50,17 +50,17 @@ public class WebPMetadataTest extends WebPBaseTest {
      */
     @Test
     public void testReadMetadata() throws Exception {
-        File imageFile = new File(WebPMetadataTest.class.getResource("/images/webp/exif/_DSC6099.webp").getFile());
-        WebPImageParser parser = new WebPImageParser();
-        WebPImageMetadata metadata = parser.getMetadata(ByteSource.file(imageFile), parser.getDefaultParameters());
+        final File imageFile = new File(WebPMetadataTest.class.getResource("/images/webp/exif/_DSC6099.webp").getFile());
+        final WebPImageParser parser = new WebPImageParser();
+        final WebPImageMetadata metadata = parser.getMetadata(ByteSource.file(imageFile), parser.getDefaultParameters());
         assertEquals(56, metadata.getItems().size());
 
-        TiffImageMetadata tiffImageMetadata = metadata.getExif();
+        final TiffImageMetadata tiffImageMetadata = metadata.getExif();
         assertNotNull(tiffImageMetadata);
 
         // Finds by the tag number.
-        TagInfo make = new TagInfoAscii("", 271, 0, null);
-        Object field = tiffImageMetadata.getFieldValue(make);
+        final TagInfo make = new TagInfoAscii("", 271, 0, null);
+        final Object field = tiffImageMetadata.getFieldValue(make);
         assertEquals("sony", field.toString().trim().toLowerCase());
     }
 
@@ -69,10 +69,10 @@ public class WebPMetadataTest extends WebPBaseTest {
      */
     @Test
     public void testReadXmp() throws Exception {
-        File imageFile = new File(WebPMetadataTest.class.getResource("/images/webp/xmp/test.webp").getFile());
-        WebPImageParser parser = new WebPImageParser();
+        final File imageFile = new File(WebPMetadataTest.class.getResource("/images/webp/xmp/test.webp").getFile());
+        final WebPImageParser parser = new WebPImageParser();
 
-        String xml = parser.getXmpXml(ByteSource.file(imageFile), parser.getDefaultParameters());
+        final String xml = parser.getXmpXml(ByteSource.file(imageFile), parser.getDefaultParameters());
         assertTrue(xml.contains("Apache License"));
     }
 }

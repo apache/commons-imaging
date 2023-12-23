@@ -19,4 +19,3 @@
  * Encapsulates sources from which data may be read.
  */
 package org.apache.commons.imaging.bytesource;
-

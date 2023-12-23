@@ -23,11 +23,9 @@ public enum PngColorType {
 
     // FIXME can this be merged with ImageInfo.ColorType?
 
-    GREYSCALE(0, true, false, 1, new int[]{1, 2, 4, 8, 16}),
-    TRUE_COLOR(2, false, false, 3, new int[]{8, 16}),
-    INDEXED_COLOR(3, false, false, 1, new int[]{1, 2, 4, 8}),
-    GREYSCALE_WITH_ALPHA(4, true, true, 2, new int[]{8, 16}),
-    TRUE_COLOR_WITH_ALPHA(6, false, true, 4, new int[]{8, 16});
+    GREYSCALE(0, true, false, 1, new int[] { 1, 2, 4, 8, 16 }), TRUE_COLOR(2, false, false, 3, new int[] { 8, 16 }),
+    INDEXED_COLOR(3, false, false, 1, new int[] { 1, 2, 4, 8 }), GREYSCALE_WITH_ALPHA(4, true, true, 2, new int[] { 8, 16 }),
+    TRUE_COLOR_WITH_ALPHA(6, false, true, 4, new int[] { 8, 16 });
 
     static PngColorType getColorType(final boolean alpha, final boolean grayscale) {
         if (grayscale) {
@@ -41,6 +39,7 @@ public enum PngColorType {
         }
         return PngColorType.TRUE_COLOR;
     }
+
     public static PngColorType getColorType(final int value) {
         for (final PngColorType type : values()) {
             if (type.value == value) {
@@ -50,6 +49,7 @@ public enum PngColorType {
 
         return null;
     }
+
     private final int value;
     private final boolean greyscale;
     private final boolean alpha;

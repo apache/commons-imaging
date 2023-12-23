@@ -47,9 +47,8 @@ abstract class AbstractScanExpediter {
     final GammaCorrection gammaCorrection;
     final AbstractTransparencyFilter abstractTransparencyFilter;
 
-    AbstractScanExpediter(final int width, final int height, final InputStream is,
-            final BufferedImage bi, final PngColorType pngColorType, final int bitDepth, final int bitsPerPixel,
-            final PngChunkPlte pngChunkPLTE, final GammaCorrection gammaCorrection,
+    AbstractScanExpediter(final int width, final int height, final InputStream is, final BufferedImage bi, final PngColorType pngColorType, final int bitDepth,
+            final int bitsPerPixel, final PngChunkPlte pngChunkPLTE, final GammaCorrection gammaCorrection,
             final AbstractTransparencyFilter abstractTransparencyFilter) {
         this.width = width;
         this.height = height;
@@ -70,8 +69,7 @@ abstract class AbstractScanExpediter {
         return (bits + 7) / 8;
     }
 
-    byte[] getNextScanline(final InputStream is, final int length, final byte[] prev,
-            final int bytesPerPixel) throws ImagingException, IOException {
+    byte[] getNextScanline(final InputStream is, final int length, final byte[] prev, final int bytesPerPixel) throws ImagingException, IOException {
         final int filterType = is.read();
         if (filterType < 0) {
             throw new ImagingException("PNG: missing filter type");
@@ -86,18 +84,14 @@ abstract class AbstractScanExpediter {
     }
 
     final int getPixelArgb(final int alpha, final int red, final int green, final int blue) {
-        return ((0xff & alpha) << 24)
-             | ((0xff & red)   << 16)
-             | ((0xff & green) << 8)
-             | ((0xff & blue)  << 0);
+        return (0xff & alpha) << 24 | (0xff & red) << 16 | (0xff & green) << 8 | (0xff & blue) << 0;
     }
 
     final int getPixelRgb(final int red, final int green, final int blue) {
         return getPixelArgb(0xff, red, green, blue);
     }
 
-    int getRgb(final BitParser bitParser, final int pixelIndexInScanline)
-            throws ImagingException, IOException {
+    int getRgb(final BitParser bitParser, final int pixelIndexInScanline) throws ImagingException, IOException {
 
         switch (pngColorType) {
         case GREYSCALE: {
@@ -191,23 +185,22 @@ abstract class AbstractScanExpediter {
 
     ScanlineFilter getScanlineFilter(final FilterType filterType, final int bytesPerPixel) {
         switch (filterType) {
-            case NONE:
-                return new ScanlineFilterNone();
-            case SUB:
-                return new ScanlineFilterSub(bytesPerPixel);
-            case UP:
-                return new ScanlineFilterUp();
-            case AVERAGE:
-                return new ScanlineFilterAverage(bytesPerPixel);
-            case PAETH:
-                return new ScanlineFilterPaeth(bytesPerPixel);
+        case NONE:
+            return new ScanlineFilterNone();
+        case SUB:
+            return new ScanlineFilterSub(bytesPerPixel);
+        case UP:
+            return new ScanlineFilterUp();
+        case AVERAGE:
+            return new ScanlineFilterAverage(bytesPerPixel);
+        case PAETH:
+            return new ScanlineFilterPaeth(bytesPerPixel);
         }
 
         return null;
     }
 
-    byte[] unfilterScanline(final FilterType filterType, final byte[] src, final byte[] prev,
-            final int bytesPerPixel) throws ImagingException, IOException {
+    byte[] unfilterScanline(final FilterType filterType, final byte[] src, final byte[] prev, final int bytesPerPixel) throws ImagingException, IOException {
         final ScanlineFilter filter = getScanlineFilter(filterType, bytesPerPixel);
 
         final byte[] dst = Allocator.byteArray(src.length);

@@ -26,8 +26,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class BitmapRoundtripTest extends RoundtripBase {
 
-    public static BufferedImage[] images = {
-            TestImages.createArgbBitmapImage(1, 1), // minimal
+    public static BufferedImage[] images = { TestImages.createArgbBitmapImage(1, 1), // minimal
             TestImages.createArgbBitmapImage(2, 2), //
             TestImages.createArgbBitmapImage(10, 10), // larger than 8
             TestImages.createArgbBitmapImage(300, 300), // larger than 256

@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.apache.commons.imaging.ImagingConstants;
 import org.junit.jupiter.api.Test;
 
-public class TransparencyFilterIndexedColorTest{
+public class TransparencyFilterIndexedColorTest {
 
     @Test
     public void testFilterWithNegativeAndNegative() {
@@ -30,7 +30,7 @@ public class TransparencyFilterIndexedColorTest{
         final TransparencyFilterIndexedColor transparencyFilterIndexedColor = new TransparencyFilterIndexedColor(byteArray);
 
         try {
-            transparencyFilterIndexedColor.filter((-416), (-398));
+            transparencyFilterIndexedColor.filter(-416, -398);
             fail("Expecting exception: Exception");
         } catch (final Exception e) {
             assertEquals("TransparencyFilterIndexedColor index: -398, bytes.length: 0", e.getMessage());

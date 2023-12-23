@@ -47,7 +47,7 @@ public class AsciiFieldTest extends AbstractExifTest {
         // note that exif might be null if no Exif metadata is found.
         final TiffImageMetadata exif = jpegMetadata.getExif();
         final List<TiffField> fields = exif.getAllFields();
-        final Map<Integer,TiffField> fieldMap = new HashMap<>();
+        final Map<Integer, TiffField> fieldMap = new HashMap<>();
         // Build a simplified field tag -> field map, ignoring directory
         // structures.
         // Good enough for our purposes, since the image in question is known.
@@ -55,15 +55,10 @@ public class AsciiFieldTest extends AbstractExifTest {
             fieldMap.put(field.getTag(), field);
         }
 
-        final Map<Integer,Object> expectedFieldValues = new HashMap<>();
-        expectedFieldValues.put(
-                TiffTagConstants.TIFF_TAG_MAKE.tag, "Canon");
-        expectedFieldValues.put(
-                TiffTagConstants.TIFF_TAG_MODEL.tag,
-                "Canon PowerShot SD750");
-        expectedFieldValues.put(
-                TiffTagConstants.TIFF_TAG_DATE_TIME.tag,
-                "2007:12:25 13:34:39");
+        final Map<Integer, Object> expectedFieldValues = new HashMap<>();
+        expectedFieldValues.put(TiffTagConstants.TIFF_TAG_MAKE.tag, "Canon");
+        expectedFieldValues.put(TiffTagConstants.TIFF_TAG_MODEL.tag, "Canon PowerShot SD750");
+        expectedFieldValues.put(TiffTagConstants.TIFF_TAG_DATE_TIME.tag, "2007:12:25 13:34:39");
 
         for (final Map.Entry<Integer, Object> tag : expectedFieldValues.entrySet()) {
             assertTrue(fieldMap.containsKey(tag.getKey()));

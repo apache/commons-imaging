@@ -51,33 +51,18 @@ public class IccTag {
         this.fIccTagType = fIccTagType;
     }
 
-    public void dump(final PrintWriter pw, final String prefix) throws ImagingException,
-            IOException {
-        pw.println(prefix
-                + "tag signature: "
-                + Integer.toHexString(signature)
-                + " ("
-                + new String(new byte[] {
-                        (byte) (0xff & (signature >> 24)),
-                        (byte) (0xff & (signature >> 16)),
-                        (byte) (0xff & (signature >> 8)),
-                        (byte) (0xff & (signature >> 0)), }, StandardCharsets.US_ASCII)
-                + ")");
+    public void dump(final PrintWriter pw, final String prefix) throws ImagingException, IOException {
+        pw.println(prefix + "tag signature: " + Integer.toHexString(signature) + " (" + new String(new byte[] { (byte) (0xff & signature >> 24),
+                (byte) (0xff & signature >> 16), (byte) (0xff & signature >> 8), (byte) (0xff & signature >> 0), }, StandardCharsets.US_ASCII) + ")");
 
         if (data == null) {
             pw.println(prefix + "data: " + Arrays.toString((byte[]) null));
         } else {
             pw.println(prefix + "data: " + data.length);
 
-            pw.println(prefix
-                    + "data type signature: "
-                    + Integer.toHexString(dataTypeSignature)
-                    + " ("
-                    + new String(new byte[] {
-                            (byte) (0xff & (dataTypeSignature >> 24)),
-                            (byte) (0xff & (dataTypeSignature >> 16)),
-                            (byte) (0xff & (dataTypeSignature >> 8)),
-                            (byte) (0xff & (dataTypeSignature >> 0)), }, StandardCharsets.US_ASCII)
+            pw.println(prefix + "data type signature: " + Integer.toHexString(dataTypeSignature) + " ("
+                    + new String(new byte[] { (byte) (0xff & dataTypeSignature >> 24), (byte) (0xff & dataTypeSignature >> 16),
+                            (byte) (0xff & dataTypeSignature >> 8), (byte) (0xff & dataTypeSignature >> 0), }, StandardCharsets.US_ASCII)
                     + ")");
 
             if (itdt == null) {
@@ -95,7 +80,8 @@ public class IccTag {
     }
 
     public void dump(final String prefix) throws ImagingException, IOException {
-        try (StringWriter sw = new StringWriter(); PrintWriter pw = new PrintWriter(sw)) {
+        try (StringWriter sw = new StringWriter();
+                PrintWriter pw = new PrintWriter(sw)) {
             dump(pw, prefix);
             pw.flush();
             sw.flush();
@@ -117,8 +103,7 @@ public class IccTag {
         data = bytes;
 
         try (InputStream bis = new ByteArrayInputStream(bytes)) {
-            dataTypeSignature = BinaryFunctions.read4Bytes("data type signature", bis,
-                    "ICC: corrupt tag data", ByteOrder.BIG_ENDIAN);
+            dataTypeSignature = BinaryFunctions.read4Bytes("data type signature", bis, "ICC: corrupt tag data", ByteOrder.BIG_ENDIAN);
 
             itdt = getIccTagDataType(dataTypeSignature);
             // if (itdt != null)

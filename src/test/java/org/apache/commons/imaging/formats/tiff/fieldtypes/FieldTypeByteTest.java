@@ -23,14 +23,14 @@ import java.nio.ByteOrder;
 import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Test;
 
-public class FieldTypeByteTest{
+public class FieldTypeByteTest {
 
-  @Test
-  public void testWriteDataWithNull() {
-      final FieldTypeByte fieldTypeByte = AbstractFieldType.UNDEFINED;
-      final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
+    @Test
+    public void testWriteDataWithNull() {
+        final FieldTypeByte fieldTypeByte = AbstractFieldType.UNDEFINED;
+        final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
 
-      assertThrows(ImagingException.class, () -> fieldTypeByte.writeData( null, byteOrder));
-  }
+        assertThrows(ImagingException.class, () -> fieldTypeByte.writeData(null, byteOrder));
+    }
 
 }

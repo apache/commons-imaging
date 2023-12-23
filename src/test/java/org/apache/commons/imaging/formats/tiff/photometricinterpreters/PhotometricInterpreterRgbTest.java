@@ -30,15 +30,14 @@ public class PhotometricInterpreterRgbTest {
     private PhotometricInterpreterRgb p;
 
     private final int samplesPerPixel = 3;
-    private final int[] bitsPerSample = {8, 8, 8};
+    private final int[] bitsPerSample = { 8, 8, 8 };
     private final int predictor = 1;
     private final int width = 800;
     private final int height = 600;
 
     @BeforeEach
     public void setUp() {
-        p = new PhotometricInterpreterRgb(
-        samplesPerPixel, bitsPerSample, predictor, width, height);
+        p = new PhotometricInterpreterRgb(samplesPerPixel, bitsPerSample, predictor, width, height);
     }
 
     @Test
@@ -54,10 +53,10 @@ public class PhotometricInterpreterRgbTest {
 
     @Test
     public void testInterpretPixel() throws ImagingException, IOException {
-        final ImageBuilder imgBuilder = new ImageBuilder(600, 400, /*alpha*/ true);
+        final ImageBuilder imgBuilder = new ImageBuilder(600, 400, /* alpha */ true);
         final int x = 10;
         final int y = 20;
-        p.interpretPixel(imgBuilder, new int[] {255, 255, 255}, x, y);
+        p.interpretPixel(imgBuilder, new int[] { 255, 255, 255 }, x, y);
         assertEquals(0xffffffff, imgBuilder.getRgb(x, y));
     }
 }

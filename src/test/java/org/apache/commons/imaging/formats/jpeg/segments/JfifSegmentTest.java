@@ -24,20 +24,20 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Test;
 
-public class JfifSegmentTest{
+public class JfifSegmentTest {
 
-  @Test
-  public void testCreatesJfifSegment() throws IOException {
-      final byte[] byteArray = new byte[25];
+    @Test
+    public void testCreatesJfifSegment() throws IOException {
+        final byte[] byteArray = new byte[25];
 
-      try {
-          new JfifSegment((-2275), byteArray);
-          fail("Expecting exception: Exception");
-      } catch (final ImagingException e) {
-          assertEquals("Not a Valid JPEG File: missing JFIF string", e.getMessage());
-          assertEquals(JfifSegment.class.getName(), e.getStackTrace()[0].getClassName());
-      }
+        try {
+            new JfifSegment(-2275, byteArray);
+            fail("Expecting exception: Exception");
+        } catch (final ImagingException e) {
+            assertEquals("Not a Valid JPEG File: missing JFIF string", e.getMessage());
+            assertEquals(JfifSegment.class.getName(), e.getStackTrace()[0].getClassName());
+        }
 
-  }
+    }
 
 }

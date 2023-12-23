@@ -22,10 +22,7 @@ package org.apache.commons.imaging.palette;
  * @since 1.0-alpha1
  */
 enum ColorComponent {
-    ALPHA(24),
-    RED(16),
-    GREEN(8),
-    BLUE(0);
+    ALPHA(24), RED(16), GREEN(8), BLUE(0);
 
     private final int shift;
 
@@ -34,6 +31,6 @@ enum ColorComponent {
     }
 
     public int argbComponent(final int argb) {
-        return (argb >> shift) & 0xff;
+        return argb >> shift & 0xff;
     }
 }

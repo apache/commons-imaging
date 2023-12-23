@@ -33,27 +33,23 @@ public class App2Segment extends AppnSegment implements Comparable<App2Segment> 
     public final int curMarker;
     public final int numMarkers;
 
-    public App2Segment(final int marker, final byte[] segmentData)
-            throws ImagingException, IOException {
+    public App2Segment(final int marker, final byte[] segmentData) throws ImagingException, IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
-    public App2Segment(final int marker, int markerLength, final InputStream is2)
-            throws ImagingException, IOException {
+    public App2Segment(final int marker, int markerLength, final InputStream is2) throws ImagingException, IOException {
         super(marker, markerLength, is2);
 
-        if (startsWith(getSegmentData(),
-                JpegConstants.ICC_PROFILE_LABEL)) {
+        if (startsWith(getSegmentData(), JpegConstants.ICC_PROFILE_LABEL)) {
             final InputStream is = new ByteArrayInputStream(getSegmentData());
 
-            readAndVerifyBytes(is, JpegConstants.ICC_PROFILE_LABEL,
-                    "Not a Valid App2 Segment: missing ICC Profile label");
+            readAndVerifyBytes(is, JpegConstants.ICC_PROFILE_LABEL, "Not a Valid App2 Segment: missing ICC Profile label");
 
             curMarker = readByte("curMarker", is, "Not a valid App2 Marker");
             numMarkers = readByte("numMarkers", is, "Not a valid App2 Marker");
 
             markerLength -= JpegConstants.ICC_PROFILE_LABEL.size();
-            markerLength -= (1 + 1);
+            markerLength -= 1 + 1;
 
             iccBytes = readBytes("App2 Data", is, markerLength, "Invalid App2 Segment: insufficient data");
         } else {

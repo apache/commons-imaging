@@ -19,8 +19,9 @@ package org.apache.commons.imaging.color;
 /**
  * Represents a color in the HSV color space.
  *
- * <p>Contains the constant values for black, white, red,
- * green, blue, cyan, magenta, and yellow.</p>
+ * <p>
+ * Contains the constant values for black, white, red, green, blue, cyan, magenta, and yellow.
+ * </p>
  *
  * @see <a href="https://en.wikipedia.org/wiki/HSL_and_HSV">https://en.wikipedia.org/wiki/HSL_and_HSV</a>
  * @since 1.0-alpha1
@@ -29,6 +30,7 @@ public final class ColorHsv {
 
     /**
      * A constant for color black. Color components are:
+     *
      * <pre>
      *     Hue:        0
      *     Saturation: 0
@@ -39,6 +41,7 @@ public final class ColorHsv {
 
     /**
      * A constant for color white. Color components are:
+     *
      * <pre>
      *     Hue:        0
      *     Saturation: 0
@@ -49,6 +52,7 @@ public final class ColorHsv {
 
     /**
      * A constant for color red. Color components are:
+     *
      * <pre>
      *     Hue:        0
      *     Saturation: 100
@@ -59,6 +63,7 @@ public final class ColorHsv {
 
     /**
      * A constant for color green. Color components are:
+     *
      * <pre>
      *     Hue:        120
      *     Saturation: 100
@@ -69,6 +74,7 @@ public final class ColorHsv {
 
     /**
      * A constant for color blue. Color components are:
+     *
      * <pre>
      *     Hue:        240
      *     Saturation: 100
@@ -115,11 +121,11 @@ public final class ColorHsv {
         int result;
         long temp;
         temp = Double.doubleToLongBits(h);
-        result = (int) (temp ^ (temp >>> 32));
+        result = (int) (temp ^ temp >>> 32);
         temp = Double.doubleToLongBits(s);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) (temp ^ temp >>> 32);
         temp = Double.doubleToLongBits(v);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) (temp ^ temp >>> 32);
         return result;
     }
 

@@ -28,55 +28,54 @@ import org.apache.commons.imaging.ImagingTestConstants;
 import org.junit.jupiter.api.Test;
 
 /**
- * Reads files in the BigTIFF samples folder and compares the
- * BigTIFF files against the standard "classic" tiff image.
+ * Reads files in the BigTIFF samples folder and compares the BigTIFF files against the standard "classic" tiff image.
  */
 public class TiffBigTiffTest extends TiffBaseTest {
 
-  private boolean doImagesMatch(int w, int h, int[] classicRgb, BufferedImage image) {
-    int iW = image.getWidth();
-    int iH = image.getHeight();
-    if (iW != w || iH != h) {
-      return false;
-    }
-    int[] argb = new int[w * h];
-    image.getRGB(0, 0, w, h, argb, 0, w);
-    for (int i = 0; i < argb.length; i++) {
-      if ((argb[i] & 0x00ffffff) != (classicRgb[i] & 0x00ffffff)) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  @Test
-  public void test() throws IOException {
-    final File tiffFolder = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, "tiff");
-    final File bigTiffFolder = new File(tiffFolder, "13");
-
-    final File classicFile = new File(bigTiffFolder, "Classic.tif");
-    final BufferedImage classicImage = Imaging.getBufferedImage(classicFile);
-    assertNotNull(classicImage);
-    final int w = classicImage.getWidth();
-    final int h = classicImage.getHeight();
-    final int[] classicRgb = new int[w * h];
-    classicImage.getRGB(0, 0, w, h, classicRgb, 0, w); // data for comparison
-
-    int nTest = 0;
-    File[] files = bigTiffFolder.listFiles();
-    for (File f : files) {
-      String name = f.getName();
-      if (!name.toLowerCase().startsWith("bigtiff")) {
-        continue;
-      }
-      final BufferedImage image = Imaging.getBufferedImage(f);
-      assertNotNull(image);
-      boolean status = doImagesMatch(w, h, classicRgb, image);
-      assertTrue(status, "BigTIFF content does not match test image for " + name);
-      nTest++;
+    private boolean doImagesMatch(final int w, final int h, final int[] classicRgb, final BufferedImage image) {
+        final int iW = image.getWidth();
+        final int iH = image.getHeight();
+        if (iW != w || iH != h) {
+            return false;
+        }
+        final int[] argb = new int[w * h];
+        image.getRGB(0, 0, w, h, argb, 0, w);
+        for (int i = 0; i < argb.length; i++) {
+            if ((argb[i] & 0x00ffffff) != (classicRgb[i] & 0x00ffffff)) {
+                return false;
+            }
+        }
+        return true;
     }
 
-    assertTrue(nTest>0, "JUnit test failed to find sample BigTIFF files");
-  }
+    @Test
+    public void test() throws IOException {
+        final File tiffFolder = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, "tiff");
+        final File bigTiffFolder = new File(tiffFolder, "13");
+
+        final File classicFile = new File(bigTiffFolder, "Classic.tif");
+        final BufferedImage classicImage = Imaging.getBufferedImage(classicFile);
+        assertNotNull(classicImage);
+        final int w = classicImage.getWidth();
+        final int h = classicImage.getHeight();
+        final int[] classicRgb = new int[w * h];
+        classicImage.getRGB(0, 0, w, h, classicRgb, 0, w); // data for comparison
+
+        int nTest = 0;
+        final File[] files = bigTiffFolder.listFiles();
+        for (final File f : files) {
+            final String name = f.getName();
+            if (!name.toLowerCase().startsWith("bigtiff")) {
+                continue;
+            }
+            final BufferedImage image = Imaging.getBufferedImage(f);
+            assertNotNull(image);
+            final boolean status = doImagesMatch(w, h, classicRgb, image);
+            assertTrue(status, "BigTIFF content does not match test image for " + name);
+            nTest++;
+        }
+
+        assertTrue(nTest > 0, "JUnit test failed to find sample BigTIFF files");
+    }
 
 }

@@ -28,12 +28,9 @@ import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
  */
 public class TagInfoDirectory extends TagInfoLong {
 
-    private static final List<AbstractFieldType> fieldList
-        = Collections.unmodifiableList(
-            Arrays.asList(AbstractFieldType.LONG, AbstractFieldType.IFD));
+    private static final List<AbstractFieldType> fieldList = Collections.unmodifiableList(Arrays.asList(AbstractFieldType.LONG, AbstractFieldType.IFD));
 
-    public TagInfoDirectory(final String name, final int tag,
-        final TiffDirectoryType directoryType) {
+    public TagInfoDirectory(final String name, final int tag, final TiffDirectoryType directoryType) {
         super(name, tag, fieldList, 1, directoryType, true);
     }
 }

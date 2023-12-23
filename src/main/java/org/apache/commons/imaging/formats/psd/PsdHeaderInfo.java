@@ -46,7 +46,8 @@ public class PsdHeaderInfo {
     }
 
     public void dump() {
-        try (StringWriter sw = new StringWriter(); PrintWriter pw = new PrintWriter(sw)) {
+        try (StringWriter sw = new StringWriter();
+                PrintWriter pw = new PrintWriter(sw)) {
             dump(pw);
             pw.flush();
             sw.flush();

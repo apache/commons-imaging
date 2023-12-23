@@ -32,8 +32,7 @@ public class FieldTypeLong extends AbstractFieldType {
     public Object getValue(final TiffField entry) {
         final byte[] bytes = entry.getByteArrayValue();
         if (entry.getCount() == 1) {
-            return ByteConversions.toInt(bytes,
-                    entry.getByteOrder());
+            return ByteConversions.toInt(bytes, entry.getByteOrder());
         }
         return ByteConversions.toInts(bytes, entry.getByteOrder());
     }

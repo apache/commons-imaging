@@ -44,15 +44,14 @@ public abstract class GenericSegment extends AbstractSegment {
     }
 
     public void dump(final PrintWriter pw, final int start) {
-        for (int i = 0; (i < 50) && ((i + start) < segmentData.length); i++) {
+        for (int i = 0; i < 50 && i + start < segmentData.length; i++) {
             debugNumber(pw, "\t" + (i + start), segmentData[i + start], 1);
         }
     }
 
     /**
-     * Returns a copy of the segment's contents,
-     * excluding the marker and length bytes at
-     * the beginning.
+     * Returns a copy of the segment's contents, excluding the marker and length bytes at the beginning.
+     *
      * @return the segment's contents
      */
     public byte[] getSegmentData() {
@@ -60,9 +59,8 @@ public abstract class GenericSegment extends AbstractSegment {
     }
 
     /**
-     * Returns a specific byte of the segment's contents,
-     * excluding the marker and length bytes at
-     * the beginning.
+     * Returns a specific byte of the segment's contents, excluding the marker and length bytes at the beginning.
+     *
      * @param offset segment offset
      * @see GenericSegment#getSegmentData()
      * @return the bye in the segment's contents
@@ -73,6 +71,7 @@ public abstract class GenericSegment extends AbstractSegment {
 
     /**
      * Convert the bytes to a String
+     *
      * @param encoding segment encoding
      * @return the encoded bytes
      */

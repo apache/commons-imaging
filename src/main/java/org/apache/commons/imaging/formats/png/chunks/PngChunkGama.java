@@ -25,8 +25,7 @@ public class PngChunkGama extends PngChunk {
 
     private final int gamma;
 
-    public PngChunkGama(final int length, final int chunkType, final int crc, final byte[] bytes)
-            throws IOException {
+    public PngChunkGama(final int length, final int chunkType, final int crc, final byte[] bytes) throws IOException {
         super(length, chunkType, crc, bytes);
 
         final ByteArrayInputStream is = new ByteArrayInputStream(bytes);

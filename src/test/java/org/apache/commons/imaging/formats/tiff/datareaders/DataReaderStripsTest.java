@@ -24,16 +24,14 @@ import org.junit.jupiter.api.Test;
 public class DataReaderStripsTest {
     @Test
     public void testApplyPredictor() {
-        final int[] bitsPerPixel = {1,2,3};
-        final DataReaderStrips strips = new DataReaderStrips(
-            null, null, 3, bitsPerPixel, 2, 4, 0, 3, 1, 1,
-            TiffPlanarConfiguration.CHUNKY, null, 2, null);
+        final int[] bitsPerPixel = { 1, 2, 3 };
+        final DataReaderStrips strips = new DataReaderStrips(null, null, 3, bitsPerPixel, 2, 4, 0, 3, 1, 1, TiffPlanarConfiguration.CHUNKY, null, 2, null);
         strips.resetPredictor();
-        final int[] samples = {10, 355, 355, 255};
-        int[] expected = {10, 99, 99, 255};
+        final int[] samples = { 10, 355, 355, 255 };
+        int[] expected = { 10, 99, 99, 255 };
         int[] predicted = strips.applyPredictor(samples);
         assertArrayEquals(expected, predicted);
-        expected = new int[]{20, 198, 198, 254};
+        expected = new int[] { 20, 198, 198, 254 };
         predicted = strips.applyPredictor(samples);
         assertArrayEquals(expected, predicted);
     }

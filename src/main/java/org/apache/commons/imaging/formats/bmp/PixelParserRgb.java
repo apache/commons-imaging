@@ -42,17 +42,16 @@ final class PixelParserRgb extends AbstractPixelParserSimple {
         case 4: {
             if (cachedBitCount < bhi.bitsPerPixel) {
                 if (cachedBitCount != 0) {
-                    throw new ImagingException("Unexpected leftover bits: "
-                            + cachedBitCount + "/" + bhi.bitsPerPixel);
+                    throw new ImagingException("Unexpected leftover bits: " + cachedBitCount + "/" + bhi.bitsPerPixel);
                 }
 
                 cachedBitCount += 8;
-                cachedByte = (0xff & imageData[byteCount]);
+                cachedByte = 0xff & imageData[byteCount];
                 byteCount++;
             }
             final int cacheMask = (1 << bhi.bitsPerPixel) - 1;
-            final int sample = cacheMask & (cachedByte >> (8 - bhi.bitsPerPixel));
-            cachedByte = 0xff & (cachedByte << bhi.bitsPerPixel);
+            final int sample = cacheMask & cachedByte >> 8 - bhi.bitsPerPixel;
+            cachedByte = 0xff & cachedByte << bhi.bitsPerPixel;
             cachedBitCount -= bhi.bitsPerPixel;
             return getColorTableRgb(sample);
         }
@@ -64,11 +63,11 @@ final class PixelParserRgb extends AbstractPixelParserSimple {
         }
         case 16: {
             final int data = read2Bytes("Pixel", is, "BMP Image Data", ByteOrder.LITTLE_ENDIAN);
-            final int blue = (0x1f & (data >> 0)) << 3;
-            final int green = (0x1f & (data >> 5)) << 3;
-            final int red = (0x1f & (data >> 10)) << 3;
+            final int blue = (0x1f & data >> 0) << 3;
+            final int green = (0x1f & data >> 5) << 3;
+            final int red = (0x1f & data >> 10) << 3;
             final int alpha = 0xff;
-            final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+            final int rgb = alpha << 24 | red << 16 | green << 8 | blue << 0;
             byteCount += 2;
             return rgb;
         }
@@ -77,7 +76,7 @@ final class PixelParserRgb extends AbstractPixelParserSimple {
             final int green = 0xff & imageData[byteCount + 1];
             final int red = 0xff & imageData[byteCount + 2];
             final int alpha = 0xff;
-            final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+            final int rgb = alpha << 24 | red << 16 | green << 8 | blue << 0;
             byteCount += 3;
             return rgb;
         }
@@ -86,7 +85,7 @@ final class PixelParserRgb extends AbstractPixelParserSimple {
             final int green = 0xff & imageData[byteCount + 1];
             final int red = 0xff & imageData[byteCount + 2];
             final int alpha = 0xff;
-            final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+            final int rgb = alpha << 24 | red << 16 | green << 8 | blue << 0;
             byteCount += 4;
             return rgb;
         }
@@ -94,15 +93,14 @@ final class PixelParserRgb extends AbstractPixelParserSimple {
             break;
         }
 
-        throw new ImagingException("Unknown BitsPerPixel: "
-                + bhi.bitsPerPixel);
+        throw new ImagingException("Unknown BitsPerPixel: " + bhi.bitsPerPixel);
     }
 
     @Override
     public void newline() throws ImagingException, IOException {
         cachedBitCount = 0;
 
-        while (((byteCount) % 4) != 0) {
+        while (byteCount % 4 != 0) {
             readByte("Pixel", is, "BMP Image Data");
             byteCount++;
         }

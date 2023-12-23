@@ -26,8 +26,7 @@ import java.util.Map;
 import org.apache.commons.imaging.ImagingException;
 
 /**
- * A rudimentary preprocessor and parser for the C programming
- * language.
+ * A rudimentary preprocessor and parser for the C programming language.
  *
  * FIXME replace this by a parser generated via ANTLR (if we really need it?!)
  */
@@ -35,20 +34,19 @@ public class BasicCParser {
     /**
      * Parses the hexadecimal-base escape-sequence found at index {@code i} of {@code string}.
      *
-     * <p>Helper-function for {@code unescapeString()}.</p>
+     * <p>
+     * Helper-function for {@code unescapeString()}.
+     * </p>
      *
-     * @param i  the index of the escape-sequence in the string
+     * @param i             the index of the escape-sequence in the string
      * @param stringBuilder the stringBuilder to append the escape-char to
-     * @param string the string whose chars are parsed
+     * @param string        the string whose chars are parsed
      * @return the new index i
      * @since 1.0-alpha3
      */
-    private static int appendHex(int i, final StringBuilder stringBuilder, final String string)
-        throws ImagingException {
+    private static int appendHex(int i, final StringBuilder stringBuilder, final String string) throws ImagingException {
         if (i + 2 >= string.length()) {
-            throw new ImagingException(
-                    "Parsing XPM file failed, "
-                            + "hex constant in string too short");
+            throw new ImagingException("Parsing XPM file failed, " + "hex constant in string too short");
         }
         final char hex1 = string.charAt(i + 1);
         final char hex2 = string.charAt(i + 2);
@@ -57,9 +55,7 @@ public class BasicCParser {
         try {
             constant = Integer.parseInt(hex1 + Character.toString(hex2), 16);
         } catch (final NumberFormatException nfe) {
-            throw new ImagingException(
-                    "Parsing XPM file failed, "
-                            + "hex constant invalid", nfe);
+            throw new ImagingException("Parsing XPM file failed, " + "hex constant invalid", nfe);
         }
         stringBuilder.append((char) constant);
         return i;
@@ -68,28 +64,28 @@ public class BasicCParser {
     /**
      * Parses the octal-base escape-sequence found at index {@code i} of {@code string}.
      *
-     * <p>Helper-function for {@code unescapeString()}.</p>
+     * <p>
+     * Helper-function for {@code unescapeString()}.
+     * </p>
      *
-     * @param i  the index of the escape-sequence in the string
+     * @param i             the index of the escape-sequence in the string
      * @param stringBuilder the stringBuilder to append the escape-char to
-     * @param string the string whose chars are parsed
+     * @param string        the string whose chars are parsed
      * @return the new index i
      * @since 1.0-alpha3
      */
     private static int appendOct(int i, final StringBuilder stringBuilder, final String string) {
         int length = 1;
-        if (i + 1 < string.length() && '0' <= string.charAt(i + 1)
-                && string.charAt(i + 1) <= '7') {
+        if (i + 1 < string.length() && '0' <= string.charAt(i + 1) && string.charAt(i + 1) <= '7') {
             ++length;
         }
-        if (i + 2 < string.length() && '0' <= string.charAt(i + 2)
-                && string.charAt(i + 2) <= '7') {
+        if (i + 2 < string.length() && '0' <= string.charAt(i + 2) && string.charAt(i + 2) <= '7') {
             ++length;
         }
         int constant = 0;
         for (int j = 0; j < length; j++) {
             constant *= 8;
-            constant += (string.charAt(i + j) - '0');
+            constant += string.charAt(i + j) - '0';
         }
         i += length - 1;
         stringBuilder.append((char) constant);
@@ -99,16 +95,17 @@ public class BasicCParser {
     /**
      * Parses the {@code i:th} escape-char in the input {@code string} and appends it to {@code stringBuilder}.
      *
-     * <p>Helper-function for {@code unescapeString()}.</p>
+     * <p>
+     * Helper-function for {@code unescapeString()}.
+     * </p>
      *
-     * @param  i  the index of the escape-char in the string
-     * @param  stringBuilder the stringBuilder to append the escape-char to
-     * @param  string the string whose chars are parsed
+     * @param i             the index of the escape-char in the string
+     * @param stringBuilder the stringBuilder to append the escape-char to
+     * @param string        the string whose chars are parsed
      * @return the new index i
      * @since 1.0-alpha3
      */
-    private static int parseEscape(int i, final StringBuilder stringBuilder, final String string)
-        throws ImagingException {
+    private static int parseEscape(int i, final StringBuilder stringBuilder, final String string) throws ImagingException {
         final char c = string.charAt(i);
         switch (c) {
         case '\\':
@@ -155,15 +152,13 @@ public class BasicCParser {
             stringBuilder.append((char) 0x0b);
             break;
         default:
-            throw new ImagingException("Parsing XPM file failed, "
-                    + "invalid escape sequence");
+            throw new ImagingException("Parsing XPM file failed, " + "invalid escape sequence");
         }
         return i;
 
     }
 
-    public static ByteArrayOutputStream preprocess(final InputStream is,
-            final StringBuilder firstComment, final Map<String, String> defines)
+    public static ByteArrayOutputStream preprocess(final InputStream is, final StringBuilder firstComment, final Map<String, String> defines)
             throws IOException, ImagingException {
         boolean inSingleQuotes = false;
         boolean inString = false;
@@ -269,11 +264,9 @@ public class BasicCParser {
                         throw new ImagingException("Bad preprocessor directive");
                     }
                     if (!tokens[0].equals("define")) {
-                        throw new ImagingException("Invalid/unsupported "
-                                + "preprocessor directive '" + tokens[0] + "'");
+                        throw new ImagingException("Invalid/unsupported " + "preprocessor directive '" + tokens[0] + "'");
                     }
-                    defines.put(tokens[1], (tokens.length == 3) ? tokens[2]
-                            : null);
+                    defines.put(tokens[1], tokens.length == 3 ? tokens[2] : null);
                     directiveBuffer.setLength(0);
                 } else {
                     directiveBuffer.append((char) c);
@@ -363,19 +356,15 @@ public class BasicCParser {
         return liveTokens;
     }
 
-    public static void unescapeString(final StringBuilder stringBuilder, final String string)
-            throws ImagingException {
+    public static void unescapeString(final StringBuilder stringBuilder, final String string) throws ImagingException {
         if (string.length() < 2) {
-            throw new ImagingException("Parsing XPM file failed, "
-                    + "string is too short");
+            throw new ImagingException("Parsing XPM file failed, " + "string is too short");
         }
-        if (string.charAt(0) != '"'
-                || string.charAt(string.length() - 1) != '"') {
-            throw new ImagingException("Parsing XPM file failed, "
-                    + "string not surrounded by '\"'");
+        if (string.charAt(0) != '"' || string.charAt(string.length() - 1) != '"') {
+            throw new ImagingException("Parsing XPM file failed, " + "string not surrounded by '\"'");
         }
         boolean hadBackSlash = false;
-        for (int i = 1; i < (string.length() - 1); i++) {
+        for (int i = 1; i < string.length() - 1; i++) {
             final char c = string.charAt(i);
             if (hadBackSlash) {
                 i = parseEscape(i, stringBuilder, string);
@@ -383,15 +372,13 @@ public class BasicCParser {
             } else if (c == '\\') {
                 hadBackSlash = true;
             } else if (c == '"') {
-                throw new ImagingException("Parsing XPM file failed, "
-                        + "extra '\"' found in string");
+                throw new ImagingException("Parsing XPM file failed, " + "extra '\"' found in string");
             } else {
                 stringBuilder.append(c);
             }
         }
         if (hadBackSlash) {
-            throw new ImagingException("Parsing XPM file failed, "
-                    + "unterminated escape sequence found in string");
+            throw new ImagingException("Parsing XPM file failed, " + "unterminated escape sequence found in string");
         }
     }
 
@@ -425,15 +412,14 @@ public class BasicCParser {
                     break;
                 case '\r':
                 case '\n':
-                    throw new ImagingException(
-                            "Unterminated string in XPM file");
+                    throw new ImagingException("Unterminated string in XPM file");
                 default:
                     token.append((char) c);
                     hadBackSlash = false;
                     break;
                 }
             } else if (inIdentifier) {
-                if (!Character.isLetterOrDigit(c) && (c != '_')) {
+                if (!Character.isLetterOrDigit(c) && c != '_') {
                     is.unread(c);
                     return token.toString();
                 }
@@ -444,16 +430,13 @@ public class BasicCParser {
             } else if (Character.isLetterOrDigit(c) || c == '_') {
                 token.append((char) c);
                 inIdentifier = true;
-            } else if (c == '{' || c == '}' || c == '[' || c == ']'
-                    || c == '*' || c == ';' || c == '=' || c == ',') {
+            } else if (c == '{' || c == '}' || c == '[' || c == ']' || c == '*' || c == ';' || c == '=' || c == ',') {
                 token.append((char) c);
                 return token.toString();
             } else if (c == ' ' || c == '\t' || c == '\r' || c == '\n') {
                 // ignore
             } else {
-                throw new ImagingException(
-                        "Unhandled/invalid character '" + ((char) c)
-                                + "' found in XPM file");
+                throw new ImagingException("Unhandled/invalid character '" + (char) c + "' found in XPM file");
             }
         }
 

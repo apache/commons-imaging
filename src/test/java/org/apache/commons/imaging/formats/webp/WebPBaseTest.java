@@ -38,13 +38,10 @@ public abstract class WebPBaseTest extends AbstractImagingTest {
 
     protected static Stream<File> images() throws IOException {
         final List<File> images = getWebPImages();
-        File emptyWebP = new File(WebPReadTest.class.getResource("/images/webp/empty/empty-100x100.webp").getFile());
-        File animationWebP = new File(WebPReadTest.class.getResource("/images/webp/animation/example.webp").getFile());
-        File exifWebP = new File(WebPReadTest.class.getResource("/images/webp/exif/_DSC6099.webp").getFile());
-        return Stream.concat(
-                images.stream(),
-                Stream.of(emptyWebP, animationWebP, exifWebP)
-        );
+        final File emptyWebP = new File(WebPReadTest.class.getResource("/images/webp/empty/empty-100x100.webp").getFile());
+        final File animationWebP = new File(WebPReadTest.class.getResource("/images/webp/animation/example.webp").getFile());
+        final File exifWebP = new File(WebPReadTest.class.getResource("/images/webp/exif/_DSC6099.webp").getFile());
+        return Stream.concat(images.stream(), Stream.of(emptyWebP, animationWebP, exifWebP));
     }
 
     private static boolean isWebP(final File file) throws IOException {

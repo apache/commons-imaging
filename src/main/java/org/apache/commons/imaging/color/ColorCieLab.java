@@ -17,11 +17,11 @@
 package org.apache.commons.imaging.color;
 
 /**
- * Represents a color in the CIELAB color space, also
- * known as LAB color space.
+ * Represents a color in the CIELAB color space, also known as LAB color space.
  *
- * <p>Contains the constant values for black, white, red,
- * green, and blue.</p>
+ * <p>
+ * Contains the constant values for black, white, red, green, and blue.
+ * </p>
  *
  * @see <a href="https://en.wikipedia.org/wiki/CIELAB_color_space#CIELAB">https://en.wikipedia.org/wiki/CIELAB_color_space#CIELAB</a>
  * @since 1.0-alpha1
@@ -30,6 +30,7 @@ public final class ColorCieLab {
 
     /**
      * A constant for color black. Color components are:
+     *
      * <pre>
      *     L: 0
      *     a: 0
@@ -40,6 +41,7 @@ public final class ColorCieLab {
 
     /**
      * A constant for color white. Color components are:
+     *
      * <pre>
      *     L: 100
      *     a: 0
@@ -50,6 +52,7 @@ public final class ColorCieLab {
 
     /**
      * A constant for color red. Color components are:
+     *
      * <pre>
      *     L: 53
      *     a: 80
@@ -60,6 +63,7 @@ public final class ColorCieLab {
 
     /**
      * A constant for color green. Color components are:
+     *
      * <pre>
      *     L:  88
      *     a: -86
@@ -70,6 +74,7 @@ public final class ColorCieLab {
 
     /**
      * A constant for color blue. Color components are:
+     *
      * <pre>
      *     L:   32
      *     a:   79
@@ -116,11 +121,11 @@ public final class ColorCieLab {
         int result;
         long temp;
         temp = Double.doubleToLongBits(l);
-        result = (int) (temp ^ (temp >>> 32));
+        result = (int) (temp ^ temp >>> 32);
         temp = Double.doubleToLongBits(a);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) (temp ^ temp >>> 32);
         temp = Double.doubleToLongBits(b);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) (temp ^ temp >>> 32);
         return result;
     }
 

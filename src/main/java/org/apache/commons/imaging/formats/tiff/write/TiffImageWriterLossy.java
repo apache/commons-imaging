@@ -50,8 +50,7 @@ public class TiffImageWriterLossy extends AbstractTiffImageWriter {
     }
 
     @Override
-    public void write(final OutputStream os, final TiffOutputSet outputSet)
-            throws IOException, ImagingException {
+    public void write(final OutputStream os, final TiffOutputSet outputSet) throws IOException, ImagingException {
         final TiffOutputSummary outputSummary = validateDirectories(outputSet);
 
         final List<AbstractTiffOutputItem> outputItems = outputSet.getOutputItems(outputSummary);
@@ -66,9 +65,7 @@ public class TiffImageWriterLossy extends AbstractTiffImageWriter {
         writeStep(bos, outputItems);
     }
 
-    private void writeStep(final BinaryOutputStream bos,
-            final List<AbstractTiffOutputItem> outputItems) throws IOException,
-            ImagingException {
+    private void writeStep(final BinaryOutputStream bos, final List<AbstractTiffOutputItem> outputItems) throws IOException, ImagingException {
         writeImageFileHeader(bos);
 
         for (final AbstractTiffOutputItem outputItem : outputItems) {

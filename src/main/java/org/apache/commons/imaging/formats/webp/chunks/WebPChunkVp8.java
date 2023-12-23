@@ -54,7 +54,7 @@ public final class WebPChunkVp8 extends WebPChunk {
      * @param bytes chunk data.
      * @throws ImagingException if the chunk data and the size provided do not match.
      */
-    public WebPChunkVp8(int type, int size, byte[] bytes) throws ImagingException {
+    public WebPChunkVp8(final int type, final int size, final byte[] bytes) throws ImagingException {
         super(type, size, bytes);
 
         if (size < 10) {
@@ -68,20 +68,17 @@ public final class WebPChunkVp8 extends WebPChunk {
         /*
          * Frame Header:
          *
-         * 1.  A 1-bit frame type (0 for key frames, 1 for interframes).
+         * 1. A 1-bit frame type (0 for key frames, 1 for interframes).
          *
-         * 2.  A 3-bit version number (0 - 3 are defined as four different
-         *     profiles with different decoding complexity; other values may be
-         *     defined for future variants of the VP8 data format).
+         * 2. A 3-bit version number (0 - 3 are defined as four different profiles with different decoding complexity; other values may be defined for future
+         * variants of the VP8 data format).
          *
-         * 3.  A 1-bit show_frame flag (0 when current frame is not for display,
-         *     1 when current frame is for display).
+         * 3. A 1-bit show_frame flag (0 when current frame is not for display, 1 when current frame is for display).
          *
-         * 4.  A 19-bit field containing the size of the first data partition in
-         *     bytes.
+         * 4. A 19-bit field containing the size of the first data partition in bytes.
          */
 
-        int b0 = bytes[0] & 0xFF;
+        final int b0 = bytes[0] & 0xFF;
         // int b1 = bytes[1] & 0xFF;
         // int b2 = bytes[2] & 0xFF;
 
@@ -99,21 +96,18 @@ public final class WebPChunkVp8 extends WebPChunk {
         /*
          * Key Frame:
          *
-         * Start code byte 0     0x9d
-         * Start code byte 1     0x01
-         * Start code byte 2     0x2a
+         * Start code byte 0 0x9d Start code byte 1 0x01 Start code byte 2 0x2a
          *
-         * 16 bits      :     (2 bits Horizontal Scale << 14) | Width  (14 bits)
-         * 16 bits      :     (2 bits Vertical   Scale << 14) | Height (14 bits)
+         * 16 bits : (2 bits Horizontal Scale << 14) | Width (14 bits) 16 bits : (2 bits Vertical Scale << 14) | Height (14 bits)
          */
 
-        int b3 = bytes[3] & 0xFF;
-        int b4 = bytes[4] & 0xFF;
-        int b5 = bytes[5] & 0xFF;
-        int b6 = bytes[6] & 0xFF;
-        int b7 = bytes[7] & 0xFF;
-        int b8 = bytes[8] & 0xFF;
-        int b9 = bytes[9] & 0xFF;
+        final int b3 = bytes[3] & 0xFF;
+        final int b4 = bytes[4] & 0xFF;
+        final int b5 = bytes[5] & 0xFF;
+        final int b6 = bytes[6] & 0xFF;
+        final int b7 = bytes[7] & 0xFF;
+        final int b8 = bytes[8] & 0xFF;
+        final int b9 = bytes[9] & 0xFF;
 
         if (b3 != 0x9D || b4 != 0x01 || b5 != 0x2A) {
             throw new ImagingException("Invalid VP8 chunk: invalid signature");
@@ -126,7 +120,7 @@ public final class WebPChunkVp8 extends WebPChunk {
     }
 
     @Override
-    public void dump(PrintWriter pw, int offset) throws ImagingException, IOException {
+    public void dump(final PrintWriter pw, final int offset) throws ImagingException, IOException {
         super.dump(pw, offset);
         pw.println("  Version Number: " + getVersionNumber());
         pw.println("  Width: " + getWidth());

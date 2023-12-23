@@ -40,14 +40,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Performs a test in which a TIFF file with the special-purpose floating-point
- * sample type is used to store data to a file. The file is then read to see if
- * it matches the original values.
+ * Performs a test in which a TIFF file with the special-purpose floating-point sample type is used to store data to a file. The file is then read to see if it
+ * matches the original values.
  * <p>
- * At this time, Commons Imaging does not fully implement the floating-point
- * specification. Currently, this class only tests the use of uncompressed
- * floating point values in the Strips format. The Tiles format is not
- * exercised.
+ * At this time, Commons Imaging does not fully implement the floating-point specification. Currently, this class only tests the use of uncompressed floating
+ * point values in the Strips format. The Tiles format is not exercised.
  */
 public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
 
@@ -88,25 +85,20 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
     }
 
     /**
-     * Gets the bytes for output for a 32 bit floating point format. Note that
-     * this method operates over "blocks" of data which may represent either
-     * TIFF Strips or Tiles. When processing strips, there is always one column
-     * of blocks and each strip is exactly the full width of the image. When
-     * processing tiles, there may be one or more columns of blocks and the
-     * block coverage may extend beyond both the last row and last column.
+     * Gets the bytes for output for a 32 bit floating point format. Note that this method operates over "blocks" of data which may represent either TIFF Strips
+     * or Tiles. When processing strips, there is always one column of blocks and each strip is exactly the full width of the image. When processing tiles,
+     * there may be one or more columns of blocks and the block coverage may extend beyond both the last row and last column.
      *
-     * @param f an array of the grid of output values in row major order
-     * @param width the width of the overall image
-     * @param height the height of the overall image
+     * @param f            an array of the grid of output values in row major order
+     * @param width        the width of the overall image
+     * @param height       the height of the overall image
      * @param nRowsInBlock the number of rows in the Strip or Tile
      * @param nColsInBlock the number of columns in the Strip or Tile
-     * @param byteOrder little-endian or big-endian
+     * @param byteOrder    little-endian or big-endian
      * @return a valid array of equally sized array.
      */
-    private byte[][] getBytesForOutput32(
-        final float[] f, final int width, final int height,
-        final int nRowsInBlock, final int nColsInBlock,
-        final ByteOrder byteOrder) {
+    private byte[][] getBytesForOutput32(final float[] f, final int width, final int height, final int nRowsInBlock, final int nColsInBlock,
+            final ByteOrder byteOrder) {
         final int nColsOfBlocks = (width + nColsInBlock - 1) / nColsInBlock;
         final int nRowsOfBlocks = (height + nRowsInBlock + 1) / nRowsInBlock;
         final int bytesPerPixel = 4;
@@ -126,13 +118,13 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
                 final byte[] b = blocks[blockRow * nColsOfBlocks + blockCol];
                 if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
                     b[offset] = (byte) (sample & 0xff);
-                    b[offset + 1] = (byte) ((sample >> 8) & 0xff);
-                    b[offset + 2] = (byte) ((sample >> 16) & 0xff);
-                    b[offset + 3] = (byte) ((sample >> 24) & 0xff);
+                    b[offset + 1] = (byte) (sample >> 8 & 0xff);
+                    b[offset + 2] = (byte) (sample >> 16 & 0xff);
+                    b[offset + 3] = (byte) (sample >> 24 & 0xff);
                 } else {
-                    b[offset] = (byte) ((sample >> 24) & 0xff);
-                    b[offset + 1] = (byte) ((sample >> 16) & 0xff);
-                    b[offset + 2] = (byte) ((sample >> 8) & 0xff);
+                    b[offset] = (byte) (sample >> 24 & 0xff);
+                    b[offset + 1] = (byte) (sample >> 16 & 0xff);
+                    b[offset + 2] = (byte) (sample >> 8 & 0xff);
                     b[offset + 3] = (byte) (sample & 0xff);
                 }
             }
@@ -142,25 +134,20 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
     }
 
     /**
-     * Gets the bytes for output for a 64 bit floating point format. Note that
-     * this method operates over "blocks" of data which may represent either
-     * TIFF Strips or Tiles. When processing strips, there is always one column
-     * of blocks and each strip is exactly the full width of the image. When
-     * processing tiles, there may be one or more columns of blocks and the
-     * block coverage may extend beyond both the last row and last column.
+     * Gets the bytes for output for a 64 bit floating point format. Note that this method operates over "blocks" of data which may represent either TIFF Strips
+     * or Tiles. When processing strips, there is always one column of blocks and each strip is exactly the full width of the image. When processing tiles,
+     * there may be one or more columns of blocks and the block coverage may extend beyond both the last row and last column.
      *
-     * @param f an array of the grid of output values in row major order
-     * @param width the width of the overall image
-     * @param height the height of the overall image
+     * @param f            an array of the grid of output values in row major order
+     * @param width        the width of the overall image
+     * @param height       the height of the overall image
      * @param nRowsInBlock the number of rows in the Strip or Tile
      * @param nColsInBlock the number of columns in the Strip or Tile
-     * @param byteOrder little-endian or big-endian
+     * @param byteOrder    little-endian or big-endian
      * @return a valid array of equally sized array.
      */
-    private byte[][] getBytesForOutput64(
-        final float[] f, final int width, final int height,
-        final int nRowsInBlock, final int nColsInBlock,
-        final ByteOrder byteOrder) {
+    private byte[][] getBytesForOutput64(final float[] f, final int width, final int height, final int nRowsInBlock, final int nColsInBlock,
+            final ByteOrder byteOrder) {
         final int nColsOfBlocks = (width + nColsInBlock - 1) / nColsInBlock;
         final int nRowsOfBlocks = (height + nRowsInBlock + 1) / nRowsInBlock;
         final int bytesPerPixel = 8;
@@ -180,21 +167,21 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
                 final byte[] b = blocks[blockRow * nColsOfBlocks + blockCol];
                 if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
                     b[offset] = (byte) (sample & 0xff);
-                    b[offset + 1] = (byte) ((sample >> 8) & 0xff);
-                    b[offset + 2] = (byte) ((sample >> 16) & 0xff);
-                    b[offset + 3] = (byte) ((sample >> 24) & 0xff);
-                    b[offset + 4] = (byte) ((sample >> 32) & 0xff);
-                    b[offset + 5] = (byte) ((sample >> 40) & 0xff);
-                    b[offset + 6] = (byte) ((sample >> 48) & 0xff);
-                    b[offset + 7] = (byte) ((sample >> 56) & 0xff);
+                    b[offset + 1] = (byte) (sample >> 8 & 0xff);
+                    b[offset + 2] = (byte) (sample >> 16 & 0xff);
+                    b[offset + 3] = (byte) (sample >> 24 & 0xff);
+                    b[offset + 4] = (byte) (sample >> 32 & 0xff);
+                    b[offset + 5] = (byte) (sample >> 40 & 0xff);
+                    b[offset + 6] = (byte) (sample >> 48 & 0xff);
+                    b[offset + 7] = (byte) (sample >> 56 & 0xff);
                 } else {
-                    b[offset] = (byte) ((sample >> 56) & 0xff);
-                    b[offset + 1] = (byte) ((sample >> 48) & 0xff);
-                    b[offset + 2] = (byte) ((sample >> 40) & 0xff);
-                    b[offset + 3] = (byte) ((sample >> 32) & 0xff);
-                    b[offset + 4] = (byte) ((sample >> 24) & 0xff);
-                    b[offset + 5] = (byte) ((sample >> 16) & 0xff);
-                    b[offset + 6] = (byte) ((sample >> 8) & 0xff);
+                    b[offset] = (byte) (sample >> 56 & 0xff);
+                    b[offset + 1] = (byte) (sample >> 48 & 0xff);
+                    b[offset + 2] = (byte) (sample >> 40 & 0xff);
+                    b[offset + 3] = (byte) (sample >> 32 & 0xff);
+                    b[offset + 4] = (byte) (sample >> 24 & 0xff);
+                    b[offset + 5] = (byte) (sample >> 16 & 0xff);
+                    b[offset + 6] = (byte) (sample >> 8 & 0xff);
                     b[offset + 7] = (byte) (sample & 0xff);
                 }
             }
@@ -204,9 +191,8 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
     }
 
     /**
-     * Constructs a photometric interpreter. This initialization is performed in
-     * a dedicated method to ensure consistency throughout different phases of
-     * the test.
+     * Constructs a photometric interpreter. This initialization is performed in a dedicated method to ensure consistency throughout different phases of the
+     * test.
      *
      * @return a valid instance.
      */
@@ -216,9 +202,9 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
 
     @Test
     public void test() throws Exception {
-        // we set up the 32 and 64 bit test cases.  At this time,
+        // we set up the 32 and 64 bit test cases. At this time,
         // the Tile format is not supported for floating-point samples by the
-        // TIFF datareaders classes.  So that format is not yet exercised.
+        // TIFF datareaders classes. So that format is not yet exercised.
         // Note also that the compressed floating-point with predictor=3
         // is processed in other tests, but not here.
         final File[] testFile = new File[8];
@@ -234,10 +220,8 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
             final String name = testFile[i].getName();
             final ByteSource byteSource = ByteSource.file(testFile[i]);
             final TiffReader tiffReader = new TiffReader(true);
-            final TiffContents contents = tiffReader.readDirectories(
-                byteSource,
-                true, // indicates that application should read image data, if present
-                FormatCompliance.getDefault());
+            final TiffContents contents = tiffReader.readDirectories(byteSource, true, // indicates that application should read image data, if present
+                    FormatCompliance.getDefault());
             final TiffDirectory directory = contents.directories.get(0);
             final PhotometricInterpreterFloat pi = getPhotometricInterpreter();
             final TiffImagingParameters params = new TiffImagingParameters();
@@ -248,26 +232,21 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
             final int[] pixel = new int[width * height];
             bImage.getRGB(0, 0, width, height, pixel, 0, width);
             for (int k = 0; k < pixel.length; k++) {
-                assertEquals(argb[k], pixel[k],
-                    "Extracted data does not match original, test "
-                    + i + ", index " + k);
+                assertEquals(argb[k], pixel[k], "Extracted data does not match original, test " + i + ", index " + k);
             }
             final float meanValue = pi.getMeanFound();
             assertEquals(0.5, meanValue, 1.0e-5, "Invalid numeric values in " + name);
             // To write out an image file for inspection, use the following
             // (with appropriate adjustments for path and OS)
-            //File imFile = new File("C:/Users/public", testFile[i].getName() + ".png");
-            //ImageIO.write(bImage, "PNG", imFile);
+            // File imFile = new File("C:/Users/public", testFile[i].getName() + ".png");
+            // ImageIO.write(bImage, "PNG", imFile);
 
         }
     }
 
-    private File writeFile(final int bitsPerSample, final ByteOrder byteOrder, final boolean useTiles)
-        throws IOException, ImagingException {
-        final String name = String.format("FpRoundTrip_%2d_%s_%s.tiff",
-            bitsPerSample,
-            byteOrder == ByteOrder.LITTLE_ENDIAN ? "LE" : "BE",
-            useTiles ? "Tiles" : "Strips");
+    private File writeFile(final int bitsPerSample, final ByteOrder byteOrder, final boolean useTiles) throws IOException, ImagingException {
+        final String name = String.format("FpRoundTrip_%2d_%s_%s.tiff", bitsPerSample, byteOrder == ByteOrder.LITTLE_ENDIAN ? "LE" : "BE",
+                useTiles ? "Tiles" : "Strips");
         final File outputFile = new File(tempDir.toFile(), name);
 
         final int bytesPerSample = bitsPerSample / 8;
@@ -276,13 +255,13 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
         int nBytesInBlock;
         if (useTiles) {
             // Define the tiles so that they will not evenly subdivide
-            // the image.  This will allow the test to evaluate how the
+            // the image. This will allow the test to evaluate how the
             // data reader processes tiles that are only partially used.
             nRowsInBlock = 12;
             nColsInBlock = 20;
         } else {
             // Define the strips so that they will not evenly subdivide
-            // the image.  This will allow the test to evaluate how the
+            // the image. This will allow the test to evaluate how the
             // data reader processes strips that are only partially used.
             nRowsInBlock = 2;
             nColsInBlock = width;
@@ -291,31 +270,25 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
 
         byte[][] blocks;
         if (bitsPerSample == 32) {
-            blocks = this.getBytesForOutput32(
-                f, width, height, nRowsInBlock, nColsInBlock, byteOrder);
+            blocks = this.getBytesForOutput32(f, width, height, nRowsInBlock, nColsInBlock, byteOrder);
         } else {
-            blocks = getBytesForOutput64(
-                f, width, height, nRowsInBlock, nColsInBlock, byteOrder);
+            blocks = getBytesForOutput64(f, width, height, nRowsInBlock, nColsInBlock, byteOrder);
         }
 
-        // NOTE:  At this time, Tile format is not supported.
+        // NOTE: At this time, Tile format is not supported.
         // When it is, modify the tags below to populate
         // TIFF_TAG_TILE_* appropriately.
         final TiffOutputSet outputSet = new TiffOutputSet(byteOrder);
         final TiffOutputDirectory outDir = outputSet.addRootDirectory();
         outDir.add(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH, width);
         outDir.add(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH, height);
-        outDir.add(TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT,
-            (short) TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT);
+        outDir.add(TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, (short) TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT);
         outDir.add(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL, (short) 1);
         outDir.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE, (short) bitsPerSample);
-        outDir.add(TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION,
-            (short) TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_BLACK_IS_ZERO);
-        outDir.add(TiffTagConstants.TIFF_TAG_COMPRESSION,
-            (short) TiffTagConstants.COMPRESSION_VALUE_UNCOMPRESSED);
+        outDir.add(TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION, (short) TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_BLACK_IS_ZERO);
+        outDir.add(TiffTagConstants.TIFF_TAG_COMPRESSION, (short) TiffTagConstants.COMPRESSION_VALUE_UNCOMPRESSED);
 
-        outDir.add(TiffTagConstants.TIFF_TAG_PLANAR_CONFIGURATION,
-            (short) TiffTagConstants.PLANAR_CONFIGURATION_VALUE_CHUNKY);
+        outDir.add(TiffTagConstants.TIFF_TAG_PLANAR_CONFIGURATION, (short) TiffTagConstants.PLANAR_CONFIGURATION_VALUE_CHUNKY);
 
         if (useTiles) {
             outDir.add(TiffTagConstants.TIFF_TAG_TILE_WIDTH, nColsInBlock);
@@ -333,16 +306,14 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
 
         AbstractTiffImageData abstractTiffImageData;
         if (useTiles) {
-            abstractTiffImageData
-                = new AbstractTiffImageData.Tiles(imageData, nColsInBlock, nRowsInBlock);
+            abstractTiffImageData = new AbstractTiffImageData.Tiles(imageData, nColsInBlock, nRowsInBlock);
         } else {
-            abstractTiffImageData
-                = new AbstractTiffImageData.Strips(imageData, nRowsInBlock);
+            abstractTiffImageData = new AbstractTiffImageData.Strips(imageData, nRowsInBlock);
         }
         outDir.setTiffImageData(abstractTiffImageData);
 
         try (FileOutputStream fos = new FileOutputStream(outputFile);
-            BufferedOutputStream bos = new BufferedOutputStream(fos)) {
+                BufferedOutputStream bos = new BufferedOutputStream(fos)) {
             final TiffImageWriterLossy writer = new TiffImageWriterLossy(byteOrder);
             writer.write(bos, outputSet);
             bos.flush();

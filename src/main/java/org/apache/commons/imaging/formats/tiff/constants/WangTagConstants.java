@@ -24,18 +24,13 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoBytes;
 
 /**
- * Wang/Eastman Software/Kodac/eiStream/Imaging for Windows tags,
- * undocumented and in need of more work.
+ * Wang/Eastman Software/Kodac/eiStream/Imaging for Windows tags, undocumented and in need of more work.
  */
 public final class WangTagConstants {
 
-    public static final TagInfoBytes EXIF_TAG_WANG_ANNOTATION = new TagInfoBytes(
-            "WangAnnotation", 0x80a4, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+    public static final TagInfoBytes EXIF_TAG_WANG_ANNOTATION = new TagInfoBytes("WangAnnotation", 0x80a4, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final List<TagInfo> ALL_WANG_TAGS =
-            Collections.unmodifiableList(Arrays.<TagInfo> asList(
-                    EXIF_TAG_WANG_ANNOTATION ));
+    public static final List<TagInfo> ALL_WANG_TAGS = Collections.unmodifiableList(Arrays.<TagInfo>asList(EXIF_TAG_WANG_ANNOTATION));
 
     private WangTagConstants() {
     }

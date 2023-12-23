@@ -19,4 +19,3 @@
  * PNG image format transparency filters.
  */
 package org.apache.commons.imaging.formats.png.transparencyfilters;
-

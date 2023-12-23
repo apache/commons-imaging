@@ -20,8 +20,7 @@ import java.nio.ByteOrder;
 import java.util.Arrays;
 
 /**
- * Convenience methods for converting data types to and from
- * byte arrays.
+ * Convenience methods for converting data types to and from byte arrays.
  */
 public final class ByteConversions {
     public static byte[] toBytes(final double value, final ByteOrder byteOrder) {
@@ -33,23 +32,23 @@ public final class ByteConversions {
     private static void toBytes(final double value, final ByteOrder byteOrder, final byte[] result, final int offset) {
         final long bits = Double.doubleToRawLongBits(value);
         if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
-            result[offset + 0] = (byte) (0xff & (bits >> 0));
-            result[offset + 1] = (byte) (0xff & (bits >> 8));
-            result[offset + 2] = (byte) (0xff & (bits >> 16));
-            result[offset + 3] = (byte) (0xff & (bits >> 24));
-            result[offset + 4] = (byte) (0xff & (bits >> 32));
-            result[offset + 5] = (byte) (0xff & (bits >> 40));
-            result[offset + 6] = (byte) (0xff & (bits >> 48));
-            result[offset + 7] = (byte) (0xff & (bits >> 56));
+            result[offset + 0] = (byte) (0xff & bits >> 0);
+            result[offset + 1] = (byte) (0xff & bits >> 8);
+            result[offset + 2] = (byte) (0xff & bits >> 16);
+            result[offset + 3] = (byte) (0xff & bits >> 24);
+            result[offset + 4] = (byte) (0xff & bits >> 32);
+            result[offset + 5] = (byte) (0xff & bits >> 40);
+            result[offset + 6] = (byte) (0xff & bits >> 48);
+            result[offset + 7] = (byte) (0xff & bits >> 56);
         } else {
-            result[offset + 7] = (byte) (0xff & (bits >> 0));
-            result[offset + 6] = (byte) (0xff & (bits >> 8));
-            result[offset + 5] = (byte) (0xff & (bits >> 16));
-            result[offset + 4] = (byte) (0xff & (bits >> 24));
-            result[offset + 3] = (byte) (0xff & (bits >> 32));
-            result[offset + 2] = (byte) (0xff & (bits >> 40));
-            result[offset + 1] = (byte) (0xff & (bits >> 48));
-            result[offset + 0] = (byte) (0xff & (bits >> 56));
+            result[offset + 7] = (byte) (0xff & bits >> 0);
+            result[offset + 6] = (byte) (0xff & bits >> 8);
+            result[offset + 5] = (byte) (0xff & bits >> 16);
+            result[offset + 4] = (byte) (0xff & bits >> 24);
+            result[offset + 3] = (byte) (0xff & bits >> 32);
+            result[offset + 2] = (byte) (0xff & bits >> 40);
+            result[offset + 1] = (byte) (0xff & bits >> 48);
+            result[offset + 0] = (byte) (0xff & bits >> 56);
         }
     }
 
@@ -57,8 +56,7 @@ public final class ByteConversions {
         return toBytes(values, 0, values.length, byteOrder);
     }
 
-    private static byte[] toBytes(final double[] values, final int offset,
-            final int length, final ByteOrder byteOrder) {
+    private static byte[] toBytes(final double[] values, final int offset, final int length, final ByteOrder byteOrder) {
         final byte[] result = Allocator.byteArray(length * 8);
         for (int i = 0; i < length; i++) {
             toBytes(values[offset + i], byteOrder, result, i * 8);
@@ -75,15 +73,15 @@ public final class ByteConversions {
     private static void toBytes(final float value, final ByteOrder byteOrder, final byte[] result, final int offset) {
         final int bits = Float.floatToRawIntBits(value);
         if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
-            result[offset + 0] = (byte) (0xff & (bits >> 0));
-            result[offset + 1] = (byte) (0xff & (bits >> 8));
-            result[offset + 2] = (byte) (0xff & (bits >> 16));
-            result[offset + 3] = (byte) (0xff & (bits >> 24));
+            result[offset + 0] = (byte) (0xff & bits >> 0);
+            result[offset + 1] = (byte) (0xff & bits >> 8);
+            result[offset + 2] = (byte) (0xff & bits >> 16);
+            result[offset + 3] = (byte) (0xff & bits >> 24);
         } else {
-            result[offset + 3] = (byte) (0xff & (bits >> 0));
-            result[offset + 2] = (byte) (0xff & (bits >> 8));
-            result[offset + 1] = (byte) (0xff & (bits >> 16));
-            result[offset + 0] = (byte) (0xff & (bits >> 24));
+            result[offset + 3] = (byte) (0xff & bits >> 0);
+            result[offset + 2] = (byte) (0xff & bits >> 8);
+            result[offset + 1] = (byte) (0xff & bits >> 16);
+            result[offset + 0] = (byte) (0xff & bits >> 24);
         }
     }
 
@@ -132,10 +130,9 @@ public final class ByteConversions {
     }
 
     /**
-     * Encodes an eight-byte (long) into an array of bytes based on
-     * the specified byte order.
+     * Encodes an eight-byte (long) into an array of bytes based on the specified byte order.
      *
-     * @param value a standard data primitive of type long
+     * @param value     a standard data primitive of type long
      * @param byteOrder the byte order to be used for encoding
      * @return an array of length 8
      */
@@ -173,8 +170,7 @@ public final class ByteConversions {
         return result;
     }
 
-    private static void toBytes(final RationalNumber value, final ByteOrder byteOrder,
-            final byte[] result, final int offset) {
+    private static void toBytes(final RationalNumber value, final ByteOrder byteOrder, final byte[] result, final int offset) {
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
             result[offset + 0] = (byte) (value.numerator >> 24);
             result[offset + 1] = (byte) (value.numerator >> 16);
@@ -200,8 +196,7 @@ public final class ByteConversions {
         return toBytes(values, 0, values.length, byteOrder);
     }
 
-    private static byte[] toBytes(final RationalNumber[] values, final int offset,
-            final int length, final ByteOrder byteOrder) {
+    private static byte[] toBytes(final RationalNumber[] values, final int offset, final int length, final ByteOrder byteOrder) {
         final byte[] result = Allocator.byteArray(length * 8);
         for (int i = 0; i < length; i++) {
             toBytes(values[offset + i], byteOrder, result, i * 8);
@@ -252,13 +247,9 @@ public final class ByteConversions {
         final long byte7 = 0xffL & bytes[offset + 7];
         final long bits;
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
-            bits = (byte0 << 56) | (byte1 << 48) | (byte2 << 40)
-                    | (byte3 << 32) | (byte4 << 24) | (byte5 << 16)
-                    | (byte6 << 8) | (byte7 << 0);
+            bits = byte0 << 56 | byte1 << 48 | byte2 << 40 | byte3 << 32 | byte4 << 24 | byte5 << 16 | byte6 << 8 | byte7 << 0;
         } else {
-            bits = (byte7 << 56) | (byte6 << 48) | (byte5 << 40)
-                    | (byte4 << 32) | (byte3 << 24) | (byte2 << 16)
-                    | (byte1 << 8) | (byte0 << 0);
+            bits = byte7 << 56 | byte6 << 48 | byte5 << 40 | byte4 << 32 | byte3 << 24 | byte2 << 16 | byte1 << 8 | byte0 << 0;
         }
         return Double.longBitsToDouble(bits);
     }
@@ -267,8 +258,7 @@ public final class ByteConversions {
         return toDoubles(bytes, 0, bytes.length, byteOrder);
     }
 
-    private static double[] toDoubles(final byte[] bytes, final int offset,
-            final int length, final ByteOrder byteOrder) {
+    private static double[] toDoubles(final byte[] bytes, final int offset, final int length, final ByteOrder byteOrder) {
         final double[] result = Allocator.doubleArray(length / 8);
         Arrays.setAll(result, i -> toDouble(bytes, offset + 8 * i, byteOrder));
         return result;
@@ -285,9 +275,9 @@ public final class ByteConversions {
         final int byte3 = 0xff & bytes[offset + 3];
         final int bits;
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
-            bits = (byte0 << 24) | (byte1 << 16) | (byte2 << 8) | (byte3 << 0);
+            bits = byte0 << 24 | byte1 << 16 | byte2 << 8 | byte3 << 0;
         } else {
-            bits = (byte3 << 24) | (byte2 << 16) | (byte1 << 8) | (byte0 << 0);
+            bits = byte3 << 24 | byte2 << 16 | byte1 << 8 | byte0 << 0;
         }
         return Float.intBitsToFloat(bits);
     }
@@ -296,8 +286,7 @@ public final class ByteConversions {
         return toFloats(bytes, 0, bytes.length, byteOrder);
     }
 
-    private static float[] toFloats(final byte[] bytes, final int offset,
-            final int length, final ByteOrder byteOrder) {
+    private static float[] toFloats(final byte[] bytes, final int offset, final int length, final ByteOrder byteOrder) {
         final float[] result = Allocator.floatArray(length / 4);
         for (int i = 0; i < result.length; i++) {
             result[i] = toFloat(bytes, offset + 4 * i, byteOrder);
@@ -315,27 +304,26 @@ public final class ByteConversions {
         final int byte2 = 0xff & bytes[offset + 2];
         final int byte3 = 0xff & bytes[offset + 3];
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
-            return (byte0 << 24) | (byte1 << 16) | (byte2 << 8) | byte3;
+            return byte0 << 24 | byte1 << 16 | byte2 << 8 | byte3;
         }
-        return (byte3 << 24) | (byte2 << 16) | (byte1 << 8) | byte0;
+        return byte3 << 24 | byte2 << 16 | byte1 << 8 | byte0;
     }
 
     public static int[] toInts(final byte[] bytes, final ByteOrder byteOrder) {
         return toInts(bytes, 0, bytes.length, byteOrder);
     }
 
-    private static int[] toInts(final byte[] bytes, final int offset, final int length,
-            final ByteOrder byteOrder) {
+    private static int[] toInts(final byte[] bytes, final int offset, final int length, final ByteOrder byteOrder) {
         final int[] result = Allocator.intArray(length / 4);
         Arrays.setAll(result, i -> toInt(bytes, offset + 4 * i, byteOrder));
         return result;
     }
 
     /**
-     * Extracts an eight-byte long integer from the specified byte array.
-     * This method assumes that the byte array is of sufficiently large size
-     * to encode a long integer.
-     * @param bytes an array of size at least 8
+     * Extracts an eight-byte long integer from the specified byte array. This method assumes that the byte array is of sufficiently large size to encode a long
+     * integer.
+     *
+     * @param bytes     an array of size at least 8
      * @param byteOrder the byte-order for interpreting the input bytes
      * @return an eight-byte signed integer
      */
@@ -354,55 +342,42 @@ public final class ByteConversions {
         final long byte7 = 0xffL & bytes[offset + 7];
 
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
-            return  (byte0 << 56) | (byte1 << 48) | (byte2 << 40)
-                    | (byte3 << 32) | (byte4 << 24) | (byte5 << 16)
-                    | (byte6 << 8) | byte7  ;
+            return byte0 << 56 | byte1 << 48 | byte2 << 40 | byte3 << 32 | byte4 << 24 | byte5 << 16 | byte6 << 8 | byte7;
         }
-        return (byte7 << 56) | (byte6 << 48) | (byte5 << 40)
-                    | (byte4 << 32) | (byte3 << 24) | (byte2 << 16)
-                    | (byte1 << 8) | byte0;
+        return byte7 << 56 | byte6 << 48 | byte5 << 40 | byte4 << 32 | byte3 << 24 | byte2 << 16 | byte1 << 8 | byte0;
     }
 
     /**
-     * Extracts an array of eight-byte long integers from the specified array
-     * of bytes.  The size of the result array is computed based on the
-     * size of the input byte array.
-     * @param bytes a valid array
+     * Extracts an array of eight-byte long integers from the specified array of bytes. The size of the result array is computed based on the size of the input
+     * byte array.
+     *
+     * @param bytes     a valid array
      * @param byteOrder the byte-order for interpreting the input bytes
      * @return an array of zero or more eight-byte signed integers
      */
     public static long[] toLongs(final byte[] bytes, final ByteOrder byteOrder) {
-      return toLongs(bytes, 0, bytes.length, byteOrder);
+        return toLongs(bytes, 0, bytes.length, byteOrder);
     }
 
-    private static long[] toLongs(final byte[] bytes, final int offset, final int length,
-      final ByteOrder byteOrder) {
-      final long[] result = Allocator.longArray(length / 8);
-      Arrays.setAll(result, i -> toLong(bytes, offset + 8 * i, byteOrder));
-      return result;
+    private static long[] toLongs(final byte[] bytes, final int offset, final int length, final ByteOrder byteOrder) {
+        final long[] result = Allocator.longArray(length / 8);
+        Arrays.setAll(result, i -> toLong(bytes, offset + 8 * i, byteOrder));
+        return result;
     }
 
     /**
-     * Interprets the content of a specified bytes array to create
-     * an instance of the RationalNumber class.
-     * @param bytes a valid array dimensioned to at least 8.
-     * @param byteOrder the byte order for integer conversion
-     * @param unsignedType indicates whether the extracted value is
-     * an unsigned type.
+     * Interprets the content of a specified bytes array to create an instance of the RationalNumber class.
+     *
+     * @param bytes        a valid array dimensioned to at least 8.
+     * @param byteOrder    the byte order for integer conversion
+     * @param unsignedType indicates whether the extracted value is an unsigned type.
      * @return a valid instance
      */
-    public static RationalNumber toRational(
-            final byte[] bytes,
-            final ByteOrder byteOrder,
-            final boolean unsignedType) {
+    public static RationalNumber toRational(final byte[] bytes, final ByteOrder byteOrder, final boolean unsignedType) {
         return toRational(bytes, 0, byteOrder, unsignedType);
     }
 
-    private static RationalNumber toRational(
-            final byte[] bytes,
-            final int offset,
-            final ByteOrder byteOrder,
-            final boolean unsignedType) {
+    private static RationalNumber toRational(final byte[] bytes, final int offset, final ByteOrder byteOrder, final boolean unsignedType) {
         final int byte0 = 0xff & bytes[offset + 0];
         final int byte1 = 0xff & bytes[offset + 1];
         final int byte2 = 0xff & bytes[offset + 2];
@@ -414,28 +389,20 @@ public final class ByteConversions {
         final int numerator;
         final int divisor;
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
-            numerator = (byte0 << 24) | (byte1 << 16) | (byte2 << 8) | byte3;
-            divisor = (byte4 << 24) | (byte5 << 16) | (byte6 << 8) | byte7;
+            numerator = byte0 << 24 | byte1 << 16 | byte2 << 8 | byte3;
+            divisor = byte4 << 24 | byte5 << 16 | byte6 << 8 | byte7;
         } else {
-            numerator = (byte3 << 24) | (byte2 << 16) | (byte1 << 8) | byte0;
-            divisor = (byte7 << 24) | (byte6 << 16) | (byte5 << 8) | byte4;
+            numerator = byte3 << 24 | byte2 << 16 | byte1 << 8 | byte0;
+            divisor = byte7 << 24 | byte6 << 16 | byte5 << 8 | byte4;
         }
         return new RationalNumber(numerator, divisor, unsignedType);
     }
 
-    public static RationalNumber[] toRationals(
-            final byte[] bytes,
-            final ByteOrder byteOrder,
-            final boolean unsignedType) {
+    public static RationalNumber[] toRationals(final byte[] bytes, final ByteOrder byteOrder, final boolean unsignedType) {
         return toRationals(bytes, 0, bytes.length, byteOrder, unsignedType);
     }
 
-    private static RationalNumber[] toRationals(
-            final byte[] bytes,
-            final int offset,
-            final int length,
-            final ByteOrder byteOrder,
-            final boolean unsignedType) {
+    private static RationalNumber[] toRationals(final byte[] bytes, final int offset, final int length, final ByteOrder byteOrder, final boolean unsignedType) {
         final RationalNumber[] result = new RationalNumber[length / 8];
         Arrays.setAll(result, i -> toRational(bytes, offset + 8 * i, byteOrder, unsignedType));
         return result;
@@ -453,8 +420,7 @@ public final class ByteConversions {
         return toShorts(bytes, 0, bytes.length, byteOrder);
     }
 
-    private static short[] toShorts(final byte[] bytes, final int offset,
-            final int length, final ByteOrder byteOrder) {
+    private static short[] toShorts(final byte[] bytes, final int offset, final int length, final ByteOrder byteOrder) {
         final short[] result = Allocator.shortArray(length / 2);
         for (int i = 0; i < result.length; i++) {
             result[i] = toShort(bytes, offset + 2 * i, byteOrder);
@@ -470,17 +436,16 @@ public final class ByteConversions {
         final int byte0 = 0xff & bytes[offset + 0];
         final int byte1 = 0xff & bytes[offset + 1];
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
-            return ((byte0 << 8) | byte1);
+            return byte0 << 8 | byte1;
         }
-        return ((byte1 << 8) | byte0);
+        return byte1 << 8 | byte0;
     }
 
     public static int[] toUInt16s(final byte[] bytes, final ByteOrder byteOrder) {
         return toUInt16s(bytes, 0, bytes.length, byteOrder);
     }
 
-    private static int[] toUInt16s(final byte[] bytes, final int offset, final int length,
-            final ByteOrder byteOrder) {
+    private static int[] toUInt16s(final byte[] bytes, final int offset, final int length, final ByteOrder byteOrder) {
         final int[] result = Allocator.intArray(length / 2);
         Arrays.setAll(result, i -> toUInt16(bytes, offset + 2 * i, byteOrder));
         return result;

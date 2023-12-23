@@ -36,6 +36,7 @@ public abstract class AbstractTiffElement {
             return data.length;
         }
     }
+
     public static final class Stub extends AbstractTiffElement {
         public Stub(final long offset, final int length) {
             super(offset, length);
@@ -43,11 +44,11 @@ public abstract class AbstractTiffElement {
 
         @Override
         public String getElementDescription() {
-            return "Element, offset: " + offset + ", length: " + length
-                    + ", last: " + (offset + length);
+            return "Element, offset: " + offset + ", length: " + length + ", last: " + (offset + length);
         }
 
     }
+
     public static final Comparator<AbstractTiffElement> COMPARATOR = Comparator.comparingLong(e -> e.offset);
 
     public final long offset;

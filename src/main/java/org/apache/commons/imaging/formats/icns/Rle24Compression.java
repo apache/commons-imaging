@@ -47,7 +47,7 @@ final class Rle24Compression {
                 if ((data[dataPos] & 0x80) != 0) {
                     final int count = (0xff & data[dataPos]) - 125;
                     for (int i = 0; i < count; i++) {
-                        result[band + 4 * (resultPos++)] = data[dataPos + 1];
+                        result[band + 4 * resultPos++] = data[dataPos + 1];
                     }
                     dataPos += 2;
                     remaining -= count;
@@ -55,7 +55,7 @@ final class Rle24Compression {
                     final int count = (0xff & data[dataPos]) + 1;
                     dataPos++;
                     for (int i = 0; i < count; i++) {
-                        result[band + 4 * (resultPos++)] = data[dataPos++];
+                        result[band + 4 * resultPos++] = data[dataPos++];
                     }
                     remaining -= count;
                 }

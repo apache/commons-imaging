@@ -33,43 +33,30 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShorts;
  */
 public final class GeoTiffTagConstants {
 
-    public static final TagInfoDoubles EXIF_TAG_MODEL_PIXEL_SCALE_TAG = new TagInfoDoubles(
-            "ModelPixelScaleTag", 0x830e, 3,
+    public static final TagInfoDoubles EXIF_TAG_MODEL_PIXEL_SCALE_TAG = new TagInfoDoubles("ModelPixelScaleTag", 0x830e, 3,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoDoubles EXIF_TAG_INTERGRAPH_MATRIX_TAG = new TagInfoDoubles(
-            "IntergraphMatrixTag", 0x8480, -1,
+    public static final TagInfoDoubles EXIF_TAG_INTERGRAPH_MATRIX_TAG = new TagInfoDoubles("IntergraphMatrixTag", 0x8480, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoDoubles EXIF_TAG_MODEL_TIEPOINT_TAG = new TagInfoDoubles(
-            "ModelTiepointTag", 0x8482, -1,
+    public static final TagInfoDoubles EXIF_TAG_MODEL_TIEPOINT_TAG = new TagInfoDoubles("ModelTiepointTag", 0x8482, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoDoubles EXIF_TAG_MODEL_TRANSFORMATION_TAG = new TagInfoDoubles(
-            "ModelTransformationTag", 0x85d8, 16,
+    public static final TagInfoDoubles EXIF_TAG_MODEL_TRANSFORMATION_TAG = new TagInfoDoubles("ModelTransformationTag", 0x85d8, 16,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoShorts EXIF_TAG_GEO_KEY_DIRECTORY_TAG = new TagInfoShorts(
-            "GeoKeyDirectoryTag", 0x87af, -1,
+    public static final TagInfoShorts EXIF_TAG_GEO_KEY_DIRECTORY_TAG = new TagInfoShorts("GeoKeyDirectoryTag", 0x87af, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoDoubles EXIF_TAG_GEO_DOUBLE_PARAMS_TAG = new TagInfoDoubles(
-            "GeoDoubleParamsTag", 0x87b0, -1,
+    public static final TagInfoDoubles EXIF_TAG_GEO_DOUBLE_PARAMS_TAG = new TagInfoDoubles("GeoDoubleParamsTag", 0x87b0, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoAscii EXIF_TAG_GEO_ASCII_PARAMS_TAG = new TagInfoAscii(
-            "GeoAsciiParamsTag", 0x87b1, -1,
+    public static final TagInfoAscii EXIF_TAG_GEO_ASCII_PARAMS_TAG = new TagInfoAscii("GeoAsciiParamsTag", 0x87b1, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final List<TagInfo> ALL_GEO_TIFF_TAGS =
-            Collections.unmodifiableList(Arrays.asList(
-                    EXIF_TAG_MODEL_PIXEL_SCALE_TAG,
-                    EXIF_TAG_INTERGRAPH_MATRIX_TAG,
-                    EXIF_TAG_MODEL_TIEPOINT_TAG,
-                    EXIF_TAG_MODEL_TRANSFORMATION_TAG,
-                    EXIF_TAG_GEO_KEY_DIRECTORY_TAG,
-                    EXIF_TAG_GEO_DOUBLE_PARAMS_TAG,
-                    EXIF_TAG_GEO_ASCII_PARAMS_TAG));
+    public static final List<TagInfo> ALL_GEO_TIFF_TAGS = Collections
+            .unmodifiableList(Arrays.asList(EXIF_TAG_MODEL_PIXEL_SCALE_TAG, EXIF_TAG_INTERGRAPH_MATRIX_TAG, EXIF_TAG_MODEL_TIEPOINT_TAG,
+                    EXIF_TAG_MODEL_TRANSFORMATION_TAG, EXIF_TAG_GEO_KEY_DIRECTORY_TAG, EXIF_TAG_GEO_DOUBLE_PARAMS_TAG, EXIF_TAG_GEO_ASCII_PARAMS_TAG));
 
     private GeoTiffTagConstants() {
     }

@@ -42,8 +42,8 @@ public class CompressedDataReader implements DataReader {
     }
 
     @Override
-    public void readData(final InputStream is, final BufferedImage bi, final PsdImageContents imageContents,
-            final BinaryFileParser bfp) throws ImagingException, IOException {
+    public void readData(final InputStream is, final BufferedImage bi, final PsdImageContents imageContents, final BinaryFileParser bfp)
+            throws ImagingException, IOException {
         final PsdHeaderInfo header = imageContents.header;
         final int width = header.columns;
         final int height = header.rows;
@@ -52,8 +52,7 @@ public class CompressedDataReader implements DataReader {
         final int scanlineCount = height * header.channels;
         final int[] scanlineByteCounts = Allocator.intArray(scanlineCount);
         for (int i = 0; i < scanlineCount; i++) {
-            scanlineByteCounts[i] = BinaryFunctions.read2Bytes("scanlineByteCounts[" + i + "]", is,
-                    "PSD: bad Image Data", bfp.getByteOrder());
+            scanlineByteCounts[i] = BinaryFunctions.read2Bytes("scanlineByteCounts[" + i + "]", is, "PSD: bad Image Data", bfp.getByteOrder());
         }
         // System.out.println("fImageContents.Compression: "
         // + imageContents.Compression);
@@ -66,8 +65,7 @@ public class CompressedDataReader implements DataReader {
         for (int channel = 0; channel < channelCount; channel++) {
             for (int y = 0; y < height; y++) {
                 final int index = channel * height + y;
-                final byte[] packed = BinaryFunctions.readBytes("scanline", is, scanlineByteCounts[index],
-                        "PSD: Missing Image Data");
+                final byte[] packed = BinaryFunctions.readBytes("scanline", is, scanlineByteCounts[index], "PSD: Missing Image Data");
 
                 final byte[] unpacked = new PackBits().decompress(packed, width);
                 try (InputStream bais = new ByteArrayInputStream(unpacked);

@@ -19,4 +19,3 @@
  * The PCX image format.
  */
 package org.apache.commons.imaging.formats.pcx;
-

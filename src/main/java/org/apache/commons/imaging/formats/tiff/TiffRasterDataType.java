@@ -17,21 +17,16 @@
 package org.apache.commons.imaging.formats.tiff;
 
 /**
- * Provides an enumeration indicating the type of data for
- * an instance of a TiffRasterData class.
+ * Provides an enumeration indicating the type of data for an instance of a TiffRasterData class.
  */
 public enum TiffRasterDataType {
     /**
-     * Indicates that the raster contains integer data.
-     * Attempts to access floating-point data from the raster
-     * will result in the nearest floating point value.
+     * Indicates that the raster contains integer data. Attempts to access floating-point data from the raster will result in the nearest floating point value.
      */
     INTEGER,
 
     /**
-     * Indicates that the raster contains single-precision floating-point
-     * data.  Attempts to access integer data from the raster
-     * may result in a truncated value.
+     * Indicates that the raster contains single-precision floating-point data. Attempts to access integer data from the raster may result in a truncated value.
      */
     FLOAT;
 }

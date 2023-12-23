@@ -21,8 +21,9 @@ import org.apache.commons.imaging.common.BufferedImageFactory;
 /**
  * Imaging parameters.
  *
- * <p>Contains parameters that are common to all formats. Implementations must include
- * the specific parameters for each image format.</p>
+ * <p>
+ * Contains parameters that are common to all formats. Implementations must include the specific parameters for each image format.
+ * </p>
  *
  * @param <E> This type
  * @since 1.0-alpha3
@@ -30,15 +31,13 @@ import org.apache.commons.imaging.common.BufferedImageFactory;
 public class ImagingParameters<E extends ImagingParameters<E>> {
 
     /**
-     * Whether to throw an exception when any issue occurs during reading
-     * or writing a file format. Default is {@code false}.
+     * Whether to throw an exception when any issue occurs during reading or writing a file format. Default is {@code false}.
      */
     private boolean strict;
 
     /**
-     * An optional file name, used for the description of input streams
-     * where a file name would be hard (or not possible) to be identified.
-     * Default is {@code null}.
+     * An optional file name, used for the description of input streams where a file name would be hard (or not possible) to be identified. Default is
+     * {@code null}.
      */
     private String fileName;
 
@@ -48,8 +47,9 @@ public class ImagingParameters<E extends ImagingParameters<E>> {
     private BufferedImageFactory bufferedImageFactory;
 
     /**
-     * <p>Parameter key. Used in write operations to indicate the desired pixel
-     * density (DPI), and/or aspect ratio.</p>
+     * <p>
+     * Parameter key. Used in write operations to indicate the desired pixel density (DPI), and/or aspect ratio.
+     * </p>
      */
     private PixelDensity pixelDensity;
 

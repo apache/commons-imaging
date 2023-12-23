@@ -34,7 +34,7 @@ public class TagInfoByteOrShortTest {
         final short[] shortArray = new short[2];
         final byte[] byteArray = tagInfoByteOrShort.encodeValue(byteOrder, shortArray);
 
-        assertArrayEquals(new byte[]{(byte) 0, (byte) 0, (byte) 0, (byte) 0}, byteArray);
+        assertArrayEquals(new byte[] { (byte) 0, (byte) 0, (byte) 0, (byte) 0 }, byteArray);
     }
 
     @Test

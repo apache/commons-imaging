@@ -23,7 +23,7 @@ import java.awt.image.BufferedImage;
 
 import org.junit.jupiter.api.Test;
 
-public class BmpWriterRgbTest{
+public class BmpWriterRgbTest {
 
     @Test
     public void testGetImageData() {
@@ -34,7 +34,7 @@ public class BmpWriterRgbTest{
         assertEquals(24, bmpWriterRgb.getBitsPerPixel());
         assertEquals(0, bmpWriterRgb.getPaletteSize());
         assertEquals(16, byteArray.length);
-        assertArrayEquals(new byte[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, byteArray);
+        assertArrayEquals(new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, byteArray);
     }
 
 }

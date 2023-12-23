@@ -34,6 +34,7 @@ final class TiffOutputSummary {
             this.item = item;
         }
     }
+
     public final ByteOrder byteOrder;
     public final TiffOutputDirectory rootDirectory;
     public final Map<Integer, TiffOutputDirectory> directoryTypeMap;
@@ -41,16 +42,13 @@ final class TiffOutputSummary {
 
     private final List<ImageDataOffsets> imageDataItems = new ArrayList<>();
 
-    TiffOutputSummary(final ByteOrder byteOrder,
-            final TiffOutputDirectory rootDirectory,
-            final Map<Integer, TiffOutputDirectory> directoryTypeMap) {
+    TiffOutputSummary(final ByteOrder byteOrder, final TiffOutputDirectory rootDirectory, final Map<Integer, TiffOutputDirectory> directoryTypeMap) {
         this.byteOrder = byteOrder;
         this.rootDirectory = rootDirectory;
         this.directoryTypeMap = directoryTypeMap;
     }
 
-    public void add(final AbstractTiffOutputItem item,
-            final TiffOutputField itemOffsetField) {
+    public void add(final AbstractTiffOutputItem item, final TiffOutputField itemOffsetField) {
         offsetItems.add(new OffsetItem(item, itemOffsetField));
     }
 
@@ -60,8 +58,7 @@ final class TiffOutputSummary {
 
     public void updateOffsets(final ByteOrder byteOrder) throws ImagingException {
         for (final OffsetItem offset : offsetItems) {
-            final byte[] value = AbstractFieldType.LONG.writeData(
-                    (int) offset.item.getOffset(), byteOrder);
+            final byte[] value = AbstractFieldType.LONG.writeData((int) offset.item.getOffset(), byteOrder);
             offset.itemOffsetField.setData(value);
         }
 
@@ -71,8 +68,7 @@ final class TiffOutputSummary {
                 imageDataInfo.imageDataOffsets[j] = (int) item.getOffset();
             }
 
-            imageDataInfo.imageDataOffsetsField.setData(
-                    AbstractFieldType.LONG.writeData(imageDataInfo.imageDataOffsets, byteOrder));
+            imageDataInfo.imageDataOffsetsField.setData(AbstractFieldType.LONG.writeData(imageDataInfo.imageDataOffsets, byteOrder));
         }
     }
 

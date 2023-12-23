@@ -58,13 +58,11 @@ public abstract class AbstractImagingTest {
         return getTestImages(null, -1);
     }
 
-    protected static List<File> getTestImages(final ImageFilter filter) throws IOException,
-            ImagingException {
+    protected static List<File> getTestImages(final ImageFilter filter) throws IOException, ImagingException {
         return getTestImages(filter, -1);
     }
 
-    protected static List<File> getTestImages(final ImageFilter filter, final int max)
-            throws IOException, ImagingException {
+    protected static List<File> getTestImages(final ImageFilter filter, final int max) throws IOException, ImagingException {
         final List<File> images = new ArrayList<>();
 
         for (final File file : ALL_IMAGES) {
@@ -96,8 +94,7 @@ public abstract class AbstractImagingTest {
         return getTestImage(null);
     }
 
-    protected File getTestImage(final ImageFilter filter) throws IOException,
-            ImagingException {
+    protected File getTestImage(final ImageFilter filter) throws IOException, ImagingException {
         final List<File> images = getTestImages(filter, 1);
 
         assertFalse(images.isEmpty());
@@ -105,18 +102,15 @@ public abstract class AbstractImagingTest {
         return images.get(0);
     }
 
-    protected File getTestImageByName(final String fileName)
-            throws IOException, ImagingException {
+    protected File getTestImageByName(final String fileName) throws IOException, ImagingException {
         return getTestImage(file -> file.getName().equals(fileName));
     }
 
     protected boolean isInvalidPngTestFile(final File file) {
-        return (file.getParentFile().getName().equalsIgnoreCase("pngsuite") &&
-                file.getName().toLowerCase().startsWith("x"));
+        return file.getParentFile().getName().equalsIgnoreCase("pngsuite") && file.getName().toLowerCase().startsWith("x");
     }
 
     protected boolean isPhilHarveyTestImage(final File file) {
-        return file.getAbsolutePath().startsWith(
-                ImagingTestConstants.PHIL_HARVEY_TEST_IMAGE_FOLDER.getAbsolutePath());
+        return file.getAbsolutePath().startsWith(ImagingTestConstants.PHIL_HARVEY_TEST_IMAGE_FOLDER.getAbsolutePath());
     }
 }

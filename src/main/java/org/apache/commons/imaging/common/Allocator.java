@@ -119,8 +119,7 @@ public class Allocator {
     /**
      * Checks a request for meeting allocation limits.
      * <p>
-     * The default limit is {@value #DEFAULT}, override with the system property
-     * "org.apache.commons.imaging.common.mylzw.AllocationChecker".
+     * The default limit is {@value #DEFAULT}, override with the system property "org.apache.commons.imaging.common.mylzw.AllocationChecker".
      * </p>
      *
      * @param request an allocation request.
@@ -137,8 +136,7 @@ public class Allocator {
     /**
      * Checks a request for meeting allocation limits.
      * <p>
-     * The default limit is {@value #DEFAULT}, override with the system property
-     * "org.apache.commons.imaging.common.mylzw.AllocationChecker".
+     * The default limit is {@value #DEFAULT}, override with the system property "org.apache.commons.imaging.common.mylzw.AllocationChecker".
      * </p>
      *
      * @param request     an allocation request count.
@@ -150,7 +148,7 @@ public class Allocator {
         int multiplyExact;
         try {
             multiplyExact = Math.multiplyExact(request, elementSize);
-        } catch (ArithmeticException e) {
+        } catch (final ArithmeticException e) {
             throw new AllocationRequestException(LIMIT, BigInteger.valueOf(request).multiply(BigInteger.valueOf(elementSize)), e);
         }
         if (multiplyExact > LIMIT) {
@@ -162,8 +160,7 @@ public class Allocator {
     /**
      * Checks a request for meeting allocation limits.
      * <p>
-     * The default limit is {@value #DEFAULT}, override with the system property
-     * "org.apache.commons.imaging.common.mylzw.AllocationChecker".
+     * The default limit is {@value #DEFAULT}, override with the system property "org.apache.commons.imaging.common.mylzw.AllocationChecker".
      * </p>
      *
      * @param request     an allocation request count is cast down to an int.
@@ -174,7 +171,7 @@ public class Allocator {
     public static int check(final long request, final int elementSize) {
         try {
             return check(Math.toIntExact(request), elementSize);
-        } catch (ArithmeticException e) {
+        } catch (final ArithmeticException e) {
             throw new AllocationRequestException(LIMIT, request, e);
         }
     }

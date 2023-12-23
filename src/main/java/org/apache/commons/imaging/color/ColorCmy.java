@@ -19,8 +19,9 @@ package org.apache.commons.imaging.color;
 /**
  * Represents a color in the CMY color space.
  *
- * <p>Contains the constant values for black, white, red,
- * green, blue, cyan, magenta, and yellow.</p>
+ * <p>
+ * Contains the constant values for black, white, red, green, blue, cyan, magenta, and yellow.
+ * </p>
  *
  * @see <a href="https://en.wikipedia.org/wiki/CMY_color_model">https://en.wikipedia.org/wiki/CMY_color_model</a>
  * @since 1.0-alpha1
@@ -29,6 +30,7 @@ public final class ColorCmy {
 
     /**
      * A constant for color cyan. Color components are:
+     *
      * <pre>
      *     cyan:    100
      *     magenta: 0
@@ -39,6 +41,7 @@ public final class ColorCmy {
 
     /**
      * A constant for color magenta. Color components are:
+     *
      * <pre>
      *     cyan:    0
      *     magenta: 100
@@ -49,6 +52,7 @@ public final class ColorCmy {
 
     /**
      * A constant for color yellow. Color components are:
+     *
      * <pre>
      *     cyan:    0
      *     magenta: 0
@@ -59,6 +63,7 @@ public final class ColorCmy {
 
     /**
      * A constant for color black. Color components are:
+     *
      * <pre>
      *     cyan:    100
      *     magenta: 100
@@ -69,6 +74,7 @@ public final class ColorCmy {
 
     /**
      * A constant for color white. Color components are:
+     *
      * <pre>
      *     cyan:    0
      *     magenta: 0
@@ -79,6 +85,7 @@ public final class ColorCmy {
 
     /**
      * A constant for color red. Color components are:
+     *
      * <pre>
      *     cyan:    0
      *     magenta: 100
@@ -89,6 +96,7 @@ public final class ColorCmy {
 
     /**
      * A constant for color green. Color components are:
+     *
      * <pre>
      *     cyan:    100
      *     magenta: 0
@@ -99,6 +107,7 @@ public final class ColorCmy {
 
     /**
      * A constant for color blue. Color components are:
+     *
      * <pre>
      *     cyan:    100
      *     magenta: 100
@@ -145,11 +154,11 @@ public final class ColorCmy {
         int result;
         long temp;
         temp = Double.doubleToLongBits(c);
-        result = (int) (temp ^ (temp >>> 32));
+        result = (int) (temp ^ temp >>> 32);
         temp = Double.doubleToLongBits(m);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) (temp ^ temp >>> 32);
         temp = Double.doubleToLongBits(y);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) (temp ^ temp >>> 32);
         return result;
     }
 

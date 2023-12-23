@@ -24,7 +24,6 @@ import org.apache.commons.imaging.ImagingException;
 
 interface PnmWriter {
 
-    void writeImage(BufferedImage src, OutputStream os,
-            PnmImagingParameters params) throws ImagingException, IOException;
+    void writeImage(BufferedImage src, OutputStream os, PnmImagingParameters params) throws ImagingException, IOException;
 
 }

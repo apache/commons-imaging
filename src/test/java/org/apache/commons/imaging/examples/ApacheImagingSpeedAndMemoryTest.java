@@ -164,17 +164,14 @@ import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.lang3.ArrayUtils;
 
 /**
- * A "test stand" for evaluating the speed an memory use of different Apache
- * Imaging operations
+ * A "test stand" for evaluating the speed an memory use of different Apache Imaging operations
  */
 public class ApacheImagingSpeedAndMemoryTest {
 
     /**
-     * Create an instance of the speed and memory test class and execute a test
-     * loop for the specified file.
+     * Create an instance of the speed and memory test class and execute a test loop for the specified file.
      *
-     * @param args
-     *            the path to the file to be processed
+     * @param args the path to the file to be processed
      */
     public static void main(final String[] args) {
         if (ArrayUtils.isEmpty(args)) {
@@ -186,9 +183,9 @@ public class ApacheImagingSpeedAndMemoryTest {
     }
 
     /**
-     * Loads the input file multiple times, measuring the time and memory use
-     * for each iteration.
-     * @param fmt a valid PrintStream for formatting the output
+     * Loads the input file multiple times, measuring the time and memory use for each iteration.
+     *
+     * @param fmt  a valid PrintStream for formatting the output
      * @param name the path for the input image file to be tested
      */
     private void performTest(final PrintStream fmt, final String name) {
@@ -212,8 +209,7 @@ public class ApacheImagingSpeedAndMemoryTest {
                 TiffImageParser tiffImageParser = new TiffImageParser();
                 // load the file and record time needed to do so
                 final long time0Nanos = System.nanoTime();
-                BufferedImage bImage = tiffImageParser.getBufferedImage(
-                        byteSource, params);
+                BufferedImage bImage = tiffImageParser.getBufferedImage(byteSource, params);
                 final long time1Nanos = System.nanoTime();
                 // tabulate results
                 final double testTime = (time1Nanos - time0Nanos) / 1000000.0;
@@ -237,14 +233,11 @@ public class ApacheImagingSpeedAndMemoryTest {
                     // print header info
                     fmt.format("%n");
                     fmt.format("Processing file: %s%n", target.getName());
-                    fmt.format(" image size: %d by %d%n%n", bImage.getWidth(),
-                            bImage.getHeight());
+                    fmt.format(" image size: %d by %d%n%n", bImage.getWidth(), bImage.getHeight());
                     fmt.format(" time to load image    --         memory%n");
                     fmt.format(" time ms      avg ms   --    used mb   total mb%n");
                 }
-                fmt.format("%9.3f %9.3f    --  %9.3f %9.3f %n", testTime,
-                        avgTime, usedMemory / (1024.0 * 1024.0), totalMemory
-                                / (1024.0 * 1024.0));
+                fmt.format("%9.3f %9.3f    --  %9.3f %9.3f %n", testTime, avgTime, usedMemory / (1024.0 * 1024.0), totalMemory / (1024.0 * 1024.0));
                 bImage = null;
                 byteSource = null;
                 params = null;

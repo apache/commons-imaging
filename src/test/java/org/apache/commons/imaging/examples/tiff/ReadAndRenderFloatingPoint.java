@@ -33,30 +33,21 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PhotometricInterpreterFloat;
 
 /**
- * A simple example application that reads the content of a TIFF file containing
- * floating-point data and renders it using a gray-scale palette. TIFF files are
- * sometimes used to store non-image information for scientific and geophysical
- * data products, including terrestrial elevation and ocean depth data.
+ * A simple example application that reads the content of a TIFF file containing floating-point data and renders it using a gray-scale palette. TIFF files are
+ * sometimes used to store non-image information for scientific and geophysical data products, including terrestrial elevation and ocean depth data.
  */
 public class ReadAndRenderFloatingPoint {
 
-    private static final String[] USAGE = {
-        "Usage ReadAndRendserFloatingPoint <input file>  [output file]",
-        "   input file:  Mandatory file to be read",
-        "   output file: Optional output path for file to be written.",
-        "                This name should not include a file extension.",
-        "                Output data will be written using the JPEG format."
-    };
+    private static final String[] USAGE = { "Usage ReadAndRendserFloatingPoint <input file>  [output file]", "   input file:  Mandatory file to be read",
+            "   output file: Optional output path for file to be written.", "                This name should not include a file extension.",
+            "                Output data will be written using the JPEG format." };
 
     /**
-     * Reads the content of a TIFF file containing floating-point data and
-     * renders it using a gray-scale palette.
+     * Reads the content of a TIFF file containing floating-point data and renders it using a gray-scale palette.
      *
-     * @param args the command line arguments giving the path to an input TIFF
-     * file and an output JPEG.
-     * @throws org.apache.commons.imaging.ImagingException in the event of an
-     * internal data format or version compatibility error reading the image.
-     * @throws IOException in the event of an I/O error.
+     * @param args the command line arguments giving the path to an input TIFF file and an output JPEG.
+     * @throws org.apache.commons.imaging.ImagingException in the event of an internal data format or version compatibility error reading the image.
+     * @throws IOException                                 in the event of an I/O error.
      */
     public static void main(final String[] args) throws ImagingException, IOException {
         if (args.length == 0) {
@@ -72,30 +63,27 @@ public class ReadAndRenderFloatingPoint {
         if (args.length == 2) {
             outputPath = args[1];
         }
-        final boolean optionalImageWritingEnabled
-            = outputPath != null && !outputPath.isEmpty();
+        final boolean optionalImageWritingEnabled = outputPath != null && !outputPath.isEmpty();
 
         final ByteSource byteSource = ByteSource.file(target);
 
         // Establish a TiffReader. This is just a simple constructor that
-        // does not actually access the file.  So the application cannot
+        // does not actually access the file. So the application cannot
         // obtain the byteOrder, or other details, until the contents has
-        // been read.  Then read the directories associated with the
+        // been read. Then read the directories associated with the
         // file by passing in the byte source and options.
         final TiffReader tiffReader = new TiffReader(true);
 
-        // Read the directories in the TIFF file.  Directories are the
+        // Read the directories in the TIFF file. Directories are the
         // main data element of a TIFF file. They usually include an image
         // element, but sometimes just carry metadata. This example
         // reads all the directories in the file, but if we were interested
         // in just the first element, Commons Imaging provides alternate API's
         // that would be more efficient.
-        final TiffContents contents = tiffReader.readDirectories(
-            byteSource,
-            true, // indicates that application should read image data, if present
-            FormatCompliance.getDefault());
+        final TiffContents contents = tiffReader.readDirectories(byteSource, true, // indicates that application should read image data, if present
+                FormatCompliance.getDefault());
 
-        // Render the first directory in the file.  A practical implementation
+        // Render the first directory in the file. A practical implementation
         // could use any of the directories in the file. This demo uses the
         // first one just for simplicity.
         final TiffDirectory directory = contents.directories.get(0);
@@ -108,14 +96,14 @@ public class ReadAndRenderFloatingPoint {
         // Obtain metadata about what kind of data is in the product.
         // Because this demo is designed for floating-point data,
         // it will expect the sample format to include only one element
-        // of type floating point.   Beyond that, the TIFF specification
+        // of type floating point. Beyond that, the TIFF specification
         // allows a large number of variations in format (16, 24, or 32 byte
-        // floats; tiles versus strips; etc.).  Unfortunately the test data
+        // floats; tiles versus strips; etc.). Unfortunately the test data
         // for the less common variations was not available when Commons Imaging
         // was implemented and so the API will not be able to handle all
-        // of them.  This test will simply allow the API to throw an exception
+        // of them. This test will simply allow the API to throw an exception
         // if an unsupported format is encountered.
-        //    The getFieldValue call allows an application to provide a
+        // The getFieldValue call allows an application to provide a
         // boolean indicating that the field must be present for processing
         // to continue. If it does not, an exception is thrown.
         final short[] sampleFormat = directory.getFieldValue(TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, true);
@@ -133,15 +121,15 @@ public class ReadAndRenderFloatingPoint {
         System.out.println("");
 
         // Create a TIFF Photometric Interpreter to perform a grayscale
-        // rendering.  A Photometric Interpreter is a class that maps a
+        // rendering. A Photometric Interpreter is a class that maps a
         // floating-point value to a pixel (RGB) equivalent.
         // Because there is no way to know the range of
-        // values in the TIFF before it is read.  So the special-purpose
+        // values in the TIFF before it is read. So the special-purpose
         // interpreter permits an application to extract the
         // min and maximum bounds of the data as an auxiliary function
         // of interpreting the data. Unfortunately, if we wish for a
         // good interpretation, we need to read the data twice.
-        //    For this demo, we store the Photometric Interpreter instance
+        // For this demo, we store the Photometric Interpreter instance
         // as a option-parameter to be passed into the read-image method.
         final PhotometricInterpreterFloat pi = new PhotometricInterpreterFloat(0.0f, 1.0f);
         TiffImagingParameters params = new TiffImagingParameters();
@@ -158,8 +146,7 @@ public class ReadAndRenderFloatingPoint {
             final File output = new File(outputPath);
             // create a new photometric interpreter based on the range
             // of values found above.
-            final PhotometricInterpreterFloat grayScale
-                = new PhotometricInterpreterFloat(minValue, maxValue);
+            final PhotometricInterpreterFloat grayScale = new PhotometricInterpreterFloat(minValue, maxValue);
             params = new TiffImagingParameters();
             params.setCustomPhotometricInterpreter(grayScale);
             bImage = directory.getTiffImage(params);

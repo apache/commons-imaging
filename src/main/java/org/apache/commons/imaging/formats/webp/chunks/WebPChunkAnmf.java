@@ -53,7 +53,7 @@ public final class WebPChunkAnmf extends WebPChunk {
      * @param bytes chunk data.
      * @throws ImagingException if the chunk data and the size provided do not match.
      */
-    public WebPChunkAnmf(int type, int size, byte[] bytes) throws ImagingException {
+    public WebPChunkAnmf(final int type, final int size, final byte[] bytes) throws ImagingException {
         super(type, size, bytes);
     }
 }

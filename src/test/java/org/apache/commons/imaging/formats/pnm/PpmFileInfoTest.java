@@ -23,19 +23,20 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests for class {@link PpmFileInfo}.
+ *
  * @see PpmFileInfo
  *
  **/
 public class PpmFileInfoTest {
 
-  @Test
-  public void testCreatesPpmFileInfoOne() {
-      assertThrows(ImagingException.class, () -> new PpmFileInfo(0, 0, false, 16711680));
-  }
+    @Test
+    public void testCreatesPpmFileInfoOne() {
+        assertThrows(ImagingException.class, () -> new PpmFileInfo(0, 0, false, 16711680));
+    }
 
-  @Test
-  public void testCreatesPpmFileInfoThree() {
-      assertThrows(ImagingException.class, () -> new PpmFileInfo(0, 0, true, 0));
-  }
+    @Test
+    public void testCreatesPpmFileInfoThree() {
+        assertThrows(ImagingException.class, () -> new PpmFileInfo(0, 0, true, 0));
+    }
 
 }

@@ -26,25 +26,26 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests for class {@link FieldTypeRational}.
+ *
  * @see FieldTypeRational
  *
  **/
 public class FieldTypeRationalTest {
 
-  @Test
-  public void testWriteDataWithNonNull() {
-      final FieldTypeRational fieldTypeRational = new FieldTypeRational((-922), "z_AX");
-      final ByteOrder byteOrder = ByteOrder.nativeOrder();
-      assertThrows(ImagingException.class, () -> fieldTypeRational.writeData("z_AX", byteOrder));
-  }
+    @Test
+    public void testWriteDataWithNonNull() {
+        final FieldTypeRational fieldTypeRational = new FieldTypeRational(-922, "z_AX");
+        final ByteOrder byteOrder = ByteOrder.nativeOrder();
+        assertThrows(ImagingException.class, () -> fieldTypeRational.writeData("z_AX", byteOrder));
+    }
 
-  @Test
-  public void testWriteDataWithNull() throws ImagingException {
-      final FieldTypeRational fieldTypeRational = new FieldTypeRational(9, null);
-      final Double doubleOne = 2.2d;
-      final byte[] byteArray = fieldTypeRational.writeData(doubleOne, null);
+    @Test
+    public void testWriteDataWithNull() throws ImagingException {
+        final FieldTypeRational fieldTypeRational = new FieldTypeRational(9, null);
+        final Double doubleOne = 2.2d;
+        final byte[] byteArray = fieldTypeRational.writeData(doubleOne, null);
 
-      assertArrayEquals(new byte[] {(byte)11, (byte)0, (byte)0, (byte)0, (byte)5, (byte)0, (byte)0, (byte)0}, byteArray);
-  }
+        assertArrayEquals(new byte[] { (byte) 11, (byte) 0, (byte) 0, (byte) 0, (byte) 5, (byte) 0, (byte) 0, (byte) 0 }, byteArray);
+    }
 
 }

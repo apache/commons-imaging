@@ -65,7 +65,7 @@ import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFi
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilterTrueColor;
 import org.apache.commons.imaging.icc.IccProfileParser;
 
-public class PngImageParser extends AbstractImageParser<PngImagingParameters>  implements XmpEmbeddable<PngImagingParameters> {
+public class PngImageParser extends AbstractImageParser<PngImagingParameters> implements XmpEmbeddable<PngImagingParameters> {
 
     private static final Logger LOGGER = Logger.getLogger(PngImageParser.class.getName());
 
@@ -74,16 +74,15 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters>  i
 
     public static String getChunkTypeName(final int chunkType) {
         final StringBuilder result = new StringBuilder();
-        result.append((char) (0xff & (chunkType >> 24)));
-        result.append((char) (0xff & (chunkType >> 16)));
-        result.append((char) (0xff & (chunkType >> 8)));
-        result.append((char) (0xff & (chunkType >> 0)));
+        result.append((char) (0xff & chunkType >> 24));
+        result.append((char) (0xff & chunkType >> 16));
+        result.append((char) (0xff & chunkType >> 8));
+        result.append((char) (0xff & chunkType >> 0));
         return result.toString();
     }
 
     @Override
-    public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
-            throws ImagingException, IOException {
+    public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource) throws ImagingException, IOException {
         final ImageInfo imageInfo = getImageInfo(byteSource);
         if (imageInfo == null) {
             return false;
@@ -104,7 +103,7 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters>  i
 
         pw.println("chunks: " + chunks.size());
 
-        if ((chunks.isEmpty())) {
+        if (chunks.isEmpty()) {
             return false;
         }
 
@@ -146,18 +145,10 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters>  i
     // private final static int tRNS = CharsToQuad('t', 'R', 'N', 's');
 
     @Override
-    public BufferedImage getBufferedImage(final ByteSource byteSource, final PngImagingParameters params)
-            throws ImagingException, IOException {
+    public BufferedImage getBufferedImage(final ByteSource byteSource, final PngImagingParameters params) throws ImagingException, IOException {
 
-        final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] {
-                ChunkType.IHDR,
-                ChunkType.PLTE,
-                ChunkType.IDAT,
-                ChunkType.tRNS,
-                ChunkType.iCCP,
-                ChunkType.gAMA,
-                ChunkType.sRGB,
-            }, false);
+        final List<PngChunk> chunks = readChunks(byteSource,
+                new ChunkType[] { ChunkType.IHDR, ChunkType.PLTE, ChunkType.IDAT, ChunkType.tRNS, ChunkType.iCCP, ChunkType.gAMA, ChunkType.sRGB, }, false);
 
         if (chunks.isEmpty()) {
             throw new ImagingException("PNG: no chunks");
@@ -287,18 +278,16 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters>  i
             AbstractScanExpediter abstractScanExpediter;
 
             switch (pngChunkIHDR.getInterlaceMethod()) {
-                case NONE:
-                    abstractScanExpediter = new ScanExpediterSimple(width, height, iis,
-                            result, pngColorType, bitDepth, bitsPerPixel,
-                            pngChunkPLTE, gammaCorrection, abstractTransparencyFilter);
-                    break;
-                case ADAM7:
-                    abstractScanExpediter = new ScanExpediterInterlaced(width, height, iis,
-                            result, pngColorType, bitDepth, bitsPerPixel,
-                            pngChunkPLTE, gammaCorrection, abstractTransparencyFilter);
-                    break;
-                default:
-                    throw new ImagingException("Unknown InterlaceMethod: " + pngChunkIHDR.getInterlaceMethod());
+            case NONE:
+                abstractScanExpediter = new ScanExpediterSimple(width, height, iis, result, pngColorType, bitDepth, bitsPerPixel, pngChunkPLTE, gammaCorrection,
+                        abstractTransparencyFilter);
+                break;
+            case ADAM7:
+                abstractScanExpediter = new ScanExpediterInterlaced(width, height, iis, result, pngColorType, bitDepth, bitsPerPixel, pngChunkPLTE,
+                        gammaCorrection, abstractTransparencyFilter);
+                break;
+            default:
+                throw new ImagingException("Unknown InterlaceMethod: " + pngChunkIHDR.getInterlaceMethod());
             }
 
             abstractScanExpediter.drive();
@@ -325,10 +314,9 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters>  i
      * @param is PNG image input stream
      * @return List of String-formatted chunk types, ie. "tRNs".
      * @throws ImagingException if it fail to read the PNG chunks
-     * @throws IOException if it fails to read the input stream data
+     * @throws IOException      if it fails to read the input stream data
      */
-    public List<String> getChunkTypes(final InputStream is)
-            throws ImagingException, IOException {
+    public List<String> getChunkTypes(final InputStream is) throws ImagingException, IOException {
         final List<PngChunk> chunks = readChunks(is, null, false);
         final List<String> chunkTypes = Allocator.arrayList(chunks.size());
         for (final PngChunk chunk : chunks) {
@@ -348,38 +336,26 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters>  i
     }
 
     @Override
-    public byte[] getIccProfileBytes(final ByteSource byteSource, final PngImagingParameters params)
-            throws ImagingException, IOException {
-        final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] { ChunkType.iCCP },
-                true);
+    public byte[] getIccProfileBytes(final ByteSource byteSource, final PngImagingParameters params) throws ImagingException, IOException {
+        final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] { ChunkType.iCCP }, true);
 
         if (chunks.isEmpty()) {
             return null;
         }
 
         if (chunks.size() > 1) {
-            throw new ImagingException(
-                    "PNG contains more than one ICC Profile ");
+            throw new ImagingException("PNG contains more than one ICC Profile ");
         }
 
         final PngChunkIccp pngChunkiCCP = (PngChunkIccp) chunks.get(0);
 
-        return (pngChunkiCCP.getUncompressedProfile());// TODO should this be a clone?
+        return pngChunkiCCP.getUncompressedProfile();// TODO should this be a clone?
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final PngImagingParameters params)
-            throws ImagingException, IOException {
-        final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] {
-                ChunkType.IHDR,
-                ChunkType.pHYs,
-                ChunkType.sCAL,
-                ChunkType.tEXt,
-                ChunkType.zTXt,
-                ChunkType.tRNS,
-                ChunkType.PLTE,
-                ChunkType.iTXt,
-            }, false);
+    public ImageInfo getImageInfo(final ByteSource byteSource, final PngImagingParameters params) throws ImagingException, IOException {
+        final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] { ChunkType.IHDR, ChunkType.pHYs, ChunkType.sCAL, ChunkType.tEXt, ChunkType.zTXt,
+                ChunkType.tRNS, ChunkType.PLTE, ChunkType.iTXt, }, false);
 
         if (chunks.isEmpty()) {
             throw new ImagingException("PNG: no chunks");
@@ -407,8 +383,7 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters>  i
 
         final List<PngChunk> pHYss = filterChunks(chunks, ChunkType.pHYs);
         if (pHYss.size() > 1) {
-            throw new ImagingException("PNG contains more than one pHYs: "
-                    + pHYss.size());
+            throw new ImagingException("PNG contains more than one pHYs: " + pHYss.size());
         }
         if (pHYss.size() == 1) {
             pngChunkpHYs = (PngChunkPhys) pHYss.get(0);
@@ -418,17 +393,14 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters>  i
 
         final List<PngChunk> sCALs = filterChunks(chunks, ChunkType.sCAL);
         if (sCALs.size() > 1) {
-            throw new ImagingException("PNG contains more than one sCAL:"
-                    + sCALs.size());
+            throw new ImagingException("PNG contains more than one sCAL:" + sCALs.size());
         }
         if (sCALs.size() == 1) {
             final PngChunkScal pngChunkScal = (PngChunkScal) sCALs.get(0);
             if (pngChunkScal.getUnitSpecifier() == 1) {
-                physicalScale = PhysicalScale.createFromMeters(pngChunkScal.getUnitsPerPixelXAxis(),
-                      pngChunkScal.getUnitsPerPixelYAxis());
+                physicalScale = PhysicalScale.createFromMeters(pngChunkScal.getUnitsPerPixelXAxis(), pngChunkScal.getUnitsPerPixelYAxis());
             } else {
-                physicalScale = PhysicalScale.createFromRadians(pngChunkScal.getUnitsPerPixelXAxis(),
-                      pngChunkScal.getUnitsPerPixelYAxis());
+                physicalScale = PhysicalScale.createFromRadians(pngChunkScal.getUnitsPerPixelXAxis(), pngChunkScal.getUnitsPerPixelYAxis());
             }
         }
 
@@ -479,7 +451,7 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters>  i
         // System.out.println("\t" + "pngChunkpHYs.PixelsPerUnitXAxis: " +
         // pngChunkpHYs.PixelsPerUnitXAxis );
         // }
-        if ((pngChunkpHYs != null) && (pngChunkpHYs.getUnitSpecifier() == 1)) { // meters
+        if (pngChunkpHYs != null && pngChunkpHYs.getUnitSpecifier() == 1) { // meters
             final double metersPerInch = 0.0254;
 
             physicalWidthDpi = (int) Math.round(pngChunkpHYs.getPixelsPerUnitXAxis() * metersPerInch);
@@ -497,33 +469,29 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters>  i
 
         ImageInfo.ColorType colorType;
         switch (pngChunkIHDR.getPngColorType()) {
-            case GREYSCALE:
-            case GREYSCALE_WITH_ALPHA:
-                colorType = ImageInfo.ColorType.GRAYSCALE;
-                break;
-            case TRUE_COLOR:
-            case INDEXED_COLOR:
-            case TRUE_COLOR_WITH_ALPHA:
-                colorType = ImageInfo.ColorType.RGB;
-                break;
-            default:
-                throw new ImagingException("Png: Unknown ColorType: " + pngChunkIHDR.getPngColorType());
+        case GREYSCALE:
+        case GREYSCALE_WITH_ALPHA:
+            colorType = ImageInfo.ColorType.GRAYSCALE;
+            break;
+        case TRUE_COLOR:
+        case INDEXED_COLOR:
+        case TRUE_COLOR_WITH_ALPHA:
+            colorType = ImageInfo.ColorType.RGB;
+            break;
+        default:
+            throw new ImagingException("Png: Unknown ColorType: " + pngChunkIHDR.getPngColorType());
         }
 
         final String formatDetails = "Png";
         final ImageInfo.CompressionAlgorithm compressionAlgorithm = ImageInfo.CompressionAlgorithm.PNG_FILTER;
 
-        return new PngImageInfo(formatDetails, bitsPerPixel, comments,
-                format, formatName, height, mimeType, numberOfImages,
-                physicalHeightDpi, physicalHeightInch, physicalWidthDpi,
-                physicalWidthInch, width, progressive, transparent,
-                usesPalette, colorType, compressionAlgorithm, textChunks,
-                physicalScale);
+        return new PngImageInfo(formatDetails, bitsPerPixel, comments, format, formatName, height, mimeType, numberOfImages, physicalHeightDpi,
+                physicalHeightInch, physicalWidthDpi, physicalWidthInch, width, progressive, transparent, usesPalette, colorType, compressionAlgorithm,
+                textChunks, physicalScale);
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final PngImagingParameters params)
-            throws ImagingException, IOException {
+    public Dimension getImageSize(final ByteSource byteSource, final PngImagingParameters params) throws ImagingException, IOException {
         final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] { ChunkType.IHDR, }, true);
 
         if (chunks.isEmpty()) {
@@ -540,8 +508,7 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters>  i
     }
 
     @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final PngImagingParameters params)
-            throws ImagingException, IOException {
+    public ImageMetadata getMetadata(final ByteSource byteSource, final PngImagingParameters params) throws ImagingException, IOException {
         final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] { ChunkType.tEXt, ChunkType.zTXt, ChunkType.iTXt }, false);
 
         if (chunks.isEmpty()) {
@@ -567,22 +534,21 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters>  i
     private AbstractTransparencyFilter getTransparencyFilter(final PngColorType pngColorType, final PngChunk pngChunktRNS)
             throws ImagingException, IOException {
         switch (pngColorType) {
-            case GREYSCALE: // 1,2,4,8,16 Each pixel is a grayscale sample.
-                return new TransparencyFilterGrayscale(pngChunktRNS.getBytes());
-            case TRUE_COLOR: // 8,16 Each pixel is an R,G,B triple.
-                return new TransparencyFilterTrueColor(pngChunktRNS.getBytes());
-            case INDEXED_COLOR: // 1,2,4,8 Each pixel is a palette index;
-                return new TransparencyFilterIndexedColor(pngChunktRNS.getBytes());
-            case GREYSCALE_WITH_ALPHA: // 8,16 Each pixel is a grayscale sample,
-            case TRUE_COLOR_WITH_ALPHA: // 8,16 Each pixel is an R,G,B triple,
-            default:
-                throw new ImagingException("Simple Transparency not compatible with ColorType: " + pngColorType);
+        case GREYSCALE: // 1,2,4,8,16 Each pixel is a grayscale sample.
+            return new TransparencyFilterGrayscale(pngChunktRNS.getBytes());
+        case TRUE_COLOR: // 8,16 Each pixel is an R,G,B triple.
+            return new TransparencyFilterTrueColor(pngChunktRNS.getBytes());
+        case INDEXED_COLOR: // 1,2,4,8 Each pixel is a palette index;
+            return new TransparencyFilterIndexedColor(pngChunktRNS.getBytes());
+        case GREYSCALE_WITH_ALPHA: // 8,16 Each pixel is a grayscale sample,
+        case TRUE_COLOR_WITH_ALPHA: // 8,16 Each pixel is an R,G,B triple,
+        default:
+            throw new ImagingException("Simple Transparency not compatible with ColorType: " + pngColorType);
         }
     }
 
     @Override
-    public String getXmpXml(final ByteSource byteSource, final XmpImagingParameters<PngImagingParameters> params)
-            throws ImagingException, IOException {
+    public String getXmpXml(final ByteSource byteSource, final XmpImagingParameters<PngImagingParameters> params) throws ImagingException, IOException {
 
         final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] { ChunkType.iTXt }, false);
 
@@ -603,8 +569,7 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters>  i
             return null;
         }
         if (xmpChunks.size() > 1) {
-            throw new ImagingException(
-                    "PNG contains more than one XMP chunk.");
+            throw new ImagingException("PNG contains more than one XMP chunk.");
         }
 
         final PngChunkItxt chunk = xmpChunks.get(0);
@@ -615,8 +580,7 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters>  i
     // BinaryFileParser
     // I may not have always preserved byte order correctly.
 
-    public boolean hasChunkType(final ByteSource byteSource, final ChunkType chunkType)
-            throws ImagingException, IOException {
+    public boolean hasChunkType(final ByteSource byteSource, final ChunkType chunkType) throws ImagingException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             readSignature(is);
             final List<PngChunk> chunks = readChunks(is, new ChunkType[] { chunkType }, true);
@@ -638,16 +602,15 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters>  i
         return false;
     }
 
-    private List<PngChunk> readChunks(final ByteSource byteSource, final ChunkType[] chunkTypes,
-            final boolean returnAfterFirst) throws ImagingException, IOException {
+    private List<PngChunk> readChunks(final ByteSource byteSource, final ChunkType[] chunkTypes, final boolean returnAfterFirst)
+            throws ImagingException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             readSignature(is);
             return readChunks(is, chunkTypes, returnAfterFirst);
         }
     }
 
-    private List<PngChunk> readChunks(final InputStream is, final ChunkType[] chunkTypes,
-            final boolean returnAfterFirst) throws ImagingException, IOException {
+    private List<PngChunk> readChunks(final InputStream is, final ChunkType[] chunkTypes, final boolean returnAfterFirst) throws ImagingException, IOException {
         final List<PngChunk> result = new ArrayList<>();
 
         while (true) {
@@ -665,8 +628,7 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters>  i
 
             byte[] bytes = null;
             if (keep) {
-                bytes = BinaryFunctions.readBytes("Chunk Data", is, length,
-                        "Not a Valid PNG File: Couldn't read Chunk Data.");
+                bytes = BinaryFunctions.readBytes("Chunk Data", is, length, "Not a Valid PNG File: Couldn't read Chunk Data.");
             } else {
                 BinaryFunctions.skipBytes(is, length, "Not a Valid PNG File");
             }
@@ -719,16 +681,13 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters>  i
 
     }
 
-    public void readSignature(final InputStream is) throws ImagingException,
-            IOException {
-        BinaryFunctions.readAndVerifyBytes(is, PngConstants.PNG_SIGNATURE,
-                "Not a Valid PNG Segment: Incorrect Signature");
+    public void readSignature(final InputStream is) throws ImagingException, IOException {
+        BinaryFunctions.readAndVerifyBytes(is, PngConstants.PNG_SIGNATURE, "Not a Valid PNG Segment: Incorrect Signature");
 
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, final PngImagingParameters params)
-            throws ImagingException, IOException {
+    public void writeImage(final BufferedImage src, final OutputStream os, final PngImagingParameters params) throws ImagingException, IOException {
         new PngWriter().writeImage(src, os, params, null);
     }
 

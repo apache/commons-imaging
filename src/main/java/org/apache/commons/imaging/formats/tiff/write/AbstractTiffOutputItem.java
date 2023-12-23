@@ -46,15 +46,13 @@ abstract class AbstractTiffOutputItem {
 
         public void updateValue(final byte[] bytes) throws ImagingException {
             if (this.bytes.length != bytes.length) {
-                throw new ImagingException("Updated data size mismatch: "
-                        + this.bytes.length + " vs. " + bytes.length);
+                throw new ImagingException("Updated data size mismatch: " + this.bytes.length + " vs. " + bytes.length);
             }
             System.arraycopy(bytes, 0, this.bytes, 0, bytes.length);
         }
 
         @Override
-        public void writeItem(final BinaryOutputStream bos) throws IOException,
-                ImagingException {
+        public void writeItem(final BinaryOutputStream bos) throws IOException, ImagingException {
             bos.write(bytes);
         }
     }
@@ -75,6 +73,5 @@ abstract class AbstractTiffOutputItem {
         this.offset = offset;
     }
 
-    public abstract void writeItem(BinaryOutputStream bos) throws IOException,
-            ImagingException;
+    public abstract void writeItem(BinaryOutputStream bos) throws IOException, ImagingException;
 }

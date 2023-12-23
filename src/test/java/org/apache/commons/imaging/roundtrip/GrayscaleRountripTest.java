@@ -26,8 +26,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class GrayscaleRountripTest extends RoundtripBase {
 
-    public static BufferedImage[] images = {
-            TestImages.createArgbBitmapImage(1, 1), // minimal
+    public static BufferedImage[] images = { TestImages.createArgbBitmapImage(1, 1), // minimal
             TestImages.createArgbGrayscaleImage(2, 2), //
             TestImages.createArgbGrayscaleImage(10, 10), // larger than 8
             TestImages.createArgbGrayscaleImage(300, 300), // larger than 256
@@ -45,8 +44,8 @@ public class GrayscaleRountripTest extends RoundtripBase {
     @ParameterizedTest
     @MethodSource
     public void testGrayscaleRoundtrip(final BufferedImage testImage, final FormatInfo formatInfo) throws Exception {
-            final boolean imageExact = formatInfo.colorSupport != FormatInfo.COLOR_BITMAP;
+        final boolean imageExact = formatInfo.colorSupport != FormatInfo.COLOR_BITMAP;
 
-            roundtrip(formatInfo, testImage, "gray", imageExact);
+        roundtrip(formatInfo, testImage, "gray", imageExact);
     }
 }

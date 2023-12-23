@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
  * @see PngCrc
  *
  **/
-public class PngCrcTest{
+public class PngCrcTest {
 
     @Test
     public void testCrc() {
@@ -35,7 +35,7 @@ public class PngCrcTest{
         final PngCrc pngCrc = new PngCrc();
         final byte[] byteArray = new byte[4];
 
-        assertEquals(558161692, pngCrc.crc(byteArray, (byte)32));
+        assertEquals(558161692, pngCrc.crc(byteArray, (byte) 32));
         assertEquals(3736805603L, pngCrc.startPartialCrc(byteArray, 0));
 
     }

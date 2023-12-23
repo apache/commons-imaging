@@ -95,13 +95,9 @@ public class PcxImageParser extends AbstractImageParser<PcxImagingParameters> {
         public final int vScreenSize; // vertical screen size, in pixels.
                                       // PaintBrush >= IV only.
 
-        PcxHeader(final int manufacturer, final int version,
-                final int encoding, final int bitsPerPixel, final int xMin,
-                final int yMin, final int xMax, final int yMax, final int hDpi,
-                final int vDpi, final int[] colormap, final int reserved,
-                final int nPlanes, final int bytesPerLine,
-                final int paletteInfo, final int hScreenSize,
-                final int vScreenSize) {
+        PcxHeader(final int manufacturer, final int version, final int encoding, final int bitsPerPixel, final int xMin, final int yMin, final int xMax,
+                final int yMax, final int hDpi, final int vDpi, final int[] colormap, final int reserved, final int nPlanes, final int bytesPerLine,
+                final int paletteInfo, final int hScreenSize, final int vScreenSize) {
             this.manufacturer = manufacturer;
             this.version = version;
             this.encoding = encoding;
@@ -138,9 +134,7 @@ public class PcxImageParser extends AbstractImageParser<PcxImagingParameters> {
                 if (i > 0) {
                     pw.print(",");
                 }
-                pw.print("(" + (0xff & (colormap[i] >> 16)) + ","
-                        + (0xff & (colormap[i] >> 8)) + ","
-                        + (0xff & colormap[i]) + ")");
+                pw.print("(" + (0xff & colormap[i] >> 16) + "," + (0xff & colormap[i] >> 8) + "," + (0xff & colormap[i]) + ")");
             }
             pw.println();
             pw.println("Reserved: " + reserved);
@@ -152,6 +146,7 @@ public class PcxImageParser extends AbstractImageParser<PcxImagingParameters> {
             pw.println();
         }
     }
+
     private static final String DEFAULT_EXTENSION = ImageFormats.PCX.getDefaultExtension();
 
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.PCX.getExtensions();
@@ -161,8 +156,7 @@ public class PcxImageParser extends AbstractImageParser<PcxImagingParameters> {
     }
 
     @Override
-    public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
-            throws ImagingException, IOException {
+    public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource) throws ImagingException, IOException {
         readPcxHeader(byteSource).dump(pw);
         return true;
     }
@@ -200,41 +194,22 @@ public class PcxImageParser extends AbstractImageParser<PcxImagingParameters> {
     }
 
     @Override
-    public byte[] getIccProfileBytes(final ByteSource byteSource, final PcxImagingParameters params)
-            throws ImagingException, IOException {
+    public byte[] getIccProfileBytes(final ByteSource byteSource, final PcxImagingParameters params) throws ImagingException, IOException {
         return null;
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final PcxImagingParameters params)
-            throws ImagingException, IOException {
+    public ImageInfo getImageInfo(final ByteSource byteSource, final PcxImagingParameters params) throws ImagingException, IOException {
         final PcxHeader pcxHeader = readPcxHeader(byteSource);
         final Dimension size = getImageSize(byteSource, params);
-        return new ImageInfo(
-                "PCX",
-                pcxHeader.nPlanes * pcxHeader.bitsPerPixel,
-                new ArrayList<>(),
-                ImageFormats.PCX,
-                "ZSoft PCX Image",
-                size.height,
-                "image/x-pcx",
-                1,
-                pcxHeader.vDpi,
-                Math.round(size.getHeight() / pcxHeader.vDpi),
-                pcxHeader.hDpi,
-                Math.round(size.getWidth() / pcxHeader.hDpi),
-                size.width,
-                false,
-                false,
-                !(pcxHeader.nPlanes == 3 && pcxHeader.bitsPerPixel == 8),
-                ImageInfo.ColorType.RGB,
-                pcxHeader.encoding == PcxHeader.ENCODING_RLE ? ImageInfo.CompressionAlgorithm.RLE
-                        : ImageInfo.CompressionAlgorithm.NONE);
+        return new ImageInfo("PCX", pcxHeader.nPlanes * pcxHeader.bitsPerPixel, new ArrayList<>(), ImageFormats.PCX, "ZSoft PCX Image", size.height,
+                "image/x-pcx", 1, pcxHeader.vDpi, Math.round(size.getHeight() / pcxHeader.vDpi), pcxHeader.hDpi, Math.round(size.getWidth() / pcxHeader.hDpi),
+                size.width, false, false, !(pcxHeader.nPlanes == 3 && pcxHeader.bitsPerPixel == 8), ImageInfo.ColorType.RGB,
+                pcxHeader.encoding == PcxHeader.ENCODING_RLE ? ImageInfo.CompressionAlgorithm.RLE : ImageInfo.CompressionAlgorithm.NONE);
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final PcxImagingParameters params)
-            throws ImagingException, IOException {
+    public Dimension getImageSize(final ByteSource byteSource, final PcxImagingParameters params) throws ImagingException, IOException {
         final PcxHeader pcxHeader = readPcxHeader(byteSource);
         final int xSize = pcxHeader.xMax - pcxHeader.xMin + 1;
         if (xSize < 0) {
@@ -248,8 +223,7 @@ public class PcxImageParser extends AbstractImageParser<PcxImagingParameters> {
     }
 
     @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final PcxImagingParameters params)
-            throws ImagingException, IOException {
+    public ImageMetadata getMetadata(final ByteSource byteSource, final PcxImagingParameters params) throws ImagingException, IOException {
         return null;
     }
 
@@ -259,22 +233,18 @@ public class PcxImageParser extends AbstractImageParser<PcxImagingParameters> {
     }
 
     private int[] read256ColorPalette(final InputStream stream) throws IOException {
-        final byte[] paletteBytes = readBytes("Palette", stream, 769,
-                "Error reading palette");
+        final byte[] paletteBytes = readBytes("Palette", stream, 769, "Error reading palette");
         if (paletteBytes[0] != 12) {
             return null;
         }
         final int[] palette = new int[256];
         for (int i = 0; i < palette.length; i++) {
-            palette[i] = ((0xff & paletteBytes[1 + 3 * i]) << 16)
-                    | ((0xff & paletteBytes[1 + 3 * i + 1]) << 8)
-                    | (0xff & paletteBytes[1 + 3 * i + 2]);
+            palette[i] = (0xff & paletteBytes[1 + 3 * i]) << 16 | (0xff & paletteBytes[1 + 3 * i + 1]) << 8 | 0xff & paletteBytes[1 + 3 * i + 2];
         }
         return palette;
     }
 
-    private int[] read256ColorPaletteFromEndOfFile(final ByteSource byteSource)
-            throws IOException {
+    private int[] read256ColorPaletteFromEndOfFile(final ByteSource byteSource) throws IOException {
         try (InputStream stream = byteSource.getInputStream()) {
             final long toSkip = byteSource.size() - 769;
             skipBytes(stream, (int) toSkip);
@@ -282,8 +252,7 @@ public class PcxImageParser extends AbstractImageParser<PcxImagingParameters> {
         }
     }
 
-    private BufferedImage readImage(final PcxHeader pcxHeader, final InputStream is,
-            final ByteSource byteSource) throws ImagingException, IOException {
+    private BufferedImage readImage(final PcxHeader pcxHeader, final InputStream is, final ByteSource byteSource) throws ImagingException, IOException {
         final int xSize = pcxHeader.xMax - pcxHeader.xMin + 1;
         if (xSize < 0) {
             throw new ImagingException("Image width is negative");
@@ -305,15 +274,13 @@ public class PcxImageParser extends AbstractImageParser<PcxImagingParameters> {
         }
         final int scanlineLength = pcxHeader.bytesPerLine * pcxHeader.nPlanes;
         final byte[] scanline = Allocator.byteArray(scanlineLength);
-        if ((pcxHeader.bitsPerPixel == 1 || pcxHeader.bitsPerPixel == 2
-                || pcxHeader.bitsPerPixel == 4 || pcxHeader.bitsPerPixel == 8)
+        if ((pcxHeader.bitsPerPixel == 1 || pcxHeader.bitsPerPixel == 2 || pcxHeader.bitsPerPixel == 4 || pcxHeader.bitsPerPixel == 8)
                 && pcxHeader.nPlanes == 1) {
             final int bytesPerImageRow = (xSize * pcxHeader.bitsPerPixel + 7) / 8;
             final byte[] image = Allocator.byteArray(ySize * bytesPerImageRow);
             for (int y = 0; y < ySize; y++) {
                 rleReader.read(is, scanline);
-                System.arraycopy(scanline, 0, image, y * bytesPerImageRow,
-                        bytesPerImageRow);
+                System.arraycopy(scanline, 0, image, y * bytesPerImageRow, bytesPerImageRow);
             }
             final DataBufferByte dataBuffer = new DataBufferByte(image, image.length);
             int[] palette;
@@ -331,34 +298,25 @@ public class PcxImageParser extends AbstractImageParser<PcxImagingParameters> {
                     palette = read256ColorPaletteFromEndOfFile(byteSource);
                 }
                 if (palette == null) {
-                    throw new ImagingException(
-                            "No 256 color palette found in image that needs it");
+                    throw new ImagingException("No 256 color palette found in image that needs it");
                 }
             } else {
                 palette = pcxHeader.colormap;
             }
             WritableRaster raster;
             if (pcxHeader.bitsPerPixel == 8) {
-                raster = Raster.createInterleavedRaster(dataBuffer,
-                        xSize, ySize, bytesPerImageRow, 1, new int[] { 0 },
-                        null);
+                raster = Raster.createInterleavedRaster(dataBuffer, xSize, ySize, bytesPerImageRow, 1, new int[] { 0 }, null);
             } else {
-                raster = Raster.createPackedRaster(dataBuffer, xSize,
-                        ySize, pcxHeader.bitsPerPixel, null);
+                raster = Raster.createPackedRaster(dataBuffer, xSize, ySize, pcxHeader.bitsPerPixel, null);
             }
-            final IndexColorModel colorModel = new IndexColorModel(
-                    pcxHeader.bitsPerPixel, 1 << pcxHeader.bitsPerPixel,
-                    palette, 0, false, -1, DataBuffer.TYPE_BYTE);
-            return new BufferedImage(colorModel, raster,
-                    colorModel.isAlphaPremultiplied(), new Properties());
-        }
-        if (pcxHeader.bitsPerPixel == 1 && 2 <= pcxHeader.nPlanes
-                && pcxHeader.nPlanes <= 4) {
-            final IndexColorModel colorModel = new IndexColorModel(pcxHeader.nPlanes,
-                    1 << pcxHeader.nPlanes, pcxHeader.colormap, 0, false, -1,
+            final IndexColorModel colorModel = new IndexColorModel(pcxHeader.bitsPerPixel, 1 << pcxHeader.bitsPerPixel, palette, 0, false, -1,
                     DataBuffer.TYPE_BYTE);
-            final BufferedImage image = new BufferedImage(xSize, ySize,
-                    BufferedImage.TYPE_BYTE_BINARY, colorModel);
+            return new BufferedImage(colorModel, raster, colorModel.isAlphaPremultiplied(), new Properties());
+        }
+        if (pcxHeader.bitsPerPixel == 1 && 2 <= pcxHeader.nPlanes && pcxHeader.nPlanes <= 4) {
+            final IndexColorModel colorModel = new IndexColorModel(pcxHeader.nPlanes, 1 << pcxHeader.nPlanes, pcxHeader.colormap, 0, false, -1,
+                    DataBuffer.TYPE_BYTE);
+            final BufferedImage image = new BufferedImage(xSize, ySize, BufferedImage.TYPE_BYTE_BINARY, colorModel);
             final byte[] unpacked = Allocator.byteArray(xSize);
             for (int y = 0; y < ySize; y++) {
                 rleReader.read(is, scanline);
@@ -368,7 +326,7 @@ public class PcxImageParser extends AbstractImageParser<PcxImagingParameters> {
                     for (int i = 0; i < pcxHeader.bytesPerLine; i++) {
                         final int b = 0xff & scanline[nextByte++];
                         for (int j = 0; j < 8 && 8 * i + j < unpacked.length; j++) {
-                            unpacked[8 * i + j] |= (byte) (((b >> (7 - j)) & 0x1) << plane);
+                            unpacked[8 * i + j] |= (byte) ((b >> 7 - j & 0x1) << plane);
                         }
                     }
                 }
@@ -385,35 +343,24 @@ public class PcxImageParser extends AbstractImageParser<PcxImagingParameters> {
             for (int y = 0; y < ySize; y++) {
                 rleReader.read(is, scanline);
                 System.arraycopy(scanline, 0, image[0], y * xSize, xSize);
-                System.arraycopy(scanline, pcxHeader.bytesPerLine, image[1], y
-                        * xSize, xSize);
-                System.arraycopy(scanline, 2 * pcxHeader.bytesPerLine,
-                        image[2], y * xSize, xSize);
+                System.arraycopy(scanline, pcxHeader.bytesPerLine, image[1], y * xSize, xSize);
+                System.arraycopy(scanline, 2 * pcxHeader.bytesPerLine, image[2], y * xSize, xSize);
             }
-            final DataBufferByte dataBuffer = new DataBufferByte(image,
-                    image[0].length);
-            final WritableRaster raster = Raster.createBandedRaster(
-                    dataBuffer, xSize, ySize, xSize, new int[] { 0, 1, 2 },
-                    new int[] { 0, 0, 0 }, null);
-            final ColorModel colorModel = new ComponentColorModel(
-                    ColorSpace.getInstance(ColorSpace.CS_sRGB), false, false,
-                    Transparency.OPAQUE, DataBuffer.TYPE_BYTE);
-            return new BufferedImage(colorModel, raster,
-                    colorModel.isAlphaPremultiplied(), new Properties());
+            final DataBufferByte dataBuffer = new DataBufferByte(image, image[0].length);
+            final WritableRaster raster = Raster.createBandedRaster(dataBuffer, xSize, ySize, xSize, new int[] { 0, 1, 2 }, new int[] { 0, 0, 0 }, null);
+            final ColorModel colorModel = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB), false, false, Transparency.OPAQUE,
+                    DataBuffer.TYPE_BYTE);
+            return new BufferedImage(colorModel, raster, colorModel.isAlphaPremultiplied(), new Properties());
         }
-        if (((pcxHeader.bitsPerPixel != 24) || (pcxHeader.nPlanes != 1)) && ((pcxHeader.bitsPerPixel != 32) || (pcxHeader.nPlanes != 1))) {
-            throw new ImagingException(
-                    "Invalid/unsupported image with bitsPerPixel "
-                            + pcxHeader.bitsPerPixel + " and planes "
-                            + pcxHeader.nPlanes);
+        if ((pcxHeader.bitsPerPixel != 24 || pcxHeader.nPlanes != 1) && (pcxHeader.bitsPerPixel != 32 || pcxHeader.nPlanes != 1)) {
+            throw new ImagingException("Invalid/unsupported image with bitsPerPixel " + pcxHeader.bitsPerPixel + " and planes " + pcxHeader.nPlanes);
         }
         final int rowLength = 3 * xSize;
         final byte[] image = Allocator.byteArray(rowLength * ySize);
         for (int y = 0; y < ySize; y++) {
             rleReader.read(is, scanline);
             if (pcxHeader.bitsPerPixel == 24) {
-                System.arraycopy(scanline, 0, image, y * rowLength,
-                        rowLength);
+                System.arraycopy(scanline, 0, image, y * rowLength, rowLength);
             } else {
                 for (int x = 0; x < xSize; x++) {
                     image[y * rowLength + 3 * x] = scanline[4 * x];
@@ -423,27 +370,20 @@ public class PcxImageParser extends AbstractImageParser<PcxImagingParameters> {
             }
         }
         final DataBufferByte dataBuffer = new DataBufferByte(image, image.length);
-        final WritableRaster raster = Raster.createInterleavedRaster(
-                dataBuffer, xSize, ySize, rowLength, 3,
-                new int[] { 2, 1, 0 }, null);
-        final ColorModel colorModel = new ComponentColorModel(
-                ColorSpace.getInstance(ColorSpace.CS_sRGB), false, false,
-                Transparency.OPAQUE, DataBuffer.TYPE_BYTE);
-        return new BufferedImage(colorModel, raster,
-                colorModel.isAlphaPremultiplied(), new Properties());
+        final WritableRaster raster = Raster.createInterleavedRaster(dataBuffer, xSize, ySize, rowLength, 3, new int[] { 2, 1, 0 }, null);
+        final ColorModel colorModel = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB), false, false, Transparency.OPAQUE,
+                DataBuffer.TYPE_BYTE);
+        return new BufferedImage(colorModel, raster, colorModel.isAlphaPremultiplied(), new Properties());
     }
 
-    private PcxHeader readPcxHeader(final ByteSource byteSource)
-            throws ImagingException, IOException {
+    private PcxHeader readPcxHeader(final ByteSource byteSource) throws ImagingException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             return readPcxHeader(is, false);
         }
     }
 
-    private PcxHeader readPcxHeader(final InputStream is, final boolean isStrict)
-            throws ImagingException, IOException {
-        final byte[] pcxHeaderBytes = readBytes("PcxHeader", is, 128,
-                "Not a Valid PCX File");
+    private PcxHeader readPcxHeader(final InputStream is, final boolean isStrict) throws ImagingException, IOException {
+        final byte[] pcxHeaderBytes = readBytes("PcxHeader", is, 128, "Not a Valid PCX File");
         final int manufacturer = 0xff & pcxHeaderBytes[0];
         final int version = 0xff & pcxHeaderBytes[1];
         final int encoding = 0xff & pcxHeaderBytes[2];
@@ -455,10 +395,8 @@ public class PcxImageParser extends AbstractImageParser<PcxImagingParameters> {
         final int hDpi = toUInt16(pcxHeaderBytes, 12, getByteOrder());
         final int vDpi = toUInt16(pcxHeaderBytes, 14, getByteOrder());
         final int[] colormap = new int[16];
-        Arrays.setAll(colormap, i -> 0xff000000
-                    | ((0xff & pcxHeaderBytes[16 + 3 * i]) << 16)
-                    | ((0xff & pcxHeaderBytes[16 + 3 * i + 1]) << 8)
-                    | (0xff & pcxHeaderBytes[16 + 3 * i + 2]));
+        Arrays.setAll(colormap, i -> 0xff000000 | (0xff & pcxHeaderBytes[16 + 3 * i]) << 16 | (0xff & pcxHeaderBytes[16 + 3 * i + 1]) << 8
+                | 0xff & pcxHeaderBytes[16 + 3 * i + 2]);
         final int reserved = 0xff & pcxHeaderBytes[64];
         final int nPlanes = 0xff & pcxHeaderBytes[65];
         final int bytesPerLine = toUInt16(pcxHeaderBytes, 66, getByteOrder());
@@ -467,26 +405,22 @@ public class PcxImageParser extends AbstractImageParser<PcxImagingParameters> {
         final int vScreenSize = toUInt16(pcxHeaderBytes, 72, getByteOrder());
 
         if (manufacturer != 10) {
-            throw new ImagingException(
-                    "Not a Valid PCX File: manufacturer is " + manufacturer);
+            throw new ImagingException("Not a Valid PCX File: manufacturer is " + manufacturer);
         }
         if (isStrict) {
             // Note that reserved is sometimes set to a non-zero value
             // by Paintbrush itself, so it shouldn't be enforced.
             if (bytesPerLine % 2 != 0) {
-                throw new ImagingException(
-                        "Not a Valid PCX File: bytesPerLine is odd");
+                throw new ImagingException("Not a Valid PCX File: bytesPerLine is odd");
             }
         }
 
-        return new PcxHeader(manufacturer, version, encoding, bitsPerPixel,
-                xMin, yMin, xMax, yMax, hDpi, vDpi, colormap, reserved,
-                nPlanes, bytesPerLine, paletteInfo, hScreenSize, vScreenSize);
+        return new PcxHeader(manufacturer, version, encoding, bitsPerPixel, xMin, yMin, xMax, yMax, hDpi, vDpi, colormap, reserved, nPlanes, bytesPerLine,
+                paletteInfo, hScreenSize, vScreenSize);
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, final PcxImagingParameters params)
-            throws ImagingException, IOException {
+    public void writeImage(final BufferedImage src, final OutputStream os, final PcxImagingParameters params) throws ImagingException, IOException {
         new PcxWriter(params).writeImage(src, os);
     }
 }

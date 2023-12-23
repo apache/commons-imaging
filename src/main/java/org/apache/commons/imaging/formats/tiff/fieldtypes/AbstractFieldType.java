@@ -45,43 +45,22 @@ public abstract class AbstractFieldType {
     public static final FieldTypeLong8 SLONG8 = new FieldTypeLong8(17, "Long8");
     public static final FieldTypeLong8 IFD8 = new FieldTypeLong8(18, "Long8");
 
-    public static final List<AbstractFieldType> ANY =
-            Collections.unmodifiableList(Arrays.asList(
-                    BYTE, ASCII, SHORT,
-                    LONG, RATIONAL, SBYTE,
-                    UNDEFINED, SSHORT, SLONG,
-                    SRATIONAL, FLOAT, DOUBLE,
-                    IFD, LONG8, SLONG8, IFD8));
-    public static final List<AbstractFieldType> SHORT_OR_LONG =
-            Collections.unmodifiableList(Arrays.asList(
-                    SHORT, LONG));
-    public static final List<AbstractFieldType> SHORT_OR_RATIONAL =
-            Collections.unmodifiableList(Arrays.asList(
-                    SHORT, RATIONAL));
+    public static final List<AbstractFieldType> ANY = Collections.unmodifiableList(
+            Arrays.asList(BYTE, ASCII, SHORT, LONG, RATIONAL, SBYTE, UNDEFINED, SSHORT, SLONG, SRATIONAL, FLOAT, DOUBLE, IFD, LONG8, SLONG8, IFD8));
+    public static final List<AbstractFieldType> SHORT_OR_LONG = Collections.unmodifiableList(Arrays.asList(SHORT, LONG));
+    public static final List<AbstractFieldType> SHORT_OR_RATIONAL = Collections.unmodifiableList(Arrays.asList(SHORT, RATIONAL));
 
-    public static final List<AbstractFieldType> SHORT_OR_LONG_OR_RATIONAL =
-            Collections.unmodifiableList(Arrays.asList(
-                    SHORT, LONG, RATIONAL));
+    public static final List<AbstractFieldType> SHORT_OR_LONG_OR_RATIONAL = Collections.unmodifiableList(Arrays.asList(SHORT, LONG, RATIONAL));
 
-    public static final List<AbstractFieldType> LONG_OR_SHORT =
-            Collections.unmodifiableList(Arrays.asList(
-                    SHORT, LONG));
+    public static final List<AbstractFieldType> LONG_OR_SHORT = Collections.unmodifiableList(Arrays.asList(SHORT, LONG));
 
-    public static final List<AbstractFieldType> BYTE_OR_SHORT =
-            Collections.unmodifiableList(Arrays.asList(
-                    SHORT, BYTE));
+    public static final List<AbstractFieldType> BYTE_OR_SHORT = Collections.unmodifiableList(Arrays.asList(SHORT, BYTE));
 
-    public static final List<AbstractFieldType> LONG_OR_IFD =
-            Collections.unmodifiableList(Arrays.asList(
-                    (AbstractFieldType) LONG, IFD));
+    public static final List<AbstractFieldType> LONG_OR_IFD = Collections.unmodifiableList(Arrays.asList((AbstractFieldType) LONG, IFD));
 
-    public static final List<AbstractFieldType> ASCII_OR_RATIONAL =
-            Collections.unmodifiableList(Arrays.asList(
-                    ASCII, RATIONAL));
+    public static final List<AbstractFieldType> ASCII_OR_RATIONAL = Collections.unmodifiableList(Arrays.asList(ASCII, RATIONAL));
 
-    public static final List<AbstractFieldType> ASCII_OR_BYTE =
-            Collections.unmodifiableList(Arrays.asList(
-                    ASCII, BYTE));
+    public static final List<AbstractFieldType> ASCII_OR_BYTE = Collections.unmodifiableList(Arrays.asList(ASCII, BYTE));
 
     public static AbstractFieldType getFieldType(final int type) throws ImagingException {
         for (final AbstractFieldType abstractFieldType : ANY) {
@@ -117,5 +96,6 @@ public abstract class AbstractFieldType {
     }
 
     public abstract Object getValue(TiffField entry);
+
     public abstract byte[] writeData(Object o, ByteOrder byteOrder) throws ImagingException;
 }

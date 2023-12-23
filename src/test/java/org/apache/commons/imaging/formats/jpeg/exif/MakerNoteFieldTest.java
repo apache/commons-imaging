@@ -28,8 +28,7 @@ import org.apache.commons.imaging.internal.Debug;
 public class MakerNoteFieldTest extends AbstractSpecificExifTagTest {
 
     @Override
-    protected void checkField(final File imageFile, final TiffField field)
-            throws IOException, ImagingException, ImagingException {
+    protected void checkField(final File imageFile, final TiffField field) throws IOException, ImagingException, ImagingException {
         if (field.getTag() != ExifTagConstants.EXIF_TAG_MAKER_NOTE.tag) {
             return;
         }

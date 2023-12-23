@@ -20,42 +20,43 @@ package org.apache.commons.imaging.formats.png;
  * Used to specify physical scale when reading or storing image information.
  */
 public final class PhysicalScale {
-   private static final int METER_UNITS = 1;
-   private static final int RADIAN_UNITS = 2;
-   public static final PhysicalScale UNDEFINED = createFromMeters(-1.0, -1.0);
+    private static final int METER_UNITS = 1;
+    private static final int RADIAN_UNITS = 2;
+    public static final PhysicalScale UNDEFINED = createFromMeters(-1.0, -1.0);
 
-   public static PhysicalScale createFromMeters(final double x, final double y) {
-      return new PhysicalScale(METER_UNITS, x, y);
-   }
-   public static PhysicalScale createFromRadians(final double x, final double y) {
-      return new PhysicalScale(RADIAN_UNITS, x, y);
-   }
-   private final int units;
+    public static PhysicalScale createFromMeters(final double x, final double y) {
+        return new PhysicalScale(METER_UNITS, x, y);
+    }
 
-   private final double horizontalUnitsPerPixel;
+    public static PhysicalScale createFromRadians(final double x, final double y) {
+        return new PhysicalScale(RADIAN_UNITS, x, y);
+    }
 
-   private final double verticalUnitsPerPixel;
+    private final int units;
 
-   private PhysicalScale(final int units, final double horizontalUnitsPerPixel,
-                         final double verticalUnitsPerPixel) {
-      this.units = units;
-      this.horizontalUnitsPerPixel = horizontalUnitsPerPixel;
-      this.verticalUnitsPerPixel = verticalUnitsPerPixel;
-   }
+    private final double horizontalUnitsPerPixel;
 
-   public double getHorizontalUnitsPerPixel() {
-      return horizontalUnitsPerPixel;
-   }
+    private final double verticalUnitsPerPixel;
 
-   public double getVerticalUnitsPerPixel() {
-      return verticalUnitsPerPixel;
-   }
+    private PhysicalScale(final int units, final double horizontalUnitsPerPixel, final double verticalUnitsPerPixel) {
+        this.units = units;
+        this.horizontalUnitsPerPixel = horizontalUnitsPerPixel;
+        this.verticalUnitsPerPixel = verticalUnitsPerPixel;
+    }
 
-   public boolean isInMeters() {
-      return METER_UNITS == units;
-   }
+    public double getHorizontalUnitsPerPixel() {
+        return horizontalUnitsPerPixel;
+    }
 
-   public boolean isInRadians() {
-      return RADIAN_UNITS == units;
-   }
+    public double getVerticalUnitsPerPixel() {
+        return verticalUnitsPerPixel;
+    }
+
+    public boolean isInMeters() {
+        return METER_UNITS == units;
+    }
+
+    public boolean isInRadians() {
+        return RADIAN_UNITS == units;
+    }
 }

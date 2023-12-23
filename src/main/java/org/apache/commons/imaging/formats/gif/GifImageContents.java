@@ -24,8 +24,7 @@ final class GifImageContents {
     final List<GifBlock> blocks;
     final byte[] globalColorTable;
 
-    GifImageContents(final GifHeaderInfo gifHeaderInfo, final byte[] globalColorTable,
-            final List<GifBlock> blocks) {
+    GifImageContents(final GifHeaderInfo gifHeaderInfo, final byte[] globalColorTable, final List<GifBlock> blocks) {
         this.gifHeaderInfo = gifHeaderInfo;
         this.globalColorTable = globalColorTable;
         this.blocks = blocks;

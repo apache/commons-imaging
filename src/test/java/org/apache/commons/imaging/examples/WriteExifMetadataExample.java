@@ -38,16 +38,13 @@ public class WriteExifMetadataExample {
     /**
      * This example illustrates how to add/update EXIF metadata in a JPEG file.
      *
-     * @param jpegImageFile
-     *            A source image file.
-     * @param dst
-     *            The output file.
+     * @param jpegImageFile A source image file.
+     * @param dst           The output file.
      * @throws IOException
      * @throws ImagingException
      * @throws ImagingException
      */
-    public void changeExifMetadata(final File jpegImageFile, final File dst)
-            throws IOException, ImagingException, ImagingException {
+    public void changeExifMetadata(final File jpegImageFile, final File dst) throws IOException, ImagingException, ImagingException {
 
         try (FileOutputStream fos = new FileOutputStream(dst);
                 OutputStream os = new BufferedOutputStream(fos)) {
@@ -99,8 +96,7 @@ public class WriteExifMetadataExample {
                 // make sure to remove old value if present (this method will
                 // not fail if the tag does not exist).
                 exifDirectory.removeField(ExifTagConstants.EXIF_TAG_APERTURE_VALUE);
-                exifDirectory.add(ExifTagConstants.EXIF_TAG_APERTURE_VALUE,
-                        new RationalNumber(3, 10));
+                exifDirectory.add(ExifTagConstants.EXIF_TAG_APERTURE_VALUE, new RationalNumber(3, 10));
             }
 
             {
@@ -116,13 +112,11 @@ public class WriteExifMetadataExample {
 
             // printTagValue(jpegMetadata, TiffConstants.TIFF_TAG_DATE_TIME);
 
-            new ExifRewriter().updateExifMetadataLossless(jpegImageFile, os,
-                    outputSet);
+            new ExifRewriter().updateExifMetadataLossless(jpegImageFile, os, outputSet);
         }
     }
 
-    public void removeExifMetadata(final File jpegImageFile, final File dst)
-            throws IOException, ImagingException, ImagingException {
+    public void removeExifMetadata(final File jpegImageFile, final File dst) throws IOException, ImagingException, ImagingException {
         try (FileOutputStream fos = new FileOutputStream(dst);
                 OutputStream os = new BufferedOutputStream(fos)) {
             new ExifRewriter().removeExifMetadata(jpegImageFile, os);
@@ -130,22 +124,17 @@ public class WriteExifMetadataExample {
     }
 
     /**
-     * This example illustrates how to remove a tag (if present) from EXIF
-     * metadata in a JPEG file.
+     * This example illustrates how to remove a tag (if present) from EXIF metadata in a JPEG file.
      *
-     * In this case, we remove the "aperture" tag from the EXIF metadata if
-     * present.
+     * In this case, we remove the "aperture" tag from the EXIF metadata if present.
      *
-     * @param jpegImageFile
-     *            A source image file.
-     * @param dst
-     *            The output file.
+     * @param jpegImageFile A source image file.
+     * @param dst           The output file.
      * @throws IOException
      * @throws ImagingException
      * @throws ImagingException
      */
-    public void removeExifTag(final File jpegImageFile, final File dst) throws IOException,
-            ImagingException, ImagingException {
+    public void removeExifTag(final File jpegImageFile, final File dst) throws IOException, ImagingException, ImagingException {
         try (FileOutputStream fos = new FileOutputStream(dst);
                 OutputStream os = new BufferedOutputStream(fos)) {
             TiffOutputSet outputSet = null;
@@ -201,24 +190,20 @@ public class WriteExifMetadataExample {
                 }
             }
 
-            new ExifRewriter().updateExifMetadataLossless(jpegImageFile, os,
-                    outputSet);
+            new ExifRewriter().updateExifMetadataLossless(jpegImageFile, os, outputSet);
         }
     }
 
     /**
      * This example illustrates how to set the GPS values in JPEG EXIF metadata.
      *
-     * @param jpegImageFile
-     *            A source image file.
-     * @param dst
-     *            The output file.
+     * @param jpegImageFile A source image file.
+     * @param dst           The output file.
      * @throws IOException
      * @throws ImagingException
      * @throws ImagingException
      */
-    public void setExifGPSTag(final File jpegImageFile, final File dst) throws IOException,
-            ImagingException, ImagingException {
+    public void setExifGPSTag(final File jpegImageFile, final File dst) throws IOException, ImagingException, ImagingException {
         try (FileOutputStream fos = new FileOutputStream(dst);
                 OutputStream os = new BufferedOutputStream(fos)) {
             TiffOutputSet outputSet = null;
@@ -261,8 +246,7 @@ public class WriteExifMetadataExample {
                 outputSet.setGpsInDegrees(longitude, latitude);
             }
 
-            new ExifRewriter().updateExifMetadataLossless(jpegImageFile, os,
-                    outputSet);
+            new ExifRewriter().updateExifMetadataLossless(jpegImageFile, os, outputSet);
         }
     }
 

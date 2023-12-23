@@ -38,7 +38,7 @@ public final class ColorConversions {
         double x, y, z;
         {
 
-            double varY = ((cieL * 100.0 / 255.0) + 16.0) / 116.0;
+            double varY = (cieL * 100.0 / 255.0 + 16.0) / 116.0;
             double varX = cieA / 500.0 + varY;
             double varZ = varY - cieB / 200.0;
 
@@ -66,9 +66,9 @@ public final class ColorConversions {
             varG = pivotRgb(varG);
             varB = pivotRgb(varB);
 
-            r = (varR * 255);
-            g = (varG * 255);
-            b = (varB * 255);
+            r = varR * 255;
+            g = varG * 255;
+            b = varB * 255;
         }
 
         return convertRgbToRgb(r, g, b);
@@ -207,14 +207,14 @@ public final class ColorConversions {
         double varY = (l + 16) / 116.0;
         varY = unPivotXyz(varY);
 
-        final double refU = (4 * REF_X) / (REF_X + (15 * REF_Y) + (3 * REF_Z));
-        final double refV = (9 * REF_Y) / (REF_X + (15 * REF_Y) + (3 * REF_Z));
+        final double refU = 4 * REF_X / (REF_X + 15 * REF_Y + 3 * REF_Z);
+        final double refV = 9 * REF_Y / (REF_X + 15 * REF_Y + 3 * REF_Z);
         final double varU = u / (13 * l) + refU;
         final double varV = v / (13 * l) + refV;
 
         final double y = varY * 100;
         final double x = -(9 * y * varU) / ((varU - 4) * varV - varU * varV);
-        final double z = (9 * y - (15 * varV * y) - (varV * x)) / (3 * varV);
+        final double z = (9 * y - 15 * varV * y - varV * x) / (3 * varV);
 
         return new ColorXyz(x, y, z);
     }
@@ -223,13 +223,12 @@ public final class ColorConversions {
         return convertCmykToCmy(cmyk.c, cmyk.m, cmyk.y, cmyk.k);
     }
 
-    public static ColorCmy convertCmykToCmy(double c, double m, double y,
-            final double k) {
+    public static ColorCmy convertCmykToCmy(double c, double m, double y, final double k) {
         // Where CMYK and CMY values = 0 ÷ 1
 
-        c = (c * (1 - k) + k);
-        m = (m * (1 - k) + k);
-        y = (y * (1 - k) + k);
+        c = c * (1 - k) + k;
+        m = m * (1 - k) + k;
+        y = y * (1 - k) + k;
 
         return new ColorCmy(c, m, y);
     }
@@ -243,8 +242,7 @@ public final class ColorConversions {
         return convertCmyToRgb(convertCmykToCmy(C, M, Y, K));
     }
 
-    public static int convertCmykToRgbAdobe(final int sc, final int sm, final int sy,
-            final int sk) {
+    public static int convertCmykToRgbAdobe(final int sc, final int sm, final int sy, final int sk) {
         final int red = 255 - (sc + sk);
         final int green = 255 - (sm + sk);
         final int blue = 255 - (sy + sk);
@@ -384,14 +382,14 @@ public final class ColorConversions {
             if (l < 0.5) {
                 var2 = l * (1 + s);
             } else {
-                var2 = (l + s) - (s * l);
+                var2 = l + s - s * l;
             }
 
             final double var1 = 2 * l - var2;
 
-            r = 255 * convertHueToRgb(var1, var2, h + (1 / 3.0));
+            r = 255 * convertHueToRgb(var1, var2, h + 1 / 3.0);
             g = 255 * convertHueToRgb(var1, var2, h);
-            b = 255 * convertHueToRgb(var1, var2, h - (1 / 3.0));
+            b = 255 * convertHueToRgb(var1, var2, h - 1 / 3.0);
         }
 
         return convertRgbToRgb(r, g, b);
@@ -462,24 +460,23 @@ public final class ColorConversions {
         if (vH > 1) {
             vH -= 1;
         }
-        if ((6 * vH) < 1) {
-            return (v1 + (v2 - v1) * 6 * vH);
+        if (6 * vH < 1) {
+            return v1 + (v2 - v1) * 6 * vH;
         }
-        if ((2 * vH) < 1) {
-            return (v2);
+        if (2 * vH < 1) {
+            return v2;
         }
-        if ((3 * vH) < 2) {
-            return (v1 + (v2 - v1) * ((2 / 3.0) - vH) * 6);
+        if (3 * vH < 2) {
+            return v1 + (v2 - v1) * (2 / 3.0 - vH) * 6;
         }
-        return (v1);
+        return v1;
     }
 
     public static ColorXyz convertHunterLabToXyz(final ColorHunterLab cielab) {
         return convertHunterLabToXyz(cielab.l, cielab.a, cielab.b);
     }
 
-    public static ColorXyz convertHunterLabToXyz(final double l, final double a,
-            final double b) {
+    public static ColorXyz convertHunterLabToXyz(final double l, final double a, final double b) {
         final double varY = l / 10;
         final double varX = a / 17.5 * l / 10;
         final double varZ = b / 7 * l / 10;
@@ -492,32 +489,32 @@ public final class ColorConversions {
     }
 
     public static ColorCmy convertRgbToCmy(final int rgb) {
-        final int r = 0xff & (rgb >> 16);
-        final int g = 0xff & (rgb >> 8);
-        final int b = 0xff & (rgb >> 0);
+        final int r = 0xff & rgb >> 16;
+        final int g = 0xff & rgb >> 8;
+        final int b = 0xff & rgb >> 0;
 
         // RGB values = 0 ÷ 255
         // CMY values = 0 ÷ 1
 
-        final double c = 1 - (r / 255.0);
-        final double m = 1 - (g / 255.0);
-        final double y = 1 - (b / 255.0);
+        final double c = 1 - r / 255.0;
+        final double m = 1 - g / 255.0;
+        final double y = 1 - b / 255.0;
 
         return new ColorCmy(c, m, y);
     }
 
     public static ColorHsl convertRgbToHsl(final int rgb) {
 
-        final int r = 0xff & (rgb >> 16);
-        final int g = 0xff & (rgb >> 8);
-        final int b = 0xff & (rgb >> 0);
+        final int r = 0xff & rgb >> 16;
+        final int g = 0xff & rgb >> 8;
+        final int b = 0xff & rgb >> 0;
 
-        final double varR = (r / 255.0); // Where RGB values = 0 ÷ 255
-        final double varG = (g / 255.0);
-        final double varB = (b / 255.0);
+        final double varR = r / 255.0; // Where RGB values = 0 ÷ 255
+        final double varG = g / 255.0;
+        final double varB = b / 255.0;
 
         final double varMin = Math.min(varR, Math.min(varG, varB)); // Min. value
-                                                                  // of RGB
+                                                                    // of RGB
         double varMax;
         boolean maxIsR = false;
         boolean maxIsG = false;
@@ -542,7 +539,7 @@ public final class ColorConversions {
             h = 0; // HSL results = 0 ÷ 1
             s = 0;
         } else {
-        // Chromatic data...
+            // Chromatic data...
 
             // Debug.debug("L", L);
 
@@ -554,16 +551,16 @@ public final class ColorConversions {
 
             // Debug.debug("S", S);
 
-            final double delR = (((varMax - varR) / 6) + (delMax / 2)) / delMax;
-            final double delG = (((varMax - varG) / 6) + (delMax / 2)) / delMax;
-            final double delB = (((varMax - varB) / 6) + (delMax / 2)) / delMax;
+            final double delR = ((varMax - varR) / 6 + delMax / 2) / delMax;
+            final double delG = ((varMax - varG) / 6 + delMax / 2) / delMax;
+            final double delB = ((varMax - varB) / 6 + delMax / 2) / delMax;
 
             if (maxIsR) {
                 h = delB - delG;
             } else if (maxIsG) {
-                h = (1 / 3.0) + delR - delB;
+                h = 1 / 3.0 + delR - delB;
             } else {
-                h = (2 / 3.0) + delG - delR;
+                h = 2 / 3.0 + delG - delR;
             }
 
             // Debug.debug("H1", H);
@@ -582,16 +579,16 @@ public final class ColorConversions {
     }
 
     public static ColorHsv convertRgbToHsv(final int rgb) {
-        final int r = 0xff & (rgb >> 16);
-        final int g = 0xff & (rgb >> 8);
-        final int b = 0xff & (rgb >> 0);
+        final int r = 0xff & rgb >> 16;
+        final int g = 0xff & rgb >> 8;
+        final int b = 0xff & rgb >> 0;
 
-        final double varR = (r / 255.0); // RGB values = 0 ÷ 255
-        final double varG = (g / 255.0);
-        final double varB = (b / 255.0);
+        final double varR = r / 255.0; // RGB values = 0 ÷ 255
+        final double varG = g / 255.0;
+        final double varB = b / 255.0;
 
         final double varMin = Math.min(varR, Math.min(varG, varB)); // Min. value
-                                                                  // of RGB
+                                                                    // of RGB
         boolean maxIsR = false;
         boolean maxIsG = false;
         double varMax;
@@ -614,19 +611,19 @@ public final class ColorConversions {
             h = 0; // HSV results = 0 ÷ 1
             s = 0;
         } else {
-        // Chromatic data...
+            // Chromatic data...
             s = delMax / varMax;
 
-            final double delR = (((varMax - varR) / 6) + (delMax / 2)) / delMax;
-            final double delG = (((varMax - varG) / 6) + (delMax / 2)) / delMax;
-            final double delB = (((varMax - varB) / 6) + (delMax / 2)) / delMax;
+            final double delR = ((varMax - varR) / 6 + delMax / 2) / delMax;
+            final double delG = ((varMax - varG) / 6 + delMax / 2) / delMax;
+            final double delB = ((varMax - varB) / 6 + delMax / 2) / delMax;
 
             if (maxIsR) {
                 h = delB - delG;
             } else if (maxIsG) {
-                h = (1 / 3.0) + delR - delB;
+                h = 1 / 3.0 + delR - delB;
             } else {
-                h = (2 / 3.0) + delG - delR;
+                h = 2 / 3.0 + delG - delR;
             }
 
             if (h < 0) {
@@ -651,7 +648,7 @@ public final class ColorConversions {
 
         final int alpha = 0xff;
 
-        return (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+        return alpha << 24 | red << 16 | green << 8 | blue << 0;
     }
 
     private static int convertRgbToRgb(int red, int green, int blue) {
@@ -661,15 +658,15 @@ public final class ColorConversions {
 
         final int alpha = 0xff;
 
-        return (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+        return alpha << 24 | red << 16 | green << 8 | blue << 0;
     }
 
     // See also c# implementation:
     // https://github.com/muak/ColorMinePortable/blob/master/ColorMinePortable/ColorSpaces/Conversions/XyzConverter.cs
     public static ColorXyz convertRgbToXyz(final int rgb) {
-        final int r = 0xff & (rgb >> 16);
-        final int g = 0xff & (rgb >> 8);
-        final int b = 0xff & (rgb >> 0);
+        final int r = 0xff & rgb >> 16;
+        final int g = 0xff & rgb >> 8;
+        final int b = 0xff & rgb >> 0;
 
         double varR = r / 255.0; // Where R = 0 ÷ 255
         double varG = g / 255.0; // Where G = 0 ÷ 255
@@ -701,8 +698,8 @@ public final class ColorConversions {
     public static ColorCieLuv convertXuzToCieLuv(final double x, final double y, final double z) {
         // problems here with div by zero
 
-        final double varU = (4 * x) / (x + (15 * y) + (3 * z));
-        final double varV = (9 * y) / (x + (15 * y) + (3 * z));
+        final double varU = 4 * x / (x + 15 * y + 3 * z);
+        final double varV = 9 * y / (x + 15 * y + 3 * z);
 
         // Debug.debug("var_U", var_U);
         // Debug.debug("var_V", var_V);
@@ -714,13 +711,13 @@ public final class ColorConversions {
 
         // Debug.debug("var_Y", var_Y);
 
-        final double refU = (4 * REF_X) / (REF_X + (15 * REF_Y) + (3 * REF_Z));
-        final double refV = (9 * REF_Y) / (REF_X + (15 * REF_Y) + (3 * REF_Z));
+        final double refU = 4 * REF_X / (REF_X + 15 * REF_Y + 3 * REF_Z);
+        final double refV = 9 * REF_Y / (REF_X + 15 * REF_Y + 3 * REF_Z);
 
         // Debug.debug("ref_U", ref_U);
         // Debug.debug("ref_V", ref_V);
 
-        final double l = (116 * varY) - 16;
+        final double l = 116 * varY - 16;
         final double u = 13 * l * (varU - refU);
         final double v = 13 * l * (varV - refV);
 
@@ -757,11 +754,10 @@ public final class ColorConversions {
         return convertXyzToHunterLab(xyz.x, xyz.y, xyz.z);
     }
 
-    public static ColorHunterLab convertXyzToHunterLab(final double x,
-            final double y, final double z) {
+    public static ColorHunterLab convertXyzToHunterLab(final double x, final double y, final double z) {
         final double l = 10 * Math.sqrt(y);
-        final double a = y == 0.0 ? 0.0 : 17.5 * (((1.02 * x) - y) / Math.sqrt(y));
-        final double b = y == 0.0 ? 0.0 : 7 * ((y - (0.847 * z)) / Math.sqrt(y));
+        final double a = y == 0.0 ? 0.0 : 17.5 * ((1.02 * x - y) / Math.sqrt(y));
+        final double b = y == 0.0 ? 0.0 : 7 * ((y - 0.847 * z) / Math.sqrt(y));
 
         return new ColorHunterLab(l, a, b);
     }
@@ -790,9 +786,9 @@ public final class ColorConversions {
         varG = pivotRgb(varG);
         varB = pivotRgb(varB);
 
-        final double r = (varR * 255);
-        final double g = (varG * 255);
-        final double b = (varB * 255);
+        final double r = varR * 255;
+        final double g = varG * 255;
+        final double b = varB * 255;
         return convertRgbToRgb(r, g, b);
     }
 

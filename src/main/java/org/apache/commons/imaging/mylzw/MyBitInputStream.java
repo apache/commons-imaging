@@ -60,12 +60,12 @@ public class MyBitInputStream extends FilterInputStream {
                 return -1;
             }
 
-            final int newByte = (0xff & next);
+            final int newByte = 0xff & next;
 
             if (byteOrder == ByteOrder.BIG_ENDIAN) {
-                bitCache = (bitCache << 8) | newByte;
+                bitCache = bitCache << 8 | newByte;
             } else {
-                bitCache = (newByte << bitsInCache) | bitCache;
+                bitCache = newByte << bitsInCache | bitCache;
             }
 
             bytesRead++;
@@ -76,7 +76,7 @@ public class MyBitInputStream extends FilterInputStream {
         int sample;
 
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
-            sample = sampleMask & (bitCache >> (bitsInCache - sampleBits));
+            sample = sampleMask & bitCache >> bitsInCache - sampleBits;
         } else {
             sample = sampleMask & bitCache;
             bitCache >>= sampleBits;

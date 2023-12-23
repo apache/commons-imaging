@@ -23,13 +23,13 @@ import java.io.ByteArrayInputStream;
 
 import org.junit.jupiter.api.Test;
 
-public class RleReaderTest{
+public class RleReaderTest {
 
     @Test
     public void testReadWithNonNull() {
         final RleReader rleReader = new RleReader(false);
         final byte[] byteArray = new byte[1];
-        final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArray, (byte) (-64), (byte) (-64));
+        final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArray, (byte) -64, (byte) -64);
 
         try {
             rleReader.read(byteArrayInputStream, byteArray);

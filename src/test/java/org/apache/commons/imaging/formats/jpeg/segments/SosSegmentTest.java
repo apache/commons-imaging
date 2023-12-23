@@ -22,27 +22,27 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-public class SosSegmentTest{
+public class SosSegmentTest {
 
-  @Test
-  public void testCreatesSosSegmentTakingThreeArguments() throws IOException {
-      final byte[] byteArray = new byte[5];
-      final SosSegment sosSegment = new SosSegment((-1044), byteArray);
+    @Test
+    public void testCreatesSosSegmentTakingThreeArguments() throws IOException {
+        final byte[] byteArray = new byte[5];
+        final SosSegment sosSegment = new SosSegment(-1044, byteArray);
 
-      assertEquals(0, sosSegment.successiveApproximationBitLow);
-      assertEquals(0, sosSegment.successiveApproximationBitHigh);
+        assertEquals(0, sosSegment.successiveApproximationBitLow);
+        assertEquals(0, sosSegment.successiveApproximationBitHigh);
 
-      assertEquals("[Segment: SOS (Unknown)]", sosSegment.toString());
-  }
+        assertEquals("[Segment: SOS (Unknown)]", sosSegment.toString());
+    }
 
-  @Test
-  public void testGetComponentsTakingNoArguments() throws IOException {
-      final byte[] byteArray = new byte[5];
-      final SosSegment sosSegment = new SosSegment((-1044), byteArray);
-      sosSegment.getComponents();
+    @Test
+    public void testGetComponentsTakingNoArguments() throws IOException {
+        final byte[] byteArray = new byte[5];
+        final SosSegment sosSegment = new SosSegment(-1044, byteArray);
+        sosSegment.getComponents();
 
-      assertEquals(0, sosSegment.successiveApproximationBitHigh);
-      assertEquals(0, sosSegment.successiveApproximationBitLow);
-  }
+        assertEquals(0, sosSegment.successiveApproximationBitHigh);
+        assertEquals(0, sosSegment.successiveApproximationBitLow);
+    }
 
 }

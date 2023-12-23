@@ -56,8 +56,7 @@ final class RleReader {
             for (int bytesRead = 0; bytesRead < samples.length; bytesRead += r) {
                 r = is.read(samples, bytesRead, samples.length - bytesRead);
                 if (r < 0) {
-                    throw new ImagingException(
-                            "Premature end of file reading image data");
+                    throw new ImagingException("Premature end of file reading image data");
                 }
             }
         }

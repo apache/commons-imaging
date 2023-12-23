@@ -30,9 +30,8 @@ final class PngCrc {
     }
 
     /*
-     * Update a running CRC with the bytes buf[0..len-1]--the CRC should be
-     * initialized to all 1's, and the transmitted value is the 1's complement
-     * of the final running CRC (see the crc() routine below)).
+     * Update a running CRC with the bytes buf[0..len-1]--the CRC should be initialized to all 1's, and the transmitted value is the 1's complement of the final
+     * running CRC (see the crc() routine below)).
      */
 
     /* Return the CRC of the bytes buf[0..len-1]. */
@@ -41,7 +40,7 @@ final class PngCrc {
     }
 
     public long finishPartialCrc(final long oldCrc) {
-        return (oldCrc ^ 0xffffffffL);
+        return oldCrc ^ 0xffffffffL;
     }
 
     /* Make the table for a fast CRC. */
@@ -54,7 +53,7 @@ final class PngCrc {
             c = n;
             for (k = 0; k < 8; k++) {
                 if ((c & 1) != 0) {
-                    c = 0xedb88320L ^ (c >> 1);
+                    c = 0xedb88320L ^ c >> 1;
                 } else {
                     c = c >> 1;
                 }
@@ -79,7 +78,7 @@ final class PngCrc {
             // Debug.debug("crc[" + n + "]", c + " (" + Long.toHexString(c) +
             // ")");
 
-            c = crcTable[(int) ((c ^ buf[n]) & 0xff)] ^ (c >> 8);
+            c = crcTable[(int) ((c ^ buf[n]) & 0xff)] ^ c >> 8;
         }
         return c;
     }

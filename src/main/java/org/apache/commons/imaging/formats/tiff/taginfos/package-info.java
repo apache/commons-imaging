@@ -19,4 +19,3 @@
  * Classes for the TIFF tags.
  */
 package org.apache.commons.imaging.formats.tiff.taginfos;
-

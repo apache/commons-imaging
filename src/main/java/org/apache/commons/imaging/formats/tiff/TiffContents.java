@@ -50,9 +50,7 @@ public class TiffContents {
                 Debug.debug("\t" + "overlap");
             }
 
-            Debug.debug("element, start: " + element.offset + ", length: "
-                    + element.length + ", end: "
-                    + (element.offset + element.length) + ": "
+            Debug.debug("element, start: " + element.offset + ", length: " + element.length + ", end: " + (element.offset + element.length) + ": "
                     + element.getElementDescription());
             final String verbosity = element.getElementDescription();
             if (null != verbosity) {

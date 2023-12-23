@@ -42,18 +42,16 @@ final class PamFileInfo extends AbstractFileInfo {
             green = scaleSample(green, scale, maxval);
             blue = scaleSample(blue, scale, maxval);
 
-            int alpha =  0xff;
+            int alpha = 0xff;
             if (hasAlpha) {
                 alpha = readSample(is, bytesPerSample);
                 alpha = scaleSample(alpha, scale, maxval);
             }
 
-            return ((0xff & alpha) << 24)
-                 | ((0xff & red)   << 16)
-                 | ((0xff & green) << 8)
-                 | ((0xff & blue)  << 0);
+            return (0xff & alpha) << 24 | (0xff & red) << 16 | (0xff & green) << 8 | (0xff & blue) << 0;
         }
     }
+
     private final class GrayscaleTupleReader extends TupleReader {
         private final ImageInfo.ColorType colorType;
 
@@ -77,16 +75,16 @@ final class PamFileInfo extends AbstractFileInfo {
                 alpha = scaleSample(alpha, scale, maxval);
             }
 
-            return ((0xff & alpha)  << 24)
-                 | ((0xff & sample) << 16)
-                 | ((0xff & sample) << 8)
-                 | ((0xff & sample) << 0);
+            return (0xff & alpha) << 24 | (0xff & sample) << 16 | (0xff & sample) << 8 | (0xff & sample) << 0;
         }
     }
+
     private abstract static class TupleReader {
         public abstract ImageInfo.ColorType getColorType();
+
         public abstract int getRgb(InputStream is) throws IOException;
     }
+
     private final int depth;
     private final int maxval;
     private final float scale;
@@ -102,8 +100,7 @@ final class PamFileInfo extends AbstractFileInfo {
         this.depth = depth;
         this.maxval = maxval;
         if (maxval <= 0) {
-            throw new ImagingException("PAM maxVal " + maxval
-                    + " is out of range [1;65535]");
+            throw new ImagingException("PAM maxVal " + maxval + " is out of range [1;65535]");
         }
         if (maxval <= 255) {
             scale = 255f;
@@ -112,26 +109,25 @@ final class PamFileInfo extends AbstractFileInfo {
             scale = 65535f;
             bytesPerSample = 2;
         } else {
-            throw new ImagingException("PAM maxVal " + maxval
-                    + " is out of range [1;65535]");
+            throw new ImagingException("PAM maxVal " + maxval + " is out of range [1;65535]");
         }
 
         hasAlpha = tupleType.endsWith("_ALPHA");
         switch (tupleType) {
-            case "BLACKANDWHITE":
-            case "BLACKANDWHITE_ALPHA":
-                tupleReader = new GrayscaleTupleReader(ImageInfo.ColorType.BW);
-                break;
-            case "GRAYSCALE":
-            case "GRAYSCALE_ALPHA":
-                tupleReader = new GrayscaleTupleReader(ImageInfo.ColorType.GRAYSCALE);
-                break;
-            case "RGB":
-            case "RGB_ALPHA":
-                tupleReader = new ColorTupleReader();
-                break;
-            default:
-                throw new ImagingException("Unknown PAM tupletype '" + tupleType + "'");
+        case "BLACKANDWHITE":
+        case "BLACKANDWHITE_ALPHA":
+            tupleReader = new GrayscaleTupleReader(ImageInfo.ColorType.BW);
+            break;
+        case "GRAYSCALE":
+        case "GRAYSCALE_ALPHA":
+            tupleReader = new GrayscaleTupleReader(ImageInfo.ColorType.GRAYSCALE);
+            break;
+        case "RGB":
+        case "RGB_ALPHA":
+            tupleReader = new ColorTupleReader();
+            break;
+        default:
+            throw new ImagingException("Unknown PAM tupletype '" + tupleType + "'");
         }
     }
 

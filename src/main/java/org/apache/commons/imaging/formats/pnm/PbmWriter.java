@@ -32,8 +32,7 @@ final class PbmWriter implements PnmWriter {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, final PnmImagingParameters params)
-            throws ImagingException, IOException {
+    public void writeImage(final BufferedImage src, final OutputStream os, final PnmImagingParameters params) throws ImagingException, IOException {
         os.write(PnmConstants.PNM_PREFIX_BYTE);
         os.write(rawBits ? PnmConstants.PBM_RAW_CODE : PnmConstants.PBM_TEXT_CODE);
         os.write(PnmConstants.PNM_SEPARATOR);
@@ -53,9 +52,9 @@ final class PbmWriter implements PnmWriter {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 final int argb = src.getRGB(x, y);
-                final int red = 0xff & (argb >> 16);
-                final int green = 0xff & (argb >> 8);
-                final int blue = 0xff & (argb >> 0);
+                final int red = 0xff & argb >> 16;
+                final int green = 0xff & argb >> 8;
+                final int blue = 0xff & argb >> 0;
                 int sample = (red + green + blue) / 3;
                 if (sample > 127) {
                     sample = 0;
@@ -64,7 +63,7 @@ final class PbmWriter implements PnmWriter {
                 }
 
                 if (rawBits) {
-                    bitcache = (bitcache << 1) | (0x1 & sample);
+                    bitcache = bitcache << 1 | 0x1 & sample;
                     bitsInCache++;
 
                     if (bitsInCache >= 8) {
@@ -74,14 +73,14 @@ final class PbmWriter implements PnmWriter {
                     }
                 } else {
                     os.write(Integer.toString(sample).getBytes(StandardCharsets.US_ASCII)); // max
-                                                                  // component
-                                                                  // value
+                    // component
+                    // value
                     os.write(PnmConstants.PNM_SEPARATOR);
                 }
             }
 
-            if (rawBits && (bitsInCache > 0)) {
-                bitcache = bitcache << (8 - bitsInCache);
+            if (rawBits && bitsInCache > 0) {
+                bitcache = bitcache << 8 - bitsInCache;
                 os.write((byte) bitcache);
                 bitcache = 0;
                 bitsInCache = 0;

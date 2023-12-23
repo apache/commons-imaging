@@ -40,9 +40,8 @@ public class IptcAddTest extends IptcBaseTest {
     }
 
     /*
-         * Add a few IPTC values to JPEG images, whether or not they have existing
-         * IPTC data.
-         */
+     * Add a few IPTC values to JPEG images, whether or not they have existing IPTC data.
+     */
     @ParameterizedTest
     @MethodSource("data")
     public void testAddIptcData(final File imageFile) throws Exception {
@@ -61,8 +60,7 @@ public class IptcAddTest extends IptcBaseTest {
 
         final List<IptcRecord> newRecords = new ArrayList<>();
         for (final IptcRecord record : oldRecords) {
-            if (record.iptcType != IptcTypes.CITY
-                    && record.iptcType != IptcTypes.CREDIT) {
+            if (record.iptcType != IptcTypes.CITY && record.iptcType != IptcTypes.CREDIT) {
                 newRecords.add(record);
             }
         }
@@ -79,8 +77,7 @@ public class IptcAddTest extends IptcBaseTest {
         }
 
         final ByteSource updateByteSource = ByteSource.array(bytes, "test.jpg");
-        final JpegPhotoshopMetadata outMetadata = new JpegImageParser().getPhotoshopMetadata(
-                updateByteSource, params);
+        final JpegPhotoshopMetadata outMetadata = new JpegImageParser().getPhotoshopMetadata(updateByteSource, params);
 
         assertNotNull(outMetadata);
         assertEquals(outMetadata.getItems().size(), newRecords.size());

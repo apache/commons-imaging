@@ -39,26 +39,20 @@ public class JfifSegment extends AbstractSegment {
     public final int yThumbnail;
     public final int thumbnailSize;
 
-    public JfifSegment(final int marker, final byte[] segmentData)
-            throws ImagingException, IOException {
+    public JfifSegment(final int marker, final byte[] segmentData) throws ImagingException, IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
-    public JfifSegment(final int marker, final int markerLength, final InputStream is)
-            throws ImagingException, IOException {
+    public JfifSegment(final int marker, final int markerLength, final InputStream is) throws ImagingException, IOException {
         super(marker, markerLength);
 
         final byte[] signature = readBytes(is, JpegConstants.JFIF0_SIGNATURE.size());
-        if (!JpegConstants.JFIF0_SIGNATURE.equals(signature)
-                && !JpegConstants.JFIF0_SIGNATURE_ALTERNATIVE.equals(signature)) {
-            throw new ImagingException(
-                    "Not a Valid JPEG File: missing JFIF string");
+        if (!JpegConstants.JFIF0_SIGNATURE.equals(signature) && !JpegConstants.JFIF0_SIGNATURE_ALTERNATIVE.equals(signature)) {
+            throw new ImagingException("Not a Valid JPEG File: missing JFIF string");
         }
 
-        jfifMajorVersion = readByte("jfifMajorVersion", is,
-                "Not a Valid JPEG File");
-        jfifMinorVersion = readByte("jfifMinorVersion", is,
-                "Not a Valid JPEG File");
+        jfifMajorVersion = readByte("jfifMajorVersion", is, "Not a Valid JPEG File");
+        jfifMinorVersion = readByte("jfifMinorVersion", is, "Not a Valid JPEG File");
         densityUnits = readByte("densityUnits", is, "Not a Valid JPEG File");
         xDensity = read2Bytes("xDensity", is, "Not a Valid JPEG File", getByteOrder());
         yDensity = read2Bytes("yDensity", is, "Not a Valid JPEG File", getByteOrder());
@@ -67,8 +61,7 @@ public class JfifSegment extends AbstractSegment {
         yThumbnail = readByte("yThumbnail", is, "Not a Valid JPEG File");
         thumbnailSize = xThumbnail * yThumbnail;
         if (thumbnailSize > 0) {
-            skipBytes(is, thumbnailSize,
-                    "Not a Valid JPEG File: missing thumbnail");
+            skipBytes(is, thumbnailSize, "Not a Valid JPEG File: missing thumbnail");
 
         }
     }

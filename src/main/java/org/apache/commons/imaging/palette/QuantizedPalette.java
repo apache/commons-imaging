@@ -32,7 +32,7 @@ public class QuantizedPalette implements Palette {
         this.subsets = subsets == null ? Collections.emptyList() : Collections.unmodifiableList(subsets);
         this.precision = precision;
 
-        straight = Allocator.array(1 << (precision * 3), ColorSpaceSubset[]::new, ColorSpaceSubset.SHALLOW_SIZE);
+        straight = Allocator.array(1 << precision * 3, ColorSpaceSubset[]::new, ColorSpaceSubset.SHALLOW_SIZE);
 
         for (int i = 0; i < this.subsets.size(); i++) {
             final ColorSpaceSubset subset = this.subsets.get(i);
@@ -41,9 +41,7 @@ public class QuantizedPalette implements Palette {
             for (int u = subset.mins[0]; u <= subset.maxs[0]; u++) {
                 for (int j = subset.mins[1]; j <= subset.maxs[1]; j++) {
                     for (int k = subset.mins[2]; k <= subset.maxs[2]; k++) {
-                        final int index = (u << (precision * 2))
-                                | (j << (precision * 1))
-                                | (k << (precision * 0));
+                        final int index = u << precision * 2 | j << precision * 1 | k << precision * 0;
                         straight[index] = subset;
                     }
                 }
@@ -61,9 +59,8 @@ public class QuantizedPalette implements Palette {
     public int getPaletteIndex(final int rgb) throws ImagingException {
         final int precisionMask = (1 << precision) - 1;
 
-        final int index = ((rgb >> (24 - 3 * precision)) & (precisionMask << (precision << 1)))
-                | ((rgb >> (16 - 2 * precision)) & (precisionMask << precision))
-                | ((rgb >> (8 - precision)) & (precisionMask));
+        final int index = rgb >> 24 - 3 * precision & precisionMask << (precision << 1) | rgb >> 16 - 2 * precision & precisionMask << precision
+                | rgb >> 8 - precision & precisionMask;
 
         return straight[index].getIndex();
     }

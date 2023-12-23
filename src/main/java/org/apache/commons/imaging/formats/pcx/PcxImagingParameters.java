@@ -19,6 +19,7 @@ import org.apache.commons.imaging.ImagingParameters;
 
 /**
  * Parameters used by the Pcx format.
+ *
  * @since 1.0-alpha3
  */
 public class PcxImagingParameters extends ImagingParameters<PcxImagingParameters> {

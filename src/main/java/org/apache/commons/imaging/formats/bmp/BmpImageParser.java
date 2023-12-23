@@ -67,8 +67,7 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
     }
 
     @Override
-    public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
-            throws ImagingException, IOException {
+    public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource) throws ImagingException, IOException {
         pw.println("bmp.dumpImageFile");
 
         final ImageInfo imageData = getImageInfo(byteSource, null);
@@ -91,22 +90,22 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
     }
 
     private String getBmpTypeDescription(final int identifier1, final int identifier2) {
-        if ((identifier1 == 'B') && (identifier2 == 'M')) {
+        if (identifier1 == 'B' && identifier2 == 'M') {
             return "Windows 3.1x, 95, NT,";
         }
-        if ((identifier1 == 'B') && (identifier2 == 'A')) {
+        if (identifier1 == 'B' && identifier2 == 'A') {
             return "OS/2 Bitmap Array";
         }
-        if ((identifier1 == 'C') && (identifier2 == 'I')) {
+        if (identifier1 == 'C' && identifier2 == 'I') {
             return "OS/2 Color Icon";
         }
-        if ((identifier1 == 'C') && (identifier2 == 'P')) {
+        if (identifier1 == 'C' && identifier2 == 'P') {
             return "OS/2 Color Pointer";
         }
-        if ((identifier1 == 'I') && (identifier2 == 'C')) {
+        if (identifier1 == 'I' && identifier2 == 'C') {
             return "OS/2 Icon";
         }
-        if ((identifier1 == 'P') && (identifier2 == 'T')) {
+        if (identifier1 == 'P' && identifier2 == 'T') {
             return "OS/2 Pointer";
         }
 
@@ -114,15 +113,13 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
     }
 
     @Override
-    public BufferedImage getBufferedImage(final ByteSource byteSource, final BmpImagingParameters params)
-            throws ImagingException, IOException {
+    public BufferedImage getBufferedImage(final ByteSource byteSource, final BmpImagingParameters params) throws ImagingException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             return getBufferedImage(is, params);
         }
     }
 
-    public BufferedImage getBufferedImage(final InputStream inputStream, final BmpImagingParameters params)
-            throws ImagingException, IOException {
+    public BufferedImage getBufferedImage(final InputStream inputStream, final BmpImagingParameters params) throws ImagingException, IOException {
         final BmpImageContents ic = readImageContents(inputStream, FormatCompliance.getDefault());
 
         final BmpHeaderInfo bhi = ic.bhi;
@@ -174,8 +171,7 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final BmpImagingParameters params)
-            throws ImagingException, IOException {
+    public ImageInfo getImageInfo(final ByteSource byteSource, final BmpImagingParameters params) throws ImagingException, IOException {
         BmpImageContents ic = null;
         try (InputStream is = byteSource.getInputStream()) {
             ic = readImageContents(is, FormatCompliance.getDefault());
@@ -211,9 +207,8 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
         final int physicalHeightDpi = (int) Math.round(bhi.vResolution * .0254);
         final float physicalHeightInch = (float) ((double) height / (double) physicalHeightDpi);
 
-        final String formatDetails = "Bmp (" + (char) bhi.identifier1
-                + (char) bhi.identifier2 + ": "
-                + getBmpTypeDescription(bhi.identifier1, bhi.identifier2) + ")";
+        final String formatDetails = "Bmp (" + (char) bhi.identifier1 + (char) bhi.identifier2 + ": " + getBmpTypeDescription(bhi.identifier1, bhi.identifier2)
+                + ")";
 
         final boolean transparent = false;
 
@@ -221,16 +216,12 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
         final ImageInfo.ColorType colorType = ImageInfo.ColorType.RGB;
         final ImageInfo.CompressionAlgorithm compressionAlgorithm = ImageInfo.CompressionAlgorithm.RLE;
 
-        return new ImageInfo(formatDetails, bitsPerPixel, comments,
-                format, name, height, mimeType, numberOfImages,
-                physicalHeightDpi, physicalHeightInch, physicalWidthDpi,
-                physicalWidthInch, width, progressive, transparent,
-                usesPalette, colorType, compressionAlgorithm);
+        return new ImageInfo(formatDetails, bitsPerPixel, comments, format, name, height, mimeType, numberOfImages, physicalHeightDpi, physicalHeightInch,
+                physicalWidthDpi, physicalWidthInch, width, progressive, transparent, usesPalette, colorType, compressionAlgorithm);
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final BmpImagingParameters params)
-            throws ImagingException, IOException {
+    public Dimension getImageSize(final ByteSource byteSource, final BmpImagingParameters params) throws ImagingException, IOException {
         final BmpHeaderInfo bhi = readBmpHeaderInfo(byteSource);
 
         return new Dimension(bhi.width, bhi.height);
@@ -281,10 +272,10 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
                     break;
                 default: {
                     int size = b / rleSamplesPerByte;
-                    if ((b % rleSamplesPerByte) > 0) {
+                    if (b % rleSamplesPerByte > 0) {
                         size++;
                     }
-                    if ((size % 2) != 0) {
+                    if (size % 2 != 0) {
                         size++;
                     }
 
@@ -294,8 +285,7 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
                     // RLESamplesPerByte);
                     // System.out.println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
                     // );
-                    final byte[] bytes = readBytes("bytes", is, size,
-                            "RLE: Absolute Mode");
+                    final byte[] bytes = readBytes("bytes", is, size, "RLE: Absolute Mode");
                     baos.write(bytes);
                 }
                     break;
@@ -313,9 +303,7 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
         }
     }
 
-    private BmpHeaderInfo readBmpHeaderInfo(final InputStream is,
-            final FormatCompliance formatCompliance)
-            throws ImagingException, IOException {
+    private BmpHeaderInfo readBmpHeaderInfo(final InputStream is, final FormatCompliance formatCompliance) throws ImagingException, IOException {
         final byte identifier1 = readByte("Identifier1", is, "Not a Valid BMP File");
         final byte identifier2 = readByte("Identifier2", is, "Not a Valid BMP File");
 
@@ -454,23 +442,17 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
             }
         }
 
-        return new BmpHeaderInfo(identifier1, identifier2,
-                fileSize, reserved, bitmapDataOffset, bitmapHeaderSize, width,
-                height, planes, bitsPerPixel, compression, bitmapDataSize,
-                hResolution, vResolution, colorsUsed, colorsImportant, redMask,
-                greenMask, blueMask, alphaMask, colorSpaceType, colorSpace,
-                gammaRed, gammaGreen, gammaBlue, intent, profileData,
-                profileSize, reservedV5);
+        return new BmpHeaderInfo(identifier1, identifier2, fileSize, reserved, bitmapDataOffset, bitmapHeaderSize, width, height, planes, bitsPerPixel,
+                compression, bitmapDataSize, hResolution, vResolution, colorsUsed, colorsImportant, redMask, greenMask, blueMask, alphaMask, colorSpaceType,
+                colorSpace, gammaRed, gammaGreen, gammaBlue, intent, profileData, profileSize, reservedV5);
     }
 
-    private BmpImageContents readImageContents(final InputStream is,
-            final FormatCompliance formatCompliance)
-            throws ImagingException, IOException {
+    private BmpImageContents readImageContents(final InputStream is, final FormatCompliance formatCompliance) throws ImagingException, IOException {
         final BmpHeaderInfo bhi = readBmpHeaderInfo(is, formatCompliance);
 
         int colorTableSize = bhi.colorsUsed;
         if (colorTableSize == 0) {
-            colorTableSize = (1 << bhi.bitsPerPixel);
+            colorTableSize = 1 << bhi.bitsPerPixel;
         }
 
         if (LOGGER.isLoggable(Level.FINE)) {
@@ -542,8 +524,7 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
             break;
 
         default:
-            throw new ImagingException("BMP: Unknown Compression: "
-                    + bhi.compression);
+            throw new ImagingException("BMP: Unknown Compression: " + bhi.compression);
         }
 
         if (paletteLength < 0) {
@@ -552,17 +533,15 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
 
         byte[] colorTable = null;
         if (paletteLength > 0) {
-            colorTable = readBytes("ColorTable", is, paletteLength,
-                    "Not a Valid BMP File");
+            colorTable = readBytes("ColorTable", is, paletteLength, "Not a Valid BMP File");
         }
 
         if (LOGGER.isLoggable(Level.FINE)) {
             debugNumber("paletteLength", paletteLength, 4);
-            LOGGER.fine("ColorTable: "
-                    + ((colorTable == null) ? "null" : Integer.toString(colorTable.length)));
+            LOGGER.fine("ColorTable: " + (colorTable == null ? "null" : Integer.toString(colorTable.length)));
         }
 
-        int imageLineLength = (((bhi.bitsPerPixel) * bhi.width) + 7) / 8;
+        int imageLineLength = (bhi.bitsPerPixel * bhi.width + 7) / 8;
 
         if (LOGGER.isLoggable(Level.FINE)) {
             final int pixelCount = bhi.width * bhi.height;
@@ -578,14 +557,11 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
             debugNumber("PixelCount", pixelCount, 4);
         }
         // int ImageLineLength = BytesPerPixel * bhi.Width;
-        while ((imageLineLength % 4) != 0) {
+        while (imageLineLength % 4 != 0) {
             imageLineLength++;
         }
 
-        final int headerSize = BITMAP_FILE_HEADER_SIZE
-                + bhi.bitmapHeaderSize
-                + (bhi.bitmapHeaderSize == 40
-                        && bhi.compression == BI_BITFIELDS ? 3 * 4 : 0);
+        final int headerSize = BITMAP_FILE_HEADER_SIZE + bhi.bitmapHeaderSize + (bhi.bitmapHeaderSize == 40 && bhi.compression == BI_BITFIELDS ? 3 * 4 : 0);
         final int expectedDataOffset = headerSize + paletteLength;
 
         if (LOGGER.isLoggable(Level.FINE)) {
@@ -594,10 +570,8 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
         }
         final int extraBytes = bhi.bitmapDataOffset - expectedDataOffset;
         if (extraBytes < 0) {
-            throw new ImagingException("BMP has invalid image data offset: "
-                    + bhi.bitmapDataOffset + " (expected: "
-                    + expectedDataOffset + ", paletteLength: " + paletteLength
-                    + ", headerSize: " + headerSize + ")");
+            throw new ImagingException("BMP has invalid image data offset: " + bhi.bitmapDataOffset + " (expected: " + expectedDataOffset + ", paletteLength: "
+                    + paletteLength + ", headerSize: " + headerSize + ")");
         }
         if (extraBytes > 0) {
             readBytes("BitmapDataOffset", is, extraBytes, "Not a Valid BMP File");
@@ -613,8 +587,7 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
         if (rle) {
             imageData = getRleBytes(is, rleSamplesPerByte);
         } else {
-            imageData = readBytes("ImageData", is, imageDataSize,
-                    "Not a Valid BMP File");
+            imageData = readBytes("ImageData", is, imageDataSize, "Not a Valid BMP File");
         }
 
         if (LOGGER.isLoggable(Level.FINE)) {
@@ -635,8 +608,7 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
             abstractPixelParser = new PixelParserBitFields(bhi, colorTable, imageData);
             break;
         default:
-            throw new ImagingException("BMP: Unknown Compression: "
-                    + bhi.compression);
+            throw new ImagingException("BMP: Unknown Compression: " + bhi.compression);
         }
 
         return new BmpImageContents(bhi, colorTable, imageData, abstractPixelParser);
@@ -649,8 +621,7 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
         }
         final PixelDensity pixelDensity = params.getPixelDensity();
 
-        final SimplePalette palette = new PaletteFactory().makeExactRgbPaletteSimple(
-                src, 256);
+        final SimplePalette palette = new PaletteFactory().makeExactRgbPaletteSimple(src, 256);
 
         BmpWriter writer;
         if (palette == null) {
@@ -672,8 +643,7 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
         bos.write4Bytes(fileSize);
 
         bos.write4Bytes(0); // reserved
-        bos.write4Bytes(BITMAP_FILE_HEADER_SIZE + BITMAP_INFO_HEADER_SIZE
-                + 4 * writer.getPaletteSize()); // Bitmap Data Offset
+        bos.write4Bytes(BITMAP_FILE_HEADER_SIZE + BITMAP_INFO_HEADER_SIZE + 4 * writer.getPaletteSize()); // Bitmap Data Offset
 
         final int width = src.getWidth();
         final int height = src.getHeight();

@@ -21,17 +21,17 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 
-public class FieldTypeTest{
+public class FieldTypeTest {
 
-  @Test
-  public void testGetFieldTypeWithNegative() {
-      try {
-          AbstractFieldType.getFieldType((-748));
-          fail("Expecting exception: Exception");
-      } catch (final Exception e) {
-          assertEquals("Field type -748 is unsupported", e.getMessage());
-          assertEquals(AbstractFieldType.class.getName(), e.getStackTrace()[0].getClassName());
-      }
-  }
+    @Test
+    public void testGetFieldTypeWithNegative() {
+        try {
+            AbstractFieldType.getFieldType(-748);
+            fail("Expecting exception: Exception");
+        } catch (final Exception e) {
+            assertEquals("Field type -748 is unsupported", e.getMessage());
+            assertEquals(AbstractFieldType.class.getName(), e.getStackTrace()[0].getClassName());
+        }
+    }
 
 }

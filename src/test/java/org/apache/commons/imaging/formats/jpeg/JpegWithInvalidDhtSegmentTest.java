@@ -27,8 +27,7 @@ import org.apache.commons.imaging.test.TestResources;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test that an invalid segment will not cause an ArrayIndexOutOfBoundsException
- * when the huffman table is created in a DHT segment.
+ * Test that an invalid segment will not cause an ArrayIndexOutOfBoundsException when the huffman table is created in a DHT segment.
  */
 public class JpegWithInvalidDhtSegmentTest {
 

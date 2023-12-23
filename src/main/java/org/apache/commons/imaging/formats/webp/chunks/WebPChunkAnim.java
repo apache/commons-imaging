@@ -47,7 +47,7 @@ public final class WebPChunkAnim extends WebPChunk {
      * @param bytes chunk data.
      * @throws ImagingException if the chunk data and the size provided do not match.
      */
-    public WebPChunkAnim(int type, int size, byte[] bytes) throws ImagingException {
+    public WebPChunkAnim(final int type, final int size, final byte[] bytes) throws ImagingException {
         super(type, size, bytes);
     }
 }

@@ -22,8 +22,7 @@ import java.util.Objects;
 import org.apache.commons.imaging.common.BinaryFileParser;
 
 /**
- * A PNG image is composed of several chunks. This is the base class for the chunks,
- * used by the parser.
+ * A PNG image is composed of several chunks. This is the base class for the chunks, used by the parser.
  *
  * @see <a href="https://en.wikipedia.org/wiki/Portable_Network_Graphics#%22Chunks%22_within_the_file">Portable_Network_Graphics</a>
  */
@@ -43,10 +42,10 @@ public class PngChunk extends BinaryFileParser {
     /**
      * Constructs a new instance.
      *
-     * @param length chunk length
+     * @param length    chunk length
      * @param chunkType chunk type
-     * @param crc CRC computed over the chunk type and chunk data (but not the length)
-     * @param bytes chunk data bytes
+     * @param crc       CRC computed over the chunk type and chunk data (but not the length)
+     * @param bytes     chunk data bytes
      * @throws NullPointerException if bytes is null.
      */
     public PngChunk(final int length, final int chunkType, final int crc, final byte[] bytes) {
@@ -59,7 +58,7 @@ public class PngChunk extends BinaryFileParser {
         int shift = 24;
         final int theMask = 1 << 5;
         for (int i = 0; i < propertyBits.length; i++) {
-            final int theByte = 0xff & (chunkType >> shift);
+            final int theByte = 0xff & chunkType >> shift;
             shift -= 8;
             propertyBits[i] = (theByte & theMask) > 0;
         }
@@ -90,7 +89,9 @@ public class PngChunk extends BinaryFileParser {
     /**
      * Gets a new {@link ByteArrayInputStream} for the chunk bytes.
      *
-     * <p>The caller is responsible for closing the resource.</p>
+     * <p>
+     * The caller is responsible for closing the resource.
+     * </p>
      *
      * @return a ByteArrayInputStream for the chunk bytes
      */

@@ -41,8 +41,7 @@ public class DhtSegment extends AbstractSegment {
         private final int[] maxCode = new int[1 + 16]; // 1-based
         private final int[] valPtr = new int[1 + 16]; // 1-based
 
-        HuffmanTable(final int tableClass, final int destinationIdentifier,
-                final int[] bits, final int[] huffVal) {
+        HuffmanTable(final int tableClass, final int destinationIdentifier, final int[] bits, final int[] huffVal) {
             this.tableClass = tableClass;
             this.destinationIdentifier = destinationIdentifier;
 //            this.bits = bits; // 1-based; not used outside the ctor
@@ -140,16 +139,14 @@ public class DhtSegment extends AbstractSegment {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
-    public DhtSegment(final int marker, int length, final InputStream is)
-            throws IOException {
+    public DhtSegment(final int marker, int length, final InputStream is) throws IOException {
         super(marker, length);
 
         final ArrayList<HuffmanTable> huffmanTables = new ArrayList<>();
         while (length > 0) {
-            final int tableClassAndDestinationId = 0xff & readByte(
-                    "TableClassAndDestinationId", is, "Not a Valid JPEG File");
+            final int tableClassAndDestinationId = 0xff & readByte("TableClassAndDestinationId", is, "Not a Valid JPEG File");
             length--;
-            final int tableClass = (tableClassAndDestinationId >> 4) & 0xf;
+            final int tableClass = tableClassAndDestinationId >> 4 & 0xf;
             final int destinationIdentifier = tableClassAndDestinationId & 0xf;
             final int[] bits = new int[1 + 16];
             int bitsSum = 0;
@@ -164,8 +161,7 @@ public class DhtSegment extends AbstractSegment {
                 length--;
             }
 
-            huffmanTables.add(new HuffmanTable(tableClass,
-                    destinationIdentifier, bits, huffVal));
+            huffmanTables.add(new HuffmanTable(tableClass, destinationIdentifier, bits, huffVal));
         }
         this.huffmanTables = Collections.unmodifiableList(huffmanTables);
     }

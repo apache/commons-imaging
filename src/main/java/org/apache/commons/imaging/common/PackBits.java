@@ -26,8 +26,7 @@ public class PackBits {
 
     public byte[] compress(final byte[] bytes) throws IOException {
         // max length 1 extra byte for every 128
-        try (UnsynchronizedByteArrayOutputStream baos = UnsynchronizedByteArrayOutputStream.builder()
-                .setBufferSize(Allocator.checkByteArray(bytes.length * 2))
+        try (UnsynchronizedByteArrayOutputStream baos = UnsynchronizedByteArrayOutputStream.builder().setBufferSize(Allocator.checkByteArray(bytes.length * 2))
                 .get()) {
             int ptr = 0;
             while (ptr < bytes.length) {
@@ -74,8 +73,7 @@ public class PackBits {
         }
     }
 
-    public byte[] decompress(final byte[] bytes, final int expected)
-            throws ImagingException {
+    public byte[] decompress(final byte[] bytes, final int expected) throws ImagingException {
         int total = 0;
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -85,14 +83,11 @@ public class PackBits {
         while (total < expected) {
             // Read the next source byte into n.
             if (i >= bytes.length) {
-                throw new ImagingException(
-                        "Tiff: Unpack bits source exhausted: " + i
-                                + ", done + " + total + ", expected + "
-                                + expected);
+                throw new ImagingException("Tiff: Unpack bits source exhausted: " + i + ", done + " + total + ", expected + " + expected);
             }
 
             final int n = bytes[i++];
-            if ((n >= 0) && (n <= 127)) {
+            if (n >= 0 && n <= 127) {
                 // If n is between 0 and 127 inclusive, copy the next n+1 bytes
                 // literally.
                 final int count = n + 1;
@@ -101,7 +96,7 @@ public class PackBits {
                 for (int j = 0; j < count; j++) {
                     baos.write(bytes[i++]);
                 }
-            } else if ((n >= -127) && (n <= -1)) {
+            } else if (n >= -127 && n <= -1) {
                 // Else if n is between -127 and -1 inclusive, copy the next byte
                 // -n+1 times.
 
@@ -148,7 +143,7 @@ public class PackBits {
 
         int i;
 
-        for (i = start + 1; (i < bytes.length) && (bytes[i] == b); i++) {
+        for (i = start + 1; i < bytes.length && bytes[i] == b; i++) {
             // do nothing
         }
 

@@ -90,8 +90,8 @@ public enum WebPChunkType {
 
     private static final WebPChunkType[] types = WebPChunkType.values();
 
-    static WebPChunkType findType(int chunkType) {
-        for (WebPChunkType type : types) {
+    static WebPChunkType findType(final int chunkType) {
+        for (final WebPChunkType type : types) {
             if (type.value == chunkType) {
                 return type;
             }
@@ -99,21 +99,16 @@ public enum WebPChunkType {
         return null;
     }
 
-    static WebPChunk makeChunk(int chunkType, int size, byte[] bytes) throws IOException, ImagingException {
-        WebPChunkType type = findType(chunkType);
-        return type != null
-                ? type.constructor.make(chunkType, size, bytes)
-                : new WebPChunkXyzw(chunkType, size, bytes);
+    static WebPChunk makeChunk(final int chunkType, final int size, final byte[] bytes) throws IOException, ImagingException {
+        final WebPChunkType type = findType(chunkType);
+        return type != null ? type.constructor.make(chunkType, size, bytes) : new WebPChunkXyzw(chunkType, size, bytes);
     }
 
     private final ChunkConstructor constructor;
     final int value;
 
-    WebPChunkType(ChunkConstructor constructor) {
+    WebPChunkType(final ChunkConstructor constructor) {
         this.constructor = constructor;
-        this.value = BinaryFunctions.charsToQuad(
-                name().length() == 4 ? name().charAt(3) : ' ',
-                name().charAt(2), name().charAt(1), name().charAt(0)
-        );
+        this.value = BinaryFunctions.charsToQuad(name().length() == 4 ? name().charAt(3) : ' ', name().charAt(2), name().charAt(1), name().charAt(0));
     }
 }

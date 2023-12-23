@@ -29,11 +29,11 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 
 public class TiffOutputField {
     private static final String NEWLINE = System.lineSeparator();
-    protected static TiffOutputField createOffsetField(final TagInfo tagInfo,
-            final ByteOrder byteOrder) throws ImagingException {
-        return new TiffOutputField(tagInfo, AbstractFieldType.LONG, 1,
-                AbstractFieldType.LONG.writeData(0, byteOrder));
+
+    protected static TiffOutputField createOffsetField(final TagInfo tagInfo, final ByteOrder byteOrder) throws ImagingException {
+        return new TiffOutputField(tagInfo, AbstractFieldType.LONG, 1, AbstractFieldType.LONG.writeData(0, byteOrder));
     }
+
     public final int tag;
     public final TagInfo tagInfo;
     public final AbstractFieldType abstractFieldType;
@@ -43,8 +43,7 @@ public class TiffOutputField {
 
     private int sortHint = -1;
 
-    public TiffOutputField(final int tag, final TagInfo tagInfo, final AbstractFieldType abstractFieldType,
-            final int count, final byte[] bytes) {
+    public TiffOutputField(final int tag, final TagInfo tagInfo, final AbstractFieldType abstractFieldType, final int count, final byte[] bytes) {
         this.tag = tag;
         this.tagInfo = tagInfo;
         this.abstractFieldType = abstractFieldType;
@@ -54,14 +53,12 @@ public class TiffOutputField {
         if (isLocalValue()) {
             separateValueItem = null;
         } else {
-            final String name = "Field Separate value (" + tagInfo.getDescription()
-                    + ")";
+            final String name = "Field Separate value (" + tagInfo.getDescription() + ")";
             separateValueItem = new AbstractTiffOutputItem.Value(name, bytes);
         }
     }
 
-    public TiffOutputField(final TagInfo tagInfo, final AbstractFieldType abstractFieldType, final int count,
-            final byte[] bytes) {
+    public TiffOutputField(final TagInfo tagInfo, final AbstractFieldType abstractFieldType, final int count, final byte[] bytes) {
         this(tagInfo.tag, tagInfo, abstractFieldType, count, bytes);
     }
 
@@ -131,8 +128,7 @@ public class TiffOutputField {
         return result.toString();
     }
 
-    protected void writeField(final BinaryOutputStream bos) throws IOException,
-            ImagingException {
+    protected void writeField(final BinaryOutputStream bos) throws IOException, ImagingException {
         bos.write2Bytes(tag);
         bos.write2Bytes(abstractFieldType.getType());
         bos.write4Bytes(count);
@@ -142,8 +138,7 @@ public class TiffOutputField {
                 throw new ImagingException("Unexpected separate value item.");
             }
             if (bytes.length > 4) {
-                throw new ImagingException(
-                        "Local value has invalid length: " + bytes.length);
+                throw new ImagingException("Local value has invalid length: " + bytes.length);
             }
 
             bos.write(bytes);

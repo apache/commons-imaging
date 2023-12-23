@@ -32,24 +32,24 @@ import org.junit.jupiter.api.Test;
 public class TiffSubImageTest extends TiffBaseTest {
     final List<File> imageFileList;
 
-    TiffSubImageTest() throws IOException, ImagingException{
+    TiffSubImageTest() throws IOException, ImagingException {
         imageFileList = getTiffImages();
     }
 
-    private void processBadParams(final File target, final int x, final int y, final int width, final int height, final String comment) throws IOException{
+    private void processBadParams(final File target, final int x, final int y, final int width, final int height, final String comment) throws IOException {
         final TiffImageParser tiffImageParser = new TiffImageParser();
         try {
             final TiffImagingParameters params = new TiffImagingParameters();
             params.setSubImage(x, y, width, height);
             tiffImageParser.getBufferedImage(target, params);
-            fail("Reading TIFF sub-image failed to detect bad parameter: "+comment);
-        }catch (final ImagingException | IllegalArgumentException ire){
+            fail("Reading TIFF sub-image failed to detect bad parameter: " + comment);
+        } catch (final ImagingException | IllegalArgumentException ire) {
             // the test passed
         }
     }
 
     @Test
-    public void testBadSubImage()  throws ImagingException, IOException {
+    public void testBadSubImage() throws ImagingException, IOException {
         final TiffImageParser tiffImageParser = new TiffImageParser();
         final File target = imageFileList.get(0);
         final BufferedImage referenceImage = Imaging.getBufferedImage(target);
@@ -91,29 +91,29 @@ public class TiffSubImageTest extends TiffBaseTest {
     @Test
     public void testSubImageCorrectness() throws ImagingException, IOException {
         final TiffImageParser tiffImageParser = new TiffImageParser();
-        for(final File target: imageFileList) {
+        for (final File target : imageFileList) {
             final BufferedImage referenceImage = Imaging.getBufferedImage(target);
             final int rW = referenceImage.getWidth();
             final int rH = referenceImage.getHeight();
-            if (rW<3 || rH<3) {
+            if (rW < 3 || rH < 3) {
                 continue;
             }
-            final int []rArgb = new int[rW*rH];
+            final int[] rArgb = new int[rW * rH];
             referenceImage.getRGB(0, 0, rW, rH, rArgb, 0, rW);
             final TiffImagingParameters params = new TiffImagingParameters();
-            params.setSubImage(1, 1, rW-2, rH-2);
+            params.setSubImage(1, 1, rW - 2, rH - 2);
             final BufferedImage image = tiffImageParser.getBufferedImage(target, params);
             final int iW = image.getWidth();
             final int iH = image.getHeight();
-            assertEquals(iW, rW-2, "Invalid subimage width");
-            assertEquals(iH, rH-2, "Invalid subimage height");
-            final int []iArgb= new int[iW*iH];
+            assertEquals(iW, rW - 2, "Invalid subimage width");
+            assertEquals(iH, rH - 2, "Invalid subimage height");
+            final int[] iArgb = new int[iW * iH];
             image.getRGB(0, 0, iW, iH, iArgb, 0, iW);
-            for(int i=0; i<iH; i++){
-                for(int j=0; j<iW; j++){
-                    final int rTest = rArgb[(i+1)*rW+j+1];
-                    final int iTest = iArgb[i*iW+j];
-                    assertEquals(iTest, rTest, "Invalid pixel lookup for "+target.getName()+" at "+i+", "+j);
+            for (int i = 0; i < iH; i++) {
+                for (int j = 0; j < iW; j++) {
+                    final int rTest = rArgb[(i + 1) * rW + j + 1];
+                    final int iTest = iArgb[i * iW + j];
+                    assertEquals(iTest, rTest, "Invalid pixel lookup for " + target.getName() + " at " + i + ", " + j);
                 }
             }
         }

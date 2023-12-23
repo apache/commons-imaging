@@ -31,10 +31,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Internal-only debug class. Used for collecting extra information when parsing or
- * modifying images or metadata. These methods are useful for troubleshooting and
- * issue analysis, but this should not be used directly by end-users, nor extended
- * in any way. This may change or be removed at any time.
+ * Internal-only debug class. Used for collecting extra information when parsing or modifying images or metadata. These methods are useful for troubleshooting
+ * and issue analysis, but this should not be used directly by end-users, nor extended in any way. This may change or be removed at any time.
  */
 public final class Debug {
 
@@ -45,10 +43,10 @@ public final class Debug {
     private static long counter;
 
     private static String byteQuadToString(final int byteQuad) {
-        final byte b1 = (byte) ((byteQuad >> 24) & 0xff);
-        final byte b2 = (byte) ((byteQuad >> 16) & 0xff);
-        final byte b3 = (byte) ((byteQuad >> 8) & 0xff);
-        final byte b4 = (byte) ((byteQuad >> 0) & 0xff);
+        final byte b1 = (byte) (byteQuad >> 24 & 0xff);
+        final byte b2 = (byte) (byteQuad >> 16 & 0xff);
+        final byte b3 = (byte) (byteQuad >> 8 & 0xff);
+        final byte b4 = (byte) (byteQuad >> 0 & 0xff);
 
         final char c1 = (char) b1;
         final char c2 = (char) b2;
@@ -56,7 +54,7 @@ public final class Debug {
         final char c4 = (char) b4;
         // return new String(new char[] { c1, c2, c3, c4 });
         final StringBuilder buffer = new StringBuilder(31);
-        buffer.append(new String(new char[]{c1, c2, c3, c4}));
+        buffer.append(new String(new char[] { c1, c2, c3, c4 }));
         buffer.append(" byteQuad: ");
         buffer.append(byteQuad);
         buffer.append(" b1: ");
@@ -89,7 +87,7 @@ public final class Debug {
 
     private static void debug(final String message, final Calendar value) {
         final DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.ENGLISH);
-        debug(message, (value == null) ? "null" : df.format(value.getTime()));
+        debug(message, value == null ? "null" : df.format(value.getTime()));
     }
 
     private static void debug(final String message, final char[] v) {
@@ -98,11 +96,11 @@ public final class Debug {
 
     private static void debug(final String message, final Date value) {
         final DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.ENGLISH);
-        debug(message, (value == null) ? "null" : df.format(value));
+        debug(message, value == null ? "null" : df.format(value));
     }
 
     private static void debug(final String message, final File file) {
-        debug(message + ": " + ((file == null) ? "null" : file.getPath()));
+        debug(message + ": " + (file == null ? "null" : file.getPath()));
     }
 
     private static void debug(final String message, final ICC_Profile value) {
@@ -195,8 +193,7 @@ public final class Debug {
                     c = (char) b;
                 }
 
-                result.append("\t" + i + ": " + b + " (" + c + ", 0x"
-                        + Integer.toHexString(b) + ")" + NEWLINE);
+                result.append("\t" + i + ": " + b + " (" + c + ", 0x" + Integer.toHexString(b) + ")" + NEWLINE);
             }
             if (v.length > max) {
                 result.append("\t..." + NEWLINE);
@@ -264,15 +261,12 @@ public final class Debug {
     private static String getDebug(final Throwable e, final int max) {
         final StringBuilder result = new StringBuilder(35);
 
-        final SimpleDateFormat timestamp = new SimpleDateFormat(
-                "yyyy-MM-dd kk:mm:ss:SSS", Locale.ENGLISH);
+        final SimpleDateFormat timestamp = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss:SSS", Locale.ENGLISH);
         final String datetime = timestamp.format(new Date()).toLowerCase();
 
         result.append(NEWLINE);
-        result.append("Throwable: "
-                + ((e == null) ? "" : ("(" + e.getClass().getName() + ")"))
-                + ":" + datetime + NEWLINE);
-        result.append("Throwable: " + ((e == null) ? "null" : e.getLocalizedMessage()) + NEWLINE);
+        result.append("Throwable: " + (e == null ? "" : "(" + e.getClass().getName() + ")") + ":" + datetime + NEWLINE);
+        result.append("Throwable: " + (e == null ? "null" : e.getLocalizedMessage()) + NEWLINE);
         result.append(NEWLINE);
 
         result.append(getStackTrace(e, max));
@@ -297,9 +291,8 @@ public final class Debug {
                 for (int i = skip; i < stes.length && (limit < 0 || i < limit); i++) {
                     final StackTraceElement ste = stes[i];
 
-                    result.append("\tat " + ste.getClassName() + "."
-                            + ste.getMethodName() + "(" + ste.getFileName()
-                            + ":" + ste.getLineNumber() + ")" + NEWLINE);
+                    result.append(
+                            "\tat " + ste.getClassName() + "." + ste.getMethodName() + "(" + ste.getFileName() + ":" + ste.getLineNumber() + ")" + NEWLINE);
                 }
                 if (limit >= 0 && stes.length > limit) {
                     result.append("\t..." + NEWLINE);

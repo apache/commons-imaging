@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-public class SimplePaletteTest{
+public class SimplePaletteTest {
 
     @Test
     public void testGetPaletteIndexReturningNegative() {
@@ -28,8 +28,8 @@ public class SimplePaletteTest{
         final int[] intArray = new int[1];
         final SimplePalette simplePalette = new SimplePalette(intArray);
 
-        assertEquals( -1, simplePalette.getPaletteIndex((-1)));
-        assertEquals(1, simplePalette.length() );
+        assertEquals(-1, simplePalette.getPaletteIndex(-1));
+        assertEquals(1, simplePalette.length());
 
     }
 

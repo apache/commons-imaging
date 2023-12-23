@@ -34,24 +34,14 @@ import org.junit.jupiter.api.Test;
 
 public class IcnsRoundTripTest extends IcnsBaseTest {
     // 16x16 test image
-    private static final int[][] IMAGE = {
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0},
-        {0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
-        {0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0},
-        {0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0},
-        {0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0},
-        {0,0,0,0,0,1,1,1,0,1,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
-    };
+    private static final int[][] IMAGE = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
 
     @Test
     public void test1BPPIconMaskVersus8BPPMask() throws Exception {
@@ -110,8 +100,8 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                     } else {
                         pixel = background;
                     }
-                    bos.write(0xff & (pixel >> 16));
-                    bos.write(0xff & (pixel >> 8));
+                    bos.write(0xff & pixel >> 16);
+                    bos.write(0xff & pixel >> 8);
                     bos.write(0xff & pixel);
                 }
             }
@@ -123,7 +113,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                     int eightBits = 0;
                     for (int pos = 0; pos < 8; pos++) {
                         if (IMAGE[y][x + pos] != 0) {
-                            eightBits |= (1 << (7 - pos));
+                            eightBits |= 1 << 7 - pos;
                         }
                     }
                     bos.write(eightBits);
@@ -132,8 +122,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
             // Missing 1 bit mask!!!
             bos.flush();
 
-            assertThrows(ImagingException.class, () -> writeAndReadImageData("32bpp-half-masked-CORRUPT",
-                    baos.toByteArray(), foreground, background));
+            assertThrows(ImagingException.class, () -> writeAndReadImageData("32bpp-half-masked-CORRUPT", baos.toByteArray(), foreground, background));
         }
     }
 
@@ -157,8 +146,8 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                     } else {
                         pixel = background;
                     }
-                    bos.write(0xff & (pixel >> 16));
-                    bos.write(0xff & (pixel >> 8));
+                    bos.write(0xff & pixel >> 16);
+                    bos.write(0xff & pixel >> 8);
                     bos.write(0xff & pixel);
                 }
             }
@@ -170,7 +159,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                     int eightBits = 0;
                     for (int pos = 0; pos < 8; pos++) {
                         if (IMAGE[y][x + pos] != 0) {
-                            eightBits |= (1 << (7 - pos));
+                            eightBits |= 1 << 7 - pos;
                         }
                     }
                     bos.write(eightBits);
@@ -182,7 +171,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                     int eightBits = 0;
                     for (int pos = 0; pos < 8; pos++) {
                         if (IMAGE[y][x + pos] != 0) {
-                            eightBits |= (1 << (7 - pos));
+                            eightBits |= 1 << 7 - pos;
                         }
                     }
                     bos.write(eightBits);
@@ -213,8 +202,8 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                     } else {
                         pixel = background;
                     }
-                    bos.write(0xff & (pixel >> 16));
-                    bos.write(0xff & (pixel >> 8));
+                    bos.write(0xff & pixel >> 16);
+                    bos.write(0xff & pixel >> 8);
                     bos.write(0xff & pixel);
                 }
             }
@@ -252,7 +241,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                     int eightBits = 0;
                     for (int pos = 0; pos < 8; pos++) {
                         if (IMAGE[y][x + pos] != 0) {
-                            eightBits |= (1 << (7 - pos));
+                            eightBits |= 1 << 7 - pos;
                         }
                     }
                     bos.write(eightBits);
@@ -358,7 +347,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                     int eightBits = 0;
                     for (int pos = 0; pos < 8; pos++) {
                         if (IMAGE[y][x + pos] != 0) {
-                            eightBits |= (1 << (7 - pos));
+                            eightBits |= 1 << 7 - pos;
                         }
                     }
                     bos.write(eightBits);
@@ -396,7 +385,8 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
             }
             bos.flush();
             writeAndReadImageData("8bpp-image-no-mask", baos.toByteArray(), foreground, background);
-        }}
+        }
+    }
 
     private void verify(final BufferedImage data, final int foreground, final int background) {
         assertNotNull(data);
@@ -405,24 +395,20 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         for (int y = 0; y < data.getHeight(); y++) {
             assertEquals(data.getWidth(), IMAGE[y].length);
             for (int x = 0; x < data.getWidth(); x++) {
-                final int imageARGB = (IMAGE[y][x] == 1) ? foreground : background;
+                final int imageARGB = IMAGE[y][x] == 1 ? foreground : background;
                 final int dataARGB = data.getRGB(x, y);
 
                 if (imageARGB != dataARGB) {
-                    Debug.debug("x: " + x + ", y: " + y + ", image: "
-                            + imageARGB + " (0x"
-                            + Integer.toHexString(imageARGB) + ")" + ", data: "
-                            + dataARGB + " (0x" + Integer.toHexString(dataARGB)
-                            + ")");
+                    Debug.debug("x: " + x + ", y: " + y + ", image: " + imageARGB + " (0x" + Integer.toHexString(imageARGB) + ")" + ", data: " + dataARGB
+                            + " (0x" + Integer.toHexString(dataARGB) + ")");
                 }
                 assertEquals(imageARGB, dataARGB);
             }
         }
     }
 
-    private void writeAndReadImageData(final String description, final byte[] rawData,
-            final int foreground, final int background) throws IOException,
-            ImagingException {
+    private void writeAndReadImageData(final String description, final byte[] rawData, final int foreground, final int background)
+            throws IOException, ImagingException {
         final BufferedImage dstImage = Imaging.getBufferedImage(new ByteArrayInputStream(rawData), "description.icns");
 
         assertNotNull(dstImage);

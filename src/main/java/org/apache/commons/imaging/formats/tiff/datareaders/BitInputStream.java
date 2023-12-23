@@ -24,8 +24,8 @@ import java.nio.ByteOrder;
 import org.apache.commons.imaging.ImagingException;
 
 /**
- * Input stream reading 1-8, 16, 24 or 32 bits, starting from the most significant bit, but incapable of reading
- * non-aligned and < 8 bit fields across byte boundaries.
+ * Input stream reading 1-8, 16, 24 or 32 bits, starting from the most significant bit, but incapable of reading non-aligned and < 8 bit fields across byte
+ * boundaries.
  */
 final class BitInputStream extends FilterInputStream {
     private final ByteOrder byteOrder;
@@ -98,20 +98,20 @@ final class BitInputStream extends FilterInputStream {
         }
 
         /**
-         * Taking default order of the TIFF to be Little Endian and reversing the bytes in the end if its Big
-         * Endian.This is done because majority (may be all) of the files will be of Little Endian.
+         * Taking default order of the TIFF to be Little Endian and reversing the bytes in the end if its Big Endian.This is done because majority (may be all)
+         * of the files will be of Little Endian.
          */
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
             switch (count) {
             case 16:
                 bytesRead += 2;
-                return (in.read() << 8) | (in.read() << 0);
+                return in.read() << 8 | in.read() << 0;
             case 24:
                 bytesRead += 3;
-                return (in.read() << 16) | (in.read() << 8) | (in.read() << 0);
+                return in.read() << 16 | in.read() << 8 | in.read() << 0;
             case 32:
                 bytesRead += 4;
-                return (in.read() << 24) | (in.read() << 16) | (in.read() << 8) | (in.read() << 0);
+                return in.read() << 24 | in.read() << 16 | in.read() << 8 | in.read() << 0;
             default:
                 break;
             }
@@ -119,13 +119,13 @@ final class BitInputStream extends FilterInputStream {
             switch (count) {
             case 16:
                 bytesRead += 2;
-                return ((in.read() << 0) | (in.read() << 8));
+                return in.read() << 0 | in.read() << 8;
             case 24:
                 bytesRead += 3;
-                return ((in.read() << 0) | (in.read() << 8) | (in.read() << 16));
+                return in.read() << 0 | in.read() << 8 | in.read() << 16;
             case 32:
                 bytesRead += 4;
-                return ((in.read() << 0) | (in.read() << 8) | (in.read() << 16) | (in.read() << 24));
+                return in.read() << 0 | in.read() << 8 | in.read() << 16 | in.read() << 24;
             default:
                 break;
             }

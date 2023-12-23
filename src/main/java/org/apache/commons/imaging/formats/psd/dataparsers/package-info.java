@@ -19,4 +19,3 @@
  * PSD image format data parsers.
  */
 package org.apache.commons.imaging.formats.psd.dataparsers;
-

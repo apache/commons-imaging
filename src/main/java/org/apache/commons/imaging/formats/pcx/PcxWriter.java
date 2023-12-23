@@ -49,8 +49,7 @@ final class PcxWriter {
         pixelDensity = pixelDensityParam != null ? pixelDensityParam : PixelDensity.createFromPixelsPerInch(72, 72);
     }
 
-    public void writeImage(final BufferedImage src, final OutputStream os)
-            throws IOException {
+    public void writeImage(final BufferedImage src, final OutputStream os) throws IOException {
         final PaletteFactory paletteFactory = new PaletteFactory();
         final SimplePalette palette = paletteFactory.makeExactRgbPaletteSimple(src, 256);
         final BinaryOutputStream bos = BinaryOutputStream.littleEndian(os);
@@ -110,7 +109,7 @@ final class PcxWriter {
         }
 
         int bytesPerLine = (bitDepth * src.getWidth() + 7) / 8;
-        if ((bytesPerLine % 2) != 0) {
+        if (bytesPerLine % 2 != 0) {
             // must be even:
             bytesPerLine++;
         }
@@ -125,8 +124,8 @@ final class PcxWriter {
             } else {
                 rgb = 0;
             }
-            palette16[3 * i + 0] = (byte) (0xff & (rgb >> 16));
-            palette16[3 * i + 1] = (byte) (0xff & (rgb >> 8));
+            palette16[3 * i + 0] = (byte) (0xff & rgb >> 16);
+            palette16[3 * i + 1] = (byte) (0xff & rgb >> 8);
             palette16[3 * i + 2] = (byte) (0xff & rgb);
         }
 
@@ -166,15 +165,15 @@ final class PcxWriter {
                 } else {
                     rgb = 0;
                 }
-                bos.write((rgb >> 16) & 0xff);
-                bos.write((rgb >> 8) & 0xff);
+                bos.write(rgb >> 16 & 0xff);
+                bos.write(rgb >> 8 & 0xff);
                 bos.write(rgb & 0xff);
             }
         }
     }
 
-    private void writePixels(final BufferedImage src, final int bitDepth, final int planes,
-            final int bytesPerLine, final SimplePalette palette, final BinaryOutputStream bos) throws IOException {
+    private void writePixels(final BufferedImage src, final int bitDepth, final int planes, final int bytesPerLine, final SimplePalette palette,
+            final BinaryOutputStream bos) throws IOException {
         final byte[] plane0 = Allocator.byteArray(bytesPerLine);
         final byte[] plane1 = Allocator.byteArray(bytesPerLine);
         final byte[] plane2 = Allocator.byteArray(bytesPerLine);
@@ -183,7 +182,7 @@ final class PcxWriter {
 
         for (int y = 0; y < src.getHeight(); y++) {
             for (int i = 0; i < planes; i++) {
-                Arrays.fill(allPlanes[i], (byte)0);
+                Arrays.fill(allPlanes[i], (byte) 0);
             }
 
             if (bitDepth == 1 && planes == 1) {
@@ -195,43 +194,43 @@ final class PcxWriter {
                     } else {
                         bit = 1;
                     }
-                    plane0[x >>> 3] |= (bit << (7 - (x & 7)));
+                    plane0[x >>> 3] |= bit << 7 - (x & 7);
                 }
             } else if (bitDepth == 1 && planes == 2) {
                 for (int x = 0; x < src.getWidth(); x++) {
                     final int argb = src.getRGB(x, y);
                     final int index = palette.getPaletteIndex(0xffffff & argb);
-                    plane0[x >>> 3] |= (index & 1) << (7 - (x & 7));
-                    plane1[x >>> 3] |= ((index & 2) >> 1) << (7 - (x & 7));
+                    plane0[x >>> 3] |= (index & 1) << 7 - (x & 7);
+                    plane1[x >>> 3] |= (index & 2) >> 1 << 7 - (x & 7);
                 }
             } else if (bitDepth == 1 && planes == 3) {
                 for (int x = 0; x < src.getWidth(); x++) {
                     final int argb = src.getRGB(x, y);
                     final int index = palette.getPaletteIndex(0xffffff & argb);
-                    plane0[x >>> 3] |= (index & 1) << (7 - (x & 7));
-                    plane1[x >>> 3] |= ((index & 2) >> 1) << (7 - (x & 7));
-                    plane2[x >>> 3] |= ((index & 4) >> 2) << (7 - (x & 7));
+                    plane0[x >>> 3] |= (index & 1) << 7 - (x & 7);
+                    plane1[x >>> 3] |= (index & 2) >> 1 << 7 - (x & 7);
+                    plane2[x >>> 3] |= (index & 4) >> 2 << 7 - (x & 7);
                 }
             } else if (bitDepth == 1 && planes == 4) {
                 for (int x = 0; x < src.getWidth(); x++) {
                     final int argb = src.getRGB(x, y);
                     final int index = palette.getPaletteIndex(0xffffff & argb);
-                    plane0[x >>> 3] |= (index & 1) << (7 - (x & 7));
-                    plane1[x >>> 3] |= ((index & 2) >> 1) << (7 - (x & 7));
-                    plane2[x >>> 3] |= ((index & 4) >> 2) << (7 - (x & 7));
-                    plane3[x >>> 3] |= ((index & 8) >> 3) << (7 - (x & 7));
+                    plane0[x >>> 3] |= (index & 1) << 7 - (x & 7);
+                    plane1[x >>> 3] |= (index & 2) >> 1 << 7 - (x & 7);
+                    plane2[x >>> 3] |= (index & 4) >> 2 << 7 - (x & 7);
+                    plane3[x >>> 3] |= (index & 8) >> 3 << 7 - (x & 7);
                 }
             } else if (bitDepth == 2 && planes == 1) {
                 for (int x = 0; x < src.getWidth(); x++) {
                     final int argb = src.getRGB(x, y);
                     final int index = palette.getPaletteIndex(0xffffff & argb);
-                    plane0[x >>> 2] |= (index << 2 * (3 - (x & 3)));
+                    plane0[x >>> 2] |= index << 2 * (3 - (x & 3));
                 }
             } else if (bitDepth == 4 && planes == 1) {
                 for (int x = 0; x < src.getWidth(); x++) {
                     final int argb = src.getRGB(x, y);
                     final int index = palette.getPaletteIndex(0xffffff & argb);
-                    plane0[x >>> 1] |= (index << 4 * (1 - (x & 1)));
+                    plane0[x >>> 1] |= index << 4 * (1 - (x & 1));
                 }
             } else if (bitDepth == 8 && planes == 1) {
                 for (int x = 0; x < src.getWidth(); x++) {
@@ -255,8 +254,7 @@ final class PcxWriter {
         rleWriter.flush(bos);
     }
 
-    private void writePixels32(final BufferedImage src, final int bytesPerLine,
-            final BinaryOutputStream bos) throws IOException {
+    private void writePixels32(final BufferedImage src, final int bytesPerLine, final BinaryOutputStream bos) throws IOException {
 
         final int[] rgbs = Allocator.intArray(src.getWidth());
         final byte[] plane = Allocator.byteArray(4 * bytesPerLine);

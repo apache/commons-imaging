@@ -19,4 +19,3 @@
  * The Radiance HDR image format.
  */
 package org.apache.commons.imaging.formats.rgbe;
-

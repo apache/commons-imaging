@@ -29,25 +29,18 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUndefineds;
  * Adobe Photoshop (R) TIFF Technical Notes
  * </p>
  * <p>
- * [BROEKN URL]
- * http://partners.adobe.com/public/developer/en/tiff/TIFFphotoshop.pdf
+ * [BROEKN URL] http://partners.adobe.com/public/developer/en/tiff/TIFFphotoshop.pdf
  * </p>
  */
 public final class AdobePhotoshopTagConstants {
 
-    public static final TagInfoUndefineds EXIF_TAG_JPEGTABLES = new TagInfoUndefineds(
-            "JPEGTables", 0x015b, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+    public static final TagInfoUndefineds EXIF_TAG_JPEGTABLES = new TagInfoUndefineds("JPEGTables", 0x015b, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoUndefineds EXIF_TAG_IMAGE_SOURCE_DATA = new TagInfoUndefineds(
-            "ImageSourceData", 0x935c, -1,
+    public static final TagInfoUndefineds EXIF_TAG_IMAGE_SOURCE_DATA = new TagInfoUndefineds("ImageSourceData", 0x935c, -1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
-    public static final List<TagInfo> ALL_ADOBE_PHOTOSHOP_TAGS =
-            Collections.unmodifiableList(Arrays.<TagInfo> asList(
-                    EXIF_TAG_JPEGTABLES,
-                    EXIF_TAG_IMAGE_SOURCE_DATA
-            ));
+    public static final List<TagInfo> ALL_ADOBE_PHOTOSHOP_TAGS = Collections
+            .unmodifiableList(Arrays.<TagInfo>asList(EXIF_TAG_JPEGTABLES, EXIF_TAG_IMAGE_SOURCE_DATA));
 
     private AdobePhotoshopTagConstants() {
     }

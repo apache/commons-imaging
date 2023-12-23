@@ -19,4 +19,3 @@
  * The ICNS image format.
  */
 package org.apache.commons.imaging.formats.icns;
-

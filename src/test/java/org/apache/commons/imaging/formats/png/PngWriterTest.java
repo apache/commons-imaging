@@ -37,21 +37,11 @@ import org.junit.jupiter.api.Test;
 public class PngWriterTest extends AbstractPngTest {
 
     // The form of the test set is
-    //    0.   target file name
-    //    1.   Expected colour count (as String) - for testPaletteFactory
-    private static String [][] testSet = {
-        {"1/Oregon Scientific DS6639 - DSC_0307 - small.png", "1"},
-        {"2/12118.png", "1"},
-        {"2/28569-4.png", "1"},
-        {"2/28569-8.png", "1"},
-        {"2/28569.png", "1"},
-        {"3/testImage.png", "116"},
-        {"3/testImageNoAlpha.png", "1"},
-        {"4/buttons_level_menu_down.ipad.png", "2"},
-        {"5/trns-gray.png", "26"},
-        {"5/trns-palette8.png", "18"},
-        {"5/trns-rgb.png", "26"},
-    };
+    // 0. target file name
+    // 1. Expected colour count (as String) - for testPaletteFactory
+    private static String[][] testSet = { { "1/Oregon Scientific DS6639 - DSC_0307 - small.png", "1" }, { "2/12118.png", "1" }, { "2/28569-4.png", "1" },
+            { "2/28569-8.png", "1" }, { "2/28569.png", "1" }, { "3/testImage.png", "116" }, { "3/testImageNoAlpha.png", "1" },
+            { "4/buttons_level_menu_down.ipad.png", "2" }, { "5/trns-gray.png", "26" }, { "5/trns-palette8.png", "18" }, { "5/trns-rgb.png", "26" }, };
 
     private static int countColors(final byte[] bytes) throws IOException {
         final BufferedImage imageParsed = Imaging.getBufferedImage(bytes);
@@ -65,14 +55,14 @@ public class PngWriterTest extends AbstractPngTest {
         }
     }
 
-    private File getPngFile(String name) {
+    private File getPngFile(final String name) {
         final File pngFolder = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, "png");
         return new File(pngFolder, name);
     }
 
     @Test
     public void testNullParameters() throws IOException {
-        for (String[] testTarget : testSet) {
+        for (final String[] testTarget : testSet) {
             final String filePath = testTarget[0];
             final File imageFile = getPngFile(filePath);
 
@@ -89,7 +79,7 @@ public class PngWriterTest extends AbstractPngTest {
 
     @Test
     public void testPaletteFactory() throws IOException {
-        for (String[] testTarget : testSet) {
+        for (final String[] testTarget : testSet) {
             final String filePath = testTarget[0];
             final File imageFile = getPngFile(filePath);
             final int colourCount = Integer.parseInt(testTarget[1]);

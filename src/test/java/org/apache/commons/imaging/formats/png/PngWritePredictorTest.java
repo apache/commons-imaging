@@ -43,9 +43,8 @@ public class PngWritePredictorTest {
     }
 
     /**
-     * Populate an integer pixel array for a 256-by-256 image with varied colors across the image area and a white and
-     * black line down the main diagonal.
-     * 
+     * Populate an integer pixel array for a 256-by-256 image with varied colors across the image area and a white and black line down the main diagonal.
+     *
      * @return a valid array of integers.
      */
     private int[] populateARGB() {
@@ -54,9 +53,9 @@ public class PngWritePredictorTest {
         for (int i = 0; i < 256; i++) {
             for (int j = 0; j < 256; j++) {
                 final int red = i;
-                final int green = (255 - i);
+                final int green = 255 - i;
                 final int blue = j;
-                argb[i * 256 + j] = ((((0xff00 | red) << 8) | green) << 8) | blue;
+                argb[i * 256 + j] = ((0xff00 | red) << 8 | green) << 8 | blue;
             }
         }
 

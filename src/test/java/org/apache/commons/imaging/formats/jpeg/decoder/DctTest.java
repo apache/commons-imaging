@@ -27,7 +27,7 @@ public class DctTest {
         final double[] ret = new double[8];
         for (int u = 0; u < 8; u++) {
             double sum = 0;
-            final float cu = (u == 0) ? ((float) (1.0 / Math.sqrt(2))) : 1;
+            final float cu = u == 0 ? (float) (1.0 / Math.sqrt(2)) : 1;
             for (int x = 0; x < 8; x++) {
                 sum += vector[x] * Math.cos((2 * x + 1) * u * Math.PI / 16);
             }
@@ -41,13 +41,11 @@ public class DctTest {
         for (int u = 0; u < 8; u++) {
             for (int v = 0; v < 8; v++) {
                 double sum = 0;
-                final float cu = (u == 0) ? ((float) (1.0 / Math.sqrt(2))) : 1;
-                final float cv = (v == 0) ? ((float) (1.0 / Math.sqrt(2))) : 1;
+                final float cu = u == 0 ? (float) (1.0 / Math.sqrt(2)) : 1;
+                final float cv = v == 0 ? (float) (1.0 / Math.sqrt(2)) : 1;
                 for (int x = 0; x < 8; x++) {
                     for (int y = 0; y < 8; y++) {
-                        sum += matrix[y][x]
-                                * Math.cos((2 * x + 1) * u * Math.PI / 16)
-                                * Math.cos((2 * y + 1) * v * Math.PI / 16);
+                        sum += matrix[y][x] * Math.cos((2 * x + 1) * u * Math.PI / 16) * Math.cos((2 * y + 1) * v * Math.PI / 16);
                     }
                 }
                 ret[v][u] = 0.25f * cu * cv * sum;
@@ -61,9 +59,8 @@ public class DctTest {
         for (int x = 0; x < 8; x++) {
             double sum = 0;
             for (int u = 0; u < 8; u++) {
-                final float cu = (u == 0) ? ((float) (1.0 / Math.sqrt(2))) : 1;
-                sum += cu * vector[u]
-                        * Math.cos((2 * x + 1) * u * Math.PI / 16);
+                final float cu = u == 0 ? (float) (1.0 / Math.sqrt(2)) : 1;
+                sum += cu * vector[u] * Math.cos((2 * x + 1) * u * Math.PI / 16);
             }
             ret[x] = 0.5f * sum;
         }
@@ -77,13 +74,9 @@ public class DctTest {
                 double sum = 0;
                 for (int u = 0; u < 8; u++) {
                     for (int v = 0; v < 8; v++) {
-                        final float cu = (u == 0) ? ((float) (1.0 / Math.sqrt(2)))
-                                : 1;
-                        final float cv = (v == 0) ? ((float) (1.0 / Math.sqrt(2)))
-                                : 1;
-                        sum += cu * cv * matrix[v][u]
-                                * Math.cos((2 * x + 1) * u * Math.PI / 16)
-                                * Math.cos((2 * y + 1) * v * Math.PI / 16);
+                        final float cu = u == 0 ? (float) (1.0 / Math.sqrt(2)) : 1;
+                        final float cv = v == 0 ? (float) (1.0 / Math.sqrt(2)) : 1;
+                        sum += cu * cv * matrix[v][u] * Math.cos((2 * x + 1) * u * Math.PI / 16) * Math.cos((2 * y + 1) * v * Math.PI / 16);
                     }
                 }
                 ret[y][x] = 0.25f * sum;

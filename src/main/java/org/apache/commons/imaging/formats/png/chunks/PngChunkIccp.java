@@ -30,8 +30,8 @@ import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.io.IOUtils;
 
 /**
- * The PNG iCCP chunk. If "present, the image samples conform to the color space represented by the embedded ICC
- * profile as defined by the International Color Consortium".
+ * The PNG iCCP chunk. If "present, the image samples conform to the color space represented by the embedded ICC profile as defined by the International Color
+ * Consortium".
  *
  * @see <a href="http://www.libpng.org/pub/png/spec/1.2/PNG-Chunks.html">PNG Specification</a>
  */
@@ -65,12 +65,12 @@ public class PngChunkIccp extends PngChunk {
     /**
      * Constructs a new instance.
      *
-     * @param length chunk length
+     * @param length    chunk length
      * @param chunkType chunk type
-     * @param crc CRC computed over the chunk type and chunk data (but not the length)
-     * @param bytes chunk data bytes
+     * @param crc       CRC computed over the chunk type and chunk data (but not the length)
+     * @param bytes     chunk data bytes
      * @throws ImagingException when no profile name is present
-     * @throws IOException when an error happens while reading the profile data
+     * @throws IOException      when an error happens while reading the profile data
      */
     public PngChunkIccp(final int length, final int chunkType, final int crc, final byte[] bytes) throws ImagingException, IOException {
         super(length, chunkType, crc, bytes);
@@ -114,6 +114,7 @@ public class PngChunkIccp extends PngChunk {
 
     /**
      * Return a copy of the uncompressed profile data.
+     *
      * @return the uncompressed profile data
      */
     public byte[] getUncompressedProfile() {

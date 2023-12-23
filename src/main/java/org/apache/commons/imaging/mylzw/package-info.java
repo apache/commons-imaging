@@ -19,4 +19,3 @@
  * Provides LZW compression.
  */
 package org.apache.commons.imaging.mylzw;
-

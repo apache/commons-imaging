@@ -24,21 +24,12 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * ImageInfo represents a collection of basic properties of an image, such as
- * width, height, format, bit depth, etc.
+ * ImageInfo represents a collection of basic properties of an image, such as width, height, format, bit depth, etc.
  */
 public class ImageInfo {
 
     public enum ColorType {
-        BW("Black and White"),
-        GRAYSCALE("Grayscale"),
-        RGB("RGB"),
-        CMYK("CMYK"),
-        YCbCr("YCbCr"),
-        YCCK("YCCK"),
-        YCC("YCC"),
-        OTHER("Other"),
-        UNKNOWN("Unknown");
+        BW("Black and White"), GRAYSCALE("Grayscale"), RGB("RGB"), CMYK("CMYK"), YCbCr("YCbCr"), YCCK("YCCK"), YCC("YCC"), OTHER("Other"), UNKNOWN("Unknown");
 
         private final String description;
 
@@ -53,19 +44,9 @@ public class ImageInfo {
     }
 
     public enum CompressionAlgorithm {
-        UNKNOWN("Unknown"),
-        NONE("None"),
-        LZW("LZW"),
-        PACKBITS("PackBits"),
-        JPEG_TIFF_OBSOLETE("JPEG Obsolete (TIFF only)"),
-        JPEG("JPEG"),
-        RLE("RLE: Run-Length Encoding"),
-        ADAPTIVE_RLE("Adaptive RLE"),
-        PSD("Photoshop"),
-        PNG_FILTER("PNG Filter"),
-        CCITT_GROUP_3("CCITT Group 3 1-Dimensional Modified Huffman run-length encoding."),
-        CCITT_GROUP_4("CCITT Group 4"),
-        CCITT_1D("CCITT 1D"),
+        UNKNOWN("Unknown"), NONE("None"), LZW("LZW"), PACKBITS("PackBits"), JPEG_TIFF_OBSOLETE("JPEG Obsolete (TIFF only)"), JPEG("JPEG"),
+        RLE("RLE: Run-Length Encoding"), ADAPTIVE_RLE("Adaptive RLE"), PSD("Photoshop"), PNG_FILTER("PNG Filter"),
+        CCITT_GROUP_3("CCITT Group 3 1-Dimensional Modified Huffman run-length encoding."), CCITT_GROUP_4("CCITT Group 4"), CCITT_1D("CCITT 1D"),
         DEFLATE("DEFLATE (ZIP)");
 
         private final String description;
@@ -107,13 +88,10 @@ public class ImageInfo {
 
     private final CompressionAlgorithm compressionAlgorithm;
 
-    public ImageInfo(final String formatDetails, final int bitsPerPixel,
-            final List<String> comments, final ImageFormat format, final String formatName,
-            final int height, final String mimeType, final int numberOfImages,
-            final int physicalHeightDpi, final float physicalHeightInch,
-            final int physicalWidthDpi, final float physicalWidthInch, final int width,
-            final boolean progressive, final boolean transparent, final boolean usesPalette,
-            final ColorType colorType, final CompressionAlgorithm compressionAlgorithm) {
+    public ImageInfo(final String formatDetails, final int bitsPerPixel, final List<String> comments, final ImageFormat format, final String formatName,
+            final int height, final String mimeType, final int numberOfImages, final int physicalHeightDpi, final float physicalHeightInch,
+            final int physicalWidthDpi, final float physicalWidthInch, final int width, final boolean progressive, final boolean transparent,
+            final boolean usesPalette, final ColorType colorType, final CompressionAlgorithm compressionAlgorithm) {
         this.formatDetails = formatDetails;
 
         this.bitsPerPixel = bitsPerPixel;
@@ -164,7 +142,9 @@ public class ImageInfo {
     /**
      * Returns a list of comments from the image file.
      *
-     * <p>This is mostly obsolete.</p>
+     * <p>
+     * This is mostly obsolete.
+     * </p>
      *
      * @return A list of comments.
      */
@@ -184,7 +164,9 @@ public class ImageInfo {
     /**
      * Returns the image file format, ie. ImageFormat.IMAGE_FORMAT_PNG.
      *
-     * <p>Returns ImageFormat.IMAGE_FORMAT_UNKNOWN if format is unknown.</p>
+     * <p>
+     * Returns ImageFormat.IMAGE_FORMAT_UNKNOWN if format is unknown.
+     * </p>
      *
      * @return a constant defined in ImageFormat.
      * @see ImageFormats
@@ -235,8 +217,9 @@ public class ImageInfo {
     /**
      * Returns the number of images in the file.
      *
-     * <p>Applies mostly to GIF and TIFF; reading PSD/Photoshop layers is not
-     * supported, and Jpeg/JFIF EXIF thumbnails are not included in this count.</p>
+     * <p>
+     * Applies mostly to GIF and TIFF; reading PSD/Photoshop layers is not supported, and Jpeg/JFIF EXIF thumbnails are not included in this count.
+     * </p>
      *
      * @return number of images in the file.
      */
@@ -247,9 +230,9 @@ public class ImageInfo {
     /**
      * Returns horizontal dpi of the image, if available.
      *
-     * <p>Applies to TIFF (optional), BMP (always), GIF (constant: 72), Jpeg
-     * (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant:
-     * 72).</p>
+     * <p>
+     * Applies to TIFF (optional), BMP (always), GIF (constant: 72), Jpeg (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant: 72).
+     * </p>
      *
      * @return returns -1 if not present.
      */
@@ -260,9 +243,9 @@ public class ImageInfo {
     /**
      * Returns physical height of the image in inches, if available.
      *
-     * <p>Applies to TIFF (optional), BMP (always), GIF (constant: 72), Jpeg
-     * (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant:
-     * 72).</p>
+     * <p>
+     * Applies to TIFF (optional), BMP (always), GIF (constant: 72), Jpeg (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant: 72).
+     * </p>
      *
      * @return returns -1 if not present.
      */
@@ -273,9 +256,9 @@ public class ImageInfo {
     /**
      * Returns vertical dpi of the image, if available.
      *
-     * <p>Applies to TIFF (optional), BMP (always), GIF (constant: 72), Jpeg
-     * (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant:
-     * 72).</p>
+     * <p>
+     * Applies to TIFF (optional), BMP (always), GIF (constant: 72), Jpeg (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant: 72).
+     * </p>
      *
      * @return returns -1 if not present.
      */
@@ -286,9 +269,9 @@ public class ImageInfo {
     /**
      * Returns physical width of the image in inches, if available.
      *
-     * <p>Applies to TIFF (optional), BMP (always), GIF (constant: 72), Jpeg
-     * (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant:
-     * 72).</p>
+     * <p>
+     * Applies to TIFF (optional), BMP (always), GIF (constant: 72), Jpeg (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant: 72).
+     * </p>
      *
      * @return returns -1 if not present.
      */

@@ -84,16 +84,15 @@ final class ImageAsserts {
     }
 
     static int calculateARGBDistance(final int a, final int b) {
-        final int aAlpha = 0xff & (a >> 24);
-        final int aRed = 0xff & (a >> 16);
-        final int aGreen = 0xff & (a >> 8);
-        final int aBlue = 0xff & (a >> 0);
-        final int bAlpha = 0xff & (b >> 24);
-        final int bRed = 0xff & (b >> 16);
-        final int bGreen = 0xff & (b >> 8);
-        final int bBlue = 0xff & (b >> 0);
-        return Math.abs(aAlpha - bAlpha) + Math.abs(aRed - bRed)
-                + Math.abs(aGreen - bGreen) + Math.abs(aBlue - bBlue);
+        final int aAlpha = 0xff & a >> 24;
+        final int aRed = 0xff & a >> 16;
+        final int aGreen = 0xff & a >> 8;
+        final int aBlue = 0xff & a >> 0;
+        final int bAlpha = 0xff & b >> 24;
+        final int bRed = 0xff & b >> 16;
+        final int bGreen = 0xff & b >> 8;
+        final int bBlue = 0xff & b >> 0;
+        return Math.abs(aAlpha - bAlpha) + Math.abs(aRed - bRed) + Math.abs(aGreen - bGreen) + Math.abs(aBlue - bBlue);
 
     }
 

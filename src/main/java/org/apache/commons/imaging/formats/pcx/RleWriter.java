@@ -30,31 +30,24 @@ final class RleWriter {
 
     void flush(final BinaryOutputStream bos) throws IOException {
         if (repeatCount > 0) {
-            if (repeatCount == 1 && (previousByte & 0xc0) != 0xc0) {
-                bos.write(previousByte);
-            } else {
+            if (repeatCount != 1 || (previousByte & 0xc0) == 0xc0) {
                 bos.write(0xc0 | repeatCount);
-                bos.write(previousByte);
             }
+            bos.write(previousByte);
         }
     }
 
-    void write(final BinaryOutputStream bos, final byte[] samples)
-            throws IOException {
+    void write(final BinaryOutputStream bos, final byte[] samples) throws IOException {
         if (isCompressed) {
             for (final byte element : samples) {
-                if ((element & 0xff) == previousByte
-                        && repeatCount < 63) {
+                if ((element & 0xff) == previousByte && repeatCount < 63) {
                     ++repeatCount;
                 } else {
                     if (repeatCount > 0) {
-                        if (repeatCount == 1
-                                && (previousByte & 0xc0) != 0xc0) {
-                            bos.write(previousByte);
-                        } else {
+                        if (repeatCount != 1 || (previousByte & 0xc0) == 0xc0) {
                             bos.write(0xc0 | repeatCount);
-                            bos.write(previousByte);
                         }
+                        bos.write(previousByte);
                     }
                     previousByte = 0xff & element;
                     repeatCount = 1;

@@ -39,9 +39,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Performs a round-trip that writes an image containing Alpha and then reads it
- * back.
- * Selected non-opaque pixels are tested for correctness,
+ * Performs a round-trip that writes an image containing Alpha and then reads it back. Selected non-opaque pixels are tested for correctness,
  */
 public class TiffAlphaRoundTripTest {
 
@@ -49,18 +47,16 @@ public class TiffAlphaRoundTripTest {
     Path tempDir;
 
     /**
-     * Checks to see if a pixel component (A, R, G, or B) for two specified
-     * values are within a specified tolerance.
+     * Checks to see if a pixel component (A, R, G, or B) for two specified values are within a specified tolerance.
      *
-     * @param a the first value
-     * @param b the second value
-     * @param iShift a multiple of 8 telling how far to shift values
-     * to extract components (24, 16, 8, or zero for ARGB)
+     * @param a          the first value
+     * @param b          the second value
+     * @param iShift     a multiple of 8 telling how far to shift values to extract components (24, 16, 8, or zero for ARGB)
      * @param iTolerance a small positive integer
      * @return true if the components of the values match
      */
     boolean componentMatch(final int a, final int b, final int iShift, final int iTolerance) {
-        int delta = ((a >> iShift) & 0xff) - ((b >> iShift) & 0xff);
+        int delta = (a >> iShift & 0xff) - (b >> iShift & 0xff);
         if (delta < 0) {
             delta = -delta;
         }
@@ -68,13 +64,9 @@ public class TiffAlphaRoundTripTest {
     }
 
     void doPixelsMatch(final int x, final int y, final int a, final int b) {
-        if (!componentMatch(a, b, 0, 2)
-            || !componentMatch(a, b, 8, 2)
-            || !componentMatch(a, b, 16, 2)
-            || !componentMatch(a, b, 24, 2)) {
+        if (!componentMatch(a, b, 0, 2) || !componentMatch(a, b, 8, 2) || !componentMatch(a, b, 16, 2) || !componentMatch(a, b, 24, 2)) {
 
-            final String complaint = String.format("Pixel mismatch at (%d,%d): 0x%08x 0x%08x",
-                x, y, a, b);
+            final String complaint = String.format("Pixel mismatch at (%d,%d): 0x%08x 0x%08x", x, y, a, b);
             fail(complaint);
         }
     }
@@ -84,7 +76,7 @@ public class TiffAlphaRoundTripTest {
 
         // This test will exercise two passes to test the implementation
         // of the TIFF support for writing and reading images containing
-        // an alpha channel.  In the first pass, the alpha writing is enabled
+        // an alpha channel. In the first pass, the alpha writing is enabled
         // in the second pass it is suppressed.
         for (int i = 0; i < 2; i++) {
             // Step 0, create a buffered image that includes transparency
@@ -108,17 +100,16 @@ public class TiffAlphaRoundTripTest {
             g2d.fillRect(200, 200, 100, 100);
 
             // Step 1: write the Buffered Image to an output file and
-            //         then read it back in.  This action will test the
-            //         correctness of a round-trip test.
+            // then read it back in. This action will test the
+            // correctness of a round-trip test.
             final File file = new File(tempDir.toFile(), "TiffAlphaRoundTripTest.tif");
             file.delete();
             Imaging.writeImage(image0, file, ImageFormats.TIFF);
             final BufferedImage image1 = Imaging.getBufferedImage(file);
 
-            // Step 2:  create a composite image overlaying a white background
-            //          with the results from the TIFF file.
-            final BufferedImage compImage
-                = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+            // Step 2: create a composite image overlaying a white background
+            // with the results from the TIFF file.
+            final BufferedImage compImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
             g2d = compImage.createGraphics();
             g2d.setColor(Color.white);
             g2d.fillRect(0, 0, width, height);
@@ -138,7 +129,7 @@ public class TiffAlphaRoundTripTest {
     }
 
     @Test
-    void testExtraSamples() throws Exception{
+    void testExtraSamples() throws Exception {
 
         final int bytesPerSample = 4;
         final int width = 10;
@@ -160,13 +151,10 @@ public class TiffAlphaRoundTripTest {
             outDir.add(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH, width);
             outDir.add(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH, height);
             outDir.add(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL, (short) 4);
-            outDir.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE, new short[]{8, 8, 8, 8});
-            outDir.add(TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION,
-                    (short) TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_RGB);
-            outDir.add(TiffTagConstants.TIFF_TAG_COMPRESSION,
-                    (short) TiffTagConstants.COMPRESSION_VALUE_UNCOMPRESSED);
-            outDir.add(TiffTagConstants.TIFF_TAG_PLANAR_CONFIGURATION,
-                    (short) TiffTagConstants.PLANAR_CONFIGURATION_VALUE_CHUNKY);
+            outDir.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE, new short[] { 8, 8, 8, 8 });
+            outDir.add(TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION, (short) TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_RGB);
+            outDir.add(TiffTagConstants.TIFF_TAG_COMPRESSION, (short) TiffTagConstants.COMPRESSION_VALUE_UNCOMPRESSED);
+            outDir.add(TiffTagConstants.TIFF_TAG_PLANAR_CONFIGURATION, (short) TiffTagConstants.PLANAR_CONFIGURATION_VALUE_CHUNKY);
             outDir.add(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP, height);
             outDir.add(TiffTagConstants.TIFF_TAG_STRIP_BYTE_COUNTS, nBytesPerStrip);
 
@@ -175,17 +163,16 @@ public class TiffAlphaRoundTripTest {
             final byte[] b = new byte[nBytesPerStrip];
             int k = 0;
             for (final int sample : samples) {
-                b[k++] = (byte) ((sample >> 16) & 0xff);  // R
-                b[k++] = (byte) ((sample >> 8) & 0xff);   // G
-                b[k++] = (byte) (sample & 0xff);          // B
-                b[k++] = (byte) ((sample >> 24) & 0xff);  // A
+                b[k++] = (byte) (sample >> 16 & 0xff); // R
+                b[k++] = (byte) (sample >> 8 & 0xff); // G
+                b[k++] = (byte) (sample & 0xff); // B
+                b[k++] = (byte) (sample >> 24 & 0xff); // A
             }
 
             final AbstractTiffElement.DataElement[] imageData = new AbstractTiffElement.DataElement[1];
             imageData[0] = new AbstractTiffImageData.Data(0, b.length, b);
 
-            final AbstractTiffImageData abstractTiffImageData
-                = new AbstractTiffImageData.Strips(imageData, height);
+            final AbstractTiffImageData abstractTiffImageData = new AbstractTiffImageData.Strips(imageData, height);
 
             outDir.setTiffImageData(abstractTiffImageData);
 
@@ -198,23 +185,23 @@ public class TiffAlphaRoundTripTest {
             }
 
             final BufferedImage result = Imaging.getBufferedImage(outputFile);
-            final int []argb = new int[samples.length];
+            final int[] argb = new int[samples.length];
             result.getRGB(0, 0, width, height, argb, 0, width);
-            final int index = 3*width+1;
+            final int index = 3 * width + 1;
             int iSample = samples[index];
-            final int iArgb   = argb[index];
+            final int iArgb = argb[index];
             if (iExtra == 0) {
                 // when extra samples is zero, the alpha channel is ignored.
-                // We expect ARGB to start with 0xff.  So we OR in 0xff for
+                // We expect ARGB to start with 0xff. So we OR in 0xff for
                 // the alpha value of the sample
                 iSample |= 0xff000000;
-            } else if (iExtra==1) {
+            } else if (iExtra == 1) {
                 // The pre-multiply alpha case
                 iSample = 0x89de0000;
             }
             final String p = String.format("%08x", iSample);
             final String q = String.format("%08x", iArgb);
-            assertEquals(p, q, "Failure on ExtraSamples="+iExtra);
+            assertEquals(p, q, "Failure on ExtraSamples=" + iExtra);
         }
     }
 }

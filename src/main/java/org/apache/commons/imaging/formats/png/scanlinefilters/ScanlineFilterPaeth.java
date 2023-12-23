@@ -35,7 +35,7 @@ public class ScanlineFilterPaeth implements ScanlineFilter {
         final int pc = Math.abs(p - c);
         // ; return nearest of a,b,c,
         // ; breaking ties in order a,b,c.
-        if ((pa <= pb) && (pa <= pc)) {
+        if (pa <= pb && pa <= pc) {
             return a;
         }
         if (pb <= pc) {
@@ -45,8 +45,7 @@ public class ScanlineFilterPaeth implements ScanlineFilter {
     }
 
     @Override
-    public void unfilter(final byte[] src, final byte[] dst, final byte[] up)
-            throws ImagingException, IOException {
+    public void unfilter(final byte[] src, final byte[] dst, final byte[] up) throws ImagingException, IOException {
         for (int i = 0; i < src.length; i++) {
             int left = 0;
             final int prevIndex = i - bytesPerPixel;
@@ -61,7 +60,7 @@ public class ScanlineFilterPaeth implements ScanlineFilter {
             // above = 255;
 
             int upperLeft = 0;
-            if ((prevIndex >= 0) && (up != null)) {
+            if (prevIndex >= 0 && up != null) {
                 upperLeft = up[prevIndex];
             }
             // upperLeft = 255;

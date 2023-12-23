@@ -45,8 +45,7 @@ final class PixelParserRle extends AbstractPixelParser {
             rgbs[1] = getColorTableRgb(sample2);
             // pixels_written = 2;
         } else {
-            throw new ImagingException("BMP RLE: bad BitsPerPixel: "
-                    + bhi.bitsPerPixel);
+            throw new ImagingException("BMP RLE: bad BitsPerPixel: " + bhi.bitsPerPixel);
         }
 
         return rgbs;
@@ -59,17 +58,15 @@ final class PixelParserRle extends AbstractPixelParser {
         if (bhi.bitsPerPixel == 4) {
             return 2;
         }
-        throw new ImagingException("BMP RLE: bad BitsPerPixel: "
-                + bhi.bitsPerPixel);
+        throw new ImagingException("BMP RLE: bad BitsPerPixel: " + bhi.bitsPerPixel);
     }
 
-    private int processByteOfData(final int[] rgbs, final int repeat, int x, final int y,
-            final int width, final int height, final ImageBuilder imageBuilder) {
+    private int processByteOfData(final int[] rgbs, final int repeat, int x, final int y, final int width, final int height, final ImageBuilder imageBuilder) {
         // int rbg
         int pixelsWritten = 0;
         for (int i = 0; i < repeat; i++) {
 
-            if ((x >= 0) && (x < width) && (y >= 0) && (y < height)) {
+            if (x >= 0 && x < width && y >= 0 && y < height) {
                 // int rgb = 0xff000000;
                 // rgb = getNextRGB();
                 final int rgb = rgbs[i % rgbs.length];
@@ -88,8 +85,7 @@ final class PixelParserRle extends AbstractPixelParser {
     }
 
     @Override
-    public void processImage(final ImageBuilder imageBuilder)
-            throws ImagingException, IOException {
+    public void processImage(final ImageBuilder imageBuilder) throws ImagingException, IOException {
         final int width = bhi.width;
         final int height = bhi.height;
         int x = 0;
@@ -122,10 +118,10 @@ final class PixelParserRle extends AbstractPixelParser {
                 default: {
                     final int samplesPerByte = getSamplesPerByte();
                     int size = b / samplesPerByte;
-                    if ((b % samplesPerByte) > 0) {
+                    if (b % samplesPerByte > 0) {
                         size++;
                     }
-                    if ((size % 2) != 0) {
+                    if (size % 2 != 0) {
                         size++;
                     }
 
@@ -138,15 +134,14 @@ final class PixelParserRle extends AbstractPixelParser {
                     int remaining = b;
 
                     for (int i = 0; remaining > 0; i++) {
-                    // for (int i = 0; i < bytes.length; i++)
+                        // for (int i = 0; i < bytes.length; i++)
                         final int[] samples = convertDataToSamples(0xff & bytes[i]);
                         final int towrite = Math.min(remaining, samplesPerByte);
                         // System.out.println("remaining: " + remaining);
                         // System.out.println("SamplesPerByte: "
                         // + SamplesPerByte);
                         // System.out.println("towrite: " + towrite);
-                        final int written = processByteOfData(samples, towrite, x, y,
-                                width, height, imageBuilder);
+                        final int written = processByteOfData(samples, towrite, x, y, width, height, imageBuilder);
                         // System.out.println("written: " + written);
                         // System.out.println("");
                         x += written;
@@ -158,8 +153,7 @@ final class PixelParserRle extends AbstractPixelParser {
             } else {
                 final int[] rgbs = convertDataToSamples(b);
 
-                x += processByteOfData(rgbs, a, x, y, width, height,
-                        imageBuilder);
+                x += processByteOfData(rgbs, a, x, y, width, height, imageBuilder);
             }
         }
     }

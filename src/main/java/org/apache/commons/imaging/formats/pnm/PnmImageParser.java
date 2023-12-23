@@ -42,21 +42,15 @@ import org.apache.commons.imaging.palette.PaletteFactory;
 public class PnmImageParser extends AbstractImageParser<PnmImagingParameters> {
 
     private static final String DEFAULT_EXTENSION = ImageFormats.PNM.getDefaultExtension();
-    private static final String[] ACCEPTED_EXTENSIONS = {
-            ImageFormats.PAM.getDefaultExtension(),
-            ImageFormats.PBM.getDefaultExtension(),
-            ImageFormats.PGM.getDefaultExtension(),
-            ImageFormats.PNM.getDefaultExtension(),
-            ImageFormats.PPM.getDefaultExtension()
-    };
+    private static final String[] ACCEPTED_EXTENSIONS = { ImageFormats.PAM.getDefaultExtension(), ImageFormats.PBM.getDefaultExtension(),
+            ImageFormats.PGM.getDefaultExtension(), ImageFormats.PNM.getDefaultExtension(), ImageFormats.PPM.getDefaultExtension() };
 
     public PnmImageParser() {
         super(ByteOrder.LITTLE_ENDIAN);
     }
 
     @Override
-    public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
-            throws ImagingException, IOException {
+    public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource) throws ImagingException, IOException {
         pw.println("pnm.dumpImageFile");
 
         final ImageInfo imageData = getImageInfo(byteSource);
@@ -78,18 +72,11 @@ public class PnmImageParser extends AbstractImageParser<PnmImagingParameters> {
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] {
-                ImageFormats.PBM,
-                ImageFormats.PGM,
-                ImageFormats.PPM,
-                ImageFormats.PNM,
-                ImageFormats.PAM
-        };
+        return new ImageFormat[] { ImageFormats.PBM, ImageFormats.PGM, ImageFormats.PPM, ImageFormats.PNM, ImageFormats.PAM };
     }
 
     @Override
-    public BufferedImage getBufferedImage(final ByteSource byteSource, final PnmImagingParameters params)
-            throws ImagingException, IOException {
+    public BufferedImage getBufferedImage(final ByteSource byteSource, final PnmImagingParameters params) throws ImagingException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             final AbstractFileInfo info = readHeader(is);
 
@@ -97,8 +84,7 @@ public class PnmImageParser extends AbstractImageParser<PnmImagingParameters> {
             final int height = info.height;
 
             final boolean hasAlpha = info.hasAlpha();
-            final ImageBuilder imageBuilder = new ImageBuilder(width, height,
-                    hasAlpha);
+            final ImageBuilder imageBuilder = new ImageBuilder(width, height, hasAlpha);
             info.readImage(imageBuilder, is);
 
             return imageBuilder.getBufferedImage();
@@ -116,14 +102,12 @@ public class PnmImageParser extends AbstractImageParser<PnmImagingParameters> {
     }
 
     @Override
-    public byte[] getIccProfileBytes(final ByteSource byteSource, final PnmImagingParameters params)
-            throws ImagingException, IOException {
+    public byte[] getIccProfileBytes(final ByteSource byteSource, final PnmImagingParameters params) throws ImagingException, IOException {
         return null;
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final PnmImagingParameters params)
-            throws ImagingException, IOException {
+    public ImageInfo getImageInfo(final ByteSource byteSource, final PnmImagingParameters params) throws ImagingException, IOException {
         final AbstractFileInfo info = readHeader(byteSource);
 
         final List<String> comments = new ArrayList<>();
@@ -150,24 +134,19 @@ public class PnmImageParser extends AbstractImageParser<PnmImagingParameters> {
         final ImageInfo.ColorType colorType = info.getColorType();
         final ImageInfo.CompressionAlgorithm compressionAlgorithm = ImageInfo.CompressionAlgorithm.NONE;
 
-        return new ImageInfo(formatDetails, bitsPerPixel, comments,
-                format, formatName, info.height, mimeType, numberOfImages,
-                physicalHeightDpi, physicalHeightInch, physicalWidthDpi,
-                physicalWidthInch, info.width, progressive, transparent,
-                usesPalette, colorType, compressionAlgorithm);
+        return new ImageInfo(formatDetails, bitsPerPixel, comments, format, formatName, info.height, mimeType, numberOfImages, physicalHeightDpi,
+                physicalHeightInch, physicalWidthDpi, physicalWidthInch, info.width, progressive, transparent, usesPalette, colorType, compressionAlgorithm);
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final PnmImagingParameters params)
-            throws ImagingException, IOException {
+    public Dimension getImageSize(final ByteSource byteSource, final PnmImagingParameters params) throws ImagingException, IOException {
         final AbstractFileInfo info = readHeader(byteSource);
 
         return new Dimension(info.width, info.height);
     }
 
     @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final PnmImagingParameters params)
-            throws ImagingException, IOException {
+    public ImageMetadata getMetadata(final ByteSource byteSource, final PnmImagingParameters params) throws ImagingException, IOException {
         return null;
     }
 
@@ -176,15 +155,13 @@ public class PnmImageParser extends AbstractImageParser<PnmImagingParameters> {
         return "Pbm-Custom";
     }
 
-    private AbstractFileInfo readHeader(final ByteSource byteSource)
-            throws ImagingException, IOException {
+    private AbstractFileInfo readHeader(final ByteSource byteSource) throws ImagingException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             return readHeader(is);
         }
     }
 
-    private AbstractFileInfo readHeader(final InputStream is) throws ImagingException,
-            IOException {
+    private AbstractFileInfo readHeader(final InputStream is) throws ImagingException, IOException {
         final byte identifier1 = readByte("Identifier1", is, "Not a Valid PNM File");
         final byte identifier2 = readByte("Identifier2", is, "Not a Valid PNM File");
 
@@ -194,24 +171,20 @@ public class PnmImageParser extends AbstractImageParser<PnmImagingParameters> {
 
         final WhiteSpaceReader wsr = new WhiteSpaceReader(is);
 
-        if (identifier2 == PnmConstants.PBM_TEXT_CODE
-                || identifier2 == PnmConstants.PBM_RAW_CODE
-                || identifier2 == PnmConstants.PGM_TEXT_CODE
-                || identifier2 == PnmConstants.PGM_RAW_CODE
-                || identifier2 == PnmConstants.PPM_TEXT_CODE
-                || identifier2 == PnmConstants.PPM_RAW_CODE) {
+        if (identifier2 == PnmConstants.PBM_TEXT_CODE || identifier2 == PnmConstants.PBM_RAW_CODE || identifier2 == PnmConstants.PGM_TEXT_CODE
+                || identifier2 == PnmConstants.PGM_RAW_CODE || identifier2 == PnmConstants.PPM_TEXT_CODE || identifier2 == PnmConstants.PPM_RAW_CODE) {
 
             final int width;
             try {
-              width = Integer.parseInt(wsr.readtoWhiteSpace());
+                width = Integer.parseInt(wsr.readtoWhiteSpace());
             } catch (final NumberFormatException e) {
-              throw new ImagingException("Invalid width specified." , e);
+                throw new ImagingException("Invalid width specified.", e);
             }
             final int height;
             try {
-              height = Integer.parseInt(wsr.readtoWhiteSpace());
+                height = Integer.parseInt(wsr.readtoWhiteSpace());
             } catch (final NumberFormatException e) {
-              throw new ImagingException("Invalid height specified." , e);
+                throw new ImagingException("Invalid height specified.", e);
             }
 
             switch (identifier2) {
@@ -319,8 +292,7 @@ public class PnmImageParser extends AbstractImageParser<PnmImagingParameters> {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, final PnmImagingParameters params)
-            throws ImagingException, IOException {
+    public void writeImage(final BufferedImage src, final OutputStream os, final PnmImagingParameters params) throws ImagingException, IOException {
         PnmWriter writer = null;
         boolean useRawbits = true;
 

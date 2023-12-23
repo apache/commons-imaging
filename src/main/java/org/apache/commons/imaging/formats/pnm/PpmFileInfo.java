@@ -87,10 +87,7 @@ final class PpmFileInfo extends AbstractFileInfo {
         blue = scaleSample(blue, scale, max);
         final int alpha = 0xff;
 
-        return ((0xff & alpha) << 24)
-             | ((0xff & red)   << 16)
-             | ((0xff & green) << 8)
-             | ((0xff & blue)  << 0);
+        return (0xff & alpha) << 24 | (0xff & red) << 16 | (0xff & green) << 8 | (0xff & blue) << 0;
     }
 
     @Override
@@ -104,10 +101,7 @@ final class PpmFileInfo extends AbstractFileInfo {
         blue = scaleSample(blue, scale, max);
         final int alpha = 0xff;
 
-        return ((0xff & alpha)  << 24)
-              | ((0xff & red)   << 16)
-              | ((0xff & green) << 8)
-              | ((0xff & blue)  << 0);
+        return (0xff & alpha) << 24 | (0xff & red) << 16 | (0xff & green) << 8 | (0xff & blue) << 0;
     }
 
     @Override

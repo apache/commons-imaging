@@ -17,11 +17,11 @@
 package org.apache.commons.imaging.color;
 
 /**
- * Represents a color in the CIE 1931 color space, also
- * known as XYZ color space.
+ * Represents a color in the CIE 1931 color space, also known as XYZ color space.
  *
- * <p>Contains the constant values for black, white, red,
- * green, and blue.</p>
+ * <p>
+ * Contains the constant values for black, white, red, green, and blue.
+ * </p>
  *
  * @see <a href="https://en.wikipedia.org/wiki/CIE_1931_color_space">https://en.wikipedia.org/wiki/CIE_1931_color_space</a>
  * @since 1.0-alpha1
@@ -30,6 +30,7 @@ public final class ColorXyz {
 
     /**
      * A constant for color black. Color components are:
+     *
      * <pre>
      *     X: 0
      *     Y: 0
@@ -40,6 +41,7 @@ public final class ColorXyz {
 
     /**
      * A constant for color white. Color components are:
+     *
      * <pre>
      *     X:  95.05
      *     Y: 100.00
@@ -50,6 +52,7 @@ public final class ColorXyz {
 
     /**
      * A constant for color red. Color components are:
+     *
      * <pre>
      *     X: 41.24
      *     Y: 21.26
@@ -60,6 +63,7 @@ public final class ColorXyz {
 
     /**
      * A constant for color green. Color components are:
+     *
      * <pre>
      *     X: 35.76
      *     Y: 71.52
@@ -70,6 +74,7 @@ public final class ColorXyz {
 
     /**
      * A constant for color blue. Color components are:
+     *
      * <pre>
      *     X: 18.05
      *     Y:  7.22
@@ -116,11 +121,11 @@ public final class ColorXyz {
         int result;
         long temp;
         temp = Double.doubleToLongBits(x);
-        result = (int) (temp ^ (temp >>> 32));
+        result = (int) (temp ^ temp >>> 32);
         temp = Double.doubleToLongBits(y);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) (temp ^ temp >>> 32);
         temp = Double.doubleToLongBits(z);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) (temp ^ temp >>> 32);
         return result;
     }
 

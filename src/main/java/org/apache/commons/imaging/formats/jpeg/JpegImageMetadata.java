@@ -40,8 +40,7 @@ public class JpegImageMetadata implements ImageMetadata {
     private final JpegPhotoshopMetadata photoshop;
     private final TiffImageMetadata exif;
 
-    public JpegImageMetadata(final JpegPhotoshopMetadata photoshop,
-            final TiffImageMetadata exif) {
+    public JpegImageMetadata(final JpegPhotoshopMetadata photoshop, final TiffImageMetadata exif) {
         this.photoshop = photoshop;
         this.exif = exif;
     }
@@ -73,13 +72,11 @@ public class JpegImageMetadata implements ImageMetadata {
     /**
      * Gets the thumbnail image if available.
      *
-     * @return the thumbnail image. May be {@code null} if no image could
-     *         be found.
+     * @return the thumbnail image. May be {@code null} if no image could be found.
      * @throws ImagingException if it fails to read the image
-     * @throws IOException if it fails to get the thumbnail or to read the image data
+     * @throws IOException      if it fails to get the thumbnail or to read the image data
      */
-    public BufferedImage getExifThumbnail() throws ImagingException,
-            IOException {
+    public BufferedImage getExifThumbnail() throws ImagingException, IOException {
 
         if (exif == null) {
             return null;
@@ -106,8 +103,7 @@ public class JpegImageMetadata implements ImageMetadata {
                     // our JPEG reading is still a bit buggy -
                     // fall back to ImageIO on error
                     if (!imageSucceeded) {
-                        final ByteArrayInputStream input = new ByteArrayInputStream(
-                                jpegImageData.getData());
+                        final ByteArrayInputStream input = new ByteArrayInputStream(jpegImageData.getData());
                         image = ImageIO.read(input);
                     }
                 }
@@ -152,10 +148,9 @@ public class JpegImageMetadata implements ImageMetadata {
      *
      * @return Thumbnail width and height or null if no thumbnail.
      * @throws ImagingException if it fails to read the image
-     * @throws IOException if it fails to read the image size
+     * @throws IOException      if it fails to read the image size
      */
-    public Dimension getExifThumbnailSize() throws ImagingException,
-            IOException {
+    public Dimension getExifThumbnailSize() throws ImagingException, IOException {
         final byte[] data = getExifThumbnailData();
 
         if (data != null) {

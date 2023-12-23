@@ -41,29 +41,21 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingp
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PhotometricInterpreterFloat;
 
 /**
- * A simple example application that reads the content of a TIFF file containing
- * floating-point data and extracts its content. TIFF files are * sometimes used to store non-image information for scientific and geophysical
- * data products, including terrestrial elevation and ocean depth data.
+ * A simple example application that reads the content of a TIFF file containing floating-point data and extracts its content. TIFF files are * sometimes used
+ * to store non-image information for scientific and geophysical data products, including terrestrial elevation and ocean depth data.
  */
 public class ExampleReadFloatingPointData {
 
-    private static final String[] USAGE = {
-        "Usage ReadFloatingPointData <input file> [output file]",
-        "   input file:  Mandatory file to be read",
-        "   output file: Optional output path for file to be written.",
-        "                This name should not include a file extension.",
-        "                Output data will be written using the JPEG format."
-    };
+    private static final String[] USAGE = { "Usage ReadFloatingPointData <input file> [output file]", "   input file:  Mandatory file to be read",
+            "   output file: Optional output path for file to be written.", "                This name should not include a file extension.",
+            "                Output data will be written using the JPEG format." };
 
     /**
-     * Reads the content of a TIFF file containing floating-point data and
-     * obtains some simple statistics
+     * Reads the content of a TIFF file containing floating-point data and obtains some simple statistics
      *
-     * @param args the command line arguments giving the path to an input TIFF
-     * file
-     * @throws org.apache.commons.imaging.ImagingException in the event of an
-     * internal data format or version compatibility error reading the image.
-     * @throws IOException in the event of an I/O error.
+     * @param args the command line arguments giving the path to an input TIFF file
+     * @throws org.apache.commons.imaging.ImagingException in the event of an internal data format or version compatibility error reading the image.
+     * @throws IOException                                 in the event of an I/O error.
      */
     public static void main(final String[] args) throws ImagingException, IOException {
         if (args.length == 0) {
@@ -79,8 +71,7 @@ public class ExampleReadFloatingPointData {
         if (args.length >= 2) {
             outputPath = args[1];
         }
-        final boolean optionalImageWritingEnabled
-            = outputPath != null && !outputPath.isEmpty();
+        final boolean optionalImageWritingEnabled = outputPath != null && !outputPath.isEmpty();
 
         final ByteSource byteSource = ByteSource.file(target);
 
@@ -89,17 +80,15 @@ public class ExampleReadFloatingPointData {
         // readDirectories is called.
         final TiffReader tiffReader = new TiffReader(true);
 
-        // Read the directories in the TIFF file.  Directories are the
+        // Read the directories in the TIFF file. Directories are the
         // main data element of a TIFF file. They usually include an image
         // element, but sometimes just carry metadata. This example
-        // reads all the directories in the file.   Typically reading
+        // reads all the directories in the file. Typically reading
         // the directories is not a time-consuming operation.
-        final TiffContents contents = tiffReader.readDirectories(
-            byteSource,
-            true, // indicates that application should read image data, if present
-            FormatCompliance.getDefault());
+        final TiffContents contents = tiffReader.readDirectories(byteSource, true, // indicates that application should read image data, if present
+                FormatCompliance.getDefault());
 
-        // Read the first directory in the file.  A practical implementation
+        // Read the first directory in the file. A practical implementation
         // could use any of the directories in the file. This demo uses the
         // first one just for simplicity.
         final TiffDirectory directory = contents.directories.get(0);
@@ -115,13 +104,12 @@ public class ExampleReadFloatingPointData {
         // See the Javadoc for readFloatingPointRasterData for more details.
         final long time0Nanos = System.nanoTime();
         final TiffImagingParameters params = new TiffImagingParameters();
-        final TiffRasterData rasterData
-            = directory.getRasterData(params);
+        final TiffRasterData rasterData = directory.getRasterData(params);
         final long time1Nanos = System.nanoTime();
-        System.out.println("Data read in " + ((time1Nanos - time0Nanos) / 1.0e+6) + " ms");
+        System.out.println("Data read in " + (time1Nanos - time0Nanos) / 1.0e+6 + " ms");
 
         // One of the test files in the Commons Imaging distribution uses
-        // the value 9999 as a special "No Data" indicator.  In that case,
+        // the value 9999 as a special "No Data" indicator. In that case,
         // we do not want to include 9999 in the simple-statistics survey.
         final float excludedValue = Float.NaN;
         TiffRasterStatistics simpleStats;
@@ -139,14 +127,13 @@ public class ExampleReadFloatingPointData {
 
         System.out.format("Image size %dx%d%n", w, h);
         System.out.format("Range of values in TIFF: %f %f%n", minValue, maxValue);
-        System.out.format("Number of data values found %d%n",
-            simpleStats.getCountOfSamples());
+        System.out.format("Number of data values found %d%n", simpleStats.getCountOfSamples());
 
         if (optionalImageWritingEnabled) {
             // The easiest way to get an image is by using the
             // TiffDirectory class' getTiffImage() methods and passing in
             // an optional photometric interpreter as shown in the
-            // ReadAndRenderFloatingPoint.java example,  But in this case,
+            // ReadAndRenderFloatingPoint.java example, But in this case,
             // we'll take the approach of building an image from the
             // raster data that was obtained above.
             final File output = new File(outputPath);
@@ -158,23 +145,20 @@ public class ExampleReadFloatingPointData {
                 // draw the excluded value in red.
                 paletteList.add(new PaletteEntryForValue(excludedValue, Color.red));
             }
-            paletteList.add(
-                new PaletteEntryForRange(minValue, maxValue, Color.black, Color.white));
-            // palette entries are defined for ranges   minValue <= value < maxValue.
+            paletteList.add(new PaletteEntryForRange(minValue, maxValue, Color.black, Color.white));
+            // palette entries are defined for ranges minValue <= value < maxValue.
             // Thus raster cells containing the maximum value would not be
             // color-coded unless we add an additional palette entry to
             // handle the single-value for the maximum.
             paletteList.add(new PaletteEntryForValue(maxValue, Color.white));
-            final PhotometricInterpreterFloat photometricInterpreter
-                = new PhotometricInterpreterFloat(paletteList);
+            final PhotometricInterpreterFloat photometricInterpreter = new PhotometricInterpreterFloat(paletteList);
 
             // Now construct an ImageBuilder to store the results
             final ImageBuilder builder = new ImageBuilder(w, h, false);
             for (int y = 0; y < h; y++) {
                 for (int x = 0; x < w; x++) {
                     final float f = rasterData.getValue(x, y);
-                    final int argb
-                        = photometricInterpreter.mapValueToArgb(f);
+                    final int argb = photometricInterpreter.mapValueToArgb(f);
                     builder.setRgb(x, y, argb);
                 }
             }

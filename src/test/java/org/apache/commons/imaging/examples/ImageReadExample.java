@@ -30,28 +30,23 @@ import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 
 public class ImageReadExample {
-    public static class ManagedImageBufferedImageFactory implements
-            BufferedImageFactory {
+    public static class ManagedImageBufferedImageFactory implements BufferedImageFactory {
 
         @Override
-        public BufferedImage getColorBufferedImage(final int width, final int height,
-                final boolean hasAlpha) {
+        public BufferedImage getColorBufferedImage(final int width, final int height, final boolean hasAlpha) {
             final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             final GraphicsDevice gd = ge.getDefaultScreenDevice();
             final GraphicsConfiguration gc = gd.getDefaultConfiguration();
-            return gc.createCompatibleImage(width, height,
-                    Transparency.TRANSLUCENT);
+            return gc.createCompatibleImage(width, height, Transparency.TRANSLUCENT);
         }
 
         @Override
-        public BufferedImage getGrayscaleBufferedImage(final int width, final int height,
-                final boolean hasAlpha) {
+        public BufferedImage getGrayscaleBufferedImage(final int width, final int height, final boolean hasAlpha) {
             return getColorBufferedImage(width, height, hasAlpha);
         }
     }
 
-    public static BufferedImage imageReadExample(final File file)
-            throws ImagingException, IOException {
+    public static BufferedImage imageReadExample(final File file) throws ImagingException, IOException {
         final TiffImagingParameters params = new TiffImagingParameters();
 
         // set optional parameters if you like

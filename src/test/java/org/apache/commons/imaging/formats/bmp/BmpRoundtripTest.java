@@ -60,9 +60,7 @@ public class BmpRoundtripTest extends AbstractBmpTest {
                 final int rgbB = 0xffffff & b[y][x];
 
                 if (rgbA != rgbB) {
-                    Debug.debug("x: " + x + ", y: " + y + ", rgbA: " + rgbA
-                            + " (0x" + Integer.toHexString(rgbA) + ")"
-                            + ", rgbB: " + rgbB + " (0x"
+                    Debug.debug("x: " + x + ", y: " + y + ", rgbA: " + rgbA + " (0x" + Integer.toHexString(rgbA) + ")" + ", rgbB: " + rgbB + " (0x"
                             + Integer.toHexString(rgbB) + ")");
                 }
                 assertEquals(rgbA, rgbB);
@@ -76,8 +74,7 @@ public class BmpRoundtripTest extends AbstractBmpTest {
             for (int x = 0; x < width; x++) {
                 final int alpha = (x + y) % 256;
                 final int value = (x + y) % 256;
-                final int argb = (0xff & alpha) << 24 | (0xff & value) << 16
-                        | (0xff & value) << 8 | (0xff & value) << 0;
+                final int argb = (0xff & alpha) << 24 | (0xff & value) << 16 | (0xff & value) << 8 | (0xff & value) << 0;
 
                 result[y][x] = argb;
             }
@@ -98,8 +95,7 @@ public class BmpRoundtripTest extends AbstractBmpTest {
     private BufferedImage imageDataToBufferedImage(final int[][] rawData) {
         final int width = rawData[0].length;
         final int height = rawData.length;
-        final BufferedImage image = new BufferedImage(width, height,
-                BufferedImage.TYPE_INT_ARGB);
+        final BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 image.setRGB(x, y, rawData[y][x]);

@@ -19,8 +19,9 @@ package org.apache.commons.imaging.color;
 /**
  * Represents a color in the CIELUV color space..
  *
- * <p>Contains the constant values for black, white, red,
- * green, and blue.</p>
+ * <p>
+ * Contains the constant values for black, white, red, green, and blue.
+ * </p>
  *
  * @see <a href="https://en.wikipedia.org/wiki/CIELUV">https://en.wikipedia.org/wiki/CIELUV</a>
  * @since 1.0-alpha1
@@ -29,6 +30,7 @@ public final class ColorCieLuv {
 
     /**
      * A constant for color black. Color components are:
+     *
      * <pre>
      *     L: 0.000
      *     u: 0.000
@@ -39,6 +41,7 @@ public final class ColorCieLuv {
 
     /**
      * A constant for color white. Color components are:
+     *
      * <pre>
      *     L: 100.000
      *     u:   0.000
@@ -49,6 +52,7 @@ public final class ColorCieLuv {
 
     /**
      * A constant for color red. Color components are:
+     *
      * <pre>
      *     L:  53.233
      *     u: 175.053
@@ -59,6 +63,7 @@ public final class ColorCieLuv {
 
     /**
      * A constant for color green. Color components are:
+     *
      * <pre>
      *     L:  87.737
      *     u: -83.080
@@ -69,6 +74,7 @@ public final class ColorCieLuv {
 
     /**
      * A constant for color blue. Color components are:
+     *
      * <pre>
      *     L:   32.303
      *     u:   -9.400
@@ -115,11 +121,11 @@ public final class ColorCieLuv {
         int result;
         long temp;
         temp = Double.doubleToLongBits(l);
-        result = (int) (temp ^ (temp >>> 32));
+        result = (int) (temp ^ temp >>> 32);
         temp = Double.doubleToLongBits(u);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) (temp ^ temp >>> 32);
         temp = Double.doubleToLongBits(v);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) (temp ^ temp >>> 32);
         return result;
     }
 

@@ -42,14 +42,10 @@ import java.io.IOException;
  */
 public class ColorTools {
 
-    public BufferedImage convertBetweenColorSpaces(BufferedImage bi,
-            final ColorSpace from, final ColorSpace to) {
-        final RenderingHints hints = new RenderingHints(RenderingHints.KEY_RENDERING,
-                RenderingHints.VALUE_RENDER_QUALITY);
-        hints.put(RenderingHints.KEY_COLOR_RENDERING,
-                RenderingHints.VALUE_COLOR_RENDER_QUALITY);
-        hints.put(RenderingHints.KEY_DITHERING,
-                RenderingHints.VALUE_DITHER_ENABLE);
+    public BufferedImage convertBetweenColorSpaces(BufferedImage bi, final ColorSpace from, final ColorSpace to) {
+        final RenderingHints hints = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        hints.put(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+        hints.put(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
 
         final ColorConvertOp op = new ColorConvertOp(from, to, hints);
 
@@ -62,14 +58,10 @@ public class ColorTools {
         return result;
     }
 
-    public BufferedImage convertBetweenColorSpacesX2(BufferedImage bi,
-            final ColorSpace from, final ColorSpace to) {
-        final RenderingHints hints = new RenderingHints(RenderingHints.KEY_RENDERING,
-                RenderingHints.VALUE_RENDER_QUALITY);
-        hints.put(RenderingHints.KEY_COLOR_RENDERING,
-                RenderingHints.VALUE_COLOR_RENDER_QUALITY);
-        hints.put(RenderingHints.KEY_DITHERING,
-                RenderingHints.VALUE_DITHER_ENABLE);
+    public BufferedImage convertBetweenColorSpacesX2(BufferedImage bi, final ColorSpace from, final ColorSpace to) {
+        final RenderingHints hints = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        hints.put(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+        hints.put(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
 
         // bi = relabelColorSpace(bi, cs);
         // dumpColorSpace("\tcs_sRGB", cs_sRGB);
@@ -105,12 +97,9 @@ public class ColorTools {
     public BufferedImage convertToColorSpace(final BufferedImage bi, final ColorSpace to) {
         final ColorSpace from = bi.getColorModel().getColorSpace();
 
-        final RenderingHints hints = new RenderingHints(RenderingHints.KEY_RENDERING,
-                RenderingHints.VALUE_RENDER_QUALITY);
-        hints.put(RenderingHints.KEY_COLOR_RENDERING,
-                RenderingHints.VALUE_COLOR_RENDER_QUALITY);
-        hints.put(RenderingHints.KEY_DITHERING,
-                RenderingHints.VALUE_DITHER_ENABLE);
+        final RenderingHints hints = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        hints.put(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+        hints.put(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
 
         final ColorConvertOp op = new ColorConvertOp(from, to, hints);
 
@@ -131,8 +120,7 @@ public class ColorTools {
         return convertToColorSpace(bi, srgbCM.getColorSpace());
     }
 
-    public BufferedImage correctImage(final BufferedImage src, final File file)
-            throws ImagingException, IOException {
+    public BufferedImage correctImage(final BufferedImage src, final File file) throws ImagingException, IOException {
         final ICC_Profile icc = Imaging.getIccProfile(file);
         if (icc == null) {
             return src;
@@ -146,7 +134,7 @@ public class ColorTools {
     private int countBitsInMask(int i) {
         int count = 0;
         while (i != 0) {
-            count += (i & 1);
+            count += i & 1;
             // uses the unsigned version of java's right shift operator,
             // so that left hand bits are zeroed.
             i >>>= 1;
@@ -154,42 +142,34 @@ public class ColorTools {
         return count;
     }
 
-    public ColorModel deriveColorModel(final BufferedImage bi, final ColorSpace cs)
-            throws ImagingOpException {
+    public ColorModel deriveColorModel(final BufferedImage bi, final ColorSpace cs) throws ImagingOpException {
         // boolean hasAlpha = (bi.getAlphaRaster() != null);
         return deriveColorModel(bi, cs, false);
     }
 
-    public ColorModel deriveColorModel(final BufferedImage bi, final ColorSpace cs,
-            final boolean forceNoAlpha) throws ImagingOpException {
+    public ColorModel deriveColorModel(final BufferedImage bi, final ColorSpace cs, final boolean forceNoAlpha) throws ImagingOpException {
         return deriveColorModel(bi.getColorModel(), cs, forceNoAlpha);
     }
 
-    public ColorModel deriveColorModel(final ColorModel colorModel, final ColorSpace cs,
-            final boolean forceNoAlpha) throws ImagingOpException {
+    public ColorModel deriveColorModel(final ColorModel colorModel, final ColorSpace cs, final boolean forceNoAlpha) throws ImagingOpException {
 
         if (colorModel instanceof ComponentColorModel) {
             final ComponentColorModel ccm = (ComponentColorModel) colorModel;
             // ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_sRGB);
             if (forceNoAlpha) {
-                return new ComponentColorModel(cs, false, false,
-                        Transparency.OPAQUE, ccm.getTransferType());
+                return new ComponentColorModel(cs, false, false, Transparency.OPAQUE, ccm.getTransferType());
             }
-            return new ComponentColorModel(cs, ccm.hasAlpha(),
-                    ccm.isAlphaPremultiplied(), ccm.getTransparency(),
-                    ccm.getTransferType());
+            return new ComponentColorModel(cs, ccm.hasAlpha(), ccm.isAlphaPremultiplied(), ccm.getTransparency(), ccm.getTransferType());
         }
         if (colorModel instanceof DirectColorModel) {
             final DirectColorModel dcm = (DirectColorModel) colorModel;
 
-            final int oldMask = dcm.getRedMask() | dcm.getGreenMask()
-                    | dcm.getBlueMask() | dcm.getAlphaMask();
+            final int oldMask = dcm.getRedMask() | dcm.getGreenMask() | dcm.getBlueMask() | dcm.getAlphaMask();
 
             final int oldBits = countBitsInMask(oldMask);
 
-            return new DirectColorModel(cs, oldBits, dcm.getRedMask(),
-                    dcm.getGreenMask(), dcm.getBlueMask(), dcm.getAlphaMask(),
-                    dcm.isAlphaPremultiplied(), dcm.getTransferType());
+            return new DirectColorModel(cs, oldBits, dcm.getRedMask(), dcm.getGreenMask(), dcm.getBlueMask(), dcm.getAlphaMask(), dcm.isAlphaPremultiplied(),
+                    dcm.getTransferType());
         }
         // else if (old_cm instanceof PackedColorModel)
         // {
@@ -215,8 +195,7 @@ public class ColorTools {
         throw new ImagingOpException("Could not clone unknown ColorModel Type.");
     }
 
-    public BufferedImage relabelColorSpace(final BufferedImage bi, final ColorModel cm)
-            throws ImagingOpException {
+    public BufferedImage relabelColorSpace(final BufferedImage bi, final ColorModel cm) throws ImagingOpException {
         // This does not do the conversion. It tries to relabel the
         // BufferedImage
         // with its actual (presumably correct) Colorspace.
@@ -226,8 +205,7 @@ public class ColorTools {
         return new BufferedImage(cm, bi.getRaster(), false, null);
     }
 
-    public BufferedImage relabelColorSpace(final BufferedImage bi, final ColorSpace cs)
-            throws ImagingOpException {
+    public BufferedImage relabelColorSpace(final BufferedImage bi, final ColorSpace cs) throws ImagingOpException {
         // This does not do the conversion. It tries to relabel the
         // BufferedImage
         // with its actual (presumably correct) Colorspace.
@@ -240,8 +218,7 @@ public class ColorTools {
 
     }
 
-    public BufferedImage relabelColorSpace(final BufferedImage bi, final ICC_Profile profile)
-            throws ImagingOpException {
+    public BufferedImage relabelColorSpace(final BufferedImage bi, final ICC_Profile profile) throws ImagingOpException {
         final ICC_ColorSpace cs = new ICC_ColorSpace(profile);
 
         return relabelColorSpace(bi, cs);

@@ -30,8 +30,7 @@ public abstract class AbstractJpegXmpTest extends AbstractImagingTest {
 
     private static final ImageFilter HAS_JPEG_XMP_IMAGE_FILTER = AbstractJpegXmpTest::hasJpegXmpData;
 
-    protected static List<File> getImagesWithXmpData() throws IOException,
-            ImagingException {
+    protected static List<File> getImagesWithXmpData() throws IOException, ImagingException {
         return getTestImages(HAS_JPEG_XMP_IMAGE_FILTER);
     }
 
@@ -44,12 +43,11 @@ public abstract class AbstractJpegXmpTest extends AbstractImagingTest {
     // };
 
     protected static boolean hasJpegXmpData(final File file) {
-        if (!file.getName().toLowerCase().endsWith(".jpg"))
-         {
+        if (!file.getName().toLowerCase().endsWith(".jpg")) {
             return false;
-        // ImageFormat format = Imaging.guessFormat(file);
-        // if (format != ImageFormat.IMAGE_FORMAT_JPEG)
-        // return false;
+            // ImageFormat format = Imaging.guessFormat(file);
+            // if (format != ImageFormat.IMAGE_FORMAT_JPEG)
+            // return false;
         }
 
         // Debug.debug("possible file", file);
@@ -64,8 +62,7 @@ public abstract class AbstractJpegXmpTest extends AbstractImagingTest {
         }
     }
 
-    protected List<File> getImagesWithXmpData(final int max) throws IOException,
-            ImagingException {
+    protected List<File> getImagesWithXmpData(final int max) throws IOException, ImagingException {
         return getTestImages(HAS_JPEG_XMP_IMAGE_FILTER, max);
     }
 

@@ -25,6 +25,7 @@ public class FileSystemTraversal {
     public interface Visitor {
         boolean visit(File file, double progressEstimate);
     }
+
     public static final int MODE_FILES = 1;
     public static final int MODE_FOLDERS = 2;
     public static final int MODE_FILES_AND_FOLDERS = 3;
@@ -35,7 +36,7 @@ public class FileSystemTraversal {
 
     static {
         try {
-            ON_MAC_OS_X = (System.getProperty("mrj.version") != null);
+            ON_MAC_OS_X = System.getProperty("mrj.version") != null;
         } catch (final Exception e) {
             Debug.debug(e);
 
@@ -47,12 +48,10 @@ public class FileSystemTraversal {
         return traverse(file, mode, visitor, 0, 1);
     }
 
-    private boolean traverse(final File file, final int mode, final Visitor visitor,
-            final double estimate, final double estimateIncrement) {
+    private boolean traverse(final File file, final int mode, final Visitor visitor, final double estimate, final double estimateIncrement) {
 
         if (file.isFile()) {
-            if ((mode == MODE_FILES) || (mode == MODE_FILES_AND_FOLDERS)
-                    || (mode == MODE_ALL)) {
+            if (mode == MODE_FILES || mode == MODE_FILES_AND_FOLDERS || mode == MODE_ALL) {
                 if (!visitor.visit(file, estimate)) {
                     return false;
                 }
@@ -64,25 +63,20 @@ public class FileSystemTraversal {
                     final File child = files[i];
                     if (ON_MAC_OS_X && child.isDirectory()) {
                         final String name = child.getName();
-                        if (name.equalsIgnoreCase("automount")
-                                || name.equalsIgnoreCase("private")
-                                || name.equalsIgnoreCase("Network")
+                        if (name.equalsIgnoreCase("automount") || name.equalsIgnoreCase("private") || name.equalsIgnoreCase("Network")
                                 || name.equalsIgnoreCase("Volumes")) {
                             continue;
                             // return true;
                         }
                     }
 
-                    if (!traverse(child, mode, visitor, estimate
-                            + estimateIncrement * i / files.length,
-                            estimateIncrement / files.length)) {
+                    if (!traverse(child, mode, visitor, estimate + estimateIncrement * i / files.length, estimateIncrement / files.length)) {
                         return false;
                     }
                 }
             }
 
-            if ((mode == MODE_FOLDERS) || (mode == MODE_FILES_AND_FOLDERS)
-                    || (mode == MODE_ALL)) {
+            if (mode == MODE_FOLDERS || mode == MODE_FILES_AND_FOLDERS || mode == MODE_ALL) {
                 if (!visitor.visit(file, estimate)) {
                     return false;
                 }
@@ -100,8 +94,7 @@ public class FileSystemTraversal {
         return traverse(mode, visitor, 0, 1);
     }
 
-    private boolean traverse(final int mode, final Visitor visitor, final double estimate,
-            final double estimateIncrement) {
+    private boolean traverse(final int mode, final Visitor visitor, final double estimate, final double estimateIncrement) {
         File[] roots = File.listRoots();
 
         if (ON_MAC_OS_X) {
@@ -122,8 +115,7 @@ public class FileSystemTraversal {
                 continue;
             }
 
-            if (!traverse(roots[i], mode, visitor, estimate + estimateIncrement
-                    * i / roots.length, estimateIncrement / roots.length)) {
+            if (!traverse(roots[i], mode, visitor, estimate + estimateIncrement * i / roots.length, estimateIncrement / roots.length)) {
                 return false;
             }
         }

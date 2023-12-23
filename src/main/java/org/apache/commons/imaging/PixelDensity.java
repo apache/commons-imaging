@@ -17,8 +17,7 @@
 package org.apache.commons.imaging;
 
 /**
- * Used to specify pixel density and physical dimensions when reading or
- * storing image information.
+ * Used to specify pixel density and physical dimensions when reading or storing image information.
  */
 public final class PixelDensity {
     private static final int PIXEL_NO_UNIT = 0;
@@ -29,9 +28,11 @@ public final class PixelDensity {
     public static PixelDensity createFromPixelsPerCentimetre(final double x, final double y) {
         return new PixelDensity(x, y, PIXEL_PER_CENTIMETRE);
     }
+
     public static PixelDensity createFromPixelsPerInch(final double x, final double y) {
         return new PixelDensity(x, y, PIXEL_PER_INCH);
     }
+
     public static PixelDensity createFromPixelsPerMetre(final double x, final double y) {
         return new PixelDensity(x, y, PIXEL_PER_METRE);
     }
@@ -47,8 +48,7 @@ public final class PixelDensity {
     // / One-tenth of a millimetre units.
     private final int unitLength;
 
-    private PixelDensity(final double horizontalDensity, final double verticalDensity,
-            final int unitLength) {
+    private PixelDensity(final double horizontalDensity, final double verticalDensity, final int unitLength) {
         this.horizontalDensity = horizontalDensity;
         this.verticalDensity = verticalDensity;
         this.unitLength = unitLength;

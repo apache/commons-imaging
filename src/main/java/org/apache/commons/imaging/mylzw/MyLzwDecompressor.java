@@ -51,8 +51,7 @@ public final class MyLzwDecompressor {
         this(initialCodeSize, byteOrder, tiffLZWMode, null);
     }
 
-    public MyLzwDecompressor(final int initialCodeSize, final ByteOrder byteOrder,
-            final boolean tiffLZWMode, final Listener listener) throws ImagingException {
+    public MyLzwDecompressor(final int initialCodeSize, final ByteOrder byteOrder, final boolean tiffLZWMode, final Listener listener) throws ImagingException {
         this.listener = listener;
         this.byteOrder = byteOrder;
         this.tiffLZWMode = tiffLZWMode;
@@ -70,7 +69,7 @@ public final class MyLzwDecompressor {
     }
 
     private void addStringToTable(final byte[] bytes) {
-        if (codes < (1 << codeSize)) {
+        if (codes < 1 << codeSize) {
             table[codes] = bytes;
             codes++;
         }
@@ -87,7 +86,7 @@ public final class MyLzwDecompressor {
     }
 
     private void checkCodeSize() {
-        int limit = (1 << codeSize);
+        int limit = 1 << codeSize;
         if (tiffLZWMode) {
             limit--;
         }
@@ -182,15 +181,13 @@ public final class MyLzwDecompressor {
     }
 
     private byte[] stringFromCode(final int code) throws ImagingException {
-        if ((code >= codes) || (code < 0)) {
-            throw new ImagingException("Bad Code: " + code + " codes: " + codes
-                    + " code_size: " + codeSize + ", table: " + table.length);
+        if (code >= codes || code < 0) {
+            throw new ImagingException("Bad Code: " + code + " codes: " + codes + " code_size: " + codeSize + ", table: " + table.length);
         }
         return table[code];
     }
 
-    private void writeToResult(final OutputStream os, final byte[] bytes)
-            throws IOException {
+    private void writeToResult(final OutputStream os, final byte[] bytes) throws IOException {
         os.write(bytes);
         written += bytes.length;
     }

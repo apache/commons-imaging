@@ -35,8 +35,7 @@ public class JpegXmpParser extends BinaryFileParser {
         return BinaryFunctions.startsWith(segmentData, JpegConstants.XMP_IDENTIFIER);
     }
 
-    public String parseXmpJpegSegment(final byte[] segmentData)
-            throws ImagingException {
+    public String parseXmpJpegSegment(final byte[] segmentData) throws ImagingException {
         if (!isXmpJpegSegment(segmentData)) {
             throw new ImagingException("Invalid JPEG XMP Segment.");
         }

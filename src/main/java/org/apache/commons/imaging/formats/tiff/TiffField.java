@@ -48,8 +48,7 @@ public class TiffField {
 
         @Override
         public String getElementDescription() {
-            return "OversizeValueElement, tag: " + getTagInfo().name
-                    + ", fieldType: " + getFieldType().getName();
+            return "OversizeValueElement, tag: " + getTagInfo().name + ", fieldType: " + getFieldType().getName();
         }
     }
 
@@ -65,8 +64,7 @@ public class TiffField {
 
     private final int sortHint;
 
-    public TiffField(final int tag, final int directoryType, final AbstractFieldType abstractFieldType,
-            final long count, final long offset, final byte[] value,
+    public TiffField(final int tag, final int directoryType, final AbstractFieldType abstractFieldType, final long count, final long offset, final byte[] value,
             final ByteOrder byteOrder, final int sortHint) {
 
         this.tag = tag;
@@ -82,7 +80,8 @@ public class TiffField {
     }
 
     public void dump() {
-        try (StringWriter sw = new StringWriter(); PrintWriter pw = new PrintWriter(sw)) {
+        try (StringWriter sw = new StringWriter();
+                PrintWriter pw = new PrintWriter(sw)) {
             dump(pw);
             pw.flush();
             sw.flush();
@@ -107,6 +106,7 @@ public class TiffField {
 
     /**
      * Returns a copy of the raw value of the field.
+     *
      * @return the value of the field, in the byte order of the field.
      */
     public byte[] getByteArrayValue() {
@@ -115,6 +115,7 @@ public class TiffField {
 
     /**
      * Returns the field's byte order.
+     *
      * @return the byte order
      */
     public ByteOrder getByteOrder() {
@@ -123,6 +124,7 @@ public class TiffField {
 
     /**
      * The length of the field's value.
+     *
      * @return the length, in bytes.
      */
     public int getBytesLength() {
@@ -131,6 +133,7 @@ public class TiffField {
 
     /**
      * Returns the field's count, derived from bytes 4-7.
+     *
      * @return the count
      */
     public long getCount() {
@@ -138,8 +141,7 @@ public class TiffField {
     }
 
     public String getDescriptionWithoutValue() {
-        return getTag() + " (0x" + Integer.toHexString(getTag()) + ": " + getTagInfo().name
-                + "): ";
+        return getTag() + " (0x" + Integer.toHexString(getTag()) + ": " + getTagInfo().name + "): ";
     }
 
     public int getDirectoryType() {
@@ -183,16 +185,14 @@ public class TiffField {
             return Arrays.copyOf(numbers, numbers.length);
         }
 
-        throw new ImagingException("Unknown value: " + o + " for: "
-                + getTagInfo().getDescription());
+        throw new ImagingException("Unknown value: " + o + " for: " + getTagInfo().getDescription());
         // return null;
     }
 
     public double getDoubleValue() throws ImagingException {
         final Object o = getValue();
         if (o == null) {
-            throw new ImagingException("Missing value: "
-                    + getTagInfo().getDescription());
+            throw new ImagingException("Missing value: " + getTagInfo().getDescription());
         }
 
         return ((Number) o).doubleValue();
@@ -200,6 +200,7 @@ public class TiffField {
 
     /**
      * Returns the field's type, derived from bytes 2-3.
+     *
      * @return the field's type, as a {@code FieldType} object.
      */
     public AbstractFieldType getFieldType() {
@@ -227,7 +228,7 @@ public class TiffField {
         if (o instanceof short[]) {
             final short[] numbers = (short[]) o;
             final int[] result = Allocator.intArray(numbers.length);
-            Arrays.setAll(result, i ->  0xffff & numbers[i]);
+            Arrays.setAll(result, i -> 0xffff & numbers[i]);
             return result;
         }
         if (o instanceof int[]) {
@@ -243,16 +244,14 @@ public class TiffField {
             return iNumbers;
         }
 
-        throw new ImagingException("Unknown value: " + o + " for: "
-                + getTagInfo().getDescription());
+        throw new ImagingException("Unknown value: " + o + " for: " + getTagInfo().getDescription());
         // return null;
     }
 
     public int getIntValue() throws ImagingException {
         final Object o = getValue();
         if (o == null) {
-            throw new ImagingException("Missing value: "
-                    + getTagInfo().getDescription());
+            throw new ImagingException("Missing value: " + getTagInfo().getDescription());
         }
 
         return ((Number) o).intValue();
@@ -291,18 +290,15 @@ public class TiffField {
             return sum;
         }
 
-        throw new ImagingException("Unknown value: " + o + " for: "
-                + getTagInfo().getDescription());
+        throw new ImagingException("Unknown value: " + o + " for: " + getTagInfo().getDescription());
         // return -1;
     }
 
     /**
-     * Gets the value of the field in the form of an array of eight-byte
-     * (long) integers.
-     * @return an valid array of size zero or larger giving signed long integer
-     * values.
-     * @throws ImagingException if the field instance is of an incompatible type
-     * or does not contain a valid data element.
+     * Gets the value of the field in the form of an array of eight-byte (long) integers.
+     *
+     * @return an valid array of size zero or larger giving signed long integer values.
+     * @throws ImagingException if the field instance is of an incompatible type or does not contain a valid data element.
      */
     public long[] getLongArrayValue() throws ImagingException {
         final Object o = getValue();
@@ -335,24 +331,24 @@ public class TiffField {
         throw new ImagingException("Unknown value: " + o + " for: " + getTagInfo().getDescription());
     }
 
-     /**
+    /**
      * Gets the value of the field in the form of an eight-byte (long) integer.
+     *
      * @return a signed long integer value.
-     * @throws ImagingException if the field instance is of an incompatible type
-     * or does not contain a valid data element.
+     * @throws ImagingException if the field instance is of an incompatible type or does not contain a valid data element.
      */
-     public long getLongValue() throws ImagingException {
-         final Object o = getValue();
-         if (o == null) {
-             throw new ImagingException("Missing value: " + getTagInfo().getDescription());
-         }
-         return ((Number) o).longValue();
-     }
+    public long getLongValue() throws ImagingException {
+        final Object o = getValue();
+        if (o == null) {
+            throw new ImagingException("Missing value: " + getTagInfo().getDescription());
+        }
+        return ((Number) o).longValue();
+    }
 
     /**
      * Returns the TIFF field's offset/value field, derived from bytes 8-11.
-     * @return the field's offset in a {@code long} of 4 packed bytes,
-     * or its inlined value &lt;= 4 bytes long encoded in the field's byte order.
+     *
+     * @return the field's offset in a {@code long} of 4 packed bytes, or its inlined value &lt;= 4 bytes long encoded in the field's byte order.
      */
     public int getOffset() {
         return (int) offset;
@@ -376,14 +372,14 @@ public class TiffField {
             return null;
         }
         if (!(o instanceof String)) {
-            throw new ImagingException("Expected String value("
-                    + getTagInfo().getDescription() + "): " + o);
+            throw new ImagingException("Expected String value(" + getTagInfo().getDescription() + "): " + o);
         }
         return (String) o;
     }
 
     /**
      * Returns the field's tag, derived from bytes 0-1.
+     *
      * @return the tag, as an {@code int} in which only the lowest 2 bytes are set
      */
     public int getTag() {
@@ -446,21 +442,21 @@ public class TiffField {
                 result.append(object.toString());
             }
             return result.toString();
-        // } else if (o instanceof Number[])
-        // {
-        // Number[] numbers = (Number[]) o;
-        // StringBuilder result = new StringBuilder();
-        //
-        // for (int i = 0; i < numbers.length; i++)
-        // {
-        // Number number = numbers[i];
-        //
-        // if (i > 0)
-        // result.append(", ");
-        // result.append("" + number);
-        // }
-        // return result.toString();
-        // }
+            // } else if (o instanceof Number[])
+            // {
+            // Number[] numbers = (Number[]) o;
+            // StringBuilder result = new StringBuilder();
+            //
+            // for (int i = 0; i < numbers.length; i++)
+            // {
+            // Number number = numbers[i];
+            //
+            // if (i > 0)
+            // result.append(", ");
+            // result.append("" + number);
+            // }
+            // return result.toString();
+            // }
         }
         if (o instanceof short[]) {
             final short[] values = (short[]) o;
@@ -609,25 +605,16 @@ public class TiffField {
 
     /**
      * Indicates whether the field's value is inlined into the offset field.
+     *
      * @return true if the value is inlined
      */
     public boolean isLocalValue() {
-        return (count * abstractFieldType.getSize()) <= TiffConstants.TIFF_ENTRY_MAX_VALUE_LENGTH;
+        return count * abstractFieldType.getSize() <= TiffConstants.TIFF_ENTRY_MAX_VALUE_LENGTH;
     }
 
     @Override
     public String toString() {
-        return getTag() +
-                " (0x" +
-                Integer.toHexString(getTag()) +
-                ": " +
-                getTagInfo().name +
-                "): " +
-                getValueDescription() +
-                " (" +
-                getCount() +
-                " " +
-                getFieldType().getName() +
-                ")";
+        return getTag() + " (0x" + Integer.toHexString(getTag()) + ": " + getTagInfo().name + "): " + getValueDescription() + " (" + getCount() + " "
+                + getFieldType().getName() + ")";
     }
 }

@@ -16,8 +16,6 @@
  */
 
 /**
- * Provides utility classes that are employed across multiple
- * image formats and sub-packages.
+ * Provides utility classes that are employed across multiple image formats and sub-packages.
  */
 package org.apache.commons.imaging.common;
-

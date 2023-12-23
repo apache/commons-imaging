@@ -30,28 +30,17 @@ import org.apache.commons.imaging.ImagingTestConstants;
 import org.junit.jupiter.api.Test;
 
 /**
- * Performs tests that access the content of TIFF files
- * containing non-opaque alpha-channel pixels
+ * Performs tests that access the content of TIFF files containing non-opaque alpha-channel pixels
  */
 public class TiffReadAlphaTest {
 
-    private final static String[] names = {
-        "TransparencyTestStripAssociated.tif",
-        "TransparencyTestStripUnassociated.tif",
-        "TransparencyTestTileAssociated.tif",
-        "TransparencyTestTileUnassociated.tif"
-    };
+    private final static String[] names = { "TransparencyTestStripAssociated.tif", "TransparencyTestStripUnassociated.tif",
+            "TransparencyTestTileAssociated.tif", "TransparencyTestTileUnassociated.tif" };
 
-    private final static int[][] testSite = {
-        {40, 40, 0xffff0000},
-        {60, 40, 0xff77ff77},
-        {40, 60, 0xffff0000},
-        {60, 60, 0xff008800}
-    };
+    private final static int[][] testSite = { { 40, 40, 0xffff0000 }, { 60, 40, 0xff77ff77 }, { 40, 60, 0xffff0000 }, { 60, 60, 0xff008800 } };
 
     /**
-     * Gets a file from the TIFF test directory that contains floating-point
-     * data.
+     * Gets a file from the TIFF test directory that contains floating-point data.
      *
      * @param name a valid file name
      * @return a valid file reference.

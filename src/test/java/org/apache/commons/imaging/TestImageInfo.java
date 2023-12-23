@@ -63,13 +63,12 @@ public class TestImageInfo {
         final ColorType colorType = ColorType.GRAYSCALE;
         final CompressionAlgorithm compressionAlgorithm = CompressionAlgorithm.JPEG;
 
-        final ImageInfo imageInfo = new ImageInfo(formatDetails, bitsPerPixel, comments, format, formatName, height,
-                mimeType, numberOfImages, physicalHeightDpi, physicalHeightInch, physicalWidthDpi, physicalWidthInch,
-                width, progressive, transparent, usesPalette, colorType, compressionAlgorithm);
+        final ImageInfo imageInfo = new ImageInfo(formatDetails, bitsPerPixel, comments, format, formatName, height, mimeType, numberOfImages,
+                physicalHeightDpi, physicalHeightInch, physicalWidthDpi, physicalWidthInch, width, progressive, transparent, usesPalette, colorType,
+                compressionAlgorithm);
         assertEquals(formatDetails, imageInfo.getFormatDetails());
         assertEquals(bitsPerPixel, imageInfo.getBitsPerPixel());
-        assertEquals(comments.toString(), imageInfo.getComments()
-                .toString());
+        assertEquals(comments.toString(), imageInfo.getComments().toString());
         assertEquals(format, imageInfo.getFormat());
         assertEquals(formatName, imageInfo.getFormatName());
         assertEquals(height, imageInfo.getHeight());
@@ -89,75 +88,44 @@ public class TestImageInfo {
 
     @Test
     public void testToStringEmptyComments() {
-        final ImageInfo imageInfo = new ImageInfo(null, 0, new ArrayList<>(), ImageFormats.DCX, null, 0, null, 0, 0, 0.0f, 0, 0.0f, 0, false,
-                false, false, ColorType.BW, null);
-        final String expected = "Format Details: null\n" +
-                "Bits Per Pixel: 0\n" +
-                "Comments: 0\n" +
-                "Format: DCX\n" +
-                "Format Name: null\n" +
-                "Compression Algorithm: null\n" +
-                "Height: 0\n" +
-                "MimeType: null\n" +
-                "Number Of Images: 0\n" +
-                "Physical Height Dpi: 0\n" +
-                "Physical Height Inch: 0.0\n" +
-                "Physical Width Dpi: 0\n" +
-                "Physical Width Inch: 0.0\n" +
-                "Width: 0\n" +
-                "Is Progressive: false\n" +
-                "Is Transparent: false\n" +
-                "Color Type: Black and White\n" +
-                "Uses Palette: false\n";
+        final ImageInfo imageInfo = new ImageInfo(null, 0, new ArrayList<>(), ImageFormats.DCX, null, 0, null, 0, 0, 0.0f, 0, 0.0f, 0, false, false, false,
+                ColorType.BW, null);
+        final String expected = "Format Details: null\n" + "Bits Per Pixel: 0\n" + "Comments: 0\n" + "Format: DCX\n" + "Format Name: null\n"
+                + "Compression Algorithm: null\n" + "Height: 0\n" + "MimeType: null\n" + "Number Of Images: 0\n" + "Physical Height Dpi: 0\n"
+                + "Physical Height Inch: 0.0\n" + "Physical Width Dpi: 0\n" + "Physical Width Inch: 0.0\n" + "Width: 0\n" + "Is Progressive: false\n"
+                + "Is Transparent: false\n" + "Color Type: Black and White\n" + "Uses Palette: false\n";
         final String testString = imageInfo.toString().replaceAll("\\r", "");
         assertEquals(expected, testString);
     }
 
     @Test
     public void testToStringErrorWhenColorPaletteIsNull() {
-        final ImageInfo imageInfo = new ImageInfo(null, 0, new ArrayList<>(), ImageFormats.DCX, null, 0, null, 0, 0, 0.0f, 0, 0.0f, 0, false,
-                false, false, null, null);
+        final ImageInfo imageInfo = new ImageInfo(null, 0, new ArrayList<>(), ImageFormats.DCX, null, 0, null, 0, 0, 0.0f, 0, 0.0f, 0, false, false, false,
+                null, null);
         assertEquals("Image Data: Error", imageInfo.toString());
     }
 
     @Test
     public void testToStringErrorWhenCommentsIsNull() {
-        final ImageInfo imageInfo = new ImageInfo(null, 0, null, null, null, 0, null, 0, 0, 0.0f, 0, 0.0f, 0, false,
-                false, false, null, null);
+        final ImageInfo imageInfo = new ImageInfo(null, 0, null, null, null, 0, null, 0, 0, 0.0f, 0, 0.0f, 0, false, false, false, null, null);
         assertEquals("Image Data: Error", imageInfo.toString());
     }
 
     @Test
     public void testToStringErrorWhenFormatIsNull() {
-        final ImageInfo imageInfo = new ImageInfo(null, 0, new ArrayList<>(), null, null, 0, null, 0, 0, 0.0f, 0, 0.0f, 0, false,
-                false, false, ColorType.BW, null);
+        final ImageInfo imageInfo = new ImageInfo(null, 0, new ArrayList<>(), null, null, 0, null, 0, 0, 0.0f, 0, 0.0f, 0, false, false, false, ColorType.BW,
+                null);
         assertEquals("Image Data: Error", imageInfo.toString());
     }
 
     @Test
     public void testToStringWithComments() {
-        final ImageInfo imageInfo = new ImageInfo(null, 0, Arrays.asList("a", "b"), ImageFormats.DCX, null, 0, null, 0, 0, 0.0f, 0, 0.0f, 0, false,
-                false, false, ColorType.BW, null);
-        final String expected = "Format Details: null\n" +
-                "Bits Per Pixel: 0\n" +
-                "Comments: 2\n" +
-                "\t0: 'a'\n" +
-                "\t1: 'b'\n" +
-                "Format: DCX\n" +
-                "Format Name: null\n" +
-                "Compression Algorithm: null\n" +
-                "Height: 0\n" +
-                "MimeType: null\n" +
-                "Number Of Images: 0\n" +
-                "Physical Height Dpi: 0\n" +
-                "Physical Height Inch: 0.0\n" +
-                "Physical Width Dpi: 0\n" +
-                "Physical Width Inch: 0.0\n" +
-                "Width: 0\n" +
-                "Is Progressive: false\n" +
-                "Is Transparent: false\n" +
-                "Color Type: Black and White\n" +
-                "Uses Palette: false\n";
+        final ImageInfo imageInfo = new ImageInfo(null, 0, Arrays.asList("a", "b"), ImageFormats.DCX, null, 0, null, 0, 0, 0.0f, 0, 0.0f, 0, false, false,
+                false, ColorType.BW, null);
+        final String expected = "Format Details: null\n" + "Bits Per Pixel: 0\n" + "Comments: 2\n" + "\t0: 'a'\n" + "\t1: 'b'\n" + "Format: DCX\n"
+                + "Format Name: null\n" + "Compression Algorithm: null\n" + "Height: 0\n" + "MimeType: null\n" + "Number Of Images: 0\n"
+                + "Physical Height Dpi: 0\n" + "Physical Height Inch: 0.0\n" + "Physical Width Dpi: 0\n" + "Physical Width Inch: 0.0\n" + "Width: 0\n"
+                + "Is Progressive: false\n" + "Is Transparent: false\n" + "Color Type: Black and White\n" + "Uses Palette: false\n";
         final String testString = imageInfo.toString().replaceAll("\\r", "");
         assertEquals(expected, testString);
     }

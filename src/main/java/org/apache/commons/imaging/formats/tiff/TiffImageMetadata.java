@@ -48,8 +48,7 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputField;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 
 public class TiffImageMetadata extends GenericImageMetadata {
-    public static class Directory extends GenericImageMetadata implements
-            ImageMetadataItem {
+    public static class Directory extends GenericImageMetadata implements ImageMetadataItem {
         // private BufferedImage thumbnail;
 
         public final int type;
@@ -79,11 +78,9 @@ public class TiffImageMetadata extends GenericImageMetadata {
             return directory.getJpegImageData();
         }
 
-        public TiffOutputDirectory getOutputDirectory(final ByteOrder byteOrder)
-                throws ImagingException {
+        public TiffOutputDirectory getOutputDirectory(final ByteOrder byteOrder) throws ImagingException {
             try {
-                final TiffOutputDirectory dstDir = new TiffOutputDirectory(type,
-                        byteOrder);
+                final TiffOutputDirectory dstDir = new TiffOutputDirectory(type, byteOrder);
 
                 final List<? extends ImageMetadataItem> entries = getItems();
                 for (final ImageMetadataItem entry : entries) {
@@ -109,8 +106,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
 
                     // Debug.debug("value", Debug.getType(value));
 
-                    final byte[] bytes = tagInfo.encodeValue(abstractFieldType, value,
-                            byteOrder);
+                    final byte[] bytes = tagInfo.encodeValue(abstractFieldType, value, byteOrder);
 
                     // if (tagInfo.isUnknown())
                     // Debug.debug(
@@ -119,8 +115,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
                     // + ") bytes", bytes);
 
                     final int count = bytes.length / abstractFieldType.getSize();
-                    final TiffOutputField dstField = new TiffOutputField(
-                            srcField.getTag(), tagInfo, abstractFieldType, count, bytes);
+                    final TiffOutputField dstField = new TiffOutputField(srcField.getTag(), tagInfo, abstractFieldType, count, bytes);
                     dstField.setSortHint(srcField.getSortHint());
                     dstDir.add(dstField);
                 }
@@ -134,8 +129,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
             }
         }
 
-        public BufferedImage getThumbnail() throws ImagingException,
-                IOException {
+        public BufferedImage getThumbnail() throws ImagingException, IOException {
             return directory.getTiffImage(byteOrder);
         }
 
@@ -145,8 +139,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
 
         @Override
         public String toString(final String prefix) {
-            return (prefix != null ? prefix : "") + directory.description()
-                    + ": " //
+            return (prefix != null ? prefix : "") + directory.description() + ": " //
                     + (getTiffImageData() != null ? " (tiffImageData)" : "") //
                     + (getJpegImageData() != null ? " (jpegImageData)" : "") //
                     + "\n" + super.toString(prefix) + "\n";
@@ -165,12 +158,8 @@ public class TiffImageMetadata extends GenericImageMetadata {
         public final RationalNumber longitudeMinutes;
         public final RationalNumber longitudeSeconds;
 
-        public GpsInfo(final String latitudeRef, final String longitudeRef,
-                final RationalNumber latitudeDegrees,
-                final RationalNumber latitudeMinutes,
-                final RationalNumber latitudeSeconds,
-                final RationalNumber longitudeDegrees,
-                final RationalNumber longitudeMinutes,
+        public GpsInfo(final String latitudeRef, final String longitudeRef, final RationalNumber latitudeDegrees, final RationalNumber latitudeMinutes,
+                final RationalNumber latitudeSeconds, final RationalNumber longitudeDegrees, final RationalNumber longitudeMinutes,
                 final RationalNumber longitudeSeconds) {
             this.latitudeRef = latitudeRef;
             this.longitudeRef = longitudeRef;
@@ -183,9 +172,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
         }
 
         public double getLatitudeAsDegreesNorth() throws ImagingException {
-            final double result = latitudeDegrees.doubleValue()
-                    + (latitudeMinutes.doubleValue() / 60.0)
-                    + (latitudeSeconds.doubleValue() / 3600.0);
+            final double result = latitudeDegrees.doubleValue() + latitudeMinutes.doubleValue() / 60.0 + latitudeSeconds.doubleValue() / 3600.0;
 
             if (latitudeRef.trim().equalsIgnoreCase("n")) {
                 return result;
@@ -193,14 +180,11 @@ public class TiffImageMetadata extends GenericImageMetadata {
             if (latitudeRef.trim().equalsIgnoreCase("s")) {
                 return -result;
             }
-            throw new ImagingException("Unknown latitude ref: \""
-                    + latitudeRef + "\"");
+            throw new ImagingException("Unknown latitude ref: \"" + latitudeRef + "\"");
         }
 
         public double getLongitudeAsDegreesEast() throws ImagingException {
-            final double result = longitudeDegrees.doubleValue()
-                    + (longitudeMinutes.doubleValue() / 60.0)
-                    + (longitudeSeconds.doubleValue() / 3600.0);
+            final double result = longitudeDegrees.doubleValue() + longitudeMinutes.doubleValue() / 60.0 + longitudeSeconds.doubleValue() / 3600.0;
 
             if (longitudeRef.trim().equalsIgnoreCase("e")) {
                 return result;
@@ -208,8 +192,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
             if (longitudeRef.trim().equalsIgnoreCase("w")) {
                 return -result;
             }
-            throw new ImagingException("Unknown longitude ref: \""
-                    + longitudeRef + "\"");
+            throw new ImagingException("Unknown longitude ref: \"" + longitudeRef + "\"");
         }
 
         @Override
@@ -219,23 +202,9 @@ public class TiffImageMetadata extends GenericImageMetadata {
             // latitude: 8 degrees, 40 minutes, 42.2 seconds S
             // longitude: 115 degrees, 26 minutes, 21.8 seconds E
 
-            return "[GPS. Latitude: " +
-                    latitudeDegrees.toDisplayString() +
-                    " degrees, " +
-                    latitudeMinutes.toDisplayString() +
-                    " minutes, " +
-                    latitudeSeconds.toDisplayString() +
-                    " seconds " +
-                    latitudeRef +
-                    ", Longitude: " +
-                    longitudeDegrees.toDisplayString() +
-                    " degrees, " +
-                    longitudeMinutes.toDisplayString() +
-                    " minutes, " +
-                    longitudeSeconds.toDisplayString() +
-                    " seconds " +
-                    longitudeRef +
-                    ']';
+            return "[GPS. Latitude: " + latitudeDegrees.toDisplayString() + " degrees, " + latitudeMinutes.toDisplayString() + " minutes, "
+                    + latitudeSeconds.toDisplayString() + " seconds " + latitudeRef + ", Longitude: " + longitudeDegrees.toDisplayString() + " degrees, "
+                    + longitudeMinutes.toDisplayString() + " minutes, " + longitudeSeconds.toDisplayString() + " seconds " + longitudeRef + ']';
         }
 
     }
@@ -276,15 +245,13 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return findField(tagInfo, false);
     }
 
-    public TiffField findField(final TagInfo tagInfo, final boolean exactDirectoryMatch)
-            throws ImagingException {
+    public TiffField findField(final TagInfo tagInfo, final boolean exactDirectoryMatch) throws ImagingException {
         // Please keep this method in sync with TiffField's getTag()
         final Integer tagCount = TiffTags.getTagCount(tagInfo.tag);
         final int tagsMatching = tagCount == null ? 0 : tagCount;
 
         final List<? extends ImageMetadataItem> directories = getDirectories();
-        if (exactDirectoryMatch
-                || tagInfo.directoryType != TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN) {
+        if (exactDirectoryMatch || tagInfo.directoryType != TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN) {
             for (final ImageMetadataItem directory1 : directories) {
                 final Directory directory = (Directory) directory1;
                 if (directory.type == tagInfo.directoryType.directoryType) {
@@ -299,9 +266,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
             }
             for (final ImageMetadataItem directory1 : directories) {
                 final Directory directory = (Directory) directory1;
-                if ((tagInfo.directoryType.isImageDirectory()
-                        && directory.type >= 0) || (!tagInfo.directoryType.isImageDirectory()
-                        && directory.type < 0)) {
+                if (tagInfo.directoryType.isImageDirectory() && directory.type >= 0 || !tagInfo.directoryType.isImageDirectory() && directory.type < 0) {
                     final TiffField field = directory.findField(tagInfo);
                     if (field != null) {
                         return field;
@@ -410,8 +375,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
-    public RationalNumber[] getFieldValue(final TagInfoRationals tag)
-            throws ImagingException {
+    public RationalNumber[] getFieldValue(final TagInfoRationals tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
             return null;
@@ -458,8 +422,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
-    public RationalNumber[] getFieldValue(final TagInfoSRationals tag)
-            throws ImagingException {
+    public RationalNumber[] getFieldValue(final TagInfoSRationals tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
             return null;
@@ -503,8 +466,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
         final TiffField longitudeRefField = gpsDirectory.findField(GpsTagConstants.GPS_TAG_GPS_LONGITUDE_REF);
         final TiffField longitudeField = gpsDirectory.findField(GpsTagConstants.GPS_TAG_GPS_LONGITUDE);
 
-        if (latitudeRefField == null || latitudeField == null
-                || longitudeRefField == null || longitudeField == null) {
+        if (latitudeRefField == null || latitudeField == null || longitudeRefField == null || longitudeField == null) {
             return null;
         }
 
@@ -526,9 +488,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
         final RationalNumber longitudeMinutes = longitude[1];
         final RationalNumber longitudeSeconds = longitude[2];
 
-        return new GpsInfo(latitudeRef, longitudeRef, latitudeDegrees,
-                latitudeMinutes, latitudeSeconds, longitudeDegrees,
-                longitudeMinutes, longitudeSeconds);
+        return new GpsInfo(latitudeRef, longitudeRef, latitudeDegrees, latitudeMinutes, latitudeSeconds, longitudeDegrees, longitudeMinutes, longitudeSeconds);
     }
 
     @Override

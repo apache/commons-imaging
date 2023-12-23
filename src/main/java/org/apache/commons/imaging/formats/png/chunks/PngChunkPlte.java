@@ -29,13 +29,12 @@ import org.apache.commons.imaging.formats.png.GammaCorrection;
 public class PngChunkPlte extends PngChunk {
     private final int[] rgb;
 
-    public PngChunkPlte(final int length, final int chunkType, final int crc, final byte[] bytes)
-            throws ImagingException, IOException {
+    public PngChunkPlte(final int length, final int chunkType, final int crc, final byte[] bytes) throws ImagingException, IOException {
         super(length, chunkType, crc, bytes);
 
         final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
 
-        if ((length % 3) != 0) {
+        if (length % 3 != 0) {
             throw new ImagingException("PLTE: wrong length: " + length);
         }
 
@@ -44,14 +43,10 @@ public class PngChunkPlte extends PngChunk {
         rgb = Allocator.intArray(count);
 
         for (int i = 0; i < count; i++) {
-            final int red = readByte("red[" + i + "]", is,
-                    "Not a Valid PNG File: PLTE Corrupt");
-            final int green = readByte("green[" + i + "]", is,
-                    "Not a Valid PNG File: PLTE Corrupt");
-            final int blue = readByte("blue[" + i + "]", is,
-                    "Not a Valid PNG File: PLTE Corrupt");
-            rgb[i] = 0xff000000 | ((0xff & red) << 16) | ((0xff & green) << 8)
-                    | ((0xff & blue) << 0);
+            final int red = readByte("red[" + i + "]", is, "Not a Valid PNG File: PLTE Corrupt");
+            final int green = readByte("green[" + i + "]", is, "Not a Valid PNG File: PLTE Corrupt");
+            final int blue = readByte("blue[" + i + "]", is, "Not a Valid PNG File: PLTE Corrupt");
+            rgb[i] = 0xff000000 | (0xff & red) << 16 | (0xff & green) << 8 | (0xff & blue) << 0;
         }
     }
 
@@ -75,9 +70,8 @@ public class PngChunkPlte extends PngChunk {
     // }
 
     public int getRgb(final int index) throws ImagingException {
-        if ((index < 0) || (index >= rgb.length)) {
-            throw new ImagingException("PNG: unknown Palette reference: "
-                    + index);
+        if (index < 0 || index >= rgb.length) {
+            throw new ImagingException("PNG: unknown Palette reference: " + index);
         }
         return rgb[index];
     }

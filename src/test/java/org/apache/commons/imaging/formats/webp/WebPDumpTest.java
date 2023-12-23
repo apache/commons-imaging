@@ -40,7 +40,7 @@ public class WebPDumpTest extends WebPBaseTest {
      */
     @ParameterizedTest
     @MethodSource("images")
-    public void testDump(File imageFile) throws Exception {
+    public void testDump(final File imageFile) throws Exception {
         Debug.debug("imageFile", imageFile);
         Debug.debug();
 
@@ -50,8 +50,8 @@ public class WebPDumpTest extends WebPBaseTest {
             Debug.debug();
         }
 
-        WebPImageParser parser = new WebPImageParser();
-        WebPImagingParameters params = new WebPImagingParameters();
+        final WebPImageParser parser = new WebPImageParser();
+        final WebPImagingParameters params = new WebPImagingParameters();
 
         final WebPImageMetadata metadata = parser.getMetadata(ByteSource.file(imageFile), parser.getDefaultParameters());
         if (metadata != null) {
@@ -59,12 +59,12 @@ public class WebPDumpTest extends WebPBaseTest {
             Debug.debug();
         }
 
-        ByteSource bs = ByteSource.file(imageFile);
+        final ByteSource bs = ByteSource.file(imageFile);
 
-        Dimension size = parser.getImageSize(bs, params);
+        final Dimension size = parser.getImageSize(bs, params);
 
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
+        final StringWriter sw = new StringWriter();
+        final PrintWriter pw = new PrintWriter(sw);
         parser.dumpImageFile(pw, bs);
 
         assertTrue(sw.toString().contains("Width: " + size.width));

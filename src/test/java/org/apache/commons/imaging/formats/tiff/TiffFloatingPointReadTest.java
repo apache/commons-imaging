@@ -39,13 +39,12 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingp
 import org.junit.jupiter.api.Test;
 
 /**
- * Performs tests that access the content of TIFF files containing floating
- * point data.
+ * Performs tests that access the content of TIFF files containing floating point data.
  */
 public class TiffFloatingPointReadTest {
 
-    private void checkSubImage(final File target, final TiffRasterData fullRaster, final int x0, final int y0,
-            final int width, final int height) throws ImagingException, IOException {
+    private void checkSubImage(final File target, final TiffRasterData fullRaster, final int x0, final int y0, final int width, final int height)
+            throws ImagingException, IOException {
         final TiffImagingParameters params = new TiffImagingParameters();
         params.setSubImage(x0, y0, width, height);
         final TiffRasterData partRaster = readRasterFromTIFF(target, params);
@@ -55,15 +54,13 @@ public class TiffFloatingPointReadTest {
             for (int x = x0; x < x0 + width; x++) {
                 final float vFull = fullRaster.getValue(x, y);
                 final float vPart = partRaster.getValue(x - x0, y - y0);
-                assertEquals(vFull, vPart,
-                        "Invalid value match for partial at (" + x + "," + y + ") for " + target.getName());
+                assertEquals(vFull, vPart, "Invalid value match for partial at (" + x + "," + y + ") for " + target.getName());
             }
         }
     }
 
     /**
-     * Gets a file from the TIFF test directory that contains floating-point
-     * data.
+     * Gets a file from the TIFF test directory that contains floating-point data.
      *
      * @param name a valid file name
      * @return a valid file reference.
@@ -75,32 +72,27 @@ public class TiffFloatingPointReadTest {
     }
 
     /**
-     * Read a TIFF file using a PhotometricInterpreter with entries for the
-     * specified range of values and an arbitrary no-data value. If the image is
+     * Read a TIFF file using a PhotometricInterpreter with entries for the specified range of values and an arbitrary no-data value. If the image is
      * successfully read, the interpreter instance will be returned.
      *
      * @param target the specified TIFF file
-     * @param f0 the expected minimum bound or lower
-     * @param f1 the expected maximum bound or higher
-     * @param fNot an arbitrary non-data value or NaN
+     * @param f0     the expected minimum bound or lower
+     * @param f1     the expected maximum bound or higher
+     * @param fNot   an arbitrary non-data value or NaN
      * @return if successful, a valid photometric interpreter.
-     * @throws ImagingException in the event of an unsupported or malformed
-     * file data element.
-     * @throws IOException in the event of an I/O error
+     * @throws ImagingException in the event of an unsupported or malformed file data element.
+     * @throws IOException      in the event of an I/O error
      */
-    private PhotometricInterpreterFloat readAndInterpretTIFF(
-        final File target, final float f0, final float f1, final float fNot) throws ImagingException, IOException {
+    private PhotometricInterpreterFloat readAndInterpretTIFF(final File target, final float f0, final float f1, final float fNot)
+            throws ImagingException, IOException {
         final ByteSource byteSource = ByteSource.file(target);
         final TiffReader tiffReader = new TiffReader(true);
-        final TiffContents contents = tiffReader.readDirectories(
-            byteSource,
-            true, // indicates that application should read image data, if present
-            FormatCompliance.getDefault());
+        final TiffContents contents = tiffReader.readDirectories(byteSource, true, // indicates that application should read image data, if present
+                FormatCompliance.getDefault());
         final ByteOrder byteOrder = tiffReader.getByteOrder();
         final TiffDirectory directory = contents.directories.get(0);
         if (!directory.hasTiffFloatingPointRasterData()) {
-            fail("Internal error, sample file does not have floating-point data "
-                + target.getName());
+            fail("Internal error, sample file does not have floating-point data " + target.getName());
         }
         final List<PaletteEntry> pList = new ArrayList<>();
         pList.add(new PaletteEntryForValue(fNot, Color.red));
@@ -121,19 +113,14 @@ public class TiffFloatingPointReadTest {
      * @param target the specified TIFF file
      * @param params an optional map of parameters for reading.
      * @return if successful, a valid raster data instance
-     * @throws ImagingException in the event of an unsupported or malformed
-     * file data element.
-     * @throws IOException in the event of an I/O error
+     * @throws ImagingException in the event of an unsupported or malformed file data element.
+     * @throws IOException      in the event of an I/O error
      */
-    private TiffRasterData readRasterFromTIFF(
-        final File target, final TiffImagingParameters params)
-        throws ImagingException, IOException {
+    private TiffRasterData readRasterFromTIFF(final File target, final TiffImagingParameters params) throws ImagingException, IOException {
         final ByteSource byteSource = ByteSource.file(target);
         final TiffReader tiffReader = new TiffReader(true);
-        final TiffContents contents = tiffReader.readDirectories(
-            byteSource,
-            true, // indicates that application should read image data, if present
-            FormatCompliance.getDefault());
+        final TiffContents contents = tiffReader.readDirectories(byteSource, true, // indicates that application should read image data, if present
+                FormatCompliance.getDefault());
         final TiffDirectory directory = contents.directories.get(0);
         return directory.getRasterData(params);
     }

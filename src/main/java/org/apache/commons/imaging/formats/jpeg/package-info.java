@@ -19,4 +19,3 @@
  * The JPEG image format.
  */
 package org.apache.commons.imaging.formats.jpeg;
-

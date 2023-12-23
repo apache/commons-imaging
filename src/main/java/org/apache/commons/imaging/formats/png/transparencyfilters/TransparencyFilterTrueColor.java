@@ -34,15 +34,12 @@ public class TransparencyFilterTrueColor extends AbstractTransparencyFilter {
         final int transparentGreen = read2Bytes("transparentGreen", is, "tRNS: Missing transparentColor", getByteOrder());
         final int transparentBlue = read2Bytes("transparentBlue", is, "tRNS: Missing transparentColor", getByteOrder());
 
-        transparentColor = ((0xff & transparentRed) << 16)
-                | ((0xff & transparentGreen) << 8)
-                | ((0xff & transparentBlue) << 0);
+        transparentColor = (0xff & transparentRed) << 16 | (0xff & transparentGreen) << 8 | (0xff & transparentBlue) << 0;
 
     }
 
     @Override
-    public int filter(final int rgb, final int sample) throws ImagingException,
-            IOException {
+    public int filter(final int rgb, final int sample) throws ImagingException, IOException {
         if ((0x00ffffff & rgb) == transparentColor) {
             return 0x00;
         }

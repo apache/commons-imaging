@@ -30,21 +30,14 @@ import org.apache.commons.imaging.bytesource.ByteSource;
 public interface XmpEmbeddable<E extends XmpImagingParameters<E>> {
 
     /**
-     * Gets a string containing XML conforming to the Extensible
-     * Metadata Platform (XMP) standard for representing information about
-     * image content.  Not all image formats support XMP information and
-     * even for those that do, there is no guarantee that such information
-     * will be present in an image.
+     * Gets a string containing XML conforming to the Extensible Metadata Platform (XMP) standard for representing information about image content. Not all
+     * image formats support XMP information and even for those that do, there is no guarantee that such information will be present in an image.
      *
      * @param byteSource A valid reference to a ByteSource.
-     * @param params     Optional instructions for special-handling or
-     *                   interpretation of the input data.
-     * @return If XMP metadata is present, a valid string;
-     *         if it is not present, a null.
-     * @throws ImagingException In the event that the specified content
-     *                            does not conform to the format of the specific
-     *                            parser implementation.
-     * @throws IOException        In the event of unsuccessful read or access operation.
+     * @param params     Optional instructions for special-handling or interpretation of the input data.
+     * @return If XMP metadata is present, a valid string; if it is not present, a null.
+     * @throws ImagingException In the event that the specified content does not conform to the format of the specific parser implementation.
+     * @throws IOException      In the event of unsuccessful read or access operation.
      */
     String getXmpXml(ByteSource byteSource, XmpImagingParameters<E> params) throws ImagingException, IOException;
 

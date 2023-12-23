@@ -19,4 +19,3 @@
  * The PNG image format.
  */
 package org.apache.commons.imaging.formats.png;
-

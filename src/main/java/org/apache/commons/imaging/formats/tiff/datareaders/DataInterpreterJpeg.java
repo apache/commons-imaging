@@ -32,54 +32,39 @@ import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 
 /**
- * Provides logic for obtaining image data from a JPEG-encoded TIFF strip
- * or tile (the "block") from the source file.
+ * Provides logic for obtaining image data from a JPEG-encoded TIFF strip or tile (the "block") from the source file.
  */
 final class DataInterpreterJpeg {
 
     /**
-     * Interpret the content of a TIFF strip or tile obtained from the
-     * source file. The workingBuilder is an image builder that is
-     * configured to receive the extracted data.
+     * Interpret the content of a TIFF strip or tile obtained from the source file. The workingBuilder is an image builder that is configured to receive the
+     * extracted data.
      * <p>
-     * The dimensions of the workingBuilder may or may not be identical
-     * to those of the source image. If the calling module is extracting
-     * a partial image, the workingBuilder will be sized so that its
-     * upper-left corner coordinate (row and column) and width and height
-     * are all even multiples of the dimensions of the tile or strip
-     * definition from the source. The reason for that approach
-     * is to simplify some of the logic in the legacy code by
-     * eliminating bounds-checking in the transfer loops.
+     * The dimensions of the workingBuilder may or may not be identical to those of the source image. If the calling module is extracting a partial image, the
+     * workingBuilder will be sized so that its upper-left corner coordinate (row and column) and width and height are all even multiples of the dimensions of
+     * the tile or strip definition from the source. The reason for that approach is to simplify some of the logic in the legacy code by eliminating
+     * bounds-checking in the transfer loops.
      * </p>
      *
-     * @param directory the source directory containing JPEG tables
+     * @param directory      the source directory containing JPEG tables
      * @param workingBuilder the output image-builder to receive pixels.
-     * @param xBlock column offset of the block within the workingBuilder
-     * @param yBlock row offset of the block within the workingBuilder
-     * @param blockWidth the width of the block (may be smaller than the
-     * full width of the JPEG image obtained from the source data)
-     * @param blockHeight the height of the block (may be smaller than the full
-     * height of the JPEG image obtained from the source data)
-     * @param compressed the raw bytes from the TIFF source file
-     * @throws ImagingException in the event of an unsupported feature or
-     * JPEG-specific encoding error
-     * @throws IOException in the event of an unrecoverable I/O error
+     * @param xBlock         column offset of the block within the workingBuilder
+     * @param yBlock         row offset of the block within the workingBuilder
+     * @param blockWidth     the width of the block (may be smaller than the full width of the JPEG image obtained from the source data)
+     * @param blockHeight    the height of the block (may be smaller than the full height of the JPEG image obtained from the source data)
+     * @param compressed     the raw bytes from the TIFF source file
+     * @throws ImagingException in the event of an unsupported feature or JPEG-specific encoding error
+     * @throws IOException      in the event of an unrecoverable I/O error
      */
-    static void intepretBlock(final TiffDirectory directory,
-      final ImageBuilder workingBuilder,
-      final int xBlock,
-      final int yBlock,
-      final int blockWidth,
-      final int blockHeight,
-      final byte[] compressed)
-      throws ImagingException, IOException {
-        // the data for the block.   The TIFF format can store some
+    static void intepretBlock(final TiffDirectory directory, final ImageBuilder workingBuilder, final int xBlock, final int yBlock, final int blockWidth,
+            final int blockHeight, final byte[] compressed) throws ImagingException, IOException {
+        // the data for the block. The TIFF format can store some
         // of the internal JPEG tables in a separate TIFF field (tag) called
         // "JPEG Tables" which are used for all of the tiles in the file.
         // So we need to concatenate the field bytes into the
         // compressed sequence. Both the field bytes and compressed
         // arrays start and end with the sequences SOI (0xffd8)
-        // and EOI (0xffd9).  To concatenate the two, we need to get rid
+        // and EOI (0xffd9). To concatenate the two, we need to get rid
         // of the EOI from field bytes and SOI from compressed.
         if (compressed.length <= 4) {
             return;
@@ -87,7 +72,7 @@ final class DataInterpreterJpeg {
 
         byte[] concat;
 
-        byte[] field = directory.getFieldValue(EXIF_TAG_JPEGTABLES, false);
+        final byte[] field = directory.getFieldValue(EXIF_TAG_JPEGTABLES, false);
 
         if (field == null || field.length == 0) {
             // The TIFF information was ommitted.
@@ -100,23 +85,20 @@ final class DataInterpreterJpeg {
         } else {
             concat = new byte[field.length + compressed.length - 4];
             System.arraycopy(field, 0, concat, 0, field.length - 2);
-            System.arraycopy(compressed, 2,
-              concat, field.length - 2,
-              compressed.length - 2);
+            System.arraycopy(compressed, 2, concat, field.length - 2, compressed.length - 2);
         }
 
         final ByteSource bsArray = ByteSource.array(concat, "JPEGtile");
 
-        // Set up the decoder.  In some cases, TIFF files may
+        // Set up the decoder. In some cases, TIFF files may
         // use the RGB encoding (which is slightly unusual for JPEGs).
-        // So check the photometric interpretation.  If it is
-        // RGB, we make a special setting in the decoder.  Otherwise,
+        // So check the photometric interpretation. If it is
+        // RGB, we make a special setting in the decoder. Otherwise,
         // we let the decoder act according to the standard
         // JPEG rules.
         final JpegDecoder decoder = new JpegDecoder();
 
-        final TiffField piField
-          = directory.findField(TIFF_TAG_PHOTOMETRIC_INTERPRETATION);
+        final TiffField piField = directory.findField(TIFF_TAG_PHOTOMETRIC_INTERPRETATION);
 
         if (piField != null) {
             final int pi = piField.getIntValue();
@@ -126,7 +108,7 @@ final class DataInterpreterJpeg {
         }
 
         final BufferedImage bImage = decoder.decode(bsArray);
-        // a null result is not expected.  An exception would
+        // a null result is not expected. An exception would
         // be thrown if there was a formatting error
         final int iWidth = bImage.getWidth();
         final int iHeight = bImage.getHeight();

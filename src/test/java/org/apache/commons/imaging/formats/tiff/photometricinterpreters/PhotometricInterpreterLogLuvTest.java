@@ -32,15 +32,14 @@ public class PhotometricInterpreterLogLuvTest {
     private PhotometricInterpreterLogLuv p;
 
     private final int samplesPerPixel = 8;
-    private final int[] bitsPerSample = {1, 2, 3};
+    private final int[] bitsPerSample = { 1, 2, 3 };
     private final int predictor = 1;
     private final int width = 800;
     private final int height = 600;
 
     @BeforeEach
     public void setUp() {
-        p = new PhotometricInterpreterLogLuv(samplesPerPixel, bitsPerSample, predictor,
-                width, height);
+        p = new PhotometricInterpreterLogLuv(samplesPerPixel, bitsPerSample, predictor, width, height);
     }
 
     @Test
@@ -90,10 +89,10 @@ public class PhotometricInterpreterLogLuvTest {
 
     @Test
     public void testInterpretPixel() throws ImagingException, IOException {
-        final ImageBuilder imgBuilder = new ImageBuilder(600, 400, /*alpha*/ true);
+        final ImageBuilder imgBuilder = new ImageBuilder(600, 400, /* alpha */ true);
         final int x = 10;
         final int y = 20;
-        p.interpretPixel(imgBuilder, new int[] {100, (byte) 32, (byte) 2}, x, y);
+        p.interpretPixel(imgBuilder, new int[] { 100, (byte) 32, (byte) 2 }, x, y);
         assertEquals(-7584166, imgBuilder.getRgb(x, y));
     }
 

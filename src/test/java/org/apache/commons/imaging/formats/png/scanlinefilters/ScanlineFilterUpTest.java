@@ -25,13 +25,13 @@ import org.junit.jupiter.api.Test;
 
 public class ScanlineFilterUpTest {
 
-  @Test
-  public void testUnfilterWithNull() throws IOException, ImagingException {
-      final ScanlineFilterUp scanlineFilterUp = new ScanlineFilterUp();
-      final byte[] byteArray = new byte[4];
-      scanlineFilterUp.unfilter(byteArray, byteArray, null);
+    @Test
+    public void testUnfilterWithNull() throws IOException, ImagingException {
+        final ScanlineFilterUp scanlineFilterUp = new ScanlineFilterUp();
+        final byte[] byteArray = new byte[4];
+        scanlineFilterUp.unfilter(byteArray, byteArray, null);
 
-      assertArrayEquals(new byte[] {(byte)0, (byte)0, (byte)0, (byte)0}, byteArray);
-  }
+        assertArrayEquals(new byte[] { (byte) 0, (byte) 0, (byte) 0, (byte) 0 }, byteArray);
+    }
 
 }

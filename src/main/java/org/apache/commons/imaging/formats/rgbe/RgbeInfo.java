@@ -33,14 +33,12 @@ import org.apache.commons.imaging.common.ImageMetadata;
 
 final class RgbeInfo implements Closeable {
     // #?RADIANCE
-    private static final byte[] HEADER = {
-        0x23, 0x3F, 0x52, 0x41, 0x44, 0x49, 0x41, 0x4E, 0x43, 0x45
-    };
+    private static final byte[] HEADER = { 0x23, 0x3F, 0x52, 0x41, 0x44, 0x49, 0x41, 0x4E, 0x43, 0x45 };
     private static final Pattern RESOLUTION_STRING = Pattern.compile("-Y (\\d+) \\+X (\\d+)");
 
     private static final byte[] TWO_TWO = { 0x2, 0x2 };
-    private static void decompress(final InputStream in, final byte[] out)
-            throws IOException,ImagingException {
+
+    private static void decompress(final InputStream in, final byte[] out) throws IOException, ImagingException {
         int position = 0;
         final int total = out.length;
 
@@ -64,6 +62,7 @@ final class RgbeInfo implements Closeable {
             }
         }
     }
+
     private final InputStream in;
     private GenericImageMetadata metadata;
     private int width = -1;
@@ -105,8 +104,7 @@ final class RgbeInfo implements Closeable {
             throw new ImagingException("Scan lines must be less than 32768 bytes long");
         }
 
-        final byte[] scanLineBytes = ByteConversions.toBytes((short) wd,
-                ByteOrder.BIG_ENDIAN);
+        final byte[] scanLineBytes = ByteConversions.toBytes((short) wd, ByteOrder.BIG_ENDIAN);
         final byte[] rgbe = Allocator.byteArray(wd * 4);
         final float[][] out = new float[3][Allocator.check(wd * ht)];
 
@@ -153,9 +151,7 @@ final class RgbeInfo implements Closeable {
         final Matcher matcher = RESOLUTION_STRING.matcher(resolution);
 
         if (!matcher.matches()) {
-            throw new ImagingException(
-                    "Invalid HDR resolution string. Only \"-Y N +X M\" is supported. Found \""
-                            + resolution + "\"");
+            throw new ImagingException("Invalid HDR resolution string. Only \"-Y N +X M\" is supported. Found \"" + resolution + "\"");
         }
 
         height = Integer.parseInt(matcher.group(1));

@@ -45,7 +45,7 @@ public final class WebPChunkIccp extends WebPChunk {
      * @param bytes chunk data.
      * @throws ImagingException if the chunk data and the size provided do not match.
      */
-    public WebPChunkIccp(int type, int size, byte[] bytes) throws ImagingException {
+    public WebPChunkIccp(final int type, final int size, final byte[] bytes) throws ImagingException {
         super(type, size, bytes);
     }
 }

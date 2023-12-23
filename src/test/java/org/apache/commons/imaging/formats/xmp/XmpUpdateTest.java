@@ -42,8 +42,7 @@ public class XmpUpdateTest<E extends XmpImagingParameters<E>> extends AbstractIm
         final List<File> images = getTestImages();
         for (final File imageFile : images) {
 
-            if (imageFile.getName().toLowerCase().endsWith(".png")
-                    && isInvalidPngTestFile(imageFile)) {
+            if (imageFile.getName().toLowerCase().endsWith(".png") && isInvalidPngTestFile(imageFile)) {
                 continue;
             }
 
@@ -56,8 +55,7 @@ public class XmpUpdateTest<E extends XmpImagingParameters<E>> extends AbstractIm
             }
 
             String xmpXml = Imaging.getXmpXml(imageFile);
-            if (null == xmpXml
-                    && imageFormat.equals(ImageFormats.GIF)) {
+            if (null == xmpXml && imageFormat.equals(ImageFormats.GIF)) {
                 xmpXml = "temporary test until I can locate a GIF with XMP in the wild.";
             }
             if (null == xmpXml) {

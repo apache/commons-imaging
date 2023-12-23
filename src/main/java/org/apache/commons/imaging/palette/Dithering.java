@@ -25,9 +25,9 @@ import org.apache.commons.imaging.ImagingException;
  */
 public final class Dithering {
     private static int adjustPixel(final int argb, final int errA, final int errR, final int errG, final int errB, final int mul) {
-        int a = (argb >> 24) & 0xff;
-        int r = (argb >> 16) & 0xff;
-        int g = (argb >> 8) & 0xff;
+        int a = argb >> 24 & 0xff;
+        int r = argb >> 16 & 0xff;
+        int g = argb >> 8 & 0xff;
         int b = argb & 0xff;
 
         a += errA * mul / 16;
@@ -56,13 +56,12 @@ public final class Dithering {
             b = 0xff;
         }
 
-        return (a << 24) | (r << 16) | (g << 8) | b;
+        return a << 24 | r << 16 | g << 8 | b;
     }
 
     /**
-     * Changes the given image to only use colors from the given palette,
-     * applying Floyd-Steinberg dithering in the process. Ensure that
-     * your alpha values in the image and in the palette are consistent.
+     * Changes the given image to only use colors from the given palette, applying Floyd-Steinberg dithering in the process. Ensure that your alpha values in
+     * the image and in the palette are consistent.
      *
      * @param image   the image to change
      * @param palette the palette to use
@@ -76,14 +75,14 @@ public final class Dithering {
                 final int nextArgb = palette.getEntry(index);
                 image.setRGB(x, y, nextArgb);
 
-                final int a = (argb >> 24) & 0xff;
-                final int r = (argb >> 16) & 0xff;
-                final int g = (argb >> 8) & 0xff;
+                final int a = argb >> 24 & 0xff;
+                final int r = argb >> 16 & 0xff;
+                final int g = argb >> 8 & 0xff;
                 final int b = argb & 0xff;
 
-                final int na = (nextArgb >> 24) & 0xff;
-                final int nr = (nextArgb >> 16) & 0xff;
-                final int ng = (nextArgb >> 8) & 0xff;
+                final int na = nextArgb >> 24 & 0xff;
+                final int nr = nextArgb >> 16 & 0xff;
+                final int ng = nextArgb >> 8 & 0xff;
                 final int nb = nextArgb & 0xff;
 
                 final int errA = a - na;

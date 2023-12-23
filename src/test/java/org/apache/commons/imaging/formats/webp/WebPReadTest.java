@@ -48,9 +48,9 @@ public class WebPReadTest extends WebPBaseTest {
      */
     @Test
     public void testBufferedImageNotSupported() throws IOException {
-        File emptyWebP = new File(WebPReadTest.class.getResource("/images/webp/empty/empty-100x100.webp").getFile());
-        WebPImageParser parser = new WebPImageParser();
-        ImagingException exception = assertThrows(ImagingException.class, () -> {
+        final File emptyWebP = new File(WebPReadTest.class.getResource("/images/webp/empty/empty-100x100.webp").getFile());
+        final WebPImageParser parser = new WebPImageParser();
+        final ImagingException exception = assertThrows(ImagingException.class, () -> {
             parser.getBufferedImage(ByteSource.file(emptyWebP), parser.getDefaultParameters());
         });
         assertTrue(exception.getMessage().contains("Reading WebP files is currently not supported"));
@@ -61,7 +61,7 @@ public class WebPReadTest extends WebPBaseTest {
      */
     @Test
     public void testParser() {
-        WebPImageParser parser = new WebPImageParser();
+        final WebPImageParser parser = new WebPImageParser();
         assertEquals("WebP-Custom", parser.getName());
         assertEquals("webp", parser.getDefaultExtension());
     }
@@ -72,7 +72,7 @@ public class WebPReadTest extends WebPBaseTest {
      */
     @ParameterizedTest
     @MethodSource("images")
-    public void testRead(File imageFile) throws Exception {
+    public void testRead(final File imageFile) throws Exception {
         Debug.debug("start");
 
         Debug.debug("imageFile", imageFile);
@@ -91,8 +91,8 @@ public class WebPReadTest extends WebPBaseTest {
      */
     @Test
     public void testWebPChunkInvalidSizeBytes() {
-        ImagingException exception = assertThrows(ImagingException.class, () -> {
-            new WebPChunkIccp(0, 10, new byte[]{});
+        final ImagingException exception = assertThrows(ImagingException.class, () -> {
+            new WebPChunkIccp(0, 10, new byte[] {});
         });
         assertEquals("Chunk size must match bytes length", exception.getMessage());
     }

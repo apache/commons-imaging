@@ -66,7 +66,7 @@ final class ColorSpaceSubset {
     }
 
     public boolean contains(int red, int green, int blue) {
-        red >>= (8 - precision);
+        red >>= 8 - precision;
         if (mins[0] > red) {
             return false;
         }
@@ -74,7 +74,7 @@ final class ColorSpaceSubset {
             return false;
         }
 
-        green >>= (8 - precision);
+        green >>= 8 - precision;
         if (mins[1] > green) {
             return false;
         }
@@ -82,7 +82,7 @@ final class ColorSpaceSubset {
             return false;
         }
 
-        blue >>= (8 - precision);
+        blue >>= 8 - precision;
         if (mins[2] > blue) {
             return false;
         }
@@ -99,35 +99,24 @@ final class ColorSpaceSubset {
         final int bdiff = maxs[2] - mins[2] + 1;
         final int colorArea = rdiff * gdiff * bdiff;
 
-        LOGGER.fine(prefix + ": [" + Integer.toHexString(rgb)
-                + "] total : " + total
+        LOGGER.fine(prefix + ": [" + Integer.toHexString(rgb) + "] total : " + total
         // + " ("
         // + (100.0 * (double) total / (double) total_area)
         // + " %)"
-                );
-        LOGGER.fine("\t" + "rgb: " + Integer.toHexString(rgb) + ", "
-                + "red: " + Integer.toHexString(mins[0] << (8 - precision))
-                + ", " + Integer.toHexString(maxs[0] << (8 - precision)) + ", "
-                + "green: " + Integer.toHexString(mins[1] << (8 - precision))
-                + ", " + Integer.toHexString(maxs[1] << (8 - precision)) + ", "
-                + "blue: " + Integer.toHexString(mins[2] << (8 - precision))
-                + ", " + Integer.toHexString(maxs[2] << (8 - precision)));
-        LOGGER.fine("\t" + "red: " + mins[0] + ", " + maxs[0] + ", "
-                + "green: " + mins[1] + ", " + maxs[1] + ", " + "blue: "
-                + mins[2] + ", " + maxs[2]);
-        LOGGER.fine("\t" + "rdiff: " + rdiff + ", " + "gdiff: " + gdiff
-                        + ", " + "bdiff: " + bdiff + ", " + "colorArea: "
-                        + colorArea);
+        );
+        LOGGER.fine("\t" + "rgb: " + Integer.toHexString(rgb) + ", " + "red: " + Integer.toHexString(mins[0] << 8 - precision) + ", "
+                + Integer.toHexString(maxs[0] << 8 - precision) + ", " + "green: " + Integer.toHexString(mins[1] << 8 - precision) + ", "
+                + Integer.toHexString(maxs[1] << 8 - precision) + ", " + "blue: " + Integer.toHexString(mins[2] << 8 - precision) + ", "
+                + Integer.toHexString(maxs[2] << 8 - precision));
+        LOGGER.fine("\t" + "red: " + mins[0] + ", " + maxs[0] + ", " + "green: " + mins[1] + ", " + maxs[1] + ", " + "blue: " + mins[2] + ", " + maxs[2]);
+        LOGGER.fine("\t" + "rdiff: " + rdiff + ", " + "gdiff: " + gdiff + ", " + "bdiff: " + bdiff + ", " + "colorArea: " + colorArea);
     }
 
     public void dumpJustRgb(final String prefix) {
-        LOGGER.fine("\t" + "rgb: " + Integer.toHexString(rgb) + ", "
-                + "red: " + Integer.toHexString(mins[0] << (8 - precision))
-                + ", " + Integer.toHexString(maxs[0] << (8 - precision)) + ", "
-                + "green: " + Integer.toHexString(mins[1] << (8 - precision))
-                + ", " + Integer.toHexString(maxs[1] << (8 - precision)) + ", "
-                + "blue: " + Integer.toHexString(mins[2] << (8 - precision))
-                + ", " + Integer.toHexString(maxs[2] << (8 - precision)));
+        LOGGER.fine("\t" + "rgb: " + Integer.toHexString(rgb) + ", " + "red: " + Integer.toHexString(mins[0] << 8 - precision) + ", "
+                + Integer.toHexString(maxs[0] << 8 - precision) + ", " + "green: " + Integer.toHexString(mins[1] << 8 - precision) + ", "
+                + Integer.toHexString(maxs[1] << 8 - precision) + ", " + "blue: " + Integer.toHexString(mins[2] << 8 - precision) + ", "
+                + Integer.toHexString(maxs[2] << 8 - precision));
     }
 
     public int getArea() {
@@ -152,13 +141,11 @@ final class ColorSpaceSubset {
             for (int green = mins[1]; green <= maxs[1]; green++) {
                 for (int blue = mins[2]; blue <= maxs[2]; blue++) {
                     // note: order reversed
-                    final int idx = (blue << (2 * precision))
-                            | (green << (1 * precision))
-                            | (red << (0 * precision));
+                    final int idx = blue << 2 * precision | green << 1 * precision | red << 0 * precision;
                     final int count = table[idx];
-                    redsum += count * (red << (8 - precision));
-                    greensum += count * (green << (8 - precision));
-                    bluesum += count * (blue << (8 - precision));
+                    redsum += count * (red << 8 - precision);
+                    greensum += count * (green << 8 - precision);
+                    bluesum += count * (blue << 8 - precision);
                 }
             }
         }
@@ -166,7 +153,7 @@ final class ColorSpaceSubset {
         redsum /= total;
         greensum /= total;
         bluesum /= total;
-        rgb = (int) (((redsum & 0xff) << 16) | ((greensum & 0xff) << 8) | ((bluesum & 0xff) << 0));
+        rgb = (int) ((redsum & 0xff) << 16 | (greensum & 0xff) << 8 | (bluesum & 0xff) << 0);
     }
 
     public void setIndex(final int i) {

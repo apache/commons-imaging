@@ -73,6 +73,7 @@ public class TiffImageWriterLossless extends AbstractTiffImageWriter {
             buffer[index++] = (byte) b;
         }
     }
+
     private static final Comparator<AbstractTiffElement> ELEMENT_SIZE_COMPARATOR = Comparator.comparingInt(e -> e.length);
     private static final Comparator<AbstractTiffOutputItem> ITEM_SIZE_COMPARATOR = Comparator.comparingInt(AbstractTiffOutputItem::getItemLength);
 
@@ -87,13 +88,11 @@ public class TiffImageWriterLossless extends AbstractTiffImageWriter {
         this.exifBytes = exifBytes;
     }
 
-    private List<AbstractTiffElement> analyzeOldTiff(final Map<Integer, TiffOutputField> frozenFields) throws ImagingException,
-            IOException {
+    private List<AbstractTiffElement> analyzeOldTiff(final Map<Integer, TiffOutputField> frozenFields) throws ImagingException, IOException {
         try {
             final ByteSource byteSource = ByteSource.array(exifBytes);
             final FormatCompliance formatCompliance = FormatCompliance.getDefault();
-            final TiffContents contents = new TiffReader(false).readContents(
-                    byteSource, new TiffImagingParameters(), formatCompliance);
+            final TiffContents contents = new TiffReader(false).readContents(byteSource, new TiffImagingParameters(), formatCompliance);
 
             final List<AbstractTiffElement> elements = new ArrayList<>();
 
@@ -105,9 +104,7 @@ public class TiffImageWriterLossless extends AbstractTiffImageWriter {
                     final AbstractTiffElement oversizeValue = field.getOversizeValueElement();
                     if (oversizeValue != null) {
                         final TiffOutputField frozenField = frozenFields.get(field.getTag());
-                        if (frozenField != null
-                                && frozenField.getSeperateValue() != null
-                                && frozenField.bytesEqual(field.getByteArrayValue())) {
+                        if (frozenField != null && frozenField.getSeperateValue() != null && frozenField.bytesEqual(field.getByteArrayValue())) {
                             frozenField.getSeperateValue().setOffset(field.getOffset());
                         } else {
                             elements.add(oversizeValue);
@@ -138,15 +135,13 @@ public class TiffImageWriterLossless extends AbstractTiffImageWriter {
                 if (start == null) {
                     start = element;
                 } else if (element.offset - index > tolerance) {
-                    rewritableElements.add(new AbstractTiffElement.Stub(start.offset,
-                            (int) (index - start.offset)));
+                    rewritableElements.add(new AbstractTiffElement.Stub(start.offset, (int) (index - start.offset)));
                     start = element;
                 }
                 index = lastElementByte;
             }
             if (null != start) {
-                rewritableElements.add(new AbstractTiffElement.Stub(start.offset,
-                        (int) (index - start.offset)));
+                rewritableElements.add(new AbstractTiffElement.Stub(start.offset, (int) (index - start.offset)));
             }
 
             return rewritableElements;
@@ -155,8 +150,7 @@ public class TiffImageWriterLossless extends AbstractTiffImageWriter {
         }
     }
 
-    private long updateOffsetsStep(final List<AbstractTiffElement> analysis,
-            final List<AbstractTiffOutputItem> outputItems) {
+    private long updateOffsetsStep(final List<AbstractTiffElement> analysis, final List<AbstractTiffOutputItem> outputItems) {
         // items we cannot fit into a gap, we shall append to tail.
         long overflowIndex = exifBytes.length;
 
@@ -183,8 +177,7 @@ public class TiffImageWriterLossless extends AbstractTiffImageWriter {
         Collections.reverse(unusedElements);
 
         // make copy.
-        final List<AbstractTiffOutputItem> unplacedItems = new ArrayList<>(
-                outputItems);
+        final List<AbstractTiffOutputItem> unplacedItems = new ArrayList<>(outputItems);
         unplacedItems.sort(ITEM_SIZE_COMPARATOR);
         Collections.reverse(unplacedItems);
 
@@ -220,8 +213,7 @@ public class TiffImageWriterLossless extends AbstractTiffImageWriter {
                     // not a perfect fit.
                     final long excessOffset = bestFit.offset + outputItemLength;
                     final int excessLength = bestFit.length - outputItemLength;
-                    unusedElements.add(new AbstractTiffElement.Stub(excessOffset,
-                            excessLength));
+                    unusedElements.add(new AbstractTiffElement.Stub(excessOffset, excessLength));
                     // make sure the new element is in the correct order.
                     unusedElements.sort(ELEMENT_SIZE_COMPARATOR);
                     Collections.reverse(unusedElements);
@@ -233,8 +225,7 @@ public class TiffImageWriterLossless extends AbstractTiffImageWriter {
     }
 
     @Override
-    public void write(final OutputStream os, final TiffOutputSet outputSet)
-            throws IOException, ImagingException {
+    public void write(final OutputStream os, final TiffOutputSet outputSet) throws IOException, ImagingException {
         // There are some fields whose address in the file must not change,
         // unless of course their value is changed.
         final Map<Integer, TiffOutputField> frozenFields = new HashMap<>();
@@ -249,9 +240,7 @@ public class TiffImageWriterLossless extends AbstractTiffImageWriter {
         }
         if (analysis.size() == 1) {
             final AbstractTiffElement onlyElement = analysis.get(0);
-            if (onlyElement.offset == TIFF_HEADER_SIZE
-                    && onlyElement.offset + onlyElement.length
-                            + TIFF_HEADER_SIZE == oldLength) {
+            if (onlyElement.offset == TIFF_HEADER_SIZE && onlyElement.offset + onlyElement.length + TIFF_HEADER_SIZE == oldLength) {
                 // no gaps in old data, safe to complete overwrite.
                 new TiffImageWriterLossy(byteOrder).write(os, outputSet);
                 return;
@@ -283,9 +272,8 @@ public class TiffImageWriterLossless extends AbstractTiffImageWriter {
 
     }
 
-    private void writeStep(final OutputStream os, final TiffOutputSet outputSet,
-            final List<AbstractTiffElement> analysis, final List<AbstractTiffOutputItem> outputItems,
-            final long outputLength) throws IOException, ImagingException {
+    private void writeStep(final OutputStream os, final TiffOutputSet outputSet, final List<AbstractTiffElement> analysis,
+            final List<AbstractTiffOutputItem> outputItems, final long outputLength) throws IOException, ImagingException {
         final TiffOutputDirectory rootDirectory = outputSet.getRootDirectory();
 
         final byte[] output = Allocator.byteArray(outputLength);
@@ -301,14 +289,12 @@ public class TiffImageWriterLossless extends AbstractTiffImageWriter {
         // zero out the parsed pieces of old exif segment, in case we don't
         // overwrite them.
         for (final AbstractTiffElement element : analysis) {
-            Arrays.fill(output, (int) element.offset, (int) Math.min(element.offset + element.length, output.length),
-                    (byte) 0);
+            Arrays.fill(output, (int) element.offset, (int) Math.min(element.offset + element.length, output.length), (byte) 0);
         }
 
         // write in the new items
         for (final AbstractTiffOutputItem outputItem : outputItems) {
-            try (BinaryOutputStream bos = BinaryOutputStream
-                    .create(new BufferOutputStream(output, (int) outputItem.getOffset()), byteOrder)) {
+            try (BinaryOutputStream bos = BinaryOutputStream.create(new BufferOutputStream(output, (int) outputItem.getOffset()), byteOrder)) {
                 outputItem.writeItem(bos);
             }
         }

@@ -34,16 +34,12 @@ import org.junit.jupiter.api.Test;
 public class TiffCcittTest extends TiffBaseTest {
 
     /**
-     * Generates the next combination of elements in the sequence array, with
-     * each element having a maximum value of max. Initially, the sequence
-     * should be set to minimum values of each element.
+     * Generates the next combination of elements in the sequence array, with each element having a maximum value of max. Initially, the sequence should be set
+     * to minimum values of each element.
      *
-     * @param sequence
-     *            the array of elements to update
-     * @param max
-     *            the maximum value of each element in the sequence
-     * @return false if there is no more combinations (ie. nothing was done),
-     *         true otherwise
+     * @param sequence the array of elements to update
+     * @param max      the maximum value of each element in the sequence
+     * @return false if there is no more combinations (ie. nothing was done), true otherwise
      */
     private static boolean nextCombination(final int[] sequence, final int max) {
         int i;
@@ -85,20 +81,18 @@ public class TiffCcittTest extends TiffBaseTest {
         do {
             for (int x = 0; x < 5; x++) {
                 if (combinations[x] != 0) {
-                    uncompressed[0] |= (0x80 >>> x);
+                    uncompressed[0] |= 0x80 >>> x;
                 }
             }
             for (int x = 0; x < 5; x++) {
                 if (combinations[5 + x] != 0) {
-                    uncompressed[1] |= (0x80 >>> x);
+                    uncompressed[1] |= 0x80 >>> x;
                 }
             }
 
             try {
-                final byte[] compressed = T4AndT6Compression.compressModifiedHuffman(
-                        uncompressed, 5, 2);
-                final byte[] result = T4AndT6Compression.decompressModifiedHuffman(
-                        compressed, 5, 2);
+                final byte[] compressed = T4AndT6Compression.compressModifiedHuffman(uncompressed, 5, 2);
+                final byte[] result = T4AndT6Compression.decompressModifiedHuffman(compressed, 5, 2);
                 assertEquals(uncompressed.length, result.length);
                 for (int i = 0; i < uncompressed.length; i++) {
                     assertEquals(uncompressed[i], result[i]);
@@ -109,10 +103,8 @@ public class TiffCcittTest extends TiffBaseTest {
             }
 
             try {
-                final byte[] compressed = T4AndT6Compression.compressT4_1D(
-                        uncompressed, 5, 2, true);
-                final byte[] result = T4AndT6Compression.decompressT4_1D(compressed,
-                        5, 2, true);
+                final byte[] compressed = T4AndT6Compression.compressT4_1D(uncompressed, 5, 2, true);
+                final byte[] result = T4AndT6Compression.decompressT4_1D(compressed, 5, 2, true);
                 assertEquals(uncompressed.length, result.length);
                 for (int i = 0; i < uncompressed.length; i++) {
                     assertEquals(uncompressed[i], result[i]);
@@ -123,10 +115,8 @@ public class TiffCcittTest extends TiffBaseTest {
             }
 
             try {
-                final byte[] compressed = T4AndT6Compression.compressT4_1D(
-                        uncompressed, 5, 2, false);
-                final byte[] result = T4AndT6Compression.decompressT4_1D(compressed,
-                        5, 2, false);
+                final byte[] compressed = T4AndT6Compression.compressT4_1D(uncompressed, 5, 2, false);
+                final byte[] result = T4AndT6Compression.decompressT4_1D(compressed, 5, 2, false);
                 assertEquals(uncompressed.length, result.length);
                 for (int i = 0; i < uncompressed.length; i++) {
                     assertEquals(uncompressed[i], result[i]);
@@ -137,10 +127,8 @@ public class TiffCcittTest extends TiffBaseTest {
             }
 
             try {
-                final byte[] compressed = T4AndT6Compression.compressT4_2D(
-                        uncompressed, 5, 2, true, 2);
-                final byte[] result = T4AndT6Compression.decompressT4_2D(compressed,
-                        5, 2, true);
+                final byte[] compressed = T4AndT6Compression.compressT4_2D(uncompressed, 5, 2, true, 2);
+                final byte[] result = T4AndT6Compression.decompressT4_2D(compressed, 5, 2, true);
                 assertEquals(uncompressed.length, result.length);
                 for (int i = 0; i < uncompressed.length; i++) {
                     assertEquals(uncompressed[i], result[i]);
@@ -151,10 +139,8 @@ public class TiffCcittTest extends TiffBaseTest {
             }
 
             try {
-                final byte[] compressed = T4AndT6Compression.compressT4_2D(
-                        uncompressed, 5, 2, false, 2);
-                final byte[] result = T4AndT6Compression.decompressT4_2D(compressed,
-                        5, 2, false);
+                final byte[] compressed = T4AndT6Compression.compressT4_2D(uncompressed, 5, 2, false, 2);
+                final byte[] result = T4AndT6Compression.decompressT4_2D(compressed, 5, 2, false);
                 assertEquals(uncompressed.length, result.length);
                 for (int i = 0; i < uncompressed.length; i++) {
                     assertEquals(uncompressed[i], result[i]);
@@ -165,10 +151,8 @@ public class TiffCcittTest extends TiffBaseTest {
             }
 
             try {
-                final byte[] compressed = T4AndT6Compression.compressT6(uncompressed,
-                        5, 2);
-                final byte[] result = T4AndT6Compression.decompressT6(compressed, 5,
-                        2);
+                final byte[] compressed = T4AndT6Compression.compressT6(uncompressed, 5, 2);
+                final byte[] result = T4AndT6Compression.decompressT6(compressed, 5, 2);
                 assertEquals(uncompressed.length, result.length);
                 for (int i = 0; i < uncompressed.length; i++) {
                     assertEquals(uncompressed[i], result[i]);
@@ -183,8 +167,7 @@ public class TiffCcittTest extends TiffBaseTest {
     @Test
     public void testAll5x2Images() {
         final int[] combinations = new int[10];
-        final BufferedImage image = new BufferedImage(5, 2,
-                BufferedImage.TYPE_INT_RGB);
+        final BufferedImage image = new BufferedImage(5, 2, BufferedImage.TYPE_INT_RGB);
         do {
             for (int x = 0; x < 5; x++) {
                 if (combinations[x] == 0) {

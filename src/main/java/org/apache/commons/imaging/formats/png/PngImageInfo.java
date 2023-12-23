@@ -27,19 +27,13 @@ public class PngImageInfo extends ImageInfo {
     private final List<AbstractPngText> textChunks;
     private final PhysicalScale physicalScale;
 
-    PngImageInfo(final String formatDetails, final int bitsPerPixel,
-            final List<String> comments, final ImageFormat format, final String formatName,
-            final int height, final String mimeType, final int numberOfImages,
-            final int physicalHeightDpi, final float physicalHeightInch,
-            final int physicalWidthDpi, final float physicalWidthInch, final int width,
-            final boolean progressive, final boolean transparent, final boolean usesPalette,
-            final ColorType colorType, final CompressionAlgorithm compressionAlgorithm,
-            final List<AbstractPngText> textChunks, final PhysicalScale physicalScale) {
-        super(formatDetails, bitsPerPixel, comments, format, formatName,
-                height, mimeType, numberOfImages, physicalHeightDpi,
-                physicalHeightInch, physicalWidthDpi, physicalWidthInch, width,
-                progressive, transparent, usesPalette, colorType,
-                compressionAlgorithm);
+    PngImageInfo(final String formatDetails, final int bitsPerPixel, final List<String> comments, final ImageFormat format, final String formatName,
+            final int height, final String mimeType, final int numberOfImages, final int physicalHeightDpi, final float physicalHeightInch,
+            final int physicalWidthDpi, final float physicalWidthInch, final int width, final boolean progressive, final boolean transparent,
+            final boolean usesPalette, final ColorType colorType, final CompressionAlgorithm compressionAlgorithm, final List<AbstractPngText> textChunks,
+            final PhysicalScale physicalScale) {
+        super(formatDetails, bitsPerPixel, comments, format, formatName, height, mimeType, numberOfImages, physicalHeightDpi, physicalHeightInch,
+                physicalWidthDpi, physicalWidthInch, width, progressive, transparent, usesPalette, colorType, compressionAlgorithm);
 
         this.textChunks = textChunks;
         this.physicalScale = physicalScale;

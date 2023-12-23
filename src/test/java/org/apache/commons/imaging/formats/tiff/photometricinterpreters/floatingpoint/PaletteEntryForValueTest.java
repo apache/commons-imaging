@@ -37,8 +37,7 @@ public class PaletteEntryForValueTest {
 
     @Test
     public void testFaultyConstructors() {
-        assertThrows(IllegalArgumentException.class, () -> new PaletteEntryForValue(0.0f, null),
-                "Constructor failed to detect invalid color");
+        assertThrows(IllegalArgumentException.class, () -> new PaletteEntryForValue(0.0f, null), "Constructor failed to detect invalid color");
     }
 
     /**

@@ -28,8 +28,7 @@ import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 
 public class ImageWriteExample {
-    public static byte[] imageWriteExample(final File file)
-            throws ImagingException, ImagingException, IOException {
+    public static byte[] imageWriteExample(final File file) throws ImagingException, ImagingException, IOException {
         // read image
         final BufferedImage image = Imaging.getBufferedImage(file);
 

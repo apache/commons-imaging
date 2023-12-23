@@ -22,8 +22,7 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
 /**
- * Photometric interpretation Logluv support. Logluv is an encoding for storing
- * data inside TIFF images.
+ * Photometric interpretation Logluv support. Logluv is an encoding for storing data inside TIFF images.
  *
  * @see <a href="https://en.wikipedia.org/wiki/Logluv_TIFF">Logluv TIFF</a>
  */
@@ -47,15 +46,13 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
         public float z;
     }
 
-    public PhotometricInterpreterLogLuv(final int samplesPerPixel,
-            final int[] bitsPerSample, final int predictor, final int width, final int height) {
+    public PhotometricInterpreterLogLuv(final int samplesPerPixel, final int[] bitsPerSample, final int predictor, final int width, final int height) {
         super(samplesPerPixel, bitsPerSample, predictor, width, height);
     }
 
     /**
-     * Receives a triplet tristimulus values (CIE XYZ) and then does a CIELAB-CIEXYZ
-     * conversion (consult Wikipedia link for formula), where the CIELAB values are
-     * used to calculate the tristimulus values of the reference white point.
+     * Receives a triplet tristimulus values (CIE XYZ) and then does a CIELAB-CIEXYZ conversion (consult Wikipedia link for formula), where the CIELAB values
+     * are used to calculate the tristimulus values of the reference white point.
      *
      * @param tristimulusValues the XYZ tristimulus values
      * @return RGB values
@@ -71,18 +68,18 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
         float varB = varX * 0.0557f + varY * -0.2040f + varZ * 1.0570f;
 
         if (varR > 0.0031308) {
-            varR = 1.055f * (float) Math.pow(varR, (1 / 2.4)) - 0.055f;
+            varR = 1.055f * (float) Math.pow(varR, 1 / 2.4) - 0.055f;
         } else {
             varR = 12.92f * varR;
         }
         if (varG > 0.0031308) {
-            varG = 1.055f * (float) Math.pow(varG, (1 / 2.4)) - 0.055f;
+            varG = 1.055f * (float) Math.pow(varG, 1 / 2.4) - 0.055f;
         } else {
             varG = 12.92f * varG;
         }
 
         if (varB > 0.0031308) {
-            varB = 1.055f * (float) Math.pow(varB, (1 / 2.4)) - 0.055f;
+            varB = 1.055f * (float) Math.pow(varB, 1 / 2.4) - 0.055f;
         } else {
             varB = 12.92f * varB;
         }
@@ -99,8 +96,7 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
     }
 
     /**
-     * Receives a triplet of CIELAB values, and calculates the tristimulus values.
-     * The reference white point used here is the equivalent to summer sun and sky.
+     * Receives a triplet of CIELAB values, and calculates the tristimulus values. The reference white point used here is the equivalent to summer sun and sky.
      *
      * @param cieL lightness from black to white
      * @param cieA lightness from green to red
@@ -110,7 +106,7 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
      * @see <a href="https://en.wikipedia.org/wiki/White_point">White point</a>
      */
     TristimulusValues getTristimulusValues(final int cieL, final int cieA, final int cieB) {
-        float varY = ((cieL * 100.0f / 255.0f) + 16.0f) / 116.0f;
+        float varY = (cieL * 100.0f / 255.0f + 16.0f) / 116.0f;
         float varX = cieA / 500.0f + varY;
         float varZ = varY - cieB / 200.0f;
 
@@ -152,8 +148,7 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
     }
 
     @Override
-    public void interpretPixel(final ImageBuilder imageBuilder, final int[] samples, final int x,
-            final int y) throws ImagingException, IOException {
+    public void interpretPixel(final ImageBuilder imageBuilder, final int[] samples, final int x, final int y) throws ImagingException, IOException {
         if (samples == null || samples.length != 3) {
             throw new ImagingException("Invalid length of bits per sample (expected 3).");
         }
@@ -181,7 +176,7 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
         final int green = Math.min(255, Math.max(0, rgbValues.g));
         final int blue = Math.min(255, Math.max(0, rgbValues.b));
         final int alpha = 0xff;
-        final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+        final int rgb = alpha << 24 | red << 16 | green << 8 | blue << 0;
         imageBuilder.setRgb(x, y, rgb);
 
     }

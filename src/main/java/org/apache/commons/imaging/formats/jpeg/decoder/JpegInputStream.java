@@ -36,6 +36,7 @@ final class JpegInputStream {
 
     /**
      * Returns {@code true} as long there are unread fields available, else {@code false}
+     *
      * @return {@code true} as long there are unread fields available, else {@code false}
      */
     public boolean hasNext() {
@@ -58,20 +59,19 @@ final class JpegInputStream {
                     if (b2 == (0xff & JpegConstants.DNL_MARKER)) {
                         throw new ImagingException("DNL not yet supported");
                     }
-                    throw new ImagingException("Invalid marker found "
-                        + "in entropy data: 0xFF " + Integer.toHexString(b2));
+                    throw new ImagingException("Invalid marker found " + "in entropy data: 0xFF " + Integer.toHexString(b2));
                 }
             }
         }
-        final int bit = (b >> 7) & 0x1;
+        final int bit = b >> 7 & 0x1;
         cnt--;
         b <<= 1;
         return bit;
     }
 
     /**
-     * Returns the value from current field (as {@code InputStream.read()} would do)
-     * and set the position of the pointer to the next field to read.
+     * Returns the value from current field (as {@code InputStream.read()} would do) and set the position of the pointer to the next field to read.
+     *
      * @return the value from current field (as {@code InputStream.read()} would do).
      * @throws IllegalStateException if the stream hasn't any other value.
      */

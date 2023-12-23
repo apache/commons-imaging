@@ -33,54 +33,32 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
  * Enhancements for Adobe PageMaker(R) 6.0 software
  * </p>
  * <p>
- * [BROKEN URL]
- * http://partners.adobe.com/public/developer/en/tiff/TIFFPM6.pdf
+ * [BROKEN URL] http://partners.adobe.com/public/developer/en/tiff/TIFFPM6.pdf
  * </p>
  */
 public final class AdobePageMaker6TagConstants {
 
-    public static final TagInfoLongOrIfd TIFF_TAG_SUB_IFD = new TagInfoLongOrIfd(
-            "SubIFDs",  0x014a, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN, true);
+    public static final TagInfoLongOrIfd TIFF_TAG_SUB_IFD = new TagInfoLongOrIfd("SubIFDs", 0x014a, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN, true);
 
-    public static final TagInfoBytes TIFF_TAG_CLIP_PATH = new TagInfoBytes(
-            "ClipPath",  0x0157, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+    public static final TagInfoBytes TIFF_TAG_CLIP_PATH = new TagInfoBytes("ClipPath", 0x0157, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoLong TIFF_TAG_XCLIP_PATH_UNITS = new TagInfoLong(
-            "XClipPathUnits", 0x0158,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+    public static final TagInfoLong TIFF_TAG_XCLIP_PATH_UNITS = new TagInfoLong("XClipPathUnits", 0x0158, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoLong TIFF_TAG_YCLIP_PATH_UNITS = new TagInfoLong(
-            "YClipPathUnits", 0x0159,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+    public static final TagInfoLong TIFF_TAG_YCLIP_PATH_UNITS = new TagInfoLong("YClipPathUnits", 0x0159, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoShort TIFF_TAG_INDEXED = new TagInfoShort(
-            "Indexed", 0x015a,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+    public static final TagInfoShort TIFF_TAG_INDEXED = new TagInfoShort("Indexed", 0x015a, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
     public static final int INDEXED_VALUE_NOT_INDEXED = 0;
     public static final int INDEXED_VALUE_INDEXED = 1;
 
-    public static final TagInfoShort TIFF_TAG_OPIPROXY = new TagInfoShort(
-            "OPIProxy", 0x015f,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+    public static final TagInfoShort TIFF_TAG_OPIPROXY = new TagInfoShort("OPIProxy", 0x015f, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final int OPIPROXY_VALUE_HIGHER_RESOLUTION_IMAGE_DOES_NOT_EXIST = 0;
     public static final int OPIPROXY_VALUE_HIGHER_RESOLUTION_IMAGE_EXISTS = 1;
 
-    public static final TagInfoAscii TIFF_TAG_IMAGE_ID = new TagInfoAscii(
-            "ImageID", 0x800d, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+    public static final TagInfoAscii TIFF_TAG_IMAGE_ID = new TagInfoAscii("ImageID", 0x800d, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final List<TagInfo> ALL_ADOBE_PAGEMAKER_6_TAGS =
-            Collections.unmodifiableList(Arrays.asList(
-                    TIFF_TAG_SUB_IFD,
-                    TIFF_TAG_CLIP_PATH,
-                    TIFF_TAG_XCLIP_PATH_UNITS,
-                    TIFF_TAG_YCLIP_PATH_UNITS,
-                    TIFF_TAG_INDEXED,
-                    TIFF_TAG_OPIPROXY,
-                    TIFF_TAG_IMAGE_ID));
+    public static final List<TagInfo> ALL_ADOBE_PAGEMAKER_6_TAGS = Collections.unmodifiableList(Arrays.asList(TIFF_TAG_SUB_IFD, TIFF_TAG_CLIP_PATH,
+            TIFF_TAG_XCLIP_PATH_UNITS, TIFF_TAG_YCLIP_PATH_UNITS, TIFF_TAG_INDEXED, TIFF_TAG_OPIPROXY, TIFF_TAG_IMAGE_ID));
 
     private AdobePageMaker6TagConstants() {
     }

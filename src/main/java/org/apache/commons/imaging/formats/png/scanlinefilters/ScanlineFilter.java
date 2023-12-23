@@ -22,7 +22,6 @@ import org.apache.commons.imaging.ImagingException;
 
 public interface ScanlineFilter {
 
-    void unfilter(byte[] src, byte[] dst, byte[] up)
-            throws ImagingException, IOException;
+    void unfilter(byte[] src, byte[] dst, byte[] up) throws ImagingException, IOException;
 
 }

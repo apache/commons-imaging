@@ -32,8 +32,7 @@ final class PgmFileInfo extends AbstractFileInfo {
     PgmFileInfo(final int width, final int height, final boolean rawbits, final int max) throws ImagingException {
         super(width, height, rawbits);
         if (max <= 0) {
-            throw new ImagingException("PGM maxVal " + max
-                    + " is out of range [1;65535]");
+            throw new ImagingException("PGM maxVal " + max + " is out of range [1;65535]");
         }
         if (max <= 255) {
             scale = 255f;
@@ -42,8 +41,7 @@ final class PgmFileInfo extends AbstractFileInfo {
             scale = 65535f;
             bytesPerSample = 2;
         } else {
-            throw new ImagingException("PGM maxVal " + max
-                    + " is out of range [1;65535]");
+            throw new ImagingException("PGM maxVal " + max + " is out of range [1;65535]");
         }
         this.max = max;
     }
@@ -86,10 +84,7 @@ final class PgmFileInfo extends AbstractFileInfo {
 
         final int alpha = 0xff;
 
-        return ((0xff & alpha)  << 24)
-             | ((0xff & sample) << 16)
-             | ((0xff & sample) << 8)
-             | ((0xff & sample) << 0);
+        return (0xff & alpha) << 24 | (0xff & sample) << 16 | (0xff & sample) << 8 | (0xff & sample) << 0;
     }
 
     @Override
@@ -100,10 +95,7 @@ final class PgmFileInfo extends AbstractFileInfo {
 
         final int alpha = 0xff;
 
-        return ((0xff & alpha)  << 24)
-             | ((0xff & sample) << 16)
-             | ((0xff & sample) << 8)
-             | ((0xff & sample) << 0);
+        return (0xff & alpha) << 24 | (0xff & sample) << 16 | (0xff & sample) << 8 | (0xff & sample) << 0;
     }
 
     @Override

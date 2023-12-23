@@ -19,4 +19,3 @@
  * The main package for Apache Commons Imaging.
  */
 package org.apache.commons.imaging;
-

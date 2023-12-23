@@ -65,7 +65,7 @@ public class PaletteFactory {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 final int rgb = src.getRGB(x, y);
-                final int alpha = 0xff & (rgb >> 24);
+                final int alpha = 0xff & rgb >> 24;
                 if (alpha < 0xff) {
                     if (first < 0) {
                         first = rgb;
@@ -86,7 +86,7 @@ public class PaletteFactory {
         int first = -1;
 
         for (final int rgb : rgbs) {
-            final int alpha = 0xff & (rgb >> 24);
+            final int alpha = 0xff & rgb >> 24;
             if (alpha < 0xff) {
                 if (first < 0) {
                     first = rgb;
@@ -102,8 +102,7 @@ public class PaletteFactory {
         return 1;
     }
 
-    private void divide(final List<ColorSpaceSubset> v,
-                        final int desiredCount, final int[] table, final int precision) {
+    private void divide(final List<ColorSpaceSubset> v, final int desiredCount, final int[] table, final int precision) {
         final List<ColorSpaceSubset> ignore = new ArrayList<>();
 
         while (true) {
@@ -129,8 +128,7 @@ public class PaletteFactory {
                 LOGGER.finest("\t" + "area: " + maxArea);
             }
 
-            final DivisionCandidate dc = divideSubset2(table, maxSubset,
-                    precision);
+            final DivisionCandidate dc = divideSubset2(table, maxSubset, precision);
             if (dc != null) {
                 v.remove(maxSubset);
                 v.add(dc.dstA);
@@ -145,8 +143,7 @@ public class PaletteFactory {
         }
     }
 
-    private DivisionCandidate divideSubset2(final int[] table,
-            final ColorSpaceSubset subset, final int precision) {
+    private DivisionCandidate divideSubset2(final int[] table, final ColorSpaceSubset subset, final int precision) {
         final List<DivisionCandidate> dcs = new ArrayList<>(divideSubset2(table, subset, 0, precision));
 
         dcs.addAll(divideSubset2(table, subset, 1, precision));
@@ -162,7 +159,7 @@ public class PaletteFactory {
             final int area2 = second.total;
 
             final int diff = Math.abs(area1 - area2);
-            final double score = ((double) diff) / ((double) Math.max(area1, area2));
+            final double score = (double) diff / (double) Math.max(area1, area2);
 
             if (bestV == null || score < bestScore) {
                 bestV = dc;
@@ -174,8 +171,7 @@ public class PaletteFactory {
         return bestV;
     }
 
-    private List<DivisionCandidate> divideSubset2(final int[] table,
-            final ColorSpaceSubset subset, final int component, final int precision) {
+    private List<DivisionCandidate> divideSubset2(final int[] table, final ColorSpaceSubset subset, final int component, final int precision) {
         if (LOGGER.isLoggable(Level.FINEST)) {
             subset.dump("trying (" + component + "): ");
         }
@@ -197,7 +193,7 @@ public class PaletteFactory {
 
             sum1 += last;
 
-            if (sum1 >= (total / 2)) {
+            if (sum1 >= total / 2) {
                 break;
             }
         }
@@ -220,20 +216,18 @@ public class PaletteFactory {
         return result;
     }
 
-    private DivisionCandidate finishDivision(final ColorSpaceSubset subset,
-            final int component, final int precision, final int sum, final int slice) {
+    private DivisionCandidate finishDivision(final ColorSpaceSubset subset, final int component, final int precision, final int sum, final int slice) {
         if (LOGGER.isLoggable(Level.FINEST)) {
             subset.dump("trying (" + component + "): ");
         }
 
         final int total = subset.total;
 
-        if ((slice < subset.mins[component])
-                || (slice >= subset.maxs[component])) {
+        if (slice < subset.mins[component] || slice >= subset.maxs[component]) {
             return null;
         }
 
-        if ((sum < 1) || (sum >= total)) {
+        if (sum < 1 || sum >= total) {
             return null;
         }
 
@@ -260,14 +254,13 @@ public class PaletteFactory {
 
     }
 
-    private int getFrequencyTotal(final int[] table, final int[] mins, final int[] maxs,
-            final int precision) {
+    private int getFrequencyTotal(final int[] table, final int[] mins, final int[] maxs, final int precision) {
         int sum = 0;
 
         for (int blue = mins[2]; blue <= maxs[2]; blue++) {
-            final int b = (blue << (2 * precision));
+            final int b = blue << 2 * precision;
             for (int green = mins[1]; green <= maxs[1]; green++) {
-                final int g = (green << (1 * precision));
+                final int g = green << 1 * precision;
                 for (int red = mins[0]; red <= maxs[0]; red++) {
                     final int index = b | g | red;
 
@@ -294,7 +287,7 @@ public class PaletteFactory {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 final int argb = src.getRGB(x, y);
-                final int alpha = 0xff & (argb >> 24);
+                final int alpha = 0xff & argb >> 24;
                 if (alpha < threshold) {
                     return true;
                 }
@@ -315,9 +308,9 @@ public class PaletteFactory {
             for (int x = 0; x < width; x++) {
                 final int argb = src.getRGB(x, y);
 
-                final int red = 0xff & (argb >> 16);
-                final int green = 0xff & (argb >> 8);
-                final int blue = 0xff & (argb >> 0);
+                final int red = 0xff & argb >> 16;
+                final int green = 0xff & argb >> 8;
+                final int blue = 0xff & argb >> 0;
 
                 if (red != green || red != blue) {
                     return false;
@@ -328,9 +321,9 @@ public class PaletteFactory {
     }
 
     /**
-     * Builds an exact complete opaque palette containing all the colors in {@code src},
-     * using an algorithm that is faster than {@linkplain #makeExactRgbPaletteSimple} for large images
-     * but uses 2 mebibytes of working memory. Treats all the colors as opaque.
+     * Builds an exact complete opaque palette containing all the colors in {@code src}, using an algorithm that is faster than
+     * {@linkplain #makeExactRgbPaletteSimple} for large images but uses 2 mebibytes of working memory. Treats all the colors as opaque.
+     *
      * @param src the image whose palette to build
      * @return the palette
      */
@@ -346,7 +339,7 @@ public class PaletteFactory {
             for (int x = 0; x < width; x++) {
                 final int argb = src.getRGB(x, y);
                 final int rggbb = 0x1fffff & argb;
-                final int highred = 0x7 & (argb >> 21);
+                final int highred = 0x7 & argb >> 21;
                 final int mask = 1 << highred;
                 rgbmap[rggbb] |= mask;
             }
@@ -372,7 +365,7 @@ public class PaletteFactory {
                 mask >>>= 1;
 
                 if (bit > 0) {
-                    final int rgb = i | ((7 - j) << 21);
+                    final int rgb = i | 7 - j << 21;
 
                     colormap[mapsize++] = rgb;
                 }
@@ -384,8 +377,9 @@ public class PaletteFactory {
     }
 
     /**
-     * Builds an exact complete opaque palette containing all the colors in {@code src},
-     * and fails by returning {@code null} if there are more than {@code max} colors necessary to do this.
+     * Builds an exact complete opaque palette containing all the colors in {@code src}, and fails by returning {@code null} if there are more than {@code max}
+     * colors necessary to do this.
+     *
      * @param src the image whose palette to build
      * @param max the maximum number of colors the palette can contain
      * @return the complete palette of {@code max} or less colors, or {@code null} if more than {@code max} colors are necessary
@@ -419,26 +413,25 @@ public class PaletteFactory {
     }
 
     /**
-     * Builds an inexact possibly translucent palette of at most {@code max} colors in {@code src}
-     * using the traditional Median Cut algorithm. Color bounding boxes are split along the
-     * longest axis, with each step splitting the box. All bits in each component are used.
-     * The Algorithm is slower and seems exact than {@linkplain #makeQuantizedRgbPalette(BufferedImage, int)}.
-     * @param src the image whose palette to build
+     * Builds an inexact possibly translucent palette of at most {@code max} colors in {@code src} using the traditional Median Cut algorithm. Color bounding
+     * boxes are split along the longest axis, with each step splitting the box. All bits in each component are used. The Algorithm is slower and seems exact
+     * than {@linkplain #makeQuantizedRgbPalette(BufferedImage, int)}.
+     *
+     * @param src         the image whose palette to build
      * @param transparent whether to consider the alpha values
-     * @param max the maximum number of colors the palette can contain
+     * @param max         the maximum number of colors the palette can contain
      * @return the palette of at most {@code max} colors
      * @throws ImagingException if it fails to process the palette
      */
     public Palette makeQuantizedRgbaPalette(final BufferedImage src, final boolean transparent, final int max) throws ImagingException {
-        return new MedianCutQuantizer(!transparent).process(src, max,
-                new LongestAxisMedianCut());
+        return new MedianCutQuantizer(!transparent).process(src, max, new LongestAxisMedianCut());
     }
 
     /**
-     * Builds an inexact opaque palette of at most {@code max} colors in {@code src}
-     * using a variation of the Median Cut algorithm. Accurate to 6 bits per component,
-     * and works by splitting the color bounding box most heavily populated by colors
-     * along the component which splits the colors in that box most evenly.
+     * Builds an inexact opaque palette of at most {@code max} colors in {@code src} using a variation of the Median Cut algorithm. Accurate to 6 bits per
+     * component, and works by splitting the color bounding box most heavily populated by colors along the component which splits the colors in that box most
+     * evenly.
+     *
      * @param src the image whose palette to build
      * @param max the maximum number of colors the palette can contain
      * @return the palette of at most {@code max} colors
@@ -476,7 +469,7 @@ public class PaletteFactory {
         if (LOGGER.isLoggable(Level.FINEST)) {
             final int allTotal = getFrequencyTotal(table, all.mins, all.maxs, precision);
             LOGGER.finest("all total: " + allTotal);
-            LOGGER.finest("width * height: " + (width * height));
+            LOGGER.finest("width * height: " + width * height);
         }
 
         divide(subsets, max, table, precision);
@@ -509,8 +502,8 @@ public class PaletteFactory {
             int sample = argb & 0xff;
             argb >>= 8;
 
-            sample >>= (8 - precision);
-            result = (result << precision) | (sample & precisionMask);
+            sample >>= 8 - precision;
+            result = result << precision | sample & precisionMask;
         }
 
         return result;

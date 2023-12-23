@@ -44,12 +44,9 @@ public class IccProfileInfo {
     private final byte[] profileId;
     private final IccTag[] tags;
 
-    public IccProfileInfo(final byte[] data, final int profileSize, final int cmmTypeSignature,
-            final int profileVersion, final int profileDeviceClassSignature,
-            final int colorSpace, final int profileConnectionSpace,
-            final int profileFileSignature, final int primaryPlatformSignature,
-            final int variousFlags, final int deviceManufacturer, final int deviceModel,
-            final int renderingIntent, final int profileCreatorSignature, final byte[] profileId,
+    public IccProfileInfo(final byte[] data, final int profileSize, final int cmmTypeSignature, final int profileVersion, final int profileDeviceClassSignature,
+            final int colorSpace, final int profileConnectionSpace, final int profileFileSignature, final int primaryPlatformSignature, final int variousFlags,
+            final int deviceManufacturer, final int deviceModel, final int renderingIntent, final int profileCreatorSignature, final byte[] profileId,
             final IccTag[] tags) {
         this.data = data;
 
@@ -88,14 +85,11 @@ public class IccProfileInfo {
     }
 
     public boolean isSrgb() {
-        return deviceManufacturer == IccConstants.IEC
-                && deviceModel == IccConstants.sRGB;
+        return deviceManufacturer == IccConstants.IEC && deviceModel == IccConstants.sRGB;
     }
 
     private void printCharQuad(final PrintWriter pw, final String msg, final int i) {
-        pw.println(msg + ": '" + (char) (0xff & (i >> 24))
-                + (char) (0xff & (i >> 16)) + (char) (0xff & (i >> 8))
-                + (char) (0xff & (i >> 0)) + "'");
+        pw.println(msg + ": '" + (char) (0xff & i >> 24) + (char) (0xff & i >> 16) + (char) (0xff & i >> 8) + (char) (0xff & i >> 0) + "'");
     }
 
     @Override
@@ -107,8 +101,7 @@ public class IccProfileInfo {
         }
     }
 
-    public String toString(final String prefix) throws ImagingException,
-            IOException {
+    public String toString(final String prefix) throws ImagingException, IOException {
         final StringWriter sw = new StringWriter();
         final PrintWriter pw = new PrintWriter(sw);
 

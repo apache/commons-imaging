@@ -30,8 +30,8 @@ public class LongestAxisMedianCut implements MedianCut {
         return cg2.maxDiff - cg1.maxDiff;
     };
 
-    private void doCut(final ColorGroup colorGroup, final ColorComponent mode,
-            final List<ColorGroup> colorGroups, final boolean ignoreAlpha) throws ImagingException {
+    private void doCut(final ColorGroup colorGroup, final ColorComponent mode, final List<ColorGroup> colorGroups, final boolean ignoreAlpha)
+            throws ImagingException {
 
         final List<ColorCount> colorCounts = colorGroup.getColorCounts();
         colorCounts.sort(new ColorCountComparator(mode));
@@ -61,11 +61,8 @@ public class LongestAxisMedianCut implements MedianCut {
         }
 
         colorGroups.remove(colorGroup);
-        final List<ColorCount> colorCounts1 = new ArrayList<>(
-                colorCounts.subList(0, medianIndex + 1));
-        final List<ColorCount> colorCounts2 = new ArrayList<>(
-                colorCounts.subList(medianIndex + 1,
-                        colorCounts.size()));
+        final List<ColorCount> colorCounts1 = new ArrayList<>(colorCounts.subList(0, medianIndex + 1));
+        final List<ColorCount> colorCounts2 = new ArrayList<>(colorCounts.subList(medianIndex + 1, colorCounts.size()));
 
         final ColorGroup less = new ColorGroup(new ArrayList<>(colorCounts1), ignoreAlpha);
         colorGroups.add(less);
@@ -75,40 +72,36 @@ public class LongestAxisMedianCut implements MedianCut {
         final ColorCount medianValue = colorCounts.get(medianIndex);
         int limit;
         switch (mode) {
-            case ALPHA:
-                limit = medianValue.alpha;
-                break;
-            case RED:
-                limit = medianValue.red;
-                break;
-            case GREEN:
-                limit = medianValue.green;
-                break;
-            case BLUE:
-                limit = medianValue.blue;
-                break;
-            default:
-                throw new IllegalArgumentException("Bad mode " + mode);
+        case ALPHA:
+            limit = medianValue.alpha;
+            break;
+        case RED:
+            limit = medianValue.red;
+            break;
+        case GREEN:
+            limit = medianValue.green;
+            break;
+        case BLUE:
+            limit = medianValue.blue;
+            break;
+        default:
+            throw new IllegalArgumentException("Bad mode " + mode);
         }
         colorGroup.cut = new ColorGroupCut(less, more, mode, limit);
     }
 
     @Override
-    public boolean performNextMedianCut(final List<ColorGroup> colorGroups, final boolean ignoreAlpha)
-            throws ImagingException {
+    public boolean performNextMedianCut(final List<ColorGroup> colorGroups, final boolean ignoreAlpha) throws ImagingException {
         colorGroups.sort(COMPARATOR);
         final ColorGroup colorGroup = colorGroups.get(0);
 
         if (colorGroup.maxDiff == 0) {
             return false;
         }
-        if (!ignoreAlpha
-                && colorGroup.alphaDiff > colorGroup.redDiff
-                && colorGroup.alphaDiff > colorGroup.greenDiff
+        if (!ignoreAlpha && colorGroup.alphaDiff > colorGroup.redDiff && colorGroup.alphaDiff > colorGroup.greenDiff
                 && colorGroup.alphaDiff > colorGroup.blueDiff) {
             doCut(colorGroup, ColorComponent.ALPHA, colorGroups, ignoreAlpha);
-        } else if (colorGroup.redDiff > colorGroup.greenDiff
-                && colorGroup.redDiff > colorGroup.blueDiff) {
+        } else if (colorGroup.redDiff > colorGroup.greenDiff && colorGroup.redDiff > colorGroup.blueDiff) {
             doCut(colorGroup, ColorComponent.RED, colorGroups, ignoreAlpha);
         } else if (colorGroup.greenDiff > colorGroup.blueDiff) {
             doCut(colorGroup, ColorComponent.GREEN, colorGroups, ignoreAlpha);

@@ -68,14 +68,13 @@ public class ByteSourceImageTest extends AbstractByteSourceTest {
         assertEquals(imageFileHeight, imageBytes.getHeight());
     }
 
-    public void checkGetIccProfileBytes(final File imageFile, final byte[] imageFileBytes)
-            throws Exception {
+    public void checkGetIccProfileBytes(final File imageFile, final byte[] imageFileBytes) throws Exception {
         // check guessFormat()
         final byte[] iccBytesFile = Imaging.getIccProfileBytes(imageFile);
 
         final byte[] iccBytesBytes = Imaging.getIccProfileBytes(imageFileBytes);
 
-        assertEquals((iccBytesFile != null), (iccBytesBytes != null));
+        assertEquals(iccBytesFile != null, iccBytesBytes != null);
 
         if (iccBytesFile == null) {
             return;
@@ -144,8 +143,7 @@ public class ByteSourceImageTest extends AbstractByteSourceTest {
 
     }
 
-    public void checkGetImageSize(final File imageFile, final byte[] imageFileBytes)
-            throws Exception {
+    public void checkGetImageSize(final File imageFile, final byte[] imageFileBytes) throws Exception {
         final Dimension imageSizeFile = Imaging.getImageSize(imageFile);
         assertNotNull(imageSizeFile);
         assertTrue(imageSizeFile.width > 0);
@@ -157,8 +155,7 @@ public class ByteSourceImageTest extends AbstractByteSourceTest {
         assertEquals(imageSizeFile.height, imageSizeBytes.height);
     }
 
-    public void checkGuessFormat(final File imageFile, final byte[] imageFileBytes)
-            throws Exception {
+    public void checkGuessFormat(final File imageFile, final byte[] imageFileBytes) throws Exception {
         // check guessFormat()
         final ImageFormat imageFormatFile = Imaging.guessFormat(imageFile);
         assertNotNull(imageFormatFile);
@@ -183,14 +180,10 @@ public class ByteSourceImageTest extends AbstractByteSourceTest {
         assertNotNull(imageFileBytes);
         assertEquals(imageFileBytes.length, imageFile.length());
 
-        if (imageFile.getName().toLowerCase().endsWith(".ico")
-                || imageFile.getName().toLowerCase().endsWith(".tga")
-                || imageFile.getName().toLowerCase().endsWith(".jb2")
-                || imageFile.getName().toLowerCase().endsWith(".pcx")
-                || imageFile.getName().toLowerCase().endsWith(".dcx")
-                || imageFile.getName().toLowerCase().endsWith(".psd")
-                || imageFile.getName().toLowerCase().endsWith(".wbmp")
-                || imageFile.getName().toLowerCase().endsWith(".xbm")
+        if (imageFile.getName().toLowerCase().endsWith(".ico") || imageFile.getName().toLowerCase().endsWith(".tga")
+                || imageFile.getName().toLowerCase().endsWith(".jb2") || imageFile.getName().toLowerCase().endsWith(".pcx")
+                || imageFile.getName().toLowerCase().endsWith(".dcx") || imageFile.getName().toLowerCase().endsWith(".psd")
+                || imageFile.getName().toLowerCase().endsWith(".wbmp") || imageFile.getName().toLowerCase().endsWith(".xbm")
                 || imageFile.getName().toLowerCase().endsWith(".xpm")) {
             // these formats can't be parsed without a file name hint.
             // they have ambiguous "magic number" signatures.
@@ -199,8 +192,7 @@ public class ByteSourceImageTest extends AbstractByteSourceTest {
 
         checkGuessFormat(imageFile, imageFileBytes);
 
-        if (imageFile.getName().toLowerCase().endsWith(".png")
-                && imageFile.getParentFile().getName().equalsIgnoreCase("pngsuite")
+        if (imageFile.getName().toLowerCase().endsWith(".png") && imageFile.getParentFile().getName().equalsIgnoreCase("pngsuite")
                 && imageFile.getName().toLowerCase().startsWith("x")) {
             return;
         }
@@ -214,9 +206,7 @@ public class ByteSourceImageTest extends AbstractByteSourceTest {
         checkGetImageSize(imageFile, imageFileBytes);
 
         final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
-        if (ImageFormats.JPEG != imageFormat
-                && ImageFormats.WEBP != imageFormat
-                && ImageFormats.UNKNOWN != imageFormat) {
+        if (ImageFormats.JPEG != imageFormat && ImageFormats.WEBP != imageFormat && ImageFormats.UNKNOWN != imageFormat) {
             checkGetBufferedImage(imageFile, imageFileBytes);
         }
     }

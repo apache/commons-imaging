@@ -27,8 +27,7 @@ public abstract class DataParser {
 
     protected abstract int getRgb(int[][][] data, int x, int y, PsdImageContents imageContents);
 
-    public final void parseData(final int[][][] data, final BufferedImage bi,
-            final PsdImageContents imageContents) {
+    public final void parseData(final int[][][] data, final BufferedImage bi, final PsdImageContents imageContents) {
         final DataBuffer buffer = bi.getRaster().getDataBuffer();
 
         final PsdHeaderInfo header = imageContents.header;

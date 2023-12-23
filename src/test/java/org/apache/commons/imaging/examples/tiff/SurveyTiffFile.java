@@ -43,21 +43,17 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 
 /**
- * Provides methods to collect data for a tiff file. This class is intended for
- * use with
- * SurveyTiffFolder, though it could be integrated into other applications.
+ * Provides methods to collect data for a tiff file. This class is intended for use with SurveyTiffFolder, though it could be integrated into other
+ * applications.
  */
 public class SurveyTiffFile {
 
     /**
-     * Formats a header allowing space for the maximum length of
-     * the file paths in the list. If the comma-separated-value option
-     * is set, spaces will be suppressed and commas introduced as separators.
+     * Formats a header allowing space for the maximum length of the file paths in the list. If the comma-separated-value option is set, spaces will be
+     * suppressed and commas introduced as separators.
      *
-     * @param maxPathLen the maximum length of a file path (used if csv
-     * option is not set)
-     * @param csv true if formatting is configured for comma-separated-value
-     * files.
+     * @param maxPathLen the maximum length of a file path (used if csv option is not set)
+     * @param csv        true if formatting is configured for comma-separated-value files.
      * @return a valid string.
      */
     String formatHeader(final int maxPathLen, final boolean csv) {
@@ -69,12 +65,10 @@ public class SurveyTiffFile {
             n = 10;
         }
         final int k0 = (n - 4) / 2;
-        final int k1 = (n - 4 - k0);
+        final int k1 = n - 4 - k0;
 
-        final String header = String.format(
-            "%" + k0 + "sPath%" + k1 + "s%s", "", "",
-            "    Size     Layout  Blk_sz     P_conf  Compress  "
-            + "Predict  Data_Fmt   B/P B/S      Photo     ICC_Pro");
+        final String header = String.format("%" + k0 + "sPath%" + k1 + "s%s", "", "",
+                "    Size     Layout  Blk_sz     P_conf  Compress  " + "Predict  Data_Fmt   B/P B/S      Photo     ICC_Pro");
         if (csv) {
             return reformatHeaderForCsv(header);
         }
@@ -95,37 +89,35 @@ public class SurveyTiffFile {
     private String getCompressionString(final TiffDirectory directory) throws ImagingException {
         final short compressionFieldValue;
         if (directory.findField(TiffTagConstants.TIFF_TAG_COMPRESSION) != null) {
-            compressionFieldValue
-                = directory.getFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION);
+            compressionFieldValue = directory.getFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION);
         } else {
             compressionFieldValue = TIFF_COMPRESSION_UNCOMPRESSED_1;
         }
         final int compression = 0xffff & compressionFieldValue;
         switch (compression) {
-            case TIFF_COMPRESSION_UNCOMPRESSED: // None;
-                return "None";
-            case TIFF_COMPRESSION_CCITT_1D: // CCITT Group 3 1-Dimensional Modified
-                // Huffman run-length encoding.
-                return "CCITT_1D";
-            case TIFF_COMPRESSION_CCITT_GROUP_3:
-                return "CCITT_3";
-            case TIFF_COMPRESSION_CCITT_GROUP_4:
-                return "CCITT_4";
-            case TIFF_COMPRESSION_LZW:
-                return "LZW";
-            case TIFF_COMPRESSION_PACKBITS:
-                return "PACKBITS";
-            case TIFF_COMPRESSION_DEFLATE_ADOBE:
-            case TIFF_COMPRESSION_DEFLATE_PKZIP:
-                return "Deflate";
-            default:
-                return "None";
+        case TIFF_COMPRESSION_UNCOMPRESSED: // None;
+            return "None";
+        case TIFF_COMPRESSION_CCITT_1D: // CCITT Group 3 1-Dimensional Modified
+            // Huffman run-length encoding.
+            return "CCITT_1D";
+        case TIFF_COMPRESSION_CCITT_GROUP_3:
+            return "CCITT_3";
+        case TIFF_COMPRESSION_CCITT_GROUP_4:
+            return "CCITT_4";
+        case TIFF_COMPRESSION_LZW:
+            return "LZW";
+        case TIFF_COMPRESSION_PACKBITS:
+            return "PACKBITS";
+        case TIFF_COMPRESSION_DEFLATE_ADOBE:
+        case TIFF_COMPRESSION_DEFLATE_PKZIP:
+            return "Deflate";
+        default:
+            return "None";
         }
     }
 
     String getIccProfileString(final TiffDirectory directory) throws ImagingException {
-        final byte[] b = directory.getFieldValue(TiffEpTagConstants.EXIF_TAG_INTER_COLOR_PROFILE,
-            false);
+        final byte[] b = directory.getFieldValue(TiffEpTagConstants.EXIF_TAG_INTER_COLOR_PROFILE, false);
         if (b == null || b.length == 0) {
             return "N";
         }
@@ -133,45 +125,44 @@ public class SurveyTiffFile {
     }
 
     private String getPhotometricInterpreterString(final TiffDirectory directory, final int[] bitsPerSample) throws ImagingException {
-        final int photometricInterpretation = 0xffff & directory.getFieldValue(
-            TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION);
+        final int photometricInterpretation = 0xffff & directory.getFieldValue(TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION);
 
         switch (photometricInterpretation) {
-            case 0:
-                return "BiLev Inv";
-            case 1:
-                return "BiLevel";
-            case 2:
-                String a = "RGB";
-                if (bitsPerSample.length == 4) {
-                    final Object o = directory.getFieldValue(TiffTagConstants.TIFF_TAG_EXTRA_SAMPLES);
-                    short extraSamples = 0;
-                    if (o instanceof Short) {
-                        extraSamples = ((Short) o);
-                    }
-                    if (extraSamples == 1) {
-                        a = "RGB Pre-A";
-                    } else {
-                        a = "RGBA";
-                    }
+        case 0:
+            return "BiLev Inv";
+        case 1:
+            return "BiLevel";
+        case 2:
+            String a = "RGB";
+            if (bitsPerSample.length == 4) {
+                final Object o = directory.getFieldValue(TiffTagConstants.TIFF_TAG_EXTRA_SAMPLES);
+                short extraSamples = 0;
+                if (o instanceof Short) {
+                    extraSamples = (Short) o;
                 }
+                if (extraSamples == 1) {
+                    a = "RGB Pre-A";
+                } else {
+                    a = "RGBA";
+                }
+            }
 
-                return a;
-            case 3:
-                return "Palette";
+            return a;
+        case 3:
+            return "Palette";
 
-            case 5: // CMYK
-                return "CMYK";
-            case 6:
-                return "YCbCr";
-            case 8:
-                return "CieLab";
+        case 5: // CMYK
+            return "CMYK";
+        case 6:
+            return "YCbCr";
+        case 8:
+            return "CieLab";
 
-            case 32844:
-            case 32845:
-                return "LogLuv";
-            default:
-                return "Unknown";
+        case 32844:
+        case 32845:
+            return "LogLuv";
+        default:
+            return "Unknown";
 
         }
 
@@ -180,11 +171,8 @@ public class SurveyTiffFile {
     String getPlanarConfigurationString(final TiffDirectory directory) throws ImagingException {
 
         // Obtain the planar configuration
-        final TiffField pcField = directory.findField(
-            TiffTagConstants.TIFF_TAG_PLANAR_CONFIGURATION);
-        final TiffPlanarConfiguration planarConfiguration
-            = pcField == null
-                ? TiffPlanarConfiguration.CHUNKY
+        final TiffField pcField = directory.findField(TiffTagConstants.TIFF_TAG_PLANAR_CONFIGURATION);
+        final TiffPlanarConfiguration planarConfiguration = pcField == null ? TiffPlanarConfiguration.CHUNKY
                 : TiffPlanarConfiguration.lenientValueOf(pcField.getIntValue());
 
         if (planarConfiguration == TiffPlanarConfiguration.CHUNKY) {
@@ -196,26 +184,24 @@ public class SurveyTiffFile {
     String getPredictorString(final TiffDirectory directory) throws ImagingException {
         int predictor = -1;
 
-        final TiffField predictorField = directory.findField(
-            TiffTagConstants.TIFF_TAG_PREDICTOR);
+        final TiffField predictorField = directory.findField(TiffTagConstants.TIFF_TAG_PREDICTOR);
         if (null != predictorField) {
             predictor = predictorField.getIntValueOrArraySum();
         }
 
         switch (predictor) {
-            case TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING:
-                return "Diff";
-            case TiffTagConstants.PREDICTOR_VALUE_FLOATING_POINT_DIFFERENCING:
-                return "FP Diff";
-            default:
-                return "None";
+        case TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING:
+            return "Diff";
+        case TiffTagConstants.PREDICTOR_VALUE_FLOATING_POINT_DIFFERENCING:
+            return "FP Diff";
+        default:
+            return "None";
 
         }
     }
 
     String getSampleFormatString(final TiffDirectory directory) throws ImagingException {
-        final short[] sSampleFmt = directory.getFieldValue(
-            TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, false);
+        final short[] sSampleFmt = directory.getFieldValue(TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, false);
         if (sSampleFmt == null || sSampleFmt.length == 0) {
             return "Unknown";
         }
@@ -228,18 +214,18 @@ public class SurveyTiffFile {
         }
         final int test = sSampleFmt[0];
         switch (test) {
-            case TiffTagConstants.SAMPLE_FORMAT_VALUE_COMPLEX_INTEGER:
-                return "Comp I" + heterogeneous;
-            case TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT:
-                return "Float" + heterogeneous;
-            case TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_COMPLEX_FLOAT:
-                return "Comp F" + heterogeneous;
-            case TiffTagConstants.SAMPLE_FORMAT_VALUE_TWOS_COMPLEMENT_SIGNED_INTEGER:
-                return "Sgn Int" + heterogeneous;
-            case TiffTagConstants.SAMPLE_FORMAT_VALUE_UNSIGNED_INTEGER:
-                return "Uns Int" + heterogeneous;
-            default:
-                return "Unknown" + heterogeneous;
+        case TiffTagConstants.SAMPLE_FORMAT_VALUE_COMPLEX_INTEGER:
+            return "Comp I" + heterogeneous;
+        case TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT:
+            return "Float" + heterogeneous;
+        case TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_COMPLEX_FLOAT:
+            return "Comp F" + heterogeneous;
+        case TiffTagConstants.SAMPLE_FORMAT_VALUE_TWOS_COMPLEMENT_SIGNED_INTEGER:
+            return "Sgn Int" + heterogeneous;
+        case TiffTagConstants.SAMPLE_FORMAT_VALUE_UNSIGNED_INTEGER:
+            return "Uns Int" + heterogeneous;
+        default:
+            return "Unknown" + heterogeneous;
         }
     }
 

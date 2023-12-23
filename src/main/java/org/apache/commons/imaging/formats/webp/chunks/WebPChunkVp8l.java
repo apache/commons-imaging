@@ -53,20 +53,20 @@ public final class WebPChunkVp8l extends WebPChunk {
      * @param bytes chunk data.
      * @throws ImagingException if the chunk data and the size provided do not match.
      */
-    public WebPChunkVp8l(int type, int size, byte[] bytes) throws ImagingException {
+    public WebPChunkVp8l(final int type, final int size, final byte[] bytes) throws ImagingException {
         super(type, size, bytes);
 
         if (bytes[0] != 0x2f || size < 5) {
             throw new ImagingException("Invalid VP8L chunk");
         }
 
-        int b1 = bytes[1] & 0xFF;
-        int b2 = bytes[2] & 0xFF;
-        int b3 = bytes[3] & 0xFF;
-        int b4 = bytes[4] & 0xFF;
+        final int b1 = bytes[1] & 0xFF;
+        final int b2 = bytes[2] & 0xFF;
+        final int b3 = bytes[3] & 0xFF;
+        final int b4 = bytes[4] & 0xFF;
 
         this.imageWidth = b1 + ((b2 & 0b0011_1111) << 8) + 1;
-        this.imageHeight = SafeOperations.add(((b2 & 0b1100_0000) >> 6), (b3 << 2), ((b4 & 0b1111) << 8), 1);
+        this.imageHeight = SafeOperations.add((b2 & 0b1100_0000) >> 6, b3 << 2, (b4 & 0b1111) << 8, 1);
         this.hasAlpha = (b4 & 0b0001_0000) != 0;
         this.versionNumber = b4 >> 5;
 
@@ -76,7 +76,7 @@ public final class WebPChunkVp8l extends WebPChunk {
     }
 
     @Override
-    public void dump(PrintWriter pw, int offset) throws ImagingException, IOException {
+    public void dump(final PrintWriter pw, final int offset) throws ImagingException, IOException {
         super.dump(pw, offset);
         pw.println("  Version Number: " + getVersionNumber());
         pw.println("  Image Width: " + getImageWidth());

@@ -136,8 +136,7 @@ public class TiffReader extends BinaryFileParser {
         this.strict = strict;
     }
 
-    private JpegImageData getJpegRawImageData(final ByteSource byteSource,
-            final TiffDirectory directory) throws ImagingException, IOException {
+    private JpegImageData getJpegRawImageData(final ByteSource byteSource, final TiffDirectory directory) throws ImagingException, IOException {
         final ImageDataElement element = directory.getJpegRawImageDataElement();
         final long offset = element.offset;
         int length = element.length;
@@ -147,9 +146,7 @@ public class TiffReader extends BinaryFileParser {
         }
         final byte[] data = byteSource.getByteArray(offset, length);
         // check if the last read byte is actually the end of the image data
-        if (strict &&
-                (length < 2 ||
-                (((data[data.length - 2] & 0xff) << 8) | (data[data.length - 1] & 0xff)) != JpegConstants.EOI_MARKER)) {
+        if (strict && (length < 2 || ((data[data.length - 2] & 0xff) << 8 | data[data.length - 1] & 0xff) != JpegConstants.EOI_MARKER)) {
             throw new ImagingException("JPEG EOI marker could not be found at expected location");
         }
         return new JpegImageData(offset, length, data);
@@ -165,8 +162,7 @@ public class TiffReader extends BinaryFileParser {
         throw new ImagingException("Invalid TIFF byte order " + (0xff & byteOrderByte));
     }
 
-    private AbstractTiffImageData getTiffRawImageData(final ByteSource byteSource,
-            final TiffDirectory directory) throws ImagingException, IOException {
+    private AbstractTiffImageData getTiffRawImageData(final ByteSource byteSource, final TiffDirectory directory) throws ImagingException, IOException {
 
         final List<ImageDataElement> elements = directory.getTiffRawImageDataElements();
         final AbstractTiffImageData.Data[] data = new AbstractTiffImageData.Data[elements.size()];
@@ -216,22 +212,19 @@ public class TiffReader extends BinaryFileParser {
         return new AbstractTiffImageData.Tiles(data, tileWidth, tileLength);
     }
 
-    public void read(final ByteSource byteSource, final FormatCompliance formatCompliance, final Listener listener)
-            throws ImagingException, IOException {
+    public void read(final ByteSource byteSource, final FormatCompliance formatCompliance, final Listener listener) throws ImagingException, IOException {
         readDirectories(byteSource, formatCompliance, listener);
     }
 
-    public TiffContents readContents(final ByteSource byteSource, final TiffImagingParameters params,
-            final FormatCompliance formatCompliance) throws ImagingException,
-            IOException {
+    public TiffContents readContents(final ByteSource byteSource, final TiffImagingParameters params, final FormatCompliance formatCompliance)
+            throws ImagingException, IOException {
 
         final Collector collector = new Collector(params);
         read(byteSource, formatCompliance, collector);
         return collector.getContents();
     }
 
-    public TiffContents readDirectories(final ByteSource byteSource,
-            final boolean readImageData, final FormatCompliance formatCompliance)
+    public TiffContents readDirectories(final ByteSource byteSource, final boolean readImageData, final FormatCompliance formatCompliance)
             throws ImagingException, IOException {
         final TiffImagingParameters params = new TiffImagingParameters();
         params.setReadThumbnails(readImageData);
@@ -239,8 +232,7 @@ public class TiffReader extends BinaryFileParser {
         readDirectories(byteSource, formatCompliance, collector);
         final TiffContents contents = collector.getContents();
         if (contents.directories.isEmpty()) {
-            throw new ImagingException(
-                    "Image did not contain any directories.");
+            throw new ImagingException("Image did not contain any directories.");
         }
         return contents;
     }
@@ -265,8 +257,7 @@ public class TiffReader extends BinaryFileParser {
 //        }
 //    }
 
-    private void readDirectories(final ByteSource byteSource,
-            final FormatCompliance formatCompliance, final Listener listener)
+    private void readDirectories(final ByteSource byteSource, final FormatCompliance formatCompliance, final Listener listener)
             throws ImagingException, IOException {
         final TiffHeader tiffHeader = readTiffHeader(byteSource);
         if (!listener.setTiffHeader(tiffHeader)) {
@@ -280,10 +271,8 @@ public class TiffReader extends BinaryFileParser {
         readDirectory(byteSource, offset, dirType, formatCompliance, listener, visited);
     }
 
-    private boolean readDirectory(final ByteSource byteSource, final long directoryOffset,
-            final int dirType, final FormatCompliance formatCompliance, final Listener listener,
-            final boolean ignoreNextDirectory, final List<Number> visited)
-            throws ImagingException, IOException {
+    private boolean readDirectory(final ByteSource byteSource, final long directoryOffset, final int dirType, final FormatCompliance formatCompliance,
+            final Listener listener, final boolean ignoreNextDirectory, final List<Number> visited) throws ImagingException, IOException {
 
         if (visited.contains(directoryOffset)) {
             return false;
@@ -300,12 +289,12 @@ public class TiffReader extends BinaryFileParser {
             final List<TiffField> fields = new ArrayList<>();
 
             long entryCount;
-          try {
-              if (standardTiff) {
-                entryCount = read2Bytes("DirectoryEntryCount", is, "Not a Valid TIFF File", getByteOrder());
-              } else {
-                entryCount = read8Bytes("DirectoryEntryCount", is, "Not a Valid TIFF File", getByteOrder());
-              }
+            try {
+                if (standardTiff) {
+                    entryCount = read2Bytes("DirectoryEntryCount", is, "Not a Valid TIFF File", getByteOrder());
+                } else {
+                    entryCount = read8Bytes("DirectoryEntryCount", is, "Not a Valid TIFF File", getByteOrder());
+                }
             } catch (final IOException e) {
                 if (strict) {
                     throw e;
@@ -320,13 +309,13 @@ public class TiffReader extends BinaryFileParser {
                 final byte[] offsetBytes;
                 final long offset;
                 if (standardTiff) {
-                  count = 0xFFFFffffL & read4Bytes("Count", is, "Not a Valid TIFF File", getByteOrder());
-                  offsetBytes = readBytes("Offset", is, 4, "Not a Valid TIFF File");
-                  offset = 0xFFFFffffL & ByteConversions.toInt(offsetBytes, getByteOrder());
+                    count = 0xFFFFffffL & read4Bytes("Count", is, "Not a Valid TIFF File", getByteOrder());
+                    offsetBytes = readBytes("Offset", is, 4, "Not a Valid TIFF File");
+                    offset = 0xFFFFffffL & ByteConversions.toInt(offsetBytes, getByteOrder());
                 } else {
-                  count = read8Bytes("Count", is, "Not a Valid TIFF File", getByteOrder());
-                  offsetBytes = readBytes("Offset", is, 8, "Not a Valid TIFF File");
-                  offset = ByteConversions.toLong(offsetBytes, getByteOrder());
+                    count = read8Bytes("Count", is, "Not a Valid TIFF File", getByteOrder());
+                    offsetBytes = readBytes("Offset", is, 8, "Not a Valid TIFF File");
+                    offset = ByteConversions.toLong(offsetBytes, getByteOrder());
                 }
 
                 if (tag == 0) {
@@ -349,13 +338,10 @@ public class TiffReader extends BinaryFileParser {
                 final long valueLength = count * abstractFieldType.getSize();
                 final byte[] value;
                 if (valueLength > entryMaxValueLength) {
-                    if ((offset < 0) || (offset + valueLength) > byteSource.size()) {
+                    if (offset < 0 || offset + valueLength > byteSource.size()) {
                         if (strict) {
-                            throw new IOException(
-                                    "Attempt to read byte range starting from " + offset + " "
-                                            + "of length " + valueLength + " "
-                                            + "which is outside the file's size of "
-                                            + byteSource.size());
+                            throw new IOException("Attempt to read byte range starting from " + offset + " " + "of length " + valueLength + " "
+                                    + "which is outside the file's size of " + byteSource.size());
                         }
                         // corrupt field, ignore it
                         continue;
@@ -365,8 +351,7 @@ public class TiffReader extends BinaryFileParser {
                     value = offsetBytes;
                 }
 
-                final TiffField field = new TiffField(tag, dirType, abstractFieldType, count,
-                        offset, value, getByteOrder(), i);
+                final TiffField field = new TiffField(tag, dirType, abstractFieldType, count, offset, value, getByteOrder(), i);
 
                 fields.add(field);
 
@@ -375,25 +360,17 @@ public class TiffReader extends BinaryFileParser {
                 }
             }
 
-            final long nextDirectoryOffset = 0xFFFFffffL & read4Bytes("nextDirectoryOffset", is,
-                    "Not a Valid TIFF File", getByteOrder());
+            final long nextDirectoryOffset = 0xFFFFffffL & read4Bytes("nextDirectoryOffset", is, "Not a Valid TIFF File", getByteOrder());
 
-            final TiffDirectory directory = new TiffDirectory(
-                dirType,
-                fields,
-                directoryOffset,
-                nextDirectoryOffset,
-                getByteOrder());
+            final TiffDirectory directory = new TiffDirectory(dirType, fields, directoryOffset, nextDirectoryOffset, getByteOrder());
 
             if (listener.readImageData()) {
                 if (directory.hasTiffImageData()) {
-                    final AbstractTiffImageData rawImageData = getTiffRawImageData(
-                            byteSource, directory);
+                    final AbstractTiffImageData rawImageData = getTiffRawImageData(byteSource, directory);
                     directory.setTiffImageData(rawImageData);
                 }
                 if (directory.hasJpegImageData()) {
-                    final JpegImageData rawJpegImageData = getJpegRawImageData(
-                            byteSource, directory);
+                    final JpegImageData rawJpegImageData = getJpegRawImageData(byteSource, directory);
                     directory.setJpegImageData(rawJpegImageData);
                 }
             }
@@ -403,16 +380,10 @@ public class TiffReader extends BinaryFileParser {
             }
 
             if (listener.readOffsetDirectories()) {
-                final TagInfoDirectory[] offsetFields = {
-                        ExifTagConstants.EXIF_TAG_EXIF_OFFSET,
-                        ExifTagConstants.EXIF_TAG_GPSINFO,
-                        ExifTagConstants.EXIF_TAG_INTEROP_OFFSET
-                };
-                final int[] directoryTypes = {
-                        TiffDirectoryConstants.DIRECTORY_TYPE_EXIF,
-                        TiffDirectoryConstants.DIRECTORY_TYPE_GPS,
-                        TiffDirectoryConstants.DIRECTORY_TYPE_INTEROPERABILITY
-                };
+                final TagInfoDirectory[] offsetFields = { ExifTagConstants.EXIF_TAG_EXIF_OFFSET, ExifTagConstants.EXIF_TAG_GPSINFO,
+                        ExifTagConstants.EXIF_TAG_INTEROP_OFFSET };
+                final int[] directoryTypes = { TiffDirectoryConstants.DIRECTORY_TYPE_EXIF, TiffDirectoryConstants.DIRECTORY_TYPE_GPS,
+                        TiffDirectoryConstants.DIRECTORY_TYPE_INTEROPERABILITY };
                 for (int i = 0; i < offsetFields.length; i++) {
                     final TagInfoDirectory offsetField = offsetFields[i];
                     final TiffField field = directory.findField(offsetField);
@@ -423,9 +394,7 @@ public class TiffReader extends BinaryFileParser {
                         try {
                             subDirectoryOffset = directory.getFieldValue(offsetField);
                             subDirectoryType = directoryTypes[i];
-                            subDirectoryRead = readDirectory(byteSource,
-                                    subDirectoryOffset, subDirectoryType,
-                                    formatCompliance, listener, true, visited);
+                            subDirectoryRead = readDirectory(byteSource, subDirectoryOffset, subDirectoryType, formatCompliance, listener, true, visited);
 
                         } catch (final ImagingException imageReadException) {
                             if (strict) {
@@ -441,20 +410,17 @@ public class TiffReader extends BinaryFileParser {
 
             if (!ignoreNextDirectory && directory.getNextDirectoryOffset() > 0) {
                 // Debug.debug("next dir", directory.nextDirectoryOffset );
-                readDirectory(byteSource, directory.getNextDirectoryOffset(),
-                        dirType + 1, formatCompliance, listener, visited);
+                readDirectory(byteSource, directory.getNextDirectoryOffset(), dirType + 1, formatCompliance, listener, visited);
             }
 
             return true;
         }
     }
 
-    private boolean readDirectory(final ByteSource byteSource, final long offset,
-            final int dirType, final FormatCompliance formatCompliance, final Listener listener,
-            final List<Number> visited) throws ImagingException, IOException {
+    private boolean readDirectory(final ByteSource byteSource, final long offset, final int dirType, final FormatCompliance formatCompliance,
+            final Listener listener, final List<Number> visited) throws ImagingException, IOException {
         final boolean ignoreNextDirectory = false;
-        return readDirectory(byteSource, offset, dirType, formatCompliance,
-                listener, ignoreNextDirectory, visited);
+        return readDirectory(byteSource, offset, dirType, formatCompliance, listener, ignoreNextDirectory, visited);
     }
 
     public TiffContents readFirstDirectory(final ByteSource byteSource, final boolean readImageData, final FormatCompliance formatCompliance)
@@ -463,8 +429,7 @@ public class TiffReader extends BinaryFileParser {
         read(byteSource, formatCompliance, collector);
         final TiffContents contents = collector.getContents();
         if (contents.directories.isEmpty()) {
-            throw new ImagingException(
-                    "Image did not contain any directories.");
+            throw new ImagingException("Image did not contain any directories.");
         }
         return contents;
     }
@@ -487,8 +452,8 @@ public class TiffReader extends BinaryFileParser {
 
         // verify that the file is a supported TIFF format using
         // the numeric indentifier
-        //     Classic TIFF (32 bit):    42
-        //     Big TIFF (64 bit):        43
+        // Classic TIFF (32 bit): 42
+        // Big TIFF (64 bit): 43
         //
         final long offsetToFirstIFD;
         final int tiffVersion = read2Bytes("tiffVersion", is, "Not a Valid TIFF File", getByteOrder());
@@ -501,16 +466,14 @@ public class TiffReader extends BinaryFileParser {
             bigTiff = true;
             standardTiff = false;
             entryMaxValueLength = TIFF_ENTRY_MAX_VALUE_LENGTH_BIG;
-            int byteSize = read2Bytes("bytesizeOfOffset", is, "Not a Valid TIFF File", getByteOrder());
-            int expectedZero = read2Bytes("expectedZero", is, "Not a Valid TIFF File", getByteOrder());
+            final int byteSize = read2Bytes("bytesizeOfOffset", is, "Not a Valid TIFF File", getByteOrder());
+            final int expectedZero = read2Bytes("expectedZero", is, "Not a Valid TIFF File", getByteOrder());
             if (byteSize != 8 || expectedZero != 0) {
-                throw new ImagingException(
-                  "Misformed Big-TIFF header: " + tiffVersion);
+                throw new ImagingException("Misformed Big-TIFF header: " + tiffVersion);
             }
             offsetToFirstIFD = read8Bytes("offsetToFirstIFD", is, "Not a Valid TIFF File", getByteOrder());
         } else {
-            throw new ImagingException(
-              "Unknown TIFF Version: " + tiffVersion);
+            throw new ImagingException("Unknown TIFF Version: " + tiffVersion);
         }
 
         skipBytes(is, offsetToFirstIFD - 8, "Not a Valid TIFF File: couldn't find IFDs");

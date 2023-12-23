@@ -19,9 +19,8 @@ package org.apache.commons.imaging.formats.tiff.photometricinterpreters.floating
 import java.awt.Color;
 
 /**
- * Provides a palette entry for a color assignment to a single value. This class
- * will assign a color to a value only if it is an exact match for the input.
- * This class will also support Float.NaN
+ * Provides a palette entry for a color assignment to a single value. This class will assign a color to a value only if it is an exact match for the input. This
+ * class will also support Float.NaN
  */
 public class PaletteEntryForValue implements PaletteEntry {
 
@@ -35,8 +34,7 @@ public class PaletteEntryForValue implements PaletteEntry {
      * <p>
      * This class will support color-assignments for Float.NaN.
      *
-     * @param value the color value associated with this palette entry; a
-     * Float&#46;NaN is allowed.
+     * @param value the color value associated with this palette entry; a Float&#46;NaN is allowed.
      * @param color the color assigned to value
      */
     public PaletteEntryForValue(final float value, final Color color) {

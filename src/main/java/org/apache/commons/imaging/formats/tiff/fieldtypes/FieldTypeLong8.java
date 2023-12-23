@@ -24,8 +24,7 @@ import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 
 /**
- * Provides an implementation of the 8-byte integer field
- * type specified by the BigTIFF extensions to the TIFF format.
+ * Provides an implementation of the 8-byte integer field type specified by the BigTIFF extensions to the TIFF format.
  */
 public class FieldTypeLong8 extends AbstractFieldType {
     public FieldTypeLong8(final int type, final String name) {
@@ -33,8 +32,8 @@ public class FieldTypeLong8 extends AbstractFieldType {
     }
 
     /**
-     * Gets the value(s) for this field in the form of an array of
-     * long integers.
+     * Gets the value(s) for this field in the form of an array of long integers.
+     *
      * @param entry the TIFF field as obtained from the source file.
      * @return a valid, potentially empty array of Java long integers.
      */
@@ -42,8 +41,7 @@ public class FieldTypeLong8 extends AbstractFieldType {
     public Object getValue(final TiffField entry) {
         final byte[] bytes = entry.getByteArrayValue();
         if (entry.getCount() == 1) {
-            return ByteConversions.toInt(bytes,
-                    entry.getByteOrder());
+            return ByteConversions.toInt(bytes, entry.getByteOrder());
         }
         return ByteConversions.toLongs(bytes, entry.getByteOrder());
     }

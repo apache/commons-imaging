@@ -17,8 +17,8 @@
 package org.apache.commons.imaging.formats.gif;
 
 /**
- * Describes the disposal of a GIF frame when rendering the animation. Frames that aren't disposed can show through
- * transparent pixels of coming frames. This allows new layers to contain just the part of the animation that changes.
+ * Describes the disposal of a GIF frame when rendering the animation. Frames that aren't disposed can show through transparent pixels of coming frames. This
+ * allows new layers to contain just the part of the animation that changes.
  */
 public enum DisposalMethod {
 

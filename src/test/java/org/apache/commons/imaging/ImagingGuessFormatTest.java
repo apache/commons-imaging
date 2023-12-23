@@ -44,26 +44,20 @@ public class ImagingGuessFormatTest extends AbstractImagingTest {
     public static final String UNKNOWN_IMAGE_FILE = "info.txt";
 
     public static Stream<Object[]> data() {
-        return Arrays.asList(
-                new Object[] { ImageFormats.PNG, PNG_IMAGE_FILE },
-                new Object[] { ImageFormats.GIF, GIF_IMAGE_FILE },
+        return Arrays.asList(new Object[] { ImageFormats.PNG, PNG_IMAGE_FILE }, new Object[] { ImageFormats.GIF, GIF_IMAGE_FILE },
                 new Object[] { ImageFormats.ICNS, ICNS_IMAGE_FILE },
                 // TODO(cmchen): add ability to sniff ICOs if possible.
                 // new Object[] { ImageFormat.IMAGE_FORMAT_ICO, ICO_IMAGE_FILE },
-                new Object[] { ImageFormats.TIFF, TIFF_IMAGE_FILE },
-                new Object[] { ImageFormats.JPEG, JPEG_IMAGE_FILE },
-                new Object[] { ImageFormats.BMP, BMP_IMAGE_FILE },
-                new Object[] { ImageFormats.PSD, PSD_IMAGE_FILE },
-                new Object[] { ImageFormats.PBM, PBM_IMAGE_FILE },
-                new Object[] { ImageFormats.PGM, PGM_IMAGE_FILE },
+                new Object[] { ImageFormats.TIFF, TIFF_IMAGE_FILE }, new Object[] { ImageFormats.JPEG, JPEG_IMAGE_FILE },
+                new Object[] { ImageFormats.BMP, BMP_IMAGE_FILE }, new Object[] { ImageFormats.PSD, PSD_IMAGE_FILE },
+                new Object[] { ImageFormats.PBM, PBM_IMAGE_FILE }, new Object[] { ImageFormats.PGM, PGM_IMAGE_FILE },
                 new Object[] { ImageFormats.PPM, PPM_IMAGE_FILE },
                 // TODO(cmchen): add ability to sniff TGAs if possible.
                 // new Object[] { ImageFormat.IMAGE_FORMAT_TGA, TGA_IMAGE_FILE },
                 // TODO(cmchen): Add test images for these formats.
                 // new Object[] { ImageFormat.IMAGE_FORMAT_PNM, PNM_IMAGE_FILE },
                 // new Object[] { ImageFormat.IMAGE_FORMAT_JBIG2, JBIG2_IMAGE_FILE },
-                new Object[] { ImageFormats.UNKNOWN, UNKNOWN_IMAGE_FILE }
-        ).stream();
+                new Object[] { ImageFormats.UNKNOWN, UNKNOWN_IMAGE_FILE }).stream();
     }
 
     @ParameterizedTest

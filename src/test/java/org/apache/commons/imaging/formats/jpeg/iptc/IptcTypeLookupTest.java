@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-public class IptcTypeLookupTest{
+public class IptcTypeLookupTest {
 
     @Test
     public void testGetIptcTypeWithPositive() {

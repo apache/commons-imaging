@@ -25,12 +25,10 @@ import org.apache.commons.imaging.formats.png.chunks.PngChunkPlte;
 import org.apache.commons.imaging.formats.png.transparencyfilters.AbstractTransparencyFilter;
 
 final class ScanExpediterSimple extends AbstractScanExpediter {
-    ScanExpediterSimple(final int width, final int height, final InputStream is,
-            final BufferedImage bi, final PngColorType pngColorType, final int bitDepth, final int bitsPerPixel,
-            final PngChunkPlte pngChunkPLTE, final GammaCorrection gammaCorrection,
+    ScanExpediterSimple(final int width, final int height, final InputStream is, final BufferedImage bi, final PngColorType pngColorType, final int bitDepth,
+            final int bitsPerPixel, final PngChunkPlte pngChunkPLTE, final GammaCorrection gammaCorrection,
             final AbstractTransparencyFilter abstractTransparencyFilter) {
-        super(width, height, is, bi, pngColorType, bitDepth, bitsPerPixel,
-                pngChunkPLTE, gammaCorrection, abstractTransparencyFilter);
+        super(width, height, is, bi, pngColorType, bitDepth, bitsPerPixel, pngChunkPLTE, gammaCorrection, abstractTransparencyFilter);
     }
 
     @Override
@@ -44,8 +42,7 @@ final class ScanExpediterSimple extends AbstractScanExpediter {
 
             prev = unfiltered;
 
-            final BitParser bitParser = new BitParser(unfiltered, bitsPerPixel,
-                    bitDepth);
+            final BitParser bitParser = new BitParser(unfiltered, bitsPerPixel, bitDepth);
 
             for (int x = 0; x < width; x++) {
                 final int rgb = getRgb(bitParser, x);

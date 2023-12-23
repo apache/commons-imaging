@@ -32,25 +32,25 @@ public class TestResources {
     /**
      * Gets a {@link File} for a {@linkplain Class#getResource(String) resource path}.
      */
-    public static File resourceToFile(String path) {
+    public static File resourceToFile(final String path) {
         return new File(resourceToURI(path));
     }
 
     /**
      * Gets a {@link Path} for a {@linkplain Class#getResource(String) resource path}.
      */
-    public static Path resourceToPath(String path) {
+    public static Path resourceToPath(final String path) {
         return Paths.get(resourceToURI(path));
     }
 
-    private static URI resourceToURI(String name) {
-        URL url = TestResources.class.getResource(name);
+    private static URI resourceToURI(final String name) {
+        final URL url = TestResources.class.getResource(name);
         if (url == null) {
             throw new IllegalArgumentException("Resource does not exist: " + name);
         }
         try {
             return url.toURI();
-        } catch (URISyntaxException e) {
+        } catch (final URISyntaxException e) {
             throw new IllegalArgumentException(e);
         }
     }

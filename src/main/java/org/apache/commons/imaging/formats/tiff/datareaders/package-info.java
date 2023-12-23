@@ -19,4 +19,3 @@
  * TIFF data readers.
  */
 package org.apache.commons.imaging.formats.tiff.datareaders;
-

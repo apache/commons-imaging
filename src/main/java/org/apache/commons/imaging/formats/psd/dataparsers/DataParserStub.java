@@ -25,8 +25,7 @@ public class DataParserStub extends DataParser {
     }
 
     @Override
-    protected int getRgb(final int[][][] data, final int x, final int y,
-            final PsdImageContents imageContents) {
+    protected int getRgb(final int[][][] data, final int x, final int y, final PsdImageContents imageContents) {
         return 0;
     }
 

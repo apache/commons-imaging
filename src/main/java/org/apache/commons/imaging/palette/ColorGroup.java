@@ -75,9 +75,7 @@ final class ColorGroup {
         redDiff = maxRed - minRed;
         greenDiff = maxGreen - minGreen;
         blueDiff = maxBlue - minBlue;
-        maxDiff = Math.max(
-                ignoreAlpha ? redDiff : Math.max(alphaDiff, redDiff),
-                Math.max(greenDiff, blueDiff));
+        maxDiff = Math.max(ignoreAlpha ? redDiff : Math.max(alphaDiff, redDiff), Math.max(greenDiff, blueDiff));
         diffTotal = (ignoreAlpha ? 0 : alphaDiff) + redDiff + greenDiff + blueDiff;
     }
 
@@ -104,6 +102,7 @@ final class ColorGroup {
 
     /**
      * Return a copy of the list of color counts.
+     *
      * @return a copy of the list of color counts
      */
     List<ColorCount> getColorCounts() {
@@ -135,16 +134,10 @@ final class ColorGroup {
 
     @Override
     public String toString() {
-        return "{ColorGroup. minRed: " + Integer.toHexString(minRed)
-                + ", maxRed: " + Integer.toHexString(maxRed)
-                + ", minGreen: " + Integer.toHexString(minGreen)
-                + ", maxGreen: " + Integer.toHexString(maxGreen)
-                + ", minBlue: " + Integer.toHexString(minBlue)
-                + ", maxBlue: " + Integer.toHexString(maxBlue)
-                + ", minAlpha: " + Integer.toHexString(minAlpha)
-                + ", maxAlpha: " + Integer.toHexString(maxAlpha)
-                + ", maxDiff: " + Integer.toHexString(maxDiff)
-                + ", diffTotal: " + diffTotal + "}";
+        return "{ColorGroup. minRed: " + Integer.toHexString(minRed) + ", maxRed: " + Integer.toHexString(maxRed) + ", minGreen: "
+                + Integer.toHexString(minGreen) + ", maxGreen: " + Integer.toHexString(maxGreen) + ", minBlue: " + Integer.toHexString(minBlue) + ", maxBlue: "
+                + Integer.toHexString(maxBlue) + ", minAlpha: " + Integer.toHexString(minAlpha) + ", maxAlpha: " + Integer.toHexString(maxAlpha) + ", maxDiff: "
+                + Integer.toHexString(maxDiff) + ", diffTotal: " + diffTotal + "}";
     }
 
 }

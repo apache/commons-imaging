@@ -22,13 +22,14 @@ import java.util.Objects;
 /**
  * A comparator for {#link ColorCount} elements.
  *
- * <p>It uses a given {#link ColorComponent} to choose what
- * channel must be used for the comparison.</p>
+ * <p>
+ * It uses a given {#link ColorComponent} to choose what channel must be used for the comparison.
+ * </p>
  *
- * <p>For example, if the comparator is created for the
- * {@code ColorComponent.RED} channel, then it will
- * compare the value of red of each {@code ColorCount}
- * object in the array of elements.</p>
+ * <p>
+ * For example, if the comparator is created for the {@code ColorComponent.RED} channel, then it will compare the value of red of each {@code ColorCount} object
+ * in the array of elements.
+ * </p>
  *
  * @since 1.0-alpha2
  */

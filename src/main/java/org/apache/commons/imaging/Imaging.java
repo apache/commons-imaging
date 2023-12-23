@@ -46,36 +46,41 @@ import org.apache.commons.imaging.internal.ImageParserFactory;
  *
  * <h3>Using this class</h3>
  *
- * <p>Almost all of the Apache Commons Imaging library's core functionality can
- * be accessed through the methods provided by this class.
- * The use of the Imaging class is similar to the Java API's ImageIO class,
- * though Imaging supports formats not included in the standard Java API.</p>
+ * <p>
+ * Almost all of the Apache Commons Imaging library's core functionality can be accessed through the methods provided by this class. The use of the Imaging
+ * class is similar to the Java API's ImageIO class, though Imaging supports formats not included in the standard Java API.
+ * </p>
  *
- * <p>All of methods provided by the Imaging class are declared static.</p>
+ * <p>
+ * All of methods provided by the Imaging class are declared static.
+ * </p>
  *
- * <p>The Apache Commons Imaging package is a pure Java implementation.</p>
+ * <p>
+ * The Apache Commons Imaging package is a pure Java implementation.
+ * </p>
  *
  * <h3>Format support</h3>
  *
- * <p>While the Apache Commons Imaging package handles a number of different
- * graphics formats, support for some formats is not yet complete.
- * For the most recent information on support for specific formats, refer to
- * <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a>
- * at the main project development web site.</p>
+ * <p>
+ * While the Apache Commons Imaging package handles a number of different graphics formats, support for some formats is not yet complete. For the most recent
+ * information on support for specific formats, refer to <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a> at the main project
+ * development web site.
+ * </p>
  *
  * <h3>Optional parameters for image reading and writing</h3>
  *
- * <p>Many of the operations provided in this class as static calls can be accessed directly
- * using format-specific {@link AbstractImageParser} instances. These static methods are provided
- * for convenience in simple use cases.</p>
+ * <p>
+ * Many of the operations provided in this class as static calls can be accessed directly using format-specific {@link AbstractImageParser} instances. These
+ * static methods are provided for convenience in simple use cases.
+ * </p>
  *
  * <h3>Example code</h3>
  *
- * <p>See the source of the SampleUsage class and other classes in the
- * org.apache.commons.imaging.examples package for examples.</p>
+ * <p>
+ * See the source of the SampleUsage class and other classes in the org.apache.commons.imaging.examples package for examples.
+ * </p>
  *
- * @see <a
- *      href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/SampleUsage.java">
+ * @see <a href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/SampleUsage.java">
  *      org.apache.commons.imaging.examples.SampleUsage</a>
  * @see <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a>
  */
@@ -108,7 +113,7 @@ public final class Imaging {
         if (a.length != 2 && b.length != 2) {
             throw new IllegalArgumentException("Invalid Byte Pair.");
         }
-        return (a[0] == b[0]) && (a[1] == b[1]);
+        return a[0] == b[0] && a[1] == b[1];
     }
 
     /**
@@ -117,7 +122,7 @@ public final class Imaging {
      * @param bytes A valid array of bytes.
      * @return A valid string.
      * @throws ImagingException In the event that the specified content does not conform to the format of the specific parser implementation.
-     * @throws IOException In the event of unsuccessful read or access operation.
+     * @throws IOException      In the event of unsuccessful read or access operation.
      */
     public static String dumpImageFile(final byte[] bytes) throws ImagingException, IOException {
         return dumpImageFile(ByteSource.array(bytes));
@@ -134,7 +139,7 @@ public final class Imaging {
      * @param file A valid file reference.
      * @return A valid string.
      * @throws ImagingException In the event that the specified content does not conform to the format of the specific parser implementation.
-     * @throws IOException In the event of unsuccessful read or access operation.
+     * @throws IOException      In the event of unsuccessful read or access operation.
      */
     public static String dumpImageFile(final File file) throws ImagingException, IOException {
         return dumpImageFile(ByteSource.file(file));
@@ -146,7 +151,7 @@ public final class Imaging {
      * @param bytes a valid array of bytes
      * @return A valid (potentially empty) list of BufferedImage objects.
      * @throws ImagingException In the event that the specified content does not conform to the format of the specific parser implementation.
-     * @throws IOException In the event of unsuccessful read or access operation.
+     * @throws IOException      In the event of unsuccessful read or access operation.
      */
     public static List<BufferedImage> getAllBufferedImages(final byte[] bytes) throws ImagingException, IOException {
         return getAllBufferedImages(ByteSource.array(bytes));
@@ -163,20 +168,20 @@ public final class Imaging {
      * @param file A reference to a valid data file.
      * @return A valid (potentially empty) list of BufferedImage objects.
      * @throws ImagingException In the event that the specified content does not conform to the format of the specific parser implementation.
-     * @throws IOException In the event of unsuccessful read or access operation.
+     * @throws IOException      In the event of unsuccessful read or access operation.
      */
     public static List<BufferedImage> getAllBufferedImages(final File file) throws ImagingException, IOException {
         return getAllBufferedImages(ByteSource.file(file));
     }
 
     /**
-     * Gets all images specified by the InputStream  (some formats may include multiple images within a single data source).
+     * Gets all images specified by the InputStream (some formats may include multiple images within a single data source).
      *
-     * @param is A valid InputStream
+     * @param is       A valid InputStream
      * @param fileName File name associated with image data (optional).
      * @return A valid (potentially empty) list of BufferedImage objects.
      * @throws ImagingException In the event that the specified content does not conform to the format of the specific parser implementation.
-     * @throws IOException In the event of unsuccessful read or access operation.
+     * @throws IOException      In the event of unsuccessful read or access operation.
      */
     public static List<BufferedImage> getAllBufferedImages(final InputStream is, final String fileName) throws ImagingException, IOException {
         return getAllBufferedImages(ByteSource.inputStream(is, fileName));
@@ -185,17 +190,16 @@ public final class Imaging {
     /**
      * Reads the first image from a byte array.
      *
-     * <p>For the most recent information on support for specific formats, refer to
-     * <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a>
-     * at the main project development web site.   While the Apache Commons
-     * Imaging package does not fully support all formats, it  can read
-     * image info, metadata and ICC profiles from all image formats that
-     * provide this data.</p>
+     * <p>
+     * For the most recent information on support for specific formats, refer to <a href="https://commons.apache.org/imaging/formatsupport.html">Format
+     * Support</a> at the main project development web site. While the Apache Commons Imaging package does not fully support all formats, it can read image
+     * info, metadata and ICC profiles from all image formats that provide this data.
+     * </p>
      *
      * @param bytes a valid array of bytes from which to read data.
      * @return if successful, a valid buffered image
      * @throws ImagingException in the event of a processing error while reading an image (i.e. a format violation, etc.).
-     * @throws IOException in the event of an unrecoverable I/O exception.
+     * @throws IOException      in the event of an unrecoverable I/O exception.
      */
     public static BufferedImage getBufferedImage(final byte[] bytes) throws ImagingException, IOException {
         return getBufferedImage(ByteSource.array(bytes));
@@ -209,17 +213,16 @@ public final class Imaging {
     /**
      * Reads the first image from a file.
      *
-     * <p>For the most recent information on support for specific formats, refer to
-     * <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a>
-     * at the main project development web site.   While the Apache Commons
-     * Imaging package does not fully support all formats, it  can read
-     * image info, metadata and ICC profiles from all image formats that
-     * provide this data.</p>
+     * <p>
+     * For the most recent information on support for specific formats, refer to <a href="https://commons.apache.org/imaging/formatsupport.html">Format
+     * Support</a> at the main project development web site. While the Apache Commons Imaging package does not fully support all formats, it can read image
+     * info, metadata and ICC profiles from all image formats that provide this data.
+     * </p>
      *
      * @param file a valid reference to a file containing image data.
      * @return if successful, a valid buffered image
      * @throws ImagingException in the event of a processing error while reading an image (i.e. a format violation, etc.).
-     * @throws IOException  in the event of an unrecoverable I/O exception.
+     * @throws IOException      in the event of an unrecoverable I/O exception.
      */
     public static BufferedImage getBufferedImage(final File file) throws ImagingException, IOException {
         return getBufferedImage(ByteSource.file(file));
@@ -228,17 +231,16 @@ public final class Imaging {
     /**
      * Reads the first image from an InputStream.
      *
-     * <p>For the most recent information on support for specific formats, refer to
-     * <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a>
-     * at the main project development web site.   While the Apache Commons
-     * Imaging package does not fully support all formats, it  can read
-     * image info, metadata and ICC profiles from all image formats that
-     * provide this data.</p>
+     * <p>
+     * For the most recent information on support for specific formats, refer to <a href="https://commons.apache.org/imaging/formatsupport.html">Format
+     * Support</a> at the main project development web site. While the Apache Commons Imaging package does not fully support all formats, it can read image
+     * info, metadata and ICC profiles from all image formats that provide this data.
+     * </p>
      *
      * @param is a valid ImageStream from which to read data.
      * @return if successful, a valid buffered image
      * @throws ImagingException in the event of a processing errorfileName while reading an image (i.e. a format violation, etc.).
-     * @throws IOException  in the event of an unrecoverable I/O exception.
+     * @throws IOException      in the event of an unrecoverable I/O exception.
      */
     public static BufferedImage getBufferedImage(final InputStream is) throws ImagingException, IOException {
         return getBufferedImage(is, null);
@@ -247,18 +249,17 @@ public final class Imaging {
     /**
      * Reads the first image from an InputStream.
      *
-     * <p>For the most recent information on support for specific formats, refer to
-     * <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a>
-     * at the main project development web site.   While the Apache Commons
-     * Imaging package does not fully support all formats, it  can read
-     * image info, metadata and ICC profiles from all image formats that
-     * provide this data.</p>
+     * <p>
+     * For the most recent information on support for specific formats, refer to <a href="https://commons.apache.org/imaging/formatsupport.html">Format
+     * Support</a> at the main project development web site. While the Apache Commons Imaging package does not fully support all formats, it can read image
+     * info, metadata and ICC profiles from all image formats that provide this data.
+     * </p>
      *
-     * @param is a valid ImageStream from which to read data.
+     * @param is       a valid ImageStream from which to read data.
      * @param fileName the image file name.
      * @return if successful, a valid buffered image
      * @throws ImagingException in the event of a processing error while reading an image (i.e. a format violation, etc.).
-     * @throws IOException  in the event of an unrecoverable I/O exception.
+     * @throws IOException      in the event of an unrecoverable I/O exception.
      */
     public static BufferedImage getBufferedImage(final InputStream is, final String fileName) throws ImagingException, IOException {
         return getBufferedImage(ByteSource.inputStream(is, fileName));
@@ -267,12 +268,14 @@ public final class Imaging {
     /**
      * Attempts to determine the image format of the specified data and evaluates its format compliance.
      *
-     * <p>This method returns a FormatCompliance object which includes information about the data's compliance to a specific format.</p>
+     * <p>
+     * This method returns a FormatCompliance object which includes information about the data's compliance to a specific format.
+     * </p>
      *
      * @param bytes a valid array of bytes containing image data.
      * @return if successful, a valid FormatCompliance object.
      * @throws ImagingException in the event of unreadable data.
-     * @throws IOException in the event of an unrecoverable I/O condition.
+     * @throws IOException      in the event of an unrecoverable I/O condition.
      */
     public static FormatCompliance getFormatCompliance(final byte[] bytes) throws ImagingException, IOException {
         return getFormatCompliance(ByteSource.array(bytes));
@@ -284,15 +287,13 @@ public final class Imaging {
     }
 
     /**
-     * Attempts to determine the image format of the specified data and
-     * evaluates its format compliance.   This method
-     * returns a FormatCompliance object which includes information
-     * about the data's compliance to a specific format.
+     * Attempts to determine the image format of the specified data and evaluates its format compliance. This method returns a FormatCompliance object which
+     * includes information about the data's compliance to a specific format.
      *
      * @param file valid file containing image data
      * @return if successful, a valid FormatCompliance object.
      * @throws ImagingException in the event of unreadable data.
-     * @throws IOException in the event of an unrecoverable I/O condition.
+     * @throws IOException      in the event of an unrecoverable I/O condition.
      */
     public static FormatCompliance getFormatCompliance(final File file) throws ImagingException, IOException {
         return getFormatCompliance(ByteSource.file(file));
@@ -304,7 +305,7 @@ public final class Imaging {
      * @param bytes Byte array containing an image file.
      * @return An instance of ICC_Profile or null if the image contains no ICC profile.
      * @throws ImagingException if it fails to parse the image
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      */
     public static ICC_Profile getIccProfile(final byte[] bytes) throws ImagingException, IOException {
         return getIccProfile(ByteSource.array(bytes));
@@ -334,7 +335,7 @@ public final class Imaging {
      * @param file File containing image data.
      * @return An instance of ICC_Profile or null if the image contains no ICC profile.
      * @throws ImagingException if it fails to parse the image
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      */
     public static ICC_Profile getIccProfile(final File file) throws ImagingException, IOException {
         return getIccProfile(ByteSource.file(file));
@@ -343,30 +344,29 @@ public final class Imaging {
     /**
      * Extracts an ICC Profile (if present) from JPEG, PNG, PSD (Photoshop) and TIFF images.
      *
-     * @param is InputStream from which to read image data.
+     * @param is       InputStream from which to read image data.
      * @param fileName File name associated with image data (optional).
      * @return An instance of ICC_Profile or null if the image contains no ICC profile.
      * @throws ImagingException if it fails to parse the image
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      */
     public static ICC_Profile getIccProfile(final InputStream is, final String fileName) throws ImagingException, IOException {
         return getIccProfile(ByteSource.inputStream(is, fileName));
     }
 
     /**
-     * Extracts the raw bytes of an ICC Profile (if present) from JPEG, PNG, PSD
-     * (Photoshop) and TIFF images.
+     * Extracts the raw bytes of an ICC Profile (if present) from JPEG, PNG, PSD (Photoshop) and TIFF images.
      *
-     * <p>To parse the result use IccProfileParser or
-     * ICC_Profile.getInstance(bytes).</p>
+     * <p>
+     * To parse the result use IccProfileParser or ICC_Profile.getInstance(bytes).
+     * </p>
      *
-     * @param bytes
-     *            Byte array containing an image file.
+     * @param bytes Byte array containing an image file.
      * @return A byte array.
      * @see IccProfileParser
      * @see ICC_Profile
      * @throws ImagingException if it fails to parse the image
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      */
     public static byte[] getIccProfileBytes(final byte[] bytes) throws ImagingException, IOException {
         return getIccProfileBytes(ByteSource.array(bytes));
@@ -378,19 +378,18 @@ public final class Imaging {
     }
 
     /**
-     * Extracts the raw bytes of an ICC Profile (if present) from JPEG, PNG, PSD
-     * (Photoshop) and TIFF images.
+     * Extracts the raw bytes of an ICC Profile (if present) from JPEG, PNG, PSD (Photoshop) and TIFF images.
      *
-     * <p>To parse the result use IccProfileParser or
-     * ICC_Profile.getInstance(bytes).</p>
+     * <p>
+     * To parse the result use IccProfileParser or ICC_Profile.getInstance(bytes).
+     * </p>
      *
-     * @param file
-     *            File containing image data.
+     * @param file File containing image data.
      * @return A byte array.
      * @see IccProfileParser
      * @see ICC_Profile
      * @throws ImagingException if it fails to parse the image
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      */
     public static byte[] getIccProfileBytes(final File file) throws ImagingException, IOException {
         return getIccProfileBytes(ByteSource.file(file));
@@ -399,16 +398,19 @@ public final class Imaging {
     /**
      * Parses the "image info" of an image.
      *
-     * <p>"Image info" is a summary of basic information about the image such as:
-     * width, height, file format, bit depth, color type, etc.</p>
+     * <p>
+     * "Image info" is a summary of basic information about the image such as: width, height, file format, bit depth, color type, etc.
+     * </p>
      *
-     * <p>Not to be confused with "image metadata."</p>
+     * <p>
+     * Not to be confused with "image metadata."
+     * </p>
      *
      * @param bytes Byte array containing an image file.
      * @return An instance of ImageInfo.
      * @see ImageInfo
      * @throws ImagingException if it fails to parse the image
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      */
     public static ImageInfo getImageInfo(final byte[] bytes) throws ImagingException, IOException {
         return getImageInfo(ByteSource.array(bytes));
@@ -421,16 +423,19 @@ public final class Imaging {
     /**
      * Parses the "image info" of an image file.
      *
-     * <p>"Image info" is a summary of basic information about the image such as:
-     * width, height, file format, bit depth, color type, etc.</p>
+     * <p>
+     * "Image info" is a summary of basic information about the image such as: width, height, file format, bit depth, color type, etc.
+     * </p>
      *
-     * <p>Not to be confused with "image metadata."</p>
+     * <p>
+     * Not to be confused with "image metadata."
+     * </p>
      *
      * @param file File containing image data.
      * @return An instance of ImageInfo.
      * @see ImageInfo
      * @throws ImagingException if it fails to parse the image
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      */
     public static ImageInfo getImageInfo(final File file) throws ImagingException, IOException {
         return getImageInfo(ByteSource.file(file));
@@ -439,17 +444,20 @@ public final class Imaging {
     /**
      * Parses the "image info" of an image.
      *
-     * <p>"Image info" is a summary of basic information about the image such as:
-     * width, height, file format, bit depth, color type, etc.</p>
+     * <p>
+     * "Image info" is a summary of basic information about the image such as: width, height, file format, bit depth, color type, etc.
+     * </p>
      *
-     * <p>Not to be confused with "image metadata."</p>
+     * <p>
+     * Not to be confused with "image metadata."
+     * </p>
      *
-     * @param is InputStream from which to read image data.
+     * @param is       InputStream from which to read image data.
      * @param fileName File name associated with image data (optional).
      * @return An instance of ImageInfo.
      * @see ImageInfo
      * @throws ImagingException if it fails to parse the image
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      */
     public static ImageInfo getImageInfo(final InputStream is, final String fileName) throws ImagingException, IOException {
         return getImageInfo(ByteSource.inputStream(is, fileName));
@@ -458,17 +466,20 @@ public final class Imaging {
     /**
      * Parses the "image info" of an image.
      *
-     * <p>"Image info" is a summary of basic information about the image such as:
-     * width, height, file format, bit depth, color type, etc.</p>
+     * <p>
+     * "Image info" is a summary of basic information about the image such as: width, height, file format, bit depth, color type, etc.
+     * </p>
      *
-     * <p>Not to be confused with "image metadata."</p>
+     * <p>
+     * Not to be confused with "image metadata."
+     * </p>
      *
      * @param fileName String.
-     * @param bytes Byte array containing an image file.
+     * @param bytes    Byte array containing an image file.
      * @return An instance of ImageInfo.
      * @see ImageInfo
      * @throws ImagingException if it fails to parse the image
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      */
     public static ImageInfo getImageInfo(final String fileName, final byte[] bytes) throws ImagingException, IOException {
         return getImageInfo(ByteSource.array(bytes, fileName));
@@ -480,7 +491,7 @@ public final class Imaging {
      * @param bytes Byte array containing an image file.
      * @return The width and height of the image.
      * @throws ImagingException if it fails to parse the image
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      */
     public static Dimension getImageSize(final byte[] bytes) throws ImagingException, IOException {
         return getImageSize(ByteSource.array(bytes));
@@ -492,7 +503,7 @@ public final class Imaging {
      * @param byteSource Byte source data.
      * @return The width and height of the image.
      * @throws ImagingException if it fails to parse the image
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      */
     public static Dimension getImageSize(final ByteSource byteSource) throws ImagingException, IOException {
         final AbstractImageParser<?> imageParser = ImageParserFactory.getImageParser(byteSource);
@@ -505,7 +516,7 @@ public final class Imaging {
      * @param file File containing image data.
      * @return The width and height of the image.
      * @throws ImagingException if it fails to parse the image
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      */
     public static Dimension getImageSize(final File file) throws ImagingException, IOException {
         return getImageSize(ByteSource.file(file));
@@ -514,11 +525,11 @@ public final class Imaging {
     /**
      * Determines the width and height of an image.
      *
-     * @param is InputStream from which to read image data.
+     * @param is       InputStream from which to read image data.
      * @param fileName File name associated with image data (optional).
      * @return The width and height of the image.
      * @throws ImagingException if it fails to parse the image
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      */
     public static Dimension getImageSize(final InputStream is, final String fileName) throws ImagingException, IOException {
         return getImageSize(ByteSource.inputStream(is, fileName));
@@ -527,19 +538,23 @@ public final class Imaging {
     /**
      * Parses the metadata of an image. This metadata depends on the format of the image.
      *
-     * <p>JPEG/JFIF files may contain EXIF and/or IPTC metadata. PNG files may
-     * contain comments. TIFF files may contain metadata.</p>
+     * <p>
+     * JPEG/JFIF files may contain EXIF and/or IPTC metadata. PNG files may contain comments. TIFF files may contain metadata.
+     * </p>
      *
-     * <p>The instance of IImageMetadata returned by getMetadata() should be upcast
-     * (depending on image format).</p>
+     * <p>
+     * The instance of IImageMetadata returned by getMetadata() should be upcast (depending on image format).
+     * </p>
      *
-     * <p>Not to be confused with "image info."</p>
+     * <p>
+     * Not to be confused with "image info."
+     * </p>
      *
      * @param bytes Byte array containing an image file.
      * @return An instance of ImageMetadata.
      * @see org.apache.commons.imaging.common.ImageMetadata
      * @throws ImagingException if it fails to read the image metadata
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      */
     public static ImageMetadata getMetadata(final byte[] bytes) throws ImagingException, IOException {
         return getMetadata(ByteSource.array(bytes));
@@ -553,19 +568,23 @@ public final class Imaging {
     /**
      * Parses the metadata of an image file. This metadata depends on the format of the image.
      *
-     * <p>JPEG/JFIF files may contain EXIF and/or IPTC metadata. PNG files may
-     * contain comments. TIFF files may contain metadata.</p>
+     * <p>
+     * JPEG/JFIF files may contain EXIF and/or IPTC metadata. PNG files may contain comments. TIFF files may contain metadata.
+     * </p>
      *
-     * <p>The instance of IImageMetadata returned by getMetadata() should be upcast
-     * (depending on image format).</p>
+     * <p>
+     * The instance of IImageMetadata returned by getMetadata() should be upcast (depending on image format).
+     * </p>
      *
-     * <p>Not to be confused with "image info."</p>
+     * <p>
+     * Not to be confused with "image info."
+     * </p>
      *
      * @param file File containing image data.
      * @return An instance of IImageMetadata.
      * @see org.apache.commons.imaging.common.ImageMetadata
      * @throws ImagingException if it fails to read the image metadata
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      */
     public static ImageMetadata getMetadata(final File file) throws ImagingException, IOException {
         return getMetadata(ByteSource.file(file));
@@ -574,19 +593,24 @@ public final class Imaging {
     /**
      * Parses the metadata of an image file. This metadata depends on the format of the image.
      *
-     * <p>JPEG/JFIF files may contain EXIF and/or IPTC metadata. PNG files may
-     * contain comments. TIFF files may contain metadata.</p>
+     * <p>
+     * JPEG/JFIF files may contain EXIF and/or IPTC metadata. PNG files may contain comments. TIFF files may contain metadata.
+     * </p>
      *
-     * <p>The instance of IImageMetadata returned by getMetadata() should be upcast (depending on image format).</p>
+     * <p>
+     * The instance of IImageMetadata returned by getMetadata() should be upcast (depending on image format).
+     * </p>
      *
-     * <p>Not to be confused with "image info."</p>
+     * <p>
+     * Not to be confused with "image info."
+     * </p>
      *
-     * @param is InputStream from which to read image data.
+     * @param is       InputStream from which to read image data.
      * @param fileName File name associated with image data (optional).
      * @return An instance of IImageMetadata.
      * @see org.apache.commons.imaging.common.ImageMetadata
      * @throws ImagingException if it fails to read the image metadata
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      */
     public static ImageMetadata getMetadata(final InputStream is, final String fileName) throws ImagingException, IOException {
         return getMetadata(ByteSource.inputStream(is, fileName));
@@ -598,7 +622,7 @@ public final class Imaging {
      * @param bytes Byte array containing an image file.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      * @throws ImagingException if it fails to parse the image
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      */
     public static String getXmpXml(final byte[] bytes) throws ImagingException, IOException {
         return getXmpXml(ByteSource.array(bytes));
@@ -610,7 +634,7 @@ public final class Imaging {
      * @param byteSource File containing image data.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      * @throws ImagingException if it fails to parse the image
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      */
     public static String getXmpXml(final ByteSource byteSource) throws ImagingException, IOException {
         final AbstractImageParser<?> imageParser = ImageParserFactory.getImageParser(byteSource);
@@ -626,7 +650,7 @@ public final class Imaging {
      * @param file File containing image data.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      * @throws ImagingException if it fails to parse the image
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      */
     public static String getXmpXml(final File file) throws ImagingException, IOException {
         return getXmpXml(ByteSource.file(file));
@@ -635,11 +659,11 @@ public final class Imaging {
     /**
      * Extracts the embedded XML metadata as an XML string.
      *
-     * @param is InputStream from which to read image data.
+     * @param is       InputStream from which to read image data.
      * @param fileName File name associated with image data (optional).
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      * @throws ImagingException if it fails to parse the image
-     * @throws IOException if it fails to read the image data
+     * @throws IOException      if it fails to read the image data
      */
     public static String getXmpXml(final InputStream is, final String fileName) throws ImagingException, IOException {
         return getXmpXml(ByteSource.inputStream(is, fileName));
@@ -648,14 +672,13 @@ public final class Imaging {
     /**
      * Attempts to determine the image format of a file based on its "magic numbers," the first bytes of the data.
      *
-     * <p>Many graphics format specify identifying byte
-     * values that appear at the beginning of the data file.  This method
-     * checks for such identifying elements and returns a ImageFormat
-     * enumeration indicating what it detects. Note that this
-     * method can return "false positives" in cases where non-image files
-     * begin with the specified byte values.</p>
+     * <p>
+     * Many graphics format specify identifying byte values that appear at the beginning of the data file. This method checks for such identifying elements and
+     * returns a ImageFormat enumeration indicating what it detects. Note that this method can return "false positives" in cases where non-image files begin
+     * with the specified byte values.
+     * </p>
      *
-     * @param bytes  Byte array containing an image file.
+     * @param bytes Byte array containing an image file.
      * @return An ImageFormat, such as ImageFormat.IMAGE_FORMAT_JPEG. Returns ImageFormat.IMAGE_FORMAT_UNKNOWN if the image type cannot be determined.
      * @throws IOException in the event of an unrecoverable I/O condition.
      */
@@ -666,17 +689,16 @@ public final class Imaging {
     /**
      * Attempts to determine the image format of a file based on its "magic numbers," the first bytes of the data.
      *
-     * <p>Many graphics formats specify identifying byte
-     * values that appear at the beginning of the data file.  This method
-     * checks for such identifying elements and returns a ImageFormat
-     * enumeration indicating what it detects. Note that this
-     * method can return "false positives" in cases where non-image files
-     * begin with the specified byte values.</p>
+     * <p>
+     * Many graphics formats specify identifying byte values that appear at the beginning of the data file. This method checks for such identifying elements and
+     * returns a ImageFormat enumeration indicating what it detects. Note that this method can return "false positives" in cases where non-image files begin
+     * with the specified byte values.
+     * </p>
      *
      * @param byteSource a valid ByteSource object potentially supplying data for an image.
      * @return An ImageFormat, such as ImageFormat.IMAGE_FORMAT_JPEG. Returns ImageFormat.IMAGE_FORMAT_UNKNOWN if the image type cannot be determined.
      * @throws IllegalArgumentException in the event of an unsuccessful attempt to read the image data
-     * @throws IOException in the event of an unrecoverable I/O condition.
+     * @throws IOException              in the event of an unrecoverable I/O condition.
      */
     public static ImageFormat guessFormat(final ByteSource byteSource) throws IOException {
         if (byteSource == null) {
@@ -686,7 +708,7 @@ public final class Imaging {
         try (InputStream is = byteSource.getInputStream()) {
             final int i1 = is.read();
             final int i2 = is.read();
-            if ((i1 < 0) || (i2 < 0)) {
+            if (i1 < 0 || i2 < 0) {
                 throw new IllegalArgumentException("Couldn't read magic numbers to guess format.");
             }
 
@@ -696,9 +718,9 @@ public final class Imaging {
 
             if (compareBytePair(MAGIC_NUMBERS_GIF, bytePair)) {
                 return ImageFormats.GIF;
-            // } else if (b1 == 0x00 && b2 == 0x00) // too similar to TGA
-            // {
-            // return ImageFormat.IMAGE_FORMAT_ICO;
+                // } else if (b1 == 0x00 && b2 == 0x00) // too similar to TGA
+                // {
+                // return ImageFormat.IMAGE_FORMAT_ICO;
             }
             if (compareBytePair(MAGIC_NUMBERS_PNG, bytePair)) {
                 return ImageFormats.PNG;
@@ -742,7 +764,7 @@ public final class Imaging {
             if (compareBytePair(MAGIC_NUMBERS_JBIG2_1, bytePair)) {
                 final int i3 = is.read();
                 final int i4 = is.read();
-                if ((i3 < 0) || (i4 < 0)) {
+                if (i3 < 0 || i4 < 0) {
                     throw new IllegalArgumentException("Couldn't read magic numbers to guess format.");
                 }
 
@@ -761,7 +783,7 @@ public final class Imaging {
             } else if (compareBytePair(MAGIC_NUMBERS_RIFF_1, bytePair)) {
                 final int i3 = is.read();
                 final int i4 = is.read();
-                if ((i3 < 0) || (i4 < 0)) {
+                if (i3 < 0 || i4 < 0) {
                     throw new IllegalArgumentException("Couldn't read magic numbers to guess format.");
                 }
 
@@ -769,7 +791,7 @@ public final class Imaging {
                 final int b4 = i4 & 0xff;
                 final int[] bytePair2 = { b3, b4, };
                 if (compareBytePair(MAGIC_NUMBERS_RIFF_2, bytePair2)) {
-                    byte[] bytes = new byte[4];
+                    final byte[] bytes = new byte[4];
                     if (is.read(bytes) < 4) { // Skip file size
                         throw new IllegalArgumentException("Couldn't read magic numbers to guess format.");
                     }
@@ -779,37 +801,27 @@ public final class Imaging {
                     }
                 }
             }
-            return Stream
-                .of(ImageFormats.values())
-                .filter(imageFormat -> Stream
-                    .of(imageFormat.getExtensions())
-                    .anyMatch(extension -> {
-                        final String fileName = byteSource.getFileName();
-                        if (fileName == null || fileName.trim().isEmpty()) {
-                            return false;
-                        }
-                        final String fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1);
-                        return extension != null
-                                && !extension.trim().isEmpty()
-                                && fileExtension.equalsIgnoreCase(extension);
-                    }))
-                .findFirst()
-                .orElse(ImageFormats.UNKNOWN)
-            ;
+            return Stream.of(ImageFormats.values()).filter(imageFormat -> Stream.of(imageFormat.getExtensions()).anyMatch(extension -> {
+                final String fileName = byteSource.getFileName();
+                if (fileName == null || fileName.trim().isEmpty()) {
+                    return false;
+                }
+                final String fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1);
+                return extension != null && !extension.trim().isEmpty() && fileExtension.equalsIgnoreCase(extension);
+            })).findFirst().orElse(ImageFormats.UNKNOWN);
         }
     }
 
     /**
      * Attempts to determine the image format of a file based on its "magic numbers," the first bytes of the data.
      *
-     * <p>Many graphics formats specify identifying byte
-     * values that appear at the beginning of the data file.  This method
-     * checks for such identifying elements and returns a ImageFormat
-     * enumeration indicating what it detects. Note that this
-     * method can return "false positives" in cases where non-image files
-     * begin with the specified byte values.</p>
+     * <p>
+     * Many graphics formats specify identifying byte values that appear at the beginning of the data file. This method checks for such identifying elements and
+     * returns a ImageFormat enumeration indicating what it detects. Note that this method can return "false positives" in cases where non-image files begin
+     * with the specified byte values.
+     * </p>
      *
-     * @param file  File containing image data.
+     * @param file File containing image data.
      * @return An ImageFormat, such as ImageFormat.IMAGE_FORMAT_JPEG. Returns ImageFormat.IMAGE_FORMAT_UNKNOWN if the image type cannot be determined.
      * @throws IOException in the event of an unrecoverable I/O condition.
      */
@@ -818,9 +830,8 @@ public final class Imaging {
     }
 
     /**
-     * Attempts to determine if a file contains an image recorded in
-     * a supported graphics format based on its file-name extension
-     * (for example "&#46;jpg", "&#46;gif", "&#46;png", etc&#46;).
+     * Attempts to determine if a file contains an image recorded in a supported graphics format based on its file-name extension (for example "&#46;jpg",
+     * "&#46;gif", "&#46;png", etc&#46;).
      *
      * @param file A valid File object providing a reference to a file that may contain an image.
      * @return true if the file-name includes a supported image format file extension; otherwise, false.
@@ -833,11 +844,10 @@ public final class Imaging {
     }
 
     /**
-     * Attempts to determine if a file contains an image recorded in
-     * a supported graphics format based on its file-name extension
-     * (for example "&#46;jpg", "&#46;gif", "&#46;png", etc&#46;).
+     * Attempts to determine if a file contains an image recorded in a supported graphics format based on its file-name extension (for example "&#46;jpg",
+     * "&#46;gif", "&#46;png", etc&#46;).
      *
-     * @param fileName  A valid string representing name of file which may contain an image.
+     * @param fileName A valid string representing name of file which may contain an image.
      * @return true if the file name has an image format file extension.
      */
     public static boolean hasImageFileExtension(final String fileName) {
@@ -861,23 +871,22 @@ public final class Imaging {
     /**
      * Writes the content of a BufferedImage to a file using the specified image format.
      *
-     * <p>Image writing is not supported for all graphics formats.
-     * For the most recent information on support for specific formats, refer to
-     * <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a>
-     * at the main project development web site.   While the Apache Commons
-     * Imaging package does not fully support all formats, it  can read
-     * image info, metadata and ICC profiles from all image formats that
-     * provide this data.</p>
+     * <p>
+     * Image writing is not supported for all graphics formats. For the most recent information on support for specific formats, refer to
+     * <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a> at the main project development web site. While the Apache Commons
+     * Imaging package does not fully support all formats, it can read image info, metadata and ICC profiles from all image formats that provide this data.
+     * </p>
      *
-     * @param src a valid BufferedImage object
-     * @param file the file to which the output image is to be written
+     * @param src    a valid BufferedImage object
+     * @param file   the file to which the output image is to be written
      * @param format the format in which the output image is to be written
      * @throws ImagingException in the event of a format violation, unsupported image format, etc.
-     * @throws IOException in the event of an unrecoverable I/O exception.
+     * @throws IOException      in the event of an unrecoverable I/O exception.
      * @see ImagingConstants
      */
     public static void writeImage(final BufferedImage src, final File file, final ImageFormat format) throws ImagingException, IOException {
-        try (FileOutputStream fos = new FileOutputStream(file); BufferedOutputStream os = new BufferedOutputStream(fos)) {
+        try (FileOutputStream fos = new FileOutputStream(file);
+                BufferedOutputStream os = new BufferedOutputStream(fos)) {
             writeImage(src, os, format);
         }
     }
@@ -885,19 +894,17 @@ public final class Imaging {
     /**
      * Writes the content of a BufferedImage to an OutputStream using the specified image format.
      *
-     * <p>Image writing is not supported for all graphics formats.
-     * For the most recent information on support for specific formats, refer to
-     * <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a>
-     * at the main project development web site.   While the Apache Commons
-     * Imaging package does not fully support all formats, it  can read
-     * image info, metadata and ICC profiles from all image formats that
-     * provide this data.</p>
+     * <p>
+     * Image writing is not supported for all graphics formats. For the most recent information on support for specific formats, refer to
+     * <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a> at the main project development web site. While the Apache Commons
+     * Imaging package does not fully support all formats, it can read image info, metadata and ICC profiles from all image formats that provide this data.
+     * </p>
      *
-     * @param src a valid BufferedImage object
+     * @param src          a valid BufferedImage object
      * @param outputStream the OutputStream to which the output image is to be written
-     * @param format the format in which the output image is to be written
+     * @param format       the format in which the output image is to be written
      * @throws ImagingException in the event of a format violation, unsupported image format, etc.
-     * @throws IOException in the event of an unrecoverable I/O exception.
+     * @throws IOException      in the event of an unrecoverable I/O exception.
      * @see ImagingConstants
      */
     public static void writeImage(final BufferedImage src, final OutputStream outputStream, final ImageFormat format) throws ImagingException, IOException {
@@ -912,19 +919,17 @@ public final class Imaging {
     /**
      * Writes the content of a BufferedImage to a byte array using the specified image format.
      *
-     * <p>Image writing is not supported for all graphics formats.
-     * For the most recent information on support for specific formats, refer to
-     * <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a>
-     * at the main project development web site.   While the Apache Commons
-     * Imaging package does not fully support all formats, it  can read
-     * image info, metadata and ICC profiles from all image formats that
-     * provide this data.</p>
+     * <p>
+     * Image writing is not supported for all graphics formats. For the most recent information on support for specific formats, refer to
+     * <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a> at the main project development web site. While the Apache Commons
+     * Imaging package does not fully support all formats, it can read image info, metadata and ICC profiles from all image formats that provide this data.
+     * </p>
      *
-     * @param src a valid BufferedImage object
+     * @param src    a valid BufferedImage object
      * @param format the format in which the output image is to be written
      * @return if successful, a valid array of bytes.
      * @throws ImagingException in the event of a format violation, unsupported image format, etc.
-     * @throws IOException in the event of an unrecoverable I/O exception.
+     * @throws IOException      in the event of an unrecoverable I/O exception.
      * @see ImagingConstants
      */
     public static byte[] writeImageToBytes(final BufferedImage src, final ImageFormat format) throws ImagingException, IOException {

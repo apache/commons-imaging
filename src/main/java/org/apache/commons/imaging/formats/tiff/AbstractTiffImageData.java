@@ -54,18 +54,12 @@ public abstract class AbstractTiffImageData {
         }
 
         @Override
-        public ImageDataReader getDataReader(final TiffDirectory directory,
-          final PhotometricInterpreter photometricInterpreter,
-          final int bitsPerPixel, final int[] bitsPerSample, final int predictor,
-          final int samplesPerPixel, final int width, final int height,
-          final int compression,
-          final TiffPlanarConfiguration planarConfiguration,
-          final ByteOrder byteorder) throws IOException, ImagingException {
+        public ImageDataReader getDataReader(final TiffDirectory directory, final PhotometricInterpreter photometricInterpreter, final int bitsPerPixel,
+                final int[] bitsPerSample, final int predictor, final int samplesPerPixel, final int width, final int height, final int compression,
+                final TiffPlanarConfiguration planarConfiguration, final ByteOrder byteorder) throws IOException, ImagingException {
             final int sampleFormat = extractSampleFormat(directory);
-            return new DataReaderStrips(directory, photometricInterpreter,
-              bitsPerPixel, bitsPerSample, predictor,
-              samplesPerPixel, sampleFormat, width, height,
-              compression, planarConfiguration, byteorder, rowsPerStrip, this);
+            return new DataReaderStrips(directory, photometricInterpreter, bitsPerPixel, bitsPerSample, predictor, samplesPerPixel, sampleFormat, width, height,
+                    compression, planarConfiguration, byteorder, rowsPerStrip, this);
         }
 
         @Override
@@ -103,18 +97,12 @@ public abstract class AbstractTiffImageData {
         }
 
         @Override
-        public ImageDataReader getDataReader(final TiffDirectory directory,
-          final PhotometricInterpreter photometricInterpreter,
-          final int bitsPerPixel, final int[] bitsPerSample, final int predictor,
-          final int samplesPerPixel, final int width, final int height,
-          final int compression,
-          final TiffPlanarConfiguration planarConfiguration,
-          final ByteOrder byteOrder) throws IOException, ImagingException {
+        public ImageDataReader getDataReader(final TiffDirectory directory, final PhotometricInterpreter photometricInterpreter, final int bitsPerPixel,
+                final int[] bitsPerSample, final int predictor, final int samplesPerPixel, final int width, final int height, final int compression,
+                final TiffPlanarConfiguration planarConfiguration, final ByteOrder byteOrder) throws IOException, ImagingException {
             final int sampleFormat = extractSampleFormat(directory);
-            return new DataReaderTiled(directory, photometricInterpreter,
-              tileWidth, tileLength, bitsPerPixel, bitsPerSample,
-              predictor, samplesPerPixel, sampleFormat, width, height, compression,
-              planarConfiguration, byteOrder, this);
+            return new DataReaderTiled(directory, photometricInterpreter, tileWidth, tileLength, bitsPerPixel, bitsPerSample, predictor, samplesPerPixel,
+                    sampleFormat, width, height, compression, planarConfiguration, byteOrder, this);
         }
 
         @Override
@@ -123,9 +111,9 @@ public abstract class AbstractTiffImageData {
         }
 
         /**
-         * Gets the height of individual tiles.  Note that if the overall
-         * image height is not a multiple of the tile height, then
-         * the last row of tiles may extend beyond the image height.
+         * Gets the height of individual tiles. Note that if the overall image height is not a multiple of the tile height, then the last row of tiles may
+         * extend beyond the image height.
+         *
          * @return an integer value greater than zero
          */
         public int getTileHeight() {
@@ -133,9 +121,9 @@ public abstract class AbstractTiffImageData {
         }
 
         /**
-         * Gets the width of individual tiles.  Note that if the overall
-         * image width is not a multiple of the tile width, then
-         * the last column of tiles may extend beyond the image width.
+         * Gets the width of individual tiles. Note that if the overall image width is not a multiple of the tile width, then the last column of tiles may
+         * extend beyond the image width.
+         *
          * @return an integer value greater than zero
          */
         public int getTileWidth() {
@@ -154,20 +142,16 @@ public abstract class AbstractTiffImageData {
     }
 
     private static int extractSampleFormat(final TiffDirectory directory) throws ImagingException {
-        final short[] sSampleFmt = directory.getFieldValue(
-            TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, false);
+        final short[] sSampleFmt = directory.getFieldValue(TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, false);
         if (sSampleFmt != null && sSampleFmt.length > 0) {
             return sSampleFmt[0];
         }
-        return 0;  // unspecified format
+        return 0; // unspecified format
     }
 
-    public abstract ImageDataReader getDataReader(TiffDirectory directory,
-      PhotometricInterpreter photometricInterpreter, int bitsPerPixel,
-      int[] bitsPerSample, int predictor, int samplesPerPixel, int width,
-      int height, int compression,
-      TiffPlanarConfiguration planarConfiguration,
-      ByteOrder byteOrder) throws IOException, ImagingException;
+    public abstract ImageDataReader getDataReader(TiffDirectory directory, PhotometricInterpreter photometricInterpreter, int bitsPerPixel, int[] bitsPerSample,
+            int predictor, int samplesPerPixel, int width, int height, int compression, TiffPlanarConfiguration planarConfiguration, ByteOrder byteOrder)
+            throws IOException, ImagingException;
 
     public abstract AbstractTiffElement.DataElement[] getImageData();
 

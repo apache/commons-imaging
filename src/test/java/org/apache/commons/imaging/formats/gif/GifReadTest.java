@@ -34,7 +34,6 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.test.TestResources;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -102,7 +101,7 @@ public class GifReadTest extends AbstractGifTest {
 
     @Test
     public void testCreateMetadataWithDisposalMethods() {
-        for(final DisposalMethod disposalMethod : DisposalMethod.values()) {
+        for (final DisposalMethod disposalMethod : DisposalMethod.values()) {
             final GifImageMetadataItem metadataItem = new GifImageMetadataItem(0, 0, 0, disposalMethod);
             assertEquals(disposalMethod, metadataItem.getDisposalMethod());
         }
@@ -152,13 +151,13 @@ public class GifReadTest extends AbstractGifTest {
     }
 
     /**
-     * The GIF image Lzw compression may contain a table with length inferior to
-     * the length of entries in the image data. Which results in an ArrayOutOfBoundsException.
-     * This verifies that instead of throwing an AOOBE, we are handling the case and
-     * informing the user why the parser failed to read it, by throwin an ImageReadException
-     * with a more descriptive message.
+     * The GIF image Lzw compression may contain a table with length inferior to the length of entries in the image data. Which results in an
+     * ArrayOutOfBoundsException. This verifies that instead of throwing an AOOBE, we are handling the case and informing the user why the parser failed to read
+     * it, by throwin an ImageReadException with a more descriptive message.
      *
-     * <p>See Google OSS Fuzz issue 33464</p>
+     * <p>
+     * See Google OSS Fuzz issue 33464
+     * </p>
      *
      * @throws IOException if it fails to read the test image
      */
@@ -170,11 +169,11 @@ public class GifReadTest extends AbstractGifTest {
     }
 
     /**
-     * The GIF image data may lead to out of bound array access. This
-     * test verifies that we handle that case and raise an appropriate
-     * exception.
+     * The GIF image data may lead to out of bound array access. This test verifies that we handle that case and raise an appropriate exception.
      *
-     * <p>See Google OSS Fuzz issue 33501</p>
+     * <p>
+     * See Google OSS Fuzz issue 33501
+     * </p>
      *
      * @throws IOException if it fails to read the test image
      */
@@ -188,7 +187,9 @@ public class GifReadTest extends AbstractGifTest {
     /**
      * Test that invalid indexes are validated when accessing GIF color table array.
      *
-     * <p>See Google OSS Fuzz issue 34185</p>
+     * <p>
+     * See Google OSS Fuzz issue 34185
+     * </p>
      *
      * @throws IOException if it fails to read the test image
      */

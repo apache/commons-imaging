@@ -89,7 +89,7 @@ final class InputStreamByteSource extends ByteSource {
         public int read(final byte[] array, final int off, final int len) throws IOException {
             // first section copied verbatim from InputStream
             Objects.requireNonNull(array, "array");
-            if ((off < 0) || (off > array.length) || (len < 0) || ((off + len) > array.length) || ((off + len) < 0)) {
+            if (off < 0 || off > array.length || len < 0 || off + len > array.length || off + len < 0) {
                 throw new IndexOutOfBoundsException();
             }
             if (len == 0) {
@@ -183,7 +183,7 @@ final class InputStreamByteSource extends ByteSource {
     @Override
     public byte[] getByteArray(final long position, final int length) throws IOException {
         // We include a separate check for int overflow.
-        if ((position < 0) || (length < 0) || (position + length < 0) || (position + length > size())) {
+        if (position < 0 || length < 0 || position + length < 0 || position + length > size()) {
             throw new ImagingException(
                     "Could not read block (block start: " + position + ", block length: " + length + ", data length: " + streamLength + ").");
         }

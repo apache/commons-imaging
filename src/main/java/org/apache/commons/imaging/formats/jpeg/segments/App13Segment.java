@@ -28,13 +28,11 @@ import org.apache.commons.imaging.formats.jpeg.iptc.PhotoshopApp13Data;
 
 public class App13Segment extends AppnSegment {
 
-    public App13Segment(final int marker, final byte[] segmentData)
-            throws IOException {
+    public App13Segment(final int marker, final byte[] segmentData) throws IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
-    public App13Segment(final int marker, final int markerLength,
-            final InputStream is) throws IOException {
+    public App13Segment(final int marker, final int markerLength, final InputStream is) throws IOException {
         super(marker, markerLength, is);
 
         // isIPTCJpegSegment = new IptcParser().isIPTCJpegSegment(bytes);
@@ -56,12 +54,10 @@ public class App13Segment extends AppnSegment {
         return new IptcParser().isPhotoshopJpegSegment(getSegmentData());
     }
 
-    public PhotoshopApp13Data parsePhotoshopSegment(final ImagingParameters<JpegImagingParameters> params)
-            throws ImagingException, IOException {
+    public PhotoshopApp13Data parsePhotoshopSegment(final ImagingParameters<JpegImagingParameters> params) throws ImagingException, IOException {
         /*
-         * In practice, App13 segments are only used for Photoshop/IPTC
-         * metadata. However, we should not treat App13 signatures without
-         * Photoshop's signature as Photoshop/IPTC segments.
+         * In practice, App13 segments are only used for Photoshop/IPTC metadata. However, we should not treat App13 signatures without Photoshop's signature as
+         * Photoshop/IPTC segments.
          */
         if (!isPhotoshopJpegSegment()) {
             return null;

@@ -114,8 +114,7 @@ public class ByteSourceDataTest extends AbstractByteSourceTest {
         writeAndReadBytes(new ByteSourcePathFactory(), testByteArray);
     }
 
-    protected void writeAndReadBytes(final ByteSourceFactory byteSourceFactory,
-            final byte[] src) throws IOException {
+    protected void writeAndReadBytes(final ByteSourceFactory byteSourceFactory, final byte[] src) throws IOException {
         final ByteSource byteSource = byteSourceFactory.getByteSource(src);
 
         // test cache during interrupted read cache by reading only first N

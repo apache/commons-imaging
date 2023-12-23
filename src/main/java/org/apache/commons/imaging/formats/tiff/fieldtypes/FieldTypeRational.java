@@ -35,10 +35,7 @@ public class FieldTypeRational extends AbstractFieldType {
         final byte[] bytes = entry.getByteArrayValue();
         final boolean unsignedType = entry.getFieldType() != SRATIONAL;
         if (entry.getCount() == 1) {
-            return ByteConversions.toRational(
-                    bytes,
-                    entry.getByteOrder(),
-                    unsignedType);
+            return ByteConversions.toRational(bytes, entry.getByteOrder(), unsignedType);
         }
         return ByteConversions.toRationals(bytes, entry.getByteOrder(), unsignedType);
     }
@@ -57,8 +54,7 @@ public class FieldTypeRational extends AbstractFieldType {
         }
         if (o instanceof Number[]) {
             final Number[] numbers = (Number[]) o;
-            final RationalNumber[] rationalNumbers = Allocator.array(numbers.length, RationalNumber[]::new,
-                    RationalNumber.SHALLOW_SIZE);
+            final RationalNumber[] rationalNumbers = Allocator.array(numbers.length, RationalNumber[]::new, RationalNumber.SHALLOW_SIZE);
             Arrays.setAll(rationalNumbers, RationalNumber::valueOf);
             return ByteConversions.toBytes(rationalNumbers, byteOrder);
         }
@@ -66,8 +62,7 @@ public class FieldTypeRational extends AbstractFieldType {
             throw new ImagingException("Invalid data", o);
         }
         final double[] numbers = (double[]) o;
-        final RationalNumber[] rationalNumbers = Allocator.array(numbers.length, RationalNumber[]::new,
-                RationalNumber.SHALLOW_SIZE);
+        final RationalNumber[] rationalNumbers = Allocator.array(numbers.length, RationalNumber[]::new, RationalNumber.SHALLOW_SIZE);
         Arrays.setAll(rationalNumbers, RationalNumber::valueOf);
         return ByteConversions.toBytes(rationalNumbers, byteOrder);
     }

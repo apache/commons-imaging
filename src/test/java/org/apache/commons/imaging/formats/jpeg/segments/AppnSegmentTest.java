@@ -25,14 +25,14 @@ import java.io.InputStream;
 import org.apache.commons.imaging.ImagingConstants;
 import org.junit.jupiter.api.Test;
 
-public class AppnSegmentTest{
+public class AppnSegmentTest {
 
-  @Test
-  public void testCreatesAppnSegment() throws IOException {
-      final InputStream inputStream = new ByteArrayInputStream(ImagingConstants.EMPTY_BYTE_ARRAY);
-      final AppnSegment appnSegment = new AppnSegment(0, 0, inputStream);
+    @Test
+    public void testCreatesAppnSegment() throws IOException {
+        final InputStream inputStream = new ByteArrayInputStream(ImagingConstants.EMPTY_BYTE_ARRAY);
+        final AppnSegment appnSegment = new AppnSegment(0, 0, inputStream);
 
-      assertEquals("[Segment: APPN (APP-65504) (Unknown)]", appnSegment.toString());
-  }
+        assertEquals("[Segment: APPN (APP-65504) (Unknown)]", appnSegment.toString());
+    }
 
 }

@@ -22,38 +22,33 @@ package org.apache.commons.imaging.formats.tiff.constants;
 public enum TiffPlanarConfiguration {
 
     /**
-     * Indicates that data is stored in an interleaved format,
-     * so that component values for each pixel are contiguous in the file.
+     * Indicates that data is stored in an interleaved format, so that component values for each pixel are contiguous in the file.
      */
     CHUNKY(TiffTagConstants.PLANAR_CONFIGURATION_VALUE_CHUNKY),
     /**
-     * Indicates that data is stored in a non-interleaved format,
-     * component values for each pixel are separated into distinct
-     * planes.
+     * Indicates that data is stored in a non-interleaved format, component values for each pixel are separated into distinct planes.
      */
     PLANAR(TiffTagConstants.PLANAR_CONFIGURATION_VALUE_PLANAR);
 
     /**
-     * Interprets an integer code value to determine the enumerated value.
-     * Implements lenient rules for handling non-compliant values.
+     * Interprets an integer code value to determine the enumerated value. Implements lenient rules for handling non-compliant values.
      *
      * @param codeValue an integer code corresponding to the TIFF specification.
      * @return a valid enumeration.
      */
     public static TiffPlanarConfiguration lenientValueOf(final int codeValue) {
         switch (codeValue) {
-            case TiffTagConstants.PLANAR_CONFIGURATION_VALUE_CHUNKY:
-                return CHUNKY;
-            case TiffTagConstants.PLANAR_CONFIGURATION_VALUE_PLANAR:
-                return PLANAR;
-            default:
-                return CHUNKY;
+        case TiffTagConstants.PLANAR_CONFIGURATION_VALUE_CHUNKY:
+            return CHUNKY;
+        case TiffTagConstants.PLANAR_CONFIGURATION_VALUE_PLANAR:
+            return PLANAR;
+        default:
+            return CHUNKY;
         }
     }
 
     /**
-     * The integer code values used for indicating the planar configuration
-     * in a TIFF file.
+     * The integer code values used for indicating the planar configuration in a TIFF file.
      */
     public final int codeValue;
 

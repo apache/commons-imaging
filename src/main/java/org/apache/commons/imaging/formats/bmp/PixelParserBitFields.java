@@ -51,7 +51,7 @@ final class PixelParserBitFields extends AbstractPixelParserSimple {
         redShift = getMaskShift(redMask);
         greenShift = getMaskShift(greenMask);
         blueShift = getMaskShift(blueMask);
-        alphaShift = (alphaMask != 0 ? getMaskShift(alphaMask) : 0);
+        alphaShift = alphaMask != 0 ? getMaskShift(alphaMask) : 0;
     }
 
     private int getMaskShift(int mask) {
@@ -62,14 +62,14 @@ final class PixelParserBitFields extends AbstractPixelParserSimple {
         int trailingZeroes = 0;
 
         while ((0x1 & mask) == 0) {
-            mask = 0x7fffffff & (mask >> 1);
+            mask = 0x7fffffff & mask >> 1;
             trailingZeroes++;
         }
 
         int maskLength = 0;
 
         while ((0x1 & mask) == 1) {
-            mask = 0x7fffffff & (mask >> 1);
+            mask = 0x7fffffff & mask >> 1;
             maskLength++;
         }
 
@@ -101,22 +101,22 @@ final class PixelParserBitFields extends AbstractPixelParserSimple {
             throw new ImagingException("Unknown BitsPerPixel: " + bhi.bitsPerPixel);
         }
 
-        int red = (redMask & data);
-        int green = (greenMask & data);
-        int blue = (blueMask & data);
-        int alpha = (alphaMask != 0 ? alphaMask & data : 0xff);
+        int red = redMask & data;
+        int green = greenMask & data;
+        int blue = blueMask & data;
+        int alpha = alphaMask != 0 ? alphaMask & data : 0xff;
 
-        red = (redShift >= 0) ? red >> redShift : red << -redShift;
-        green = (greenShift >= 0) ? green >> greenShift : green << -greenShift;
-        blue = (blueShift >= 0) ? blue >> blueShift : blue << -blueShift;
-        alpha = (alphaShift >= 0) ? alpha >> alphaShift : alpha << -alphaShift;
+        red = redShift >= 0 ? red >> redShift : red << -redShift;
+        green = greenShift >= 0 ? green >> greenShift : green << -greenShift;
+        blue = blueShift >= 0 ? blue >> blueShift : blue << -blueShift;
+        alpha = alphaShift >= 0 ? alpha >> alphaShift : alpha << -alphaShift;
 
-        return (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+        return alpha << 24 | red << 16 | green << 8 | blue << 0;
     }
 
     @Override
     public void newline() throws ImagingException, IOException {
-        while ((byteCount % 4) != 0) {
+        while (byteCount % 4 != 0) {
             readByte("Pixel", is, "BMP Image Data");
             byteCount++;
         }

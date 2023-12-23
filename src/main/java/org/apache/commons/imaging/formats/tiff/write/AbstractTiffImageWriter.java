@@ -62,7 +62,7 @@ public abstract class AbstractTiffImageWriter {
     private static final int MAX_PIXELS_FOR_RGB = 1024 * 1024;
 
     protected static int imageDataPaddingLength(final int dataLength) {
-        return (4 - (dataLength % 4)) % 4;
+        return (4 - dataLength % 4) % 4;
     }
 
     protected final ByteOrder byteOrder;
@@ -88,6 +88,7 @@ public abstract class AbstractTiffImageWriter {
 
     /**
      * Check an image to see if any of its pixels are non-opaque.
+     *
      * @param src a valid image
      * @return true if at least one non-opaque pixel is found.
      */
@@ -115,13 +116,12 @@ public abstract class AbstractTiffImageWriter {
         }
         return false;
     }
-    private void combineUserExifIntoFinalExif(final TiffOutputSet userExif,
-            final TiffOutputSet outputSet) throws ImagingException {
+
+    private void combineUserExifIntoFinalExif(final TiffOutputSet userExif, final TiffOutputSet outputSet) throws ImagingException {
         final List<TiffOutputDirectory> outputDirectories = outputSet.getDirectories();
         outputDirectories.sort(TiffOutputDirectory.COMPARATOR);
         for (final TiffOutputDirectory userDirectory : userExif.getDirectories()) {
-            final int location = Collections.binarySearch(outputDirectories,
-                    userDirectory, TiffOutputDirectory.COMPARATOR);
+            final int location = Collections.binarySearch(outputDirectories, userDirectory, TiffOutputDirectory.COMPARATOR);
             if (location < 0) {
                 outputSet.addDirectory(userDirectory);
             } else {
@@ -142,7 +142,7 @@ public abstract class AbstractTiffImageWriter {
         final int stripCount = (height + rowsPerStrip - 1) / rowsPerStrip;
 
         // Write Strips
-        byte[][] result = new byte[Allocator.check(stripCount)][];
+        final byte[][] result = new byte[Allocator.check(stripCount)][];
 
         int remainingRows = height;
 
@@ -160,14 +160,14 @@ public abstract class AbstractTiffImageWriter {
             int y = i * rowsPerStrip;
             final int stop = i * rowsPerStrip + rowsPerStrip;
 
-            for (; (y < height) && (y < stop); y++) {
+            for (; y < height && y < stop; y++) {
                 int bitCache = 0;
                 int bitsInCache = 0;
                 for (int x = 0; x < width; x++) {
                     final int rgb = src.getRGB(x, y);
-                    final int red = 0xff & (rgb >> 16);
-                    final int green = 0xff & (rgb >> 8);
-                    final int blue = 0xff & (rgb >> 0);
+                    final int red = 0xff & rgb >> 16;
+                    final int green = 0xff & rgb >> 8;
+                    final int blue = 0xff & rgb >> 0;
 
                     if (bitsPerSample == 1) {
                         int sample = (red + green + blue) / 3;
@@ -197,7 +197,7 @@ public abstract class AbstractTiffImageWriter {
                     }
                 }
                 if (bitsInCache > 0) {
-                    bitCache <<= (8 - bitsInCache);
+                    bitCache <<= 8 - bitsInCache;
                     uncompressed[counter++] = (byte) bitCache;
                 }
             }
@@ -208,8 +208,7 @@ public abstract class AbstractTiffImageWriter {
         return result;
     }
 
-    protected TiffOutputSummary validateDirectories(final TiffOutputSet outputSet)
-            throws ImagingException {
+    protected TiffOutputSummary validateDirectories(final TiffOutputSet outputSet) throws ImagingException {
         if (outputSet.isEmpty()) {
             throw new ImagingException("No directories.");
         }
@@ -231,38 +230,32 @@ public abstract class AbstractTiffImageWriter {
 
             if (dirType < 0) {
                 switch (dirType) {
-                    case TiffDirectoryConstants.DIRECTORY_TYPE_EXIF:
-                        if (exifDirectory != null) {
-                            throw new ImagingException(
-                                    "More than one EXIF directory.");
-                        }
-                        exifDirectory = directory;
-                        break;
+                case TiffDirectoryConstants.DIRECTORY_TYPE_EXIF:
+                    if (exifDirectory != null) {
+                        throw new ImagingException("More than one EXIF directory.");
+                    }
+                    exifDirectory = directory;
+                    break;
 
-                    case TiffDirectoryConstants.DIRECTORY_TYPE_GPS:
-                        if (gpsDirectory != null) {
-                            throw new ImagingException(
-                                    "More than one GPS directory.");
-                        }
-                        gpsDirectory = directory;
-                        break;
+                case TiffDirectoryConstants.DIRECTORY_TYPE_GPS:
+                    if (gpsDirectory != null) {
+                        throw new ImagingException("More than one GPS directory.");
+                    }
+                    gpsDirectory = directory;
+                    break;
 
-                    case TiffDirectoryConstants.DIRECTORY_TYPE_INTEROPERABILITY:
-                        if (interoperabilityDirectory != null) {
-                            throw new ImagingException(
-                                    "More than one Interoperability directory.");
-                        }
-                        interoperabilityDirectory = directory;
-                        break;
-                    default:
-                        throw new ImagingException("Unknown directory: "
-                                + dirType);
+                case TiffDirectoryConstants.DIRECTORY_TYPE_INTEROPERABILITY:
+                    if (interoperabilityDirectory != null) {
+                        throw new ImagingException("More than one Interoperability directory.");
+                    }
+                    interoperabilityDirectory = directory;
+                    break;
+                default:
+                    throw new ImagingException("Unknown directory: " + dirType);
                 }
             } else {
                 if (directoryIndices.contains(dirType)) {
-                    throw new ImagingException(
-                            "More than one directory with index: " + dirType
-                                    + ".");
+                    throw new ImagingException("More than one directory with index: " + dirType + ".");
                 }
                 directoryIndices.add(dirType);
                 // dirMap.put(arg0, arg1)
@@ -271,28 +264,23 @@ public abstract class AbstractTiffImageWriter {
             final HashSet<Integer> fieldTags = new HashSet<>();
             for (final TiffOutputField field : directory) {
                 if (fieldTags.contains(field.tag)) {
-                    throw new ImagingException("Tag ("
-                            + field.tagInfo.getDescription()
-                            + ") appears twice in directory.");
+                    throw new ImagingException("Tag (" + field.tagInfo.getDescription() + ") appears twice in directory.");
                 }
                 fieldTags.add(field.tag);
 
                 if (field.tag == ExifTagConstants.EXIF_TAG_EXIF_OFFSET.tag) {
                     if (exifDirectoryOffsetField != null) {
-                        throw new ImagingException(
-                                "More than one Exif directory offset field.");
+                        throw new ImagingException("More than one Exif directory offset field.");
                     }
                     exifDirectoryOffsetField = field;
                 } else if (field.tag == ExifTagConstants.EXIF_TAG_INTEROP_OFFSET.tag) {
                     if (interoperabilityDirectoryOffsetField != null) {
-                        throw new ImagingException(
-                                "More than one Interoperability directory offset field.");
+                        throw new ImagingException("More than one Interoperability directory offset field.");
                     }
                     interoperabilityDirectoryOffsetField = field;
                 } else if (field.tag == ExifTagConstants.EXIF_TAG_GPSINFO.tag) {
                     if (gpsDirectoryOffsetField != null) {
-                        throw new ImagingException(
-                                "More than one GPS directory offset field.");
+                        throw new ImagingException("More than one GPS directory offset field.");
                     }
                     gpsDirectoryOffsetField = field;
                 }
@@ -323,18 +311,14 @@ public abstract class AbstractTiffImageWriter {
             previousDirectory = directory;
         }
 
-        final TiffOutputDirectory rootDirectory = directoryTypeMap.get(
-                TiffDirectoryConstants.DIRECTORY_TYPE_ROOT);
+        final TiffOutputDirectory rootDirectory = directoryTypeMap.get(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT);
 
         // prepare results
-        final TiffOutputSummary result = new TiffOutputSummary(byteOrder,
-                rootDirectory, directoryTypeMap);
+        final TiffOutputSummary result = new TiffOutputSummary(byteOrder, rootDirectory, directoryTypeMap);
 
-        if (interoperabilityDirectory == null
-                && interoperabilityDirectoryOffsetField != null) {
+        if (interoperabilityDirectory == null && interoperabilityDirectoryOffsetField != null) {
             // perhaps we should just discard field?
-            throw new ImagingException(
-                    "Output set has Interoperability Directory Offset field, but no Interoperability Directory");
+            throw new ImagingException("Output set has Interoperability Directory Offset field, but no Interoperability Directory");
         }
         if (interoperabilityDirectory != null) {
             if (exifDirectory == null) {
@@ -342,27 +326,21 @@ public abstract class AbstractTiffImageWriter {
             }
 
             if (interoperabilityDirectoryOffsetField == null) {
-                interoperabilityDirectoryOffsetField =
-                        TiffOutputField.createOffsetField(
-                                ExifTagConstants.EXIF_TAG_INTEROP_OFFSET,
-                                byteOrder);
+                interoperabilityDirectoryOffsetField = TiffOutputField.createOffsetField(ExifTagConstants.EXIF_TAG_INTEROP_OFFSET, byteOrder);
                 exifDirectory.add(interoperabilityDirectoryOffsetField);
             }
 
-            result.add(interoperabilityDirectory,
-                    interoperabilityDirectoryOffsetField);
+            result.add(interoperabilityDirectory, interoperabilityDirectoryOffsetField);
         }
 
         // make sure offset fields and offset'd directories correspond.
         if (exifDirectory == null && exifDirectoryOffsetField != null) {
             // perhaps we should just discard field?
-            throw new ImagingException(
-                    "Output set has Exif Directory Offset field, but no Exif Directory");
+            throw new ImagingException("Output set has Exif Directory Offset field, but no Exif Directory");
         }
         if (exifDirectory != null) {
             if (exifDirectoryOffsetField == null) {
-                exifDirectoryOffsetField = TiffOutputField.createOffsetField(
-                        ExifTagConstants.EXIF_TAG_EXIF_OFFSET, byteOrder);
+                exifDirectoryOffsetField = TiffOutputField.createOffsetField(ExifTagConstants.EXIF_TAG_EXIF_OFFSET, byteOrder);
                 rootDirectory.add(exifDirectoryOffsetField);
             }
 
@@ -371,13 +349,11 @@ public abstract class AbstractTiffImageWriter {
 
         if (gpsDirectory == null && gpsDirectoryOffsetField != null) {
             // perhaps we should just discard field?
-            throw new ImagingException(
-                    "Output set has GPS Directory Offset field, but no GPS Directory");
+            throw new ImagingException("Output set has GPS Directory Offset field, but no GPS Directory");
         }
         if (gpsDirectory != null) {
             if (gpsDirectoryOffsetField == null) {
-                gpsDirectoryOffsetField = TiffOutputField.createOffsetField(
-                        ExifTagConstants.EXIF_TAG_GPSINFO, byteOrder);
+                gpsDirectoryOffsetField = TiffOutputField.createOffsetField(ExifTagConstants.EXIF_TAG_GPSINFO, byteOrder);
                 rootDirectory.add(gpsDirectoryOffsetField);
             }
 
@@ -389,11 +365,9 @@ public abstract class AbstractTiffImageWriter {
         // Debug.debug();
     }
 
-    public abstract void write(OutputStream os, TiffOutputSet outputSet)
-            throws IOException, ImagingException;
+    public abstract void write(OutputStream os, TiffOutputSet outputSet) throws IOException, ImagingException;
 
-    public void writeImage(final BufferedImage src, final OutputStream os, final TiffImagingParameters params)
-            throws ImagingException, IOException {
+    public void writeImage(final BufferedImage src, final OutputStream os, final TiffImagingParameters params) throws ImagingException, IOException {
         final TiffOutputSet userExif = params.getOutputSet();
 
         final String xmpXml = params.getXmpXml();
@@ -623,13 +597,11 @@ public abstract class AbstractTiffImageWriter {
         write(os, outputSet);
     }
 
-    protected void writeImageFileHeader(final BinaryOutputStream bos)
-            throws IOException {
+    protected void writeImageFileHeader(final BinaryOutputStream bos) throws IOException {
         writeImageFileHeader(bos, TIFF_HEADER_SIZE);
     }
 
-    protected void writeImageFileHeader(final BinaryOutputStream bos,
-            final long offsetToFirstIFD) throws IOException {
+    protected void writeImageFileHeader(final BinaryOutputStream bos, final long offsetToFirstIFD) throws IOException {
         if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
             bos.write('I');
             bos.write('I');

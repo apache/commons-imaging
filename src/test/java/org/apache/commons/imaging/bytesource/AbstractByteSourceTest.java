@@ -48,18 +48,19 @@ public abstract class AbstractByteSourceTest extends AbstractImagingTest {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         for (int i = 0; i < 256 * 256; i++) {
             baos.write(0xff & i);
-            baos.write(0xff & (i >> 8));
+            baos.write(0xff & i >> 8);
         }
-        final byte[] longArray = (baos.toByteArray());
+        final byte[] longArray = baos.toByteArray();
 
-        return new byte[][]{ImagingConstants.EMPTY_BYTE_ARRAY, single, simple, zeroes, longArray,};
+        return new byte[][] { ImagingConstants.EMPTY_BYTE_ARRAY, single, simple, zeroes, longArray, };
     }
 
     protected File createTempFile(final byte[] src) throws IOException {
         final File file = Files.createTempFile("raw_", ".bin").toFile();
 
         // write test bytes to file.
-        try (FileOutputStream fos = new FileOutputStream(file); OutputStream os = new BufferedOutputStream(fos)) {
+        try (FileOutputStream fos = new FileOutputStream(file);
+                OutputStream os = new BufferedOutputStream(fos)) {
             os.write(src);
         }
 

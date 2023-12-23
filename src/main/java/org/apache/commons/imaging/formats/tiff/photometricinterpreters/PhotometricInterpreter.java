@@ -23,11 +23,10 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
 /**
- * Interpreter for photometric information in TIFF images. The photometric interpretation tag is a requirement for valid
- * TIFF images, and defines the color space of the image data.
+ * Interpreter for photometric information in TIFF images. The photometric interpretation tag is a requirement for valid TIFF images, and defines the color
+ * space of the image data.
  *
- * @see <a href= "https://www.awaresystems.be/imaging/tiff/tifftags/photometricinterpretation.html"> Baseline TIFF Tag
- *      PhotometricInterpretation</a>
+ * @see <a href= "https://www.awaresystems.be/imaging/tiff/tifftags/photometricinterpretation.html"> Baseline TIFF Tag PhotometricInterpretation</a>
  */
 public abstract class PhotometricInterpreter {
 
@@ -37,8 +36,7 @@ public abstract class PhotometricInterpreter {
     protected final int width;
     protected final int height;
 
-    public PhotometricInterpreter(final int samplesPerPixel, final int[] bitsPerSample, final int predictor,
-            final int width, final int height) {
+    public PhotometricInterpreter(final int samplesPerPixel, final int[] bitsPerSample, final int predictor, final int width, final int height) {
         this.samplesPerPixel = samplesPerPixel;
         this.bitsPerSample = Objects.requireNonNull(bitsPerSample, "bitsPerSample");
         this.predictor = predictor;
@@ -50,6 +48,5 @@ public abstract class PhotometricInterpreter {
         return bitsPerSample[offset];
     }
 
-    public abstract void interpretPixel(ImageBuilder imageBuilder, int[] samples, int x, int y)
-            throws ImagingException, IOException;
+    public abstract void interpretPixel(ImageBuilder imageBuilder, int[] samples, int x, int y) throws ImagingException, IOException;
 }

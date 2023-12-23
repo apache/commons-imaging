@@ -19,4 +19,3 @@
  * TIFF field types.
  */
 package org.apache.commons.imaging.formats.tiff.fieldtypes;
-

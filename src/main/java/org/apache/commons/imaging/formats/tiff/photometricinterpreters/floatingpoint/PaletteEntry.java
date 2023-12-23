@@ -19,23 +19,20 @@ package org.apache.commons.imaging.formats.tiff.photometricinterpreters.floating
 import java.awt.Color;
 
 /**
- * Defines an interface for specifying color assignments to floating point
- * values.
+ * Defines an interface for specifying color assignments to floating point values.
  */
 public interface PaletteEntry {
 
     /**
-     * Indicates that the entry covers exactly one unique value (including,
-     * potentially, Float&#46;NaN).
+     * Indicates that the entry covers exactly one unique value (including, potentially, Float&#46;NaN).
      *
      * @return true if the entry covers exactly one unique value
      */
     boolean coversSingleEntry();
 
     /**
-     * Gets the integer ARGB color assignment associated with the input value.
-     * If the input value is not within the covered range of this instance, the
-     * return value is undefined (though the value zero is often used).
+     * Gets the integer ARGB color assignment associated with the input value. If the input value is not within the covered range of this instance, the return
+     * value is undefined (though the value zero is often used).
      *
      * @param f valid floating point value, or a NaN.
      * @return an integer value
@@ -43,13 +40,11 @@ public interface PaletteEntry {
     int getArgb(float f);
 
     /**
-     * Gets the color assignment associated with the input value. If the input
-     * value is not within the covered range of this instance, the return value
-     * is undefined (though a null return is often used).
+     * Gets the color assignment associated with the input value. If the input value is not within the covered range of this instance, the return value is
+     * undefined (though a null return is often used).
      *
      * @param f a valid floating point value, or a NaN.
-     * @return a valid color instance or, potentially, a null if the floating
-     * point input is not within the covered range.
+     * @return a valid color instance or, potentially, a null if the floating point input is not within the covered range.
      */
     Color getColor(float f);
 
@@ -68,13 +63,11 @@ public interface PaletteEntry {
     float getUpperBound();
 
     /**
-     * Indicates whether the indicated floating-point value is within the range
-     * covered by this palette entry and can be assigned a valid color by the
+     * Indicates whether the indicated floating-point value is within the range covered by this palette entry and can be assigned a valid color by the
      * implementation.
      *
      * @param f a valid floating point value, or a NaN.
-     * @return true if the entry can assign a color to the entry; otherwise,
-     * false.
+     * @return true if the entry can assign a color to the entry; otherwise, false.
      */
     boolean isCovered(float f);
 }

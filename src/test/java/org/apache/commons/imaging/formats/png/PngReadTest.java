@@ -48,23 +48,11 @@ public class PngReadTest extends AbstractPngTest {
 
             Debug.debug("imageFile", imageFile);
             if (isInvalidPngTestFile(imageFile)) {
-                assertThrows(
-                    Exception.class,
-                    () -> Imaging.getMetadata(imageFile),
-                    "Image read should have failed."
-                );
+                assertThrows(Exception.class, () -> Imaging.getMetadata(imageFile), "Image read should have failed.");
 
-                assertThrows(
-                    Exception.class,
-                    () -> Imaging.getImageInfo(imageFile),
-                    "Image read should have failed."
-                );
+                assertThrows(Exception.class, () -> Imaging.getImageInfo(imageFile), "Image read should have failed.");
 
-                assertThrows(
-                    Exception.class,
-                    () -> Imaging.getBufferedImage(imageFile),
-                    "Image read should have failed."
-                );
+                assertThrows(Exception.class, () -> Imaging.getBufferedImage(imageFile), "Image read should have failed.");
             } else {
                 final ImageMetadata metadata = Imaging.getMetadata(imageFile);
                 assertFalse(metadata instanceof File); // Dummy check to avoid unused warning (it may be null)
@@ -84,7 +72,7 @@ public class PngReadTest extends AbstractPngTest {
      * Test reading metadata from PNG file with UTF-8 characters in the text chunks.
      *
      * @see <a href="https://issues.apache.org/jira/browse/IMAGING-342">IMAGING-342</a>
-     * @throws IOException if it fails to read the test image
+     * @throws IOException      if it fails to read the test image
      * @throws ImagingException if it fails to read the test image
      */
     @Test
@@ -96,17 +84,18 @@ public class PngReadTest extends AbstractPngTest {
         final List<?> items = metadata.getItems();
         assertEquals(1, items.size());
 
-        final GenericImageMetadata.GenericImageMetadataItem item = ((GenericImageMetadata.GenericImageMetadataItem) items.get(0));
+        final GenericImageMetadata.GenericImageMetadataItem item = (GenericImageMetadata.GenericImageMetadataItem) items.get(0);
         assertEquals("Comment", item.getKeyword());
         assertEquals("\u2192 UTF-8 Test", item.getText());
     }
 
     /**
-     * If the PNG image data contains an invalid ICC Profile, previous versions would
-     * simply rethrow the IAE. This test verifies we are instead raising the documented
-     * {@literal ImageReadException}.
+     * If the PNG image data contains an invalid ICC Profile, previous versions would simply rethrow the IAE. This test verifies we are instead raising the
+     * documented {@literal ImageReadException}.
      *
-     * <p>See Google OSS Fuzz issue 33691</p>
+     * <p>
+     * See Google OSS Fuzz issue 33691
+     * </p>
      *
      * @throws IOException if it fails to read the test image
      */
@@ -118,10 +107,11 @@ public class PngReadTest extends AbstractPngTest {
     }
 
     /**
-     * Test that a PNG image using indexed color type but no PLTE chunks
-     * does not throw a {@code NullPointerException}.
+     * Test that a PNG image using indexed color type but no PLTE chunks does not throw a {@code NullPointerException}.
      *
-     * <p>See Google OSS Fuzz issue 37607</p>
+     * <p>
+     * See Google OSS Fuzz issue 37607
+     * </p>
      *
      * @throws IOException if it fails to read the test image
      */

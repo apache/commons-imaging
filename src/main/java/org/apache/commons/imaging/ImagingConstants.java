@@ -17,11 +17,8 @@
 package org.apache.commons.imaging;
 
 /**
- * Defines constants that may be used in passing options to
- * ImageParser read/write implementations, the utility routines
- * implemented in the Imaging class, and throughout the
- * Apache Commons Imaging package.  Individual ImageParser
- * implementations may define their own format-specific options.
+ * Defines constants that may be used in passing options to ImageParser read/write implementations, the utility routines implemented in the Imaging class, and
+ * throughout the Apache Commons Imaging package. Individual ImageParser implementations may define their own format-specific options.
  */
 public final class ImagingConstants {
 

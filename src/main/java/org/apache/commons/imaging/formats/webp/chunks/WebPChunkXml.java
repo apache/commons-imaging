@@ -48,7 +48,7 @@ public final class WebPChunkXml extends WebPChunk {
      * @param bytes chunk data.
      * @throws ImagingException if the chunk data and the size provided do not match.
      */
-    public WebPChunkXml(int type, int size, byte[] bytes) throws ImagingException {
+    public WebPChunkXml(final int type, final int size, final byte[] bytes) throws ImagingException {
         super(type, size, bytes);
         this.xml = new String(bytes, StandardCharsets.UTF_8);
     }

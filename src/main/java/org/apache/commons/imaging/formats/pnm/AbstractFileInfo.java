@@ -48,7 +48,7 @@ abstract class AbstractFileInfo {
             // invalid values -> black
             sample = 0;
         }
-        return (int) ((sample * scale / max) + 0.5f);
+        return (int) (sample * scale / max + 0.5f);
     }
 
     final int width;
@@ -85,8 +85,7 @@ abstract class AbstractFileInfo {
         // do nothing by default.
     }
 
-    void readImage(final ImageBuilder imageBuilder, final InputStream is)
-            throws IOException {
+    void readImage(final ImageBuilder imageBuilder, final InputStream is) throws IOException {
         // is = new BufferedInputStream(is);
         // int count = 0;
         //

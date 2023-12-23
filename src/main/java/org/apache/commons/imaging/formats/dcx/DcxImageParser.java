@@ -59,6 +59,7 @@ public class DcxImageParser extends AbstractImageParser<PcxImagingParameters> {
             pw.println();
         }
     }
+
     // See [BROEKN URL] http://www.fileformat.fine/format/pcx/egff.htm for documentation
     private static final String DEFAULT_EXTENSION = ImageFormats.DCX.getDefaultExtension();
 
@@ -69,8 +70,7 @@ public class DcxImageParser extends AbstractImageParser<PcxImagingParameters> {
     }
 
     @Override
-    public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
-            throws ImagingException, IOException {
+    public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource) throws ImagingException, IOException {
         readDcxHeader(byteSource).dump(pw);
         return true;
     }
@@ -86,17 +86,14 @@ public class DcxImageParser extends AbstractImageParser<PcxImagingParameters> {
     }
 
     @Override
-    public List<BufferedImage> getAllBufferedImages(final ByteSource byteSource)
-            throws ImagingException, IOException {
+    public List<BufferedImage> getAllBufferedImages(final ByteSource byteSource) throws ImagingException, IOException {
         final DcxHeader dcxHeader = readDcxHeader(byteSource);
         final List<BufferedImage> images = new ArrayList<>();
         final PcxImageParser pcxImageParser = new PcxImageParser();
         for (final long element : dcxHeader.pageTable) {
             try (InputStream stream = byteSource.getInputStream(element)) {
-                final ByteSource pcxSource = ByteSource.inputStream(
-                        stream, null);
-                final BufferedImage image = pcxImageParser.getBufferedImage(
-                        pcxSource, new PcxImagingParameters());
+                final ByteSource pcxSource = ByteSource.inputStream(stream, null);
+                final BufferedImage image = pcxImageParser.getBufferedImage(pcxSource, new PcxImagingParameters());
                 images.add(image);
             }
         }
@@ -104,8 +101,7 @@ public class DcxImageParser extends AbstractImageParser<PcxImagingParameters> {
     }
 
     @Override
-    public final BufferedImage getBufferedImage(final ByteSource byteSource,
-            final PcxImagingParameters params) throws ImagingException, IOException {
+    public final BufferedImage getBufferedImage(final ByteSource byteSource, final PcxImagingParameters params) throws ImagingException, IOException {
         final List<BufferedImage> list = getAllBufferedImages(byteSource);
         return list.isEmpty() ? null : list.get(0);
     }
@@ -122,29 +118,25 @@ public class DcxImageParser extends AbstractImageParser<PcxImagingParameters> {
 
     // FIXME should throw UOE
     @Override
-    public byte[] getIccProfileBytes(final ByteSource byteSource, final PcxImagingParameters params)
-            throws ImagingException, IOException {
+    public byte[] getIccProfileBytes(final ByteSource byteSource, final PcxImagingParameters params) throws ImagingException, IOException {
         return null;
     }
 
     // FIXME should throw UOE
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final PcxImagingParameters params)
-            throws ImagingException, IOException {
+    public ImageInfo getImageInfo(final ByteSource byteSource, final PcxImagingParameters params) throws ImagingException, IOException {
         return null;
     }
 
     // FIXME should throw UOE
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final PcxImagingParameters params)
-            throws ImagingException, IOException {
+    public Dimension getImageSize(final ByteSource byteSource, final PcxImagingParameters params) throws ImagingException, IOException {
         return null;
     }
 
     // FIXME should throw UOE
     @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final PcxImagingParameters params)
-            throws ImagingException, IOException {
+    public ImageMetadata getMetadata(final ByteSource byteSource, final PcxImagingParameters params) throws ImagingException, IOException {
         return null;
     }
 
@@ -153,8 +145,7 @@ public class DcxImageParser extends AbstractImageParser<PcxImagingParameters> {
         return "Dcx-Custom";
     }
 
-    private DcxHeader readDcxHeader(final ByteSource byteSource)
-            throws ImagingException, IOException {
+    private DcxHeader readDcxHeader(final ByteSource byteSource) throws ImagingException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             final int id = read4Bytes("Id", is, "Not a Valid DCX File", getByteOrder());
             final int size = 1024;
@@ -180,8 +171,7 @@ public class DcxImageParser extends AbstractImageParser<PcxImagingParameters> {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, final PcxImagingParameters params)
-            throws ImagingException, IOException {
+    public void writeImage(final BufferedImage src, final OutputStream os, final PcxImagingParameters params) throws ImagingException, IOException {
         final int headerSize = 4 + 1024 * 4;
 
         final BinaryOutputStream bos = BinaryOutputStream.littleEndian(os);

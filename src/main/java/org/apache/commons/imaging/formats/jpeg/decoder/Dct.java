@@ -17,78 +17,47 @@ package org.apache.commons.imaging.formats.jpeg.decoder;
 
 final class Dct {
     /*
-     * The book "JPEG still image data compression standard", by Pennebaker and
-     * Mitchell, Chapter 4, discusses a number of approaches to the fast DCT.
-     * Here's the cost, excluding modified (de)quantization, for transforming an
-     * 8x8 block:
+     * The book "JPEG still image data compression standard", by Pennebaker and Mitchell, Chapter 4, discusses a number of approaches to the fast DCT. Here's
+     * the cost, excluding modified (de)quantization, for transforming an 8x8 block:
      *
-     * Algorithm                     Adds Multiplies RightShifts Total
-     * Naive                          896       1024           0  1920
-     * "Symmetries"                   448        224           0   672
-     * Vetterli and Ligtenberg        464        208           0   672
-     * Arai, Agui and Nakajima (AA&N) 464         80           0   544
-     * Feig 8x8                       462         54           6   522
-     * Fused mul/add (a pipe dream)                                416
+     * Algorithm Adds Multiplies RightShifts Total Naive 896 1024 0 1920 "Symmetries" 448 224 0 672 Vetterli and Ligtenberg 464 208 0 672 Arai, Agui and
+     * Nakajima (AA&N) 464 80 0 544 Feig 8x8 462 54 6 522 Fused mul/add (a pipe dream) 416
      *
      * IJG's libjpeg, FFmpeg, and a number of others use AA&N.
      *
-     * It would appear that Feig does 4-5% less operations, and multiplications
-     * are reduced from 80 in AA&N to only 54. But in practice:
+     * It would appear that Feig does 4-5% less operations, and multiplications are reduced from 80 in AA&N to only 54. But in practice:
      *
-     * Benchmarks, Intel Core i3 @ 2.93 GHz in long mode, 4 GB RAM Time taken to
-     * do 100 million IDCTs (less is better):
-     * Rene' Stöckel's Feig, int: 45.07 seconds
-     * My Feig, floating point: 36.252 seconds
-     * AA&N, unrolled loops, double[][] -> double[][]: 25.167 seconds
+     * Benchmarks, Intel Core i3 @ 2.93 GHz in long mode, 4 GB RAM Time taken to do 100 million IDCTs (less is better): Rene' Stöckel's Feig, int: 45.07
+     * seconds My Feig, floating point: 36.252 seconds AA&N, unrolled loops, double[][] -> double[][]: 25.167 seconds
      *
-     * Clearly Feig is hopeless. I suspect the performance killer is simply the
-     * weight of the algorithm: massive number of local variables, large code
-     * size, and lots of random array accesses.
+     * Clearly Feig is hopeless. I suspect the performance killer is simply the weight of the algorithm: massive number of local variables, large code size, and
+     * lots of random array accesses.
      *
-     * Also, AA&N can be optimized a lot:
-     * AA&N, rolled loops, double[][] -> double[][]: 21.162 seconds
-     * AA&N, rolled loops, float[][] -> float[][]: no improvement,
-     * but at some stage Hotspot might start doing SIMD, so let's
-     * use float AA&N, rolled loops, float[] -> float[][]: 19.979 seconds
-     * apparently 2D arrays are slow!
-     * AA&N, rolled loops, inlined 1D AA&N
-     * transform, float[] transformed in-place: 18.5 seconds
-     * AA&N, previous version rewritten in C and compiled with "gcc -O3"
-     * takes: 8.5 seconds
-     * (probably due to heavy use of SIMD)
+     * Also, AA&N can be optimized a lot: AA&N, rolled loops, double[][] -> double[][]: 21.162 seconds AA&N, rolled loops, float[][] -> float[][]: no
+     * improvement, but at some stage Hotspot might start doing SIMD, so let's use float AA&N, rolled loops, float[] -> float[][]: 19.979 seconds apparently 2D
+     * arrays are slow! AA&N, rolled loops, inlined 1D AA&N transform, float[] transformed in-place: 18.5 seconds AA&N, previous version rewritten in C and
+     * compiled with "gcc -O3" takes: 8.5 seconds (probably due to heavy use of SIMD)
      *
-     * Other brave attempts: AA&N, best float version converted to 16:16 fixed
-     * point: 23.923 seconds
+     * Other brave attempts: AA&N, best float version converted to 16:16 fixed point: 23.923 seconds
      *
-     * Anyway the best float version stays. 18.5 seconds = 5.4 million
-     * transforms per second per core :-)
+     * Anyway the best float version stays. 18.5 seconds = 5.4 million transforms per second per core :-)
      */
 
-    private static final float[] DCT_SCALING_FACTORS = {
-            (float) (0.5 / Math.sqrt(2.0)),
-            (float) (0.25 / Math.cos(Math.PI / 16.0)),
-            (float) (0.25 / Math.cos(2.0 * Math.PI / 16.0)),
-            (float) (0.25 / Math.cos(3.0 * Math.PI / 16.0)),
-            (float) (0.25 / Math.cos(4.0 * Math.PI / 16.0)),
-            (float) (0.25 / Math.cos(5.0 * Math.PI / 16.0)),
-            (float) (0.25 / Math.cos(6.0 * Math.PI / 16.0)),
+    private static final float[] DCT_SCALING_FACTORS = { (float) (0.5 / Math.sqrt(2.0)), (float) (0.25 / Math.cos(Math.PI / 16.0)),
+            (float) (0.25 / Math.cos(2.0 * Math.PI / 16.0)), (float) (0.25 / Math.cos(3.0 * Math.PI / 16.0)), (float) (0.25 / Math.cos(4.0 * Math.PI / 16.0)),
+            (float) (0.25 / Math.cos(5.0 * Math.PI / 16.0)), (float) (0.25 / Math.cos(6.0 * Math.PI / 16.0)),
             (float) (0.25 / Math.cos(7.0 * Math.PI / 16.0)), };
 
-    private static final float[] IDCT_SCALING_FACTORS = {
-            (float) (2.0 * 4.0 / Math.sqrt(2.0) * 0.0625),
-            (float) (4.0 * Math.cos(Math.PI / 16.0) * 0.125),
-            (float) (4.0 * Math.cos(2.0 * Math.PI / 16.0) * 0.125),
-            (float) (4.0 * Math.cos(3.0 * Math.PI / 16.0) * 0.125),
-            (float) (4.0 * Math.cos(4.0 * Math.PI / 16.0) * 0.125),
-            (float) (4.0 * Math.cos(5.0 * Math.PI / 16.0) * 0.125),
-            (float) (4.0 * Math.cos(6.0 * Math.PI / 16.0) * 0.125),
-            (float) (4.0 * Math.cos(7.0 * Math.PI / 16.0) * 0.125), };
+    private static final float[] IDCT_SCALING_FACTORS = { (float) (2.0 * 4.0 / Math.sqrt(2.0) * 0.0625), (float) (4.0 * Math.cos(Math.PI / 16.0) * 0.125),
+            (float) (4.0 * Math.cos(2.0 * Math.PI / 16.0) * 0.125), (float) (4.0 * Math.cos(3.0 * Math.PI / 16.0) * 0.125),
+            (float) (4.0 * Math.cos(4.0 * Math.PI / 16.0) * 0.125), (float) (4.0 * Math.cos(5.0 * Math.PI / 16.0) * 0.125),
+            (float) (4.0 * Math.cos(6.0 * Math.PI / 16.0) * 0.125), (float) (4.0 * Math.cos(7.0 * Math.PI / 16.0) * 0.125), };
 
-    private static final float A1 = (float) (Math.cos(2.0 * Math.PI / 8.0));
+    private static final float A1 = (float) Math.cos(2.0 * Math.PI / 8.0);
     private static final float A2 = (float) (Math.cos(Math.PI / 8.0) - Math.cos(3.0 * Math.PI / 8.0));
     private static final float A3 = A1;
     private static final float A4 = (float) (Math.cos(Math.PI / 8.0) + Math.cos(3.0 * Math.PI / 8.0));
-    private static final float A5 = (float) (Math.cos(3.0 * Math.PI / 8.0));
+    private static final float A5 = (float) Math.cos(3.0 * Math.PI / 8.0);
 
     private static final float C2 = (float) (2.0 * Math.cos(Math.PI / 8));
     private static final float C4 = (float) (2.0 * Math.cos(2 * Math.PI / 8));
@@ -97,9 +66,7 @@ final class Dct {
     private static final float R = C2 + C6;
 
     /**
-     * Fast forward Dct using AA&N. Taken from the book
-     * "JPEG still image data compression standard", by Pennebaker and Mitchell,
-     * chapter 4, figure "4-8".
+     * Fast forward Dct using AA&N. Taken from the book "JPEG still image data compression standard", by Pennebaker and Mitchell, chapter 4, figure "4-8".
      *
      * @param vector vector.
      */
@@ -220,10 +187,8 @@ final class Dct {
     }
 
     /**
-     * Fast inverse Dct using AA&N. This is taken from the beautiful
-     * [BROEKN URL] http://vsr.finermatik.tu-chemnitz.de/~jan/MPEG/HTML/IDCT.html which gives
-     * easy equations and properly explains constants and scaling factors. Terms
-     * have been inlined and the negation optimized out of existence.
+     * Fast inverse Dct using AA&N. This is taken from the beautiful [BROEKN URL] http://vsr.finermatik.tu-chemnitz.de/~jan/MPEG/HTML/IDCT.html which gives easy
+     * equations and properly explains constants and scaling factors. Terms have been inlined and the negation optimized out of existence.
      *
      * @param vector vector.
      */
@@ -354,8 +319,7 @@ final class Dct {
     public static void scaleDequantizationMatrix(final float[] matrix) {
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
-                matrix[8 * y + x] *= IDCT_SCALING_FACTORS[y]
-                        * IDCT_SCALING_FACTORS[x];
+                matrix[8 * y + x] *= IDCT_SCALING_FACTORS[y] * IDCT_SCALING_FACTORS[x];
             }
         }
     }
@@ -369,8 +333,7 @@ final class Dct {
     public static void scaleQuantizationMatrix(final float[] matrix) {
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
-                matrix[8 * y + x] *= DCT_SCALING_FACTORS[y]
-                        * DCT_SCALING_FACTORS[x];
+                matrix[8 * y + x] *= DCT_SCALING_FACTORS[y] * DCT_SCALING_FACTORS[x];
             }
         }
     }

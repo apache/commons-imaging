@@ -21,8 +21,7 @@ import java.awt.image.BufferedImage;
 
 public class SimpleBufferedImageFactory implements BufferedImageFactory {
     @Override
-    public BufferedImage getColorBufferedImage(final int width, final int height,
-            final boolean hasAlpha) {
+    public BufferedImage getColorBufferedImage(final int width, final int height, final boolean hasAlpha) {
         if (hasAlpha) {
             return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         }
@@ -30,8 +29,7 @@ public class SimpleBufferedImageFactory implements BufferedImageFactory {
     }
 
     @Override
-    public BufferedImage getGrayscaleBufferedImage(final int width, final int height,
-            final boolean hasAlpha) {
+    public BufferedImage getGrayscaleBufferedImage(final int width, final int height, final boolean hasAlpha) {
         if (hasAlpha) {
             return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         }

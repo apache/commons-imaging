@@ -19,4 +19,3 @@
  * The BMP image format.
  */
 package org.apache.commons.imaging.formats.bmp;
-

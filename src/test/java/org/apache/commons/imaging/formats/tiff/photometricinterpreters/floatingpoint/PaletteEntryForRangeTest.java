@@ -50,21 +50,16 @@ public class PaletteEntryForRangeTest {
         final Color c1 = new Color(0xff00ff00);
 
         // test the two-color variations -----------------------
-        assertThrows(IllegalArgumentException.class, () -> new PaletteEntryForRange(0.0f, 0.0f, c0, c1),
-                "Constructor failed to detect invalid range");
+        assertThrows(IllegalArgumentException.class, () -> new PaletteEntryForRange(0.0f, 0.0f, c0, c1), "Constructor failed to detect invalid range");
 
-        assertThrows(IllegalArgumentException.class, () -> new PaletteEntryForRange(0.0f, 1.0f, null, c1),
-                "Constructor failed to detect null color");
+        assertThrows(IllegalArgumentException.class, () -> new PaletteEntryForRange(0.0f, 1.0f, null, c1), "Constructor failed to detect null color");
 
-        assertThrows(IllegalArgumentException.class, () -> new PaletteEntryForRange(0.0f, 1.0f, c0, null),
-                "Constructor failed to detect invalid color");
+        assertThrows(IllegalArgumentException.class, () -> new PaletteEntryForRange(0.0f, 1.0f, c0, null), "Constructor failed to detect invalid color");
 
         // test the one-color variations -----------------------
-        assertThrows(IllegalArgumentException.class, () -> new PaletteEntryForRange(0.0f, 0.0f, c0),
-                "Constructor failed to detect invalid range");
+        assertThrows(IllegalArgumentException.class, () -> new PaletteEntryForRange(0.0f, 0.0f, c0), "Constructor failed to detect invalid range");
 
-        assertThrows(IllegalArgumentException.class, () -> new PaletteEntryForRange(0.0f, 1.0f, null),
-                "Constructor failed to detect null color");
+        assertThrows(IllegalArgumentException.class, () -> new PaletteEntryForRange(0.0f, 1.0f, null), "Constructor failed to detect null color");
     }
 
     /**

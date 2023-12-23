@@ -37,9 +37,8 @@ public class RoundtripBase {
         return Stream.of(images).flatMap(i -> Stream.of(FormatInfo.READ_WRITE_FORMATS).map(f -> Arguments.of(i, f)));
     }
 
-    protected void roundtrip(final FormatInfo formatInfo, final BufferedImage testImage,
-                             final String tempPrefix, final boolean imageExact) throws IOException,
-            ImagingException, ImagingException {
+    protected void roundtrip(final FormatInfo formatInfo, final BufferedImage testImage, final String tempPrefix, final boolean imageExact)
+            throws IOException, ImagingException, ImagingException {
 
         final AbstractImageParser abstractImageParser = ImageParserFactory.getImageParser(formatInfo.format);
 

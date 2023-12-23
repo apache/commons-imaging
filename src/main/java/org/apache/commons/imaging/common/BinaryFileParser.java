@@ -59,7 +59,8 @@ public class BinaryFileParser {
     }
 
     protected final void debugNumber(final String msg, final int data, final int bytes) {
-        try (StringWriter sw = new StringWriter(); PrintWriter pw = new PrintWriter(sw)) {
+        try (StringWriter sw = new StringWriter();
+                PrintWriter pw = new PrintWriter(sw)) {
             debugNumber(pw, msg, data, bytes);
             pw.flush();
             sw.flush();

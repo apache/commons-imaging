@@ -32,7 +32,7 @@ final class WhiteSpaceReader {
         char c = read();
 
         if (c == '#') {
-            while ((c != '\n') && (c != '\r')) {
+            while (c != '\n' && c != '\r') {
                 c = read();
             }
         }
@@ -49,7 +49,7 @@ final class WhiteSpaceReader {
 
     public String readLine() throws IOException {
         final StringBuilder buffer = new StringBuilder();
-        for (char c = read(); (c != '\n') && (c != '\r'); c = read()) {
+        for (char c = read(); c != '\n' && c != '\r'; c = read()) {
             buffer.append(c);
         }
         return buffer.length() > 0 ? buffer.toString() : null;

@@ -25,8 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Provides information about the compliance of a specified data
- * source (byte array, file, etc&#46;) to an image format.
+ * Provides information about the compliance of a specified data source (byte array, file, etc&#46;) to an image format.
  */
 public class FormatCompliance {
 
@@ -62,24 +61,20 @@ public class FormatCompliance {
         addComment(comment + ": " + getValueDescription(value));
     }
 
-    public boolean checkBounds(final String name, final int min, final int max, final int actual)
-            throws ImagingException {
-        if ((actual < min) || (actual > max)) {
-            addComment(name + ": " + "bounds check: " + min + " <= " + actual
-                    + " <= " + max + ": false");
+    public boolean checkBounds(final String name, final int min, final int max, final int actual) throws ImagingException {
+        if (actual < min || actual > max) {
+            addComment(name + ": " + "bounds check: " + min + " <= " + actual + " <= " + max + ": false");
             return false;
         }
 
         return true;
     }
 
-    public boolean compare(final String name, final int valid, final int actual)
-            throws ImagingException {
+    public boolean compare(final String name, final int valid, final int actual) throws ImagingException {
         return compare(name, new int[] { valid, }, actual);
     }
 
-    public boolean compare(final String name, final int[] valid, final int actual)
-            throws ImagingException {
+    public boolean compare(final String name, final int[] valid, final int actual) throws ImagingException {
         for (final int element : valid) {
             if (actual == element) {
                 return true;
@@ -106,11 +101,9 @@ public class FormatCompliance {
         return false;
     }
 
-    public boolean compareBytes(final String name, final byte[] expected, final byte[] actual)
-            throws ImagingException {
+    public boolean compareBytes(final String name, final byte[] expected, final byte[] actual) throws ImagingException {
         if (expected.length != actual.length) {
-            addComment(name + ": " + "Unexpected length: (expected: "
-                    + expected.length + ", actual: " + actual.length + ")");
+            addComment(name + ": " + "Unexpected length: (expected: " + expected.length + ", actual: " + actual.length + ")");
             return false;
         }
         for (int i = 0; i < expected.length; i++) {
@@ -118,9 +111,8 @@ public class FormatCompliance {
             // + getValueDescription(expected[i]) + ", actual: "
             // + getValueDescription(actual[i]) + ")");
             if (expected[i] != actual[i]) {
-                addComment(name + ": " + "Unexpected value: (expected: "
-                        + getValueDescription(expected[i]) + ", actual: "
-                        + getValueDescription(actual[i]) + ")");
+                addComment(
+                        name + ": " + "Unexpected value: (expected: " + getValueDescription(expected[i]) + ", actual: " + getValueDescription(actual[i]) + ")");
                 return false;
             }
         }
@@ -129,7 +121,8 @@ public class FormatCompliance {
     }
 
     public void dump() {
-        try (StringWriter sw = new StringWriter(); PrintWriter pw = new PrintWriter(sw)) {
+        try (StringWriter sw = new StringWriter();
+                PrintWriter pw = new PrintWriter(sw)) {
             dump(pw);
             pw.flush();
             sw.flush();

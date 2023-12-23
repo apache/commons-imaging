@@ -61,17 +61,16 @@ public final class WebPChunkVp8x extends WebPChunk {
      * @param type  VP8X chunk type
      * @param size  VP8X chunk size
      * @param bytes VP8X chunk data
-     * @throws ImagingException if the chunk data and the size provided do not match,
-     *                          or if the other parameters provided are invalid.
+     * @throws ImagingException if the chunk data and the size provided do not match, or if the other parameters provided are invalid.
      */
-    public WebPChunkVp8x(int type, int size, byte[] bytes) throws ImagingException {
+    public WebPChunkVp8x(final int type, final int size, final byte[] bytes) throws ImagingException {
         super(type, size, bytes);
 
         if (size != 10) {
             throw new ImagingException("VP8X chunk size must be 10");
         }
 
-        int mark = bytes[0] & 0xFF;
+        final int mark = bytes[0] & 0xFF;
         this.hasIcc = (mark & 0b0010_0000) != 0;
         this.hasAlpha = (mark & 0b0001_0000) != 0;
         this.hasExif = (mark & 0b0000_1000) != 0;
@@ -87,7 +86,7 @@ public final class WebPChunkVp8x extends WebPChunk {
     }
 
     @Override
-    public void dump(PrintWriter pw, int offset) throws ImagingException, IOException {
+    public void dump(final PrintWriter pw, final int offset) throws ImagingException, IOException {
         super.dump(pw, offset);
         pw.println("  ICCP: " + hasIcc());
         pw.println("  Alpha: " + hasAlpha());

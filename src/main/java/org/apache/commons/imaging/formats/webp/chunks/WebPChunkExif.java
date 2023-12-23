@@ -51,15 +51,15 @@ public final class WebPChunkExif extends WebPChunk {
      * @param bytes chunk data.
      * @throws ImagingException if the chunk data and the size provided do not match.
      */
-    public WebPChunkExif(int type, int size, byte[] bytes) throws ImagingException {
+    public WebPChunkExif(final int type, final int size, final byte[] bytes) throws ImagingException {
         super(type, size, bytes);
     }
 
     @Override
-    public void dump(PrintWriter pw, int offset) throws ImagingException, IOException {
+    public void dump(final PrintWriter pw, final int offset) throws ImagingException, IOException {
         super.dump(pw, offset);
-        TiffImageMetadata metadata = (TiffImageMetadata) new TiffImageParser().getMetadata(bytes);
-        for (ImageMetadata.ImageMetadataItem item : metadata.getItems()) {
+        final TiffImageMetadata metadata = (TiffImageMetadata) new TiffImageParser().getMetadata(bytes);
+        for (final ImageMetadata.ImageMetadataItem item : metadata.getItems()) {
             pw.println(item.toString("  "));
         }
     }

@@ -27,30 +27,31 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests for class {@link FieldTypeAscii}.
+ *
  * @see FieldTypeAscii
  *
  **/
 public class FieldTypeAsciiTest {
 
-  @Test
-  public void testCreatesFieldTypeAsciiAndCallsWriteData() {
-      final FieldTypeAscii fieldTypeAscii = new FieldTypeAscii(0, "1");
-      final byte[] byteArray = new byte[1];
-      final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
-      final TiffField tiffField = new TiffField(0, 0, fieldTypeAscii, 0L, 0, byteArray, byteOrder, 1);
+    @Test
+    public void testCreatesFieldTypeAsciiAndCallsWriteData() {
+        final FieldTypeAscii fieldTypeAscii = new FieldTypeAscii(0, "1");
+        final byte[] byteArray = new byte[1];
+        final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
+        final TiffField tiffField = new TiffField(0, 0, fieldTypeAscii, 0L, 0, byteArray, byteOrder, 1);
 
-      assertThrows(ImagingException.class, () -> fieldTypeAscii.writeData(tiffField, byteOrder));
-  }
+        assertThrows(ImagingException.class, () -> fieldTypeAscii.writeData(tiffField, byteOrder));
+    }
 
-  @Test
-  public void testCreatesFieldTypeAsciiAndWriteDataUsingByteArray() throws ImagingException {
-      final FieldTypeAscii fieldTypeAscii = new FieldTypeAscii(0, "1");
-      final byte[] byteArray = new byte[1];
-      final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
-      final byte[] byteArrayTwo = fieldTypeAscii.writeData(byteArray, byteOrder);
+    @Test
+    public void testCreatesFieldTypeAsciiAndWriteDataUsingByteArray() throws ImagingException {
+        final FieldTypeAscii fieldTypeAscii = new FieldTypeAscii(0, "1");
+        final byte[] byteArray = new byte[1];
+        final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
+        final byte[] byteArrayTwo = fieldTypeAscii.writeData(byteArray, byteOrder);
 
-      assertArrayEquals(new byte[] {(byte)0, (byte)0}, byteArrayTwo);
-  }
+        assertArrayEquals(new byte[] { (byte) 0, (byte) 0 }, byteArrayTwo);
+    }
 
     @Test
     public void testCreatesFieldTypeAsciiAndWriteDataUsingString() throws ImagingException {
@@ -58,7 +59,7 @@ public class FieldTypeAsciiTest {
         final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
         final byte[] byteArrayTwo = fieldTypeAscii.writeData("asdf", byteOrder);
 
-        assertArrayEquals(new byte[] {(byte)97, (byte)115, (byte)100, (byte)102, (byte)0}, byteArrayTwo);
+        assertArrayEquals(new byte[] { (byte) 97, (byte) 115, (byte) 100, (byte) 102, (byte) 0 }, byteArrayTwo);
     }
 
 }

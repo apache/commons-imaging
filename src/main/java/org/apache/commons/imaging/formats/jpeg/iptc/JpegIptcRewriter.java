@@ -37,87 +37,62 @@ import org.apache.commons.imaging.formats.jpeg.xmp.JpegRewriter;
 public class JpegIptcRewriter extends JpegRewriter {
 
     /**
-     * Reads a JPEG image, removes all IPTC data from the App13 segment but
-     * leaves the other data in that segment (if present) unchanged and writes
-     * the result to a stream.
+     * Reads a JPEG image, removes all IPTC data from the App13 segment but leaves the other data in that segment (if present) unchanged and writes the result
+     * to a stream.
      * <p>
      *
-     * @param src
-     *            Byte array containing JPEG image data.
-     * @param os
-     *            OutputStream to write the image to.
-     * @throws ImagingException if there are more than one Photoshop App13 segment, or if
-     *         the Photoshop segment cannot be parsed
-     * @throws IOException if it fails to read from the origin byte source, or to write to the
-     *         target byte source
+     * @param src Byte array containing JPEG image data.
+     * @param os  OutputStream to write the image to.
+     * @throws ImagingException if there are more than one Photoshop App13 segment, or if the Photoshop segment cannot be parsed
+     * @throws IOException      if it fails to read from the origin byte source, or to write to the target byte source
      * @throws ImagingException if it fails to write the target image
      */
-    public void removeIptc(final byte[] src, final OutputStream os)
-            throws ImagingException, IOException, ImagingException {
+    public void removeIptc(final byte[] src, final OutputStream os) throws ImagingException, IOException, ImagingException {
         removeIptc(src, os, false);
     }
 
     /**
-     * Reads a JPEG image, removes all IPTC data from the App13 segment but
-     * leaves the other data in that segment (if present) unchanged (unless
-     * removeSegment is true) and writes the result to a stream.
+     * Reads a JPEG image, removes all IPTC data from the App13 segment but leaves the other data in that segment (if present) unchanged (unless removeSegment
+     * is true) and writes the result to a stream.
      * <p>
      *
-     * @param src
-     *            Byte array containing JPEG image data.
-     * @param os
-     *            OutputStream to write the image to.
-     * @param removeSegment
-     *            Remove the App13 segment.
-     * @throws ImagingException if there are more than one Photoshop App13 segment, or if
-     *         the Photoshop segment cannot be parsed
-     * @throws IOException if it fails to read from the origin byte source, or to write to the
-     *         target byte source
+     * @param src           Byte array containing JPEG image data.
+     * @param os            OutputStream to write the image to.
+     * @param removeSegment Remove the App13 segment.
+     * @throws ImagingException if there are more than one Photoshop App13 segment, or if the Photoshop segment cannot be parsed
+     * @throws IOException      if it fails to read from the origin byte source, or to write to the target byte source
      * @throws ImagingException if it fails to write the target image
      */
-    public void removeIptc(final byte[] src, final OutputStream os, final boolean removeSegment)
-            throws ImagingException, IOException, ImagingException {
+    public void removeIptc(final byte[] src, final OutputStream os, final boolean removeSegment) throws ImagingException, IOException, ImagingException {
         final ByteSource byteSource = ByteSource.array(src);
         removeIptc(byteSource, os, removeSegment);
     }
 
     /**
-     * Reads a JPEG image, removes all IPTC data from the App13 segment but
-     * leaves the other data in that segment (if present) unchanged and writes
-     * the result to a stream.
+     * Reads a JPEG image, removes all IPTC data from the App13 segment but leaves the other data in that segment (if present) unchanged and writes the result
+     * to a stream.
      * <p>
      *
-     * @param byteSource
-     *            ByteSource containing JPEG image data.
-     * @param os
-     *            OutputStream to write the image to.
-     * @throws ImagingException if there are more than one Photoshop App13 segment, or if
-     *         the Photoshop segment cannot be parsed
-     * @throws IOException if it fails to read from the origin byte source, or to write to the
-     *         target byte source
+     * @param byteSource ByteSource containing JPEG image data.
+     * @param os         OutputStream to write the image to.
+     * @throws ImagingException if there are more than one Photoshop App13 segment, or if the Photoshop segment cannot be parsed
+     * @throws IOException      if it fails to read from the origin byte source, or to write to the target byte source
      * @throws ImagingException if it fails to write the target image
      */
-    public void removeIptc(final ByteSource byteSource, final OutputStream os)
-            throws ImagingException, IOException, ImagingException {
+    public void removeIptc(final ByteSource byteSource, final OutputStream os) throws ImagingException, IOException, ImagingException {
         removeIptc(byteSource, os, false);
     }
 
     /**
-     * Reads a JPEG image, removes all IPTC data from the App13 segment but
-     * leaves the other data in that segment (if present) unchanged (unless
-     * removeSegment is true) and writes the result to a stream.
+     * Reads a JPEG image, removes all IPTC data from the App13 segment but leaves the other data in that segment (if present) unchanged (unless removeSegment
+     * is true) and writes the result to a stream.
      * <p>
      *
-     * @param byteSource
-     *            ByteSource containing JPEG image data.
-     * @param os
-     *            OutputStream to write the image to.
-     * @param removeSegment
-     *            Remove the App13 segment.
-     * @throws ImagingException if there are more than one Photoshop App13 segment, or if
-     *         the Photoshop segment cannot be parsed
-     * @throws IOException if it fails to read from the origin byte source, or to write to the
-     *         target byte source
+     * @param byteSource    ByteSource containing JPEG image data.
+     * @param os            OutputStream to write the image to.
+     * @param removeSegment Remove the App13 segment.
+     * @throws ImagingException if there are more than one Photoshop App13 segment, or if the Photoshop segment cannot be parsed
+     * @throws IOException      if it fails to read from the origin byte source, or to write to the target byte source
      * @throws ImagingException if it fails to write the target image
      */
     public void removeIptc(final ByteSource byteSource, final OutputStream os, final boolean removeSegment)
@@ -127,8 +102,7 @@ public class JpegIptcRewriter extends JpegRewriter {
         final List<JFIFPiece> photoshopApp13Segments = findPhotoshopApp13Segments(oldPieces);
 
         if (photoshopApp13Segments.size() > 1) {
-            throw new ImagingException(
-                    "Image contains more than one Photoshop App13 segment.");
+            throw new ImagingException("Image contains more than one Photoshop App13 segment.");
         }
         final List<JFIFPiece> newPieces = removePhotoshopApp13Segments(oldPieces);
         if (!removeSegment && photoshopApp13Segments.size() == 1) {
@@ -137,163 +111,119 @@ public class JpegIptcRewriter extends JpegRewriter {
             final PhotoshopApp13Data oldData = new IptcParser().parsePhotoshopSegment(oldSegment.getSegmentData(), params);
             final List<IptcBlock> newBlocks = oldData.getNonIptcBlocks();
             final List<IptcRecord> newRecords = new ArrayList<>();
-            final PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,
-                    newBlocks);
+            final PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords, newBlocks);
             final byte[] segmentBytes = new IptcParser().writePhotoshopApp13Segment(newData);
-            final JFIFPieceSegment newSegment = new JFIFPieceSegment(
-                    oldSegment.marker, segmentBytes);
+            final JFIFPieceSegment newSegment = new JFIFPieceSegment(oldSegment.marker, segmentBytes);
             newPieces.add(oldPieces.indexOf(oldSegment), newSegment);
         }
         writeSegments(os, newPieces);
     }
 
     /**
-     * Reads a JPEG image, removes all IPTC data from the App13 segment but
-     * leaves the other data in that segment (if present) unchanged and writes
-     * the result to a stream.
+     * Reads a JPEG image, removes all IPTC data from the App13 segment but leaves the other data in that segment (if present) unchanged and writes the result
+     * to a stream.
      * <p>
      *
-     * @param src
-     *            Image file.
-     * @param os
-     *            OutputStream to write the image to.
+     * @param src Image file.
+     * @param os  OutputStream to write the image to.
      *
-     * @throws ImagingException if there are more than one Photoshop App13 segment, or if
-     *         the Photoshop segment cannot be parsed
-     * @throws IOException if it fails to read from the origin byte source, or to write to the
-     *         target byte source
+     * @throws ImagingException if there are more than one Photoshop App13 segment, or if the Photoshop segment cannot be parsed
+     * @throws IOException      if it fails to read from the origin byte source, or to write to the target byte source
      * @throws ImagingException if it fails to write the target image
      * @see java.io.File
      * @see java.io.OutputStream
      */
-    public void removeIptc(final File src, final OutputStream os)
-            throws ImagingException, IOException, ImagingException {
+    public void removeIptc(final File src, final OutputStream os) throws ImagingException, IOException, ImagingException {
         removeIptc(src, os, false);
     }
 
     /**
-     * Reads a JPEG image, removes all IPTC data from the App13 segment but
-     * leaves the other data in that segment (if present) unchanged (unless
-     * removeSegment is true) and writes the result to a stream.
+     * Reads a JPEG image, removes all IPTC data from the App13 segment but leaves the other data in that segment (if present) unchanged (unless removeSegment
+     * is true) and writes the result to a stream.
      * <p>
      *
-     * @param src
-     *            Image file.
-     * @param os
-     *            OutputStream to write the image to.
-     * @param removeSegment
-     *            Remove the App13 segment.
+     * @param src           Image file.
+     * @param os            OutputStream to write the image to.
+     * @param removeSegment Remove the App13 segment.
      *
      * @see java.io.File
      * @see java.io.OutputStream
-     * @throws ImagingException if there are more than one Photoshop App13 segment, or if
-     *         the Photoshop segment cannot be parsed
-     * @throws IOException if it fails to read from the origin byte source, or to write to the
-     *         target byte source
+     * @throws ImagingException if there are more than one Photoshop App13 segment, or if the Photoshop segment cannot be parsed
+     * @throws IOException      if it fails to read from the origin byte source, or to write to the target byte source
      * @throws ImagingException if it fails to write the target image
      */
-    public void removeIptc(final File src, final OutputStream os, final boolean removeSegment)
-            throws ImagingException, IOException, ImagingException {
+    public void removeIptc(final File src, final OutputStream os, final boolean removeSegment) throws ImagingException, IOException, ImagingException {
         final ByteSource byteSource = ByteSource.file(src);
         removeIptc(byteSource, os, removeSegment);
     }
 
     /**
-     * Reads a JPEG image, removes all IPTC data from the App13 segment but
-     * leaves the other data in that segment (if present) unchanged and writes
-     * the result to a stream.
+     * Reads a JPEG image, removes all IPTC data from the App13 segment but leaves the other data in that segment (if present) unchanged and writes the result
+     * to a stream.
      * <p>
      *
-     * @param src
-     *            InputStream containing JPEG image data.
-     * @param os
-     *            OutputStream to write the image to.
-     * @throws ImagingException if there are more than one Photoshop App13 segment, or if
-     *         the Photoshop segment cannot be parsed
-     * @throws IOException if it fails to read from the origin byte source, or to write to the
-     *         target byte source
+     * @param src InputStream containing JPEG image data.
+     * @param os  OutputStream to write the image to.
+     * @throws ImagingException if there are more than one Photoshop App13 segment, or if the Photoshop segment cannot be parsed
+     * @throws IOException      if it fails to read from the origin byte source, or to write to the target byte source
      * @throws ImagingException if it fails to write the target image
      */
-    public void removeIptc(final InputStream src, final OutputStream os)
-            throws ImagingException, IOException, ImagingException {
+    public void removeIptc(final InputStream src, final OutputStream os) throws ImagingException, IOException, ImagingException {
         removeIptc(src, os, false);
     }
 
     /**
-     * Reads a JPEG image, removes all IPTC data from the App13 segment but
-     * leaves the other data in that segment (if present) unchanged (unless
-     * removeSegment is true) and writes the result to a stream.
+     * Reads a JPEG image, removes all IPTC data from the App13 segment but leaves the other data in that segment (if present) unchanged (unless removeSegment
+     * is true) and writes the result to a stream.
      * <p>
      *
-     * @param src
-     *            InputStream containing JPEG image data.
-     * @param os
-     *            OutputStream to write the image to.
-     * @param removeSegment
-     *            Remove the App13 segment.
-     * @throws ImagingException if there are more than one Photoshop App13 segment, or if
-     *         the Photoshop segment cannot be parsed
-     * @throws IOException if it fails to read from the origin byte source, or to write to the
-     *         target byte source
+     * @param src           InputStream containing JPEG image data.
+     * @param os            OutputStream to write the image to.
+     * @param removeSegment Remove the App13 segment.
+     * @throws ImagingException if there are more than one Photoshop App13 segment, or if the Photoshop segment cannot be parsed
+     * @throws IOException      if it fails to read from the origin byte source, or to write to the target byte source
      * @throws ImagingException if it fails to write the target image
      */
-    public void removeIptc(final InputStream src, final OutputStream os, final boolean removeSegment)
-            throws ImagingException, IOException, ImagingException {
+    public void removeIptc(final InputStream src, final OutputStream os, final boolean removeSegment) throws ImagingException, IOException, ImagingException {
         final ByteSource byteSource = ByteSource.inputStream(src, null);
         removeIptc(byteSource, os, removeSegment);
     }
 
     /**
-     * Reads a JPEG image, replaces the IPTC data in the App13 segment but
-     * leaves the other data in that segment (if present) unchanged and writes
-     * the result to a stream.
+     * Reads a JPEG image, replaces the IPTC data in the App13 segment but leaves the other data in that segment (if present) unchanged and writes the result to
+     * a stream.
      *
-     * @param src
-     *            Byte array containing JPEG image data.
-     * @param os
-     *            OutputStream to write the image to.
-     * @param newData
-     *            structure containing IPTC data.
-     * @throws ImagingException if there are more than one Photoshop App13 segment, or if
-     *         the Photoshop segment cannot be parsed
-     * @throws IOException if it fails to read from the origin byte source, or to write to the
-     *         target byte source
+     * @param src     Byte array containing JPEG image data.
+     * @param os      OutputStream to write the image to.
+     * @param newData structure containing IPTC data.
+     * @throws ImagingException if there are more than one Photoshop App13 segment, or if the Photoshop segment cannot be parsed
+     * @throws IOException      if it fails to read from the origin byte source, or to write to the target byte source
      * @throws ImagingException if it fails to write the target image
      */
-    public void writeIptc(final byte[] src, final OutputStream os,
-            final PhotoshopApp13Data newData) throws ImagingException, IOException,
-            ImagingException {
+    public void writeIptc(final byte[] src, final OutputStream os, final PhotoshopApp13Data newData) throws ImagingException, IOException, ImagingException {
         final ByteSource byteSource = ByteSource.array(src);
         writeIptc(byteSource, os, newData);
     }
 
     /**
-     * Reads a JPEG image, replaces the IPTC data in the App13 segment but
-     * leaves the other data in that segment (if present) unchanged and writes
-     * the result to a stream.
+     * Reads a JPEG image, replaces the IPTC data in the App13 segment but leaves the other data in that segment (if present) unchanged and writes the result to
+     * a stream.
      *
-     * @param byteSource
-     *            ByteSource containing JPEG image data.
-     * @param os
-     *            OutputStream to write the image to.
-     * @param newData
-     *            structure containing IPTC data.
-     * @throws ImagingException if there are more than one Photoshop App13 segment, or if
-     *         the Photoshop segment cannot be parsed
-     * @throws IOException if it fails to read from the origin byte source, or to write to the
-     *         target byte source
+     * @param byteSource ByteSource containing JPEG image data.
+     * @param os         OutputStream to write the image to.
+     * @param newData    structure containing IPTC data.
+     * @throws ImagingException if there are more than one Photoshop App13 segment, or if the Photoshop segment cannot be parsed
+     * @throws IOException      if it fails to read from the origin byte source, or to write to the target byte source
      * @throws ImagingException if it fails to write the target image
      */
-    public void writeIptc(final ByteSource byteSource, final OutputStream os,
-            PhotoshopApp13Data newData) throws ImagingException, IOException,
-            ImagingException {
+    public void writeIptc(final ByteSource byteSource, final OutputStream os, PhotoshopApp13Data newData)
+            throws ImagingException, IOException, ImagingException {
         final JFIFPieces jfifPieces = analyzeJfif(byteSource);
         final List<JFIFPiece> oldPieces = jfifPieces.pieces;
         final List<JFIFPiece> photoshopApp13Segments = findPhotoshopApp13Segments(oldPieces);
 
         if (photoshopApp13Segments.size() > 1) {
-            throw new ImagingException(
-                    "Image contains more than one Photoshop App13 segment.");
+            throw new ImagingException("Image contains more than one Photoshop App13 segment.");
         }
         List<JFIFPiece> newPieces = removePhotoshopApp13Segments(oldPieces);
 
@@ -319,48 +249,34 @@ public class JpegIptcRewriter extends JpegRewriter {
     }
 
     /**
-     * Reads a JPEG image, replaces the IPTC data in the App13 segment but
-     * leaves the other data in that segment (if present) unchanged and writes
-     * the result to a stream.
+     * Reads a JPEG image, replaces the IPTC data in the App13 segment but leaves the other data in that segment (if present) unchanged and writes the result to
+     * a stream.
      *
-     * @param src
-     *            Image file.
-     * @param os
-     *            OutputStream to write the image to.
-     * @param newData
-     *            structure containing IPTC data.
-     * @throws ImagingException if there are more than one Photoshop App13 segment, or if
-     *         the Photoshop segment cannot be parsed
-     * @throws IOException if it fails to read from the origin byte source, or to write to the
-     *         target byte source
+     * @param src     Image file.
+     * @param os      OutputStream to write the image to.
+     * @param newData structure containing IPTC data.
+     * @throws ImagingException if there are more than one Photoshop App13 segment, or if the Photoshop segment cannot be parsed
+     * @throws IOException      if it fails to read from the origin byte source, or to write to the target byte source
      * @throws ImagingException if it fails to write the target image
      */
-    public void writeIptc(final File src, final OutputStream os, final PhotoshopApp13Data newData)
-            throws ImagingException, IOException, ImagingException {
+    public void writeIptc(final File src, final OutputStream os, final PhotoshopApp13Data newData) throws ImagingException, IOException, ImagingException {
         final ByteSource byteSource = ByteSource.file(src);
         writeIptc(byteSource, os, newData);
     }
 
     /**
-     * Reads a JPEG image, replaces the IPTC data in the App13 segment but
-     * leaves the other data in that segment (if present) unchanged and writes
-     * the result to a stream.
+     * Reads a JPEG image, replaces the IPTC data in the App13 segment but leaves the other data in that segment (if present) unchanged and writes the result to
+     * a stream.
      *
-     * @param src
-     *            InputStream containing JPEG image data.
-     * @param os
-     *            OutputStream to write the image to.
-     * @param newData
-     *            structure containing IPTC data.
-     * @throws ImagingException if there are more than one Photoshop App13 segment, or if
-     *         the Photoshop segment cannot be parsed
-     * @throws IOException if it fails to read from the origin byte source, or to write to the
-     *         target byte source
+     * @param src     InputStream containing JPEG image data.
+     * @param os      OutputStream to write the image to.
+     * @param newData structure containing IPTC data.
+     * @throws ImagingException if there are more than one Photoshop App13 segment, or if the Photoshop segment cannot be parsed
+     * @throws IOException      if it fails to read from the origin byte source, or to write to the target byte source
      * @throws ImagingException if it fails to write the target image
      */
-    public void writeIptc(final InputStream src, final OutputStream os,
-            final PhotoshopApp13Data newData) throws ImagingException, IOException,
-            ImagingException {
+    public void writeIptc(final InputStream src, final OutputStream os, final PhotoshopApp13Data newData)
+            throws ImagingException, IOException, ImagingException {
         final ByteSource byteSource = ByteSource.inputStream(src, null);
         writeIptc(byteSource, os, newData);
     }

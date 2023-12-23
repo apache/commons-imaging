@@ -20,9 +20,7 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
 public class TagInfoAsciiOrRational extends TagInfo {
-    public TagInfoAsciiOrRational(final String name, final int tag, final int length,
-            final TiffDirectoryType directoryType) {
-        super(name, tag, AbstractFieldType.ASCII_OR_RATIONAL, length,
-                directoryType, false);
+    public TagInfoAsciiOrRational(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
+        super(name, tag, AbstractFieldType.ASCII_OR_RATIONAL, length, directoryType, false);
     }
 }

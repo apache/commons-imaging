@@ -19,8 +19,7 @@ package org.apache.commons.imaging.formats.tiff.constants;
 import java.nio.ByteOrder;
 
 /**
- * Defines constants for internal elements from TIFF files and for allowing
- * applications to define parameters for reading and writing TIFF files.
+ * Defines constants for internal elements from TIFF files and for allowing applications to define parameters for reading and writing TIFF files.
  */
 public final class TiffConstants {
 
@@ -56,18 +55,14 @@ public final class TiffConstants {
     public static final int TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE = 2;
 
     /**
-     * Specifies a larger strip-size to be used for compression. This setting
-     * generally produces smaller output files, but requires a slightly longer
-     * processing time. Used in conjunction with the
-     * PARAM_KEY_LZW_COMPRESSION_STRIP_SIZE
+     * Specifies a larger strip-size to be used for compression. This setting generally produces smaller output files, but requires a slightly longer processing
+     * time. Used in conjunction with the PARAM_KEY_LZW_COMPRESSION_STRIP_SIZE
      */
     public static final int TIFF_LZW_COMPRESSION_BLOCK_SIZE_MEDIUM = 32768;
 
     /**
-     * Specifies a larger strip-size to be used for compression. This setting
-     * generally produces smaller output files, but requires a slightly longer
-     * processing time. Used in conjunction with the
-     * PARAM_KEY_LZW_COMPRESSION_STRIP_SIZE
+     * Specifies a larger strip-size to be used for compression. This setting generally produces smaller output files, but requires a slightly longer processing
+     * time. Used in conjunction with the PARAM_KEY_LZW_COMPRESSION_STRIP_SIZE
      */
     public static final int TIFF_LZW_COMPRESSION_BLOCK_SIZE_LARGE = 65536;
 

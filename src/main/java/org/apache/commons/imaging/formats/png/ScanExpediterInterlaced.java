@@ -32,14 +32,10 @@ final class ScanExpediterInterlaced extends AbstractScanExpediter {
 //    private static final int[] Block_Height = { 8, 8, 4, 4, 2, 2, 1 };
 //    private static final int[] Block_Width = { 8, 4, 4, 2, 2, 1, 1 };
 
-    ScanExpediterInterlaced(final int width, final int height, final InputStream is,
-            final BufferedImage bi,
-            final PngColorType pngColorType, final int bitDepth, final int bitsPerPixel,
-            final PngChunkPlte pngChunkPLTE,
-            final GammaCorrection gammaCorrection,
+    ScanExpediterInterlaced(final int width, final int height, final InputStream is, final BufferedImage bi, final PngColorType pngColorType,
+            final int bitDepth, final int bitsPerPixel, final PngChunkPlte pngChunkPLTE, final GammaCorrection gammaCorrection,
             final AbstractTransparencyFilter abstractTransparencyFilter) {
-        super(width, height, is, bi, pngColorType, bitDepth, bitsPerPixel,
-                pngChunkPLTE, gammaCorrection, abstractTransparencyFilter);
+        super(width, height, is, bi, pngColorType, bitDepth, bitsPerPixel, pngChunkPLTE, gammaCorrection, abstractTransparencyFilter);
     }
 
     @Override
@@ -51,14 +47,14 @@ final class ScanExpediterInterlaced extends AbstractScanExpediter {
 
             int y = STARTING_ROW[pass - 1];
             // int y_stride = ROW_INCREMENT[pass - 1];
-            //final boolean rows_in_pass = (y < height);
+            // final boolean rows_in_pass = (y < height);
             while (y < height) {
                 int x = STARTING_COL[pass - 1];
                 int pixelIndexInScanline = 0;
 
                 if (x < width) {
                     // only get data if there are pixels in this scanline/pass
-                    final int columnsInRow = 1 + ((width - STARTING_COL[pass - 1] - 1) / COL_INCREMENT[pass - 1]);
+                    final int columnsInRow = 1 + (width - STARTING_COL[pass - 1] - 1) / COL_INCREMENT[pass - 1];
                     final int bitsPerScanLine = bitsPerPixel * columnsInRow;
                     final int pixelBytesPerScanLine = getBitsToBytesRoundingUp(bitsPerScanLine);
 
@@ -81,8 +77,7 @@ final class ScanExpediterInterlaced extends AbstractScanExpediter {
         }
     }
 
-    private void visit(final int x, final int y, final BufferedImage bi, final BitParser fBitParser,
-            final int pixelIndexInScanline)
+    private void visit(final int x, final int y, final BufferedImage bi, final BitParser fBitParser, final int pixelIndexInScanline)
             throws ImagingException, IOException {
         final int rgb = getRgb(fBitParser, pixelIndexInScanline);
         bi.setRGB(x, y, rgb);

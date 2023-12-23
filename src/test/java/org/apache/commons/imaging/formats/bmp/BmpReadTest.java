@@ -50,16 +50,14 @@ public class BmpReadTest extends AbstractBmpTest {
     }
 
     /**
-     * Test that when the value of the mask parameter is zero, getMaskShift won't
-     * get stuck in one of its while loops.
+     * Test that when the value of the mask parameter is zero, getMaskShift won't get stuck in one of its while loops.
      *
      * @throws IOException
      * @throws ImagingException
      */
     @Test
     public void testGetMaskShiftZeroMask() throws ImagingException, IOException {
-        final File inputFile = new File(ImagingTestConstants.TEST_IMAGE_FOLDER +
-                "/bmp/5/@broken/timeout-bd15dbfa26b4e88070de540c6603039e8a88626f");
+        final File inputFile = new File(ImagingTestConstants.TEST_IMAGE_FOLDER + "/bmp/5/@broken/timeout-bd15dbfa26b4e88070de540c6603039e8a88626f");
         new BmpImageParser().dumpImageFile(ByteSource.file(inputFile));
     }
 

@@ -16,8 +16,6 @@
  */
 
 /**
- * Classes for TIFF photometric interpretation (specifies the intended
- * interpretation of the image pixel data).
+ * Classes for TIFF photometric interpretation (specifies the intended interpretation of the image pixel data).
  */
 package org.apache.commons.imaging.formats.tiff.photometricinterpreters;
-

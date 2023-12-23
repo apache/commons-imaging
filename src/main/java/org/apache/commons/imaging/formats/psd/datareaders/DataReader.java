@@ -24,10 +24,8 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
-public interface  DataReader {
+public interface DataReader {
 
-    void readData(InputStream is, BufferedImage bi,
-            PsdImageContents imageContents, BinaryFileParser bfp)
-            throws ImagingException, IOException;
+    void readData(InputStream is, BufferedImage bi, PsdImageContents imageContents, BinaryFileParser bfp) throws ImagingException, IOException;
 
 }

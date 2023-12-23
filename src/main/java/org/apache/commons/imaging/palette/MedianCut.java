@@ -21,6 +21,5 @@ import java.util.List;
 import org.apache.commons.imaging.ImagingException;
 
 public interface MedianCut {
-    boolean performNextMedianCut(List<ColorGroup> colorGroups, boolean ignoreAlpha)
-            throws ImagingException;
+    boolean performNextMedianCut(List<ColorGroup> colorGroups, boolean ignoreAlpha) throws ImagingException;
 }

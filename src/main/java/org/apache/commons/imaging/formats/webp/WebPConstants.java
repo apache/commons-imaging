@@ -26,22 +26,18 @@ import org.apache.commons.imaging.common.BinaryConstant;
 public final class WebPConstants {
 
     /*
-     * WebP_File_Header {
-     *     uint8_t  riff_signature[4];  // "RIFF"
-     *     uint32_t file_size;
-     *     uint8_t  webp_signature[4];  // "WEBP"
-     * }
+     * WebP_File_Header { uint8_t riff_signature[4]; // "RIFF" uint32_t file_size; uint8_t webp_signature[4]; // "WEBP" }
      */
 
     /**
      * The RIFF signature.
      */
-    public static final BinaryConstant RIFF_SIGNATURE = new BinaryConstant(new byte[]{'R', 'I', 'F', 'F'});
+    public static final BinaryConstant RIFF_SIGNATURE = new BinaryConstant(new byte[] { 'R', 'I', 'F', 'F' });
 
     /**
      * The WebP signature.
      */
-    public static final BinaryConstant WEBP_SIGNATURE = new BinaryConstant(new byte[]{'W', 'E', 'B', 'P'});
+    public static final BinaryConstant WEBP_SIGNATURE = new BinaryConstant(new byte[] { 'W', 'E', 'B', 'P' });
 
     private WebPConstants() {
     }

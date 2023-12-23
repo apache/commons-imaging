@@ -36,8 +36,7 @@ public class PngTextTest extends AbstractPngTest {
     public void test() throws Exception {
         final int width = 1;
         final int height = 1;
-        final BufferedImage srcImage = new BufferedImage(width, height,
-                BufferedImage.TYPE_INT_ARGB);
+        final BufferedImage srcImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         srcImage.setRGB(0, 0, Color.red.getRGB());
 
         final PngImagingParameters writeParams = new PngImagingParameters();
@@ -58,8 +57,7 @@ public class PngTextTest extends AbstractPngTest {
             final String text = "f";
             final String languageTag = "g";
             final String translatedKeyword = "h";
-            writeTexts.add(new AbstractPngText.Itxt(keyword, text, languageTag,
-                    translatedKeyword));
+            writeTexts.add(new AbstractPngText.Itxt(keyword, text, languageTag, translatedKeyword));
         }
 
         writeParams.setTextChunks(writeTexts);

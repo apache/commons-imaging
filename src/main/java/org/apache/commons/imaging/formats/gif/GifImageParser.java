@@ -64,51 +64,50 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
     private static final byte[] GIF_HEADER_SIGNATURE = { 71, 73, 70 };
     private static final int EXTENSION_CODE = 0x21;
     private static final int IMAGE_SEPARATOR = 0x2C;
-    private static final int GRAPHIC_CONTROL_EXTENSION = (EXTENSION_CODE << 8) | 0xf9;
+    private static final int GRAPHIC_CONTROL_EXTENSION = EXTENSION_CODE << 8 | 0xf9;
     private static final int COMMENT_EXTENSION = 0xfe;
     private static final int PLAIN_TEXT_EXTENSION = 0x01;
     private static final int XMP_EXTENSION = 0xff;
     private static final int TERMINATOR_BYTE = 0x3b;
     private static final int APPLICATION_EXTENSION_LABEL = 0xff;
-    private static final int XMP_COMPLETE_CODE = (EXTENSION_CODE << 8) | XMP_EXTENSION;
+    private static final int XMP_COMPLETE_CODE = EXTENSION_CODE << 8 | XMP_EXTENSION;
     private static final int LOCAL_COLOR_TABLE_FLAG_MASK = 1 << 7;
     private static final int INTERLACE_FLAG_MASK = 1 << 6;
     private static final int SORT_FLAG_MASK = 1 << 5;
-    private static final byte[] XMP_APPLICATION_ID_AND_AUTH_CODE = {
-        0x58, // X
-        0x4D, // M
-        0x50, // P
-        0x20, //
-        0x44, // D
-        0x61, // a
-        0x74, // t
-        0x61, // a
-        0x58, // X
-        0x4D, // M
-        0x50, // P
+    private static final byte[] XMP_APPLICATION_ID_AND_AUTH_CODE = { 0x58, // X
+            0x4D, // M
+            0x50, // P
+            0x20, //
+            0x44, // D
+            0x61, // a
+            0x74, // t
+            0x61, // a
+            0x58, // X
+            0x4D, // M
+            0x50, // P
     };
 
     // Made internal for testability.
     static DisposalMethod createDisposalMethodFromIntValue(final int value) throws ImagingException {
         switch (value) {
-            case 0:
-                return DisposalMethod.UNSPECIFIED;
-            case 1:
-                return DisposalMethod.DO_NOT_DISPOSE;
-            case 2:
-                return DisposalMethod.RESTORE_TO_BACKGROUND;
-            case 3:
-                return DisposalMethod.RESTORE_TO_PREVIOUS;
-            case 4:
-                return DisposalMethod.TO_BE_DEFINED_1;
-            case 5:
-                return DisposalMethod.TO_BE_DEFINED_2;
-            case 6:
-                return DisposalMethod.TO_BE_DEFINED_3;
-            case 7:
-                return DisposalMethod.TO_BE_DEFINED_4;
-            default:
-                throw new ImagingException("GIF: Invalid parsing of disposal method");
+        case 0:
+            return DisposalMethod.UNSPECIFIED;
+        case 1:
+            return DisposalMethod.DO_NOT_DISPOSE;
+        case 2:
+            return DisposalMethod.RESTORE_TO_BACKGROUND;
+        case 3:
+            return DisposalMethod.RESTORE_TO_PREVIOUS;
+        case 4:
+            return DisposalMethod.TO_BE_DEFINED_1;
+        case 5:
+            return DisposalMethod.TO_BE_DEFINED_2;
+        case 6:
+            return DisposalMethod.TO_BE_DEFINED_3;
+        case 7:
+            return DisposalMethod.TO_BE_DEFINED_4;
+        default:
+            throw new ImagingException("GIF: Invalid parsing of disposal method");
         }
     }
 
@@ -121,8 +120,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
     }
 
     @Override
-    public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
-            throws ImagingException, IOException {
+    public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource) throws ImagingException, IOException {
         pw.println("gif.dumpImageFile");
 
         final ImageInfo imageData = getImageInfo(byteSource);
@@ -137,9 +135,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
         pw.println("gif.blocks: " + blocks.blocks.size());
         for (int i = 0; i < blocks.blocks.size(); i++) {
             final GifBlock gifBlock = blocks.blocks.get(i);
-            this.debugNumber(pw, "\t" + i + " ("
-                    + gifBlock.getClass().getName() + ")",
-                    gifBlock.blockCode, 4);
+            this.debugNumber(pw, "\t" + i + " (" + gifBlock.getClass().getName() + ")", gifBlock.blockCode, 4);
         }
 
         pw.println("");
@@ -148,8 +144,8 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
     }
 
     /**
-     * See {@link GifImageParser#readBlocks} for reference how the blocks are created. They should match
-     * the code we are giving here, returning the correct class type. Internal only.
+     * See {@link GifImageParser#readBlocks} for reference how the blocks are created. They should match the code we are giving here, returning the correct
+     * class type. Internal only.
      */
     @SuppressWarnings("unchecked")
     private <T extends GifBlock> List<T> findAllBlocks(final List<GifBlock> blocks, final int code) {
@@ -200,15 +196,13 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
     }
 
     private GifImageData findFirstImageData(final GifImageContents imageContents) throws ImagingException {
-        final ImageDescriptor descriptor = (ImageDescriptor) findBlock(imageContents.blocks,
-                IMAGE_SEPARATOR);
+        final ImageDescriptor descriptor = (ImageDescriptor) findBlock(imageContents.blocks, IMAGE_SEPARATOR);
 
         if (descriptor == null) {
             throw new ImagingException("GIF: Couldn't read Image Descriptor");
         }
 
-        final GraphicControlExtension gce = (GraphicControlExtension) findBlock(
-                imageContents.blocks, GRAPHIC_CONTROL_EXTENSION);
+        final GraphicControlExtension gce = (GraphicControlExtension) findBlock(imageContents.blocks, GRAPHIC_CONTROL_EXTENSION);
 
         return new GifImageData(descriptor, gce);
     }
@@ -225,8 +219,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
     }
 
     @Override
-    public List<BufferedImage> getAllBufferedImages(final ByteSource byteSource)
-            throws ImagingException, IOException {
+    public List<BufferedImage> getAllBufferedImages(final ByteSource byteSource) throws ImagingException, IOException {
         final GifImageContents imageContents = readFile(byteSource, false);
 
         final GifHeaderInfo ghi = imageContents.gifHeaderInfo;
@@ -243,8 +236,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
     }
 
     @Override
-    public BufferedImage getBufferedImage(final ByteSource byteSource, final GifImagingParameters params)
-            throws ImagingException, IOException {
+    public BufferedImage getBufferedImage(final ByteSource byteSource, final GifImagingParameters params) throws ImagingException, IOException {
         final GifImageContents imageContents = readFile(byteSource, false);
 
         final GifHeaderInfo ghi = imageContents.gifHeaderInfo;
@@ -291,7 +283,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
         final int rowsInPass1 = (height + 7) / 8;
         final int rowsInPass2 = (height + 3) / 8;
         final int rowsInPass3 = (height + 1) / 4;
-        final int rowsInPass4 = (height) / 2;
+        final int rowsInPass4 = height / 2;
 
         for (int row = 0; row < height; row++) {
             int y;
@@ -301,18 +293,18 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
                     y = theRow * 8;
                 } else {
                     theRow -= rowsInPass1;
-                    if (theRow < (rowsInPass2)) {
-                        y = 4 + (theRow * 8);
+                    if (theRow < rowsInPass2) {
+                        y = 4 + theRow * 8;
                     } else {
                         theRow -= rowsInPass2;
-                        if (theRow < (rowsInPass3)) {
-                            y = 2 + (theRow * 4);
+                        if (theRow < rowsInPass3) {
+                            y = 2 + theRow * 4;
                         } else {
                             theRow -= rowsInPass3;
-                            if (theRow >= (rowsInPass4)) {
+                            if (theRow >= rowsInPass4) {
                                 throw new ImagingException("Gif: Strange Row");
                             }
-                            y = 1 + (theRow * 2);
+                            y = 1 + theRow * 2;
                         }
                     }
                 }
@@ -343,22 +335,21 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
     }
 
     private int[] getColorTable(final byte[] bytes) throws ImagingException {
-        if ((bytes.length % 3) != 0) {
-            throw new ImagingException("Bad Color Table Length: "
-                    + bytes.length);
+        if (bytes.length % 3 != 0) {
+            throw new ImagingException("Bad Color Table Length: " + bytes.length);
         }
         final int length = bytes.length / 3;
 
         final int[] result = Allocator.intArray(length);
 
         for (int i = 0; i < length; i++) {
-            final int red = 0xff & bytes[(i * 3) + 0];
-            final int green = 0xff & bytes[(i * 3) + 1];
-            final int blue = 0xff & bytes[(i * 3) + 2];
+            final int red = 0xff & bytes[i * 3 + 0];
+            final int green = 0xff & bytes[i * 3 + 1];
+            final int blue = 0xff & bytes[i * 3 + 2];
 
             final int alpha = 0xff;
 
-            final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+            final int rgb = alpha << 24 | red << 16 | green << 8 | blue << 0;
             result[i] = rgb;
         }
 
@@ -390,10 +381,8 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
     }
 
     @Override
-    public FormatCompliance getFormatCompliance(final ByteSource byteSource)
-            throws ImagingException, IOException {
-        final FormatCompliance result = new FormatCompliance(
-                byteSource.toString());
+    public FormatCompliance getFormatCompliance(final ByteSource byteSource) throws ImagingException, IOException {
+        final FormatCompliance result = new FormatCompliance(byteSource.toString());
 
         readFile(byteSource, false, result);
 
@@ -401,14 +390,12 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
     }
 
     @Override
-    public byte[] getIccProfileBytes(final ByteSource byteSource, final GifImagingParameters params)
-            throws ImagingException, IOException {
+    public byte[] getIccProfileBytes(final ByteSource byteSource, final GifImagingParameters params) throws ImagingException, IOException {
         return null;
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final GifImagingParameters params)
-            throws ImagingException, IOException {
+    public ImageInfo getImageInfo(final ByteSource byteSource, final GifImagingParameters params) throws ImagingException, IOException {
         final GifImageContents blocks = readFile(byteSource, GifImagingParameters.getStopReadingBeforeImageData(params));
 
         final GifHeaderInfo bhi = blocks.gifHeaderInfo;
@@ -416,20 +403,18 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
             throw new ImagingException("GIF: Couldn't read Header");
         }
 
-        final ImageDescriptor id = (ImageDescriptor) findBlock(blocks.blocks,
-                IMAGE_SEPARATOR);
+        final ImageDescriptor id = (ImageDescriptor) findBlock(blocks.blocks, IMAGE_SEPARATOR);
         if (id == null) {
             throw new ImagingException("GIF: Couldn't read ImageDescriptor");
         }
 
-        final GraphicControlExtension gce = (GraphicControlExtension) findBlock(
-                blocks.blocks, GRAPHIC_CONTROL_EXTENSION);
+        final GraphicControlExtension gce = (GraphicControlExtension) findBlock(blocks.blocks, GRAPHIC_CONTROL_EXTENSION);
 
         final int height = bhi.logicalScreenHeight;
         final int width = bhi.logicalScreenWidth;
 
         final List<String> comments = getComments(blocks.blocks);
-        final int bitsPerPixel = (bhi.colorResolution + 1);
+        final int bitsPerPixel = bhi.colorResolution + 1;
         final ImageFormat format = ImageFormats.GIF;
         final String formatName = "Graphics Interchange Format";
         final String mimeType = "image/gif";
@@ -443,9 +428,8 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
         final int physicalHeightDpi = 72;
         final float physicalHeightInch = (float) ((double) height / (double) physicalHeightDpi);
 
-        final String formatDetails = "GIF " + ((char) blocks.gifHeaderInfo.version1)
-                + ((char) blocks.gifHeaderInfo.version2)
-                + ((char) blocks.gifHeaderInfo.version3);
+        final String formatDetails = "GIF " + (char) blocks.gifHeaderInfo.version1 + (char) blocks.gifHeaderInfo.version2
+                + (char) blocks.gifHeaderInfo.version3;
 
         boolean transparent = false;
         if (gce != null && gce.transparency) {
@@ -456,16 +440,12 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
         final ImageInfo.ColorType colorType = ImageInfo.ColorType.RGB;
         final ImageInfo.CompressionAlgorithm compressionAlgorithm = ImageInfo.CompressionAlgorithm.LZW;
 
-        return new ImageInfo(formatDetails, bitsPerPixel, comments,
-                format, formatName, height, mimeType, numberOfImages,
-                physicalHeightDpi, physicalHeightInch, physicalWidthDpi,
-                physicalWidthInch, width, progressive, transparent,
-                usesPalette, colorType, compressionAlgorithm);
+        return new ImageInfo(formatDetails, bitsPerPixel, comments, format, formatName, height, mimeType, numberOfImages, physicalHeightDpi, physicalHeightInch,
+                physicalWidthDpi, physicalWidthInch, width, progressive, transparent, usesPalette, colorType, compressionAlgorithm);
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final GifImagingParameters params)
-            throws ImagingException, IOException {
+    public Dimension getImageSize(final ByteSource byteSource, final GifImagingParameters params) throws ImagingException, IOException {
         final GifImageContents blocks = readFile(byteSource, false);
 
         final GifHeaderInfo bhi = blocks.gifHeaderInfo;
@@ -482,8 +462,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
     }
 
     @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final GifImagingParameters params)
-            throws ImagingException, IOException {
+    public ImageMetadata getMetadata(final ByteSource byteSource, final GifImagingParameters params) throws ImagingException, IOException {
         final GifImageContents imageContents = readFile(byteSource, GifImagingParameters.getStopReadingBeforeImageData(params));
 
         final GifHeaderInfo bhi = imageContents.gifHeaderInfo;
@@ -509,15 +488,12 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
      * Extracts embedded XML metadata as XML string.
      * <p>
      *
-     * @param byteSource
-     *            File containing image data.
-     * @param params
-     *            Map of optional parameters, defined in ImagingConstants.
+     * @param byteSource File containing image data.
+     * @param params     Map of optional parameters, defined in ImagingConstants.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     @Override
-    public String getXmpXml(final ByteSource byteSource, final XmpImagingParameters<GifImagingParameters> params)
-            throws ImagingException, IOException {
+    public String getXmpXml(final ByteSource byteSource, final XmpImagingParameters<GifImagingParameters> params) throws ImagingException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             final GifHeaderInfo ghi = readHeader(is, null);
 
@@ -540,9 +516,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
                     continue;
                 }
 
-                if (!compareBytes(blockBytes, 0,
-                        XMP_APPLICATION_ID_AND_AUTH_CODE, 0,
-                        XMP_APPLICATION_ID_AND_AUTH_CODE.length)) {
+                if (!compareBytes(blockBytes, 0, XMP_APPLICATION_ID_AND_AUTH_CODE, 0, XMP_APPLICATION_ID_AND_AUTH_CODE.length)) {
                     continue;
                 }
 
@@ -551,24 +525,16 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
                     gifMagicTrailer[magic] = (byte) (0xff - magic);
                 }
 
-                if (blockBytes.length < XMP_APPLICATION_ID_AND_AUTH_CODE.length
-                        + gifMagicTrailer.length) {
+                if (blockBytes.length < XMP_APPLICATION_ID_AND_AUTH_CODE.length + gifMagicTrailer.length) {
                     continue;
                 }
-                if (!compareBytes(blockBytes, blockBytes.length
-                        - gifMagicTrailer.length, gifMagicTrailer, 0,
-                        gifMagicTrailer.length)) {
-                    throw new ImagingException(
-                            "XMP block in GIF missing magic trailer.");
+                if (!compareBytes(blockBytes, blockBytes.length - gifMagicTrailer.length, gifMagicTrailer, 0, gifMagicTrailer.length)) {
+                    throw new ImagingException("XMP block in GIF missing magic trailer.");
                 }
 
                 // XMP is UTF-8 encoded xml.
-                final String xml = new String(
-                        blockBytes,
-                        XMP_APPLICATION_ID_AND_AUTH_CODE.length,
-                        blockBytes.length
-                                - (XMP_APPLICATION_ID_AND_AUTH_CODE.length + gifMagicTrailer.length),
-                                StandardCharsets.UTF_8);
+                final String xml = new String(blockBytes, XMP_APPLICATION_ID_AND_AUTH_CODE.length,
+                        blockBytes.length - (XMP_APPLICATION_ID_AND_AUTH_CODE.length + gifMagicTrailer.length), StandardCharsets.UTF_8);
                 result.add(xml);
             }
 
@@ -582,8 +548,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
         }
     }
 
-    private List<GifBlock> readBlocks(final GifHeaderInfo ghi, final InputStream is,
-            final boolean stopBeforeImageData, final FormatCompliance formatCompliance)
+    private List<GifBlock> readBlocks(final GifHeaderInfo ghi, final InputStream is, final boolean stopBeforeImageData, final FormatCompliance formatCompliance)
             throws ImagingException, IOException {
         final List<GifBlock> result = new ArrayList<>();
 
@@ -595,8 +560,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
                 throw new ImagingException("GIF: unexpected end of data");
 
             case IMAGE_SEPARATOR:
-                final ImageDescriptor id = readImageDescriptor(ghi, code, is,
-                        stopBeforeImageData, formatCompliance);
+                final ImageDescriptor id = readImageDescriptor(ghi, code, is, stopBeforeImageData, formatCompliance);
                 result.add(id);
                 // if (stopBeforeImageData)
                 // return result;
@@ -605,20 +569,17 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
 
             case EXTENSION_CODE: {
                 final int extensionCode = is.read();
-                final int completeCode = ((0xff & code) << 8)
-                        | (0xff & extensionCode);
+                final int completeCode = (0xff & code) << 8 | 0xff & extensionCode;
 
                 switch (extensionCode) {
                 case 0xf9:
-                    final GraphicControlExtension gce = readGraphicControlExtension(
-                            completeCode, is);
+                    final GraphicControlExtension gce = readGraphicControlExtension(completeCode, is);
                     result.add(gce);
                     break;
 
                 case COMMENT_EXTENSION:
                 case PLAIN_TEXT_EXTENSION: {
-                    final GenericGifBlock block = readGenericGifBlock(is,
-                            completeCode);
+                    final GenericGifBlock block = readGenericGifBlock(is, completeCode);
                     result.add(block);
                     break;
                 }
@@ -629,15 +590,11 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
                     final byte[] label = readSubBlock(is);
 
                     if (formatCompliance != null) {
-                        formatCompliance.addComment(
-                                "Unknown Application Extension ("
-                                        + new String(label, StandardCharsets.US_ASCII) + ")",
-                                completeCode);
+                        formatCompliance.addComment("Unknown Application Extension (" + new String(label, StandardCharsets.US_ASCII) + ")", completeCode);
                     }
 
                     if (label.length > 0) {
-                        final GenericGifBlock block = readGenericGifBlock(is,
-                                completeCode, label);
+                        final GenericGifBlock block = readGenericGifBlock(is, completeCode, label);
                         result.add(block);
                     }
                     break;
@@ -646,12 +603,10 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
                 default: {
 
                     if (formatCompliance != null) {
-                        formatCompliance.addComment("Unknown block",
-                                completeCode);
+                        formatCompliance.addComment("Unknown block", completeCode);
                     }
 
-                    final GenericGifBlock block = readGenericGifBlock(is,
-                            completeCode);
+                    final GenericGifBlock block = readGenericGifBlock(is, completeCode);
                     result.add(block);
                     break;
                 }
@@ -677,39 +632,31 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
         return readBytes("block", is, actualSize, "GIF: corrupt Color Table");
     }
 
-    private GifImageContents readFile(final ByteSource byteSource,
-            final boolean stopBeforeImageData) throws ImagingException, IOException {
-        return readFile(byteSource, stopBeforeImageData,
-                FormatCompliance.getDefault());
+    private GifImageContents readFile(final ByteSource byteSource, final boolean stopBeforeImageData) throws ImagingException, IOException {
+        return readFile(byteSource, stopBeforeImageData, FormatCompliance.getDefault());
     }
 
-    private GifImageContents readFile(final ByteSource byteSource,
-            final boolean stopBeforeImageData, final FormatCompliance formatCompliance)
+    private GifImageContents readFile(final ByteSource byteSource, final boolean stopBeforeImageData, final FormatCompliance formatCompliance)
             throws ImagingException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             final GifHeaderInfo ghi = readHeader(is, formatCompliance);
 
             byte[] globalColorTable = null;
             if (ghi.globalColorTableFlag) {
-                globalColorTable = readColorTable(is,
-                        ghi.sizeOfGlobalColorTable);
+                globalColorTable = readColorTable(is, ghi.sizeOfGlobalColorTable);
             }
 
-            final List<GifBlock> blocks = readBlocks(ghi, is, stopBeforeImageData,
-                    formatCompliance);
+            final List<GifBlock> blocks = readBlocks(ghi, is, stopBeforeImageData, formatCompliance);
 
-            return new GifImageContents(ghi, globalColorTable,
-                    blocks);
+            return new GifImageContents(ghi, globalColorTable, blocks);
         }
     }
 
-    private GenericGifBlock readGenericGifBlock(final InputStream is, final int code)
-            throws IOException {
+    private GenericGifBlock readGenericGifBlock(final InputStream is, final int code) throws IOException {
         return readGenericGifBlock(is, code, null);
     }
 
-    private GenericGifBlock readGenericGifBlock(final InputStream is, final int code,
-            final byte[] first) throws IOException {
+    private GenericGifBlock readGenericGifBlock(final InputStream is, final int code, final byte[] first) throws IOException {
         final List<byte[]> subBlocks = new ArrayList<>();
 
         if (first != null) {
@@ -727,27 +674,21 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
         return new GenericGifBlock(code, subBlocks);
     }
 
-    private GraphicControlExtension readGraphicControlExtension(final int code,
-            final InputStream is) throws IOException {
+    private GraphicControlExtension readGraphicControlExtension(final int code, final InputStream is) throws IOException {
         readByte("block_size", is, "GIF: corrupt GraphicControlExt");
-        final int packed = readByte("packed fields", is,
-                "GIF: corrupt GraphicControlExt");
+        final int packed = readByte("packed fields", is, "GIF: corrupt GraphicControlExt");
 
         final int dispose = (packed & 0x1c) >> 2; // disposal method
         final boolean transparency = (packed & 1) != 0;
 
         final int delay = read2Bytes("delay in milliseconds", is, "GIF: corrupt GraphicControlExt", getByteOrder());
-        final int transparentColorIndex = 0xff & readByte("transparent color index",
-                is, "GIF: corrupt GraphicControlExt");
+        final int transparentColorIndex = 0xff & readByte("transparent color index", is, "GIF: corrupt GraphicControlExt");
         readByte("block terminator", is, "GIF: corrupt GraphicControlExt");
 
-        return new GraphicControlExtension(code, packed, dispose, transparency,
-                delay, transparentColorIndex);
+        return new GraphicControlExtension(code, packed, dispose, transparency, delay, transparentColorIndex);
     }
 
-    private GifHeaderInfo readHeader(final InputStream is,
-            final FormatCompliance formatCompliance) throws ImagingException,
-            IOException {
+    private GifHeaderInfo readHeader(final InputStream is, final FormatCompliance formatCompliance) throws ImagingException, IOException {
         final byte identifier1 = readByte("identifier1", is, "Not a Valid GIF File");
         final byte identifier2 = readByte("identifier2", is, "Not a Valid GIF File");
         final byte identifier3 = readByte("identifier3", is, "Not a Valid GIF File");
@@ -757,78 +698,62 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
         final byte version3 = readByte("version3", is, "Not a Valid GIF File");
 
         if (formatCompliance != null) {
-            formatCompliance.compareBytes("Signature", GIF_HEADER_SIGNATURE,
-                    new byte[] { identifier1, identifier2, identifier3 });
+            formatCompliance.compareBytes("Signature", GIF_HEADER_SIGNATURE, new byte[] { identifier1, identifier2, identifier3 });
             formatCompliance.compare("version", 56, version1);
             formatCompliance.compare("version", new int[] { 55, 57, }, version2);
             formatCompliance.compare("version", 97, version3);
         }
 
         if (LOGGER.isLoggable(Level.FINEST)) {
-            logCharQuad("identifier: ", ((identifier1 << 16)
-                    | (identifier2 << 8) | (identifier3 << 0)));
-            logCharQuad("version: ",
-                    ((version1 << 16) | (version2 << 8) | (version3 << 0)));
+            logCharQuad("identifier: ", identifier1 << 16 | identifier2 << 8 | identifier3 << 0);
+            logCharQuad("version: ", version1 << 16 | version2 << 8 | version3 << 0);
         }
 
         final int logicalScreenWidth = read2Bytes("Logical Screen Width", is, "Not a Valid GIF File", getByteOrder());
         final int logicalScreenHeight = read2Bytes("Logical Screen Height", is, "Not a Valid GIF File", getByteOrder());
 
         if (formatCompliance != null) {
-            formatCompliance.checkBounds("Width", 1, Integer.MAX_VALUE,
-                    logicalScreenWidth);
-            formatCompliance.checkBounds("Height", 1, Integer.MAX_VALUE,
-                    logicalScreenHeight);
+            formatCompliance.checkBounds("Width", 1, Integer.MAX_VALUE, logicalScreenWidth);
+            formatCompliance.checkBounds("Height", 1, Integer.MAX_VALUE, logicalScreenHeight);
         }
 
-        final byte packedFields = readByte("Packed Fields", is,
-                "Not a Valid GIF File");
-        final byte backgroundColorIndex = readByte("Background Color Index", is,
-                "Not a Valid GIF File");
-        final byte pixelAspectRatio = readByte("Pixel Aspect Ratio", is,
-                "Not a Valid GIF File");
+        final byte packedFields = readByte("Packed Fields", is, "Not a Valid GIF File");
+        final byte backgroundColorIndex = readByte("Background Color Index", is, "Not a Valid GIF File");
+        final byte pixelAspectRatio = readByte("Pixel Aspect Ratio", is, "Not a Valid GIF File");
 
         if (LOGGER.isLoggable(Level.FINEST)) {
             logByteBits("PackedFields bits", packedFields);
         }
 
-        final boolean globalColorTableFlag = ((packedFields & 128) > 0);
+        final boolean globalColorTableFlag = (packedFields & 128) > 0;
         if (LOGGER.isLoggable(Level.FINEST)) {
             LOGGER.finest("GlobalColorTableFlag: " + globalColorTableFlag);
         }
-        final byte colorResolution = (byte) ((packedFields >> 4) & 7);
+        final byte colorResolution = (byte) (packedFields >> 4 & 7);
         if (LOGGER.isLoggable(Level.FINEST)) {
             LOGGER.finest("ColorResolution: " + colorResolution);
         }
-        final boolean sortFlag = ((packedFields & 8) > 0);
+        final boolean sortFlag = (packedFields & 8) > 0;
         if (LOGGER.isLoggable(Level.FINEST)) {
             LOGGER.finest("SortFlag: " + sortFlag);
         }
         final byte sizeofGlobalColorTable = (byte) (packedFields & 7);
         if (LOGGER.isLoggable(Level.FINEST)) {
-            LOGGER.finest("SizeofGlobalColorTable: "
-                    + sizeofGlobalColorTable);
+            LOGGER.finest("SizeofGlobalColorTable: " + sizeofGlobalColorTable);
         }
 
         if (formatCompliance != null) {
             if (globalColorTableFlag && backgroundColorIndex != -1) {
-                formatCompliance.checkBounds("Background Color Index", 0,
-                        convertColorTableSize(sizeofGlobalColorTable),
-                        backgroundColorIndex);
+                formatCompliance.checkBounds("Background Color Index", 0, convertColorTableSize(sizeofGlobalColorTable), backgroundColorIndex);
             }
         }
 
-        return new GifHeaderInfo(identifier1, identifier2, identifier3,
-                version1, version2, version3, logicalScreenWidth,
-                logicalScreenHeight, packedFields, backgroundColorIndex,
-                pixelAspectRatio, globalColorTableFlag, colorResolution,
-                sortFlag, sizeofGlobalColorTable);
+        return new GifHeaderInfo(identifier1, identifier2, identifier3, version1, version2, version3, logicalScreenWidth, logicalScreenHeight, packedFields,
+                backgroundColorIndex, pixelAspectRatio, globalColorTableFlag, colorResolution, sortFlag, sizeofGlobalColorTable);
     }
 
-    private ImageDescriptor readImageDescriptor(final GifHeaderInfo ghi,
-            final int blockCode, final InputStream is, final boolean stopBeforeImageData,
-            final FormatCompliance formatCompliance) throws ImagingException,
-            IOException {
+    private ImageDescriptor readImageDescriptor(final GifHeaderInfo ghi, final int blockCode, final InputStream is, final boolean stopBeforeImageData,
+            final FormatCompliance formatCompliance) throws ImagingException, IOException {
         final int imageLeftPosition = read2Bytes("Image Left Position", is, "Not a Valid GIF File", getByteOrder());
         final int imageTopPosition = read2Bytes("Image Top Position", is, "Not a Valid GIF File", getByteOrder());
         final int imageWidth = read2Bytes("Image Width", is, "Not a Valid GIF File", getByteOrder());
@@ -846,15 +771,15 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
             logByteBits("PackedFields bits", packedFields);
         }
 
-        final boolean localColorTableFlag = (((packedFields >> 7) & 1) > 0);
+        final boolean localColorTableFlag = (packedFields >> 7 & 1) > 0;
         if (LOGGER.isLoggable(Level.FINEST)) {
             LOGGER.finest("LocalColorTableFlag: " + localColorTableFlag);
         }
-        final boolean interlaceFlag = (((packedFields >> 6) & 1) > 0);
+        final boolean interlaceFlag = (packedFields >> 6 & 1) > 0;
         if (LOGGER.isLoggable(Level.FINEST)) {
             LOGGER.finest("Interlace Flag: " + interlaceFlag);
         }
-        final boolean sortFlag = (((packedFields >> 5) & 1) > 0);
+        final boolean sortFlag = (packedFields >> 5 & 1) > 0;
         if (LOGGER.isLoggable(Level.FINEST)) {
             LOGGER.finest("Sort Flag: " + sortFlag);
         }
@@ -878,8 +803,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
             final InputStream bais = new ByteArrayInputStream(bytes);
 
             final int size = imageWidth * imageHeight;
-            final MyLzwDecompressor myLzwDecompressor = new MyLzwDecompressor(
-                    lzwMinimumCodeSize, ByteOrder.LITTLE_ENDIAN, false);
+            final MyLzwDecompressor myLzwDecompressor = new MyLzwDecompressor(lzwMinimumCodeSize, ByteOrder.LITTLE_ENDIAN, false);
             imageData = myLzwDecompressor.decompress(bais, size);
         } else {
             final int LZWMinimumCodeSize = is.read();
@@ -890,10 +814,8 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
             readGenericGifBlock(is, -1);
         }
 
-        return new ImageDescriptor(blockCode,
-                imageLeftPosition, imageTopPosition, imageWidth, imageHeight,
-                packedFields, localColorTableFlag, interlaceFlag, sortFlag,
-                sizeOfLocalColorTable, localColorTable, imageData);
+        return new ImageDescriptor(blockCode, imageLeftPosition, imageTopPosition, imageWidth, imageHeight, packedFields, localColorTableFlag, interlaceFlag,
+                sortFlag, sizeOfLocalColorTable, localColorTable, imageData);
     }
 
     private byte[] readSubBlock(final InputStream is) throws IOException {
@@ -973,13 +895,10 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
             bos.write2Bytes(width);
             bos.write2Bytes(height);
 
-            final int colorTableScaleLessOne = (paletteSize > 128) ? 7
-                    : (paletteSize > 64) ? 6
-                            : (paletteSize > 32) ? 5
-                                    : (paletteSize > 16) ? 4
-                                            : (paletteSize > 8) ? 3 : (paletteSize > 4) ? 2 : (paletteSize > 2) ? 1 : 0;
+            final int colorTableScaleLessOne = paletteSize > 128 ? 7
+                    : paletteSize > 64 ? 6 : paletteSize > 32 ? 5 : paletteSize > 16 ? 4 : paletteSize > 8 ? 3 : paletteSize > 4 ? 2 : paletteSize > 2 ? 1 : 0;
 
-            final int colorTableSizeInFormat = 1 << (colorTableScaleLessOne + 1);
+            final int colorTableSizeInFormat = 1 << colorTableScaleLessOne + 1;
             {
                 final byte colorResolution = (byte) colorTableScaleLessOne; // TODO:
                 final int packedFields = (7 & colorResolution) * 16;
@@ -1053,11 +972,10 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
 
                     final int packedFields;
                     if (localColorTableFlag) {
-                        packedFields = (LOCAL_COLOR_TABLE_FLAG_MASK | (interlaceFlag ? INTERLACE_FLAG_MASK : 0)
-                                | (sortFlag ? SORT_FLAG_MASK : 0) | (7 & sizeOfLocalColorTable));
+                        packedFields = LOCAL_COLOR_TABLE_FLAG_MASK | (interlaceFlag ? INTERLACE_FLAG_MASK : 0) | (sortFlag ? SORT_FLAG_MASK : 0)
+                                | 7 & sizeOfLocalColorTable;
                     } else {
-                        packedFields = (0 | (interlaceFlag ? INTERLACE_FLAG_MASK : 0) | (sortFlag ? SORT_FLAG_MASK : 0)
-                                | (7 & sizeOfLocalColorTable));
+                        packedFields = 0 | (interlaceFlag ? INTERLACE_FLAG_MASK : 0) | (sortFlag ? SORT_FLAG_MASK : 0) | 7 & sizeOfLocalColorTable;
                     }
                     bos.write(packedFields); // one byte
                 }
@@ -1068,9 +986,9 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
                     if (i < palette2.length()) {
                         final int rgb = palette2.getEntry(i);
 
-                        final int red = 0xff & (rgb >> 16);
-                        final int green = 0xff & (rgb >> 8);
-                        final int blue = 0xff & (rgb >> 0);
+                        final int red = 0xff & rgb >> 16;
+                        final int green = 0xff & rgb >> 8;
+                        final int blue = 0xff & rgb >> 0;
 
                         bos.write(red);
                         bos.write(green);
@@ -1099,8 +1017,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
                 // here.
                 bos.write(lzwMinimumCodeSize);
 
-                final MyLzwCompressor compressor = new MyLzwCompressor(lzwMinimumCodeSize, ByteOrder.LITTLE_ENDIAN,
-                        false); // GIF
+                final MyLzwCompressor compressor = new MyLzwCompressor(lzwMinimumCodeSize, ByteOrder.LITTLE_ENDIAN, false); // GIF
                 // Mode);
 
                 final byte[] imageData = Allocator.byteArray(width * height);
@@ -1111,7 +1028,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
                         int index;
 
                         if (hasAlpha) {
-                            final int alpha = 0xff & (argb >> 24);
+                            final int alpha = 0xff & argb >> 24;
                             final int alphaThreshold = 255;
                             if (alpha < alphaThreshold) {
                                 index = palette2.length(); // is transparent

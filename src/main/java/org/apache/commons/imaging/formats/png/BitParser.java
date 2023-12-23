@@ -29,10 +29,9 @@ final class BitParser {
         this.bitDepth = bitDepth;
     }
 
-    public int getSample(final int pixelIndexInScanline, final int sampleIndex)
-            throws ImagingException {
+    public int getSample(final int pixelIndexInScanline, final int sampleIndex) throws ImagingException {
         final int pixelIndexBits = bitsPerPixel * pixelIndexInScanline;
-        final int sampleIndexBits = pixelIndexBits + (sampleIndex * bitDepth);
+        final int sampleIndexBits = pixelIndexBits + sampleIndex * bitDepth;
         final int sampleIndexBytes = sampleIndexBits >> 3;
 
         if (bitDepth == 8) {
@@ -47,14 +46,13 @@ final class BitParser {
             return b & bitmask;
         }
         if (bitDepth == 16) {
-            return (((0xff & bytes[sampleIndexBytes]) << 8) | (0xff & bytes[sampleIndexBytes + 1]));
+            return (0xff & bytes[sampleIndexBytes]) << 8 | 0xff & bytes[sampleIndexBytes + 1];
         }
 
         throw new ImagingException("PNG: bad BitDepth: " + bitDepth);
     }
 
-    public int getSampleAsByte(final int pixelIndexInScanline, final int sampleIndex)
-            throws ImagingException {
+    public int getSampleAsByte(final int pixelIndexInScanline, final int sampleIndex) throws ImagingException {
         int sample = getSample(pixelIndexInScanline, sampleIndex);
 
         final int rot = 8 - bitDepth;

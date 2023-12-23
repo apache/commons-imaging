@@ -31,14 +31,13 @@ import java.util.List;
 /**
  * Recursively search the specified path and list TIFF files and metadata.
  * <p>
- * Command-line Arguments:</p>
+ * Command-line Arguments:
+ * </p>
  * <ol>
  * <li>Top-level directory (mandatory)</li>
  * <li>Output file for results (optional)</li>
  * </ol>
- * If the optional output file has the extension ".csv", the output
- * will be formatted as a comma-separated-value file suitable
- * for inspection in Excel.
+ * If the optional output file has the extension ".csv", the output will be formatted as a comma-separated-value file suitable for inspection in Excel.
  */
 public class SurveyTiffFolder {
 
@@ -79,11 +78,7 @@ public class SurveyTiffFolder {
 
     }
 
-    private static int collectPaths(
-        final File parent,
-        final List<String[]> pathList,
-        final String[] scratch,
-        final int depth) {
+    private static int collectPaths(final File parent, final List<String[]> pathList, final String[] scratch, final int depth) {
         if (depth == scratch.length) {
             // directory hierarchy is too deep
             return 0;
@@ -166,8 +161,8 @@ public class SurveyTiffFolder {
             }
             final File reportFile = new File(args[1]);
             try (FileOutputStream fos = new FileOutputStream(reportFile);
-                BufferedOutputStream bos = new BufferedOutputStream(fos);
-                PrintStream ps = new PrintStream(bos, true, StandardCharsets.UTF_8.name())) {
+                    BufferedOutputStream bos = new BufferedOutputStream(fos);
+                    PrintStream ps = new PrintStream(bos, true, StandardCharsets.UTF_8.name())) {
                 surveyFiles(topLevelDir, pathList, maxLen, csv, ps);
             } catch (final IOException ioex) {
                 System.err.println("IOException writing report to " + args[1]);
@@ -211,7 +206,7 @@ public class SurveyTiffFolder {
             String result;
             try {
                 result = surveyor.surveyFile(file, csv);
-            } catch (IOException ex) {
+            } catch (final IOException ex) {
                 sBuilder.append(ex.getMessage());
                 badFiles.add(sBuilder.toString());
                 continue; // result = ex.getMessage();

@@ -52,16 +52,16 @@ final class BmpWriterRgb implements BmpWriter {
                 final int argb = src.getRGB(x, y);
                 final int rgb = 0xffffff & argb;
 
-                final int red = 0xff & (rgb >> 16);
-                final int green = 0xff & (rgb >> 8);
-                final int blue = 0xff & (rgb >> 0);
+                final int red = 0xff & rgb >> 16;
+                final int green = 0xff & rgb >> 8;
+                final int blue = 0xff & rgb >> 0;
 
                 baos.write(blue);
                 baos.write(green);
                 baos.write(red);
                 bytecount += 3;
             }
-            while ((bytecount % 4) != 0) {
+            while (bytecount % 4 != 0) {
                 baos.write(0);
                 bytecount++;
             }

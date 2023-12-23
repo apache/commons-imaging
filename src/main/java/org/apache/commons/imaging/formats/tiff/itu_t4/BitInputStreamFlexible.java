@@ -23,9 +23,7 @@ import java.io.InputStream;
 import org.apache.commons.imaging.ImagingException;
 
 /**
- * Input stream that allows reading up to 32 bits
- * across byte boundaries in most significant
- * bit first order.
+ * Input stream that allows reading up to 32 bits across byte boundaries in most significant bit first order.
  */
 final class BitInputStreamFlexible extends FilterInputStream {
     // TODO should be byte order conscious, that is, TIFF for reading
@@ -57,20 +55,20 @@ final class BitInputStreamFlexible extends FilterInputStream {
 
     public int readBits(int count) throws IOException {
 
-        if (count <= 32)  {
+        if (count <= 32) {
             // catch-all
             int result = 0;
             // int done = 0;
 
             if (cacheBitsRemaining > 0) {
                 if (count >= cacheBitsRemaining) {
-                    result = ((1 << cacheBitsRemaining) - 1) & cache;
+                    result = (1 << cacheBitsRemaining) - 1 & cache;
                     count -= cacheBitsRemaining;
                     cacheBitsRemaining = 0;
                 } else {
                     // cache >>= count;
                     cacheBitsRemaining -= count;
-                    result = ((1 << count) - 1) & (cache >> cacheBitsRemaining);
+                    result = (1 << count) - 1 & cache >> cacheBitsRemaining;
                     count = 0;
                 }
             }
@@ -83,7 +81,7 @@ final class BitInputStreamFlexible extends FilterInputStream {
                 // + Integer.toHexString(cache) + ", "
                 // + Integer.toBinaryString(cache) + ")");
                 bytesRead++;
-                result = (result << 8) | (0xff & cache);
+                result = result << 8 | 0xff & cache;
                 count -= 8;
             }
             if (count > 0) {
@@ -96,8 +94,7 @@ final class BitInputStreamFlexible extends FilterInputStream {
                 // + Integer.toBinaryString(cache) + ")");
                 bytesRead++;
                 cacheBitsRemaining = 8 - count;
-                result = (result << count)
-                        | (((1 << count) - 1) & (cache >> cacheBitsRemaining));
+                result = result << count | (1 << count) - 1 & cache >> cacheBitsRemaining;
                 count = 0;
             }
 

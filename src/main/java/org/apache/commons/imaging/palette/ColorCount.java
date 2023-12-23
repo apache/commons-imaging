@@ -27,10 +27,10 @@ final class ColorCount {
     ColorCount(final int argb) {
         this.argb = argb;
 
-        alpha = 0xff & (argb >> 24);
-        red = 0xff & (argb >> 16);
-        green = 0xff & (argb >> 8);
-        blue = 0xff & (argb >> 0);
+        alpha = 0xff & argb >> 24;
+        red = 0xff & argb >> 16;
+        green = 0xff & argb >> 8;
+        blue = 0xff & argb >> 0;
     }
 
     @Override

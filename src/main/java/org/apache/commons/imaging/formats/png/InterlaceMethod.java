@@ -23,8 +23,7 @@ package org.apache.commons.imaging.formats.png;
  */
 public enum InterlaceMethod {
 
-    NONE(false),
-    ADAM7(true);
+    NONE(false), ADAM7(true);
 
     private final boolean progressive;
 

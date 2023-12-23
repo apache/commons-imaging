@@ -26,30 +26,31 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests for class {@link App2Segment}.
+ *
  * @see App2Segment
  **/
 public class App2SegmentTest {
 
-  @Test
-  public void testCompareTo() throws IOException, ImagingException {
-      final App2Segment app2Segment = new App2Segment(0, 0, null);
+    @Test
+    public void testCompareTo() throws IOException, ImagingException {
+        final App2Segment app2Segment = new App2Segment(0, 0, null);
 
-      assertEquals(0, app2Segment.compareTo(app2Segment));
-  }
+        assertEquals(0, app2Segment.compareTo(app2Segment));
+    }
 
-  @Test
-  public void testEqualsReturningFalse()  throws IOException, ImagingException {
-      final byte[] byteArray = new byte[3];
-      final App2Segment app2Segment = new App2Segment(65475, byteArray);
+    @Test
+    public void testEqualsReturningFalse() throws IOException, ImagingException {
+        final byte[] byteArray = new byte[3];
+        final App2Segment app2Segment = new App2Segment(65475, byteArray);
 
-      assertNotEquals(app2Segment, byteArray);
-  }
+        assertNotEquals(app2Segment, byteArray);
+    }
 
-  @Test
-  public void testEqualsReturningTrue()  throws IOException, ImagingException {
-      final App2Segment app2Segment = new App2Segment(0, 0, null);
+    @Test
+    public void testEqualsReturningTrue() throws IOException, ImagingException {
+        final App2Segment app2Segment = new App2Segment(0, 0, null);
 
-      assertEquals(app2Segment, app2Segment);
-  }
+        assertEquals(app2Segment, app2Segment);
+    }
 
 }

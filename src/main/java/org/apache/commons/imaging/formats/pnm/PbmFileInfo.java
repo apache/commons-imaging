@@ -73,7 +73,7 @@ final class PbmFileInfo extends AbstractFileInfo {
             bitsInCache += 8;
         }
 
-        final int bit = 0x1 & (bitCache >> 7);
+        final int bit = 0x1 & bitCache >> 7;
         bitCache <<= 1;
         bitsInCache--;
 

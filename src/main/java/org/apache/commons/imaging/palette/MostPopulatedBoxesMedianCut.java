@@ -24,8 +24,7 @@ import org.apache.commons.imaging.ImagingException;
 public class MostPopulatedBoxesMedianCut implements MedianCut {
 
     @Override
-    public boolean performNextMedianCut(final List<ColorGroup> colorGroups,
-            final boolean ignoreAlpha) throws ImagingException {
+    public boolean performNextMedianCut(final List<ColorGroup> colorGroups, final boolean ignoreAlpha) throws ImagingException {
         int maxPoints = 0;
         ColorGroup colorGroup = null;
         for (final ColorGroup group : colorGroups) {
@@ -74,11 +73,8 @@ public class MostPopulatedBoxesMedianCut implements MedianCut {
                 }
             }
 
-            final List<ColorCount> lowerColors = new ArrayList<>(
-                    colorCounts.subList(0, medianIndex + 1));
-            final List<ColorCount> upperColors = new ArrayList<>(
-                    colorCounts.subList(medianIndex + 1,
-                            colorCounts.size()));
+            final List<ColorCount> lowerColors = new ArrayList<>(colorCounts.subList(0, medianIndex + 1));
+            final List<ColorCount> upperColors = new ArrayList<>(colorCounts.subList(medianIndex + 1, colorCounts.size()));
             if (lowerColors.isEmpty() || upperColors.isEmpty()) {
                 continue;
             }
@@ -98,11 +94,8 @@ public class MostPopulatedBoxesMedianCut implements MedianCut {
         }
 
         colorCounts.sort(new ColorCountComparator(bestColorComponent));
-        final List<ColorCount> lowerColors = new ArrayList<>(
-                colorCounts.subList(0, bestMedianIndex + 1));
-        final List<ColorCount> upperColors = new ArrayList<>(
-                colorCounts.subList(bestMedianIndex + 1,
-                        colorCounts.size()));
+        final List<ColorCount> lowerColors = new ArrayList<>(colorCounts.subList(0, bestMedianIndex + 1));
+        final List<ColorCount> upperColors = new ArrayList<>(colorCounts.subList(bestMedianIndex + 1, colorCounts.size()));
         final ColorGroup lowerGroup = new ColorGroup(lowerColors, ignoreAlpha);
         final ColorGroup upperGroup = new ColorGroup(upperColors, ignoreAlpha);
         colorGroups.remove(colorGroup);
@@ -112,20 +105,20 @@ public class MostPopulatedBoxesMedianCut implements MedianCut {
         final ColorCount medianValue = colorCounts.get(bestMedianIndex);
         int limit;
         switch (bestColorComponent) {
-            case ALPHA:
-                limit = medianValue.alpha;
-                break;
-            case RED:
-                limit = medianValue.red;
-                break;
-            case GREEN:
-                limit = medianValue.green;
-                break;
-            case BLUE:
-                limit = medianValue.blue;
-                break;
-            default:
-                throw new IllegalArgumentException("Bad mode: " + bestColorComponent);
+        case ALPHA:
+            limit = medianValue.alpha;
+            break;
+        case RED:
+            limit = medianValue.red;
+            break;
+        case GREEN:
+            limit = medianValue.green;
+            break;
+        case BLUE:
+            limit = medianValue.blue;
+            break;
+        default:
+            throw new IllegalArgumentException("Bad mode: " + bestColorComponent);
         }
         colorGroup.cut = new ColorGroupCut(lowerGroup, upperGroup, bestColorComponent, limit);
         return true;
