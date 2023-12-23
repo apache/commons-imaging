@@ -146,8 +146,8 @@ public class GifReadTest extends AbstractGifTest {
         final ImageMetadata metadata = Imaging.getMetadata(imageFile);
         assertNotNull(metadata);
         assertTrue(metadata instanceof GifImageMetadata);
-        assertTrue(((GifImageMetadata)metadata).getWidth() > 0);
-        assertTrue(((GifImageMetadata)metadata).getHeight() > 0);
+        assertTrue(((GifImageMetadata) metadata).getWidth() > 0);
+        assertTrue(((GifImageMetadata) metadata).getHeight() > 0);
         assertNotNull(metadata.getItems());
     }
 

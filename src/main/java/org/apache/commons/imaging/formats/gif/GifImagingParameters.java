@@ -25,6 +25,11 @@ import org.apache.commons.imaging.common.XmpImagingParameters;
  * @since 1.0-alpha3
  */
 public class GifImagingParameters extends XmpImagingParameters<GifImagingParameters> {
+
+    public static boolean getStopReadingBeforeImageData(final GifImagingParameters params) {
+        return params != null && params.getStopReadingBeforeImageData();
+    }
+
     private boolean stopReadingBeforeImageData;
 
     public boolean getStopReadingBeforeImageData() {

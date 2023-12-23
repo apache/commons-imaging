@@ -94,6 +94,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="IMAGING-339" dev="kinow" type="add" due-to="Glavo">
         Basic WebP Support #254.
       </action>
+      <action issue="IMAGING-355" dev="ggregory" type="add" due-to="Andrew Khoury, Bruno P. Kinoshita, Gary Gregory">
+        Add option to skip reading GIF metadata #301.
+      </action>
       <!-- UPDATE -->
       <action dev="kinow" type="update" due-to="Dependabot, Gary Gregory">
         Bump actions/cache #225, #228, #239, #240.
