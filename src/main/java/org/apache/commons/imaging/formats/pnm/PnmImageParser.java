@@ -28,6 +28,7 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.stream.Stream;
 
 import org.apache.commons.imaging.AbstractImageParser;
 import org.apache.commons.imaging.ImageFormat;
@@ -41,10 +42,23 @@ import org.apache.commons.imaging.palette.PaletteFactory;
 
 public class PnmImageParser extends AbstractImageParser<PnmImagingParameters> {
 
+    private static final int DPI = 72;
+    private static final ImageFormat[] IMAGE_FORMATS;
     private static final String DEFAULT_EXTENSION = ImageFormats.PNM.getDefaultExtension();
-    private static final String[] ACCEPTED_EXTENSIONS = { ImageFormats.PAM.getDefaultExtension(), ImageFormats.PBM.getDefaultExtension(),
-            ImageFormats.PGM.getDefaultExtension(), ImageFormats.PNM.getDefaultExtension(), ImageFormats.PPM.getDefaultExtension() };
+    private static final String[] ACCEPTED_EXTENSIONS;
 
+    static {
+        IMAGE_FORMATS = new ImageFormat[] {
+                // @formatter:off
+                ImageFormats.PAM,
+                ImageFormats.PBM,
+                ImageFormats.PGM,
+                ImageFormats.PNM,
+                ImageFormats.PPM
+                // @formatter:on
+        };
+        ACCEPTED_EXTENSIONS = Stream.of(IMAGE_FORMATS).map(ImageFormat::getDefaultExtension).toArray(String[]::new);
+    }
     public PnmImageParser() {
         super(ByteOrder.LITTLE_ENDIAN);
     }
@@ -67,12 +81,12 @@ public class PnmImageParser extends AbstractImageParser<PnmImagingParameters> {
 
     @Override
     protected String[] getAcceptedExtensions() {
-        return ACCEPTED_EXTENSIONS;
+        return ACCEPTED_EXTENSIONS.clone();
     }
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormats.PBM, ImageFormats.PGM, ImageFormats.PPM, ImageFormats.PNM, ImageFormats.PAM };
+        return IMAGE_FORMATS.clone();
     }
 
     @Override
@@ -121,9 +135,9 @@ public class PnmImageParser extends AbstractImageParser<PnmImagingParameters> {
 
         // boolean progressive = (fPNGChunkIHDR.InterlaceMethod != 0);
         //
-        final int physicalWidthDpi = 72;
+        final int physicalWidthDpi = DPI;
         final float physicalWidthInch = (float) ((double) info.width / (double) physicalWidthDpi);
-        final int physicalHeightDpi = 72;
+        final int physicalHeightDpi = DPI;
         final float physicalHeightInch = (float) ((double) info.height / (double) physicalHeightDpi);
 
         final String formatDetails = info.getImageTypeDescription();
@@ -141,7 +155,6 @@ public class PnmImageParser extends AbstractImageParser<PnmImagingParameters> {
     @Override
     public Dimension getImageSize(final ByteSource byteSource, final PnmImagingParameters params) throws ImagingException, IOException {
         final AbstractFileInfo info = readHeader(byteSource);
-
         return new Dimension(info.width, info.height);
     }
 
