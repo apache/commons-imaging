@@ -36,23 +36,6 @@ import org.junit.jupiter.api.Test;
  */
 public class PngWriterTest extends AbstractPngTest {
 
-    private static int countColors(final byte[] bytes) throws IOException {
-        final BufferedImage imageParsed = Imaging.getBufferedImage(bytes);
-        return new PaletteFactory().makeExactRgbPaletteSimple(imageParsed, Integer.MAX_VALUE).length();
-    }
-
-    private static byte[] getImageBytes(final BufferedImage image, final PngImagingParameters params, final PaletteFactory paletteFactory) throws IOException {
-        try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
-            new PngWriter().writeImage(image, os, params, paletteFactory);
-            return os.toByteArray();
-        }
-    }
-
-    private File getPngFile(String name) {
-        final File pngFolder = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, "png");
-        return new File(pngFolder, name);
-    }
-
     // The form of the test set is
     //    0.   target file name
     //    1.   Expected colour count (as String) - for testPaletteFactory
@@ -69,6 +52,23 @@ public class PngWriterTest extends AbstractPngTest {
         {"5/trns-palette8.png", "18"},
         {"5/trns-rgb.png", "26"},
     };
+
+    private static int countColors(final byte[] bytes) throws IOException {
+        final BufferedImage imageParsed = Imaging.getBufferedImage(bytes);
+        return new PaletteFactory().makeExactRgbPaletteSimple(imageParsed, Integer.MAX_VALUE).length();
+    }
+
+    private static byte[] getImageBytes(final BufferedImage image, final PngImagingParameters params, final PaletteFactory paletteFactory) throws IOException {
+        try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
+            new PngWriter().writeImage(image, os, params, paletteFactory);
+            return os.toByteArray();
+        }
+    }
+
+    private File getPngFile(String name) {
+        final File pngFolder = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, "png");
+        return new File(pngFolder, name);
+    }
 
     @Test
     public void testNullParameters() throws IOException {
