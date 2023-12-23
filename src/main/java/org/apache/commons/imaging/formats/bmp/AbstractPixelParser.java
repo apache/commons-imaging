@@ -40,17 +40,14 @@ abstract class AbstractPixelParser {
         is = new ByteArrayInputStream(imageData);
     }
 
-    int getColorTableRgb(int actual) {
-        actual *= 4;
+    int getColorTableRgb(final int index) {
+        final int actual = index * 4;
         final int blue = 0xff & colorTable[actual + 0];
         final int green = 0xff & colorTable[actual + 1];
         final int red = 0xff & colorTable[actual + 2];
         final int alpha = 0xff;
 
-        return (alpha << 24)
-                | (red << 16)
-                | (green << 8)
-                | (blue << 0);
+        return alpha << 24 | red << 16 | green << 8 | blue << 0;
     }
 
     public abstract void processImage(ImageBuilder imageBuilder) throws ImagingException, IOException;
