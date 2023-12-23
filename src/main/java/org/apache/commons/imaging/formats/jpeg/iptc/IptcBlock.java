@@ -29,10 +29,8 @@ public class IptcBlock {
     private final byte[] blockData;
 
     public IptcBlock(final int blockType, final byte[] blockNameBytes, final byte[] blockData) {
-        Objects.requireNonNull(blockNameBytes, "blockNameBytes");
-        Objects.requireNonNull(blockData, "blockData");
-        this.blockData = blockData;
-        this.blockNameBytes = blockNameBytes;
+        this.blockData = Objects.requireNonNull(blockData, "blockData");
+        this.blockNameBytes = Objects.requireNonNull(blockNameBytes, "blockNameBytes");
         this.blockType = blockType;
     }
 
