@@ -117,7 +117,7 @@ public class GifReadTest extends GifBaseTest {
 
         int width = 0;
         int height = 0;
-        for(int i = 0; i < images.size(); i++) {
+        for (int i = 0; i < images.size(); i++) {
             final BufferedImage image = images.get(i);
             final GifImageMetadataItem metadataItem = metadata.getItems().get(i);
             final int xOffset = metadataItem.getLeftPosition();
@@ -143,7 +143,7 @@ public class GifReadTest extends GifBaseTest {
     @ParameterizedTest
     @MethodSource("data")
     public void testMetadata(final File imageFile) throws IOException {
-        ImageMetadata metadata = Imaging.getMetadata(imageFile);
+        final ImageMetadata metadata = Imaging.getMetadata(imageFile);
         assertNotNull(metadata);
         assertTrue(metadata instanceof GifImageMetadata);
         assertTrue(((GifImageMetadata)metadata).getWidth() > 0);
