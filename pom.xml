@@ -156,9 +156,6 @@
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <configuration>
-          <excludeFilterFile>${commons.conf.dir}/spotbugs-exclude-filter.xml</excludeFilterFile>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -177,6 +174,13 @@
             <includeTestSourceDirectory>false</includeTestSourceDirectory>
             <enableRulesSummary>false</enableRulesSummary>
            <excludes>target/**</excludes>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>com.github.spotbugs</groupId>
+          <artifactId>spotbugs-maven-plugin</artifactId>
+          <configuration>
+            <excludeFilterFile>${commons.conf.dir}/spotbugs-exclude-filter.xml</excludeFilterFile>
           </configuration>
         </plugin>
         <plugin>
