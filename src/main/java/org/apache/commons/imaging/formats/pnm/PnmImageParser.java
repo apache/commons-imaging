@@ -63,6 +63,13 @@ public class PnmImageParser extends AbstractImageParser<PnmImagingParameters> {
         super(ByteOrder.LITTLE_ENDIAN);
     }
 
+    private int checkHasMoreTokens(final StringTokenizer tokenizer, final String type) throws ImagingException {
+        if (!tokenizer.hasMoreTokens()) {
+            throw new ImagingException("PAM header has no " + type + " value");
+        }
+        return Integer.parseInt(tokenizer.nextToken());
+    }
+
     @Override
     public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource) throws ImagingException, IOException {
         pw.println("pnm.dumpImageFile");
@@ -248,28 +255,16 @@ public class PnmImageParser extends AbstractImageParser<PnmImagingParameters> {
                 final String type = tokenizer.nextToken();
                 if ("WIDTH".equals(type)) {
                     seenWidth = true;
-                    if (!tokenizer.hasMoreTokens()) {
-                        throw new ImagingException("PAM header has no WIDTH value");
-                    }
-                    width = Integer.parseInt(tokenizer.nextToken());
+                    width = checkHasMoreTokens(tokenizer, type);
                 } else if ("HEIGHT".equals(type)) {
                     seenHeight = true;
-                    if (!tokenizer.hasMoreTokens()) {
-                        throw new ImagingException("PAM header has no HEIGHT value");
-                    }
-                    height = Integer.parseInt(tokenizer.nextToken());
+                    height = checkHasMoreTokens(tokenizer, type);
                 } else if ("DEPTH".equals(type)) {
                     seenDepth = true;
-                    if (!tokenizer.hasMoreTokens()) {
-                        throw new ImagingException("PAM header has no DEPTH value");
-                    }
-                    depth = Integer.parseInt(tokenizer.nextToken());
+                    depth = checkHasMoreTokens(tokenizer, type);
                 } else if ("MAXVAL".equals(type)) {
                     seenMaxVal = true;
-                    if (!tokenizer.hasMoreTokens()) {
-                        throw new ImagingException("PAM header has no MAXVAL value");
-                    }
-                    maxVal = Integer.parseInt(tokenizer.nextToken());
+                    maxVal = checkHasMoreTokens(tokenizer, type);
                 } else if ("TUPLTYPE".equals(type)) {
                     seenTupleType = true;
                     if (!tokenizer.hasMoreTokens()) {
