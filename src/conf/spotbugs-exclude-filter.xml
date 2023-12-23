@@ -27,15 +27,6 @@
     xsi:schemaLocation="https://github.com/spotbugs/filter/3.0.0 https://raw.githubusercontent.com/spotbugs/spotbugs/3.1.0/spotbugs/etc/findbugsfilter.xsd">
   <!-- Reason: Intentionally exposing an array -->
   <Match>
-    <Class name="org.apache.commons.imaging.common.bytesource.ByteSourceArray" />
-    <Method name="getAll" />
-    <Bug pattern="EI_EXPOSE_REP" />
-  </Match>
-  <Match>
-    <Class name="org.apache.commons.imaging.common.bytesource.ByteSourceArray" />
-    <Bug pattern="EI_EXPOSE_REP2" />
-  </Match>
-  <Match>
     <Class name="org.apache.commons.imaging.formats.jpeg.iptc.IptcBlock" />
     <Bug pattern="EI_EXPOSE_REP2" />
   </Match>
