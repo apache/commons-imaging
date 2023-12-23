@@ -19,6 +19,7 @@ package org.apache.commons.imaging.formats.bmp;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
@@ -31,19 +32,19 @@ abstract class AbstractPixelParser {
 
     final InputStream is;
 
-    AbstractPixelParser(final BmpHeaderInfo bhi, final byte[] colorTable, final byte[] imageData) {
-        this.bhi = bhi;
+    AbstractPixelParser(final BmpHeaderInfo bmpHeaderInfo, final byte[] colorTable, final byte[] imageData) {
+        this.bhi = Objects.requireNonNull(bmpHeaderInfo, "bmpHeaderInfo");
         this.colorTable = colorTable;
-        this.imageData = imageData;
+        this.imageData = Objects.requireNonNull(imageData, "imageData");
 
         is = new ByteArrayInputStream(imageData);
     }
 
-    int getColorTableRgb(int index) {
-        index *= 4;
-        final int blue = 0xff & colorTable[index + 0];
-        final int green = 0xff & colorTable[index + 1];
-        final int red = 0xff & colorTable[index + 2];
+    int getColorTableRgb(int actual) {
+        actual *= 4;
+        final int blue = 0xff & colorTable[actual + 0];
+        final int green = 0xff & colorTable[actual + 1];
+        final int red = 0xff & colorTable[actual + 2];
         final int alpha = 0xff;
 
         return (alpha << 24)

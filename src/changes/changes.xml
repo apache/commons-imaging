@@ -78,6 +78,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="IMAGING-337" dev="ggregory" type="fix" due-to="Gary Lucas, Gary Gregory">
         Make ImageInfo state correct color type #337.
       </action>
+      <action dev="ggregory" type="fix" due-to="Bruno P. Kinoshita, Gary Gregory">
+        Fail-fast on null inputs in AbstractPixelParser constructor (oss-fuzz 34180) #183.
+      </action>
       <!-- ADD -->
       <action issue="IMAGING-352" dev="ggregory" type="add" due-to="Jeroen van der Vegt, Gary Gregory">
         [PngWriter] Allow custom PaletteFactory #294.
