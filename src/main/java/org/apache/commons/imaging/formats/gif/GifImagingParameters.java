@@ -27,11 +27,12 @@ import org.apache.commons.imaging.common.XmpImagingParameters;
 public class GifImagingParameters extends XmpImagingParameters<GifImagingParameters> {
     private boolean stopReadingBeforeImageData;
 
-    public void setStopReadingBeforeImageData(boolean stopReadingBeforeImageData) {
-        this.stopReadingBeforeImageData = stopReadingBeforeImageData;
-    }
-
     public boolean getStopReadingBeforeImageData() {
         return stopReadingBeforeImageData;
     }
+
+    public void setStopReadingBeforeImageData(final boolean stopReadingBeforeImageData) {
+        this.stopReadingBeforeImageData = stopReadingBeforeImageData;
+    }
+
 }
