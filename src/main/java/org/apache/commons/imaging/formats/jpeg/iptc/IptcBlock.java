@@ -20,9 +20,11 @@ import java.util.Objects;
 
 /**
  * Represents an IPTC block, a set of key-value pairs of Photoshop IPTC data.
+ * <p>
+ * The class is used in public API parameter types.
+ * </p>
  */
 public class IptcBlock {
-    // N.B. The class is used in public API parameter types
 
     private final int blockType;
     private final byte[] blockNameBytes;
