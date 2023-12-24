@@ -314,25 +314,28 @@ public class PnmImageParser extends AbstractImageParser<PnmImagingParameters> {
 
             final ImageFormats subtype = params.getSubtype();
             if (subtype != null) {
-                if (subtype.equals(ImageFormats.PBM)) {
+                switch (subtype) {
+                case PBM:
                     writer = new PbmWriter(useRawbits);
-                } else if (subtype.equals(ImageFormats.PGM)) {
+                    break;
+                case PGM:
                     writer = new PgmWriter(useRawbits);
-                } else if (subtype.equals(ImageFormats.PPM)) {
+                    break;
+                case PPM:
                     writer = new PpmWriter(useRawbits);
-                } else if (subtype.equals(ImageFormats.PAM)) {
+                    break;
+                case PAM:
                     writer = new PamWriter();
+                    break;
+                default:
+                    // see null-check below
+                    break;
                 }
             }
         }
 
         if (writer == null) {
-            final boolean hasAlpha = new PaletteFactory().hasTransparency(src);
-            if (hasAlpha) {
-                writer = new PamWriter();
-            } else {
-                writer = new PpmWriter(useRawbits);
-            }
+            writer = new PaletteFactory().hasTransparency(src) ? new PamWriter() : new PpmWriter(useRawbits);
         }
 
         writer.writeImage(src, os, params);
