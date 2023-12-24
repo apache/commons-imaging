@@ -42,6 +42,13 @@ import org.apache.commons.imaging.palette.PaletteFactory;
 
 public class PnmImageParser extends AbstractImageParser<PnmImagingParameters> {
 
+    private static final String TOKEN_ENDHDR = "ENDHDR";
+    private static final String TOKEN_TUPLTYPE = "TUPLTYPE";
+    private static final String TOKEN_MAXVAL = "MAXVAL";
+    private static final String TOKEN_DEPTH = "DEPTH";
+    private static final String TOKEN_HEIGHT = "HEIGHT";
+    private static final String TOKEN_WIDTH = "WIDTH";
+
     private static final int DPI = 72;
     private static final ImageFormat[] IMAGE_FORMATS;
     private static final String DEFAULT_EXTENSION = ImageFormats.PNM.getDefaultExtension();
@@ -59,15 +66,28 @@ public class PnmImageParser extends AbstractImageParser<PnmImagingParameters> {
         };
         ACCEPTED_EXTENSIONS = Stream.of(IMAGE_FORMATS).map(ImageFormat::getDefaultExtension).toArray(String[]::new);
     }
+
     public PnmImageParser() {
         super(ByteOrder.LITTLE_ENDIAN);
     }
 
-    private int checkHasMoreTokens(final StringTokenizer tokenizer, final String type) throws ImagingException {
-        if (!tokenizer.hasMoreTokens()) {
+    private void check(final boolean value, final String type) throws ImagingException {
+        if (!value) {
             throw new ImagingException("PAM header has no " + type + " value");
         }
-        return Integer.parseInt(tokenizer.nextToken());
+    }
+
+    private void checkFound(final int value, final String type) throws ImagingException {
+        check(value != -1, type);
+    }
+
+    private String checkNextTokens(final StringTokenizer tokenizer, final String type) throws ImagingException {
+        check(tokenizer.hasMoreTokens(), type);
+        return tokenizer.nextToken();
+    }
+
+    private int checkNextTokensAsInt(final StringTokenizer tokenizer, final String type) throws ImagingException {
+        return Integer.parseInt(checkNextTokens(tokenizer, type));
     }
 
     @Override
@@ -181,28 +201,28 @@ public class PnmImageParser extends AbstractImageParser<PnmImagingParameters> {
         }
     }
 
-    private AbstractFileInfo readHeader(final InputStream is) throws ImagingException, IOException {
-        final byte identifier1 = readByte("Identifier1", is, "Not a Valid PNM File");
-        final byte identifier2 = readByte("Identifier2", is, "Not a Valid PNM File");
+    private AbstractFileInfo readHeader(final InputStream inputStream) throws ImagingException, IOException {
+        final byte identifier1 = readByte("Identifier1", inputStream, "Not a Valid PNM File");
+        final byte identifier2 = readByte("Identifier2", inputStream, "Not a Valid PNM File");
 
         if (identifier1 != PnmConstants.PNM_PREFIX_BYTE) {
             throw new ImagingException("PNM file has invalid prefix byte 1");
         }
 
-        final WhiteSpaceReader wsr = new WhiteSpaceReader(is);
+        final WhiteSpaceReader wsReader = new WhiteSpaceReader(inputStream);
 
         if (identifier2 == PnmConstants.PBM_TEXT_CODE || identifier2 == PnmConstants.PBM_RAW_CODE || identifier2 == PnmConstants.PGM_TEXT_CODE
                 || identifier2 == PnmConstants.PGM_RAW_CODE || identifier2 == PnmConstants.PPM_TEXT_CODE || identifier2 == PnmConstants.PPM_RAW_CODE) {
 
             final int width;
             try {
-                width = Integer.parseInt(wsr.readtoWhiteSpace());
+                width = Integer.parseInt(wsReader.readtoWhiteSpace());
             } catch (final NumberFormatException e) {
                 throw new ImagingException("Invalid width specified.", e);
             }
             final int height;
             try {
-                height = Integer.parseInt(wsr.readtoWhiteSpace());
+                height = Integer.parseInt(wsReader.readtoWhiteSpace());
             } catch (final NumberFormatException e) {
                 throw new ImagingException("Invalid height specified.", e);
             }
@@ -213,19 +233,19 @@ public class PnmImageParser extends AbstractImageParser<PnmImagingParameters> {
             case PnmConstants.PBM_RAW_CODE:
                 return new PbmFileInfo(width, height, true);
             case PnmConstants.PGM_TEXT_CODE: {
-                final int maxgray = Integer.parseInt(wsr.readtoWhiteSpace());
+                final int maxgray = Integer.parseInt(wsReader.readtoWhiteSpace());
                 return new PgmFileInfo(width, height, false, maxgray);
             }
             case PnmConstants.PGM_RAW_CODE: {
-                final int maxgray = Integer.parseInt(wsr.readtoWhiteSpace());
+                final int maxgray = Integer.parseInt(wsReader.readtoWhiteSpace());
                 return new PgmFileInfo(width, height, true, maxgray);
             }
             case PnmConstants.PPM_TEXT_CODE: {
-                final int max = Integer.parseInt(wsr.readtoWhiteSpace());
+                final int max = Integer.parseInt(wsReader.readtoWhiteSpace());
                 return new PpmFileInfo(width, height, false, max);
             }
             case PnmConstants.PPM_RAW_CODE: {
-                final int max = Integer.parseInt(wsr.readtoWhiteSpace());
+                final int max = Integer.parseInt(wsReader.readtoWhiteSpace());
                 return new PpmFileInfo(width, height, true, max);
             }
             default:
@@ -233,67 +253,52 @@ public class PnmImageParser extends AbstractImageParser<PnmImagingParameters> {
             }
         } else if (identifier2 == PnmConstants.PAM_RAW_CODE) {
             int width = -1;
-            boolean seenWidth = false;
             int height = -1;
-            boolean seenHeight = false;
             int depth = -1;
-            boolean seenDepth = false;
             int maxVal = -1;
-            boolean seenMaxVal = false;
             final StringBuilder tupleType = new StringBuilder();
-            boolean seenTupleType = false;
 
             // Advance to next line
-            wsr.readLine();
+            wsReader.readLine();
             String line;
-            while ((line = wsr.readLine()) != null) {
+            while ((line = wsReader.readLine()) != null) {
                 line = line.trim();
                 if (line.charAt(0) == '#') {
                     continue;
                 }
                 final StringTokenizer tokenizer = new StringTokenizer(line, " ", false);
                 final String type = tokenizer.nextToken();
-                if ("WIDTH".equals(type)) {
-                    seenWidth = true;
-                    width = checkHasMoreTokens(tokenizer, type);
-                } else if ("HEIGHT".equals(type)) {
-                    seenHeight = true;
-                    height = checkHasMoreTokens(tokenizer, type);
-                } else if ("DEPTH".equals(type)) {
-                    seenDepth = true;
-                    depth = checkHasMoreTokens(tokenizer, type);
-                } else if ("MAXVAL".equals(type)) {
-                    seenMaxVal = true;
-                    maxVal = checkHasMoreTokens(tokenizer, type);
-                } else if ("TUPLTYPE".equals(type)) {
-                    seenTupleType = true;
-                    if (!tokenizer.hasMoreTokens()) {
-                        throw new ImagingException("PAM header has no TUPLTYPE value");
-                    }
-                    tupleType.append(tokenizer.nextToken());
-                } else if ("ENDHDR".equals(type)) {
+                switch (type) {
+                case TOKEN_WIDTH:
+                    width = checkNextTokensAsInt(tokenizer, type);
                     break;
-                } else {
+                case TOKEN_HEIGHT:
+                    height = checkNextTokensAsInt(tokenizer, type);
+                    break;
+                case TOKEN_DEPTH:
+                    depth = checkNextTokensAsInt(tokenizer, type);
+                    break;
+                case TOKEN_MAXVAL:
+                    maxVal = checkNextTokensAsInt(tokenizer, type);
+                    break;
+                case TOKEN_TUPLTYPE:
+                    tupleType.append(checkNextTokens(tokenizer, type));
+                    break;
+                case TOKEN_ENDHDR:
+                    // consumed & noop
+                    break;
+                default:
                     throw new ImagingException("Invalid PAM file header type " + type);
                 }
+                if (TOKEN_ENDHDR.equals(type)) {
+                    break;
+                }
             }
-
-            if (!seenWidth) {
-                throw new ImagingException("PAM header has no WIDTH");
-            }
-            if (!seenHeight) {
-                throw new ImagingException("PAM header has no HEIGHT");
-            }
-            if (!seenDepth) {
-                throw new ImagingException("PAM header has no DEPTH");
-            }
-            if (!seenMaxVal) {
-                throw new ImagingException("PAM header has no MAXVAL");
-            }
-            if (!seenTupleType) {
-                throw new ImagingException("PAM header has no TUPLTYPE");
-            }
-
+            checkFound(width, TOKEN_WIDTH);
+            checkFound(height, TOKEN_HEIGHT);
+            checkFound(depth, TOKEN_DEPTH);
+            checkFound(maxVal, TOKEN_MAXVAL);
+            check(tupleType.length() > 0, TOKEN_TUPLTYPE);
             return new PamFileInfo(width, height, depth, maxVal, tupleType.toString());
         }
         throw new ImagingException("PNM file has invalid prefix byte 2");
