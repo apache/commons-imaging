@@ -36,7 +36,7 @@ class PbmWriter implements PnmWriter {
             throws ImagingException, IOException {
         os.write(PnmConstants.PNM_PREFIX_BYTE);
         os.write(rawBits ? PnmConstants.PBM_RAW_CODE : PnmConstants.PBM_TEXT_CODE);
-        os.write(PnmConstants.PNM_SEPARATOR);
+        os.write(PnmConstants.PNM_NEWLINE);
 
         final int width = src.getWidth();
         final int height = src.getHeight();
@@ -50,7 +50,7 @@ class PbmWriter implements PnmWriter {
         int bitcache = 0;
         int bitsInCache = 0;
 
-        for (int y = 0; y < height; y++) {
+        for (int y = height - 1; y >= 0; y--) {
             for (int x = 0; x < width; x++) {
                 final int argb = src.getRGB(x, y);
                 final int red = 0xff & (argb >> 16);
@@ -74,9 +74,13 @@ class PbmWriter implements PnmWriter {
                     }
                 } else {
                     os.write(Integer.toString(sample).getBytes(StandardCharsets.US_ASCII)); // max
-                                                                  // component
-                                                                  // value
-                    os.write(PnmConstants.PNM_SEPARATOR);
+                    // component
+                    // value
+
+                    if (x != width - 1) {
+                        os.write(PnmConstants.PNM_SEPARATOR);
+                    }
+
                 }
             }
 
@@ -86,6 +90,7 @@ class PbmWriter implements PnmWriter {
                 bitcache = 0;
                 bitsInCache = 0;
             }
+            os.write(PnmConstants.PNM_NEWLINE);
         }
     }
 }

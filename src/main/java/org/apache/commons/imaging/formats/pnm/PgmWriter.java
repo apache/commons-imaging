@@ -27,7 +27,7 @@ class PgmWriter implements PnmWriter {
 
     private final boolean rawBits;
 
-    PgmWriter(final boolean rawBits) {
+        PgmWriter(final boolean rawBits) {
         this.rawBits = rawBits;
     }
 
@@ -38,16 +38,16 @@ class PgmWriter implements PnmWriter {
         // (b1 == 0x50 && b2 == 0x36)
         os.write(0x50);
         os.write(rawBits ? 0x35 : 0x32);
-        os.write(PnmConstants.PNM_SEPARATOR);
+        os.write(PnmConstants.PNM_NEWLINE);
 
         final int width = src.getWidth();
         final int height = src.getHeight();
 
         os.write(Integer.toString(width).getBytes(StandardCharsets.US_ASCII));
         os.write(PnmConstants.PNM_SEPARATOR);
-
         os.write(Integer.toString(height).getBytes(StandardCharsets.US_ASCII));
-        os.write(PnmConstants.PNM_SEPARATOR);
+
+        os.write(PnmConstants.PNM_NEWLINE);
 
         os.write(Integer.toString(255).getBytes(StandardCharsets.US_ASCII)); // max component value
         os.write(PnmConstants.PNM_NEWLINE);
@@ -64,9 +64,12 @@ class PgmWriter implements PnmWriter {
                     os.write((byte) sample);
                 } else {
                     os.write(Integer.toString(sample).getBytes(StandardCharsets.US_ASCII)); // max component value
-                    os.write(PnmConstants.PNM_SEPARATOR);
+                    if (x != width - 1) {
+                        os.write(PnmConstants.PNM_SEPARATOR);
+                    }
                 }
             }
+            os.write(PnmConstants.PNM_NEWLINE);
         }
     }
 

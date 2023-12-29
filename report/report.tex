@@ -246,10 +246,40 @@ To organize our tasks based on the errors found in \textbf{SonarCloud}, we creat
 To measure and improve the robustness of the Apache Commons Imaging project's dependability, this section focuses on three key testing tools. First, we delve into the realm of code coverage using JaCoCo and CodeCov, unraveling their importance and impact. Following that, we explore mutation testing with PiTest, evaluating the resilience of test cases. The journey concludes with Java Microbenchmark Harness, providing insights into performance characteristics. Together, these tools form a robust arsenal to fortify and enhance the project's reliability.
 
 \subsection{Code Coverage - JaCoCo}
-TODO
+JaCoCo \cite{jacoco} (Java Code Coverage) serves as a vital tool in assessing code coverage for Java applications, offering valuable insights into the extent of code execution during testing. It generates comprehensive reports that pinpoint the specific portions of the code exercised by tests.
+
+Our investigation utilizing JaCoCo revealed a baseline of 77\% Instructions Coverage and 63\% Branches Coverage. This includes specific metrics such as 2448/6213 missed cyclomatic complexities, 3931/17299 missed lines, 511/2539 missed methods, and 16/431 missed classes.
+
+A notable feature of JaCoCo lies in its ability to set a minimum expected coverage. This proactive measure ensures that code changes maintain a predefined level of coverage \cite{jacoco-check-mojo}, contributing significantly to the overall robustness of the project.
 
 \subsection{Code Coverage - CodeCov}
-TODO
+CodeCov \cite{codecov} emerges as an instrumental tool, orchestrating a meticulous examination of code coverage within the Apache Commons Imaging project. This sophisticated platform specializes in unraveling the intricacies of test suite effectiveness.
+
+\textbf{Key Metrics:}
+\begin{enumerate}
+    \item \textbf{Overall Code Coverage:} Our CodeCov analysis reveals a comprehensive code coverage of 71.17\% across the entirety of the project. This quantitative metric serves as a substantive indicator of the extent to which our test suites engage with the codebase.
+    
+    \item \textbf{Files with Lower Coverage Rates (In use with Below 0\%):}
+    \begin{itemize}
+        \item \texttt ColorTools.java
+        \item \texttt PixelDensity.java
+        \item \texttt DataParserBitmap.java
+        \item \texttt TagInfoSLongs.java
+        \item \texttt ColorTools.java
+        \item \texttt PbmWriter.java
+        \item \texttt PgmWriter.java
+        \item \texttt UncompressedDataReader.java
+        \item \texttt ScanExpediterInterlaced.java
+        \item \texttt PhotometricInterpreterCieLab.java
+        \item \texttt PhotometricInterpreterYCbCr.java
+        \item \texttt FieldTypeFloat.java
+    \end{itemize}
+    
+    \item \textbf{Line Coverage:} A granular examination exposes that among the 17,299 lines constituting the project, the project covers 12,311 lines.
+\end{enumerate}
+
+Following the addition of targeted tests aimed at addressing files with 0\% coverage, the overall code coverage has substantially increased to 71.82\%. Out of a total of 17,303 lines, 12,427 are now covered. Notably, certain sections of the code remain only partially covered, emphasizing the ongoing commitment to fortify the software's robustness and reliability.
+
 
 \subsection{Mutation Testing - PiTest}
 TODO
@@ -296,38 +326,6 @@ To the group, for always bringing "mate" while working.
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{sample-base}
-%% Use this examples as source of how to reference
-
-Some examples.  A paginated journal article \cite{Abril07}, an
-  enumerated journal article \cite{Cohen07}, a reference to an entire
-  issue \cite{JCohen96}, a monograph (whole book) \cite{Kosiur01}, a
-  monograph/whole book in a series (see 2a in spec. document)
-  \cite{Harel79}, a divisible-book such as an anthology or compilation
-  \cite{Editor00} followed by the same example, however we only output
-  the series if the volume number is given \cite{Editor00a} (so
-  Editor00a's series should NOT be present since it has no vol. no.),
-  a chapter in a divisible book \cite{Spector90}, a chapter in a
-  divisible book in a series \cite{Douglass98}, a multi-volume work as
-  book \cite{Knuth97}, a couple of articles in a proceedings (of a
-  conference, symposium, workshop for example) (paginated proceedings
-  article) \cite{Andler79, Hagerup1993}, a proceedings article with
-  all possible elements \cite{Smith10}, an example of an enumerated
-  proceedings article \cite{VanGundy07}, an informally published work
-  \cite{Harel78}, a couple of preprints \cite{Bornmann2019,
-    AnzarootPBM14}, a doctoral dissertation \cite{Clarkson85}, a
-  master's thesis: \cite{anisi03}, an online document / world wide web
-  resource \cite{Thornburg01, Ablamowicz07, Poker06}, a video game
-  (Case 1) \cite{Obama08} and (Case 2) \cite{Novak03} and \cite{Lee05}
-  and (Case 3) a patent \cite{JoeScientist001}, work accepted for
-  publication \cite{rous08}, 'YYYYb'-test for prolific author
-  \cite{SaeediMEJ10} and \cite{SaeediJETC10}. Other cites might
-  contain 'duplicate' DOI and URLs (some SIAM articles)
-  \cite{Kirschmer:2010:AEI:1958016.1958018}. Boris / Barbara Beeton:
-  multi-volume works as books \cite{MR781536} and \cite{MR781537}. A
-  couple of citations with DOIs:
-  \cite{2004:ITE:1009386.1010128,Kirschmer:2010:AEI:1958016.1958018}. Online
-  citations: \cite{TUGInstmem, Thornburg01, CTANacmart}. Artifacts:
-  \cite{R} and \cite{UMassCitations}.
 
 %%
 %% If your work has an appendix, this is the place to put it.
