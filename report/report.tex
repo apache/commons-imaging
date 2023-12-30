@@ -285,7 +285,32 @@ Following the addition of targeted tests aimed at addressing files with 0\% cove
 TODO
 
 \subsection{Java Microbenchmark Harness}
-TODO
+JMH is a powerful tool specifically designed for benchmarking Java code, allowing us to meticulously analyze the performance of our compression algorithms.
+
+In the context of our image management project, a critical analysis of CPU-intensive image formats led us to identify TIFF and WebP as the most resource-demanding formats. Subsequently, a closer examination of test durations brought to light a particularly time-consuming scenario: the compression of TIFF images using a variety of algorithms (\texttt{TIFF\_COMPRESSION\_LZW}, \texttt{TIFF\_COMPRESSION\_PACKBITS}, \texttt{TIFF\_COMPRESSION\_DEFLATE\_ADOBE}, and \texttt{Uncompressed}).
+
+To further explore the performance of each compression algorithm applied separately to the same set of images, we conducted a benchmark, yielding the following results: \vspace{12pt}
+
+\textbf{Before Parallelization:}
+\begin{itemize}
+    \item \texttt{TIFF\_COMPRESSION\_DEFLATE\_ADOBE:} Throughput 0.465 $\pm$ 0.006 ops/s
+    \item \texttt{TIFF\_COMPRESSION\_LZW:} Throughput 0.216 $\pm$ 0.001 ops/s
+    \item \texttt{TIFF\_COMPRESSION\_PACKBITS:} Throughput 1.278 $\pm$ 0.053 ops/s
+    \item \texttt{Uncompressed:} Throughput 2.170 $\pm$ 0.019 ops/s
+\end{itemize}
+
+Upon thorough review, we identified an opportunity for performance enhancement by introducing parallelism into the compression process. The parallel application of compression algorithms resulted in significant throughput improvements:\vspace{12pt}
+
+\textbf{After Parallelization:}
+\begin{itemize}
+    \item \texttt{TIFF\_COMPRESSION\_DEFLATE\_ADOBE:} Throughput 1.375 $\pm$ 0.012 ops/s (Increase by 196.77\%)
+    \item \texttt{TIFF\_COMPRESSION\_LZW:} Throughput 0.774 $\pm$ 0.008 ops/s (Increase by 258.33\%)
+    \item \texttt{TIFF\_COMPRESSION\_PACKBITS:} Throughput 2.870 $\pm$ 0.164 ops/s (Increase by 124.61\%)
+    \item \texttt{Uncompressed:} Throughput 3.984 $\pm$ 0.066 ops/s (Increase by 83.12\%)
+\end{itemize}
+
+Beyond benchmark results, we observed a substantial reduction in the tiff test duration, decreasing from 8.4978 $\pm$ 0.0407 seconds ($\pm$0.48\%) to 3.7254 $\pm$ 0.128 seconds ($\pm$3.44\%) with the implemented parallelization. This notable improvement not only enhances the efficiency of our compression algorithms but also contributes to a more expedited execution of test scenarios.
+
 
 \section{Automated Generation of Test Cases}
 TODO
