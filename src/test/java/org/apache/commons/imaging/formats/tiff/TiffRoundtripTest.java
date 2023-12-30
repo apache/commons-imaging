@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
@@ -54,7 +55,8 @@ public class TiffRoundtripTest extends TiffBaseTest {
             final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
             assertNotNull(imageInfo);
 
-
+            final BufferedImage image = Imaging.getBufferedImage(imageFile);
+            assertNotNull(image);
 
             final TiffImageParser tiffImageParser = new TiffImageParser();
 
@@ -65,14 +67,6 @@ public class TiffRoundtripTest extends TiffBaseTest {
                     TiffConstants.TIFF_COMPRESSION_DEFLATE_ADOBE
             };
             executorService.submit(() -> {
-
-                final BufferedImage image;
-                try {
-                    image = Imaging.getBufferedImage(imageFile);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                assertNotNull(image);
 
                 for (final int compression : compressions) {
                     try {
@@ -94,6 +88,9 @@ public class TiffRoundtripTest extends TiffBaseTest {
                 }
             });
         }
+        // Shutdown the executor and wait for all tasks to complete
+        executorService.shutdown();
+        executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
     }
 
     @Benchmark
@@ -120,7 +117,7 @@ public class TiffRoundtripTest extends TiffBaseTest {
         runTest(compressions);
     }
 
-    private void runTest(int[] compressions) throws IOException {
+    private void runTest(int[] compressions) throws IOException, InterruptedException {
         final List<File> images = getTiffImages();
 
 
@@ -163,5 +160,8 @@ public class TiffRoundtripTest extends TiffBaseTest {
                 }
             });
         }
+        // Shutdown the executor and wait for all tasks to complete
+        executorService.shutdown();
+        executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
     }
 }
