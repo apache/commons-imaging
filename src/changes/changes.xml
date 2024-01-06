@@ -84,6 +84,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action dev="ggregory" type="fix" due-to="Luzian Seiler, Ditscheridou, Bruno P. Kinoshita, Gary Gregory">
         Avoid NullPointerException in TiffImageParser.checkForSubImage(TiffImagingParameters) #304.
       </action>
+      <action dev="ggregory" type="fix" due-to="nanfangfanqie, Gary Gregory">
+        Avoid NullPointerException in TiffImageParser.getBufferedImage() #347.
+      </action>
       <!-- ADD -->
       <action issue="IMAGING-352" dev="ggregory" type="add" due-to="Jeroen van der Vegt, Gary Gregory">
         [PngWriter] Allow custom PaletteFactory #294.
