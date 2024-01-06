@@ -340,7 +340,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
             }
         }
 
-        PhotometricInterpreter photometricInterpreter = params.getCustomPhotometricInterpreter();
+        PhotometricInterpreter photometricInterpreter = params == null ? null : params.getCustomPhotometricInterpreter();
         if (photometricInterpreter == null) {
             photometricInterpreter = getPhotometricInterpreter(directory, photometricInterpretation, bitsPerPixel, bitsPerSample, predictor, samplesPerPixel,
                     width, height);

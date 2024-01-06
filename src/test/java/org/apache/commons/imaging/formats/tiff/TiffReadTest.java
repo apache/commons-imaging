@@ -17,6 +17,7 @@
 
 package org.apache.commons.imaging.formats.tiff;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.awt.image.BufferedImage;
@@ -69,6 +70,25 @@ public class TiffReadTest extends TiffBaseTest {
             final TiffReader tiffReader = new TiffReader(true);
             final TiffContents contents = tiffReader.readDirectories(byteSource, true, FormatCompliance.getDefault());
             assertNotNull(contents);
+        }
+    }
+
+    @Test
+    public void testReadAllImages() throws Exception {
+        // same as above, but test read all Images
+        List<File> tiffImages = getTiffImages();
+        for (final File imageFile : tiffImages) {
+
+            final String name = imageFile.getName();
+            // the "bad offsets" file will cause an exception to be thrown.
+            // It's not relevant to what this test is trying to discover.
+            // So skip it.
+            if (name.toLowerCase().contains("bad")) {
+                continue;
+            }
+
+            List<BufferedImage> allBufferedImages = Imaging.getAllBufferedImages(imageFile);
+            assertFalse(allBufferedImages.isEmpty());
         }
     }
 }
