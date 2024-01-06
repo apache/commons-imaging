@@ -76,19 +76,14 @@ public class TiffReadTest extends TiffBaseTest {
     @Test
     public void testReadAllImages() throws Exception {
         // same as above, but test read all Images
-        List<File> tiffImages = getTiffImages();
-        for (final File imageFile : tiffImages) {
-
-            final String name = imageFile.getName();
+        for (final File imageFile : getTiffImages()) {
             // the "bad offsets" file will cause an exception to be thrown.
             // It's not relevant to what this test is trying to discover.
             // So skip it.
-            if (name.toLowerCase().contains("bad")) {
+            if (imageFile.getName().toLowerCase().contains("bad")) {
                 continue;
             }
-
-            List<BufferedImage> allBufferedImages = Imaging.getAllBufferedImages(imageFile);
-            assertFalse(allBufferedImages.isEmpty());
+            assertFalse(Imaging.getAllBufferedImages(imageFile).isEmpty());
         }
     }
 }
