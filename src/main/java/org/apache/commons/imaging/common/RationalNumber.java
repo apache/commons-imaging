@@ -71,8 +71,8 @@ public class RationalNumber extends Number {
         }
 
         final long gcd = gcd(n, d);
-        d = d / gcd;
-        n = n / gcd;
+        d /= gcd;
+        n /= gcd;
 
         return new RationalNumber((int) n, (int) d);
     }

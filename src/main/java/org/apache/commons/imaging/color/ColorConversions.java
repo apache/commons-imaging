@@ -826,7 +826,7 @@ public final class ColorConversions {
         if (n > 0.04045) {
             n = Math.pow((n + 0.055) / 1.055, 2.4);
         } else {
-            n = n / 12.92;
+            n /= 12.92;
         }
         return n;
     }
