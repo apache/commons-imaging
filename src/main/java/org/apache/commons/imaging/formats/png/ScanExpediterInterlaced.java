@@ -67,13 +67,13 @@ final class ScanExpediterInterlaced extends AbstractScanExpediter {
                     while (x < width) {
                         visit(x, y, bi, fBitParser, pixelIndexInScanline);
 
-                        x = x + COL_INCREMENT[pass - 1];
+                        x += COL_INCREMENT[pass - 1];
                         pixelIndexInScanline++;
                     }
                 }
-                y = y + ROW_INCREMENT[pass - 1];
+                y += ROW_INCREMENT[pass - 1];
             }
-            pass = pass + 1;
+            pass += 1;
         }
     }
 
