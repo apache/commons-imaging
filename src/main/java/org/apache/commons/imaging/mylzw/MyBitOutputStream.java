@@ -74,7 +74,7 @@ final class MyBitOutputStream extends FilterOutputStream {
             bitCache = bitCache << sampleBits | value;
         } else {
             // LSB, so add to left
-            bitCache = bitCache | value << bitsInCache;
+            bitCache |= value << bitsInCache;
         }
         bitsInCache += sampleBits;
 
