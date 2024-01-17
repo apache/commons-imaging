@@ -102,7 +102,7 @@ public class SosSegment extends AbstractSegment {
     }
 
     /**
-     * Return a component at the specified index.
+     * Gets a component at the specified index.
      *
      * @param index the component index
      * @return the component

@@ -78,7 +78,7 @@ public class RationalNumber extends Number {
     }
 
     /**
-     * Return the greatest common divisor
+     * Gets the greatest common divisor
      */
     private static long gcd(final long a, final long b) {
         if (b == 0) {

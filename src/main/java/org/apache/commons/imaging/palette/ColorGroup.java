@@ -101,7 +101,7 @@ final class ColorGroup {
     }
 
     /**
-     * Return a copy of the list of color counts.
+     * Gets a copy of the list of color counts.
      *
      * @return a copy of the list of color counts
      */

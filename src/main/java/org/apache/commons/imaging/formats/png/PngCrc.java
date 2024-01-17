@@ -34,7 +34,7 @@ final class PngCrc {
      * running CRC (see the crc() routine below)).
      */
 
-    /* Return the CRC of the bytes buf[0..len-1]. */
+    /* Gets the CRC of the bytes buf[0..len-1]. */
     public int crc(final byte[] buf, final int len) {
         return (int) (updateCrc(0xffffffffL, buf) ^ 0xffffffffL);
     }

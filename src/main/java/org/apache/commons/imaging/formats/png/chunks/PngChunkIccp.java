@@ -113,7 +113,7 @@ public class PngChunkIccp extends PngChunk {
     }
 
     /**
-     * Return a copy of the uncompressed profile data.
+     * Gets a copy of the uncompressed profile data.
      *
      * @return the uncompressed profile data
      */
