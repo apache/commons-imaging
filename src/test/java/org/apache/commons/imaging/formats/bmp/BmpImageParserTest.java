@@ -29,7 +29,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the {@link BmpImageParser}.
- *
  */
 public class BmpImageParserTest {
 

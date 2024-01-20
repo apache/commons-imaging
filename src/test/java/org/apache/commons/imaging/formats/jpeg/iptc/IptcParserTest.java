@@ -38,7 +38,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the {#link {@link IptcParser} class.
- *
  */
 public class IptcParserTest {
 
