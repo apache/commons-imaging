@@ -33,7 +33,7 @@ import org.apache.commons.imaging.ImagingException;
  * <a href="https://www.ietf.org/rfc/rfc1951.txt">RFC 1951 - DEFLATE Compressed Data Format Specification version 1.3</a>
  * </p>
  */
-public class ZlibDeflate {
+public final class ZlibDeflate {
 
     /**
      * Compress the byte[] using ZLIB deflate compression.
@@ -76,4 +76,7 @@ public class ZlibDeflate {
         }
     }
 
+    private ZlibDeflate() {
+        // empty
+    }
 }
