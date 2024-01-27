@@ -260,7 +260,7 @@ public abstract class ImageDataReader {
 
         // Packbits
         case TIFF_COMPRESSION_PACKBITS: {
-            return new PackBits().decompress(compressedOrdered, expectedSize);
+            return PackBits.decompress(compressedOrdered, expectedSize);
         }
 
         // deflate

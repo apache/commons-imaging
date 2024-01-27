@@ -24,7 +24,7 @@ import org.apache.commons.io.output.UnsynchronizedByteArrayOutputStream;
 
 public class PackBits {
 
-    public byte[] compress(final byte[] bytes) throws IOException {
+    public static byte[] compress(final byte[] bytes) throws IOException {
         // max length 1 extra byte for every 128
         try (UnsynchronizedByteArrayOutputStream baos = UnsynchronizedByteArrayOutputStream.builder().setBufferSize(Allocator.checkByteArray(bytes.length * 2))
                 .get()) {
@@ -73,7 +73,7 @@ public class PackBits {
         }
     }
 
-    public byte[] decompress(final byte[] bytes, final int expected) throws ImagingException {
+    public static byte[] decompress(final byte[] bytes, final int expected) throws ImagingException {
         int total = 0;
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -117,7 +117,7 @@ public class PackBits {
 
     }
 
-    private int findNextDuplicate(final byte[] bytes, final int start) {
+    private static int findNextDuplicate(final byte[] bytes, final int start) {
         // int last = -1;
         if (start >= bytes.length) {
             return -1;
@@ -138,7 +138,7 @@ public class PackBits {
         return -1;
     }
 
-    private int findRunLength(final byte[] bytes, final int start) {
+    private static int findRunLength(final byte[] bytes, final int start) {
         final byte b = bytes[start];
 
         int i;
@@ -148,5 +148,9 @@ public class PackBits {
         }
 
         return i - start;
+    }
+    
+    private PackBits() {
+        // empty
     }
 }

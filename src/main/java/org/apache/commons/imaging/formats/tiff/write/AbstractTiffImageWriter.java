@@ -486,7 +486,7 @@ public abstract class AbstractTiffImageWriter {
         }
         case TIFF_COMPRESSION_PACKBITS:
             for (int i = 0; i < strips.length; i++) {
-                strips[i] = new PackBits().compress(strips[i]);
+                strips[i] = PackBits.compress(strips[i]);
             }
             break;
         case TIFF_COMPRESSION_LZW:

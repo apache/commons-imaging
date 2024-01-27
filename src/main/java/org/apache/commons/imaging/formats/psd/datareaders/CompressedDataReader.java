@@ -67,7 +67,7 @@ public class CompressedDataReader implements DataReader {
                 final int index = channel * height + y;
                 final byte[] packed = BinaryFunctions.readBytes("scanline", is, scanlineByteCounts[index], "PSD: Missing Image Data");
 
-                final byte[] unpacked = new PackBits().decompress(packed, width);
+                final byte[] unpacked = PackBits.decompress(packed, width);
                 try (InputStream bais = new ByteArrayInputStream(unpacked);
                         MyBitInputStream mbis = new MyBitInputStream(bais, ByteOrder.BIG_ENDIAN, false)) {
                     // we want all samples to be bytes
