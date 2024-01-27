@@ -22,7 +22,7 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.io.output.UnsynchronizedByteArrayOutputStream;
 
-public class PackBits {
+public final class PackBits {
 
     public static byte[] compress(final byte[] bytes) throws IOException {
         // max length 1 extra byte for every 128
@@ -149,7 +149,7 @@ public class PackBits {
 
         return i - start;
     }
-    
+
     private PackBits() {
         // empty
     }
