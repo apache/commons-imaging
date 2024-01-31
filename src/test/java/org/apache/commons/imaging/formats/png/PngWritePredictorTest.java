@@ -77,7 +77,7 @@ public class PngWritePredictorTest {
     void testWriteWithPredictor() throws IOException {
         final int[] argb = populateARGB();
 
-        // Test the RGB (no alpha) case ---------------------
+        // Test the RGB (no alpha) case
         BufferedImage bImage = new BufferedImage(256, 256, BufferedImage.TYPE_INT_RGB);
         bImage.setRGB(0, 0, 256, 256, argb, 0, 256);
 
@@ -96,7 +96,7 @@ public class PngWritePredictorTest {
         bImage.getRGB(0, 0, 256, 256, brgb, 0, 256);
         assertArrayEquals(argb, brgb, "Round trip for RGB failed");
 
-        // Test the ARGB (some semi-transparent alpha) case ---------------------
+        // Test the ARGB (some semi-transparent alpha) case
         for (int i = 0; i < 256; i++) {
             argb[i * 256 + i] &= 0x88ffffff;
         }

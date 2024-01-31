@@ -136,7 +136,7 @@ public class TiffFloatingPointReadTest {
         // code in the tabulation. If you have a file that does not
         // define a no-data value, just use Float.NaN for testing purposes.
         //
-        // Test the satellite-derived cloud imagery file -----------------------------
+        // Test the satellite-derived cloud imagery file
         // We know from inspection that this sample file contains values
         // in the range 0 to 1 and uses 9999 as a "no-data" value.
         File target = getTiffFile("Sample64BitFloatingPointPix451x337.tiff");
@@ -180,7 +180,7 @@ public class TiffFloatingPointReadTest {
         // now read the entire image
         checkSubImage(target, fullRaster, 0, 0, width, height);
 
-        // Test the USGS overview file ------------------------------
+        // Test the USGS overview file
         // We know from inspection that this sample file contains values
         // in the range -2 to 62 and uses -99999 as a "no-data" value.
         // The file is organized using tiles of size 128-by-128.

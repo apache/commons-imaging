@@ -374,7 +374,7 @@ public class ReadTagsAndImages {
                 contentType = "Image data";
             }
             ps.format("Directory %2d %s, description: %s%n", iDirectory, contentType, directory.description());
-            // Loop on the fields, printing the metadata (fields) ----------
+            // Loop on the fields, printing the metadata (fields)
             final List<TiffField> fieldList = directory.getDirectoryEntries();
             for (final TiffField tiffField : fieldList) {
                 String s = tiffField.toString();
