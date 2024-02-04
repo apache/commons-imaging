@@ -126,8 +126,7 @@ public final class ColorCieLch {
         temp = Double.doubleToLongBits(c);
         result = 31 * result + (int) (temp ^ temp >>> 32);
         temp = Double.doubleToLongBits(h);
-        result = 31 * result + (int) (temp ^ temp >>> 32);
-        return result;
+        return 31 * result + (int) (temp ^ temp >>> 32);
     }
 
     @Override

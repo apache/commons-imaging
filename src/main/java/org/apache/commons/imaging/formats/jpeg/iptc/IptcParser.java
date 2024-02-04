@@ -386,7 +386,7 @@ public class IptcParser extends BinaryFileParser {
                 break;
             }
         }
-        byte[] blockData;
+        final byte[] blockData;
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (BinaryOutputStream bos = BinaryOutputStream.create(baos, getByteOrder())) {
             if (!charset.equals(DEFAULT_CHARSET)) {
@@ -438,9 +438,7 @@ public class IptcParser extends BinaryFileParser {
             }
         }
 
-        blockData = baos.toByteArray();
-
-        return blockData;
+        return baos.toByteArray();
     }
 
     public byte[] writePhotoshopApp13Segment(final PhotoshopApp13Data data) throws IOException, ImagingException {

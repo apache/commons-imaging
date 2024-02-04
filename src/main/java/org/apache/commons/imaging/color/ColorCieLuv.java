@@ -125,8 +125,7 @@ public final class ColorCieLuv {
         temp = Double.doubleToLongBits(u);
         result = 31 * result + (int) (temp ^ temp >>> 32);
         temp = Double.doubleToLongBits(v);
-        result = 31 * result + (int) (temp ^ temp >>> 32);
-        return result;
+        return 31 * result + (int) (temp ^ temp >>> 32);
     }
 
     @Override

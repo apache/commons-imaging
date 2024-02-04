@@ -70,8 +70,7 @@ public final class ColorDin99Lab {
         temp = Double.doubleToLongBits(a99);
         result = 31 * result + (int) (temp ^ temp >>> 32);
         temp = Double.doubleToLongBits(b99);
-        result = 31 * result + (int) (temp ^ temp >>> 32);
-        return result;
+        return 31 * result + (int) (temp ^ temp >>> 32);
     }
 
     @Override

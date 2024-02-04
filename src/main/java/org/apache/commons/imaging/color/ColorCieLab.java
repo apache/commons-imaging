@@ -125,8 +125,7 @@ public final class ColorCieLab {
         temp = Double.doubleToLongBits(a);
         result = 31 * result + (int) (temp ^ temp >>> 32);
         temp = Double.doubleToLongBits(b);
-        result = 31 * result + (int) (temp ^ temp >>> 32);
-        return result;
+        return 31 * result + (int) (temp ^ temp >>> 32);
     }
 
     @Override

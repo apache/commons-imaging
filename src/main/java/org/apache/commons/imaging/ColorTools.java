@@ -51,11 +51,9 @@ public class ColorTools {
 
         bi = relabelColorSpace(bi, from);
 
-        BufferedImage result = op.filter(bi, null);
+        final BufferedImage result = op.filter(bi, null);
 
-        result = relabelColorSpace(result, to);
-
-        return result;
+        return relabelColorSpace(result, to);
     }
 
     public BufferedImage convertBetweenColorSpacesX2(BufferedImage bi, final ColorSpace from, final ColorSpace to) {
@@ -76,9 +74,7 @@ public class ColorTools {
 
         bi = op.filter(bi, null);
 
-        bi = relabelColorSpace(bi, to);
-
-        return bi;
+        return relabelColorSpace(bi, to);
 
     }
 
@@ -103,11 +99,9 @@ public class ColorTools {
 
         final ColorConvertOp op = new ColorConvertOp(from, to, hints);
 
-        BufferedImage result = op.filter(bi, null);
+        final BufferedImage result = op.filter(bi, null);
 
-        result = relabelColorSpace(result, to);
-
-        return result;
+        return relabelColorSpace(result, to);
     }
 
     public BufferedImage convertToIccProfile(final BufferedImage bi, final ICC_Profile to) {

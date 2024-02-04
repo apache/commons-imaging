@@ -173,8 +173,7 @@ public final class ColorCmyk {
         temp = Double.doubleToLongBits(y);
         result = 31 * result + (int) (temp ^ temp >>> 32);
         temp = Double.doubleToLongBits(k);
-        result = 31 * result + (int) (temp ^ temp >>> 32);
-        return result;
+        return 31 * result + (int) (temp ^ temp >>> 32);
     }
 
     @Override
