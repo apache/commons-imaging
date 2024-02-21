@@ -96,12 +96,14 @@ public class MedianCutQuantizer {
                 final ColorCount colorCount = colorCounts.get(i);
                 palette[i] = colorCount.argb;
                 if (ignoreAlpha) {
+
                     palette[i] |= 0xff000000;
                 }
             }
 
             return new SimplePalette(palette);
         }
+
 
         Debug.debug("discrete colors: " + discreteColors);
 
@@ -114,6 +116,7 @@ public class MedianCutQuantizer {
                 break;
             }
         }
+
 
         final int paletteSize = colorGroups.size();
         Debug.debug("palette size: " + paletteSize);

@@ -73,15 +73,23 @@ public class LongestAxisMedianCut implements MedianCut {
         int limit;
         switch (mode) {
         case ALPHA:
+            System.out.println("alphaMode");
+
             limit = medianValue.alpha;
             break;
         case RED:
+            System.out.println("redMode");
+
             limit = medianValue.red;
             break;
         case GREEN:
+            System.out.println("greenMode");
+
             limit = medianValue.green;
             break;
         case BLUE:
+            System.out.println("blueMode");
+
             limit = medianValue.blue;
             break;
         default:
@@ -96,16 +104,21 @@ public class LongestAxisMedianCut implements MedianCut {
         final ColorGroup colorGroup = colorGroups.get(0);
 
         if (colorGroup.maxDiff == 0) {
+            System.out.println("No diff");
             return false;
         }
         if (!ignoreAlpha && colorGroup.alphaDiff > colorGroup.redDiff && colorGroup.alphaDiff > colorGroup.greenDiff
                 && colorGroup.alphaDiff > colorGroup.blueDiff) {
+            System.out.println("alpha");
             doCut(colorGroup, ColorComponent.ALPHA, colorGroups, ignoreAlpha);
         } else if (colorGroup.redDiff > colorGroup.greenDiff && colorGroup.redDiff > colorGroup.blueDiff) {
+            System.out.println("red");
             doCut(colorGroup, ColorComponent.RED, colorGroups, ignoreAlpha);
         } else if (colorGroup.greenDiff > colorGroup.blueDiff) {
+            System.out.println("green");
             doCut(colorGroup, ColorComponent.GREEN, colorGroups, ignoreAlpha);
         } else {
+            System.out.println("blue");
             doCut(colorGroup, ColorComponent.BLUE, colorGroups, ignoreAlpha);
         }
         return true;

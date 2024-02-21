@@ -120,4 +120,56 @@ public class PaletteQuantizationTest extends AbstractImagingTest {
         checkPaletteDetails(rainbowImage, 10, 3);
         checkPaletteDetails(rainbowImage, 2, 2);
     }
+
+    @Test
+    public void checkLAMCredMode() throws ImagingException {
+        final BufferedImage rainbowImage = new BufferedImage(9, 10, BufferedImage.TYPE_INT_RGB);
+        for (int y = 0; y < rainbowImage.getHeight(); y++) {
+            for (int x = 0; x < 3; x++) {
+                rainbowImage.setRGB(x, y, 0xFF0000);
+            }
+            for (int x = 3; x < 6; x++) {
+                rainbowImage.setRGB(x, y, 0x000100);
+            }
+            for (int x = 6; x < 9; x++) {
+                rainbowImage.setRGB(x, y, 0x000000);
+            }
+        }
+        checkPaletteDetails(rainbowImage, 2, 2);
+    }
+    @Test
+    public void checkLAMCgreenMode() throws ImagingException {
+        final BufferedImage rainbowImage = new BufferedImage(9, 10, BufferedImage.TYPE_INT_RGB);
+        for (int y = 0; y < rainbowImage.getHeight(); y++) {
+            for (int x = 0; x < 3; x++) {
+                rainbowImage.setRGB(x, y, 0x550000);
+            }
+            for (int x = 3; x < 6; x++) {
+                rainbowImage.setRGB(x, y, 0x00FF00);
+            }
+            for (int x = 6; x < 9; x++) {
+                rainbowImage.setRGB(x, y, 0x000055);
+            }
+        }
+        checkPaletteDetails(rainbowImage, 2, 2);
+    }
+
+    @Test
+    public void checkLAMCblueMode() throws ImagingException {
+        final BufferedImage rainbowImage = new BufferedImage(9, 10, BufferedImage.TYPE_INT_RGB);
+        for (int y = 0; y < rainbowImage.getHeight(); y++) {
+            for (int x = 0; x < 3; x++) {
+                rainbowImage.setRGB(x, y, 0x550000);
+            }
+            for (int x = 3; x < 6; x++) {
+                rainbowImage.setRGB(x, y, 0x005500);
+            }
+            for (int x = 6; x < 9; x++) {
+                rainbowImage.setRGB(x, y, 0x0000ff);
+            }
+        }
+        checkPaletteDetails(rainbowImage, 2, 2);
+    }
+    //limit is the maximum allowed colours for the palette
+
 }

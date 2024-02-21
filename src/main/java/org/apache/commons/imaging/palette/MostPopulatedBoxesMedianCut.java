@@ -65,7 +65,8 @@ public class MostPopulatedBoxesMedianCut implements MedianCut {
             }
             if (medianIndex == colorCounts.size() - 1) {
                 medianIndex--;
-            } else if (medianIndex > 0) {
+            } 
+            else if (medianIndex > 0) {
                 final int newDiff = Math.abs(newCount - countHalf);
                 final int oldDiff = Math.abs(countHalf - oldCount);
                 if (oldDiff < newDiff) {
