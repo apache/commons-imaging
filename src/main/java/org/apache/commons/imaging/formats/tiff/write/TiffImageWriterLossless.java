@@ -203,16 +203,19 @@ public class TiffImageWriterLossless extends AbstractTiffImageWriter {
                 overflowIndex += outputItemLength;
             } else {
                 long offset = bestFit.offset;
+                int length = bestFit.length;
                 if ((offset & 1L) != 0) {
+                    // offsets have to be at a multiple of 2
                     offset += 1;
+                    length -=1;
                 }
                 outputItem.setOffset(offset);
                 unusedElements.remove(bestFit);
 
-                if (bestFit.length > outputItemLength) {
+                if (length > outputItemLength) {
                     // not a perfect fit.
-                    final long excessOffset = bestFit.offset + outputItemLength;
-                    final int excessLength = bestFit.length - outputItemLength;
+                    final long excessOffset = offset + outputItemLength;
+                    final int excessLength = length - outputItemLength;
                     unusedElements.add(new AbstractTiffElement.Stub(excessOffset, excessLength));
                     // make sure the new element is in the correct order.
                     unusedElements.sort(ELEMENT_SIZE_COMPARATOR);
