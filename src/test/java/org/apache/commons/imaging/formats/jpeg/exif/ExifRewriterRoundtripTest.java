@@ -61,24 +61,24 @@ public class ExifRewriterRoundtripTest extends AbstractExifTest {
 
     private File duplicateFile;
 
-    private void assertTiffEquals(final TiffOutputSet sourceTiffOutputSet, final TiffOutputSet duplicatedTiffOutputSet) {
+    private void assertTiffEquals(final TiffOutputSet sourceTiffOutputSet, final TiffOutputSet duplicateTiffOutputSet) {
 
         final List<TiffOutputDirectory> sourceDirectories = sourceTiffOutputSet.getDirectories();
-        final List<TiffOutputDirectory> duplicatedDirectories = duplicatedTiffOutputSet.getDirectories();
+        final List<TiffOutputDirectory> duplicatedDirectories = duplicateTiffOutputSet.getDirectories();
 
         assertEquals(sourceDirectories.size(), duplicatedDirectories.size(), "The TiffOutputSets have different numbers of directories.");
 
         for (int i = 0; i < sourceDirectories.size(); i++) {
 
             final TiffOutputDirectory sourceDirectory = sourceDirectories.get(i);
-            final TiffOutputDirectory duplicatedDirectory = duplicatedDirectories.get(i);
+            final TiffOutputDirectory duplicateDirectory = duplicatedDirectories.get(i);
 
-            assertEquals(sourceDirectory.getType(), duplicatedDirectory.getType(), "Directory type mismatch.");
+            assertEquals(sourceDirectory.getType(), duplicateDirectory.getType(), "Directory type mismatch.");
 
             final List<TiffOutputField> sourceFields = sourceDirectory.getFields();
-            final List<TiffOutputField> duplicatedFields = duplicatedDirectory.getFields();
+            final List<TiffOutputField> duplicateFields = duplicateDirectory.getFields();
 
-            final boolean fieldCountMatches = sourceFields.size() == duplicatedFields.size();
+            final boolean fieldCountMatches = sourceFields.size() == duplicateFields.size();
 
             if (!fieldCountMatches) {
 
@@ -94,7 +94,7 @@ public class ExifRewriterRoundtripTest extends AbstractExifTest {
                 for (TiffOutputField field : sourceFields)
                     sourceTags.add(field.tag);
 
-                for (TiffOutputField field : duplicatedFields)
+                for (TiffOutputField field : duplicateFields)
                     duplicatedTags.add(field.tag);
 
                 final List<Integer> missingTags = new ArrayList<>(sourceTags);
@@ -122,15 +122,15 @@ public class ExifRewriterRoundtripTest extends AbstractExifTest {
                 if (isOffsetField)
                     continue;
 
-                TiffOutputField duplicatedField = duplicatedDirectory.findField(sourceField.tag);
+                TiffOutputField duplicateField = duplicateDirectory.findField(sourceField.tag);
 
-                assertNotNull(duplicatedField, "Field is missing: " + sourceField.tagInfo);
+                assertNotNull(duplicateField, "Field is missing: " + sourceField.tagInfo);
 
-                assertEquals(sourceField.tag, duplicatedField.tag, "TiffOutputField tag mismatch.");
-                assertEquals(sourceField.abstractFieldType, duplicatedField.abstractFieldType, "TiffOutputField fieldType mismatch.");
-                assertEquals(sourceField.count, duplicatedField.count, "TiffOutputField count mismatch.");
+                assertEquals(sourceField.tag, duplicateField.tag, "TiffOutputField tag mismatch.");
+                assertEquals(sourceField.abstractFieldType, duplicateField.abstractFieldType, "TiffOutputField fieldType mismatch.");
+                assertEquals(sourceField.count, duplicateField.count, "TiffOutputField count mismatch.");
 
-                boolean sameValue = sourceField.bytesEqual(duplicatedField);
+                boolean sameValue = sourceField.bytesEqual(duplicateField);
 
                 assertTrue(sameValue, "Bytes are different for field: " + sourceField);
             }
