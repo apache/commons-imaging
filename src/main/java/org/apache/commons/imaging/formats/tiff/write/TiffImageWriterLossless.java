@@ -45,6 +45,9 @@ import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.formats.tiff.TiffReader;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 
+/**
+ * TIFF lossless image writer.
+ */
 public class TiffImageWriterLossless extends AbstractTiffImageWriter {
     private static final class BufferOutputStream extends OutputStream {
         private final byte[] buffer;
@@ -104,7 +107,7 @@ public class TiffImageWriterLossless extends AbstractTiffImageWriter {
                     final AbstractTiffElement oversizeValue = field.getOversizeValueElement();
                     if (oversizeValue != null) {
                         final TiffOutputField frozenField = frozenFields.get(field.getTag());
-                        if (frozenField != null && frozenField.getSeperateValue() != null && frozenField.bytesEqual(field.getByteArrayValue())) {
+                        if (frozenField != null && frozenField.getSeperateValue() != null && Arrays.equals(frozenField.getData(), field.getByteArrayValue())) {
                             frozenField.getSeperateValue().setOffset(field.getOffset());
                         } else {
                             elements.add(oversizeValue);

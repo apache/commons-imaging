@@ -16,6 +16,7 @@
  */
 package org.apache.commons.imaging.formats.tiff.write;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -44,7 +45,7 @@ public class TiffOutputSetTest {
         final TiffOutputField gpsVersionId = tiffOutputSet.findField(GpsTagConstants.GPS_TAG_GPS_VERSION_ID);
 
         assertNotNull(gpsVersionId);
-        assertTrue(gpsVersionId.bytesEqual(GpsTagConstants.gpsVersion()));
+        assertArrayEquals(gpsVersionId.getData(), GpsTagConstants.gpsVersion());
     }
 
 }

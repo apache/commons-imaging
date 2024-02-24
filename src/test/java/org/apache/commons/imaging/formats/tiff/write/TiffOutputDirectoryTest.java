@@ -17,9 +17,9 @@
 package org.apache.commons.imaging.formats.tiff.write;
 
 import static org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants.TIFF_TAG_DOCUMENT_NAME;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
@@ -44,6 +44,6 @@ public class TiffOutputDirectoryTest {
         assertNotNull(field);
         assertEquals(TIFF_TAG_DOCUMENT_NAME, field.tagInfo);
         final byte[] documentNameAsBytes = TIFF_TAG_DOCUMENT_NAME.encodeValue(TiffConstants.DEFAULT_TIFF_BYTE_ORDER, "Test.tiff");
-        assertTrue(field.bytesEqual(documentNameAsBytes));
+        assertArrayEquals(field.getData(), documentNameAsBytes);
     }
 }

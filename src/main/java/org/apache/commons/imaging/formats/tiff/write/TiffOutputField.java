@@ -62,10 +62,6 @@ public class TiffOutputField {
         this(tagInfo.tag, tagInfo, abstractFieldType, count, bytes);
     }
 
-    public boolean bytesEqual(final byte[] data) {
-        return Arrays.equals(bytes, data);
-    }
-
     protected AbstractTiffOutputItem getSeperateValue() {
         return separateValueItem;
     }
@@ -78,7 +74,13 @@ public class TiffOutputField {
         return bytes.length <= TIFF_ENTRY_MAX_VALUE_LENGTH;
     }
 
-    protected void setData(final byte[] bytes) throws ImagingException {
+    /**
+     * Set the data for this TIFF output field.
+     *
+     * @param bytes TIFF output field data.
+     * @throws ImagingException if the length of the bytes array do not match.
+     */
+    public void setData(final byte[] bytes) throws ImagingException {
         // if (tagInfo.isUnknown())
         // Debug.debug("unknown tag(0x" + Integer.toHexString(tag)
         // + ") setData", bytes);
@@ -95,6 +97,14 @@ public class TiffOutputField {
         // if (isLocalValue() != wasLocalValue)
         // throw new Error("Bug. Locality disrupted! "
         // + tagInfo.getDescription());
+    }
+
+    /**
+     * Return a copy of the data in this TIFF output field.
+     * @return a copy of the data in this TIFF output field.
+     */
+    public byte[] getData() {
+        return Arrays.copyOf(this.bytes, this.bytes.length);
     }
 
     public void setSortHint(final int sortHint) {
