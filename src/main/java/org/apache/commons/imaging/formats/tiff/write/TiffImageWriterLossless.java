@@ -207,7 +207,7 @@ public class TiffImageWriterLossless extends AbstractTiffImageWriter {
                 if ((offset & 1L) != 0) {
                     // offsets have to be at a multiple of 2
                     offset += 1;
-                    length -=1;
+                    length -= 1;
                 }
                 outputItem.setOffset(offset);
                 unusedElements.remove(bestFit);
