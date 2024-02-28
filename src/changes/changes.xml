@@ -46,7 +46,7 @@ The <action> type attribute can be add,update,fix,remove.
     <title>Apache Commons Imaging Release Notes</title>
   </properties>
   <body>
-    <release version="1.0" date="20YY-MM-DD" description="1.0 release">
+    <release version="1.0-M1" date="20YY-MM-DD" description="1.0 release">
       <!-- FIX -->
       <action issue="IMAGING-335" dev="ggregory" type="fix" due-to="Dominik Stadler, Gary Gregory">
         NullPointerException in App2Segment.getIccBytes when parsing a broken JPEG file.
