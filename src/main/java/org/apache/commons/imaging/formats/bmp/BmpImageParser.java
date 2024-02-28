@@ -569,7 +569,7 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
             debugNumber("expectedDataOffset", expectedDataOffset, 4);
         }
         final int extraBytes = bhi.bitmapDataOffset - expectedDataOffset;
-        if (extraBytes < 0) {
+        if (extraBytes < 0 || extraBytes > bhi.fileSize) {
             throw new ImagingException("BMP has invalid image data offset: " + bhi.bitmapDataOffset + " (expected: " + expectedDataOffset + ", paletteLength: "
                     + paletteLength + ", headerSize: " + headerSize + ")");
         }
