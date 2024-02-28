@@ -27,8 +27,8 @@ import java.io.File;
 public class IcoImageParserTest {
 
     /**
-     * For https://issues.apache.org/jira/browse/IMAGING-373.
-     * <p> There is a problem with loading bitmap stored in given ICO file, so the exception is originally thrown by BmpImageParser.
+     * For <a href="https://issues.apache.org/jira/browse/IMAGING-373">IMAGING-373</a>.
+     * <p>There is a problem with loading bitmap stored in given ICO file, so the exception is originally thrown by BmpImageParser.</p>
      */
     @Test
     public void testImageWithInvalidBmpHeaders() {
