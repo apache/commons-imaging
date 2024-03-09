@@ -28,11 +28,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
+import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.test.TestResources;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

@@ -18,11 +18,11 @@ package org.apache.commons.imaging.formats.ico;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.File;
+
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.test.TestResources;
 import org.junit.jupiter.api.Test;
-
-import java.io.File;
 
 public class IcoImageParserTest {
 
