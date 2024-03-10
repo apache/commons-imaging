@@ -40,6 +40,7 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputField;
+import org.apache.commons.imaging.formats.tiff.write.TiffOutputFieldTestUtil;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterEach;
@@ -130,7 +131,7 @@ public class ExifRewriterRoundtripTest extends AbstractExifTest {
                 assertEquals(sourceField.abstractFieldType, duplicateField.abstractFieldType, "TiffOutputField fieldType mismatch.");
                 assertEquals(sourceField.count, duplicateField.count, "TiffOutputField count mismatch.");
 
-                boolean sameValue = sourceField.bytesEqual(duplicateField);
+                boolean sameValue = TiffOutputFieldTestUtil.bytesEqual(sourceField, duplicateField);
 
                 assertTrue(sameValue, "Bytes are different for field: " + sourceField);
             }
