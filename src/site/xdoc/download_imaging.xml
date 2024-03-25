@@ -107,38 +107,38 @@ limitations under the License.
         failing that using the <code>SHA512</code> hash (<code>*.sha512</code> checksum files).
       </p>
       <p>
-        The <a href="https://www.apache.org/dist/commons/KEYS">KEYS</a>
+        The <a href="https://downloads.apache.org/commons/KEYS">KEYS</a>
         file contains the public PGP keys used by Apache Commons developers
         to sign releases.
       </p>
     </subsection>
     </section>
-    <section name="Apache Commons Imaging 1.0-alpha3 ">
+    <section name="Apache Commons Imaging 1.0.0-M1 ">
       <subsection name="Binaries">
         <table>
           <tr>
-              <td><a href="[preferred]/commons/imaging/binaries/commons-imaging-1.0-alpha3-bin.tar.gz">commons-imaging-1.0-alpha3-bin.tar.gz</a></td>
-              <td><a href="https://www.apache.org/dist/commons/imaging/binaries/commons-imaging-1.0-alpha3-bin.tar.gz.sha512">sha512</a></td>
-              <td><a href="https://www.apache.org/dist/commons/imaging/binaries/commons-imaging-1.0-alpha3-bin.tar.gz.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/imaging/binaries/commons-imaging-1.0.0-M1-bin.tar.gz">commons-imaging-1.0.0-M1-bin.tar.gz</a></td>
+              <td><a href="https://downloads.apache.org/commons/imaging/binaries/commons-imaging-1.0.0-M1-bin.tar.gz.sha512">sha512</a></td>
+              <td><a href="https://downloads.apache.org/commons/imaging/binaries/commons-imaging-1.0.0-M1-bin.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
-              <td><a href="[preferred]/commons/imaging/binaries/commons-imaging-1.0-alpha3-bin.zip">commons-imaging-1.0-alpha3-bin.zip</a></td>
-              <td><a href="https://www.apache.org/dist/commons/imaging/binaries/commons-imaging-1.0-alpha3-bin.zip.sha512">sha512</a></td>
-              <td><a href="https://www.apache.org/dist/commons/imaging/binaries/commons-imaging-1.0-alpha3-bin.zip.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/imaging/binaries/commons-imaging-1.0.0-M1-bin.zip">commons-imaging-1.0.0-M1-bin.zip</a></td>
+              <td><a href="https://downloads.apache.org/commons/imaging/binaries/commons-imaging-1.0.0-M1-bin.zip.sha512">sha512</a></td>
+              <td><a href="https://downloads.apache.org/commons/imaging/binaries/commons-imaging-1.0.0-M1-bin.zip.asc">pgp</a></td>
           </tr>
         </table>
       </subsection>
       <subsection name="Source">
         <table>
           <tr>
-              <td><a href="[preferred]/commons/imaging/source/commons-imaging-1.0-alpha3-src.tar.gz">commons-imaging-1.0-alpha3-src.tar.gz</a></td>
-              <td><a href="https://www.apache.org/dist/commons/imaging/source/commons-imaging-1.0-alpha3-src.tar.gz.sha512">sha512</a></td>
-              <td><a href="https://www.apache.org/dist/commons/imaging/source/commons-imaging-1.0-alpha3-src.tar.gz.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/imaging/source/commons-imaging-1.0.0-M1-src.tar.gz">commons-imaging-1.0.0-M1-src.tar.gz</a></td>
+              <td><a href="https://downloads.apache.org/commons/imaging/source/commons-imaging-1.0.0-M1-src.tar.gz.sha512">sha512</a></td>
+              <td><a href="https://downloads.apache.org/commons/imaging/source/commons-imaging-1.0.0-M1-src.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
-              <td><a href="[preferred]/commons/imaging/source/commons-imaging-1.0-alpha3-src.zip">commons-imaging-1.0-alpha3-src.zip</a></td>
-              <td><a href="https://www.apache.org/dist/commons/imaging/source/commons-imaging-1.0-alpha3-src.zip.sha512">sha512</a></td>
-              <td><a href="https://www.apache.org/dist/commons/imaging/source/commons-imaging-1.0-alpha3-src.zip.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/imaging/source/commons-imaging-1.0.0-M1-src.zip">commons-imaging-1.0.0-M1-src.zip</a></td>
+              <td><a href="https://downloads.apache.org/commons/imaging/source/commons-imaging-1.0.0-M1-src.zip.sha512">sha512</a></td>
+              <td><a href="https://downloads.apache.org/commons/imaging/source/commons-imaging-1.0.0-M1-src.zip.asc">pgp</a></td>
           </tr>
         </table>
       </subsection>

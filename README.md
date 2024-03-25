@@ -44,10 +44,9 @@ Apache Commons Imaging
 ===================
 
 [![Java CI](https://github.com/apache/commons-imaging/actions/workflows/maven.yml/badge.svg)](https://github.com/apache/commons-imaging/actions/workflows/maven.yml)
-[![Coverage Status](https://codecov.io/gh/apache/commons-imaging/branch/master/graph/badge.svg)](https://app.codecov.io/gh/apache/commons-imaging/branch/master)
+[![Coverage Status](https://codecov.io/gh/apache/commons-imaging/branch/master/graph/badge.svg)](https://app.codecov.io/gh/apache/commons-imaging)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-imaging/badge.svg?gav=true)](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-imaging/?gav=true)
-[![Javadocs](https://javadoc.io/badge/org.apache.commons/commons-imaging/1.0-alpha3.svg)](https://javadoc.io/doc/org.apache.commons/commons-imaging/1.0-alpha3)
-[![Fuzzing Status](https://oss-fuzz-build-logs.storage.googleapis.com/badges/apache-commons.svg)](https://bugs.chromium.org/p/oss-fuzz/issues/list?sort=-opened&can=1&q=proj:apache-commons)
+[![Javadocs](https://javadoc.io/badge/org.apache.commons/commons-imaging/1.0.0-M1.svg)](https://javadoc.io/doc/org.apache.commons/commons-imaging/1.0.0-M1)
 [![CodeQL](https://github.com/apache/commons-imaging/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/apache/commons-imaging/actions/workflows/codeql-analysis.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/apache/commons-imaging/badge)](https://api.securityscorecards.dev/projects/github.com/apache/commons-imaging)
 
@@ -60,27 +59,35 @@ More information can be found on the [Apache Commons Imaging homepage](https://c
 The [Javadoc](https://commons.apache.org/proper/commons-imaging/apidocs) can be browsed.
 Questions related to the usage of Apache Commons Imaging should be posted to the [user mailing list](https://commons.apache.org/mail-lists.html).
 
-Where can I get the latest release?
------------------------------------
+Getting the latest release
+--------------------------
 You can download source and binaries from our [download page](https://commons.apache.org/proper/commons-imaging/download_imaging.cgi).
 
-Alternatively, you can pull it from the central Maven repositories:
+Alternatively, you can pull it from  the central Maven repositories:
 
 ```xml
 <dependency>
   <groupId>org.apache.commons</groupId>
   <artifactId>commons-imaging</artifactId>
-  <version>1.0-alpha3</version>
+  <version>1.0.0-M1</version>
 </dependency>
 ```
+
+Building
+--------
+
+Building requires a Java JDK and [Apache Maven](https://maven.apache.org/). 
+The required Java version is found in the `pom.xml` as the `maven.compiler.source` property.
+
+From a command shell, run `mvn` without arguments to invoke the default Maven goal to run all tests and checks.
 
 Contributing
 ------------
 
-We accept Pull Requests via GitHub. The [developer mailing list][ml] is the main channel of communication for contributors.
+We accept Pull Requests via GitHub. The [developer mailing list](https://commons.apache.org/mail-lists.html) is the main channel of communication for contributors.
 There are some guidelines which will make applying PRs easier for us:
 + No tabs! Please use spaces for indentation.
-+ Respect the code style.
++ Respect the existing code style for each file.
 + Create minimal diffs - disable on save actions like reformat source code or organize imports. If you feel the source code should be reformatted create a separate PR for this change.
 + Provide JUnit tests for your changes and make sure your changes don't break any existing tests by running ```mvn```.
 
@@ -89,20 +96,23 @@ You can learn more about contributing via GitHub in our [contribution guidelines
 
 License
 -------
-This code is under the [Apache License v2](https://www.apache.org/licenses/LICENSE-2.0).
+This code is licensed under the [Apache License v2](https://www.apache.org/licenses/LICENSE-2.0).
 
 See the `NOTICE.txt` file for required notices and attributions.
 
-Donations
----------
-You like Apache Commons Imaging? Then [donate back to the ASF](https://www.apache.org/foundation/contributing.html) to support the development.
+Donating
+--------
+You like Apache Commons Imaging? Then [donate back to the ASF](https://www.apache.org/foundation/contributing.html) to support development.
 
 Additional Resources
 --------------------
 
 + [Apache Commons Homepage](https://commons.apache.org/)
 + [Apache Issue Tracker (JIRA)](https://issues.apache.org/jira/browse/IMAGING)
++ [Apache Commons Slack Channel](https://the-asf.slack.com/archives/C60NVB8AD)
 + [Apache Commons Twitter Account](https://twitter.com/ApacheCommons)
-+ `#apache-commons` IRC channel on `irc.freenode.org`
 
-[ml]:https://commons.apache.org/mail-lists.html
+Apache Commons Components
+-------------------------
+
+Please see the [list of components](https://commons.apache.org/components.html)
