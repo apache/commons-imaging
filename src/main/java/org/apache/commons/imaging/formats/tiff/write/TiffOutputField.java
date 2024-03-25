@@ -66,6 +66,11 @@ public class TiffOutputField {
         return Arrays.equals(bytes, data);
     }
 
+    /* Only used in tests. */
+    protected boolean bytesEqual(final TiffOutputField other) {
+        return Arrays.equals(bytes, other.bytes);
+    }
+
     protected AbstractTiffOutputItem getSeperateValue() {
         return separateValueItem;
     }
