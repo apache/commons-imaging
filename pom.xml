@@ -27,7 +27,7 @@
 
   <artifactId>commons-imaging</artifactId>
   <name>Apache Commons Imaging</name>
-  <version>1.0.0-M1-SNAPSHOT</version>
+  <version>1.0.0-M1</version>
 
   <!--
     Keep the description on a single line. Otherwise Maven might generate
@@ -61,7 +61,7 @@
     <commons.rc.version>RC1</commons.rc.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/imaging</commons.distSvnStagingUrl>
-    <project.build.outputTimestamp>2024-01-01T00:00:00Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2024-03-25T11:57:06Z</project.build.outputTimestamp>
   </properties>
 
   <scm>
