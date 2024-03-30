@@ -142,7 +142,7 @@ The <action> type attribute can be add,update,fix,remove.
         Bump maven-checkstyle plugin from 3.1.2 to 3.2.1 #233, #266.
       </action>
       <action type="update" due-to="Gary Gregory">
-        Bump commons-io:commons-io 2.6 to 2.15.1.
+        Bump commons-io:commons-io 2.6 to 2.16.0 #380.
       </action>
       <action dev="ggregory" type="update" due-to="Gary Gregory">
         Bump commons-lang3 from 3.12.0 to 3.14.0.
