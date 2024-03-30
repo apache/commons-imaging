@@ -27,7 +27,7 @@
 
   <artifactId>commons-imaging</artifactId>
   <name>Apache Commons Imaging</name>
-  <version>1.0.0-M1</version>
+  <version>1.0.0-alpha4-SNAPSHOT</version>
 
   <!--
     Keep the description on a single line. Otherwise Maven might generate
@@ -55,8 +55,8 @@
     <commons.conf.dir>src/conf</commons.conf.dir>
 
     <!-- Commons Release Plugin -->
-    <commons.release.version>1.0.0-M1</commons.release.version>
-    <commons.release.next>1.0.0-M2</commons.release.next>
+    <commons.release.version>1.0.0-alpha4</commons.release.version>
+    <commons.release.next>1.0.0-alpha5</commons.release.next>
     <commons.bc.version>1.0-alpha3</commons.bc.version>
     <commons.rc.version>RC1</commons.rc.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>

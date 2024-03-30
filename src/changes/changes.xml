@@ -46,7 +46,7 @@ The <action> type attribute can be add,update,fix,remove.
     <title>Apache Commons Imaging Release Notes</title>
   </properties>
   <body>
-    <release version="1.0.0-M1" date="2024-03-25" description="1.0 release">
+    <release version="1.0.0-alpha4" date="2024-03-30" description="1.0.0-alpha4 release">
       <!-- FIX -->
       <action issue="IMAGING-335" dev="ggregory" type="fix" due-to="Dominik Stadler, Gary Gregory">
         NullPointerException in App2Segment.getIccBytes when parsing a broken JPEG file.
@@ -154,7 +154,7 @@ The <action> type attribute can be add,update,fix,remove.
         Make unit tests work in-memory instead of writing hundred of tmp files.
       </action>
     </release>
-    <release version="1.0-alpha3" date="2022-05-13" description="Third 1.0 alpha release">
+    <release version="1.0-alpha3" date="2022-05-13" description="1.0-alpha3 release">
       <action issue="IMAGING-330" dev="kinow" type="fix" due-to="Gary Lucas">
         Add PNG predictor to reduce output size.
       </action>
@@ -310,7 +310,7 @@ The <action> type attribute can be add,update,fix,remove.
         Bump github/codeql-action from 1 to 2 #216
       </action>
     </release>
-    <release version="1.0-alpha2" date="2020-08-01" description="Second 1.0 alpha release">
+    <release version="1.0-alpha2" date="2020-08-01" description="1.0-alpha2 release">
       <action issue="IMAGING-258" dev="kinow" type="update" due-to="Gary Lucas">
         Prevent exception in TIFF when reading EXIF directory
       </action>
@@ -420,7 +420,7 @@ The <action> type attribute can be add,update,fix,remove.
         Update junit-jupiter from 5.5.2 to 5.6.2 #86.
       </action>
     </release>
-    <release version="1.0-alpha1" date="2019-04-28" description="First 1.0 alpha release">
+    <release version="1.0-alpha1" date="2019-04-28" description="1.0-alpha1 release">
       <action issue="IMAGING-199" dev="kinow" type="fix" due-to="Ric Emery">
         All tEXt chunks are not returned from PngImageParser.getMetadata
       </action>
