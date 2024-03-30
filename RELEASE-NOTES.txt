@@ -21,6 +21,7 @@ New features
 
 Fixed Bugs
 ----------
+
 * IMAGING-335:  NullPointerException in App2Segment.getIccBytes when parsing a broken JPEG file. Thanks to Dominik Stadler, Gary Gregory.
 * IMAGING-342:  Read PNG metadata from iTXt chunk. Thanks to Glavo.
 *               [StepSecurity] ci: Harden GitHub Actions #297. Thanks to step-security-bot, Gary Gregory.

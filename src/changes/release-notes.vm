@@ -93,6 +93,7 @@ New features
 #if ($release.getActions('fix').size() !=0)
 Fixed Bugs
 ----------
+
 #foreach($actionItem in $release.getActions('fix'))
 #processaction()
 #end
