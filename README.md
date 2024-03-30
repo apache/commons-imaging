@@ -46,7 +46,7 @@ Apache Commons Imaging
 [![Java CI](https://github.com/apache/commons-imaging/actions/workflows/maven.yml/badge.svg)](https://github.com/apache/commons-imaging/actions/workflows/maven.yml)
 [![Coverage Status](https://codecov.io/gh/apache/commons-imaging/branch/master/graph/badge.svg)](https://app.codecov.io/gh/apache/commons-imaging)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-imaging/badge.svg?gav=true)](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-imaging/?gav=true)
-[![Javadocs](https://javadoc.io/badge/org.apache.commons/commons-imaging/1.0.0-M1.svg)](https://javadoc.io/doc/org.apache.commons/commons-imaging/1.0.0-M1)
+[![Javadocs](https://javadoc.io/badge/org.apache.commons/commons-imaging/1.0.0-alpha4.svg)](https://javadoc.io/doc/org.apache.commons/commons-imaging/1.0.0-alpha4)
 [![CodeQL](https://github.com/apache/commons-imaging/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/apache/commons-imaging/actions/workflows/codeql-analysis.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/apache/commons-imaging/badge)](https://api.securityscorecards.dev/projects/github.com/apache/commons-imaging)
 
@@ -69,7 +69,7 @@ Alternatively, you can pull it from  the central Maven repositories:
 <dependency>
   <groupId>org.apache.commons</groupId>
   <artifactId>commons-imaging</artifactId>
-  <version>1.0.0-M1</version>
+  <version>1.0.0-alpha4</version>
 </dependency>
 ```
 
