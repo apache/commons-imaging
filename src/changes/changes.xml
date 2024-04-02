@@ -47,6 +47,9 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
     <release version="1.0.0-alpha5" date="YYYY-MM-DD" description="The 1.0.0-alpha5 release requires Java 8.">
+      <!-- FIX -->
+      <!-- UPDATE -->
+      <action dev="ggregory" type="update" due-to="Dependabot">Bump org.apache.commons:commons-parent from 67 to 69 #382.</action>
     </release>
     <release version="1.0.0-alpha4" date="2024-03-30" description="The 1.0.0-alpha4 release requires Java 8.">
       <!-- FIX -->
