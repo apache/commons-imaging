@@ -46,6 +46,8 @@ The <action> type attribute can be add,update,fix,remove.
     <title>Apache Commons Imaging Release Notes</title>
   </properties>
   <body>
+    <release version="1.0.0-alpha5" date="YYYY-MM-DD" description="The 1.0.0-alpha5 release requires Java 8.">
+    </release>
     <release version="1.0.0-alpha4" date="2024-03-30" description="The 1.0.0-alpha4 release requires Java 8.">
       <!-- FIX -->
       <action issue="IMAGING-335" dev="ggregory" type="fix" due-to="Dominik Stadler, Gary Gregory">
