@@ -31,6 +31,7 @@
       <item name="Issue Tracking"                     href="/issue-tracking.html"/>
       <item name="Source Repository"                  href="/scm.html"/>
       <item name="Javadoc"                            href="/apidocs/index.html"/>
+      <item name="Javadoc Archive"                    href="https://javadoc.io/doc/org.apache.commons/commons-imaging/"/>
       <item name="Download"                           href="/download_imaging.cgi"/>
     </menu>
 
