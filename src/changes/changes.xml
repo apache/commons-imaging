@@ -95,6 +95,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="IMAGING-373" dev="ggregory" type="fix" due-to="Milan Nikl">
         Fail faster on invalid ICO file.
       </action>
+      <action issue="IMAGING-332"  dev="ggregory" type="fix">
+        OutOfMemory with invalid PNG input file, fixed with Allocator#check.
+      </action>
       <!-- ADD -->
       <action issue="IMAGING-352" dev="ggregory" type="add" due-to="Jeroen van der Vegt, Gary Gregory">
         [PngWriter] Allow custom PaletteFactory #294.
