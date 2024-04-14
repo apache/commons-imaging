@@ -90,11 +90,13 @@ public class ExifRewriterRoundtripTest extends AbstractExifTest {
                 final List<Integer> sourceTags = new ArrayList<>();
                 final List<Integer> duplicatedTags = new ArrayList<>();
 
-                for (TiffOutputField field : sourceFields)
+                for (final TiffOutputField field : sourceFields) {
                     sourceTags.add(field.tag);
+                }
 
-                for (TiffOutputField field : duplicateFields)
+                for (final TiffOutputField field : duplicateFields) {
                     duplicatedTags.add(field.tag);
+                }
 
                 final List<Integer> missingTags = new ArrayList<>(sourceTags);
                 missingTags.removeAll(duplicatedTags);
@@ -106,7 +108,7 @@ public class ExifRewriterRoundtripTest extends AbstractExifTest {
                 assertTrue(missingTags.isEmpty(), "Missing tags: " + missingTags);
             }
 
-            for (TiffOutputField sourceField : sourceFields) {
+            for (final TiffOutputField sourceField : sourceFields) {
                 final boolean isOffsetField =
                         sourceField.tag == ExifTagConstants.EXIF_TAG_EXIF_OFFSET.tag ||
                                 sourceField.tag == ExifTagConstants.EXIF_TAG_GPSINFO.tag ||
@@ -117,10 +119,11 @@ public class ExifRewriterRoundtripTest extends AbstractExifTest {
                  * Ignore offset fields. They may not be needed after rewrite
                  * and their value changes anyway.
                  */
-                if (isOffsetField)
+                if (isOffsetField) {
                     continue;
+                }
 
-                TiffOutputField duplicateField = duplicateDirectory.findField(sourceField.tag);
+                final TiffOutputField duplicateField = duplicateDirectory.findField(sourceField.tag);
 
                 assertNotNull(duplicateField, "Field is missing: " + sourceField.tagInfo);
 
