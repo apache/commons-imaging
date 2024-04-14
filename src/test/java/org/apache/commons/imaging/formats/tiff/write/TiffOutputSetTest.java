@@ -18,7 +18,6 @@ package org.apache.commons.imaging.formats.tiff.write;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
 import org.junit.jupiter.api.BeforeEach;
