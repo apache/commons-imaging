@@ -62,6 +62,14 @@ public class TiffOutputField {
         this(tagInfo.tag, tagInfo, abstractFieldType, count, bytes);
     }
 
+    /**
+     * Return a copy of the data in this TIFF output field.
+     * @return a copy of the data in this TIFF output field.
+     */
+    public byte[] getData() {
+        return Arrays.copyOf(this.bytes, this.bytes.length);
+    }
+
     protected AbstractTiffOutputItem getSeperateValue() {
         return separateValueItem;
     }
@@ -97,14 +105,6 @@ public class TiffOutputField {
         // if (isLocalValue() != wasLocalValue)
         // throw new Error("Bug. Locality disrupted! "
         // + tagInfo.getDescription());
-    }
-
-    /**
-     * Return a copy of the data in this TIFF output field.
-     * @return a copy of the data in this TIFF output field.
-     */
-    public byte[] getData() {
-        return Arrays.copyOf(this.bytes, this.bytes.length);
     }
 
     public void setSortHint(final int sortHint) {
