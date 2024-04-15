@@ -27,7 +27,7 @@
 
   <artifactId>commons-imaging</artifactId>
   <name>Apache Commons Imaging</name>
-  <version>1.0.0-alpha5-SNAPSHOT</version>
+  <version>1.0.0-alpha5</version>
 
   <!--
     Keep the description on a single line. Otherwise Maven might generate
@@ -37,6 +37,11 @@
   <url>https://commons.apache.org/proper/commons-imaging/</url>
 
   <properties>
+    <!-- ****************************************** -->
+    <!-- WHILE IN ALPHA MODE ONLY, REMOVE FOR 1.0.0 -->
+    <!-- ****************************************** -->
+    <commons.japicmp.breakBuildOnBinaryIncompatibleModifications>false</commons.japicmp.breakBuildOnBinaryIncompatibleModifications>
+    <!-- *********************************************************************************************************************** -->
     <argLine>-Xmx512m</argLine>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
@@ -56,11 +61,11 @@
     <!-- Commons Release Plugin -->
     <commons.release.version>1.0.0-alpha5</commons.release.version>
     <commons.release.next>1.0.0-alpha6</commons.release.next>
-    <commons.bc.version>1.0-alpha4</commons.bc.version>
+    <commons.bc.version>1.0.0-alpha4</commons.bc.version>
     <commons.rc.version>RC1</commons.rc.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/imaging</commons.distSvnStagingUrl>
-    <project.build.outputTimestamp>2024-04-02T18:52:47Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2024-04-15T12:26:00Z</project.build.outputTimestamp>
   </properties>
 
   <scm>
