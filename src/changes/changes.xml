@@ -46,7 +46,7 @@ The <action> type attribute can be add,update,fix,remove.
     <title>Apache Commons Imaging Release Notes</title>
   </properties>
   <body>
-    <release version="1.0.0-alpha5" date="YYYY-MM-DD" description="The 1.0.0-alpha5 release requires Java 8.">
+    <release version="1.0.0-alpha5" date="2024-04-15" description="The 1.0.0-alpha5 release requires Java 8.">
       <!-- FIX -->
       <action issue="IMAGING-319" dev="kinow" type="fix" due-to="Stefan Oltmann, Gary Lucas">Fix EXIF metadata is discarded when updating offsets (wrong calculation).</action>
       <action issue="IMAGING-351" dev="kinow" type="fix" due-to="Stefan Oltmann, Gary Lucas, Charles Hope">Fix ExifRewriterRoundtripTest that was disabled.</action>

@@ -1,3 +1,39 @@
+Apache Commons Imaging 1.0.0-alpha5 Release Notes
+----------------------------------------
+
+The Apache Commons Imaging team is pleased to announce the release of Apache Commons Imaging 1.0.0-alpha5.
+
+Apache Commons Imaging (previously Sanselan) is a pure-Java image library.
+
+The 1.0.0-alpha5 release requires Java 8.
+
+
+Fixed Bugs
+----------
+
+* IMAGING-319:  Fix EXIF metadata is discarded when updating offsets (wrong calculation). Thanks to Stefan Oltmann, Gary Lucas.
+* IMAGING-351:  Fix ExifRewriterRoundtripTest that was disabled. Thanks to Stefan Oltmann, Gary Lucas, Charles Hope.
+
+Changes
+-------
+
+*               Bump org.apache.commons:commons-parent from 67 to 69 #382. Thanks to Dependabot.
+*               Bump commons-io:commons-io from 2.16.0 to 2.16.1 #385. Thanks to Dependabot.
+
+
+Historical list of changes: https://commons.apache.org/proper/commons-imaging//changes-report.html
+
+For complete information on Apache Commons Imaging, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Commons Imaging website:
+
+https://commons.apache.org/proper/commons-imaging/
+
+Download page: https://commons.apache.org/proper/commons-imaging//download_text.cgi
+
+Have fun!
+-Apache Commons Team
+
+-----------------------------------------------------------------------------
 Apache Commons Imaging 1.0.0-alpha4 Release Notes
 -------------------------------------------------
 
