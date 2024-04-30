@@ -86,7 +86,7 @@ public final class Debug {
     }
 
     private static void debug(final String message, final Calendar value) {
-        final DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.ENGLISH);
+        final DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.ROOT);
         debug(message, value == null ? "null" : df.format(value.getTime()));
     }
 
@@ -95,7 +95,7 @@ public final class Debug {
     }
 
     private static void debug(final String message, final Date value) {
-        final DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.ENGLISH);
+        final DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.ROOT);
         debug(message, value == null ? "null" : df.format(value));
     }
 
@@ -261,7 +261,7 @@ public final class Debug {
     private static String getDebug(final Throwable e, final int max) {
         final StringBuilder result = new StringBuilder(35);
 
-        final SimpleDateFormat timestamp = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss:SSS", Locale.ENGLISH);
+        final SimpleDateFormat timestamp = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss:SSS", Locale.ROOT);
         final String datetime = timestamp.format(new Date()).toLowerCase();
 
         result.append(NEWLINE);

@@ -156,7 +156,7 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
                             final int green = Integer.parseInt(line.substring(4, 7).trim());
                             final int blue = Integer.parseInt(line.substring(8, 11).trim());
                             final String colorName = line.substring(11).trim();
-                            colors.put(colorName.toLowerCase(Locale.ENGLISH), 0xff000000 | red << 16 | green << 8 | blue);
+                            colors.put(colorName.toLowerCase(Locale.ROOT), 0xff000000 | red << 16 | green << 8 | blue);
                         } catch (final NumberFormatException nfe) {
                             throw new ImagingException("Couldn't parse color in rgb.txt", nfe);
                         }
@@ -282,7 +282,7 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
             return 0x00000000;
         }
         loadColorNames();
-        final String colorLowercase = color.toLowerCase(Locale.ENGLISH);
+        final String colorLowercase = color.toLowerCase(Locale.ROOT);
         return colorNames.getOrDefault(colorLowercase, 0x00000000);
     }
 

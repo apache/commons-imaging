@@ -47,6 +47,7 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
     <release version="1.0.0-alpha6" date="YYYY-MM-DD" description="The 1.0.0-alpha6 release requires Java 8.">
+      <action dev="ggregory" type="fix" due-to="Gary Gregory">Replace Locale.ENGLISH with Locale.ROOT processing file names.</action>
     </release>
     <release version="1.0.0-alpha5" date="2024-04-15" description="The 1.0.0-alpha5 release requires Java 8.">
       <!-- FIX -->

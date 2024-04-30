@@ -422,7 +422,7 @@ public class TiffField {
             return "'" + o.toString().trim() + "'";
         }
         if (o instanceof Date) {
-            final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.ENGLISH);
+            final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.ROOT);
             return df.format((Date) o);
         }
         if (o instanceof Object[]) {

@@ -855,11 +855,11 @@ public final class Imaging {
             return false;
         }
 
-        final String normalizedFileName = fileName.toLowerCase(Locale.ENGLISH);
+        final String normalizedFileName = fileName.toLowerCase(Locale.ROOT);
 
         for (final AbstractImageParser<?> imageParser : AbstractImageParser.getAllImageParsers()) {
             for (final String extension : imageParser.getAcceptedExtensions()) {
-                if (normalizedFileName.endsWith(extension.toLowerCase(Locale.ENGLISH))) {
+                if (normalizedFileName.endsWith(extension.toLowerCase(Locale.ROOT))) {
                     return true;
                 }
             }

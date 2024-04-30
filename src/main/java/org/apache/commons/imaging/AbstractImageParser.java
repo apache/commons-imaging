@@ -130,7 +130,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
 
         final int index = fileName.lastIndexOf('.');
         if (index >= 0) {
-            final String fileNameExtension = fileName.substring(index + 1).toLowerCase(Locale.ENGLISH);
+            final String fileNameExtension = fileName.substring(index + 1).toLowerCase(Locale.ROOT);
             for (final String extension : extensions) {
                 if (extension.equals(fileNameExtension)) {
                     return true;
