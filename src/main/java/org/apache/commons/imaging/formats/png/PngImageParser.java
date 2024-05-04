@@ -349,7 +349,7 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
 
         final PngChunkIccp pngChunkiCCP = (PngChunkIccp) chunks.get(0);
 
-        return pngChunkiCCP.getUncompressedProfile();// TODO should this be a clone?
+        return pngChunkiCCP.getUncompressedProfile(); // TODO should this be a clone?
     }
 
     @Override
