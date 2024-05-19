@@ -16,26 +16,21 @@
  limitations under the License.
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-parent</artifactId>
     <version>69</version>
   </parent>
-
   <artifactId>commons-imaging</artifactId>
   <name>Apache Commons Imaging</name>
   <version>1.0.0-alpha6-SNAPSHOT</version>
-
   <!--
     Keep the description on a single line. Otherwise Maven might generate
     a corrupted MANIFEST.MF (see https://issues.apache.org/jira/browse/MJAR-4)
    -->
   <description>Apache Commons Imaging (previously Sanselan) is a pure-Java image library.</description>
   <url>https://commons.apache.org/proper/commons-imaging/</url>
-
   <properties>
     <!-- ****************************************** -->
     <!-- WHILE IN ALPHA MODE ONLY, REMOVE FOR 1.0.0 -->
@@ -51,8 +46,6 @@
     <commons.jira.pid>12313421</commons.jira.pid>
     <commons.osgi.export>org.apache.commons.imaging.*;version=${project.version};-noimport:=true</commons.osgi.export>
     <commons.site.path>imaging</commons.site.path>
-    <commons.scmPubUrl>https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-imaging</commons.scmPubUrl>
-    <commons.scmPubCheckoutDirectory>site-content</commons.scmPubCheckoutDirectory>
     <!-- TODO: remove when we upgrade it to commons-parent 53 due to https://issues.apache.org/jira/browse/MNG-7316 -->
     <commons.release-plugin.version>1.8.0</commons.release-plugin.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -81,21 +74,18 @@
     <url>https://gitbox.apache.org/repos/asf?p=commons-imaging.git</url>
     <tag>HEAD</tag>
   </scm>
-
   <distributionManagement>
     <site>
-      <id>apache.website</id>
-      <name>Apache Commons Site</name>
-      <url>scm:svn:https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-imaging/</url>
+      <id>stagingSite</id>
+      <name>Apache Staging Website</name>
+      <url>${commons.deployment.protocol}://people.apache.org/www/commons.apache.org/commons-${commons.componentid}/</url>
     </site>
   </distributionManagement>
-
   <issueManagement>
     <system>jira</system>
     <url>https://issues.apache.org/jira/browse/IMAGING</url>
   </issueManagement>
   <inceptionYear>2007</inceptionYear>
-
   <build>
     <defaultGoal>clean verify apache-rat:check checkstyle:check spotbugs:check javadoc:javadoc</defaultGoal>
     <plugins>
@@ -155,15 +145,6 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-scm-publish-plugin</artifactId>
-        <configuration>
-          <ignorePathsToDelete>
-            <ignorePathToDelete>javadocs</ignorePathToDelete>
-          </ignorePathsToDelete>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
       </plugin>
       <plugin>
@@ -173,6 +154,22 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-scm-publish-plugin</artifactId>
+        <configuration>
+          <ignorePathsToDelete>
+            <ignorePathToDelete>javadocs</ignorePathToDelete>
+          </ignorePathsToDelete>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <source>${maven.compiler.source}</source>
+        </configuration>
       </plugin>
     </plugins>
     <pluginManagement>
@@ -194,23 +191,6 @@
           <artifactId>spotbugs-maven-plugin</artifactId>
           <configuration>
             <excludeFilterFile>${commons.conf.dir}/spotbugs-exclude-filter.xml</excludeFilterFile>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-scm-publish-plugin</artifactId>
-          <configuration>
-            <ignorePathsToDelete>
-              <ignorePathToDelete>javadocs**</ignorePathToDelete>
-            </ignorePathsToDelete>
-          </configuration>
-        </plugin>     
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <configuration>
-            <excludePackageNames>org.apache.commons.imaging.formats.psd.*:org.apache.commons.imaging.formats.png.*</excludePackageNames>
-            <source>8</source>
           </configuration>
         </plugin>
         <plugin>
@@ -247,7 +227,6 @@
       </plugins>
     </pluginManagement>
   </build>
-
   <dependencies>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -283,7 +262,6 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <reporting>
     <plugins>
       <plugin>
@@ -389,54 +367,6 @@
       </plugin>
     </plugins>
   </reporting>
-
-  <profiles>
-    <profile>
-      <id>setup-checkout</id>
-      <activation>
-        <file>
-          <missing>site-content</missing>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <version>3.1.0</version>
-            <executions>
-              <execution>
-                <id>prepare-checkout</id>
-                <phase>pre-site</phase>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-                <configuration>
-                  <target>
-                    <exec executable="svn">
-                      <arg line="checkout --depth immediates ${commons.scmPubUrl} ${commons.scmPubCheckoutDirectory}" />
-                    </exec>
-
-                    <exec executable="svn">
-                      <arg line="update --set-depth exclude ${commons.scmPubCheckoutDirectory}/javadocs" />
-                    </exec>
-
-                    <pathconvert pathsep=" " property="dirs">
-                      <dirset dir="${commons.scmPubCheckoutDirectory}" includes="*" />
-                    </pathconvert>
-                    <exec executable="svn">
-                      <arg line="update --set-depth infinity ${dirs}" />
-                    </exec>
-                  </target>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
-
   <developers>
     <developer>
       <name>Charles M. Chen</name>
@@ -486,7 +416,6 @@
       </properties>
     </developer>
   </developers>
-
   <contributors>
     <contributor>
       <name>Adrian Moerchen</name>
