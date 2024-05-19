@@ -76,9 +76,9 @@
   </scm>
   <distributionManagement>
     <site>
-      <id>stagingSite</id>
-      <name>Apache Staging Website</name>
-      <url>${commons.deployment.protocol}://people.apache.org/www/commons.apache.org/commons-${commons.componentid}/</url>
+      <id>apache.website</id>
+      <name>Apache Commons Site</name>
+      <url>scm:svn:https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-imaging/</url>
     </site>
   </distributionManagement>
   <issueManagement>
