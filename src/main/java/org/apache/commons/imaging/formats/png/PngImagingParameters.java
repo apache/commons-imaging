@@ -117,7 +117,7 @@ public class PngImagingParameters extends XmpImagingParameters<PngImagingParamet
      * time when writing an image, but will not affect the time required to read an image.
      *
      * @param predictorEnabled true if a predictor is enabled; otherwise, false.
-     * @return this
+     * @return {@code this} instance.
      */
     public PngImagingParameters setPredictorEnabled(final boolean predictorEnabled) {
         this.predictorEnabled = predictorEnabled;

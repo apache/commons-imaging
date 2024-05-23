@@ -206,7 +206,7 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
      * directories, GPS-related directories, etc.
      *
      * @param tiffOutputSet A valid instance.
-     * @return this
+     * @return {@code this} instance.
      */
     public TiffImagingParameters setOutputSet(final TiffOutputSet tiffOutputSet) {
         this.tiffOutputSet = tiffOutputSet;
@@ -228,7 +228,7 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
      * @param y      pixel coordinate of the upper-left corner of the source image, must be zero or greater.
      * @param width  width of the image subset to be read, must be greater than zero.
      * @param height height of the image subset to be read, must be greater than zero.
-     * @return this
+     * @return {@code this} instance.
      */
     public TiffImagingParameters setSubImage(final int x, final int y, final int width, final int height) {
         if (x < 0 || y < 0) {
