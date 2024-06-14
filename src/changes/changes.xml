@@ -49,7 +49,7 @@ The <action> type attribute can be add,update,fix,remove.
     <release version="1.0.0-alpha6" date="YYYY-MM-DD" description="The 1.0.0-alpha6 release requires Java 8.">
       <action dev="ggregory" type="fix" due-to="Gary Gregory">Replace Locale.ENGLISH with Locale.ROOT processing file names.</action>
       <!-- UPDATE -->
-      <action dev="ggregory" type="update" due-to="Dependabot">Bump org.apache.commons:commons-parent from 69 to 70 #400.</action>
+      <action dev="ggregory" type="update" due-to="Dependabot">Bump org.apache.commons:commons-parent from 69 to 71 #400, #406.</action>
     </release>
     <release version="1.0.0-alpha5" date="2024-04-15" description="The 1.0.0-alpha5 release requires Java 8.">
       <!-- FIX -->
