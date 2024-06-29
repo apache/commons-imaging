@@ -47,7 +47,6 @@ Apache Commons Imaging
 [![Coverage Status](https://codecov.io/gh/apache/commons-imaging/branch/master/graph/badge.svg)](https://app.codecov.io/gh/apache/commons-imaging)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-imaging/badge.svg?gav=true)](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-imaging/?gav=true)
 [![Javadocs](https://javadoc.io/badge/org.apache.commons/commons-imaging/1.0.0-alpha5.svg)](https://javadoc.io/doc/org.apache.commons/commons-imaging/1.0.0-alpha5)
-[![CodeQL](https://github.com/apache/commons-imaging/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/apache/commons-imaging/actions/workflows/codeql-analysis.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/apache/commons-imaging/badge)](https://api.securityscorecards.dev/projects/github.com/apache/commons-imaging)
 
 Apache Commons Imaging (previously Sanselan) is a pure-Java image library.
