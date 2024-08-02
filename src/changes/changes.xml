@@ -51,6 +51,7 @@ The <action> type attribute can be add,update,fix,remove.
       <!-- UPDATE -->
       <action dev="ggregory" type="update" due-to="Dependabot">Bump org.apache.commons:commons-parent from 69 to 71 #400, #406.</action>
       <action dev="ggregory" type="update" due-to="Dependabot">Bump org.apache.commons:commons-lang3 from 3.14.0 to 3.15.0 #416.</action>
+      <action dev="ggregory" type="update" due-to="Dependabot">Bump org.hamcrest:hamcrest from 2.2 to 3.0 #422.</action>
     </release>
     <release version="1.0.0-alpha5" date="2024-04-15" description="The 1.0.0-alpha5 release requires Java 8.">
       <!-- FIX -->
