@@ -17,7 +17,7 @@
 package org.apache.commons.imaging.color;
 
 /**
- * Represents a color in the CIELUV color space..
+ * Represents a color in the CIELUV color space.
  *
  * <p>
  * Contains the constant values for black, white, red, green, and blue.
