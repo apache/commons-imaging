@@ -18,6 +18,7 @@
 package org.apache.commons.imaging.formats.gif;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -144,7 +145,7 @@ public class GifReadTest extends AbstractGifTest {
     public void testMetadata(final File imageFile) throws IOException {
         final ImageMetadata metadata = Imaging.getMetadata(imageFile);
         assertNotNull(metadata);
-        assertTrue(metadata instanceof GifImageMetadata);
+        assertInstanceOf(GifImageMetadata.class, metadata);
         assertTrue(((GifImageMetadata) metadata).getWidth() > 0);
         assertTrue(((GifImageMetadata) metadata).getHeight() > 0);
         assertNotNull(metadata.getItems());
