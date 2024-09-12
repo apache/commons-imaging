@@ -256,25 +256,23 @@ public class RationalNumber extends Number {
     public RationalNumber negate() {
         long n = numerator;
         long d = divisor;
-        if (unsignedType) {
-            // An instance of an unsigned type can be negated if and only if
-            // its high-order bit (the sign bit) is clear. If the bit is set,
-            // the value will be too large to convert to a signed type.
-            // In such a case it is necessary to adjust the numerator and denominator
-            // by their greatest common divisor (gcd), if one exists.
-            // If no non-zero common divisor exists, an exception is thrown.
+        // An instance of an unsigned type can be negated if and only if
+        // its high-order bit (the sign bit) is clear. If the bit is set,
+        // the value will be too large to convert to a signed type.
+        // In such a case it is necessary to adjust the numerator and denominator
+        // by their greatest common divisor (gcd), if one exists.
+        // If no non-zero common divisor exists, an exception is thrown.
+        if (unsignedType && n >> 31 == 1) {
+            // the unsigned value is so large that the high-order bit is set
+            // it cannot be converted to a negative number. Check to see
+            // whether there is an option to reduce its magnitude.
+            final long g = gcd(numerator, divisor);
+            if (g != 0) {
+                n /= g;
+                d /= g;
+            }
             if (n >> 31 == 1) {
-                // the unsigned value is so large that the high-order bit is set
-                // it cannot be converted to a negative number. Check to see
-                // whether there is an option to reduce its magnitude.
-                final long g = gcd(numerator, divisor);
-                if (g != 0) {
-                    n /= g;
-                    d /= g;
-                }
-                if (n >> 31 == 1) {
-                    throw new NumberFormatException("Unsigned numerator is too large to negate " + numerator);
-                }
+                throw new NumberFormatException("Unsigned numerator is too large to negate " + numerator);
             }
         }
         return new RationalNumber(-n, d, false);
