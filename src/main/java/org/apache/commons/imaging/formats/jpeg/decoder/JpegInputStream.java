@@ -45,13 +45,13 @@ final class JpegInputStream {
 
     public int nextBit() throws ImagingException {
         if (cnt == 0) {
-            b = this.read();
+            b = read();
             if (b < 0) {
                 throw new ImagingException("Premature End of File");
             }
             cnt = 8;
             if (b == 0xff) {
-                final int b2 = this.read();
+                final int b2 = read();
                 if (b2 < 0) {
                     throw new ImagingException("Premature End of File");
                 }
@@ -76,7 +76,7 @@ final class JpegInputStream {
      * @throws IllegalStateException if the stream hasn't any other value.
      */
     int read() {
-        if (!this.hasNext()) {
+        if (!hasNext()) {
             throw new IllegalStateException("This stream hasn't any other value, all values were already read.");
         }
         final int value = this.interval[nextPos];
