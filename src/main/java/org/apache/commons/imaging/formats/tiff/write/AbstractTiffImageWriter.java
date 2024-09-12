@@ -294,7 +294,7 @@ public abstract class AbstractTiffImageWriter {
 
         // "normal" TIFF directories should have continous indices starting with
         // 0, ie. 0, 1, 2...
-        directoryIndices.sort(null);
+        Collections.sort(directoryIndices);
 
         TiffOutputDirectory previousDirectory = null;
         for (int i = 0; i < directoryIndices.size(); i++) {
@@ -493,7 +493,7 @@ public abstract class AbstractTiffImageWriter {
             predictor = TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING;
             for (int i = 0; i < strips.length; i++) {
                 final byte[] uncompressed = strips[i];
-                this.applyPredictor(width, samplesPerPixel, strips[i]);
+                applyPredictor(width, samplesPerPixel, strips[i]);
 
                 final int LZW_MINIMUM_CODE_SIZE = 8;
                 final MyLzwCompressor compressor = new MyLzwCompressor(LZW_MINIMUM_CODE_SIZE, ByteOrder.BIG_ENDIAN, true);
@@ -504,7 +504,7 @@ public abstract class AbstractTiffImageWriter {
         case TIFF_COMPRESSION_DEFLATE_ADOBE:
             predictor = TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING;
             for (int i = 0; i < strips.length; i++) {
-                this.applyPredictor(width, samplesPerPixel, strips[i]);
+                applyPredictor(width, samplesPerPixel, strips[i]);
                 strips[i] = ZlibDeflate.compress(strips[i]);
             }
             break;
