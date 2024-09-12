@@ -742,10 +742,8 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
             LOGGER.finest("SizeofGlobalColorTable: " + sizeofGlobalColorTable);
         }
 
-        if (formatCompliance != null) {
-            if (globalColorTableFlag && backgroundColorIndex != -1) {
-                formatCompliance.checkBounds("Background Color Index", 0, convertColorTableSize(sizeofGlobalColorTable), backgroundColorIndex);
-            }
+        if (formatCompliance != null && globalColorTableFlag && backgroundColorIndex != -1) {
+            formatCompliance.checkBounds("Background Color Index", 0, convertColorTableSize(sizeofGlobalColorTable), backgroundColorIndex);
         }
 
         return new GifHeaderInfo(identifier1, identifier2, identifier3, version1, version2, version3, logicalScreenWidth, logicalScreenHeight, packedFields,
