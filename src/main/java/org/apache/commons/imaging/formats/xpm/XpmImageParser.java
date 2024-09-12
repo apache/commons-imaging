@@ -468,18 +468,26 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
     }
 
     private void populatePaletteEntry(final PaletteEntry paletteEntry, final String key, final String color) throws ImagingException {
-        if ("m".equals(key)) {
+        switch (key) {
+        case "m":
             paletteEntry.monoArgb = parseColor(color);
             paletteEntry.haveMono = true;
-        } else if ("g4".equals(key)) {
+            break;
+        case "g4":
             paletteEntry.gray4LevelArgb = parseColor(color);
             paletteEntry.haveGray4Level = true;
-        } else if ("g".equals(key)) {
+            break;
+        case "g":
             paletteEntry.grayArgb = parseColor(color);
             paletteEntry.haveGray = true;
-        } else if ("s".equals(key) || "c".equals(key)) {
+            break;
+        case "s":
+        case "c":
             paletteEntry.colorArgb = parseColor(color);
             paletteEntry.haveColor = true;
+            break;
+        default:
+            break;
         }
     }
 
