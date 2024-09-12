@@ -75,14 +75,19 @@ public class PngTextTest extends AbstractPngTest {
         final List<AbstractPngText> readTexts = imageInfo.getTextChunks();
         assertEquals(readTexts.size(), 3);
         for (final AbstractPngText text : readTexts) {
-            if (text.keyword.equals("a")) {
+            switch (text.keyword) {
+            case "a":
                 assertEquals(text.text, "b");
-            } else if (text.keyword.equals("c")) {
+                break;
+            case "c":
                 assertEquals(text.text, "d");
-            } else if (text.keyword.equals("e")) {
+                break;
+            case "e":
                 assertEquals(text.text, "f");
-            } else {
+                break;
+            default:
                 fail("unknown text chunk.");
+                break;
             }
         }
     }
