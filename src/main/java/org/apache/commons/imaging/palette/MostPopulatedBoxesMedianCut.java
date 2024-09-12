@@ -28,11 +28,9 @@ public class MostPopulatedBoxesMedianCut implements MedianCut {
         int maxPoints = 0;
         ColorGroup colorGroup = null;
         for (final ColorGroup group : colorGroups) {
-            if (group.maxDiff > 0) {
-                if (group.totalPoints > maxPoints) {
-                    colorGroup = group;
-                    maxPoints = group.totalPoints;
-                }
+            if (group.maxDiff > 0 && group.totalPoints > maxPoints) {
+                colorGroup = group;
+                maxPoints = group.totalPoints;
             }
         }
         if (colorGroup == null) {
