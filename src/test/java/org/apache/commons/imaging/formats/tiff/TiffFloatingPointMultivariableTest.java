@@ -270,7 +270,7 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
         nBytesInBlock = nRowsInBlock * nColsInBlock * bytesPerSample;
 
         byte[][] blocks;
-        blocks = this.getBytesForOutput32(nRowsInBlock, nColsInBlock, byteOrder, useTiles, planarConfiguration);
+        blocks = getBytesForOutput32(nRowsInBlock, nColsInBlock, byteOrder, useTiles, planarConfiguration);
 
         final TiffOutputSet outputSet = new TiffOutputSet(byteOrder);
         final TiffOutputDirectory outDir = outputSet.addRootDirectory();
