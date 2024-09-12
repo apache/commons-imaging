@@ -607,7 +607,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
     @Override
     public ImageMetadata getMetadata(final ByteSource byteSource, TiffImagingParameters params) throws ImagingException, IOException {
         if (params == null) {
-            params = this.getDefaultParameters();
+            params = getDefaultParameters();
         }
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffReader tiffReader = new TiffReader(params.isStrict());
@@ -723,7 +723,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
      */
     TiffRasterData getRasterData(final TiffDirectory directory, final ByteOrder byteOrder, TiffImagingParameters params) throws ImagingException, IOException {
         if (params == null) {
-            params = this.getDefaultParameters();
+            params = getDefaultParameters();
         }
 
         final short[] sSampleFmt = directory.getFieldValue(TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, true);
