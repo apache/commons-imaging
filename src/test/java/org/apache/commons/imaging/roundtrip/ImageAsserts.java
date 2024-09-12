@@ -64,10 +64,8 @@ final class ImageAsserts {
             for (int y = 0; y < a.getHeight(); y++) {
                 final int aArgb = a.getRGB(x, y);
                 final int bArgb = b.getRGB(x, y);
-                if (aArgb != bArgb) {
-                    if (calculateARGBDistance(aArgb, bArgb) <= tolerance) {
-                        continue; // ignore.
-                    }
+                if (aArgb != bArgb && calculateARGBDistance(aArgb, bArgb) <= tolerance) {
+                    continue; // ignore.
                 }
                 if (aArgb != bArgb) {
                     Debug.debug("width: " + a.getWidth());
