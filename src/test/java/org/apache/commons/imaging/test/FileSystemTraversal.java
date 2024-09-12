@@ -51,10 +51,8 @@ public class FileSystemTraversal {
     private boolean traverse(final File file, final int mode, final Visitor visitor, final double estimate, final double estimateIncrement) {
 
         if (file.isFile()) {
-            if (mode == MODE_FILES || mode == MODE_FILES_AND_FOLDERS || mode == MODE_ALL) {
-                if (!visitor.visit(file, estimate)) {
-                    return false;
-                }
+            if ((mode == MODE_FILES || mode == MODE_FILES_AND_FOLDERS || mode == MODE_ALL) && !visitor.visit(file, estimate)) {
+                return false;
             }
         } else if (file.isDirectory()) {
             final File[] files = file.listFiles();
@@ -76,15 +74,11 @@ public class FileSystemTraversal {
                 }
             }
 
-            if (mode == MODE_FOLDERS || mode == MODE_FILES_AND_FOLDERS || mode == MODE_ALL) {
-                if (!visitor.visit(file, estimate)) {
-                    return false;
-                }
-            }
-        } else if (mode == MODE_ALL) {
-            if (!visitor.visit(file, estimate)) {
+            if ((mode == MODE_FOLDERS || mode == MODE_FILES_AND_FOLDERS || mode == MODE_ALL) && !visitor.visit(file, estimate)) {
                 return false;
             }
+        } else if (mode == MODE_ALL && !visitor.visit(file, estimate)) {
+            return false;
         }
 
         return true;
