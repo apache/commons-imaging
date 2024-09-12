@@ -407,12 +407,10 @@ public class PcxImageParser extends AbstractImageParser<PcxImagingParameters> {
         if (manufacturer != 10) {
             throw new ImagingException("Not a Valid PCX File: manufacturer is " + manufacturer);
         }
-        if (isStrict) {
-            // Note that reserved is sometimes set to a non-zero value
-            // by Paintbrush itself, so it shouldn't be enforced.
-            if (bytesPerLine % 2 != 0) {
-                throw new ImagingException("Not a Valid PCX File: bytesPerLine is odd");
-            }
+        // Note that reserved is sometimes set to a non-zero value
+        // by Paintbrush itself, so it shouldn't be enforced.
+        if (isStrict && bytesPerLine % 2 != 0) {
+            throw new ImagingException("Not a Valid PCX File: bytesPerLine is odd");
         }
 
         return new PcxHeader(manufacturer, version, encoding, bitsPerPixel, xMin, yMin, xMax, yMax, hDpi, vDpi, colormap, reserved, nPlanes, bytesPerLine,
