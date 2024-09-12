@@ -242,10 +242,8 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
                     gammaCorrection = new GammaCorrection(gamma, targetGamma);
                 }
 
-                if (gammaCorrection != null) {
-                    if (pngChunkPLTE != null) {
-                        pngChunkPLTE.correct(gammaCorrection);
-                    }
+                if (gammaCorrection != null && pngChunkPLTE != null) {
+                    pngChunkPLTE.correct(gammaCorrection);
                 }
 
             }
@@ -633,10 +631,8 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
                 BinaryFunctions.skipBytes(is, length, "Not a Valid PNG File");
             }
 
-            if (LOGGER.isLoggable(Level.FINEST)) {
-                if (bytes != null) {
-                    debugNumber("bytes", bytes.length, 4);
-                }
+            if (LOGGER.isLoggable(Level.FINEST) && bytes != null) {
+                debugNumber("bytes", bytes.length, 4);
             }
 
             final int crc = BinaryFunctions.read4Bytes("CRC", is, "Not a Valid PNG File", getByteOrder());
