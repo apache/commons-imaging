@@ -574,7 +574,7 @@ public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> im
     private List<ImageResourceBlock> readImageResourceBlocks(final ByteSource byteSource, final int[] imageResourceIDs, final int maxBlocksToRead)
             throws ImagingException, IOException {
         try (InputStream imageStream = byteSource.getInputStream();
-                InputStream resourceStream = this.getInputStream(byteSource, PSD_SECTION_IMAGE_RESOURCES)) {
+                InputStream resourceStream = getInputStream(byteSource, PSD_SECTION_IMAGE_RESOURCES)) {
 
             final PsdImageContents imageContents = readImageContents(imageStream);
 
