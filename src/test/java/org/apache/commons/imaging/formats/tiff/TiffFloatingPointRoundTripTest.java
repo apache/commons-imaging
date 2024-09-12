@@ -270,7 +270,7 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
 
         byte[][] blocks;
         if (bitsPerSample == 32) {
-            blocks = this.getBytesForOutput32(f, width, height, nRowsInBlock, nColsInBlock, byteOrder);
+            blocks = getBytesForOutput32(f, width, height, nRowsInBlock, nColsInBlock, byteOrder);
         } else {
             blocks = getBytesForOutput64(f, width, height, nRowsInBlock, nColsInBlock, byteOrder);
         }
