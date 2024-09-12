@@ -261,10 +261,8 @@ public class JpegRewriter extends BinaryFileParser {
             }
 
             final JFIFPieceSegment segment = (JFIFPieceSegment) piece;
-            if (segment.isAppSegment()) {
-                if (firstAppIndex == -1) {
-                    firstAppIndex = i;
-                }
+            if (segment.isAppSegment() && firstAppIndex == -1) {
+                firstAppIndex = i;
             }
         }
 
