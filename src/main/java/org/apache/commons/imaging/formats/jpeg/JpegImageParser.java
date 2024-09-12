@@ -27,6 +27,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -92,7 +93,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
             throw new ImagingException("App2 Segments Missing.  Found: " + segments.size() + ", Expected: " + markerCount + ".");
         }
 
-        segments.sort(null);
+        Collections.sort(segments);
 
         final int offset = startWithZero ? 0 : 1;
 
@@ -710,11 +711,9 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
                     return false;
                 }
 
-                if (marker == JpegConstants.JPEG_APP1_MARKER) {
-                    if (new JpegXmpParser().isXmpJpegSegment(segmentData)) {
-                        result.add(new JpegXmpParser().parseXmpJpegSegment(segmentData));
-                        return false;
-                    }
+                if (marker == JpegConstants.JPEG_APP1_MARKER && new JpegXmpParser().isXmpJpegSegment(segmentData)) {
+                    result.add(new JpegXmpParser().parseXmpJpegSegment(segmentData));
+                    return false;
                 }
 
                 return true;
@@ -754,11 +753,9 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
                     return false;
                 }
 
-                if (marker == JpegConstants.JPEG_APP1_MARKER) {
-                    if (startsWith(segmentData, JpegConstants.EXIF_IDENTIFIER_CODE)) {
-                        result[0] = true;
-                        return false;
-                    }
+                if (marker == JpegConstants.JPEG_APP1_MARKER && startsWith(segmentData, JpegConstants.EXIF_IDENTIFIER_CODE)) {
+                    result[0] = true;
+                    return false;
                 }
 
                 return true;
@@ -793,11 +790,9 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
                     return false;
                 }
 
-                if (marker == JpegConstants.JPEG_APP13_MARKER) {
-                    if (new IptcParser().isPhotoshopJpegSegment(segmentData)) {
-                        result[0] = true;
-                        return false;
-                    }
+                if (marker == JpegConstants.JPEG_APP13_MARKER && new IptcParser().isPhotoshopJpegSegment(segmentData)) {
+                    result[0] = true;
+                    return false;
                 }
 
                 return true;
@@ -832,11 +827,9 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
                     return false;
                 }
 
-                if (marker == JpegConstants.JPEG_APP1_MARKER) {
-                    if (new JpegXmpParser().isXmpJpegSegment(segmentData)) {
-                        result[0] = true;
-                        return false;
-                    }
+                if (marker == JpegConstants.JPEG_APP1_MARKER && new JpegXmpParser().isXmpJpegSegment(segmentData)) {
+                    result[0] = true;
+                    return false;
                 }
 
                 return true;
