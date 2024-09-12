@@ -168,7 +168,7 @@ public class TiffShortIntRoundTripTest extends TiffBaseTest {
         nBytesInBlock = nRowsInBlock * nColsInBlock * bytesPerSample;
 
         byte[][] blocks;
-        blocks = this.getBytesForOutput16(sample, width, height, nRowsInBlock, nColsInBlock, byteOrder);
+        blocks = getBytesForOutput16(sample, width, height, nRowsInBlock, nColsInBlock, byteOrder);
 
         // NOTE: At this time, Tile format is not supported.
         // When it is, modify the tags below to populate
