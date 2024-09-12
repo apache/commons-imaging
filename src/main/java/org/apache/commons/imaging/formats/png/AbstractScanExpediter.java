@@ -56,7 +56,7 @@ abstract class AbstractScanExpediter {
         this.bi = bi;
         this.pngColorType = pngColorType;
         this.bitDepth = bitDepth;
-        this.bytesPerPixel = this.getBitsToBytesRoundingUp(bitsPerPixel);
+        this.bytesPerPixel = getBitsToBytesRoundingUp(bitsPerPixel);
         this.bitsPerPixel = bitsPerPixel;
         this.pngChunkPlte = pngChunkPLTE;
         this.gammaCorrection = gammaCorrection;
