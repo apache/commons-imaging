@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -72,9 +73,9 @@ public class ExifRewriteTest extends AbstractExifTest {
 
         assertEquals(oldDirectories.size(), oldDirectoryMap.size());
         final List<Integer> oldDirectoryTypes = new ArrayList<>(oldDirectoryMap.keySet());
-        oldDirectoryTypes.sort(null);
+        Collections.sort(oldDirectoryTypes);
         final List<Integer> newDirectoryTypes = new ArrayList<>(newDirectoryMap.keySet());
-        newDirectoryTypes.sort(null);
+        Collections.sort(newDirectoryTypes);
         assertEquals(oldDirectoryTypes, newDirectoryTypes);
 
         for (final Integer dirType : oldDirectoryTypes) {
@@ -106,9 +107,9 @@ public class ExifRewriteTest extends AbstractExifTest {
             assertEquals(oldFieldMap.keySet(), newFieldMap.keySet());
 
             final List<Integer> oldFieldTags = new ArrayList<>(oldFieldMap.keySet());
-            oldFieldTags.sort(null);
+            Collections.sort(oldFieldTags);
             final List<Integer> newFieldTags = new ArrayList<>(newFieldMap.keySet());
-            newFieldTags.sort(null);
+            Collections.sort(newFieldTags);
             assertEquals(oldFieldTags, newFieldTags);
 
             for (final Integer fieldTag : oldFieldTags) {
