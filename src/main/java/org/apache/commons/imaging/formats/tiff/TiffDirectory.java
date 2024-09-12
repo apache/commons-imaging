@@ -761,7 +761,7 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
      * @throws ImagingException in the event of an invalid or malformed specification.
      */
     public boolean hasTiffFloatingPointRasterData() throws ImagingException {
-        if (!this.hasTiffImageData()) {
+        if (!hasTiffImageData()) {
             return false;
         }
         final short[] s = getFieldValue(TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, false);
@@ -785,7 +785,7 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
      * @throws ImagingException in the event of an invalid or malformed specification.
      */
     public boolean hasTiffRasterData() throws ImagingException {
-        if (!this.hasTiffImageData()) {
+        if (!hasTiffImageData()) {
             return false;
         }
         final short[] s = getFieldValue(TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, false);
