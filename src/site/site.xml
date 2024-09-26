@@ -32,6 +32,7 @@
       <item name="Source Repository"                  href="/scm.html"/>
       <item name="Javadoc"                            href="/apidocs/index.html"/>
       <item name="Download"                           href="/download_imaging.cgi"/>
+      <item name="Security"                           href="/security.html"/>
     </menu>
 
     <menu name="Documentation">
