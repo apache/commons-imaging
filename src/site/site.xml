@@ -33,6 +33,7 @@
       <item name="Javadoc"                            href="/apidocs/index.html"/>
       <item name="Javadoc Archive"                    href="https://javadoc.io/doc/org.apache.commons/commons-imaging/"/>
       <item name="Download"                           href="/download_imaging.cgi"/>
+      <item name="Security"                           href="/security.html"/>
     </menu>
 
     <menu name="Documentation">
