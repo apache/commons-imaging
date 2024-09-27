@@ -16,13 +16,6 @@
  */
 package org.apache.commons.imaging.formats.gif;
 
-import static org.apache.commons.imaging.common.BinaryFunctions.compareBytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.logByteBits;
-import static org.apache.commons.imaging.common.BinaryFunctions.logCharQuad;
-import static org.apache.commons.imaging.common.BinaryFunctions.read2Bytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
-import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
-
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -45,6 +38,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.Allocator;
+import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.ImageMetadata;
@@ -516,7 +510,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
                     continue;
                 }
 
-                if (!compareBytes(blockBytes, 0, XMP_APPLICATION_ID_AND_AUTH_CODE, 0, XMP_APPLICATION_ID_AND_AUTH_CODE.length)) {
+                if (!BinaryFunctions.compareBytes(blockBytes, 0, XMP_APPLICATION_ID_AND_AUTH_CODE, 0, XMP_APPLICATION_ID_AND_AUTH_CODE.length)) {
                     continue;
                 }
 
@@ -528,7 +522,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
                 if (blockBytes.length < XMP_APPLICATION_ID_AND_AUTH_CODE.length + gifMagicTrailer.length) {
                     continue;
                 }
-                if (!compareBytes(blockBytes, blockBytes.length - gifMagicTrailer.length, gifMagicTrailer, 0, gifMagicTrailer.length)) {
+                if (!BinaryFunctions.compareBytes(blockBytes, blockBytes.length - gifMagicTrailer.length, gifMagicTrailer, 0, gifMagicTrailer.length)) {
                     throw new ImagingException("XMP block in GIF missing magic trailer.");
                 }
 
@@ -629,7 +623,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
     private byte[] readColorTable(final InputStream is, final int tableSize) throws IOException {
         final int actualSize = convertColorTableSize(tableSize);
 
-        return readBytes("block", is, actualSize, "GIF: corrupt Color Table");
+        return BinaryFunctions.readBytes("block", is, actualSize, "GIF: corrupt Color Table");
     }
 
     private GifImageContents readFile(final ByteSource byteSource, final boolean stopBeforeImageData) throws ImagingException, IOException {
@@ -675,27 +669,27 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
     }
 
     private GraphicControlExtension readGraphicControlExtension(final int code, final InputStream is) throws IOException {
-        readByte("block_size", is, "GIF: corrupt GraphicControlExt");
-        final int packed = readByte("packed fields", is, "GIF: corrupt GraphicControlExt");
+        BinaryFunctions.readByte("block_size", is, "GIF: corrupt GraphicControlExt");
+        final int packed = BinaryFunctions.readByte("packed fields", is, "GIF: corrupt GraphicControlExt");
 
         final int dispose = (packed & 0x1c) >> 2; // disposal method
         final boolean transparency = (packed & 1) != 0;
 
-        final int delay = read2Bytes("delay in milliseconds", is, "GIF: corrupt GraphicControlExt", getByteOrder());
-        final int transparentColorIndex = 0xff & readByte("transparent color index", is, "GIF: corrupt GraphicControlExt");
-        readByte("block terminator", is, "GIF: corrupt GraphicControlExt");
+        final int delay = BinaryFunctions.read2Bytes("delay in milliseconds", is, "GIF: corrupt GraphicControlExt", getByteOrder());
+        final int transparentColorIndex = 0xff & BinaryFunctions.readByte("transparent color index", is, "GIF: corrupt GraphicControlExt");
+        BinaryFunctions.readByte("block terminator", is, "GIF: corrupt GraphicControlExt");
 
         return new GraphicControlExtension(code, packed, dispose, transparency, delay, transparentColorIndex);
     }
 
     private GifHeaderInfo readHeader(final InputStream is, final FormatCompliance formatCompliance) throws ImagingException, IOException {
-        final byte identifier1 = readByte("identifier1", is, "Not a Valid GIF File");
-        final byte identifier2 = readByte("identifier2", is, "Not a Valid GIF File");
-        final byte identifier3 = readByte("identifier3", is, "Not a Valid GIF File");
+        final byte identifier1 = BinaryFunctions.readByte("identifier1", is, "Not a Valid GIF File");
+        final byte identifier2 = BinaryFunctions.readByte("identifier2", is, "Not a Valid GIF File");
+        final byte identifier3 = BinaryFunctions.readByte("identifier3", is, "Not a Valid GIF File");
 
-        final byte version1 = readByte("version1", is, "Not a Valid GIF File");
-        final byte version2 = readByte("version2", is, "Not a Valid GIF File");
-        final byte version3 = readByte("version3", is, "Not a Valid GIF File");
+        final byte version1 = BinaryFunctions.readByte("version1", is, "Not a Valid GIF File");
+        final byte version2 = BinaryFunctions.readByte("version2", is, "Not a Valid GIF File");
+        final byte version3 = BinaryFunctions.readByte("version3", is, "Not a Valid GIF File");
 
         if (formatCompliance != null) {
             formatCompliance.compareBytes("Signature", GIF_HEADER_SIGNATURE, new byte[] { identifier1, identifier2, identifier3 });
@@ -705,24 +699,24 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
         }
 
         if (LOGGER.isLoggable(Level.FINEST)) {
-            logCharQuad("identifier: ", identifier1 << 16 | identifier2 << 8 | identifier3 << 0);
-            logCharQuad("version: ", version1 << 16 | version2 << 8 | version3 << 0);
+            BinaryFunctions.logCharQuad("identifier: ", identifier1 << 16 | identifier2 << 8 | identifier3 << 0);
+            BinaryFunctions.logCharQuad("version: ", version1 << 16 | version2 << 8 | version3 << 0);
         }
 
-        final int logicalScreenWidth = read2Bytes("Logical Screen Width", is, "Not a Valid GIF File", getByteOrder());
-        final int logicalScreenHeight = read2Bytes("Logical Screen Height", is, "Not a Valid GIF File", getByteOrder());
+        final int logicalScreenWidth = BinaryFunctions.read2Bytes("Logical Screen Width", is, "Not a Valid GIF File", getByteOrder());
+        final int logicalScreenHeight = BinaryFunctions.read2Bytes("Logical Screen Height", is, "Not a Valid GIF File", getByteOrder());
 
         if (formatCompliance != null) {
             formatCompliance.checkBounds("Width", 1, Integer.MAX_VALUE, logicalScreenWidth);
             formatCompliance.checkBounds("Height", 1, Integer.MAX_VALUE, logicalScreenHeight);
         }
 
-        final byte packedFields = readByte("Packed Fields", is, "Not a Valid GIF File");
-        final byte backgroundColorIndex = readByte("Background Color Index", is, "Not a Valid GIF File");
-        final byte pixelAspectRatio = readByte("Pixel Aspect Ratio", is, "Not a Valid GIF File");
+        final byte packedFields = BinaryFunctions.readByte("Packed Fields", is, "Not a Valid GIF File");
+        final byte backgroundColorIndex = BinaryFunctions.readByte("Background Color Index", is, "Not a Valid GIF File");
+        final byte pixelAspectRatio = BinaryFunctions.readByte("Pixel Aspect Ratio", is, "Not a Valid GIF File");
 
         if (LOGGER.isLoggable(Level.FINEST)) {
-            logByteBits("PackedFields bits", packedFields);
+            BinaryFunctions.logByteBits("PackedFields bits", packedFields);
         }
 
         final boolean globalColorTableFlag = (packedFields & 128) > 0;
@@ -752,11 +746,11 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
 
     private ImageDescriptor readImageDescriptor(final GifHeaderInfo ghi, final int blockCode, final InputStream is, final boolean stopBeforeImageData,
             final FormatCompliance formatCompliance) throws ImagingException, IOException {
-        final int imageLeftPosition = read2Bytes("Image Left Position", is, "Not a Valid GIF File", getByteOrder());
-        final int imageTopPosition = read2Bytes("Image Top Position", is, "Not a Valid GIF File", getByteOrder());
-        final int imageWidth = read2Bytes("Image Width", is, "Not a Valid GIF File", getByteOrder());
-        final int imageHeight = read2Bytes("Image Height", is, "Not a Valid GIF File", getByteOrder());
-        final byte packedFields = readByte("Packed Fields", is, "Not a Valid GIF File");
+        final int imageLeftPosition = BinaryFunctions.read2Bytes("Image Left Position", is, "Not a Valid GIF File", getByteOrder());
+        final int imageTopPosition = BinaryFunctions.read2Bytes("Image Top Position", is, "Not a Valid GIF File", getByteOrder());
+        final int imageWidth = BinaryFunctions.read2Bytes("Image Width", is, "Not a Valid GIF File", getByteOrder());
+        final int imageHeight = BinaryFunctions.read2Bytes("Image Height", is, "Not a Valid GIF File", getByteOrder());
+        final byte packedFields = BinaryFunctions.readByte("Packed Fields", is, "Not a Valid GIF File");
 
         if (formatCompliance != null) {
             formatCompliance.checkBounds("Width", 1, ghi.logicalScreenWidth, imageWidth);
@@ -766,7 +760,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
         }
 
         if (LOGGER.isLoggable(Level.FINEST)) {
-            logByteBits("PackedFields bits", packedFields);
+            BinaryFunctions.logByteBits("PackedFields bits", packedFields);
         }
 
         final boolean localColorTableFlag = (packedFields >> 7 & 1) > 0;
@@ -817,9 +811,9 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
     }
 
     private byte[] readSubBlock(final InputStream is) throws IOException {
-        final int blockSize = 0xff & readByte("blockSize", is, "GIF: corrupt block");
+        final int blockSize = 0xff & BinaryFunctions.readByte("blockSize", is, "GIF: corrupt block");
 
-        return readBytes("block", is, blockSize, "GIF: corrupt block");
+        return BinaryFunctions.readBytes("block", is, blockSize, "GIF: corrupt block");
     }
 
     private int simplePow(final int base, final int power) {

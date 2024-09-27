@@ -17,13 +17,6 @@
 
 package org.apache.commons.imaging.formats.jpeg.iptc;
 
-import static org.apache.commons.imaging.common.BinaryFunctions.read2Bytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
-import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.slice;
-import static org.apache.commons.imaging.common.BinaryFunctions.startsWith;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -100,7 +93,7 @@ public class IptcParser extends BinaryFileParser {
     }
 
     public boolean isPhotoshopJpegSegment(final byte[] segmentData) {
-        if (!startsWith(segmentData, JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING)) {
+        if (!BinaryFunctions.startsWith(segmentData, JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING)) {
             return false;
         }
 
@@ -116,7 +109,8 @@ public class IptcParser extends BinaryFileParser {
             // Note that these are unsigned quantities. Name is always an even
             // number of bytes (including the 1st byte, which is the size.)
 
-            final byte[] idString = readBytes("", bis, JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.size(), "App13 Segment missing identification string");
+            final byte[] idString = BinaryFunctions.readBytes("", bis, JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.size(),
+                    "App13 Segment missing identification string");
             if (!JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.equals(idString)) {
                 throw new ImagingException("Not a Photoshop App13 Segment");
             }
@@ -126,7 +120,7 @@ public class IptcParser extends BinaryFileParser {
             while (true) {
                 final int imageResourceBlockSignature;
                 try {
-                    imageResourceBlockSignature = read4Bytes("", bis, "Image Resource Block missing identification string", APP13_BYTE_ORDER);
+                    imageResourceBlockSignature = BinaryFunctions.read4Bytes("", bis, "Image Resource Block missing identification string", APP13_BYTE_ORDER);
                 } catch (final IOException ioEx) {
                     break;
                 }
@@ -134,7 +128,7 @@ public class IptcParser extends BinaryFileParser {
                     throw new ImagingException("Invalid Image Resource Block Signature");
                 }
 
-                final int blockType = read2Bytes("", bis, "Image Resource Block missing type", APP13_BYTE_ORDER);
+                final int blockType = BinaryFunctions.read2Bytes("", bis, "Image Resource Block missing type", APP13_BYTE_ORDER);
                 Debug.debug("blockType: " + blockType + " (0x" + Integer.toHexString(blockType) + ")");
 
                 // skip blocks that the photoshop spec recommends to, see IMAGING-246
@@ -147,17 +141,17 @@ public class IptcParser extends BinaryFileParser {
                     continue;
                 }
 
-                final int blockNameLength = readByte("Name length", bis, "Image Resource Block missing name length");
+                final int blockNameLength = BinaryFunctions.readByte("Name length", bis, "Image Resource Block missing name length");
                 if (blockNameLength > 0) {
                     Debug.debug("blockNameLength: " + blockNameLength + " (0x" + Integer.toHexString(blockNameLength) + ")");
                 }
                 byte[] blockNameBytes;
                 if (blockNameLength == 0) {
-                    readByte("Block name bytes", bis, "Image Resource Block has invalid name");
+                    BinaryFunctions.readByte("Block name bytes", bis, "Image Resource Block has invalid name");
                     blockNameBytes = ImagingConstants.EMPTY_BYTE_ARRAY;
                 } else {
                     try {
-                        blockNameBytes = readBytes("", bis, blockNameLength, "Invalid Image Resource Block name");
+                        blockNameBytes = BinaryFunctions.readBytes("", bis, blockNameLength, "Invalid Image Resource Block name");
                     } catch (final IOException ioEx) {
                         if (strict) {
                             throw ioEx;
@@ -166,11 +160,11 @@ public class IptcParser extends BinaryFileParser {
                     }
 
                     if (blockNameLength % 2 == 0) {
-                        readByte("Padding byte", bis, "Image Resource Block missing padding byte");
+                        BinaryFunctions.readByte("Padding byte", bis, "Image Resource Block missing padding byte");
                     }
                 }
 
-                final int blockSize = read4Bytes("", bis, "Image Resource Block missing size", APP13_BYTE_ORDER);
+                final int blockSize = BinaryFunctions.read4Bytes("", bis, "Image Resource Block missing size", APP13_BYTE_ORDER);
                 Debug.debug("blockSize: " + blockSize + " (0x" + Integer.toHexString(blockSize) + ")");
 
                 /*
@@ -182,7 +176,7 @@ public class IptcParser extends BinaryFileParser {
 
                 final byte[] blockData;
                 try {
-                    blockData = readBytes("", bis, blockSize, "Invalid Image Resource Block data");
+                    blockData = BinaryFunctions.readBytes("", bis, blockSize, "Invalid Image Resource Block data");
                 } catch (final IOException ioEx) {
                     if (strict) {
                         throw ioEx;
@@ -193,7 +187,7 @@ public class IptcParser extends BinaryFileParser {
                 blocks.add(new IptcBlock(blockType, blockNameBytes, blockData));
 
                 if (blockSize % 2 != 0) {
-                    readByte("Padding byte", bis, "Image Resource Block missing padding byte");
+                    BinaryFunctions.readByte("Padding byte", bis, "Image Resource Block missing padding byte");
                 }
             }
 
@@ -256,7 +250,7 @@ public class IptcParser extends BinaryFileParser {
                 return elements;
             }
 
-            final byte[] recordData = slice(bytes, index, recordSize);
+            final byte[] recordData = BinaryFunctions.slice(bytes, index, recordSize);
             index += recordSize;
 
             // Debug.debug("recordSize", recordSize + " (0x"

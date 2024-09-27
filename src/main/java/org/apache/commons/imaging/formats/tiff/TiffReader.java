@@ -16,12 +16,6 @@
  */
 package org.apache.commons.imaging.formats.tiff;
 
-import static org.apache.commons.imaging.common.BinaryFunctions.read2Bytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.read8Bytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
-import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.skipBytes;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.ENTRY_MAX_VALUE_LENGTH;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.ENTRY_MAX_VALUE_LENGTH_BIG;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.VERSION_BIG;
@@ -37,6 +31,7 @@ import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.BinaryFileParser;
+import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory.ImageDataElement;
@@ -284,16 +279,16 @@ public class TiffReader extends BinaryFileParser {
                 return true;
             }
 
-            skipBytes(is, directoryOffset);
+            BinaryFunctions.skipBytes(is, directoryOffset);
 
             final List<TiffField> fields = new ArrayList<>();
 
             long entryCount;
             try {
                 if (standardTiff) {
-                    entryCount = read2Bytes("DirectoryEntryCount", is, "Not a Valid TIFF File", getByteOrder());
+                    entryCount = BinaryFunctions.read2Bytes("DirectoryEntryCount", is, "Not a Valid TIFF File", getByteOrder());
                 } else {
-                    entryCount = read8Bytes("DirectoryEntryCount", is, "Not a Valid TIFF File", getByteOrder());
+                    entryCount = BinaryFunctions.read8Bytes("DirectoryEntryCount", is, "Not a Valid TIFF File", getByteOrder());
                 }
             } catch (final IOException e) {
                 if (strict) {
@@ -303,18 +298,18 @@ public class TiffReader extends BinaryFileParser {
             }
 
             for (int i = 0; i < entryCount; i++) {
-                final int tag = read2Bytes("Tag", is, "Not a Valid TIFF File", getByteOrder());
-                final int type = read2Bytes("Type", is, "Not a Valid TIFF File", getByteOrder());
+                final int tag = BinaryFunctions.read2Bytes("Tag", is, "Not a Valid TIFF File", getByteOrder());
+                final int type = BinaryFunctions.read2Bytes("Type", is, "Not a Valid TIFF File", getByteOrder());
                 final long count;
                 final byte[] offsetBytes;
                 final long offset;
                 if (standardTiff) {
-                    count = 0xFFFFffffL & read4Bytes("Count", is, "Not a Valid TIFF File", getByteOrder());
-                    offsetBytes = readBytes("Offset", is, 4, "Not a Valid TIFF File");
+                    count = 0xFFFFffffL & BinaryFunctions.read4Bytes("Count", is, "Not a Valid TIFF File", getByteOrder());
+                    offsetBytes = BinaryFunctions.readBytes("Offset", is, 4, "Not a Valid TIFF File");
                     offset = 0xFFFFffffL & ByteConversions.toInt(offsetBytes, getByteOrder());
                 } else {
-                    count = read8Bytes("Count", is, "Not a Valid TIFF File", getByteOrder());
-                    offsetBytes = readBytes("Offset", is, 8, "Not a Valid TIFF File");
+                    count = BinaryFunctions.read8Bytes("Count", is, "Not a Valid TIFF File", getByteOrder());
+                    offsetBytes = BinaryFunctions.readBytes("Offset", is, 8, "Not a Valid TIFF File");
                     offset = ByteConversions.toLong(offsetBytes, getByteOrder());
                 }
 
@@ -360,7 +355,7 @@ public class TiffReader extends BinaryFileParser {
                 }
             }
 
-            final long nextDirectoryOffset = 0xFFFFffffL & read4Bytes("nextDirectoryOffset", is, "Not a Valid TIFF File", getByteOrder());
+            final long nextDirectoryOffset = 0xFFFFffffL & BinaryFunctions.read4Bytes("nextDirectoryOffset", is, "Not a Valid TIFF File", getByteOrder());
 
             final TiffDirectory directory = new TiffDirectory(dirType, fields, directoryOffset, nextDirectoryOffset, getByteOrder());
 
@@ -441,8 +436,8 @@ public class TiffReader extends BinaryFileParser {
     }
 
     private TiffHeader readTiffHeader(final InputStream is) throws ImagingException, IOException {
-        final int byteOrder1 = readByte("BYTE_ORDER_1", is, "Not a Valid TIFF File");
-        final int byteOrder2 = readByte("BYTE_ORDER_2", is, "Not a Valid TIFF File");
+        final int byteOrder1 = BinaryFunctions.readByte("BYTE_ORDER_1", is, "Not a Valid TIFF File");
+        final int byteOrder2 = BinaryFunctions.readByte("BYTE_ORDER_2", is, "Not a Valid TIFF File");
         if (byteOrder1 != byteOrder2) {
             throw new ImagingException("Byte Order bytes don't match (" + byteOrder1 + ", " + byteOrder2 + ").");
         }
@@ -456,27 +451,27 @@ public class TiffReader extends BinaryFileParser {
         // Big TIFF (64 bit): 43
         //
         final long offsetToFirstIFD;
-        final int tiffVersion = read2Bytes("tiffVersion", is, "Not a Valid TIFF File", getByteOrder());
+        final int tiffVersion = BinaryFunctions.read2Bytes("tiffVersion", is, "Not a Valid TIFF File", getByteOrder());
         if (tiffVersion == VERSION_STANDARD) {
             bigTiff = false;
             standardTiff = true;
             entryMaxValueLength = ENTRY_MAX_VALUE_LENGTH;
-            offsetToFirstIFD = 0xFFFFffffL & read4Bytes("offsetToFirstIFD", is, "Not a Valid TIFF File", getByteOrder());
+            offsetToFirstIFD = 0xFFFFffffL & BinaryFunctions.read4Bytes("offsetToFirstIFD", is, "Not a Valid TIFF File", getByteOrder());
         } else if (tiffVersion == VERSION_BIG) {
             bigTiff = true;
             standardTiff = false;
             entryMaxValueLength = ENTRY_MAX_VALUE_LENGTH_BIG;
-            final int byteSize = read2Bytes("bytesizeOfOffset", is, "Not a Valid TIFF File", getByteOrder());
-            final int expectedZero = read2Bytes("expectedZero", is, "Not a Valid TIFF File", getByteOrder());
+            final int byteSize = BinaryFunctions.read2Bytes("bytesizeOfOffset", is, "Not a Valid TIFF File", getByteOrder());
+            final int expectedZero = BinaryFunctions.read2Bytes("expectedZero", is, "Not a Valid TIFF File", getByteOrder());
             if (byteSize != 8 || expectedZero != 0) {
                 throw new ImagingException("Misformed Big-TIFF header: " + tiffVersion);
             }
-            offsetToFirstIFD = read8Bytes("offsetToFirstIFD", is, "Not a Valid TIFF File", getByteOrder());
+            offsetToFirstIFD = BinaryFunctions.read8Bytes("offsetToFirstIFD", is, "Not a Valid TIFF File", getByteOrder());
         } else {
             throw new ImagingException("Unknown TIFF Version: " + tiffVersion);
         }
 
-        skipBytes(is, offsetToFirstIFD - 8, "Not a Valid TIFF File: couldn't find IFDs");
+        BinaryFunctions.skipBytes(is, offsetToFirstIFD - 8, "Not a Valid TIFF File: couldn't find IFDs");
 
         return new TiffHeader(byteOrder, tiffVersion, offsetToFirstIFD, bigTiff);
     }

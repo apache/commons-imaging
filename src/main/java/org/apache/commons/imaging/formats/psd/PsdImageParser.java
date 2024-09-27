@@ -16,13 +16,6 @@
  */
 package org.apache.commons.imaging.formats.psd;
 
-import static org.apache.commons.imaging.common.BinaryFunctions.read2Bytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.readAndVerifyBytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
-import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.skipBytes;
-
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -39,6 +32,7 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
+import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.XmpEmbeddable;
 import org.apache.commons.imaging.common.XmpImagingParameters;
@@ -241,41 +235,41 @@ public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> im
         try (InputStream is = byteSource.getInputStream()) {
             // PsdHeaderInfo header = readHeader(is);
             if (section == PSD_SECTION_HEADER) {
-                return readBytes("Header", is, PSD_HEADER_LENGTH, "Not a Valid PSD File");
+                return BinaryFunctions.readBytes("Header", is, PSD_HEADER_LENGTH, "Not a Valid PSD File");
             }
-            skipBytes(is, PSD_HEADER_LENGTH);
+            BinaryFunctions.skipBytes(is, PSD_HEADER_LENGTH);
 
-            final int colorModeDataLength = read4Bytes("ColorModeDataLength", is, "Not a Valid PSD File", getByteOrder());
+            final int colorModeDataLength = BinaryFunctions.read4Bytes("ColorModeDataLength", is, "Not a Valid PSD File", getByteOrder());
 
             if (section == PSD_SECTION_COLOR_MODE) {
-                return readBytes("ColorModeData", is, colorModeDataLength, "Not a Valid PSD File");
+                return BinaryFunctions.readBytes("ColorModeData", is, colorModeDataLength, "Not a Valid PSD File");
             }
 
-            skipBytes(is, colorModeDataLength);
+            BinaryFunctions.skipBytes(is, colorModeDataLength);
             // byte[] ColorModeData = readByteArray("ColorModeData",
             // ColorModeDataLength, is, "Not a Valid PSD File");
 
-            final int imageResourcesLength = read4Bytes("ImageResourcesLength", is, "Not a Valid PSD File", getByteOrder());
+            final int imageResourcesLength = BinaryFunctions.read4Bytes("ImageResourcesLength", is, "Not a Valid PSD File", getByteOrder());
 
             if (section == PSD_SECTION_IMAGE_RESOURCES) {
-                return readBytes("ImageResources", is, imageResourcesLength, "Not a Valid PSD File");
+                return BinaryFunctions.readBytes("ImageResources", is, imageResourcesLength, "Not a Valid PSD File");
             }
 
-            skipBytes(is, imageResourcesLength);
+            BinaryFunctions.skipBytes(is, imageResourcesLength);
             // byte[] ImageResources = readByteArray("ImageResources",
             // ImageResourcesLength, is, "Not a Valid PSD File");
 
-            final int layerAndMaskDataLength = read4Bytes("LayerAndMaskDataLength", is, "Not a Valid PSD File", getByteOrder());
+            final int layerAndMaskDataLength = BinaryFunctions.read4Bytes("LayerAndMaskDataLength", is, "Not a Valid PSD File", getByteOrder());
 
             if (section == PSD_SECTION_LAYER_AND_MASK_DATA) {
-                return readBytes("LayerAndMaskData", is, layerAndMaskDataLength, "Not a Valid PSD File");
+                return BinaryFunctions.readBytes("LayerAndMaskData", is, layerAndMaskDataLength, "Not a Valid PSD File");
             }
 
-            skipBytes(is, layerAndMaskDataLength);
+            BinaryFunctions.skipBytes(is, layerAndMaskDataLength);
             // byte[] LayerAndMaskData = readByteArray("LayerAndMaskData",
             // LayerAndMaskDataLength, is, "Not a Valid PSD File");
 
-            read2Bytes("Compression", is, "Not a Valid PSD File", getByteOrder());
+            BinaryFunctions.read2Bytes("Compression", is, "Not a Valid PSD File", getByteOrder());
 
             // byte[] ImageData = readByteArray("ImageData",
             // LayerAndMaskDataLength, is, "Not a Valid PSD File");
@@ -391,40 +385,40 @@ public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> im
                 return is;
             }
 
-            skipBytes(is, PSD_HEADER_LENGTH);
+            BinaryFunctions.skipBytes(is, PSD_HEADER_LENGTH);
             // is.skip(kHeaderLength);
 
-            final int colorModeDataLength = read4Bytes("ColorModeDataLength", is, "Not a Valid PSD File", getByteOrder());
+            final int colorModeDataLength = BinaryFunctions.read4Bytes("ColorModeDataLength", is, "Not a Valid PSD File", getByteOrder());
 
             if (section == PSD_SECTION_COLOR_MODE) {
                 return is;
             }
 
-            skipBytes(is, colorModeDataLength);
+            BinaryFunctions.skipBytes(is, colorModeDataLength);
             // byte[] ColorModeData = readByteArray("ColorModeData",
             // ColorModeDataLength, is, "Not a Valid PSD File");
 
-            final int imageResourcesLength = read4Bytes("ImageResourcesLength", is, "Not a Valid PSD File", getByteOrder());
+            final int imageResourcesLength = BinaryFunctions.read4Bytes("ImageResourcesLength", is, "Not a Valid PSD File", getByteOrder());
 
             if (section == PSD_SECTION_IMAGE_RESOURCES) {
                 return is;
             }
 
-            skipBytes(is, imageResourcesLength);
+            BinaryFunctions.skipBytes(is, imageResourcesLength);
             // byte[] ImageResources = readByteArray("ImageResources",
             // ImageResourcesLength, is, "Not a Valid PSD File");
 
-            final int layerAndMaskDataLength = read4Bytes("LayerAndMaskDataLength", is, "Not a Valid PSD File", getByteOrder());
+            final int layerAndMaskDataLength = BinaryFunctions.read4Bytes("LayerAndMaskDataLength", is, "Not a Valid PSD File", getByteOrder());
 
             if (section == PSD_SECTION_LAYER_AND_MASK_DATA) {
                 return is;
             }
 
-            skipBytes(is, layerAndMaskDataLength);
+            BinaryFunctions.skipBytes(is, layerAndMaskDataLength);
             // byte[] LayerAndMaskData = readByteArray("LayerAndMaskData",
             // LayerAndMaskDataLength, is, "Not a Valid PSD File");
 
-            read2Bytes("Compression", is, "Not a Valid PSD File", getByteOrder());
+            BinaryFunctions.read2Bytes("Compression", is, "Not a Valid PSD File", getByteOrder());
 
             // byte[] ImageData = readByteArray("ImageData",
             // LayerAndMaskDataLength, is, "Not a Valid PSD File");
@@ -509,15 +503,15 @@ public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> im
     }
 
     private PsdHeaderInfo readHeader(final InputStream is) throws ImagingException, IOException {
-        readAndVerifyBytes(is, new byte[] { 56, 66, 80, 83 }, "Not a Valid PSD File");
+        BinaryFunctions.readAndVerifyBytes(is, new byte[] { 56, 66, 80, 83 }, "Not a Valid PSD File");
 
-        final int version = read2Bytes("Version", is, "Not a Valid PSD File", getByteOrder());
-        final byte[] reserved = readBytes("Reserved", is, 6, "Not a Valid PSD File");
-        final int channels = read2Bytes("Channels", is, "Not a Valid PSD File", getByteOrder());
-        final int rows = read4Bytes("Rows", is, "Not a Valid PSD File", getByteOrder());
-        final int columns = read4Bytes("Columns", is, "Not a Valid PSD File", getByteOrder());
-        final int depth = read2Bytes("Depth", is, "Not a Valid PSD File", getByteOrder());
-        final int mode = read2Bytes("Mode", is, "Not a Valid PSD File", getByteOrder());
+        final int version = BinaryFunctions.read2Bytes("Version", is, "Not a Valid PSD File", getByteOrder());
+        final byte[] reserved = BinaryFunctions.readBytes("Reserved", is, 6, "Not a Valid PSD File");
+        final int channels = BinaryFunctions.read2Bytes("Channels", is, "Not a Valid PSD File", getByteOrder());
+        final int rows = BinaryFunctions.read4Bytes("Rows", is, "Not a Valid PSD File", getByteOrder());
+        final int columns = BinaryFunctions.read4Bytes("Columns", is, "Not a Valid PSD File", getByteOrder());
+        final int depth = BinaryFunctions.read2Bytes("Depth", is, "Not a Valid PSD File", getByteOrder());
+        final int mode = BinaryFunctions.read2Bytes("Mode", is, "Not a Valid PSD File", getByteOrder());
 
         return new PsdHeaderInfo(version, reserved, channels, rows, columns, depth, mode);
     }
@@ -531,25 +525,25 @@ public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> im
     private PsdImageContents readImageContents(final InputStream is) throws ImagingException, IOException {
         final PsdHeaderInfo header = readHeader(is);
 
-        final int colorModeDataLength = read4Bytes("ColorModeDataLength", is, "Not a Valid PSD File", getByteOrder());
-        skipBytes(is, colorModeDataLength);
+        final int colorModeDataLength = BinaryFunctions.read4Bytes("ColorModeDataLength", is, "Not a Valid PSD File", getByteOrder());
+        BinaryFunctions.skipBytes(is, colorModeDataLength);
         // is.skip(ColorModeDataLength);
         // byte[] ColorModeData = readByteArray("ColorModeData",
         // ColorModeDataLength, is, "Not a Valid PSD File");
 
-        final int imageResourcesLength = read4Bytes("ImageResourcesLength", is, "Not a Valid PSD File", getByteOrder());
-        skipBytes(is, imageResourcesLength);
+        final int imageResourcesLength = BinaryFunctions.read4Bytes("ImageResourcesLength", is, "Not a Valid PSD File", getByteOrder());
+        BinaryFunctions.skipBytes(is, imageResourcesLength);
         // long skipped = is.skip(ImageResourcesLength);
         // byte[] ImageResources = readByteArray("ImageResources",
         // ImageResourcesLength, is, "Not a Valid PSD File");
 
-        final int layerAndMaskDataLength = read4Bytes("LayerAndMaskDataLength", is, "Not a Valid PSD File", getByteOrder());
-        skipBytes(is, layerAndMaskDataLength);
+        final int layerAndMaskDataLength = BinaryFunctions.read4Bytes("LayerAndMaskDataLength", is, "Not a Valid PSD File", getByteOrder());
+        BinaryFunctions.skipBytes(is, layerAndMaskDataLength);
         // is.skip(LayerAndMaskDataLength);
         // byte[] LayerAndMaskData = readByteArray("LayerAndMaskData",
         // LayerAndMaskDataLength, is, "Not a Valid PSD File");
 
-        final int compression = read2Bytes("Compression", is, "Not a Valid PSD File", getByteOrder());
+        final int compression = BinaryFunctions.read2Bytes("Compression", is, "Not a Valid PSD File", getByteOrder());
 
         // skip_bytes(is, LayerAndMaskDataLength);
         // byte[] ImageData = readByteArray("ImageData", LayerAndMaskDataLength,
@@ -575,11 +569,9 @@ public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> im
             throws ImagingException, IOException {
         try (InputStream imageStream = byteSource.getInputStream();
                 InputStream resourceStream = getInputStream(byteSource, PSD_SECTION_IMAGE_RESOURCES)) {
-
             final PsdImageContents imageContents = readImageContents(imageStream);
-
-            final byte[] ImageResources = readBytes("ImageResources", resourceStream, imageContents.imageResourcesLength, "Not a Valid PSD File");
-
+            final byte[] ImageResources = BinaryFunctions.readBytes("ImageResources", resourceStream, imageContents.imageResourcesLength,
+                    "Not a Valid PSD File");
             return readImageResourceBlocks(ImageResources, imageResourceIDs, maxBlocksToRead);
         }
     }
@@ -589,35 +581,35 @@ public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> im
         final List<ImageResourceBlock> result = new ArrayList<>();
 
         while (available > 0) {
-            readAndVerifyBytes(is, new byte[] { 56, 66, 73, 77 }, "Not a Valid PSD File");
+            BinaryFunctions.readAndVerifyBytes(is, new byte[] { 56, 66, 73, 77 }, "Not a Valid PSD File");
             available -= 4;
 
-            final int id = read2Bytes("ID", is, "Not a Valid PSD File", getByteOrder());
+            final int id = BinaryFunctions.read2Bytes("ID", is, "Not a Valid PSD File", getByteOrder());
             available -= 2;
 
-            final int nameLength = readByte("NameLength", is, "Not a Valid PSD File");
+            final int nameLength = BinaryFunctions.readByte("NameLength", is, "Not a Valid PSD File");
 
             available -= 1;
-            final byte[] nameBytes = readBytes("NameData", is, nameLength, "Not a Valid PSD File");
+            final byte[] nameBytes = BinaryFunctions.readBytes("NameData", is, nameLength, "Not a Valid PSD File");
             available -= nameLength;
             if ((nameLength + 1) % 2 != 0) {
                 // final int NameDiscard =
-                readByte("NameDiscard", is, "Not a Valid PSD File");
+                BinaryFunctions.readByte("NameDiscard", is, "Not a Valid PSD File");
                 available -= 1;
             }
             // String Name = readPString("Name", 6, is, "Not a Valid PSD File");
-            final int dataSize = read4Bytes("Size", is, "Not a Valid PSD File", getByteOrder());
+            final int dataSize = BinaryFunctions.read4Bytes("Size", is, "Not a Valid PSD File", getByteOrder());
             available -= 4;
             // int ActualDataSize = ((DataSize % 2) == 0)
             // ? DataSize
             // : DataSize + 1; // pad to make even
 
-            final byte[] data = readBytes("Data", is, dataSize, "Not a Valid PSD File");
+            final byte[] data = BinaryFunctions.readBytes("Data", is, dataSize, "Not a Valid PSD File");
             available -= dataSize;
 
             if (dataSize % 2 != 0) {
                 // final int DataDiscard =
-                readByte("DataDiscard", is, "Not a Valid PSD File");
+                BinaryFunctions.readByte("DataDiscard", is, "Not a Valid PSD File");
                 available -= 1;
             }
 

@@ -16,18 +16,6 @@
  */
 package org.apache.commons.imaging.formats.tiff;
 
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.COMPRESSION_CCITT_1D;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.COMPRESSION_CCITT_GROUP_3;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.COMPRESSION_CCITT_GROUP_4;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.COMPRESSION_DEFLATE_ADOBE;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.COMPRESSION_DEFLATE_PKZIP;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.COMPRESSION_JPEG;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.COMPRESSION_JPEG_OBSOLETE;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.COMPRESSION_LZW;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.COMPRESSION_PACKBITS;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.COMPRESSION_UNCOMPRESSED_1;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.COMPRESSION_UNCOMPRESSED_2;
-
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -52,6 +40,7 @@ import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.XmpEmbeddable;
 import org.apache.commons.imaging.common.XmpImagingParameters;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory.ImageDataElement;
+import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffEpTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
@@ -245,7 +234,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
         if (directory.findField(TiffTagConstants.TIFF_TAG_COMPRESSION) != null) {
             compressionFieldValue = directory.getFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION);
         } else {
-            compressionFieldValue = COMPRESSION_UNCOMPRESSED_1;
+            compressionFieldValue = TiffConstants.COMPRESSION_UNCOMPRESSED_1;
         }
         final int compression = 0xffff & compressionFieldValue;
         final int width = directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH);
@@ -539,41 +528,41 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
         if (directory.findField(TiffTagConstants.TIFF_TAG_COMPRESSION) != null) {
             compressionFieldValue = directory.getFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION);
         } else {
-            compressionFieldValue = COMPRESSION_UNCOMPRESSED_1;
+            compressionFieldValue = TiffConstants.COMPRESSION_UNCOMPRESSED_1;
         }
         final int compression = 0xffff & compressionFieldValue;
         ImageInfo.CompressionAlgorithm compressionAlgorithm;
 
         switch (compression) {
-        case COMPRESSION_UNCOMPRESSED_1:
+        case TiffConstants.COMPRESSION_UNCOMPRESSED_1:
             compressionAlgorithm = ImageInfo.CompressionAlgorithm.NONE;
             break;
-        case COMPRESSION_CCITT_1D:
+        case TiffConstants.COMPRESSION_CCITT_1D:
             compressionAlgorithm = ImageInfo.CompressionAlgorithm.CCITT_1D;
             break;
-        case COMPRESSION_CCITT_GROUP_3:
+        case TiffConstants.COMPRESSION_CCITT_GROUP_3:
             compressionAlgorithm = ImageInfo.CompressionAlgorithm.CCITT_GROUP_3;
             break;
-        case COMPRESSION_CCITT_GROUP_4:
+        case TiffConstants.COMPRESSION_CCITT_GROUP_4:
             compressionAlgorithm = ImageInfo.CompressionAlgorithm.CCITT_GROUP_4;
             break;
-        case COMPRESSION_LZW:
+        case TiffConstants.COMPRESSION_LZW:
             compressionAlgorithm = ImageInfo.CompressionAlgorithm.LZW;
             break;
-        case COMPRESSION_JPEG_OBSOLETE:
+        case TiffConstants.COMPRESSION_JPEG_OBSOLETE:
             compressionAlgorithm = ImageInfo.CompressionAlgorithm.JPEG_TIFF_OBSOLETE;
             break;
-        case COMPRESSION_JPEG:
+        case TiffConstants.COMPRESSION_JPEG:
             compressionAlgorithm = ImageInfo.CompressionAlgorithm.JPEG;
             break;
-        case COMPRESSION_UNCOMPRESSED_2:
+        case TiffConstants.COMPRESSION_UNCOMPRESSED_2:
             compressionAlgorithm = ImageInfo.CompressionAlgorithm.NONE;
             break;
-        case COMPRESSION_PACKBITS:
+        case TiffConstants.COMPRESSION_PACKBITS:
             compressionAlgorithm = ImageInfo.CompressionAlgorithm.PACKBITS;
             break;
-        case COMPRESSION_DEFLATE_PKZIP:
-        case COMPRESSION_DEFLATE_ADOBE:
+        case TiffConstants.COMPRESSION_DEFLATE_PKZIP:
+        case TiffConstants.COMPRESSION_DEFLATE_ADOBE:
             compressionAlgorithm = ImageInfo.CompressionAlgorithm.DEFLATE;
             break;
         default:
@@ -749,7 +738,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
         if (directory.findField(TiffTagConstants.TIFF_TAG_COMPRESSION) != null) {
             compressionFieldValue = directory.getFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION);
         } else {
-            compressionFieldValue = COMPRESSION_UNCOMPRESSED_1;
+            compressionFieldValue = TiffConstants.COMPRESSION_UNCOMPRESSED_1;
         }
         final int compression = 0xffff & compressionFieldValue;
 
