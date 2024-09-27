@@ -16,17 +16,6 @@
  */
 package org.apache.commons.imaging.formats.tiff.write;
 
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.DEFAULT_TIFF_BYTE_ORDER;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_1D;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_4;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_DEFLATE_ADOBE;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_LZW;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_PACKBITS;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_HEADER_SIZE;
-
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.io.IOException;
@@ -52,6 +41,7 @@ import org.apache.commons.imaging.formats.tiff.AbstractTiffElement;
 import org.apache.commons.imaging.formats.tiff.AbstractTiffImageData;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
+import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.itu_t4.T4AndT6Compression;
@@ -68,7 +58,7 @@ public abstract class AbstractTiffImageWriter {
     protected final ByteOrder byteOrder;
 
     public AbstractTiffImageWriter() {
-        this.byteOrder = DEFAULT_TIFF_BYTE_ORDER;
+        this.byteOrder = TiffConstants.DEFAULT_TIFF_BYTE_ORDER;
     }
 
     public AbstractTiffImageWriter(final ByteOrder byteOrder) {
@@ -400,7 +390,7 @@ public abstract class AbstractTiffImageWriter {
         // the value of such a little-used feature does not seem
         // commensurate with the complexity of the extra code it would require.
 
-        int compression = TIFF_COMPRESSION_LZW;
+        int compression = TiffConstants.TIFF_COMPRESSION_LZW;
         short predictor = TiffTagConstants.PREDICTOR_VALUE_NONE;
 
         int stripSizeInBits = 64000; // the default from legacy implementation
@@ -419,7 +409,8 @@ public abstract class AbstractTiffImageWriter {
         int samplesPerPixel;
         int bitsPerSample;
         int photometricInterpretation;
-        if (compression == TIFF_COMPRESSION_CCITT_1D || compression == TIFF_COMPRESSION_CCITT_GROUP_3 || compression == TIFF_COMPRESSION_CCITT_GROUP_4) {
+        if (compression == TiffConstants.TIFF_COMPRESSION_CCITT_1D || compression == TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3
+                || compression == TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_4) {
             samplesPerPixel = 1;
             bitsPerSample = 1;
             photometricInterpretation = 0;
@@ -443,12 +434,12 @@ public abstract class AbstractTiffImageWriter {
         int t4Options = 0;
         int t6Options = 0;
         switch (compression) {
-        case TIFF_COMPRESSION_CCITT_1D:
+        case TiffConstants.TIFF_COMPRESSION_CCITT_1D:
             for (int i = 0; i < strips.length; i++) {
                 strips[i] = T4AndT6Compression.compressModifiedHuffman(strips[i], width, strips[i].length / ((width + 7) / 8));
             }
             break;
-        case TIFF_COMPRESSION_CCITT_GROUP_3: {
+        case TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3: {
             final Integer t4Parameter = params.getT4Options();
             if (t4Parameter != null) {
                 t4Options = t4Parameter.intValue();
@@ -469,13 +460,13 @@ public abstract class AbstractTiffImageWriter {
             }
             break;
         }
-        case TIFF_COMPRESSION_CCITT_GROUP_4: {
+        case TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_4: {
             final Integer t6Parameter = params.getT6Options();
             if (t6Parameter != null) {
                 t6Options = t6Parameter.intValue();
             }
             t6Options &= 0x4;
-            final boolean usesUncompressedMode = (t6Options & TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE) != 0;
+            final boolean usesUncompressedMode = (t6Options & TiffConstants.TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE) != 0;
             if (usesUncompressedMode) {
                 throw new ImagingException("T.6 compression with the uncompressed mode extension is not yet supported");
             }
@@ -484,12 +475,12 @@ public abstract class AbstractTiffImageWriter {
             }
             break;
         }
-        case TIFF_COMPRESSION_PACKBITS:
+        case TiffConstants.TIFF_COMPRESSION_PACKBITS:
             for (int i = 0; i < strips.length; i++) {
                 strips[i] = PackBits.compress(strips[i]);
             }
             break;
-        case TIFF_COMPRESSION_LZW:
+        case TiffConstants.TIFF_COMPRESSION_LZW:
             predictor = TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING;
             for (int i = 0; i < strips.length; i++) {
                 final byte[] uncompressed = strips[i];
@@ -501,14 +492,14 @@ public abstract class AbstractTiffImageWriter {
                 strips[i] = compressed;
             }
             break;
-        case TIFF_COMPRESSION_DEFLATE_ADOBE:
+        case TiffConstants.TIFF_COMPRESSION_DEFLATE_ADOBE:
             predictor = TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING;
             for (int i = 0; i < strips.length; i++) {
                 applyPredictor(width, samplesPerPixel, strips[i]);
                 strips[i] = ZlibDeflate.compress(strips[i]);
             }
             break;
-        case TIFF_COMPRESSION_UNCOMPRESSED:
+        case TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED:
             break;
         default:
             throw new ImagingException(
@@ -598,7 +589,7 @@ public abstract class AbstractTiffImageWriter {
     }
 
     protected void writeImageFileHeader(final BinaryOutputStream bos) throws IOException {
-        writeImageFileHeader(bos, TIFF_HEADER_SIZE);
+        writeImageFileHeader(bos, TiffConstants.TIFF_HEADER_SIZE);
     }
 
     protected void writeImageFileHeader(final BinaryOutputStream bos, final long offsetToFirstIFD) throws IOException {
