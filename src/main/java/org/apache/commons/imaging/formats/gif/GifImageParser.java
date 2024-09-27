@@ -224,7 +224,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
         final List<GifImageData> imageData = findAllImageData(imageContents);
         final List<BufferedImage> result = Allocator.arrayList(imageData.size());
         for (final GifImageData id : imageData) {
-            result.add(getBufferedImage(ghi, id, imageContents.globalColorTable));
+            result.add(getBufferedImage(id, imageContents.globalColorTable));
         }
         return result;
     }
@@ -240,10 +240,10 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
 
         final GifImageData imageData = findFirstImageData(imageContents);
 
-        return getBufferedImage(ghi, imageData, imageContents.globalColorTable);
+        return getBufferedImage(imageData, imageContents.globalColorTable);
     }
 
-    private BufferedImage getBufferedImage(final GifHeaderInfo headerInfo, final GifImageData imageData, final byte[] globalColorTable)
+    private BufferedImage getBufferedImage(final GifImageData imageData, final byte[] globalColorTable)
             throws ImagingException {
         final ImageDescriptor id = imageData.descriptor;
         final GraphicControlExtension gce = imageData.gce;
