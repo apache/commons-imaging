@@ -49,6 +49,7 @@ The <action> type attribute can be add,update,fix,remove.
     <release version="1.0.0-alpha6" date="YYYY-MM-DD" description="The 1.0.0-alpha6 release requires Java 8.">
       <!-- FIX -->
       <action dev="ggregory" type="fix" due-to="Gary Gregory">Replace Locale.ENGLISH with Locale.ROOT processing file names.</action>
+      <action dev="ggregory" type="fix" due-to="Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName.</action>
       <!-- ADD -->
       <action dev="ggregory" type="fix" due-to="Arnout Engelen">Add an Imaging-specific security page #439.</action>
       <!-- UPDATE -->

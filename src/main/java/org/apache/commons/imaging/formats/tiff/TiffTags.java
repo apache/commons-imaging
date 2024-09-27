@@ -48,8 +48,8 @@ final class TiffTags {
 
     private static final List<TagInfo> ALL_TAGS = makeMergedTagList();
 
-    private static final Map<Integer, List<TagInfo>> ALL_TAG_MAP = makeTagMap(TiffTags.ALL_TAGS);
-    private static final Map<Integer, Integer> TAG_COUNTS = countTags(TiffTags.ALL_TAGS);
+    private static final Map<Integer, List<TagInfo>> ALL_TAG_MAP = makeTagMap(ALL_TAGS);
+    private static final Map<Integer, Integer> TAG_COUNTS = countTags(ALL_TAGS);
 
     private static Map<Integer, Integer> countTags(final List<TagInfo> tags) {
         final Map<Integer, Integer> map = new HashMap<>();

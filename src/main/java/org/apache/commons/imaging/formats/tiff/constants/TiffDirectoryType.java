@@ -51,7 +51,7 @@ public enum TiffDirectoryType {
                 return tiffDirectoryType;
             }
         }
-        return TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN;
+        return EXIF_DIRECTORY_UNKNOWN;
     }
 
     private final boolean isImageDirectory;

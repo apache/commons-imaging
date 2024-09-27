@@ -140,7 +140,7 @@ public class RationalNumber extends Number {
         final int maxIterations = 100; // value is quite high, actually.
                                        // shouldn't matter.
         for (int count = 0; bestOption.error > TOLERANCE && count < maxIterations; count++) {
-            final RationalNumber mediant = RationalNumber.factoryMethod(low.rationalNumber.numerator + high.rationalNumber.numerator,
+            final RationalNumber mediant = factoryMethod(low.rationalNumber.numerator + high.rationalNumber.numerator,
                     low.rationalNumber.divisor + high.rationalNumber.divisor);
             final Option mediantOption = Option.factory(mediant, value);
 

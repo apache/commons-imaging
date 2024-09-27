@@ -38,12 +38,12 @@ public final class ImageParserFactory {
         // TODO: circular dependency between Imaging and internal Util class below.
         final ImageFormat format = Imaging.guessFormat(byteSource);
         if (!format.equals(ImageFormats.UNKNOWN)) {
-            return ImageParserFactory.getImageParser(format);
+            return getImageParser(format);
         }
 
         final String fileName = byteSource.getFileName();
         if (fileName != null) {
-            return ImageParserFactory.getImageParser(fileName);
+            return getImageParser(fileName);
         }
 
         throw new IllegalArgumentException("Can't parse this format.");

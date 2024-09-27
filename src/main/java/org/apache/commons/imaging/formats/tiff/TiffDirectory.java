@@ -123,7 +123,7 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
     }
 
     public String description() {
-        return TiffDirectory.description(type);
+        return description(type);
     }
 
     public void dump() {

@@ -88,7 +88,7 @@ public enum WebPChunkType {
         WebPChunk make(int type, int size, byte[] bytes) throws IOException, ImagingException;
     }
 
-    private static final WebPChunkType[] types = WebPChunkType.values();
+    private static final WebPChunkType[] types = values();
 
     static WebPChunkType findType(final int chunkType) {
         for (final WebPChunkType type : types) {

@@ -30,14 +30,14 @@ public enum PngColorType {
     static PngColorType getColorType(final boolean alpha, final boolean grayscale) {
         if (grayscale) {
             if (alpha) {
-                return PngColorType.GREYSCALE_WITH_ALPHA;
+                return GREYSCALE_WITH_ALPHA;
             }
-            return PngColorType.GREYSCALE;
+            return GREYSCALE;
         }
         if (alpha) {
-            return PngColorType.TRUE_COLOR_WITH_ALPHA;
+            return TRUE_COLOR_WITH_ALPHA;
         }
-        return PngColorType.TRUE_COLOR;
+        return TRUE_COLOR;
     }
 
     public static PngColorType getColorType(final int value) {
