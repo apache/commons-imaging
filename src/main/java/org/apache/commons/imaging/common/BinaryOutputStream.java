@@ -49,10 +49,6 @@ public abstract class BinaryOutputStream extends FilterOutputStream {
         super(outputStream);
     }
 
-    public BinaryOutputStream(final OutputStream outputStream, final ByteOrder byteOrder) {
-        super(outputStream);
-    }
-
     public abstract void write2Bytes(int value) throws IOException;
 
     public abstract void write3Bytes(int value) throws IOException;
