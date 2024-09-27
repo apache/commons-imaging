@@ -16,10 +16,10 @@
  */
 package org.apache.commons.imaging.formats.tiff.write;
 
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_DIRECTORY_FOOTER_LENGTH;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_DIRECTORY_HEADER_LENGTH;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_ENTRY_LENGTH;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_ENTRY_MAX_VALUE_LENGTH;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.DIRECTORY_FOOTER_LENGTH;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.DIRECTORY_HEADER_LENGTH;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.ENTRY_LENGTH;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.ENTRY_MAX_VALUE_LENGTH;
 
 import java.io.IOException;
 import java.nio.ByteOrder;
@@ -450,7 +450,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
 
     @Override
     public int getItemLength() {
-        return TIFF_ENTRY_LENGTH * fields.size() + TIFF_DIRECTORY_HEADER_LENGTH + TIFF_DIRECTORY_FOOTER_LENGTH;
+        return ENTRY_LENGTH * fields.size() + DIRECTORY_HEADER_LENGTH + DIRECTORY_FOOTER_LENGTH;
     }
 
     protected List<AbstractTiffOutputItem> getOutputItems(final TiffOutputSummary outputSummary) throws ImagingException {
@@ -462,7 +462,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         TiffOutputField jpegOffsetField = null;
         if (null != jpegImageData) {
             jpegOffsetField = new TiffOutputField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT, AbstractFieldType.LONG, 1,
-                    new byte[TIFF_ENTRY_MAX_VALUE_LENGTH]);
+                    new byte[ENTRY_MAX_VALUE_LENGTH]);
             add(jpegOffsetField);
 
             final byte[] lengthValue = AbstractFieldType.LONG.writeData(jpegImageData.length, outputSummary.byteOrder);

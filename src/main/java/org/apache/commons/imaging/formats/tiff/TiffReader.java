@@ -22,10 +22,10 @@ import static org.apache.commons.imaging.common.BinaryFunctions.read8Bytes;
 import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
 import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
 import static org.apache.commons.imaging.common.BinaryFunctions.skipBytes;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_ENTRY_MAX_VALUE_LENGTH;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_ENTRY_MAX_VALUE_LENGTH_BIG;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_VERSION_BIG;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_VERSION_STANDARD;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.ENTRY_MAX_VALUE_LENGTH;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.ENTRY_MAX_VALUE_LENGTH_BIG;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.VERSION_BIG;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.VERSION_STANDARD;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -457,15 +457,15 @@ public class TiffReader extends BinaryFileParser {
         //
         final long offsetToFirstIFD;
         final int tiffVersion = read2Bytes("tiffVersion", is, "Not a Valid TIFF File", getByteOrder());
-        if (tiffVersion == TIFF_VERSION_STANDARD) {
+        if (tiffVersion == VERSION_STANDARD) {
             bigTiff = false;
             standardTiff = true;
-            entryMaxValueLength = TIFF_ENTRY_MAX_VALUE_LENGTH;
+            entryMaxValueLength = ENTRY_MAX_VALUE_LENGTH;
             offsetToFirstIFD = 0xFFFFffffL & read4Bytes("offsetToFirstIFD", is, "Not a Valid TIFF File", getByteOrder());
-        } else if (tiffVersion == TIFF_VERSION_BIG) {
+        } else if (tiffVersion == VERSION_BIG) {
             bigTiff = true;
             standardTiff = false;
-            entryMaxValueLength = TIFF_ENTRY_MAX_VALUE_LENGTH_BIG;
+            entryMaxValueLength = ENTRY_MAX_VALUE_LENGTH_BIG;
             final int byteSize = read2Bytes("bytesizeOfOffset", is, "Not a Valid TIFF File", getByteOrder());
             final int expectedZero = read2Bytes("expectedZero", is, "Not a Valid TIFF File", getByteOrder());
             if (byteSize != 8 || expectedZero != 0) {

@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.tiff.write;
 
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_ENTRY_MAX_VALUE_LENGTH;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.ENTRY_MAX_VALUE_LENGTH;
 
 import java.io.IOException;
 import java.nio.ByteOrder;
@@ -79,7 +79,7 @@ public class TiffOutputField {
     }
 
     protected final boolean isLocalValue() {
-        return bytes.length <= TIFF_ENTRY_MAX_VALUE_LENGTH;
+        return bytes.length <= ENTRY_MAX_VALUE_LENGTH;
     }
 
     /**
@@ -152,7 +152,7 @@ public class TiffOutputField {
             }
 
             bos.write(bytes);
-            final int remainder = TIFF_ENTRY_MAX_VALUE_LENGTH - bytes.length;
+            final int remainder = ENTRY_MAX_VALUE_LENGTH - bytes.length;
             for (int i = 0; i < remainder; i++) {
                 bos.write(0);
             }

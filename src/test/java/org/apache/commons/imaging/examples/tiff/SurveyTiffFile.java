@@ -16,15 +16,15 @@
  */
 package org.apache.commons.imaging.examples.tiff;
 
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_1D;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_4;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_DEFLATE_ADOBE;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_DEFLATE_PKZIP;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_LZW;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_PACKBITS;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED_1;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.COMPRESSION_CCITT_1D;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.COMPRESSION_CCITT_GROUP_3;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.COMPRESSION_CCITT_GROUP_4;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.COMPRESSION_DEFLATE_ADOBE;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.COMPRESSION_DEFLATE_PKZIP;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.COMPRESSION_LZW;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.COMPRESSION_PACKBITS;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.COMPRESSION_UNCOMPRESSED;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.COMPRESSION_UNCOMPRESSED_1;
 
 import java.io.File;
 import java.io.IOException;
@@ -91,25 +91,25 @@ public class SurveyTiffFile {
         if (directory.findField(TiffTagConstants.TIFF_TAG_COMPRESSION) != null) {
             compressionFieldValue = directory.getFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION);
         } else {
-            compressionFieldValue = TIFF_COMPRESSION_UNCOMPRESSED_1;
+            compressionFieldValue = COMPRESSION_UNCOMPRESSED_1;
         }
         final int compression = 0xffff & compressionFieldValue;
         switch (compression) {
-        case TIFF_COMPRESSION_UNCOMPRESSED: // None;
+        case COMPRESSION_UNCOMPRESSED: // None;
             return "None";
-        case TIFF_COMPRESSION_CCITT_1D: // CCITT Group 3 1-Dimensional Modified
+        case COMPRESSION_CCITT_1D: // CCITT Group 3 1-Dimensional Modified
             // Huffman run-length encoding.
             return "CCITT_1D";
-        case TIFF_COMPRESSION_CCITT_GROUP_3:
+        case COMPRESSION_CCITT_GROUP_3:
             return "CCITT_3";
-        case TIFF_COMPRESSION_CCITT_GROUP_4:
+        case COMPRESSION_CCITT_GROUP_4:
             return "CCITT_4";
-        case TIFF_COMPRESSION_LZW:
+        case COMPRESSION_LZW:
             return "LZW";
-        case TIFF_COMPRESSION_PACKBITS:
+        case COMPRESSION_PACKBITS:
             return "PACKBITS";
-        case TIFF_COMPRESSION_DEFLATE_ADOBE:
-        case TIFF_COMPRESSION_DEFLATE_PKZIP:
+        case COMPRESSION_DEFLATE_ADOBE:
+        case COMPRESSION_DEFLATE_PKZIP:
             return "Deflate";
         default:
             return "None";

@@ -22,7 +22,7 @@
 */
 package org.apache.commons.imaging.formats.tiff.datareaders;
 
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_JPEG;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.COMPRESSION_JPEG;
 
 import java.awt.Rectangle;
 import java.io.ByteArrayInputStream;
@@ -249,7 +249,7 @@ public final class DataReaderTiled extends ImageDataReader {
                 final int x = iCol * tileWidth - x0;
                 final int y = iRow * tileLength - y0;
                 // Handle JPEG based compression
-                if (compression == TIFF_COMPRESSION_JPEG) {
+                if (compression == COMPRESSION_JPEG) {
                     if (planarConfiguration == TiffPlanarConfiguration.PLANAR) {
                         throw new ImagingException("TIFF file in non-supported configuration: JPEG compression used in planar configuration.");
                     }

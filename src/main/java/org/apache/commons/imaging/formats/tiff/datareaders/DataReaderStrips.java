@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.tiff.datareaders;
 
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_JPEG;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.COMPRESSION_JPEG;
 
 import java.awt.Rectangle;
 import java.io.ByteArrayInputStream;
@@ -283,7 +283,7 @@ public final class DataReaderStrips extends ImageDataReader {
 
                 final byte[] compressed = imageData.getImageData(strip).getData();
 
-                if (compression == TIFF_COMPRESSION_JPEG) {
+                if (compression == COMPRESSION_JPEG) {
                     final int yBlock = strip * rowsPerStrip;
                     final int yWork = yBlock - y0;
                     DataInterpreterJpeg.intepretBlock(directory, workingBuilder, 0, yWork, width, (int) rowsInThisStrip, compressed);
@@ -299,7 +299,7 @@ public final class DataReaderStrips extends ImageDataReader {
             // sequence. For example, red-green-blue values would be given as
             // red values for all pixels, followed by green values for all pixels,
             // etc.
-            if (compression == TIFF_COMPRESSION_JPEG) {
+            if (compression == COMPRESSION_JPEG) {
                 throw new ImagingException("TIFF file in non-supported configuration: JPEG compression used in planar configuration.");
             }
             final int nStripsInPlane = imageData.getImageDataLength() / 3;

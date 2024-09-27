@@ -186,7 +186,7 @@ public class TiffCcittTest extends TiffBaseTest {
 
             try {
                 final TiffImagingParameters params = new TiffImagingParameters();
-                params.setCompression(TiffConstants.TIFF_COMPRESSION_CCITT_1D);
+                params.setCompression(TiffConstants.COMPRESSION_CCITT_1D);
                 final TiffImageParser tiffImageParser = new TiffImageParser();
                 final byte[] compressed;
                 try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
@@ -204,7 +204,7 @@ public class TiffCcittTest extends TiffBaseTest {
 
             try {
                 final TiffImagingParameters params = new TiffImagingParameters();
-                params.setCompression(TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
+                params.setCompression(TiffConstants.COMPRESSION_CCITT_GROUP_3);
                 params.setT4Options(0);
                 final byte[] compressed;
                 try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
@@ -220,7 +220,7 @@ public class TiffCcittTest extends TiffBaseTest {
 
             try {
                 final TiffImagingParameters params = new TiffImagingParameters();
-                params.setCompression(TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
+                params.setCompression(TiffConstants.COMPRESSION_CCITT_GROUP_3);
                 params.setT4Options(4);
                 final byte[] compressed;
                 try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
@@ -236,7 +236,7 @@ public class TiffCcittTest extends TiffBaseTest {
 
             try {
                 final TiffImagingParameters params = new TiffImagingParameters();
-                params.setCompression(TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
+                params.setCompression(TiffConstants.COMPRESSION_CCITT_GROUP_3);
                 params.setT4Options(1);
                 final byte[] compressed;
                 try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
@@ -252,7 +252,7 @@ public class TiffCcittTest extends TiffBaseTest {
 
             try {
                 final TiffImagingParameters params = new TiffImagingParameters();
-                params.setCompression(TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
+                params.setCompression(TiffConstants.COMPRESSION_CCITT_GROUP_3);
                 params.setT4Options(5);
                 final byte[] compressed;
                 try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
@@ -268,7 +268,7 @@ public class TiffCcittTest extends TiffBaseTest {
 
             try {
                 final TiffImagingParameters params = new TiffImagingParameters();
-                params.setCompression(TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_4);
+                params.setCompression(TiffConstants.COMPRESSION_CCITT_GROUP_4);
                 final byte[] compressed;
                 try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
                     tiffImageParser.writeImage(image, baos, params);

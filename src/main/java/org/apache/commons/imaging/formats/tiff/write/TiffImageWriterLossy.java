@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.tiff.write;
 
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_HEADER_SIZE;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.HEADER_SIZE;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -37,7 +37,7 @@ public class TiffImageWriterLossy extends AbstractTiffImageWriter {
     }
 
     private void updateOffsetsStep(final List<AbstractTiffOutputItem> outputItems) {
-        int offset = TIFF_HEADER_SIZE;
+        int offset = HEADER_SIZE;
 
         for (final AbstractTiffOutputItem outputItem : outputItems) {
             outputItem.setOffset(offset);

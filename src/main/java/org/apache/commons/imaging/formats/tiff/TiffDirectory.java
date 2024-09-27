@@ -114,7 +114,7 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
 
     public TiffDirectory(final int type, final List<TiffField> entries, final long offset, final long nextDirectoryOffset, final ByteOrder byteOrder) {
         super(offset,
-                TiffConstants.TIFF_DIRECTORY_HEADER_LENGTH + entries.size() * TiffConstants.TIFF_ENTRY_LENGTH + TiffConstants.TIFF_DIRECTORY_FOOTER_LENGTH);
+                TiffConstants.DIRECTORY_HEADER_LENGTH + entries.size() * TiffConstants.ENTRY_LENGTH + TiffConstants.DIRECTORY_FOOTER_LENGTH);
 
         this.type = type;
         this.entries = Collections.unmodifiableList(entries);
@@ -166,14 +166,14 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
 
     @Override
     public String getElementDescription() {
-        long entryOffset = offset + TiffConstants.TIFF_DIRECTORY_HEADER_LENGTH;
+        long entryOffset = offset + TiffConstants.DIRECTORY_HEADER_LENGTH;
 
         final StringBuilder result = new StringBuilder();
         for (final TiffField entry : entries) {
             result.append(String.format("\t[%d]: %s (%d, 0x%x), %s, %d: %s%n", entryOffset, entry.getTagInfo().name, entry.getTag(), entry.getTag(),
                     entry.getFieldType().getName(), entry.getBytesLength(), entry.getValueDescription()));
 
-            entryOffset += TiffConstants.TIFF_ENTRY_LENGTH;
+            entryOffset += TiffConstants.ENTRY_LENGTH;
         }
         return result.toString();
     }

@@ -609,7 +609,7 @@ public class TiffField {
      * @return true if the value is inlined
      */
     public boolean isLocalValue() {
-        return count * abstractFieldType.getSize() <= TiffConstants.TIFF_ENTRY_MAX_VALUE_LENGTH;
+        return count * abstractFieldType.getSize() <= TiffConstants.ENTRY_MAX_VALUE_LENGTH;
     }
 
     @Override

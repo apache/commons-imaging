@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.tiff.write;
 
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_HEADER_SIZE;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.HEADER_SIZE;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -246,7 +246,7 @@ public class TiffImageWriterLossless extends AbstractTiffImageWriter {
         }
         if (analysis.size() == 1) {
             final AbstractTiffElement onlyElement = analysis.get(0);
-            if (onlyElement.offset == TIFF_HEADER_SIZE && onlyElement.offset + onlyElement.length + TIFF_HEADER_SIZE == oldLength) {
+            if (onlyElement.offset == HEADER_SIZE && onlyElement.offset + onlyElement.length + HEADER_SIZE == oldLength) {
                 // no gaps in old data, safe to complete overwrite.
                 new TiffImageWriterLossy(byteOrder).write(os, outputSet);
                 return;

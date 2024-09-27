@@ -34,7 +34,7 @@ public class ImageWriteExample {
 
         // set optional parameters if you like
         final TiffImagingParameters params = new TiffImagingParameters();
-        params.setCompression(TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED);
+        params.setCompression(TiffConstants.COMPRESSION_UNCOMPRESSED);
 
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             new TiffImageParser().writeImage(image, baos, params);

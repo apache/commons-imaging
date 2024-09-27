@@ -205,55 +205,55 @@ public abstract class ImageDataReader {
         }
 
         switch (compression) {
-        case TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED:
+        case TiffConstants.COMPRESSION_UNCOMPRESSED:
             // None;
             return compressedOrdered;
-        case TiffConstants.TIFF_COMPRESSION_CCITT_1D:
+        case TiffConstants.COMPRESSION_CCITT_1D:
             // CCITT Group 3 1-Dimensional Modified Huffman run-length encoding.
             return T4AndT6Compression.decompressModifiedHuffman(compressedOrdered, tileWidth, tileHeight);
-        case TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3: {
+        case TiffConstants.COMPRESSION_CCITT_GROUP_3: {
             int t4Options = 0;
             final TiffField field = directory.findField(TiffTagConstants.TIFF_TAG_T4_OPTIONS);
             if (field != null) {
                 t4Options = field.getIntValue();
             }
-            final boolean is2D = (t4Options & TiffConstants.TIFF_FLAG_T4_OPTIONS_2D) != 0;
-            final boolean usesUncompressedMode = (t4Options & TiffConstants.TIFF_FLAG_T4_OPTIONS_UNCOMPRESSED_MODE) != 0;
+            final boolean is2D = (t4Options & TiffConstants.FLAG_T4_OPTIONS_2D) != 0;
+            final boolean usesUncompressedMode = (t4Options & TiffConstants.FLAG_T4_OPTIONS_UNCOMPRESSED_MODE) != 0;
             if (usesUncompressedMode) {
                 throw new ImagingException("T.4 compression with the uncompressed mode extension is not yet supported");
             }
-            final boolean hasFillBitsBeforeEOL = (t4Options & TiffConstants.TIFF_FLAG_T4_OPTIONS_FILL) != 0;
+            final boolean hasFillBitsBeforeEOL = (t4Options & TiffConstants.FLAG_T4_OPTIONS_FILL) != 0;
             if (is2D) {
                 return T4AndT6Compression.decompressT4_2D(compressedOrdered, tileWidth, tileHeight, hasFillBitsBeforeEOL);
             }
             return T4AndT6Compression.decompressT4_1D(compressedOrdered, tileWidth, tileHeight, hasFillBitsBeforeEOL);
         }
-        case TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_4: {
+        case TiffConstants.COMPRESSION_CCITT_GROUP_4: {
             int t6Options = 0;
             final TiffField field = directory.findField(TiffTagConstants.TIFF_TAG_T6_OPTIONS);
             if (field != null) {
                 t6Options = field.getIntValue();
             }
-            final boolean usesUncompressedMode = (t6Options & TiffConstants.TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE) != 0;
+            final boolean usesUncompressedMode = (t6Options & TiffConstants.FLAG_T6_OPTIONS_UNCOMPRESSED_MODE) != 0;
             if (usesUncompressedMode) {
                 throw new ImagingException("T.6 compression with the uncompressed mode extension is not yet supported");
             }
             return T4AndT6Compression.decompressT6(compressedOrdered, tileWidth, tileHeight);
         }
-        case TiffConstants.TIFF_COMPRESSION_LZW: {
+        case TiffConstants.COMPRESSION_LZW: {
             final InputStream is = new ByteArrayInputStream(compressedOrdered);
             final int lzwMinimumCodeSize = 8;
             return new MyLzwDecompressor(lzwMinimumCodeSize, ByteOrder.BIG_ENDIAN, true).decompress(is, expectedSize);
         }
 
         // Packbits
-        case TiffConstants.TIFF_COMPRESSION_PACKBITS: {
+        case TiffConstants.COMPRESSION_PACKBITS: {
             return PackBits.decompress(compressedOrdered, expectedSize);
         }
 
         // deflate
-        case TiffConstants.TIFF_COMPRESSION_DEFLATE_ADOBE:
-        case TiffConstants.TIFF_COMPRESSION_DEFLATE_PKZIP: {
+        case TiffConstants.COMPRESSION_DEFLATE_ADOBE:
+        case TiffConstants.COMPRESSION_DEFLATE_PKZIP: {
             return ZlibDeflate.decompress(compressedInput, expectedSize);
         }
 
