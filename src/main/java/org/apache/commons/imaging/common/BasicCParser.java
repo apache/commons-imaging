@@ -433,7 +433,7 @@ public class BasicCParser {
             } else if (c == '{' || c == '}' || c == '[' || c == ']' || c == '*' || c == ';' || c == '=' || c == ',') {
                 token.append((char) c);
                 return token.toString();
-            } else if (c == ' ' || c == '\t' || c == '\r' || c == '\n') {
+            } else if (c == ' ' || c == '\t' || c == '\r' || c == '\n') { // NOPMD
                 // ignore
             } else {
                 throw new ImagingException("Unhandled/invalid character '" + (char) c + "' found in XPM file");
