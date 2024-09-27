@@ -380,7 +380,6 @@ public class IptcParser extends BinaryFileParser {
                 break;
             }
         }
-        final byte[] blockData;
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (BinaryOutputStream bos = BinaryOutputStream.create(baos, getByteOrder())) {
             if (!charset.equals(DEFAULT_CHARSET)) {
