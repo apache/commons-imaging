@@ -119,7 +119,7 @@ public class WebPImageParser extends AbstractImageParser<WebPImagingParameters> 
                 }
 
                 sizeCount = SafeOperations.add(sizeCount, chunkSize);
-                return chunk;
+                return chunk; // NOPMD How can we do this better?
             }
 
             if (firstChunk) {
