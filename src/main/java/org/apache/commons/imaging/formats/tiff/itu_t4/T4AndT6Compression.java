@@ -635,10 +635,9 @@ public final class T4AndT6Compression {
 
     private static int nextChangingElement(final int[] line, final int currentColour, final int start) {
         int position;
-        for (position = start; position < line.length && line[position] == currentColour; position++) {
+        for (position = start; position < line.length && line[position] == currentColour; position++) { // NOPMD
             // noop
         }
-
         return Math.min(position, line.length);
     }
 
