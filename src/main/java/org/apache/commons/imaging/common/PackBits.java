@@ -143,7 +143,7 @@ public final class PackBits {
 
         int i;
 
-        for (i = start + 1; i < bytes.length && bytes[i] == b; i++) {
+        for (i = start + 1; i < bytes.length && bytes[i] == b; i++) { // NOPMD
             // do nothing
         }
 
