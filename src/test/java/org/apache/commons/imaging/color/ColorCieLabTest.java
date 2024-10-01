@@ -16,8 +16,6 @@
  */
 package org.apache.commons.imaging.color;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -48,7 +46,7 @@ public class ColorCieLabTest {
     @Test
     public void testHashCodeAndEquals() {
         assertTrue(color.equals(colorCopy) && colorCopy.equals(color));
-        assertThat(color.hashCode(), is(colorCopy.hashCode()));
+        assertEquals(colorCopy.hashCode(), color.hashCode());
     }
 
     @Test
