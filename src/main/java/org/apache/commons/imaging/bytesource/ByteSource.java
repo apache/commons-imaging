@@ -70,8 +70,8 @@ public class ByteSource {
     private final AbstractOrigin<?, ?> origin;
 
     ByteSource(final AbstractOrigin<?, ?> origin, final String fileName) {
-        this.fileName = fileName;
-        this.origin = origin;
+        this.origin = Objects.requireNonNull(origin, "origin");
+        this.fileName = fileName; // may be null
     }
 
     public byte[] getByteArray(final long position, final int length) throws IOException {
