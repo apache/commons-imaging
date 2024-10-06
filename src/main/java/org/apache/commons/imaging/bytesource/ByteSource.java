@@ -43,6 +43,21 @@ public class ByteSource {
         return new ByteSource(new FileOrigin(file), file.getName());
     }
 
+    public static final InputStream getInputStream(final ByteSource byteSource, final long skip) throws IOException {
+        InputStream is = null;
+        boolean succeeded = false;
+        try {
+            is = byteSource.getInputStream();
+            BinaryFunctions.skipBytes(is, skip);
+            succeeded = true;
+        } finally {
+            if (!succeeded) {
+                IOUtils.close(is);
+            }
+        }
+        return is;
+    }
+
     public static ByteSource inputStream(final InputStream is, final String name) {
         return new InputStreamByteSource(is, name);
     }
@@ -69,21 +84,6 @@ public class ByteSource {
 
     public InputStream getInputStream() throws IOException {
         return origin.getInputStream();
-    }
-
-    public final InputStream getInputStream(final long skip) throws IOException {
-        InputStream is = null;
-        boolean succeeded = false;
-        try {
-            is = getInputStream();
-            BinaryFunctions.skipBytes(is, skip);
-            succeeded = true;
-        } finally {
-            if (!succeeded) {
-                IOUtils.close(is);
-            }
-        }
-        return is;
     }
 
     /**

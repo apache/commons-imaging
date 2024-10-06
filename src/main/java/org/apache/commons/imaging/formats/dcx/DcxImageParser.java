@@ -91,7 +91,7 @@ public class DcxImageParser extends AbstractImageParser<PcxImagingParameters> {
         final List<BufferedImage> images = new ArrayList<>();
         final PcxImageParser pcxImageParser = new PcxImageParser();
         for (final long element : dcxHeader.pageTable) {
-            try (InputStream stream = byteSource.getInputStream(element)) {
+            try (InputStream stream = ByteSource.getInputStream(byteSource, element)) {
                 images.add(pcxImageParser.getBufferedImage(ByteSource.inputStream(stream, null), new PcxImagingParameters()));
             }
         }

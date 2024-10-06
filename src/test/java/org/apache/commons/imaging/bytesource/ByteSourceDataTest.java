@@ -145,7 +145,7 @@ public class ByteSourceDataTest extends AbstractByteSourceTest {
 
             final int start = src.length / 2;
 
-            try (InputStream is = byteSource.getInputStream(start)) {
+            try (InputStream is = ByteSource.getInputStream(byteSource, start)) {
                 final byte[] dst = IOUtils.toByteArray(is);
 
                 assertEquals(src.length, dst.length + start);
