@@ -180,6 +180,7 @@ final class InputStreamByteSource extends ByteSource {
         this.inputStream = new BufferedInputStream(inputStream);
     }
 
+    @SuppressWarnings("resource") // accesses input stream more than once, don't close here.
     @Override
     public byte[] getByteArray(final long position, final int length) throws IOException {
         // We include a separate check for int overflow.
