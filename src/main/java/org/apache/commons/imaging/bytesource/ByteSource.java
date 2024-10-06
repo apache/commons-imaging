@@ -54,7 +54,7 @@ public class ByteSource {
     private final String fileName;
     private final AbstractOrigin<?, ?> origin;
 
-    public ByteSource(final AbstractOrigin<?, ?> origin, final String fileName) {
+    ByteSource(final AbstractOrigin<?, ?> origin, final String fileName) {
         this.fileName = fileName;
         this.origin = origin;
     }
