@@ -32,7 +32,7 @@ jobs:
         include:
             - java: 23
               os: ubuntu-latest
-              experimental: true
+              experimental: false
             - java: 24-ea
               os: ubuntu-latest
               experimental: true
