@@ -71,12 +71,12 @@ public class ByteSource {
         return origin.getInputStream();
     }
 
-    public final InputStream getInputStream(final long start) throws IOException {
+    public final InputStream getInputStream(final long skip) throws IOException {
         InputStream is = null;
         boolean succeeded = false;
         try {
             is = getInputStream();
-            BinaryFunctions.skipBytes(is, start);
+            BinaryFunctions.skipBytes(is, skip);
             succeeded = true;
         } finally {
             if (!succeeded) {
