@@ -169,7 +169,7 @@ final class InputStreamByteSource extends ByteSource {
 
     }
 
-    private static final int BLOCK_SIZE = 1024;
+    private static final int BLOCK_SIZE = IOUtils.DEFAULT_BUFFER_SIZE;
     private final InputStream inputStream;
     private Block headBlock;
     private byte[] readBuffer;

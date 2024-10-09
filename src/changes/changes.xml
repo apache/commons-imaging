@@ -53,6 +53,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action dev="ggregory" type="fix" due-to="Gary Gregory">Fix PMD TooManyStaticImports.</action>
       <action dev="ggregory" type="fix" due-to="Gary Gregory">Fix PMD UnusedFormalParameter.</action>
       <action dev="ggregory" type="fix" due-to="Gary Gregory">Fix PMD UnusedLocalVariable.</action>
+      <action dev="ggregory" type="fix" due-to="Gary Gregory">Increase default block size in byte sources from 1024 to 8192 bytes.</action>
       <!-- ADD -->
       <action dev="ggregory" type="add" due-to="Arnout Engelen">Add an Imaging-specific security page #439.</action>
       <!-- UPDATE -->
