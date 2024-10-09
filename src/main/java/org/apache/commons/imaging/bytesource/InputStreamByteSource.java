@@ -32,7 +32,7 @@ final class InputStreamByteSource extends ByteSource {
 
     private final class Block {
 
-        public final byte[] bytes;
+        final byte[] bytes;
         private Block next;
         private boolean triedNext;
 
