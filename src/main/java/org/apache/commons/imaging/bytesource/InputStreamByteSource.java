@@ -40,7 +40,7 @@ final class InputStreamByteSource extends ByteSource {
             this.bytes = bytes;
         }
 
-        public Block getNext() throws IOException {
+        Block getNext() throws IOException {
             if (null != next) {
                 return next;
             }
