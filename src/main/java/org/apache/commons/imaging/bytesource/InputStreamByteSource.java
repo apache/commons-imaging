@@ -242,11 +242,8 @@ final class InputStreamByteSource extends ByteSource {
         if (streamLength >= 0) {
             return streamLength;
         }
-
         try (InputStream cis = getInputStream()) {
-            final long result = IOUtils.consume(cis);
-            streamLength = result;
-            return result;
+            return streamLength = IOUtils.consume(cis);
         }
     }
 
