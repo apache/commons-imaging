@@ -68,20 +68,16 @@ final class InputStreamByteSource extends ByteSource {
                 block = getFirstBlock();
                 readFirst = true;
             }
-
             if (block != null && blockIndex >= block.bytes.length) {
                 block = block.getNext();
                 blockIndex = 0;
             }
-
             if (null == block) {
                 return -1;
             }
-
             if (blockIndex >= block.bytes.length) {
                 return -1;
             }
-
             return 0xff & block.bytes[blockIndex++];
         }
 
@@ -95,9 +91,7 @@ final class InputStreamByteSource extends ByteSource {
             if (len == 0) {
                 return 0;
             }
-
             // optimized block read
-
             if (null == block) {
                 if (readFirst) {
                     return -1;
@@ -105,20 +99,16 @@ final class InputStreamByteSource extends ByteSource {
                 block = getFirstBlock();
                 readFirst = true;
             }
-
             if (block != null && blockIndex >= block.bytes.length) {
                 block = block.getNext();
                 blockIndex = 0;
             }
-
             if (null == block) {
                 return -1;
             }
-
             if (blockIndex >= block.bytes.length) {
                 return -1;
             }
-
             final int readSize = Math.min(len, block.bytes.length - blockIndex);
             System.arraycopy(block.bytes, blockIndex, array, off, readSize);
             blockIndex += readSize;
@@ -127,13 +117,10 @@ final class InputStreamByteSource extends ByteSource {
 
         @Override
         public long skip(final long n) throws IOException {
-
             long remaining = n;
-
             if (n <= 0) {
                 return 0;
             }
-
             while (remaining > 0) {
                 // read the first block
                 if (null == block) {
@@ -143,27 +130,21 @@ final class InputStreamByteSource extends ByteSource {
                     block = getFirstBlock();
                     readFirst = true;
                 }
-
                 // get next block
                 if (block != null && blockIndex >= block.bytes.length) {
                     block = block.getNext();
                     blockIndex = 0;
                 }
-
                 if (null == block) {
                     break;
                 }
-
                 if (blockIndex >= block.bytes.length) {
                     break;
                 }
-
                 final int readSize = Math.min((int) Math.min(BLOCK_SIZE, remaining), block.bytes.length - blockIndex);
-
                 blockIndex += readSize;
                 remaining -= readSize;
             }
-
             return n - remaining;
         }
 
@@ -188,10 +169,8 @@ final class InputStreamByteSource extends ByteSource {
             throw new ImagingException(
                     "Could not read block (block start: " + position + ", block length: " + length + ", data length: " + streamLength + ").");
         }
-
         final InputStream cis = getInputStream();
         BinaryFunctions.skipBytes(cis, position);
-
         final byte[] bytes = Allocator.byteArray(length);
         int total = 0;
         while (true) {
