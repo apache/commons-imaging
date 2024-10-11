@@ -53,8 +53,17 @@ public class ImagingParameters<E extends ImagingParameters<E>> {
      */
     private PixelDensity pixelDensity;
 
-    // getters and setters
-
+    /**
+     * Returns this instance typed as the subclass type {@code E}.
+     * <p>
+     * This is the same as the expression:
+     * </p>
+     * <pre>
+     * (B) this
+     * </pre>
+     *
+     * @return this instance typed as the subclass type {@code E}.
+     */
     @SuppressWarnings("unchecked")
     public E asThis() {
         return (E) this;
