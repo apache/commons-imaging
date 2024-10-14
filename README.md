@@ -44,7 +44,7 @@ Apache Commons Imaging
 ===================
 
 [![Java CI](https://github.com/apache/commons-imaging/actions/workflows/maven.yml/badge.svg)](https://github.com/apache/commons-imaging/actions/workflows/maven.yml)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-imaging/badge.svg?gav=true)](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-imaging/?gav=true)
+[![Maven Central](https://img.shields.io/maven-central/v/org.apache.commons/commons-imaging?label=Maven%20Central)](https://search.maven.org/artifact/org.apache.commons/commons-imaging)
 [![Javadocs](https://javadoc.io/badge/org.apache.commons/commons-imaging/1.0.0-alpha5.svg)](https://javadoc.io/doc/org.apache.commons/commons-imaging/1.0.0-alpha5)
 [![CodeQL](https://github.com/apache/commons-imaging/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/apache/commons-imaging/actions/workflows/codeql-analysis.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/apache/commons-imaging/badge)](https://api.securityscorecards.dev/projects/github.com/apache/commons-imaging)
