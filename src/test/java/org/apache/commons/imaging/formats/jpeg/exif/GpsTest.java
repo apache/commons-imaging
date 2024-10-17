@@ -17,13 +17,19 @@
 
 package org.apache.commons.imaging.formats.jpeg.exif;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.File;
 import java.util.stream.Stream;
 
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
+import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
+import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.imaging.internal.Debug;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -62,5 +68,17 @@ public class GpsTest extends AbstractExifTest {
         Debug.debug("gpsInfo latitude as degrees north " + gpsInfo.getLatitudeAsDegreesNorth());
         Debug.debug();
 
+    }
+
+    /**
+     * @throws Exception if it cannot open the images.
+     */
+    @Test
+    public void testReadMetadata() throws Exception {
+        final File imageFile = new File(GpsTest.class.getResource("/images/jpeg/exif/2024-04-30_G012.JPG").getFile());
+        final JpegImageMetadata jpegMetadata = (JpegImageMetadata) Imaging.getMetadata(imageFile);
+        final TiffField gpsHPosErrorField = jpegMetadata.findExifValueWithExactMatch(GpsTagConstants.GPS_TAG_GPS_HORIZONTAL_POSITIONING_ERROR);
+        final RationalNumber gpsHPosError = (RationalNumber) gpsHPosErrorField.getValue();
+        assertEquals(0.014, gpsHPosError.doubleValue());
     }
 }
