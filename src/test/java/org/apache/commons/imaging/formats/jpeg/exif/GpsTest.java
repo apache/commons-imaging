@@ -77,7 +77,7 @@ public class GpsTest extends AbstractExifTest {
     public void testReadMetadata() throws Exception {
         final File imageFile = new File(GpsTest.class.getResource("/images/jpeg/exif/2024-04-30_G012.JPG").getFile());
         final JpegImageMetadata jpegMetadata = (JpegImageMetadata) Imaging.getMetadata(imageFile);
-        final TiffField gpsHPosErrorField = jpegMetadata.findExifValueWithExactMatch(GpsTagConstants.GPS_TAG_GPS_HORIZONTAL_POSITIONING_ERROR);
+        final TiffField gpsHPosErrorField = jpegMetadata.findExifValueWithExactMatch(GpsTagConstants.GPS_TAG_GPS_HOR_POSITIONING_ERROR);
         final RationalNumber gpsHPosError = (RationalNumber) gpsHPosErrorField.getValue();
         assertEquals(0.014, gpsHPosError.doubleValue());
     }
