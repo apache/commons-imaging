@@ -42,7 +42,7 @@ public class ImagingParameters<E extends ImagingParameters<E>> {
     private String fileName;
 
     /**
-     * Factory to create {@code BufferedImage}s. Default is {@code null}.
+     * Creates {@code BufferedImage}s. Default is {@code null}.
      */
     private BufferedImageFactory bufferedImageFactory;
 
