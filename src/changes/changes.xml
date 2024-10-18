@@ -60,9 +60,10 @@ The <action> type attribute can be add,update,fix,remove.
       <!-- UPDATE -->
       <action dev="ggregory" type="update" due-to="Dependabot">Bump org.apache.commons:commons-parent from 69 to 77 #400, #406, #428, #430, #436, #442, #445.</action>
       <action dev="ggregory" type="update" due-to="Dependabot">Bump org.apache.commons:commons-lang3 from 3.14.0 to 3.17.0 #416, #423, #431.</action>
-      <action dev="ggregory" type="update" due-to="Dependabot">Bump org.hamcrest:hamcrest from 2.2 to 3.0 #422.</action>
       <action dev="ggregory" type="update" due-to="Dependabot">Bump commons-io:commons-io from 2.16.1 to 2.17.0 #437.</action>
       <action dev="ggregory" type="update" due-to="Dependabot">Bump org.codehaus.mojo:taglist-maven-plugin from 3.1.0 to 3.2.1 #453.</action>
+      <!-- REMOVE -->
+      <action dev="ggregory" type="remove" due-to="Dependabot">Remove direct dependency on org.hamcrest:hamcrest.</action>
     </release>
     <release version="1.0.0-alpha5" date="2024-04-15" description="The 1.0.0-alpha5 release requires Java 8.">
       <!-- FIX -->
