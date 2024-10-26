@@ -149,7 +149,8 @@ public final class GpsTagConstants {
     public static final int GPS_TAG_GPS_DIFFERENTIAL_VALUE_DIFFERENTIAL_CORRECTED = 1;
 
     /**
-     * Horizontal positioning errors in meters
+     * Horizontal positioning errors in meters.
+     *
      * @since 1.0.0-alpha6
      */
     public static final TagInfoRational GPS_TAG_GPS_HOR_POSITIONING_ERROR = new TagInfoRational("GPSHPositioningError", 0x001f,
