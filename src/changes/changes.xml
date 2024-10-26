@@ -57,6 +57,7 @@ The <action> type attribute can be add,update,fix,remove.
       <!-- ADD -->
       <action dev="ggregory" type="add" due-to="Arnout Engelen">Add an Imaging-specific security page #439.</action>
       <action dev="ggregory" type="add" due-to="Gary Gregory">Add Maven property commons.taglist.version for debugging.</action>
+      <action dev="ggregory" type="add" due-to="Stefal, Gary Gregory">Add support of GPSHPositioningError in GpsTagConstants #451.</action> 
       <!-- UPDATE -->
       <action dev="ggregory" type="update" due-to="Dependabot, Gary Gregory">Bump org.apache.commons:commons-parent from 69 to 78 #400, #406, #428, #430, #436, #442, #445, #545.</action>
       <action dev="ggregory" type="update" due-to="Dependabot">Bump org.apache.commons:commons-lang3 from 3.14.0 to 3.17.0 #416, #423, #431.</action>
