@@ -23,3 +23,12 @@ jobs:
       - name: Build with Maven
         run: mvn clean install
 
+- name: SonarCloud Scan
+  env:
+    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  run: |
+    mvn sonar:sonar \
+      -Dsonar.projectKey = johcue_commons-imaging \
+      -Dsonar.organization = johcue \
+      -Dsonar.host.url=https://sonarcloud.io \
+      -Dsonar.login=${{ secrets.SONAR_TOKEN }}
