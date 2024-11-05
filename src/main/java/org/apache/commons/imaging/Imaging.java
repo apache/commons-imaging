@@ -940,6 +940,6 @@ public final class Imaging {
     }
 
     private Imaging() {
-        // Instances can not be created
+        // Instances cannot be created
     }
 }
