@@ -32,7 +32,7 @@ import org.apache.commons.imaging.palette.SimplePalette;
 import org.junit.jupiter.api.Test;
 
 /**
- * Unit tests for class {@link PngWriter}.
+ * Tests for class {@link PngWriter}.
  */
 public class PngWriterTest extends AbstractPngTest {
 

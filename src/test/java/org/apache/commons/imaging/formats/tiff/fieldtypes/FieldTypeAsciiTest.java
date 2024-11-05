@@ -26,7 +26,7 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.junit.jupiter.api.Test;
 
 /**
- * Unit tests for class {@link FieldTypeAscii}.
+ * Tests for class {@link FieldTypeAscii}.
  *
  * @see FieldTypeAscii
  *

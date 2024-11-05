@@ -22,7 +22,7 @@ import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Test;
 
 /**
- * Unit tests for class {@link PpmFileInfo}.
+ * Tests for class {@link PpmFileInfo}.
  *
  * @see PpmFileInfo
  *

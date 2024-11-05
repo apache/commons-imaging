@@ -25,7 +25,7 @@ import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Test;
 
 /**
- * Unit tests for class {@link FieldTypeRational}.
+ * Tests for class {@link FieldTypeRational}.
  *
  * @see FieldTypeRational
  *
