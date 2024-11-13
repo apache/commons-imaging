@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 /**
- * Unit tests for class {@link PngCrc}.
+ * Tests for class {@link PngCrc}.
  *
  * @date 13.07.2017
  * @see PngCrc

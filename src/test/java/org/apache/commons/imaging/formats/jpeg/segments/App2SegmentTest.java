@@ -25,7 +25,7 @@ import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Test;
 
 /**
- * Unit tests for class {@link App2Segment}.
+ * Tests for class {@link App2Segment}.
  *
  * @see App2Segment
  **/

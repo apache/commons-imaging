@@ -26,7 +26,7 @@ import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Test;
 
 /**
- * Unit tests for class {@link Dithering}.
+ * Tests for class {@link Dithering}.
  **/
 public class DitheringTest {
 
