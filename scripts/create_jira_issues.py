@@ -22,7 +22,7 @@ def load_tokens_from_file(file_path):
 
 
 # Load tokens from the text file
-tokens = load_tokens_from_file('/home/johcue/Documents/creds.txt')
+tokens = load_tokens_from_file('dir_file') #
 
 
 # SonarCloud setup
