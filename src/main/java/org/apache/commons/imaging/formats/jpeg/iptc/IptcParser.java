@@ -35,11 +35,7 @@ import java.util.logging.Logger;
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.ImagingParameters;
-import org.apache.commons.imaging.common.Allocator;
-import org.apache.commons.imaging.common.BinaryFileParser;
-import org.apache.commons.imaging.common.BinaryFunctions;
-import org.apache.commons.imaging.common.BinaryOutputStream;
-import org.apache.commons.imaging.common.ByteConversions;
+import org.apache.commons.imaging.common.*;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.internal.Debug;
@@ -381,7 +377,7 @@ public class IptcParser extends BinaryFileParser {
             }
         }
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (BinaryOutputStream bos = BinaryOutputStream.create(baos, getByteOrder())) {
+        try (BinaryOutputStream bos = BinaryOutputStreamFactory.create(baos, getByteOrder())) {
             if (!charset.equals(DEFAULT_CHARSET)) {
                 bos.write(IptcConstants.IPTC_RECORD_TAG_MARKER);
                 bos.write(IptcConstants.IPTC_ENVELOPE_RECORD_NUMBER);
@@ -436,7 +432,7 @@ public class IptcParser extends BinaryFileParser {
 
     public byte[] writePhotoshopApp13Segment(final PhotoshopApp13Data data) throws IOException, ImagingException {
         try (ByteArrayOutputStream os = new ByteArrayOutputStream();
-                BinaryOutputStream bos = BinaryOutputStream.bigEndian(os)) {
+                BinaryOutputStream bos = BinaryOutputStreamFactory.create(os, ByteOrder.BIG_ENDIAN)) {
 
             JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.writeTo(bos);
 
