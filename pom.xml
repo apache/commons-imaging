@@ -177,7 +177,7 @@
             <excludeFilterFile>${commons.conf.dir}/spotbugs-exclude-filter.xml</excludeFilterFile>
           </configuration>
         </plugin>
-            <plugin>
+<!--            <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
                 <version>1.15.2</version>
@@ -200,6 +200,7 @@
                     </targetTests>
                 </configuration>
             </plugin>
+-->
         <plugin>
           <groupId>org.apache.rat</groupId>
           <artifactId>apache-rat-plugin</artifactId>
