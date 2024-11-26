@@ -32,6 +32,10 @@ public class Allocator {
     private static final int DEFAULT = 1_073_741_824;
     private static final int LIMIT;
 
+    /** ArrayList-specific constants for memory calculation. */
+    private static final int ARRAYLIST_BASE_SIZE = 24; // Overhead size for ArrayList
+    private static final int ARRAYLIST_ELEMENT_SIZE = 4; // Shallow size of an element in ArrayList
+
     static {
         LIMIT = Integer.getInteger(CANONICAL_NAME, DEFAULT);
     }
@@ -76,7 +80,7 @@ public class Allocator {
      * @see #check(int)
      */
     public static <T> ArrayList<T> arrayList(final int request) {
-        check(24 + request * 4); // 4 bytes per element
+        check(ARRAYLIST_BASE_SIZE + request * ARRAYLIST_ELEMENT_SIZE); // Replaced magic numbers with constants
         return apply(request, ArrayList::new);
     }
 
