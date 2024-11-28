@@ -94,9 +94,17 @@ public class RationalNumber extends Number {
         boolean negative = value < 0;
         value = Math.abs(value);
 
+        // Determine initial bounds
         RationalNumber low = adjustBounds(value, false);
         RationalNumber high = adjustBounds(value, true);
 
+        // Find the best approximation
+        RationalNumber bestApproximation = findBestApproximation(value, low, high);
+
+        return negative ? bestApproximation.negate() : bestApproximation;
+    }
+
+    private static RationalNumber findBestApproximation(double value, RationalNumber low, RationalNumber high) {
         Option lowOption = Option.create(low, value);
         Option highOption = Option.create(high, value);
 
@@ -119,7 +127,7 @@ public class RationalNumber extends Number {
             }
         }
 
-        return negative ? bestOption.rationalNumber.negate() : bestOption.rationalNumber;
+        return bestOption.rationalNumber;
     }
 
     private static RationalNumber adjustBounds(double value, boolean increase) {
