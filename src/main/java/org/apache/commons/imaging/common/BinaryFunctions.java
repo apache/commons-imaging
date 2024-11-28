@@ -113,93 +113,39 @@ public final class BinaryFunctions {
         return arr;
     }
 
-    public static int read2Bytes(final String name, final InputStream is, final String exception, final ByteOrder byteOrder) throws IOException {
-        final int byte0 = is.read();
-        final int byte1 = is.read();
-        if ((byte0 | byte1) < 0) {
-            throw new IOException(exception);
-        }
+    public static int readBytesWithOrder(final String name, final InputStream is, final int numBytes, final String exception, final ByteOrder byteOrder) throws IOException {
+        int result = 0;
 
-        final int result;
-        if (byteOrder == ByteOrder.BIG_ENDIAN) {
-            result = byte0 << 8 | byte1;
-        } else {
-            result = byte1 << 8 | byte0;
+        for (int i = 0; i < numBytes; i++) {
+            final int byteValue = is.read();
+            if (byteValue < 0) {
+                throw new IOException(exception);
+            }
+
+            if (byteOrder == ByteOrder.BIG_ENDIAN) {
+                result |= byteValue << (8 * (numBytes - 1 - i));
+            } else {
+                result |= byteValue << (8 * i);
+            }
         }
 
         return result;
+    }
+
+    public static int read2Bytes(final String name, final InputStream is, final String exception, final ByteOrder byteOrder) throws IOException {
+        return readBytesWithOrder(name, is, 2, exception, byteOrder);
     }
 
     public static int read3Bytes(final String name, final InputStream is, final String exception, final ByteOrder byteOrder) throws IOException {
-        final int byte0 = is.read();
-        final int byte1 = is.read();
-        final int byte2 = is.read();
-        if ((byte0 | byte1 | byte2) < 0) {
-            throw new IOException(exception);
-        }
-
-        final int result;
-        if (byteOrder == ByteOrder.BIG_ENDIAN) {
-            result = byte0 << 16 | byte1 << 8 | byte2 << 0;
-        } else {
-            result = byte2 << 16 | byte1 << 8 | byte0 << 0;
-        }
-
-        return result;
+        return readBytesWithOrder(name, is, 3, exception, byteOrder);
     }
 
     public static int read4Bytes(final String name, final InputStream is, final String exception, final ByteOrder byteOrder) throws IOException {
-        final int byte0 = is.read();
-        final int byte1 = is.read();
-        final int byte2 = is.read();
-        final int byte3 = is.read();
-        if ((byte0 | byte1 | byte2 | byte3) < 0) {
-            throw new IOException(exception);
-        }
-
-        final int result;
-        if (byteOrder == ByteOrder.BIG_ENDIAN) {
-            result = byte0 << 24 | byte1 << 16 | byte2 << 8 | byte3 << 0;
-        } else {
-            result = byte3 << 24 | byte2 << 16 | byte1 << 8 | byte0 << 0;
-        }
-
-        return result;
+        return readBytesWithOrder(name, is, 4, exception, byteOrder);
     }
 
-    /**
-     * Read eight bytes from the specified input stream, adjust for byte order, and return a long integer.
-     *
-     * @param name      a descriptive identifier used for diagnostic purposes
-     * @param is        a valid input stream
-     * @param exception application-defined message to be used for constructing an exception if an error condition is triggered.
-     * @param byteOrder the order in which the InputStream marshals data
-     * @return a long integer interpreted from next 8 bytes in the InputStream
-     * @throws IOException in the event of a non-recoverable error, such as an attempt to read past the end of file.
-     */
     public static long read8Bytes(final String name, final InputStream is, final String exception, final ByteOrder byteOrder) throws IOException {
-
-        final long byte0 = is.read();
-        final long byte1 = is.read();
-        final long byte2 = is.read();
-        final long byte3 = is.read();
-        final long byte4 = is.read();
-        final long byte5 = is.read();
-        final long byte6 = is.read();
-        final long byte7 = is.read();
-
-        if ((byte0 | byte1 | byte2 | byte3 | byte4 | byte5 | byte6 | byte7) < 0) {
-            throw new IOException(exception);
-        }
-
-        final long result;
-        if (byteOrder == ByteOrder.BIG_ENDIAN) {
-            result = byte0 << 56 | byte1 << 48 | byte2 << 40 | byte3 << 32 | byte4 << 24 | byte5 << 16 | byte6 << 8 | byte7 << 0;
-        } else {
-            result = byte7 << 56 | byte6 << 48 | byte5 << 40 | byte4 << 32 | byte3 << 24 | byte2 << 16 | byte1 << 8 | byte0 << 0;
-        }
-
-        return result;
+        return readBytesWithOrder(name, is, 8, exception, byteOrder);
     }
 
     public static void readAndVerifyBytes(final InputStream is, final BinaryConstant expected, final String exception) throws ImagingException, IOException {
