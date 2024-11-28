@@ -14,11 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.imaging.common;
 
 import java.text.NumberFormat;
-
+/**
+ * Rational number, as used by the TIFF image format.
+ * <p>
+ * The TIFF format specifies two data types for rational numbers based on a pair of 32-bit integers. Rational is based on unsigned 32-bit integers and SRational
+ * is based on signed 32-bit integers. This treatment is problematic in Java because Java does not support unsigned types. To address this challenge, this class
+ * stores the numerator and divisor in long (64-bit) integers, applying masks as necessary for the unsigned type.
+ */
 public class RationalNumber extends Number {
 
     // Constants for Magic Numbers
