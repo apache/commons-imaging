@@ -36,6 +36,7 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryOutputStream;
+import org.apache.commons.imaging.common.BinaryOutputStreamFactory;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.formats.pcx.PcxImageParser;
 import org.apache.commons.imaging.formats.pcx.PcxImagingParameters;
@@ -172,7 +173,7 @@ public class DcxImageParser extends AbstractImageParser<PcxImagingParameters> {
     public void writeImage(final BufferedImage src, final OutputStream os, final PcxImagingParameters params) throws ImagingException, IOException {
         final int headerSize = 4 + 1024 * 4;
 
-        final BinaryOutputStream bos = BinaryOutputStream.create(os, ByteOrder.LITTLE_ENDIAN);
+        final BinaryOutputStream bos = BinaryOutputStreamFactory.create(os, ByteOrder.LITTLE_ENDIAN);
         bos.write4Bytes(DcxHeader.DCX_ID);
         // Some apps may need a full 1024 entry table
         bos.write4Bytes(headerSize);
