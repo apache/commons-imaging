@@ -757,7 +757,6 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
      * Indicates whether the directory definition specifies a float-point data format.
      *
      * @return {@code true} if the directory contains floating point data; otherwise, {@code false}
-     *
      * @throws ImagingException in the event of an invalid or malformed specification.
      */
     public boolean hasTiffFloatingPointRasterData() throws ImagingException {

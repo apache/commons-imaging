@@ -24,7 +24,6 @@
  * </p>
  *
  * @see <a href="https://developers.google.com/speed/webp/docs/riff_container">WebP Container Specification</a>
- *
  * @since 1.0-alpha4
  */
 package org.apache.commons.imaging.formats.webp;
