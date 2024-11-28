@@ -24,7 +24,6 @@ import java.util.Arrays;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryOutputStream;
-import org.apache.commons.imaging.common.BinaryOutputStreamFactory;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 
@@ -54,7 +53,7 @@ final class PcxWriter {
     public void writeImage(final BufferedImage src, final OutputStream os) throws IOException {
         final PaletteFactory paletteFactory = new PaletteFactory();
         final SimplePalette palette = paletteFactory.makeExactRgbPaletteSimple(src, 256);
-        final BinaryOutputStream bos = BinaryOutputStreamFactory.create(os, ByteOrder.LITTLE_ENDIAN);
+        final BinaryOutputStream bos = BinaryOutputStream.create(os, ByteOrder.LITTLE_ENDIAN);
         final int bitDepth;
         final int planes;
         if (palette == null || bitDepthWanted == 24 || bitDepthWanted == 32) {

@@ -377,7 +377,7 @@ public class IptcParser extends BinaryFileParser {
             }
         }
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (BinaryOutputStream bos = BinaryOutputStreamFactory.create(baos, getByteOrder())) {
+        try (BinaryOutputStream bos = BinaryOutputStream.create(baos, getByteOrder())) {
             if (!charset.equals(DEFAULT_CHARSET)) {
                 bos.write(IptcConstants.IPTC_RECORD_TAG_MARKER);
                 bos.write(IptcConstants.IPTC_ENVELOPE_RECORD_NUMBER);
@@ -432,7 +432,7 @@ public class IptcParser extends BinaryFileParser {
 
     public byte[] writePhotoshopApp13Segment(final PhotoshopApp13Data data) throws IOException, ImagingException {
         try (ByteArrayOutputStream os = new ByteArrayOutputStream();
-                BinaryOutputStream bos = BinaryOutputStreamFactory.create(os, ByteOrder.BIG_ENDIAN)) {
+                BinaryOutputStream bos = BinaryOutputStream.create(os, ByteOrder.BIG_ENDIAN)) {
 
             JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.writeTo(bos);
 

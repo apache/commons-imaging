@@ -19,11 +19,22 @@ package org.apache.commons.imaging.common;
 import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.ByteOrder;
 
 public abstract class BinaryOutputStream extends FilterOutputStream {
 
     public BinaryOutputStream(final OutputStream outputStream) {
         super(outputStream);
+    }
+
+    public static BinaryOutputStream create(final OutputStream outputStream, final ByteOrder byteOrder) {
+        if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
+            return new LittleEndianBinaryOutputStream(outputStream);
+        } else if (byteOrder == ByteOrder.BIG_ENDIAN) {
+            return new BigEndianBinaryOutputStream(outputStream);
+        } else {
+            throw new UnsupportedOperationException("Unsupported byte order: " + byteOrder);
+        }
     }
 
     public abstract void write2Bytes(int value) throws IOException;

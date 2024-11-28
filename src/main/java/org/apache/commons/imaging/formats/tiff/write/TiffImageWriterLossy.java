@@ -25,7 +25,6 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
-import org.apache.commons.imaging.common.BinaryOutputStreamFactory;
 
 public class TiffImageWriterLossy extends AbstractTiffImageWriter {
 
@@ -60,7 +59,7 @@ public class TiffImageWriterLossy extends AbstractTiffImageWriter {
 
         outputSummary.updateOffsets(byteOrder);
 
-        final BinaryOutputStream bos = BinaryOutputStreamFactory.create(os, byteOrder);
+        final BinaryOutputStream bos = BinaryOutputStream.create(os, byteOrder);
 
         // NB: resource is intentionally left open
         writeStep(bos, outputItems);
