@@ -42,7 +42,6 @@ public class PhotometricInterpreterPalette extends PhotometricInterpreter {
      * @param width           TODO
      * @param height          TODO
      * @param colorMap        TODO
-     *
      * @throws ImagingFormatException     if an index into the {@code colorMap} is out of bounds.
      * @throws AllocationRequestException Thrown when an allocation request exceeds the {@link Allocator} limit.
      */

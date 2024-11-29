@@ -126,7 +126,6 @@ public class JpegIptcRewriter extends JpegRewriter {
      *
      * @param src Image file.
      * @param os  OutputStream to write the image to.
-     *
      * @throws ImagingException if there are more than one Photoshop App13 segment, or if the Photoshop segment cannot be parsed
      * @throws IOException      if it fails to read from the origin byte source, or to write to the target byte source
      * @throws ImagingException if it fails to write the target image
@@ -145,7 +144,6 @@ public class JpegIptcRewriter extends JpegRewriter {
      * @param src           Image file.
      * @param os            OutputStream to write the image to.
      * @param removeSegment Remove the App13 segment.
-     *
      * @see java.io.File
      * @see java.io.OutputStream
      * @throws ImagingException if there are more than one Photoshop App13 segment, or if the Photoshop segment cannot be parsed

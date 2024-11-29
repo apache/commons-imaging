@@ -70,7 +70,6 @@ public class JpegXmpRewriter extends JpegRewriter {
      *
      * @param src Image file.
      * @param os  OutputStream to write the image to.
-     *
      * @see java.io.File
      * @see java.io.OutputStream
      * @throws ImagingException if it fails to read the JFIF segments

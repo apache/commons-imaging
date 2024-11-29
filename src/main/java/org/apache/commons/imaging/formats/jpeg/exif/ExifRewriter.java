@@ -217,7 +217,6 @@ public class ExifRewriter extends BinaryFileParser {
      *
      * @param src Image file.
      * @param os  OutputStream to write the image to.
-     *
      * @throws ImagingException if it fails to read the JFIF segments
      * @throws IOException      if it fails to read the image data
      * @throws ImagingException if it fails to write the updated data
