@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="JUnit Vintage" tests="16" skipped="0" failures="0" errors="0" time="0.036" hostname="johcue-VirtualBox" timestamp="2024-11-30T13:29:55">
+<properties>
+<property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
+<property name="file.encoding" value="UTF-8"/>
+<property name="file.separator" value="/"/>
+<property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
+<property name="java.awt.printerjob" value="sun.print.PSPrinterJob"/>
+<property name="java.class.path" value="/home/johcue/Documents/SwD/commons-imaging/randoop-tests/imaging/ColorTools:/home/johcue/Documents/SwD/commons-imaging/target/classes:/home/johcue/Documents/SwD/commons-imaging/randoop-all-4.3.3.jar:/home/johcue/.m2/repository/org/junit/platform/junit-platform-console-standalone/1.9.2/junit-platform-console-standalone-1.9.2.jar"/>
+<property name="java.class.version" value="55.0"/>
+<property name="java.home" value="/usr/lib/jvm/java-11-openjdk-amd64"/>
+<property name="java.io.tmpdir" value="/tmp"/>
+<property name="java.library.path" value="/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib"/>
+<property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+<property name="java.runtime.version" value="11.0.25+9-post-Ubuntu-1ubuntu124.04"/>
+<property name="java.specification.maintenance.version" value="3"/>
+<property name="java.specification.name" value="Java Platform API Specification"/>
+<property name="java.specification.vendor" value="Oracle Corporation"/>
+<property name="java.specification.version" value="11"/>
+<property name="java.vendor" value="Ubuntu"/>
+<property name="java.vendor.url" value="https://ubuntu.com/"/>
+<property name="java.vendor.url.bug" value="https://bugs.launchpad.net/ubuntu/+source/openjdk-lts"/>
+<property name="java.version" value="11.0.25"/>
+<property name="java.version.date" value="2024-10-15"/>
+<property name="java.vm.compressedOopsMode" value="Zero based"/>
+<property name="java.vm.info" value="mixed mode, sharing"/>
+<property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+<property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+<property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+<property name="java.vm.specification.version" value="11"/>
+<property name="java.vm.vendor" value="Ubuntu"/>
+<property name="java.vm.version" value="11.0.25+9-post-Ubuntu-1ubuntu124.04"/>
+<property name="jdk.debug" value="release"/>
+<property name="line.separator" value="
+"/>
+<property name="os.arch" value="amd64"/>
+<property name="os.name" value="Linux"/>
+<property name="os.version" value="6.8.0-49-generic"/>
+<property name="path.separator" value=":"/>
+<property name="sun.arch.data.model" value="64"/>
+<property name="sun.boot.library.path" value="/usr/lib/jvm/java-11-openjdk-amd64/lib"/>
+<property name="sun.cpu.endian" value="little"/>
+<property name="sun.cpu.isalist" value=""/>
+<property name="sun.desktop" value="gnome"/>
+<property name="sun.font.fontmanager" value="sun.awt.X11FontManager"/>
+<property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+<property name="sun.java.command" value="org.junit.platform.console.ConsoleLauncher --scan-classpath --reports-dir=/home/johcue/Documents/SwD/commons-imaging/randoop-tests/imaging/ColorTools/junit-reports"/>
+<property name="sun.java.launcher" value="SUN_STANDARD"/>
+<property name="sun.jnu.encoding" value="UTF-8"/>
+<property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+<property name="sun.os.patch.level" value="unknown"/>
+<property name="user.country" value="US"/>
+<property name="user.dir" value="/home/johcue/Documents/SwD/commons-imaging"/>
+<property name="user.home" value="/home/johcue"/>
+<property name="user.language" value="en"/>
+<property name="user.name" value="johcue"/>
+<property name="user.timezone" value="Europe/Rome"/>
+</properties>
+<testcase name="test07" classname="RegressionTest0" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:RegressionTest]/[test:RegressionTest0]/[test:test07(RegressionTest0)]
+display-name: test07
+]]></system-out>
+</testcase>
+<testcase name="test13" classname="RegressionTest0" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:RegressionTest]/[test:RegressionTest0]/[test:test13(RegressionTest0)]
+display-name: test13
+]]></system-out>
+</testcase>
+<testcase name="test15" classname="RegressionTest0" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:RegressionTest]/[test:RegressionTest0]/[test:test15(RegressionTest0)]
+display-name: test15
+]]></system-out>
+</testcase>
+<testcase name="test02" classname="RegressionTest0" time="0.006">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:RegressionTest]/[test:RegressionTest0]/[test:test02(RegressionTest0)]
+display-name: test02
+]]></system-out>
+</testcase>
+<testcase name="test05" classname="RegressionTest0" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:RegressionTest]/[test:RegressionTest0]/[test:test05(RegressionTest0)]
+display-name: test05
+]]></system-out>
+</testcase>
+<testcase name="test04" classname="RegressionTest0" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:RegressionTest]/[test:RegressionTest0]/[test:test04(RegressionTest0)]
+display-name: test04
+]]></system-out>
+</testcase>
+<testcase name="test16" classname="RegressionTest0" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:RegressionTest]/[test:RegressionTest0]/[test:test16(RegressionTest0)]
+display-name: test16
+]]></system-out>
+</testcase>
+<testcase name="test12" classname="RegressionTest0" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:RegressionTest]/[test:RegressionTest0]/[test:test12(RegressionTest0)]
+display-name: test12
+]]></system-out>
+</testcase>
+<testcase name="test10" classname="RegressionTest0" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:RegressionTest]/[test:RegressionTest0]/[test:test10(RegressionTest0)]
+display-name: test10
+]]></system-out>
+</testcase>
+<testcase name="test01" classname="RegressionTest0" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:RegressionTest]/[test:RegressionTest0]/[test:test01(RegressionTest0)]
+display-name: test01
+]]></system-out>
+</testcase>
+<testcase name="test08" classname="RegressionTest0" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:RegressionTest]/[test:RegressionTest0]/[test:test08(RegressionTest0)]
+display-name: test08
+]]></system-out>
+</testcase>
+<testcase name="test14" classname="RegressionTest0" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:RegressionTest]/[test:RegressionTest0]/[test:test14(RegressionTest0)]
+display-name: test14
+]]></system-out>
+</testcase>
+<testcase name="test06" classname="RegressionTest0" time="0.006">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:RegressionTest]/[test:RegressionTest0]/[test:test06(RegressionTest0)]
+display-name: test06
+]]></system-out>
+</testcase>
+<testcase name="test03" classname="RegressionTest0" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:RegressionTest]/[test:RegressionTest0]/[test:test03(RegressionTest0)]
+display-name: test03
+]]></system-out>
+</testcase>
+<testcase name="test11" classname="RegressionTest0" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:RegressionTest]/[test:RegressionTest0]/[test:test11(RegressionTest0)]
+display-name: test11
+]]></system-out>
+</testcase>
+<testcase name="test09" classname="RegressionTest0" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:RegressionTest]/[test:RegressionTest0]/[test:test09(RegressionTest0)]
+display-name: test09
+]]></system-out>
+</testcase>
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]
+display-name: JUnit Vintage
+]]></system-out>
+</testsuite>
