@@ -24,12 +24,9 @@ import java.io.IOException;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.common.bytesource.ByteSource;
-import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.ImagingException;
+import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffContents;
 import org.apache.commons.imaging.formats.tiff.TiffHeader;
@@ -65,10 +62,10 @@ public class ExifOrientationRewriter {
     private ByteSource fileSrc;
 
     public ExifOrientationRewriter(File imageFile) {
-        fileSrc = new ByteSourceFile(imageFile);
+        fileSrc = ByteSource.file(imageFile);
     }
     public ExifOrientationRewriter(byte[] byteArray) {
-        fileSrc = new ByteSourceArray(byteArray);
+        fileSrc = ByteSource.array(byteArray);
     }
     public ExifOrientationRewriter(ByteSource byteSource) {
         fileSrc = byteSource;
@@ -79,12 +76,11 @@ public class ExifOrientationRewriter {
      * Returns horizontal by default
      * @return Orientation enum
      * @throws IOException
-     * @throws ImageReadException
-     * @throws ImageWriteException
+     * @throws ImagingException
      */
-    public Orientation getExifOrientation() throws IOException, ImageReadException, ImageWriteException {
+    public Orientation getExifOrientation() throws IOException {
 
-        final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(this.fileSrc.getAll());
+        final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(this.fileSrc.);
 
         if (metadata == null) {
             return Orientation.HORIZONTAL;
@@ -122,20 +118,19 @@ public class ExifOrientationRewriter {
     /**
      * A method that sets a new value to the orientation field in the EXIF metadata of a JPEG file.
      * @param orientation the value as a enum of the direction to set as the new EXIF orientation
-     *
      */
-    public void setExifOrientation(Orientation orientation) throws ImageWriteException, IOException, ImageReadException {
+    public void setExifOrientation(Orientation orientation) throws IOException {
 
         JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(this.fileSrc.getAll());
 
         if (metadata == null) {
-            metadata = new JpegImageMetadata(null, new TiffImageMetadata(new TiffContents(new TiffHeader(ByteOrder.BIG_ENDIAN, 0, 0), new ArrayList<>(), new ArrayList<>())));
+            metadata = new JpegImageMetadata(null, new TiffImageMetadata(new TiffContents(new TiffHeader(ByteOrder.BIG_ENDIAN, 0, 0, false), new ArrayList<>(), new ArrayList<>())));
         }
 
         TiffImageMetadata exifMetadata = metadata.getExif();
 
         if (exifMetadata == null) {
-            exifMetadata = new TiffImageMetadata(new TiffContents(new TiffHeader(ByteOrder.BIG_ENDIAN, 0, 0), new ArrayList<>(), new ArrayList<>()));
+            exifMetadata = new TiffImageMetadata(new TiffContents(new TiffHeader(ByteOrder.BIG_ENDIAN, 0, 0, false), new ArrayList<>(), new ArrayList<>()));
         }
 
         final TiffOutputSet outputSet = exifMetadata.getOutputSet();
@@ -147,7 +142,7 @@ public class ExifOrientationRewriter {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         new ExifRewriter().updateExifMetadataLossy(this.fileSrc, baos, outputSet);
 
-        this.fileSrc = new ByteSourceArray(baos.toByteArray());
+        this.fileSrc = ByteSource.array(baos.toByteArray());
     }
 
     /**
@@ -166,7 +161,7 @@ public class ExifOrientationRewriter {
         throws IOException {
         final File tempFile =  new File(path);
         try (FileOutputStream outputStream = new FileOutputStream(tempFile)) {
-            outputStream.write(fileSrc.getAll());
+            outputStream.write(fileSrc.getByteArray(0, fileSrc.size()));
         }
     }
 
