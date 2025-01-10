@@ -39,9 +39,9 @@ then tweak the source formatting if necessary and regenerate, then commit
 The <action> type attribute can be add,update,fix,remove.
 -->
 
-<document xmlns="http://maven.apache.org/changes/1.0.0"
+<document xmlns="http://maven.apache.org/changes/2.0.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
+          xsi:schemaLocation="http://maven.apache.org/changes/2.0.0 https://maven.apache.org/xsd/changes-2.0.0.xsd">
   <properties>
     <title>Apache Commons Imaging Release Notes</title>
   </properties>
@@ -61,7 +61,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action dev="ggregory" type="add" due-to="Stefal, Gary Gregory">Add support of GPSHPositioningError in GpsTagConstants #451.</action> 
       <action dev="kinow"    type="add" due-to="Glavo">Support Extensions from PNG 1.2 Specification, Version 1.5.0 #269.</action>
       <!-- UPDATE -->
-      <action dev="ggregory" type="update" due-to="Dependabot, Gary Gregory">Bump org.apache.commons:commons-parent from 69 to 78 #400, #406, #428, #430, #436, #442, #445, #545.</action>
+      <action dev="ggregory" type="update" due-to="Dependabot, Gary Gregory">Bump org.apache.commons:commons-parent from 69 to 79 #400, #406, #428, #430, #436, #442, #445, #545.</action>
       <action dev="ggregory" type="update" due-to="Dependabot">Bump org.apache.commons:commons-lang3 from 3.14.0 to 3.17.0 #416, #423, #431.</action>
       <action dev="ggregory" type="update" due-to="Dependabot">Bump commons-io:commons-io from 2.16.1 to 2.18.0 #437, #464.</action>
       <action dev="ggregory" type="update" due-to="Dependabot">Bump org.codehaus.mojo:taglist-maven-plugin from 3.1.0 to 3.2.1 #453.</action>
