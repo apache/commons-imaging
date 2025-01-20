@@ -21,14 +21,14 @@ Changes
 *               Bump commons-io:commons-io from 2.16.0 to 2.16.1 #385. Thanks to Dependabot.
 
 
-Historical list of changes: https://commons.apache.org/proper/commons-imaging//changes-report.html
+Historical list of changes: https://commons.apache.org/proper/commons-imaging/changes.html
 
 For complete information on Apache Commons Imaging, including instructions on how to submit bug reports,
 patches, or suggestions for improvement, see the Apache Commons Imaging website:
 
 https://commons.apache.org/proper/commons-imaging/
 
-Download page: https://commons.apache.org/proper/commons-imaging//download_text.cgi
+Download page: https://commons.apache.org/proper/commons-imaging//download_imaging.cgi
 
 Have fun!
 -Apache Commons Team
@@ -92,14 +92,14 @@ Changes
 * IMAGING-345:  Make unit tests work in-memory instead of writing hundred of tmp files. Thanks to Matthieu Casanova.
 
 
-Historical list of changes: https://commons.apache.org/proper/commons-imaging//changes-report.html
+Historical list of changes: https://commons.apache.org/proper/commons-imaging/changes.html
 
 For complete information on Apache Commons Imaging, including instructions on how to submit bug reports,
 patches, or suggestions for improvement, see the Apache Commons Imaging website:
 
 https://commons.apache.org/proper/commons-imaging/
 
-Download page: https://commons.apache.org/proper/commons-imaging//download_text.cgi
+Download page: https://commons.apache.org/proper/commons-imaging//download_imaging.cgi
 
 Have fun!
 -Apache Commons Team
