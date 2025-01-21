@@ -55,6 +55,7 @@ limitations under the License.
     <module name="EmptyBlock">
       <property name="option" value="text" />
     </module>
+    <module name="EqualsHashCode" />
     <module name="IllegalImport" />
     <module name="ImportOrder">
       <property name="option" value="top" />
