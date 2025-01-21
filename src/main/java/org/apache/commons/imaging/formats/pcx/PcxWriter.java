@@ -118,7 +118,7 @@ final class PcxWriter {
         // TODO What's the right thing to do here for a null palette?
         final int paletteLen = palette != null ? palette.length() : 0;
         for (int i = 0; i < 16; i++) {
-            int rgb;
+            final int rgb;
             if (i < paletteLen) {
                 rgb = palette.getEntry(i);
             } else {
@@ -159,7 +159,7 @@ final class PcxWriter {
             // 256 color palette
             bos.write(12);
             for (int i = 0; i < 256; i++) {
-                int rgb;
+                final int rgb;
                 if (i < palette.length()) {
                     rgb = palette.getEntry(i);
                 } else {
@@ -188,7 +188,7 @@ final class PcxWriter {
             if (bitDepth == 1 && planes == 1) {
                 for (int x = 0; x < src.getWidth(); x++) {
                     final int rgb = 0xffffff & src.getRGB(x, y);
-                    int bit;
+                    final int bit;
                     if (rgb == 0x000000) {
                         bit = 0;
                     } else {

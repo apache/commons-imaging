@@ -283,7 +283,7 @@ public class TiffReader extends BinaryFileParser {
 
             final List<TiffField> fields = new ArrayList<>();
 
-            long entryCount;
+            final long entryCount;
             try {
                 if (standardTiff) {
                     entryCount = BinaryFunctions.read2Bytes("DirectoryEntryCount", is, "Not a Valid TIFF File", getByteOrder());
@@ -383,8 +383,8 @@ public class TiffReader extends BinaryFileParser {
                     final TagInfoDirectory offsetField = offsetFields[i];
                     final TiffField field = directory.findField(offsetField);
                     if (field != null) {
-                        long subDirectoryOffset;
-                        int subDirectoryType;
+                        final long subDirectoryOffset;
+                        final int subDirectoryType;
                         boolean subDirectoryRead = false;
                         try {
                             subDirectoryOffset = directory.getFieldValue(offsetField);

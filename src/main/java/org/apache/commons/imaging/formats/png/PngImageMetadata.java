@@ -34,11 +34,11 @@ public class PngImageMetadata implements ImageMetadata {
     private final ImageMetadata textualInformation;
     private final TiffImageMetadata exif;
 
-    public PngImageMetadata(ImageMetadata textualInformation) {
+    public PngImageMetadata(final ImageMetadata textualInformation) {
         this(textualInformation, null);
     }
 
-    public PngImageMetadata(ImageMetadata textualInformation, TiffImageMetadata exif) {
+    public PngImageMetadata(final ImageMetadata textualInformation, final TiffImageMetadata exif) {
         this.textualInformation = Objects.requireNonNull(textualInformation);
         this.exif = exif;
     }
@@ -86,7 +86,7 @@ public class PngImageMetadata implements ImageMetadata {
             return textualInformation.getItems();
         }
 
-        ArrayList<ImageMetadataItem> result = new ArrayList<>();
+        final ArrayList<ImageMetadataItem> result = new ArrayList<>();
         result.addAll(textualInformation.getItems());
         result.addAll(exif.getItems());
         return result;

@@ -349,7 +349,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
         double unitsPerInch = -1.0;
         // int JFIF_major_version;
         // int JFIF_minor_version;
-        String formatDetails;
+        final String formatDetails;
 
         if (jfifSegment != null) {
             xDensity = jfifSegment.xDensity;

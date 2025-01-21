@@ -482,7 +482,7 @@ public class IcoImageParser extends AbstractImageParser<IcoImagingParameters> {
                 }
             }
         }
-        BufferedImage resultImage;
+        final BufferedImage resultImage;
         if (allAlphasZero) {
             resultImage = new BufferedImage(bmpImage.getWidth(), bmpImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
             for (int y = 0; y < resultImage.getHeight(); y++) {

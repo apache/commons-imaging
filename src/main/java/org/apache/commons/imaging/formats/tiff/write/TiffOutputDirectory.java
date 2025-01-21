@@ -478,13 +478,13 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         removeFieldIfPresent(TiffTagConstants.TIFF_TAG_TILE_OFFSETS);
         removeFieldIfPresent(TiffTagConstants.TIFF_TAG_TILE_BYTE_COUNTS);
 
-        TiffOutputField imageDataOffsetField;
+        final TiffOutputField imageDataOffsetField;
         ImageDataOffsets imageDataInfo = null;
         if (null != abstractTiffImageData) {
             final boolean stripsNotTiles = abstractTiffImageData.stripsNotTiles();
 
-            TagInfo offsetTag;
-            TagInfo byteCountsTag;
+            final TagInfo offsetTag;
+            final TagInfo byteCountsTag;
             if (stripsNotTiles) {
                 offsetTag = TiffTagConstants.TIFF_TAG_STRIP_OFFSETS;
                 byteCountsTag = TiffTagConstants.TIFF_TAG_STRIP_BYTE_COUNTS;

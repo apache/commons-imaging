@@ -303,7 +303,7 @@ public class PcxImageParser extends AbstractImageParser<PcxImagingParameters> {
             } else {
                 palette = pcxHeader.colormap;
             }
-            WritableRaster raster;
+            final WritableRaster raster;
             if (pcxHeader.bitsPerPixel == 8) {
                 raster = Raster.createInterleavedRaster(dataBuffer, xSize, ySize, bytesPerImageRow, 1, new int[] { 0 }, null);
             } else {

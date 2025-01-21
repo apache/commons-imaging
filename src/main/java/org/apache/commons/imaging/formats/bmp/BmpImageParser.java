@@ -466,7 +466,7 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
         // A palette is always valid, even for images that don't need it
         // (like 32 bpp), it specifies the "optimal color palette" for
         // when the image is displayed on a <= 256 color graphics card.
-        int paletteLength;
+        final int paletteLength;
         int rleSamplesPerByte = 0;
         boolean rle = false;
 
@@ -583,7 +583,7 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
             debugNumber("imageDataSize", imageDataSize, 4);
         }
 
-        byte[] imageData;
+        final byte[] imageData;
         if (rle) {
             imageData = getRleBytes(is, rleSamplesPerByte);
         } else {
@@ -594,8 +594,7 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
             debugNumber("ImageData.length", imageData.length, 4);
         }
 
-        AbstractPixelParser abstractPixelParser;
-
+        final AbstractPixelParser abstractPixelParser;
         switch (bhi.compression) {
         case BI_RLE4:
         case BI_RLE8:
@@ -623,7 +622,7 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
 
         final SimplePalette palette = new PaletteFactory().makeExactRgbPaletteSimple(src, 256);
 
-        BmpWriter writer;
+        final BmpWriter writer;
         if (palette == null) {
             writer = new BmpWriterRgb();
         } else {

@@ -216,9 +216,9 @@ public class WebPImageParser extends AbstractImageParser<WebPImagingParameters> 
     @Override
     public ImageInfo getImageInfo(final ByteSource byteSource, final WebPImagingParameters params) throws ImagingException, IOException {
         try (ChunksReader reader = new ChunksReader(byteSource, WebPChunkType.VP8, WebPChunkType.VP8L, WebPChunkType.VP8X, WebPChunkType.ANMF)) {
-            String formatDetails;
-            int width;
-            int height;
+            final String formatDetails;
+            final int width;
+            final int height;
             int numberOfImages;
             boolean hasAlpha = false;
             ImageInfo.ColorType colorType = ImageInfo.ColorType.RGB;

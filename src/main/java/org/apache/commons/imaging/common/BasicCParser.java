@@ -51,7 +51,7 @@ public class BasicCParser {
         final char hex1 = string.charAt(i + 1);
         final char hex2 = string.charAt(i + 2);
         i += 2;
-        int constant;
+        final int constant;
         try {
             constant = Integer.parseInt(hex1 + Character.toString(hex2), 16);
         } catch (final NumberFormatException nfe) {

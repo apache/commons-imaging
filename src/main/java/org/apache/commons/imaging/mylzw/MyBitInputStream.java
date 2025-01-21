@@ -73,7 +73,7 @@ public class MyBitInputStream extends FilterInputStream {
         }
         final int sampleMask = (1 << sampleBits) - 1;
 
-        int sample;
+        final int sample;
 
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
             sample = sampleMask & bitCache >> bitsInCache - sampleBits;

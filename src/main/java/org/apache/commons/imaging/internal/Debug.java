@@ -186,7 +186,7 @@ public final class Debug {
             for (int i = 0; i < max && i < v.length; i++) {
                 final int b = 0xff & v[i];
 
-                char c;
+                final char c;
                 if (b == 0 || b == 10 || b == 11 || b == 13) {
                     c = ' ';
                 } else {

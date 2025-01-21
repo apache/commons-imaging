@@ -142,7 +142,7 @@ public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> im
         final boolean hasAlpha = false;
         final BufferedImage result = getBufferedImageFactory(params).getColorBufferedImage(width, height, hasAlpha);
 
-        DataParser dataParser;
+        final DataParser dataParser;
         switch (imageContents.header.mode) {
         case 0: // bitmap
             dataParser = new DataParserBitmap();
@@ -183,7 +183,7 @@ public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> im
         default:
             throw new ImagingException("Unknown Mode: " + imageContents.header.mode);
         }
-        DataReader fDataReader;
+        final DataReader fDataReader;
         switch (imageContents.compression) {
         case 0:
             fDataReader = new UncompressedDataReader(dataParser);
@@ -351,7 +351,7 @@ public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> im
         final boolean usesPalette = header.mode == COLOR_MODE_INDEXED;
         final ImageInfo.ColorType colorType = ImageInfo.ColorType.UNKNOWN;
 
-        ImageInfo.CompressionAlgorithm compressionAlgorithm;
+        final ImageInfo.CompressionAlgorithm compressionAlgorithm;
         switch (imageContents.compression) {
         case 0:
             compressionAlgorithm = ImageInfo.CompressionAlgorithm.NONE;

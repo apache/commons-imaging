@@ -316,7 +316,7 @@ public class PngWriter {
         boolean isGrayscale = paletteFactory.isGrayscale(src);
         Debug.debug("isGrayscale: " + isGrayscale);
 
-        PngColorType pngColorType;
+        final PngColorType pngColorType;
         {
             final boolean forceIndexedColor = params.isForceIndexedColor();
             final boolean forceTrueColor = params.isForceTrueColor();
@@ -338,7 +338,7 @@ public class PngWriter {
         final byte bitDepth = getBitDepth(pngColorType, params);
         Debug.debug("bitDepth: " + bitDepth);
 
-        int sampleDepth;
+        final int sampleDepth;
         if (pngColorType == PngColorType.INDEXED_COLOR) {
             sampleDepth = 8;
         } else {
@@ -431,7 +431,7 @@ public class PngWriter {
             // spec. We may broaden the use of predictors in future versions.
             final boolean usePredictor = params.isPredictorEnabled() && !isGrayscale && palette == null;
 
-            byte[] uncompressed;
+            final byte[] uncompressed;
             if (!usePredictor) {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 

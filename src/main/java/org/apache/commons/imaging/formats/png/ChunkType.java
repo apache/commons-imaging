@@ -189,8 +189,8 @@ public enum ChunkType {
 
     private static final ChunkType[] types = ChunkType.values();
 
-    static ChunkType findType(int chunkType) {
-        for (ChunkType type : types) {
+    static ChunkType findType(final int chunkType) {
+        for (final ChunkType type : types) {
             if (type.value == chunkType) {
                 return type;
             }
@@ -198,8 +198,8 @@ public enum ChunkType {
         return null;
     }
 
-    static PngChunk makeChunk(int length, int chunkType, int crc, byte[] bytes) throws IOException {
-        ChunkType type = findType(chunkType);
+    static PngChunk makeChunk(final int length, final int chunkType, final int crc, final byte[] bytes) throws IOException {
+        final ChunkType type = findType(chunkType);
         return type != null && type.constructor != null
                 ? type.constructor.make(length, chunkType, crc, bytes)
                 : new PngChunk(length, chunkType, crc, bytes);
@@ -214,15 +214,15 @@ public enum ChunkType {
         this(null, null);
     }
 
-    ChunkType(Extension extension) {
+    ChunkType(final Extension extension) {
         this(extension, null);
     }
 
-    ChunkType(ChunkConstructor constructor) {
+    ChunkType(final ChunkConstructor constructor) {
         this(null, constructor);
     }
 
-    ChunkType(Extension extension, ChunkConstructor constructor) {
+    ChunkType(final Extension extension, final ChunkConstructor constructor) {
         final char[] chars = name().toCharArray();
         this.array = name().getBytes(StandardCharsets.UTF_8);
         this.value = BinaryFunctions.charsToQuad(chars[0], chars[1], chars[2], chars[3]);

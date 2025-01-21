@@ -78,15 +78,15 @@ public class IptcParserTest {
      */
     @ParameterizedTest
     @CsvSource({ "äöü ÄÖÜß, true", "äöü ÄÖÜß €, true", "äöü ÄÖÜß, false", "äöü ÄÖÜß €, false" })
-    public void testEncoding(String value, boolean forceUtf8) throws IOException {
+    public void testEncoding(final String value, final boolean forceUtf8) throws IOException {
 
-        IptcParser parser = new IptcParser();
-        List<IptcRecord> records = new ArrayList<>();
+        final IptcParser parser = new IptcParser();
+        final List<IptcRecord> records = new ArrayList<>();
         records.add(new IptcRecord(IptcTypes.CAPTION_ABSTRACT, value));
         final Charset charset;
 
         //
-        byte[] actualBytes = parser.writeIptcBlock(records, forceUtf8);
+        final byte[] actualBytes = parser.writeIptcBlock(records, forceUtf8);
 
         // Write prefix including (optional)
         final byte[] prefix;
@@ -122,14 +122,14 @@ public class IptcParserTest {
             bos.write(IptcConstants.IPTC_RECORD_TAG_MARKER);
             bos.write(IptcConstants.IPTC_APPLICATION_2_RECORD_NUMBER);
             bos.write(IptcTypes.CAPTION_ABSTRACT.type);
-            byte[] valueBytes = value.getBytes(charset);
+            final byte[] valueBytes = value.getBytes(charset);
             bos.write2Bytes(valueBytes.length);
             bos.write(valueBytes);
             applicationRecord = applicationRecordStream.toByteArray();
         }
 
-        byte[] actualPrefix = ArrayUtils.subarray(actualBytes, 0, prefix.length);
-        byte[] actualApplicationRecord = ArrayUtils.subarray(actualBytes, prefix.length, prefix.length + applicationRecord.length);
+        final byte[] actualPrefix = ArrayUtils.subarray(actualBytes, 0, prefix.length);
+        final byte[] actualApplicationRecord = ArrayUtils.subarray(actualBytes, prefix.length, prefix.length + applicationRecord.length);
 
         assertArrayEquals(prefix, actualPrefix);
         assertArrayEquals(applicationRecord, actualApplicationRecord);

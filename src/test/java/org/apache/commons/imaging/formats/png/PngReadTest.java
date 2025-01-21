@@ -140,12 +140,12 @@ public class PngReadTest extends AbstractPngTest {
 
         final PngImageMetadata pngMetadata = (PngImageMetadata) parser.getMetadata(new File(file));
 
-        TiffImageMetadata exifMetadata = pngMetadata.getExif();
+        final TiffImageMetadata exifMetadata = pngMetadata.getExif();
         assertEquals("Glavo",
                 exifMetadata.findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT)
                         .getFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION));
 
-        PngImageMetadata metadata = (PngImageMetadata) parser.getMetadata(new File(file));
+        final PngImageMetadata metadata = (PngImageMetadata) parser.getMetadata(new File(file));
         assertTrue(metadata.getTextualInformation().getItems().isEmpty());
         assertEquals("Glavo",
                 metadata.getExif()

@@ -112,7 +112,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
         final JpegInputStream[] streams = Allocator.array(intervalCount, JpegInputStream[]::new, JpegInputStream.SHALLOW_SIZE);
         for (int i = 0; i < intervalCount; i++) {
             final int from = intervalStarts.get(i);
-            int to;
+            final int to;
             if (i < intervalCount - 1) {
                 // because each restart marker needs two bytes the end of
                 // this interval is two bytes before the next interval starts
@@ -271,7 +271,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                         for (int xx = 0; xx < 8; xx++) {
                             float sample = block[srcNext++];
                             sample += shift;
-                            int result;
+                            final int result;
                             if (sample < 0) {
                                 result = 0;
                             } else if (sample > max) {
@@ -373,7 +373,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
         } else if (marker == JpegConstants.DHT_MARKER) {
             final DhtSegment dhtSegment = new DhtSegment(marker, segmentData);
             for (final HuffmanTable table : dhtSegment.huffmanTables) {
-                DhtSegment.HuffmanTable[] tables;
+                final DhtSegment.HuffmanTable[] tables;
                 if (table.tableClass == 0) {
                     tables = huffmanDCTables;
                 } else if (table.tableClass == 1) {
@@ -423,8 +423,8 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             final Block[] scaledMCU = Allocator.array(mcu.length, Block[]::new, Block.SHALLOW_SIZE);
             Arrays.setAll(scaledMCU, i -> new Block(hSize, vSize));
             final int[] preds = Allocator.intArray(sofnSegment.numberOfComponents);
-            ColorModel colorModel;
-            WritableRaster raster;
+            final ColorModel colorModel;
+            final WritableRaster raster;
             Allocator.check(Integer.BYTES * sofnSegment.width * sofnSegment.height);
             switch (sofnSegment.numberOfComponents) {
             case 4:

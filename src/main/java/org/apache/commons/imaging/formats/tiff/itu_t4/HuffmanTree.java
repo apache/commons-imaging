@@ -37,7 +37,7 @@ final class HuffmanTree<T> {
         int position = 0;
         Node<T> node = nodes.get(0);
         while (node.value == null) {
-            int nextBit;
+            final int nextBit;
             try {
                 nextBit = bitStream.readBits(1);
             } catch (final IOException ioEx) {

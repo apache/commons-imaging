@@ -276,7 +276,7 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
             final ByteArrayInputStream bais = new ByteArrayInputStream(compressed);
             final InflaterInputStream iis = new InflaterInputStream(bais);
 
-            AbstractScanExpediter abstractScanExpediter;
+            final AbstractScanExpediter abstractScanExpediter;
 
             switch (pngChunkIHDR.getInterlaceMethod()) {
             case NONE:
@@ -468,7 +468,7 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
             usesPalette = true;
         }
 
-        ImageInfo.ColorType colorType;
+        final ImageInfo.ColorType colorType;
         switch (pngChunkIHDR.getPngColorType()) {
         case GREYSCALE:
         case GREYSCALE_WITH_ALPHA:

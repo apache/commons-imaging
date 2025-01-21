@@ -237,8 +237,8 @@ public class ImageBuilder {
     }
 
     private BufferedImage makeBufferedImage(final int[] argb, final int w, final int h, final boolean useAlpha) {
-        ColorModel colorModel;
-        WritableRaster raster;
+        final ColorModel colorModel;
+        final WritableRaster raster;
         final DataBufferInt buffer = new DataBufferInt(argb, w * h);
         if (useAlpha) {
             colorModel = new DirectColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB), 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000,

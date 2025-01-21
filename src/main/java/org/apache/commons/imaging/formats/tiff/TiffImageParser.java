@@ -531,7 +531,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
             compressionFieldValue = TiffConstants.COMPRESSION_UNCOMPRESSED_1;
         }
         final int compression = 0xffff & compressionFieldValue;
-        ImageInfo.CompressionAlgorithm compressionAlgorithm;
+        final ImageInfo.CompressionAlgorithm compressionAlgorithm;
 
         switch (compression) {
         case TiffConstants.COMPRESSION_UNCOMPRESSED_1:

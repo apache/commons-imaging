@@ -288,7 +288,7 @@ public class ExifRewriter extends BinaryFileParser {
         final JFIFPieces jfifPieces = analyzeJfif(byteSource);
         final List<JFIFPiece> pieces = jfifPieces.pieces;
 
-        AbstractTiffImageWriter writer;
+        final AbstractTiffImageWriter writer;
         // Just use first APP1 segment for now.
         // Multiple APP1 segments are rare and poorly supported.
         if (!jfifPieces.exifPieces.isEmpty()) {

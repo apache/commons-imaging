@@ -347,10 +347,10 @@ public final class DataReaderStrips extends ImageDataReader {
     }
 
     private TiffRasterData readRasterDataFloat(final Rectangle subImage) throws ImagingException, IOException {
-        int xRaster;
-        int yRaster;
-        int rasterWidth;
-        int rasterHeight;
+        final int xRaster;
+        final int yRaster;
+        final int rasterWidth;
+        final int rasterHeight;
         if (subImage != null) {
             xRaster = subImage.x;
             yRaster = subImage.y;
@@ -392,10 +392,10 @@ public final class DataReaderStrips extends ImageDataReader {
     }
 
     private TiffRasterData readRasterDataInt(final Rectangle subImage) throws ImagingException, IOException {
-        int xRaster;
-        int yRaster;
-        int rasterWidth;
-        int rasterHeight;
+        final int xRaster;
+        final int yRaster;
+        final int rasterWidth;
+        final int rasterHeight;
         if (subImage != null) {
             xRaster = subImage.x;
             yRaster = subImage.y;

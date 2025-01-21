@@ -258,7 +258,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
 
         final ImageBuilder imageBuilder = new ImageBuilder(width, height, hasAlpha);
 
-        int[] colorTable;
+        final int[] colorTable;
         if (id.localColorTable != null) {
             colorTable = getColorTable(id.localColorTable);
         } else if (globalColorTable != null) {
@@ -280,7 +280,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
         final int rowsInPass4 = height / 2;
 
         for (int row = 0; row < height; row++) {
-            int y;
+            final int y;
             if (id.interlaceFlag) {
                 int theRow = row;
                 if (theRow < rowsInPass1) {
@@ -1017,7 +1017,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
                     for (int x = 0; x < width; x++) {
                         final int argb = src.getRGB(x, y);
                         final int rgb = 0xffffff & argb;
-                        int index;
+                        final int index;
 
                         if (hasAlpha) {
                             final int alpha = 0xff & argb >> 24;

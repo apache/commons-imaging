@@ -63,7 +63,7 @@ public class IcnsImageParser extends AbstractImageParser<IcnsImagingParameters> 
         public void dump(final PrintWriter pw) {
             pw.println("IcnsElement");
             final IcnsType icnsType = IcnsType.findAnyType(type);
-            String typeDescription;
+            final String typeDescription;
             if (icnsType == null) {
                 typeDescription = "";
             } else {
@@ -224,7 +224,7 @@ public class IcnsImageParser extends AbstractImageParser<IcnsImagingParameters> 
 
     @Override
     public void writeImage(final BufferedImage src, final OutputStream os, final IcnsImagingParameters params) throws ImagingException, IOException {
-        IcnsType imageType;
+        final IcnsType imageType;
         if (src.getWidth() == 16 && src.getHeight() == 16) {
             imageType = IcnsType.ICNS_16x16_32BIT_IMAGE;
         } else if (src.getWidth() == 32 && src.getHeight() == 32) {

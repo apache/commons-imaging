@@ -406,9 +406,9 @@ public abstract class AbstractTiffImageWriter {
             }
         }
 
-        int samplesPerPixel;
-        int bitsPerSample;
-        int photometricInterpretation;
+        final int samplesPerPixel;
+        final int bitsPerSample;
+        final int photometricInterpretation;
         if (compression == TiffConstants.COMPRESSION_CCITT_1D || compression == TiffConstants.COMPRESSION_CCITT_GROUP_3
                 || compression == TiffConstants.COMPRESSION_CCITT_GROUP_4) {
             samplesPerPixel = 1;

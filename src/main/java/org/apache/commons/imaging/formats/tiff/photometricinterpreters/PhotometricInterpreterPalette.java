@@ -51,7 +51,7 @@ public class PhotometricInterpreterPalette extends PhotometricInterpreter {
 
         final int bitsPerPixel = getBitsPerSample(0);
         final int colorMapScale = 1 << bitsPerPixel;
-        int colorMapScaleX2;
+        final int colorMapScaleX2;
         try {
             colorMapScaleX2 = Math.multiplyExact(2, colorMapScale);
         } catch (final ArithmeticException e) {
@@ -59,7 +59,7 @@ public class PhotometricInterpreterPalette extends PhotometricInterpreter {
         }
         // Validate colorMap[i], colorMap[i + colorMapScale], and colorMap[i + colorMapScaleX2] where max(i) is
         // colorMapScale - 1.
-        int maxI;
+        final int maxI;
         try {
             maxI = Math.addExact(colorMapScaleX2, colorMapScale - 1);
         } catch (final ArithmeticException e) {

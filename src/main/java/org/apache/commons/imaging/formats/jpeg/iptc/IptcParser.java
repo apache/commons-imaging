@@ -145,7 +145,7 @@ public class IptcParser extends BinaryFileParser {
                 if (blockNameLength > 0) {
                     Debug.debug("blockNameLength: " + blockNameLength + " (0x" + Integer.toHexString(blockNameLength) + ")");
                 }
-                byte[] blockNameBytes;
+                final byte[] blockNameBytes;
                 if (blockNameLength == 0) {
                     BinaryFunctions.readByte("Block name bytes", bis, "Image Resource Block has invalid name");
                     blockNameBytes = ImagingConstants.EMPTY_BYTE_ARRAY;
@@ -371,11 +371,11 @@ public class IptcParser extends BinaryFileParser {
         return parsePhotoshopSegment(bytes, strict);
     }
 
-    public byte[] writeIptcBlock(List<IptcRecord> elements) throws ImagingException, IOException {
+    public byte[] writeIptcBlock(final List<IptcRecord> elements) throws ImagingException, IOException {
         return writeIptcBlock(elements, false);
     }
 
-    public byte[] writeIptcBlock(List<IptcRecord> elements, boolean forceUtf8Encoding) throws ImagingException, IOException {
+    public byte[] writeIptcBlock(List<IptcRecord> elements, final boolean forceUtf8Encoding) throws ImagingException, IOException {
         Charset charset;
         if (forceUtf8Encoding) {
             // Using UTF-8 is forced

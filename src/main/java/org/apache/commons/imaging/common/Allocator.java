@@ -145,7 +145,7 @@ public class Allocator {
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      */
     public static int check(final int request, final int elementSize) {
-        int multiplyExact;
+        final int multiplyExact;
         try {
             multiplyExact = Math.multiplyExact(request, elementSize);
         } catch (final ArithmeticException e) {

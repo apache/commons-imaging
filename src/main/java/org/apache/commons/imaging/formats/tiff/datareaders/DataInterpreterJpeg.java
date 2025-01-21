@@ -70,7 +70,7 @@ final class DataInterpreterJpeg {
             return;
         }
 
-        byte[] concat;
+        final byte[] concat;
 
         final byte[] field = directory.getFieldValue(EXIF_TAG_JPEGTABLES, false);
 
