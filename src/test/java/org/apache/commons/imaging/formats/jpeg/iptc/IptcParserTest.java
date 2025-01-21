@@ -69,7 +69,7 @@ public class IptcParserTest {
 
     /**
      * Tests the correct encoding when writing IptcRecords with method {@link IptcParser#writeIptcBlock(List, boolean)}. <br />
-     * The encoding has to be UTF-8, if either the Parameter {@code forceUtf8Encoding} is set to true or if a value from the passed {@link IptcRecord} instances
+     * The encoding has to be UTF-8, if either the parameter {@code forceUtf8Encoding} is set to true or if a value from the passed {@link IptcRecord} instances
      * cannot be represented in charset ISO-8859-1.
      *
      * @param value     the value to test
