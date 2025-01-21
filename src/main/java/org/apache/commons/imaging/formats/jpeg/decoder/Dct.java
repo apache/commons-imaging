@@ -112,10 +112,29 @@ final class Dct {
     }
 
     public static void forwardDct8x8(final float[] matrix) {
-        float a00, a10, a20, a30, a40, a50, a60, a70;
-        float a01, a11, a21, a31, neg_a41, a51, a61;
-        float a22, a23, mul5, a43, a53, a63;
-        float a54, a74;
+        float a00;
+        float a10;
+        float a20;
+        float a30;
+        float a40;
+        float a50;
+        float a60;
+        float a70;
+        float a01;
+        float a11;
+        float a21;
+        float a31;
+        float neg_a41;
+        float a51;
+        float a61;
+        float a22;
+        float a23;
+        float mul5;
+        float a43;
+        float a53;
+        float a63;
+        float a54;
+        float a74;
 
         for (int i = 0; i < 8; i++) {
             a00 = matrix[8 * i] + matrix[8 * i + 7];
@@ -240,10 +259,30 @@ final class Dct {
     }
 
     public static void inverseDct8x8(final float[] matrix) {
-        float a2, a3, a4, tmp1, tmp2, a5, a6, a7;
-        float tmp4, neg_b4, b6, b2, b5;
-        float tmp3, n0, n1, n2, n3, neg_n5;
-        float m3, m4, m5, m6, neg_m7;
+        float a2;
+        float a3;
+        float a4;
+        float tmp1;
+        float tmp2;
+        float a5;
+        float a6;
+        float a7;
+        float tmp4;
+        float neg_b4;
+        float b6;
+        float b2;
+        float b5;
+        float tmp3;
+        float n0;
+        float n1;
+        float n2;
+        float n3;
+        float neg_n5;
+        float m3;
+        float m4;
+        float m5;
+        float m6;
+        float neg_m7;
 
         for (int i = 0; i < 8; i++) {
             a2 = matrix[8 * i + 2] - matrix[8 * i + 6];

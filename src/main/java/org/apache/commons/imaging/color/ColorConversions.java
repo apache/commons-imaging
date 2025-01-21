@@ -35,7 +35,9 @@ public final class ColorConversions {
     private static final double XYZ_t0 = 0.008856;
 
     public static int convertCieLabToArgbTest(final int cieL, final int cieA, final int cieB) {
-        final double x, y, z;
+        final double x;
+        final double y;
+        final double z;
         {
 
             double varY = (cieL * 100.0 / 255.0 + 16.0) / 116.0;
@@ -52,7 +54,9 @@ public final class ColorConversions {
 
         }
 
-        final double r, g, b;
+        final double r;
+        final double g;
+        final double b;
         {
             final double varX = x / 100; // X = From 0 to REF_X
             final double varY = y / 100; // Y = From 0 to REF_Y
@@ -368,8 +372,9 @@ public final class ColorConversions {
     }
 
     public static int convertHslToRgb(final double h, final double s, final double l) {
-        final double r, g, b;
-
+        final double r;
+        final double g;
+        final double b;
         if (s == 0) {
             // HSL values = 0 ÷ 1
             r = l * 255; // RGB results = 0 ÷ 255
@@ -399,8 +404,9 @@ public final class ColorConversions {
     }
 
     public static int convertHsvToRgb(final double h, final double s, final double v) {
-        final double r, g, b;
-
+        final double r;
+        final double g;
+        final double b;
         if (s == 0) {
             // HSV values = 0 ÷ 1
             r = v * 255;
@@ -416,7 +422,9 @@ public final class ColorConversions {
             final double var2 = v * (1 - s * (varH - varI));
             final double var3 = v * (1 - s * (1 - (varH - varI)));
 
-            final double varR, varG, varB;
+            final double varR;
+            final double varG;
+            final double varB;
 
             if (varI == 0) {
                 varR = v;
