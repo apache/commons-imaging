@@ -372,12 +372,24 @@ public class IptcParser extends BinaryFileParser {
     }
 
     public byte[] writeIptcBlock(List<IptcRecord> elements) throws ImagingException, IOException {
-        Charset charset = DEFAULT_CHARSET;
-        for (final IptcRecord element : elements) {
-            final byte[] recordData = element.getValue().getBytes(charset);
-            if (!new String(recordData, charset).equals(element.getValue())) {
-                charset = StandardCharsets.UTF_8;
-                break;
+        return writeIptcBlock(elements, false);
+    }
+
+    public byte[] writeIptcBlock(List<IptcRecord> elements, boolean forceUtf8Encoding) throws ImagingException, IOException {
+        Charset charset;
+        if (forceUtf8Encoding) {
+            // Using UTF-8 is forced
+            charset = StandardCharsets.UTF_8;
+        } else {
+            // Check if all values can be converted to bytes with DEFAULT_CHARSET,
+            // otherwise use UTF-8
+            charset = DEFAULT_CHARSET;
+            for (final IptcRecord element : elements) {
+                final byte[] recordData = element.getValue().getBytes(charset);
+                if (!new String(recordData, charset).equals(element.getValue())) {
+                    charset = StandardCharsets.UTF_8;
+                    break;
+                }
             }
         }
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();

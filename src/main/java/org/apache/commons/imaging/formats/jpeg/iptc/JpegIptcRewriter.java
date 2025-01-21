@@ -228,14 +228,14 @@ public class JpegIptcRewriter extends JpegRewriter {
         {
             // discard old iptc blocks.
             final List<IptcBlock> newBlocks = newData.getNonIptcBlocks();
-            final byte[] newBlockBytes = new IptcParser().writeIptcBlock(newData.getRecords());
+            final byte[] newBlockBytes = new IptcParser().writeIptcBlock(newData.getRecords(), newData.isForceUtf8Encoding());
 
             final int blockType = IptcConstants.IMAGE_RESOURCE_BLOCK_IPTC_DATA;
             final byte[] blockNameBytes = ImagingConstants.EMPTY_BYTE_ARRAY;
             final IptcBlock newBlock = new IptcBlock(blockType, blockNameBytes, newBlockBytes);
             newBlocks.add(newBlock);
 
-            newData = new PhotoshopApp13Data(newData.getRecords(), newBlocks);
+            newData = new PhotoshopApp13Data(newData.getRecords(), newBlocks, newData.isForceUtf8Encoding());
 
             final byte[] segmentBytes = new IptcParser().writePhotoshopApp13Segment(newData);
             final JFIFPieceSegment newSegment = new JFIFPieceSegment(JpegConstants.JPEG_APP13_MARKER, segmentBytes);
