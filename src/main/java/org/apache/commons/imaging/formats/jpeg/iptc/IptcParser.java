@@ -374,7 +374,7 @@ public class IptcParser extends BinaryFileParser {
     public byte[] writeIptcBlock(List<IptcRecord> elements) throws ImagingException, IOException {
         return writeIptcBlock(elements, false);
     }
-   
+
     public byte[] writeIptcBlock(List<IptcRecord> elements, boolean forceUtf8Encoding) throws ImagingException, IOException {
         Charset charset;
         if (forceUtf8Encoding) {
