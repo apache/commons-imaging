@@ -105,7 +105,7 @@ public enum ChunkType {
     iTXt(PngChunkItxt::new),
 
     /**
-     * Background colour
+     * Background color
      */
     bKGD,
 
