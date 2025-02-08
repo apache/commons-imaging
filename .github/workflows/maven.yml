@@ -29,12 +29,13 @@ jobs:
         os: [windows-latest, macos-13, ubuntu-latest]
         java: [ 8, 11, 17, 21 ]
         experimental: [false]
+        # Keep same order below (os, java experimental)
         include:
-            - java: 23
-              os: ubuntu-latest
+            - os: ubuntu-latest
+              java: 23
               experimental: false
-            - java: 24-ea
-              os: ubuntu-latest
+            - os: ubuntu-latest
+              java: 24-ea
               experimental: true
         
     steps:
