@@ -69,7 +69,7 @@ public class IptcUpdateTest extends IptcBaseTest {
 
         final PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords, newBlocks);
 
-        byte[] updated;
+        final byte[] updated;
         try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
             new JpegIptcRewriter().writeIptc(ByteSource.array(noIptcFile, "test.jpg"), os, newData);
             updated = os.toByteArray();

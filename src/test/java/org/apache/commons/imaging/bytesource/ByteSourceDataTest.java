@@ -127,7 +127,7 @@ public class ByteSourceDataTest extends AbstractByteSourceTest {
         }
         // test cache by completely reading InputStream N times.
         for (int j = 0; j < 5; j++) {
-            try (final InputStream is = byteSource.getInputStream()) {
+            try (InputStream is = byteSource.getInputStream()) {
                 final byte[] dst = IOUtils.toByteArray(is);
                 assertArrayEquals(src, dst);
             }

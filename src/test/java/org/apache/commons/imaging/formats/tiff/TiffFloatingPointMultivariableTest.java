@@ -54,7 +54,7 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
     int width = 48;
     int height = 23;
     int samplesPerPixel = 2;
-    float f0 = 0.0F;
+    float f0;
     float f1 = 1.0F;
     float[] fSample = new float[width * height * samplesPerPixel];
 
@@ -251,9 +251,9 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
         final int bytesPerSample = 4 * samplesPerPixel;
         final int bitsPerSample = 8 * bytesPerSample;
 
-        int nRowsInBlock;
-        int nColsInBlock;
-        int nBytesInBlock;
+        final int nRowsInBlock;
+        final int nColsInBlock;
+        final int nBytesInBlock;
         if (useTiles) {
             // Define the tiles so that they will not evenly subdivide
             // the image. This will allow the test to evaluate how the
@@ -269,8 +269,7 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
         }
         nBytesInBlock = nRowsInBlock * nColsInBlock * bytesPerSample;
 
-        byte[][] blocks;
-        blocks = getBytesForOutput32(nRowsInBlock, nColsInBlock, byteOrder, useTiles, planarConfiguration);
+        final byte[][] blocks = getBytesForOutput32(nRowsInBlock, nColsInBlock, byteOrder, useTiles, planarConfiguration);
 
         final TiffOutputSet outputSet = new TiffOutputSet(byteOrder);
         final TiffOutputDirectory outDir = outputSet.addRootDirectory();
@@ -309,7 +308,7 @@ public class TiffFloatingPointMultivariableTest extends TiffBaseTest {
             imageData[i] = new AbstractTiffImageData.Data(0, blocks[i].length, blocks[i]);
         }
 
-        AbstractTiffImageData abstractTiffImageData;
+        final AbstractTiffImageData abstractTiffImageData;
         if (useTiles) {
             abstractTiffImageData = new AbstractTiffImageData.Tiles(imageData, nColsInBlock, nRowsInBlock);
         } else {

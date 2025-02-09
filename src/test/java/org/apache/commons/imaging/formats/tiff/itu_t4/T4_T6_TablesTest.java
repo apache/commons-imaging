@@ -26,7 +26,7 @@ public class T4_T6_TablesTest {
 
     @Test
     public void testCreatesT4_T6_TablesTakingNoArgumentsAndCallsWriteBits() {
-        try (final BitArrayOutputStream bitArrayOutputStream = new BitArrayOutputStream(2309)) {
+        try (BitArrayOutputStream bitArrayOutputStream = new BitArrayOutputStream(2309)) {
             T4_T6_Tables.EOL16.writeBits(bitArrayOutputStream);
 
             assertEquals(2, bitArrayOutputStream.size());

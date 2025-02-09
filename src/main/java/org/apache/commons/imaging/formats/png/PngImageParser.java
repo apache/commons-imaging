@@ -145,7 +145,7 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
         };
     }
 
-    // private final static int tRNS = CharsToQuad('t', 'R', 'N', 's');
+    // private static final int tRNS = CharsToQuad('t', 'R', 'N', 's');
 
     @Override
     public BufferedImage getBufferedImage(final ByteSource byteSource, final PngImagingParameters params) throws ImagingException, IOException {

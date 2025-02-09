@@ -43,7 +43,7 @@ public class RoundtripBase {
         final AbstractImageParser abstractImageParser = ImageParserFactory.getImageParser(formatInfo.format);
 
         final ImagingParameters params = ImageParserFactory.getImageParser(formatInfo.format).getDefaultParameters();
-        byte[] temp1;
+        final byte[] temp1;
         try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
             abstractImageParser.writeImage(testImage, bos, params);
             temp1 = bos.toByteArray();
@@ -61,7 +61,7 @@ public class RoundtripBase {
         }
 
         if (formatInfo.identicalSecondWrite) {
-            byte[] temp2;
+            final byte[] temp2;
             try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
                 abstractImageParser.writeImage(image2, bos, params);
                 temp2 = bos.toByteArray();

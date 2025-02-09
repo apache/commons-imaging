@@ -149,9 +149,9 @@ public class TiffShortIntRoundTripTest extends TiffBaseTest {
         final File outputFile = new File(tempDir.toFile(), name);
 
         final int bytesPerSample = bitsPerSample / 8;
-        int nRowsInBlock;
-        int nColsInBlock;
-        int nBytesInBlock;
+        final int nRowsInBlock;
+        final int nColsInBlock;
+        final int nBytesInBlock;
         if (useTiles) {
             // Define the tiles so that they will not evenly subdivide
             // the image. This will allow the test to evaluate how the
@@ -167,7 +167,7 @@ public class TiffShortIntRoundTripTest extends TiffBaseTest {
         }
         nBytesInBlock = nRowsInBlock * nColsInBlock * bytesPerSample;
 
-        byte[][] blocks;
+        final byte[][] blocks;
         blocks = getBytesForOutput16(sample, width, height, nRowsInBlock, nColsInBlock, byteOrder);
 
         // NOTE: At this time, Tile format is not supported.
@@ -199,7 +199,7 @@ public class TiffShortIntRoundTripTest extends TiffBaseTest {
             imageData[i] = new AbstractTiffImageData.Data(0, blocks[i].length, blocks[i]);
         }
 
-        AbstractTiffImageData abstractTiffImageData;
+        final AbstractTiffImageData abstractTiffImageData;
         if (useTiles) {
             abstractTiffImageData = new AbstractTiffImageData.Tiles(imageData, nColsInBlock, nRowsInBlock);
         } else {

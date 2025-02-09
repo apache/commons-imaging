@@ -53,7 +53,7 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
 
     int width = 48;
     int height = 23;
-    float f0 = 0.0F;
+    float f0;
     float f1 = 1.0F;
     float[] f = new float[width * height];
     int[] argb = new int[width * height];
@@ -250,9 +250,9 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
         final File outputFile = new File(tempDir.toFile(), name);
 
         final int bytesPerSample = bitsPerSample / 8;
-        int nRowsInBlock;
-        int nColsInBlock;
-        int nBytesInBlock;
+        final int nRowsInBlock;
+        final int nColsInBlock;
+        final int nBytesInBlock;
         if (useTiles) {
             // Define the tiles so that they will not evenly subdivide
             // the image. This will allow the test to evaluate how the
@@ -268,7 +268,7 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
         }
         nBytesInBlock = nRowsInBlock * nColsInBlock * bytesPerSample;
 
-        byte[][] blocks;
+        final byte[][] blocks;
         if (bitsPerSample == 32) {
             blocks = getBytesForOutput32(f, width, height, nRowsInBlock, nColsInBlock, byteOrder);
         } else {
@@ -304,7 +304,7 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
             imageData[i] = new AbstractTiffImageData.Data(0, blocks[i].length, blocks[i]);
         }
 
-        AbstractTiffImageData abstractTiffImageData;
+        final AbstractTiffImageData abstractTiffImageData;
         if (useTiles) {
             abstractTiffImageData = new AbstractTiffImageData.Tiles(imageData, nColsInBlock, nRowsInBlock);
         } else {

@@ -29,9 +29,9 @@ import org.apache.commons.imaging.ImagingException;
 
 public abstract class AbstractGifTest extends AbstractImagingTest {
 
-    private final static String ANIMATED_FOLDER_NAME = "animated";
+    private static final String ANIMATED_FOLDER_NAME = "animated";
 
-    private final static String SINGLE_IMAGE_FOLDER_NAME = "single";
+    private static final String SINGLE_IMAGE_FOLDER_NAME = "single";
 
     private static final ImageFilter IMAGE_FILTER = AbstractGifTest::isGif;
 

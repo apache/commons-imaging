@@ -52,7 +52,7 @@ public class PngWriteForceTrueColorText extends AbstractPngTest {
                 // Debug.debug("outFile", outFile);
 
                 final PngImagingParameters params = new PngImagingParameters();
-                byte[] outFile;
+                final byte[] outFile;
                 try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
                     params.setForceTrueColor(Boolean.TRUE);
                     pngImageParser.writeImage(image, os, params);

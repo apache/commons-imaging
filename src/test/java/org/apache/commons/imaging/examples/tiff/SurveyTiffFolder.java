@@ -46,7 +46,7 @@ public class SurveyTiffFolder {
         @Override
         public int compare(final String[] a, final String[] b) {
             for (int i = 0; i < a.length && i < b.length; i++) {
-                int test;
+                final int test;
                 if (isNumeric(a[i]) && isNumeric(b[i])) {
                     final int iA = Integer.parseInt(a[i]);
                     final int iB = Integer.parseInt(b[i]);
@@ -203,7 +203,7 @@ public class SurveyTiffFolder {
                 }
             }
 
-            String result;
+            final String result;
             try {
                 result = surveyor.surveyFile(file, csv);
             } catch (final IOException ex) {

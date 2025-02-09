@@ -45,7 +45,7 @@ public class JpegXmpRewriteTest extends AbstractJpegXmpTest {
         final String xmpXml = new JpegImageParser().getXmpXml(byteSource, params);
         assertNotNull(xmpXml);
 
-        byte[] noXmpFile;
+        final byte[] noXmpFile;
         {
             // test remove
 
@@ -65,7 +65,7 @@ public class JpegXmpRewriteTest extends AbstractJpegXmpTest {
             // test update
 
             final String newXmpXml = "test";
-            byte[] updated;
+            final byte[] updated;
             try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
                 new JpegXmpRewriter().updateXmpXml(byteSource, os, newXmpXml);
                 updated = os.toByteArray();

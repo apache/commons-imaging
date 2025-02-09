@@ -74,8 +74,9 @@ public class TiffLzwTest extends TiffBaseTest {
 
         final MyLzwDecompressor.Listener decompressionListener = new MyLzwDecompressor.Listener() {
 
-            int index = 0;
-            int clearCode, eoiCode;
+            int index;
+            int clearCode;
+            int eoiCode;
 
             @Override
             public void code(final int code) {
@@ -144,9 +145,9 @@ public class TiffLzwTest extends TiffBaseTest {
 
         final MyLzwCompressor.Listener compressionListener = new MyLzwCompressor.Listener() {
 
-            int clearCode, eoiCode;
-
-            int index = 0;
+            int clearCode;
+            int eoiCode;
+            int index;
 
             @Override
             public void clearCode(final int code) {

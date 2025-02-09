@@ -287,7 +287,7 @@ public class SurveyTiffFile {
         }
 
         final StringBuilder sb = new StringBuilder();
-        try (final Formatter fmt = new Formatter(sb)) {
+        try (Formatter fmt = new Formatter(sb)) {
 
             // Establish a TiffReader. This is just a simple constructor that
             // does not actually access the file. So the application cannot

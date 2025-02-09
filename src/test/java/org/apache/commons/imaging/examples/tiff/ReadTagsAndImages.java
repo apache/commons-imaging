@@ -510,9 +510,9 @@ public class ReadTagsAndImages {
 
             // The first four elements in the integer array are not
             // actually a GeoKey, but rather an overall identifier
-            GeoKey geoKey;
-            String name;
-            String interpretation;
+            final GeoKey geoKey;
+            final String name;
+            final String interpretation;
             if (i == 0) {
                 name = "~~~";
                 interpretation = "~~~";
@@ -540,7 +540,7 @@ public class ReadTagsAndImages {
         // a negative number. But by the GeoTIFF standard,
         // the vertical spacing is given as a positive number.
         final TiffField pixelScaleField = directory.findField(GeoTiffTagConstants.EXIF_TAG_MODEL_PIXEL_SCALE_TAG);
-        double[] pixelScale;
+        final double[] pixelScale;
         if (pixelScaleField == null) {
             ps.format("%nModelPixelScale is not supplied%n");
         } else {

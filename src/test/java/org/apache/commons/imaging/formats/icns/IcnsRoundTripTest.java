@@ -47,8 +47,8 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
     public void test1BPPIconMaskVersus8BPPMask() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0xff000000;
-        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                final BinaryOutputStream bos = BinaryOutputStream.bigEndian(baos)) {
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                BinaryOutputStream bos = BinaryOutputStream.bigEndian(baos)) {
             bos.write4Bytes(IcnsImageParser.ICNS_MAGIC);
             bos.write4Bytes(4 + 4 + 4 + 4 + 2 * 16 * 16 / 8 + 4 + 4 + 16 * 16);
             bos.write4Bytes(IcnsType.ICNS_16x16_1BIT_IMAGE_AND_MASK.getType());
@@ -84,8 +84,8 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
     public void test32BPPHalfMaskedIcon() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0xff0000ff;
-        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                final BinaryOutputStream bos = BinaryOutputStream.bigEndian(baos)) {
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                BinaryOutputStream bos = BinaryOutputStream.bigEndian(baos)) {
             bos.write4Bytes(IcnsImageParser.ICNS_MAGIC);
             bos.write4Bytes(4 + 4 + 4 + 4 + 4 * 16 * 16 + 4 + 4 + 16 * 16 / 8);
             bos.write4Bytes(IcnsType.ICNS_16x16_32BIT_IMAGE.getType());
@@ -130,8 +130,8 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
     public void test32BPPMaskedIcon() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0x000000ff;
-        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                final BinaryOutputStream bos = BinaryOutputStream.bigEndian(baos)) {
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                BinaryOutputStream bos = BinaryOutputStream.bigEndian(baos)) {
             bos.write4Bytes(IcnsImageParser.ICNS_MAGIC);
             bos.write4Bytes(4 + 4 + 4 + 4 + 4 * 16 * 16 + 4 + 4 + 2 * 16 * 16 / 8);
             bos.write4Bytes(IcnsType.ICNS_16x16_32BIT_IMAGE.getType());
@@ -186,8 +186,8 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
     public void test32BPPMaskMissingIcon() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0xff0000ff;
-        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                final BinaryOutputStream bos = BinaryOutputStream.bigEndian(baos)) {
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                BinaryOutputStream bos = BinaryOutputStream.bigEndian(baos)) {
             bos.write4Bytes(IcnsImageParser.ICNS_MAGIC);
             bos.write4Bytes(4 + 4 + 4 + 4 + 4 * 16 * 16);
             bos.write4Bytes(IcnsType.ICNS_16x16_32BIT_IMAGE.getType());
@@ -216,8 +216,8 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
     public void test8BPPIcon1BPPMaskVersus8BPPMask() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0x00cccccc;
-        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                final BinaryOutputStream bos = BinaryOutputStream.bigEndian(baos)) {
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                BinaryOutputStream bos = BinaryOutputStream.bigEndian(baos)) {
             bos.write4Bytes(IcnsImageParser.ICNS_MAGIC);
             bos.write4Bytes(4 + 4 + 4 + 4 + 16 * 16 + 4 + 4 + 16 * 16 + 4 + 4 + 2 * 16 * 16 / 8);
             bos.write4Bytes(IcnsType.ICNS_16x16_8BIT_IMAGE.getType());
@@ -273,8 +273,8 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
     public void test8BPPIcon8BPPMask() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0x00cccccc;
-        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                final BinaryOutputStream bos = BinaryOutputStream.bigEndian(baos)) {
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                BinaryOutputStream bos = BinaryOutputStream.bigEndian(baos)) {
             bos.write4Bytes(IcnsImageParser.ICNS_MAGIC);
             bos.write4Bytes(4 + 4 + 4 + 4 + 16 * 16 + 4 + 4 + 16 * 16);
             bos.write4Bytes(IcnsType.ICNS_16x16_8BIT_IMAGE.getType());
@@ -310,8 +310,8 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
     public void test8BPPIcon8BPPMaskVersus1BPPMask() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0x00cccccc;
-        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                final BinaryOutputStream bos = BinaryOutputStream.bigEndian(baos)) {
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                BinaryOutputStream bos = BinaryOutputStream.bigEndian(baos)) {
             bos.write4Bytes(IcnsImageParser.ICNS_MAGIC);
             bos.write4Bytes(4 + 4 + 4 + 4 + 16 * 16 + 4 + 4 + 16 * 16 + 4 + 4 + 2 * 16 * 16 / 8);
             bos.write4Bytes(IcnsType.ICNS_16x16_8BIT_IMAGE.getType());
@@ -367,8 +367,8 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
     public void test8BPPIconNoMask() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0xffcccccc;
-        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                final BinaryOutputStream bos = BinaryOutputStream.bigEndian(baos)) {
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                BinaryOutputStream bos = BinaryOutputStream.bigEndian(baos)) {
             bos.write4Bytes(IcnsImageParser.ICNS_MAGIC);
             bos.write4Bytes(4 + 4 + 4 + 4 + 16 * 16);
             bos.write4Bytes(IcnsType.ICNS_16x16_8BIT_IMAGE.getType());
