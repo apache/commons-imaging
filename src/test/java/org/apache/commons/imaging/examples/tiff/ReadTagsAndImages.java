@@ -224,6 +224,7 @@ public class ReadTagsAndImages {
             default:
                 break;
             }
+            break;
         case GTRasterTypeGeoKey:
             switch (valueOrPosition) {
             case 1:
@@ -244,6 +245,7 @@ public class ReadTagsAndImages {
             default:
                 break;
             }
+            break;
         case GTCitationGeoKey:
             return extractAscii(asciiParameters, valueOrPosition, len);
         case GeogCitationGeoKey:
@@ -257,6 +259,7 @@ public class ReadTagsAndImages {
             default:
                 break;
             }
+            break;
         case GeogSemiMajorAxisGeoKey:
             return extractDouble(doubleParameters, valueOrPosition, len);
         case GeogInvFlatteningGeoKey:
