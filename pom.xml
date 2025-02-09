@@ -166,7 +166,7 @@
             <configLocation>${basedir}/src/conf/checkstyle.xml</configLocation>
             <!-- <suppressionsLocation>${basedir}/src/conf/checkstyle-suppressions.xml</suppressionsLocation> -->
             <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
-            <includeTestSourceDirectory>false</includeTestSourceDirectory>
+            <includeTestSourceDirectory>true</includeTestSourceDirectory>
             <enableRulesSummary>false</enableRulesSummary>
            <excludes>target/**</excludes>
           </configuration>
