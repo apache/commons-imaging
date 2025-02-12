@@ -234,7 +234,7 @@ public class ImageInfo {
      * Applies to TIFF (optional), BMP (always), GIF (constant: 72), Jpeg (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant: 72).
      * </p>
      *
-     * @return returns -1 if not present.
+     * @return -1 if not present.
      */
     public int getPhysicalHeightDpi() {
         return physicalHeightDpi;
@@ -247,7 +247,7 @@ public class ImageInfo {
      * Applies to TIFF (optional), BMP (always), GIF (constant: 72), Jpeg (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant: 72).
      * </p>
      *
-     * @return returns -1 if not present.
+     * @return -1 if not present.
      */
     public float getPhysicalHeightInch() {
         return physicalHeightInch;
@@ -260,7 +260,7 @@ public class ImageInfo {
      * Applies to TIFF (optional), BMP (always), GIF (constant: 72), Jpeg (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant: 72).
      * </p>
      *
-     * @return returns -1 if not present.
+     * @return -1 if not present.
      */
     public int getPhysicalWidthDpi() {
         return physicalWidthDpi;
@@ -273,7 +273,7 @@ public class ImageInfo {
      * Applies to TIFF (optional), BMP (always), GIF (constant: 72), Jpeg (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant: 72).
      * </p>
      *
-     * @return returns -1 if not present.
+     * @return -1 if not present.
      */
     public float getPhysicalWidthInch() {
         return physicalWidthInch;

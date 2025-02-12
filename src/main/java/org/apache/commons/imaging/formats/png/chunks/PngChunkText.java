@@ -49,7 +49,7 @@ public class PngChunkText extends AbstractPngTextChunk {
     }
 
     /**
-     * @return Returns the keyword.
+     * @return the keyword.
      */
     @Override
     public String getKeyword() {
@@ -57,7 +57,7 @@ public class PngChunkText extends AbstractPngTextChunk {
     }
 
     /**
-     * @return Returns the text.
+     * @return the text.
      */
     @Override
     public String getText() {
