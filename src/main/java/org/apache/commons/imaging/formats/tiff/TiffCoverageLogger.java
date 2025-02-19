@@ -33,7 +33,7 @@ public class TiffCoverageLogger {
     public static void print_run_getImageInfo() {
         System.out.println("\n\n    For function getRasterData:");
         int counter = 0;
-        int total_branch = 64;
+        int total_branch = 43;
         for (int i = 1; i <= total_branch; i++) {
             boolean is_covered = branchCoverage_run_getImageInfo.getOrDefault(i, false);
             System.out.println("    Branch " + i + ": " + (is_covered ? "True" : "False"));
@@ -48,10 +48,6 @@ public class TiffCoverageLogger {
     public static void printCoverageReport() {
         System.out.println("\n\nBranch Coverage Report: ");
         print_run();
-    }
-
-    public static void printCoverageReport_getImageInfo() {
-        System.out.println("\n\nBranch Coverage Report: ");
         print_run_getImageInfo();
     }
 }
