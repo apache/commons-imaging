@@ -5,8 +5,13 @@ import java.util.Map;
 
 public class TiffCoverageLogger {
     private static final Map<Integer, Boolean> branchCoverage_run = new HashMap<>();
+    private static final Map<Integer, Boolean> branchCoverage_run_getImageInfo = new HashMap<>();
 
     public static void logBranch_run(int branchId) {
+        branchCoverage_run.put(branchId, true);
+    }
+
+    public static void logBranch_run_getImageInfo(int branchId) {
         branchCoverage_run.put(branchId, true);
     }
 
@@ -17,17 +22,36 @@ public class TiffCoverageLogger {
         for (int i = 1; i <= total_branch; i++) {
             boolean is_covered = branchCoverage_run.getOrDefault(i, false);
             System.out.println("    Branch " + i + ": " + (is_covered ? "True" : "False"));
-            if(is_covered == false){
+            if (is_covered == false) {
                 counter++;
             }
         }
-        System.out.println("\n    total missed branches : " + counter + ", This means a coverage of : " + (1 - (double)counter / total_branch) + " %");
+        System.out.println("\n    total missed branches : " + counter + ", This means a coverage of : "
+                + (1 - (double) counter / total_branch) + " %");
     }
 
-
+    public static void print_run_getImageInfo() {
+        System.out.println("\n\n    For function getRasterData:");
+        int counter = 0;
+        int total_branch = 64;
+        for (int i = 1; i <= total_branch; i++) {
+            boolean is_covered = branchCoverage_run_getImageInfo.getOrDefault(i, false);
+            System.out.println("    Branch " + i + ": " + (is_covered ? "True" : "False"));
+            if (is_covered == false) {
+                counter++;
+            }
+        }
+        System.out.println("\n    total missed branches : " + counter + ", This means a coverage of : "
+                + (1 - (double) counter / total_branch) + " %");
+    }
 
     public static void printCoverageReport() {
         System.out.println("\n\nBranch Coverage Report: ");
         print_run();
+    }
+
+    public static void printCoverageReport_getImageInfo() {
+        System.out.println("\n\nBranch Coverage Report: ");
+        print_run_getImageInfo();
     }
 }
