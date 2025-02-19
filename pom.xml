@@ -90,6 +90,35 @@
   <build>
     <defaultGoal>clean verify apache-rat:check checkstyle:check spotbugs:check javadoc:javadoc</defaultGoal>
     <plugins>
+        <plugin>
+            <groupId>org.openclover</groupId>
+            <artifactId>clover-maven-plugin</artifactId>
+            <version>4.4.1</version>
+            <executions>
+                <execution>
+                    <phase>test</phase>
+                    <goals>
+                        <goal>instrument</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <generateHtml>true</generateHtml>
+                <generateXml>true</generateXml>
+            </configuration>
+        </plugin>
+      <plugin>
+      <groupId>org.jacoco</groupId>
+      <artifactId>jacoco-maven-plugin</artifactId>
+      <version>0.8.8</version>
+      <executions>
+          <execution>
+              <goals>
+                  <goal>prepare-agent</goal>
+              </goals>
+          </execution>
+      </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
