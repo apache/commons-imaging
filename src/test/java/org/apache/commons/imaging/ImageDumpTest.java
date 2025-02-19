@@ -24,6 +24,9 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
+import org.junit.jupiter.api.AfterAll;
+import org.apache.commons.imaging.formats.tiff.TiffCoverageLogger;
+
 public class ImageDumpTest {
 
     @Test
@@ -44,4 +47,8 @@ public class ImageDumpTest {
         assertEquals(3, colorSpace.getNumComponents());
     }
 
+    @AfterAll
+    static void printFinalReport() {
+        TiffCoverageLogger.printCoverageReport();
+    }
 }
