@@ -120,6 +120,18 @@
       </executions>
       </plugin>
       <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.8</version>
+        <executions>
+            <execution>
+                <goals>
+                    <goal>prepare-agent</goal>
+                </goals>
+            </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
@@ -212,6 +224,7 @@
           <artifactId>apache-rat-plugin</artifactId>
           <configuration>
             <excludes>
+              <exclude>**/TiffCoverageLogger.java</exclude>
               <exclude>src/test/resources/images/**/*</exclude>
               <exclude>src/test/resources/IMAGING-*/*</exclude>
               <exclude>src/test/**/*.xpm</exclude>
