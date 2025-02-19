@@ -12,7 +12,7 @@ public class TiffCoverageLogger {
     }
 
     public static void logBranch_run_getImageInfo(int branchId) {
-        branchCoverage_run.put(branchId, true);
+        branchCoverage_run_getImageInfo.put(branchId, true);
     }
 
     public static void print_run() {
