@@ -473,7 +473,6 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters>
             default:
                 TiffCoverageLogger.logBranch_run_getImageInfo(11);
                 break;
-
         }
 
         int physicalWidthDpi = -1;
@@ -536,9 +535,11 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters>
 
         final List<String> comments = Allocator.arrayList(directory.size());
         for (final TiffField field : directory) {
+            TiffCoverageLogger.logBranch_run_getImageInfo(54);
             final String comment = field.toString();
             comments.add(comment);
         }
+        TiffCoverageLogger.logBranch_run_getImageInfo(55);
 
         final ImageFormat format = ImageFormats.TIFF;
         final String formatName = "TIFF Tag-based Image File Format";
