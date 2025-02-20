@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PushbackInputStream;
 import java.util.Map;
+import org.apache.commons.imaging.formats.tiff.TiffCoverageLogger;
 
 import org.apache.commons.imaging.ImagingException;
 
@@ -397,6 +398,144 @@ public class BasicCParser {
         boolean hadBackSlash = false;
         final StringBuilder token = new StringBuilder();
         for (int c = is.read(); c != -1; c = is.read()) {
+            TiffCoverageLogger.logBranch_nextToken(0);
+            if (inString) {
+                TiffCoverageLogger.logBranch_nextToken(1);
+                switch (c) {
+                case '\\':
+                    TiffCoverageLogger.logBranch_nextToken(2);
+                    token.append('\\');
+                    hadBackSlash = !hadBackSlash;
+                    break;
+                case '"':
+                    TiffCoverageLogger.logBranch_nextToken(3);
+                    token.append('"');
+                    if (!hadBackSlash) {
+                        TiffCoverageLogger.logBranch_nextToken(4);
+                        return token.toString();
+                    } else {
+                        TiffCoverageLogger.logBranch_nextToken(5);
+                    }
+                    hadBackSlash = false;
+                    break;
+                case '\r':
+                    TiffCoverageLogger.logBranch_nextToken(6);
+                case '\n':
+                    TiffCoverageLogger.logBranch_nextToken(7);
+                    throw new ImagingException("Unterminated string in XPM file");
+                default:
+                    TiffCoverageLogger.logBranch_nextToken(8);
+                    token.append((char) c);
+                    hadBackSlash = false;
+                    break;
+                }
+            } else if (inIdentifier) {
+                TiffCoverageLogger.logBranch_nextToken(9);
+                if (!Character.isLetterOrDigit(c)) {
+                    TiffCoverageLogger.logBranch_nextToken(10);
+                    if (c != '_') {
+                        TiffCoverageLogger.logBranch_nextToken(11);
+                        is.unread(c);
+                        return token.toString();
+                    } else {
+                        TiffCoverageLogger.logBranch_nextToken(12);
+                    }
+                } else {
+                    TiffCoverageLogger.logBranch_nextToken(13);
+                }
+                token.append((char) c);
+            } else if (c == '"') {
+                TiffCoverageLogger.logBranch_nextToken(14);
+                token.append('"');
+                inString = true;
+            } else if (Character.isLetterOrDigit(c)) {
+                TiffCoverageLogger.logBranch_nextToken(15);
+                token.append((char) c);
+                inIdentifier = true;
+            } else if (c == '_') {
+                TiffCoverageLogger.logBranch_nextToken(16);
+                token.append((char) c);
+                inIdentifier = true;
+            } else if (c == '{') {
+                TiffCoverageLogger.logBranch_nextToken(17);
+                token.append((char) c);
+                return token.toString();
+            } else if (c == '}') {
+                TiffCoverageLogger.logBranch_nextToken(18);
+                token.append((char) c);
+                return token.toString();
+            } else if (c == '[') {
+                TiffCoverageLogger.logBranch_nextToken(19);
+                token.append((char) c);
+                return token.toString();
+            } else if (c == ']') {
+                TiffCoverageLogger.logBranch_nextToken(20);
+                token.append((char) c);
+                return token.toString();
+            } else if (c == '*') {
+                TiffCoverageLogger.logBranch_nextToken(21);
+                token.append((char) c);
+                return token.toString();
+            } else if (c == ';') {
+                TiffCoverageLogger.logBranch_nextToken(22);
+                token.append((char) c);
+                return token.toString();
+            } else if (c == '=') {
+                TiffCoverageLogger.logBranch_nextToken(23);
+                token.append((char) c);
+                return token.toString();
+            } else if (c == ',') {
+                TiffCoverageLogger.logBranch_nextToken(24);
+                token.append((char) c);
+                return token.toString();
+            // } else if (c == '{' || c == '}' || c == '[' || c == ']' || c == '*' || c == ';' || c == '=' || c == ',') {
+            //     token.append((char) c);
+            //     return token.toString();
+            } else if (c == ' ') { // NOPMD
+                TiffCoverageLogger.logBranch_nextToken(25);
+                // ignore
+            } else if (c == '\t') { // NOPMD
+                TiffCoverageLogger.logBranch_nextToken(26);
+                // ignore
+            } else if (c == '\r') { // NOPMD
+                TiffCoverageLogger.logBranch_nextToken(27);
+                // ignore
+            } else if (c == '\n') { // NOPMD
+                TiffCoverageLogger.logBranch_nextToken(28);
+                // ignore
+            // } else if (c == ' ' || c == '\t' || c == '\r' || c == '\n') { // NOPMD
+            //     // ignore
+            } else {
+                TiffCoverageLogger.logBranch_nextToken(29);
+                throw new ImagingException("Unhandled/invalid character '" + (char) c + "' found in XPM file");
+            }
+        }
+
+        if (inIdentifier) {
+            TiffCoverageLogger.logBranch_nextToken(30);
+            return token.toString();
+        } else {
+            TiffCoverageLogger.logBranch_nextToken(31);
+        }
+        if (inString) {
+            TiffCoverageLogger.logBranch_nextToken(32);
+            throw new ImagingException("Unterminated string ends XMP file");
+        } else {
+            TiffCoverageLogger.logBranch_nextToken(33);
+        }
+        return null;
+    }
+
+    /**
+     * public String nextToken() throws IOException, ImagingException {
+        // I don't know how complete the C parsing in an XPM file
+        // is meant to be, this is just the very basics...
+
+        boolean inString = false;
+        boolean inIdentifier = false;
+        boolean hadBackSlash = false;
+        final StringBuilder token = new StringBuilder();
+        for (int c = is.read(); c != -1; c = is.read()) {
             if (inString) {
                 switch (c) {
                 case '\\':
@@ -448,5 +587,6 @@ public class BasicCParser {
         }
         return null;
     }
+     */
 
 }
