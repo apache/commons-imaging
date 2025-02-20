@@ -14,3 +14,5 @@ release.properties
 /.project
 /nbproject/
 /commons-imaging.iml
+.DS_Store
+.vscode
