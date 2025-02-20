@@ -242,26 +242,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
 
         final Rectangle subImage = checkForSubImage(params);
         if (subImage != null) {
-            // Check for valid subimage specification. The following checks
-            // are consistent with BufferedImage.getSubimage()
-            if (subImage.width <= 0) {
-                throw new ImagingException("Negative or zero subimage width.");
-            }
-            if (subImage.height <= 0) {
-                throw new ImagingException("Negative or zero subimage height.");
-            }
-            if (subImage.x < 0 || subImage.x >= width) {
-                throw new ImagingException("Subimage x is outside raster.");
-            }
-            if (subImage.x + subImage.width > width) {
-                throw new ImagingException("Subimage (x+width) is outside raster.");
-            }
-            if (subImage.y < 0 || subImage.y >= height) {
-                throw new ImagingException("Subimage y is outside raster.");
-            }
-            if (subImage.y + subImage.height > height) {
-                throw new ImagingException("Subimage (y+height) is outside raster.");
-            }
+            validateSubImage(subImage, width, height);
         }
 
         int samplesPerPixel = 1;
@@ -711,7 +692,9 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
      * @throws IOException      in the event of an I/O error
      */
     TiffRasterData getRasterData(final TiffDirectory directory, final ByteOrder byteOrder, TiffImagingParameters params) throws ImagingException, IOException {
+        TiffCoverageLogger.logBranch(2);
         if (params == null) {
+            TiffCoverageLogger.logBranch(1);
             params = getDefaultParameters();
         }
 
@@ -747,27 +730,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
 
         Rectangle subImage = checkForSubImage(params);
         if (subImage != null) {
-            // Check for valid subimage specification. The following checks
-            // are consistent with BufferedImage.getSubimage()
-            if (subImage.width <= 0) {
-                throw new ImagingException("Negative or zero subimage width.");
-            }
-            if (subImage.height <= 0) {
-                throw new ImagingException("Negative or zero subimage height.");
-            }
-            if (subImage.x < 0 || subImage.x >= width) {
-                throw new ImagingException("Subimage x is outside raster.");
-            }
-            if (subImage.x + subImage.width > width) {
-                throw new ImagingException("Subimage (x+width) is outside raster.");
-            }
-            if (subImage.y < 0 || subImage.y >= height) {
-                throw new ImagingException("Subimage y is outside raster.");
-            }
-            if (subImage.y + subImage.height > height) {
-                throw new ImagingException("Subimage (y+height) is outside raster.");
-            }
-
+            validateSubImage(subImage, width, height);
             // if the subimage is just the same thing as the whole
             // image, suppress the subimage processing
             if (subImage.x == 0 && subImage.y == 0 && subImage.width == width && subImage.height == height) {
@@ -861,4 +824,26 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
         new TiffImageWriterLossy().writeImage(src, os, params);
     }
 
+    /**
+     * Check for valid subimage specification. The following checks are consistent with BufferedImage.getSubimage().
+     * Validates that the specified subImage is within the bounds [0..width/height].
+     * @param subImage A subImage rectangle
+     * @param width    The full image width
+     * @param height   The full image height
+     * @return The same subImage if valid, or null if no subImage was requested
+     * @throws ImagingException if the subImage is invalid (e.g., out of bounds)
+     */
+    public static void validateSubImage(final Rectangle subImage, final int width, final int height) throws ImagingException {
+        if (subImage.width <= 0) throw new ImagingException("Negative or zero subimage width.");
+        
+        if (subImage.height <= 0) throw new ImagingException("Negative or zero subimage height.");
+        
+        if (subImage.x < 0 || subImage.x >= width) throw new ImagingException("Subimage x is outside raster.");
+        
+        if (subImage.y < 0 || subImage.y >= height) throw new ImagingException("Subimage y is outside raster.");
+        
+        if (subImage.x + subImage.width > width) throw new ImagingException("Subimage (x+width) is outside raster.");
+        
+        if (subImage.y + subImage.height > height) throw new ImagingException("Subimage (y+height) is outside raster.");
+    }
 }
