@@ -80,8 +80,6 @@ public class TiffCoverageLogger {
     }
 
 
-    }
-
 
     public static void printCoverageReport() {
         System.out.println("\n\nBranch Coverage Report: ");
