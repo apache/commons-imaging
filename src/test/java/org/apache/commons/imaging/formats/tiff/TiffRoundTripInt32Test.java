@@ -380,6 +380,7 @@ public class TiffRoundTripInt32Test extends TiffBaseTest {
         Exception exception = assertThrows(ImagingException.class, () -> {
             directory.getRasterData(null);
         });
+        
         assertEquals("TIFF does not provide a supported raster-data format", exception.getMessage());
     }
 }
