@@ -90,6 +90,42 @@
   <build>
     <defaultGoal>clean verify apache-rat:check checkstyle:check spotbugs:check javadoc:javadoc</defaultGoal>
     <plugins>
+        <plugin>
+            <groupId>org.openclover</groupId>
+            <artifactId>clover-maven-plugin</artifactId>
+            <version>4.5.2</version>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>setup</goal>  <!-- Clover setup goal -->
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+      <plugin>
+      <groupId>org.jacoco</groupId>
+      <artifactId>jacoco-maven-plugin</artifactId>
+      <version>0.8.8</version>
+      <executions>
+          <execution>
+              <goals>
+                  <goal>prepare-agent</goal>
+              </goals>
+          </execution>
+      </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.8</version>
+        <executions>
+            <execution>
+                <goals>
+                    <goal>prepare-agent</goal>
+                </goals>
+            </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -183,6 +219,7 @@
           <artifactId>apache-rat-plugin</artifactId>
           <configuration>
             <excludes>
+              <exclude>**/TiffCoverageLogger.java</exclude>
               <exclude>src/test/resources/images/**/*</exclude>
               <exclude>src/test/resources/IMAGING-*/*</exclude>
               <exclude>src/test/**/*.xpm</exclude>
@@ -243,6 +280,18 @@
   </dependencies>
   <reporting>
     <plugins>
+            <plugin>
+            <groupId>org.openclover</groupId>
+            <artifactId>clover-maven-plugin</artifactId>
+            <version>4.5.2</version>
+            <reportSets>
+                <reportSet>
+                    <reports>
+                        <report>clover</report>
+                    </reports>
+                </reportSet>
+            </reportSets>
+        </plugin>
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <reportSets>
