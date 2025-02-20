@@ -17,17 +17,26 @@
 package org.apache.commons.imaging.formats.tiff;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Test;
+
+import org.apache.commons.imaging.formats.tiff.TiffImageParser;
+import java.awt.Rectangle;
+
 
 public class TiffSubImageTest extends TiffBaseTest {
     final List<File> imageFileList;
@@ -117,6 +126,41 @@ public class TiffSubImageTest extends TiffBaseTest {
                 }
             }
         }
+    }
+    @Test
+    public void testValidateSubImage_ThrowsExceptionForInvalidWidth() {
+        Rectangle invalidRect = new Rectangle(0, 0, 0, 10);
+        assertThrows(ImagingException.class, 
+            () -> TiffImageParser.validateSubImage(invalidRect, 100, 100));
+    }
+
+    @Test
+    public void testValidateSubImage_ThrowsExceptionForInvalidHeight() {
+        Rectangle invalidRect = new Rectangle(0, 0, 10, 0);
+        assertThrows(ImagingException.class, 
+            () -> TiffImageParser.validateSubImage(invalidRect, 100, 100));
+    }
+
+    @Test
+    public void testValidateSubImage_ThrowsExceptionForOutOfBoundsX() {
+        Rectangle invalidRect = new Rectangle(-1, 0, 10, 10);
+        assertThrows(ImagingException.class, 
+            () -> TiffImageParser.validateSubImage(invalidRect, 100, 100));
+
+        invalidRect.x = 110;
+        assertThrows(ImagingException.class, 
+        () -> TiffImageParser.validateSubImage(invalidRect, 100, 100));
+    }
+
+    @Test
+    public void testValidateSubImage_ThrowsExceptionForOutOfBoundsY() {
+        Rectangle invalidRect = new Rectangle(0, -1, 10, 10);
+        assertThrows(ImagingException.class, 
+            () -> TiffImageParser.validateSubImage(invalidRect, 100, 100));
+        
+        invalidRect.y = 110;
+        assertThrows(ImagingException.class, 
+        () -> TiffImageParser.validateSubImage(invalidRect, 100, 100));
     }
 
 }
