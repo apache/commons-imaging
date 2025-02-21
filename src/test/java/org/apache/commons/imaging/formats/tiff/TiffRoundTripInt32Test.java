@@ -36,6 +36,8 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import org.apache.commons.imaging.formats.tiff.TiffCoverageLogger;
+
 /**
  * Performs a test in which a TIFF file with the special-purpose 32-bit integer sample type is used to store data to a file. The file is then read to see if it
  * matches the original values. The primary purpose of this test is to verify that the TIFF data reader classes behave correctly when reading raster data in
@@ -219,4 +221,166 @@ public class TiffRoundTripInt32Test extends TiffBaseTest {
         return outputFile;
     }
 
+
+    private File my_writeFile(final int bitsPerSample, final ByteOrder byteOrder, final boolean useTiles, final int predict, final int set_TIFF_TAG_SAMPLES_PER_PIXEL, final boolean a_991a) throws IOException, ImagingException {
+        final String name = String.format("Int32RoundTrip_%2d_%s_%s.tiff", bitsPerSample, byteOrder == ByteOrder.LITTLE_ENDIAN ? "LE" : "BE",
+                useTiles ? "Tiles" : "Strips");
+        final File outputFile = new File(tempDir.toFile(), name);
+
+        final int bytesPerSample = bitsPerSample / 8;
+        final int nRowsInBlock;
+        final int nColsInBlock;
+        final int nBytesInBlock;
+        if (useTiles) {
+            // Define the tiles so that they will not evenly subdivide
+            // the image. This will allow the test to evaluate how the
+            // data reader processes tiles that are only partially used.
+            nRowsInBlock = 12;
+            nColsInBlock = 20;
+        } else {
+            // Define the strips so that they will not evenly subdivide
+            // the image. This will allow the test to evaluate how the
+            // data reader processes strips that are only partially used.
+            nRowsInBlock = 2;
+            nColsInBlock = width;
+        }
+        nBytesInBlock = nRowsInBlock * nColsInBlock * bytesPerSample;
+
+        final byte[][] blocks = getBytesForOutput32(sample, width, height, nRowsInBlock, nColsInBlock, byteOrder);
+
+        // NOTE: At this time, Tile format is not supported.
+        // When it is, modify the tags below to populate
+        // TIFF_TAG_TILE_* appropriately.
+        final TiffOutputSet outputSet = new TiffOutputSet(byteOrder);
+        final TiffOutputDirectory outDir = outputSet.addRootDirectory();
+        outDir.add(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH, width);
+        outDir.add(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH, height);
+        if(a_991a == true){
+            outDir.add(TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, (short) 111);
+        }else{
+            outDir.add(TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, (short) TiffTagConstants.SAMPLE_FORMAT_VALUE_TWOS_COMPLEMENT_SIGNED_INTEGER);
+        }
+        outDir.add(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL, (short) set_TIFF_TAG_SAMPLES_PER_PIXEL);
+        outDir.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE, (short) bitsPerSample);
+        outDir.add(TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION, (short) TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_BLACK_IS_ZERO);
+        outDir.add(TiffTagConstants.TIFF_TAG_COMPRESSION, (short) TiffTagConstants.COMPRESSION_VALUE_UNCOMPRESSED);
+
+        outDir.add(TiffTagConstants.TIFF_TAG_PLANAR_CONFIGURATION, (short) TiffTagConstants.PLANAR_CONFIGURATION_VALUE_CHUNKY);
+
+        outDir.add(TiffTagConstants.TIFF_TAG_PREDICTOR, (short) predict);
+
+        if (useTiles) {
+            outDir.add(TiffTagConstants.TIFF_TAG_TILE_WIDTH, nColsInBlock);
+            outDir.add(TiffTagConstants.TIFF_TAG_TILE_LENGTH, nRowsInBlock);
+            outDir.add(TiffTagConstants.TIFF_TAG_TILE_BYTE_COUNTS, nBytesInBlock);
+        } else {
+            outDir.add(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP, nRowsInBlock);
+            outDir.add(TiffTagConstants.TIFF_TAG_STRIP_BYTE_COUNTS, nBytesInBlock);
+        }
+
+        final AbstractTiffElement.DataElement[] imageData = new AbstractTiffElement.DataElement[blocks.length];
+        for (int i = 0; i < blocks.length; i++) {
+            imageData[i] = new AbstractTiffImageData.Data(0, blocks[i].length, blocks[i]);
+        }
+
+        final AbstractTiffImageData abstractTiffImageData;
+        if (useTiles) {
+            abstractTiffImageData = new AbstractTiffImageData.Tiles(imageData, nColsInBlock, nRowsInBlock);
+        } else {
+            abstractTiffImageData = new AbstractTiffImageData.Strips(imageData, nRowsInBlock);
+        }
+        outDir.setTiffImageData(abstractTiffImageData);
+
+        try (FileOutputStream fos = new FileOutputStream(outputFile);
+                BufferedOutputStream bos = new BufferedOutputStream(fos)) {
+            final TiffImageWriterLossy writer = new TiffImageWriterLossy(byteOrder);
+            writer.write(bos, outputSet);
+            bos.flush();
+        }
+        return outputFile;
+    }
+
+
+    @Test
+    public void testGetRasterData_1() throws Exception {
+        // Branch 62
+        final File testFile = my_writeFile(32, ByteOrder.LITTLE_ENDIAN, false, 1, 1, false);
+        final ByteSource byteSource = ByteSource.file(testFile);
+        final TiffReader tiffReader = new TiffReader(true);
+        final TiffContents contents = tiffReader.readDirectories(
+            byteSource, 
+            true,
+            FormatCompliance.getDefault()
+        );
+
+        final TiffDirectory directory = contents.directories.get(0);
+        final TiffRasterData rasterData = directory.getRasterData(null);
+        final int[] intData = rasterData.getIntData();
+        assertEquals(sample.length, intData.length);
+        for (int i = 0; i < sample.length; i++) {
+            assertEquals(sample[i], intData[i]);
+        }
+    }
+
+    @Test
+    public void testGetRasterData_2() throws Exception {
+        // Branch 52
+        final File testFile = my_writeFile(32, ByteOrder.LITTLE_ENDIAN, false, 1, 16, false);
+        final ByteSource byteSource = ByteSource.file(testFile);
+        final TiffReader tiffReader = new TiffReader(true);
+        final TiffContents contents = tiffReader.readDirectories(
+            byteSource, 
+            true,
+            FormatCompliance.getDefault()
+        );
+
+        final TiffDirectory directory = contents.directories.get(0);
+        Exception exception = assertThrows(ImagingException.class, () -> {
+            directory.getRasterData(null);
+        });
+
+        assertEquals("TIFF integer data uses unsupported samples per pixel: 16", exception.getMessage());
+
+    }
+
+    @Test
+    public void testGetRasterData_3() throws Exception {
+        // Branch 55
+
+        final File testFile = my_writeFile(33, ByteOrder.LITTLE_ENDIAN, false, 1, 1, false);
+        final ByteSource byteSource = ByteSource.file(testFile);
+        final TiffReader tiffReader = new TiffReader(true);
+        final TiffContents contents = tiffReader.readDirectories(
+            byteSource, 
+            true,
+            FormatCompliance.getDefault()
+        );
+
+        final TiffDirectory directory = contents.directories.get(0);
+        Exception exception = assertThrows(ImagingException.class, () -> {
+            directory.getRasterData(null);
+        });
+        assertEquals("TIFF integer data uses unsupported bits-per-pixel: 33", exception.getMessage());
+    }
+
+    
+    @Test
+    public void testGetRasterData_4() throws Exception {
+        // Branch 64
+        final File testFile = my_writeFile(65, ByteOrder.LITTLE_ENDIAN, false, 1, 16, true);
+        final ByteSource byteSource = ByteSource.file(testFile);
+        final TiffReader tiffReader = new TiffReader(true);
+        final TiffContents contents = tiffReader.readDirectories(
+            byteSource, 
+            true,
+            FormatCompliance.getDefault()
+        );
+
+        final TiffDirectory directory = contents.directories.get(0);
+        Exception exception = assertThrows(ImagingException.class, () -> {
+            directory.getRasterData(null);
+        });
+        
+        assertEquals("TIFF does not provide a supported raster-data format", exception.getMessage());
+    }
 }

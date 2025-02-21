@@ -254,8 +254,10 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters>
             throws ImagingException, IOException {
         final short compressionFieldValue;
         if (directory.findField(TiffTagConstants.TIFF_TAG_COMPRESSION) != null) {
+            TiffCoverageLogger.getBufferedImagelogBranch_run(1);
             compressionFieldValue = directory.getFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION);
         } else {
+            TiffCoverageLogger.getBufferedImagelogBranch_run(2);
             compressionFieldValue = TiffConstants.COMPRESSION_UNCOMPRESSED_1;
         }
         final int compression = 0xffff & compressionFieldValue;
@@ -266,37 +268,89 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters>
         if (subImage != null) {
             // Check for valid subimage specification. The following checks
             // are consistent with BufferedImage.getSubimage()
+            TiffCoverageLogger.getBufferedImagelogBranch_run(3);
             if (subImage.width <= 0) {
+                TiffCoverageLogger.getBufferedImagelogBranch_run(4);
                 throw new ImagingException("Negative or zero subimage width.");
             }
+            else{
+
+                TiffCoverageLogger.getBufferedImagelogBranch_run(5);
+
+            }
             if (subImage.height <= 0) {
+                TiffCoverageLogger.getBufferedImagelogBranch_run(6);
                 throw new ImagingException("Negative or zero subimage height.");
             }
-            if (subImage.x < 0 || subImage.x >= width) {
+            else{
+                TiffCoverageLogger.getBufferedImagelogBranch_run(7);
+            }
+            
+            if (subImage.x < 0) {
+                TiffCoverageLogger.getBufferedImagelogBranch_run(8);
                 throw new ImagingException("Subimage x is outside raster.");
             }
+            else if(subImage.x >= width){
+                TiffCoverageLogger.getBufferedImagelogBranch_run(9);
+                throw new ImagingException("Subimage x is outside raster.");
+            }
+            else{
+                TiffCoverageLogger.getBufferedImagelogBranch_run(10);
+            }
+            
             if (subImage.x + subImage.width > width) {
+                TiffCoverageLogger.getBufferedImagelogBranch_run(11);
                 throw new ImagingException("Subimage (x+width) is outside raster.");
             }
-            if (subImage.y < 0 || subImage.y >= height) {
+            else{
+                TiffCoverageLogger.getBufferedImagelogBranch_run(12);
+            }
+            if (subImage.y < 0) {
+                TiffCoverageLogger.getBufferedImagelogBranch_run(13);
                 throw new ImagingException("Subimage y is outside raster.");
             }
+            else if(subImage.y >= height){
+
+                TiffCoverageLogger.getBufferedImagelogBranch_run(14);
+
+            }
+            else{
+                TiffCoverageLogger.getBufferedImagelogBranch_run(15);
+            }
             if (subImage.y + subImage.height > height) {
+                TiffCoverageLogger.getBufferedImagelogBranch_run(16);
                 throw new ImagingException("Subimage (y+height) is outside raster.");
             }
+            else{
+                TiffCoverageLogger.getBufferedImagelogBranch_run(17);
+            }
+        
+        }
+        else{
+            TiffCoverageLogger.getBufferedImagelogBranch_run(18);
         }
 
         int samplesPerPixel = 1;
         final TiffField samplesPerPixelField = directory.findField(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL);
         if (samplesPerPixelField != null) {
+            TiffCoverageLogger.getBufferedImagelogBranch_run(19);
             samplesPerPixel = samplesPerPixelField.getIntValue();
+        }
+        else {
+
+            TiffCoverageLogger.getBufferedImagelogBranch_run(20);
+
         }
         int[] bitsPerSample = { 1 };
         int bitsPerPixel = samplesPerPixel;
         final TiffField bitsPerSampleField = directory.findField(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE);
         if (bitsPerSampleField != null) {
+            TiffCoverageLogger.getBufferedImagelogBranch_run(21);
             bitsPerSample = bitsPerSampleField.getIntArrayValue();
             bitsPerPixel = bitsPerSampleField.getIntValueOrArraySum();
+        }
+        else {
+            TiffCoverageLogger.getBufferedImagelogBranch_run(22);
         }
 
         // int bitsPerPixel = getTagAsValueOrArraySum(entries,
@@ -311,13 +365,20 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters>
             // dumpOptionalNumberTag(entries, TIFF_TAG_PLANAR_CONFIGURATION);
             final TiffField predictorField = directory.findField(TiffTagConstants.TIFF_TAG_PREDICTOR);
             if (null != predictorField) {
+                TiffCoverageLogger.getBufferedImagelogBranch_run(23);
                 predictor = predictorField.getIntValueOrArraySum();
+            }
+            else{
+                TiffCoverageLogger.getBufferedImagelogBranch_run(24);
             }
         }
 
         if (samplesPerPixel != bitsPerSample.length) {
-            throw new ImagingException("Tiff: samplesPerPixel (" + samplesPerPixel + ")!=fBitsPerSample.length ("
-                    + bitsPerSample.length + ")");
+            TiffCoverageLogger.getBufferedImagelogBranch_run(25);
+            throw new ImagingException("Tiff: samplesPerPixel (" + samplesPerPixel + ")!=fBitsPerSample.length (" + bitsPerSample.length + ")");
+        }
+        else{
+            TiffCoverageLogger.getBufferedImagelogBranch_run(26);
         }
 
         final int photometricInterpretation = 0xffff
@@ -325,41 +386,59 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters>
 
         boolean hasAlpha = false;
         boolean isAlphaPremultiplied = false;
-        if (photometricInterpretation == TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_RGB
-                && samplesPerPixel == 4) {
+        if (photometricInterpretation == TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_RGB) {
+            TiffCoverageLogger.getBufferedImagelogBranch_run(27);
+            if(samplesPerPixel == 4){
+
+            TiffCoverageLogger.getBufferedImagelogBranch_run(28);
             final TiffField extraSamplesField = directory.findField(TiffTagConstants.TIFF_TAG_EXTRA_SAMPLES);
             if (extraSamplesField == null) {
                 // this state is not defined in the TIFF specification
                 // and so this code will interpret it as meaning that the
                 // proper handling would be ARGB.
+                TiffCoverageLogger.getBufferedImagelogBranch_run(29);
                 hasAlpha = true;
                 isAlphaPremultiplied = false;
             } else {
+                TiffCoverageLogger.getBufferedImagelogBranch_run(30);
                 final int extraSamplesValue = extraSamplesField.getIntValue();
                 switch (extraSamplesValue) {
-                    case TiffTagConstants.EXTRA_SAMPLE_UNASSOCIATED_ALPHA:
-                        hasAlpha = true;
-                        isAlphaPremultiplied = false;
-                        break;
-                    case TiffTagConstants.EXTRA_SAMPLE_ASSOCIATED_ALPHA:
-                        hasAlpha = true;
-                        isAlphaPremultiplied = true;
-                        break;
-                    case 0:
-                    default:
-                        hasAlpha = false;
-                        isAlphaPremultiplied = false;
-                        break;
+                case TiffTagConstants.EXTRA_SAMPLE_UNASSOCIATED_ALPHA:
+                    TiffCoverageLogger.getBufferedImagelogBranch_run(31);
+                    hasAlpha = true;
+                    isAlphaPremultiplied = false;
+                    break;
+                case TiffTagConstants.EXTRA_SAMPLE_ASSOCIATED_ALPHA:
+                TiffCoverageLogger.getBufferedImagelogBranch_run(32);
+                    hasAlpha = true;
+                    isAlphaPremultiplied = true;
+                    break;
+                case 0:
+                default:
+                    TiffCoverageLogger.getBufferedImagelogBranch_run(33);
+                    hasAlpha = false;
+                    isAlphaPremultiplied = false;
+                    break;
                 }
             }
+        }else{
+            TiffCoverageLogger.getBufferedImagelogBranch_run(34);
+        }
+        }else{
+            TiffCoverageLogger.getBufferedImagelogBranch_run(35);
         }
 
         PhotometricInterpreter photometricInterpreter = params == null ? null
                 : params.getCustomPhotometricInterpreter();
         if (photometricInterpreter == null) {
-            photometricInterpreter = getPhotometricInterpreter(directory, photometricInterpretation, bitsPerPixel,
-                    bitsPerSample, predictor, samplesPerPixel,
+            TiffCoverageLogger.getBufferedImagelogBranch_run(36);
+            photometricInterpreter = getPhotometricInterpreter(directory, photometricInterpretation, bitsPerPixel, bitsPerSample, predictor, samplesPerPixel,
                     width, height);
+        }
+        else {
+
+            TiffCoverageLogger.getBufferedImagelogBranch_run(37);
+            
         }
 
         // Obtain the planar configuration
@@ -371,13 +450,29 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters>
             // currently, we support the non-interleaved (non-chunky)
             // option only in the case of a 24-bit RBG photometric interpreter
             // and for strips (not for tiles).
-            if (photometricInterpretation != TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_RGB
-                    || bitsPerPixel != 24) {
+            TiffCoverageLogger.getBufferedImagelogBranch_run(38);
+            if (photometricInterpretation != TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_RGB) {
+                TiffCoverageLogger.getBufferedImagelogBranch_run(39);
                 throw new ImagingException("For planar configuration 2, only 24 bit RGB is currently supported");
             }
+            else if ( bitsPerPixel != 24){
+                
+                TiffCoverageLogger.getBufferedImagelogBranch_run(40);
+            }
+            else {
+
+                TiffCoverageLogger.getBufferedImagelogBranch_run(41);
+            }
             if (null == directory.findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS)) {
+                TiffCoverageLogger.getBufferedImagelogBranch_run(42);
                 throw new ImagingException("For planar configuration 2, only strips-organization is supported");
             }
+            else{
+                TiffCoverageLogger.getBufferedImagelogBranch_run(43);
+            }
+        }
+        else{
+            TiffCoverageLogger.getBufferedImagelogBranch_run(44);
         }
 
         final AbstractTiffImageData imageData = directory.getTiffImageData();
@@ -833,9 +928,9 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters>
      * @throws ImagingException in the event of incompatible or malformed data
      * @throws IOException      in the event of an I/O error
      */
-    TiffRasterData getRasterData(final TiffDirectory directory, final ByteOrder byteOrder, TiffImagingParameters params)
-            throws ImagingException, IOException {
+    TiffRasterData getRasterData(final TiffDirectory directory, final ByteOrder byteOrder, TiffImagingParameters params) throws ImagingException, IOException {
 
+        
         if (params == null) {
             TiffCoverageLogger.logBranch_run(1);
             params = getDefaultParameters();
@@ -889,56 +984,8 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters>
 
         Rectangle subImage = checkForSubImage(params);
         if (subImage != null) {
+            validateSubImage(subImage, width, height);
             TiffCoverageLogger.logBranch_run(12);
-            // Check for valid subimage specification. The following checks
-            // are consistent with BufferedImage.getSubimage()
-            if (subImage.width <= 0) {
-                TiffCoverageLogger.logBranch_run(13);
-                throw new ImagingException("Negative or zero subimage width.");
-            } else {
-                TiffCoverageLogger.logBranch_run(14);
-            }
-
-            if (subImage.height <= 0) {
-                TiffCoverageLogger.logBranch_run(15);
-                throw new ImagingException("Negative or zero subimage height.");
-            } else {
-                TiffCoverageLogger.logBranch_run(16);
-            }
-
-            if (subImage.x < 0) {
-                TiffCoverageLogger.logBranch_run(17);
-                throw new ImagingException("Subimage x is outside raster.");
-            } else if (subImage.x >= width) {
-                TiffCoverageLogger.logBranch_run(18);
-                throw new ImagingException("Subimage x is outside raster.");
-            } else {
-                TiffCoverageLogger.logBranch_run(19);
-            }
-
-            if (subImage.x + subImage.width > width) {
-                TiffCoverageLogger.logBranch_run(20);
-                throw new ImagingException("Subimage (x+width) is outside raster.");
-            } else {
-                TiffCoverageLogger.logBranch_run(21);
-            }
-
-            if (subImage.y < 0) {
-                TiffCoverageLogger.logBranch_run(22);
-                throw new ImagingException("Subimage y is outside raster.");
-            } else if (subImage.y >= height) {
-                TiffCoverageLogger.logBranch_run(23);
-                throw new ImagingException("Subimage y is outside raster.");
-            } else {
-                TiffCoverageLogger.logBranch_run(24);
-            }
-
-            if (subImage.y + subImage.height > height) {
-                TiffCoverageLogger.logBranch_run(25);
-                throw new ImagingException("Subimage (y+height) is outside raster.");
-            } else {
-                TiffCoverageLogger.logBranch_run(26);
-            }
 
             // if the subimage is just the same thing as the whole
             // image, suppress the subimage processing
@@ -1117,4 +1164,84 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters>
         new TiffImageWriterLossy().writeImage(src, os, params);
     }
 
+    /**
+     * Check for valid subimage specification. The following checks are consistent with BufferedImage.getSubimage().
+     * Validates that the specified subImage is within the bounds [0..width/height].
+     * @param subImage A subImage rectangle
+     * @param width    The full image width
+     * @param height   The full image height
+     * @return The same subImage if valid, or null if no subImage was requested
+     * @throws ImagingException if the subImage is invalid (e.g., out of bounds)
+     */
+    public static void validateSubImage(final Rectangle subImage, final int width, final int height) throws ImagingException {
+        //if (subImage.width <= 0) throw new ImagingException("Negative or zero subimage width.");
+        //
+        //if (subImage.height <= 0) throw new ImagingException("Negative or zero subimage height.");
+        //
+        //if (subImage.x < 0 || subImage.x >= width) throw new ImagingException("Subimage x is outside raster.");
+        //
+        //if (subImage.y < 0 || subImage.y >= height) throw new ImagingException("Subimage y is outside raster.");
+        //
+        //if (subImage.x + subImage.width > width) throw new ImagingException("Subimage (x+width) is outside raster.");
+        //
+        //if (subImage.y + subImage.height > height) throw new ImagingException("Subimage (y+height) is outside raster.");
+            // Check for valid subimage specification. The following checks
+            // are consistent with BufferedImage.getSubimage()
+            if (subImage.width <= 0) {
+                TiffCoverageLogger.logBranch_run(13);
+                throw new ImagingException("Negative or zero subimage width.");
+            }
+            else{
+                TiffCoverageLogger.logBranch_run(14);
+            }
+
+            if (subImage.height <= 0) {
+                TiffCoverageLogger.logBranch_run(15);
+                throw new ImagingException("Negative or zero subimage height.");
+            }
+            else{
+                TiffCoverageLogger.logBranch_run(16);
+            }
+
+            if (subImage.x < 0) {
+                TiffCoverageLogger.logBranch_run(17);
+                throw new ImagingException("Subimage x is outside raster.");
+            }
+            else if(subImage.x >= width){
+                TiffCoverageLogger.logBranch_run(18);
+                throw new ImagingException("Subimage x is outside raster.");
+            }
+            else{
+                TiffCoverageLogger.logBranch_run(19);
+            }
+
+            if (subImage.x + subImage.width > width) {
+                TiffCoverageLogger.logBranch_run(20);
+                throw new ImagingException("Subimage (x+width) is outside raster.");
+            }
+            else{
+                TiffCoverageLogger.logBranch_run(21);
+            }
+
+            if (subImage.y < 0) {
+                TiffCoverageLogger.logBranch_run(22);
+                throw new ImagingException("Subimage y is outside raster.");
+            }
+            else if(subImage.y >= height){
+                TiffCoverageLogger.logBranch_run(23);
+                throw new ImagingException("Subimage y is outside raster.");
+            }
+            else{
+                TiffCoverageLogger.logBranch_run(24);
+            }
+
+            if (subImage.y + subImage.height > height) {
+                TiffCoverageLogger.logBranch_run(25);
+                throw new ImagingException("Subimage (y+height) is outside raster.");
+            }
+            else{
+                TiffCoverageLogger.logBranch_run(26);
+            }
+    }
+    
 }
