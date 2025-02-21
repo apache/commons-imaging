@@ -48,11 +48,8 @@
          // DPI is mandatory, so we have to invent something
          pixelDensity = pixelDensityParam != null ? pixelDensityParam : PixelDensity.createFromPixelsPerInch(72, 72);
      }
- 
-     public void writeImage(final BufferedImage src, final OutputStream os) throws IOException {
-         final PaletteFactory paletteFactory = new PaletteFactory();
-         final SimplePalette palette = paletteFactory.makeExactRgbPaletteSimple(src, 256);
-         final BinaryOutputStream bos = BinaryOutputStream.littleEndian(os);
+
+     private int[] determineParameters(final SimplePalette palette) {
          final int bitDepth;
          final int planes;
          if (palette == null || bitDepthWanted == 24 || bitDepthWanted == 32) {
@@ -107,7 +104,15 @@
                  planes = 2;
              }
          }
- 
+         return new int[] { bitDepth, planes };
+     }
+     public void writeImage(final BufferedImage src, final OutputStream os) throws IOException {
+         final PaletteFactory paletteFactory = new PaletteFactory();
+         final SimplePalette palette = paletteFactory.makeExactRgbPaletteSimple(src, 256);
+         final BinaryOutputStream bos = BinaryOutputStream.littleEndian(os);
+         final int[] parameters = determineParameters(palette);
+         final int bitDepth = parameters[0];
+         final int planes = parameters[1];
          int bytesPerLine = (bitDepth * src.getWidth() + 7) / 8;
          if (bytesPerLine % 2 != 0) {
              // must be even:
