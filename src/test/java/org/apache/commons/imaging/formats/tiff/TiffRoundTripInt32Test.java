@@ -304,22 +304,22 @@ public class TiffRoundTripInt32Test extends TiffBaseTest {
     @Test
     public void testGetRasterData_1() throws Exception {
         // Branch 62
-        '''
-            Requirements:
-                Directory
-                    TiffTagConstants
-                        TIFF_TAG_SAMPLE_FORMAT                  = SAMPLE_FORMAT_VALUE_TWOS_COMPLEMENT_SIGNED_INTEGER    // Constant
-                        TIFF_TAG_SAMPLES_PER_PIXEL              = 1
-                        TIFF_TAG_BITS_PER_SAMPLE                = bitsPerSample = 32 
-                        TIFF_TAG_COMPRESSION                    = COMPRESSION_VALUE_UNCOMPRESSED                        // Constant   
-                        TIFF_TAG_IMAGE_WIDTH                    = 48 
-                        TIFF_TAG_IMAGE_LENGTH                   = 23
-                        TIFF_TAG_PLANAR_CONFIGURATION           = PLANAR_CONFIGURATION_VALUE_CHUNKY                     // Constant
-                        TIFF_TAG_SAMPLE_FORMAT                  = 
-                        
-                        PREDICTOR_VALUE = 1 
-        '''
-
+        //
+        //    Requirements:
+        //        Directory
+        //            TiffTagConstants
+        //                TIFF_TAG_SAMPLE_FORMAT                  = SAMPLE_FORMAT_VALUE_TWOS_COMPLEMENT_SIGNED_INTEGER    // Constant
+        //                TIFF_TAG_SAMPLES_PER_PIXEL              = 1
+        //                TIFF_TAG_BITS_PER_SAMPLE                = bitsPerSample = 32 
+        //                TIFF_TAG_COMPRESSION                    = COMPRESSION_VALUE_UNCOMPRESSED                        // Constant   
+        //                TIFF_TAG_IMAGE_WIDTH                    = 48 
+        //                TIFF_TAG_IMAGE_LENGTH                   = 23
+        //                TIFF_TAG_PLANAR_CONFIGURATION           = PLANAR_CONFIGURATION_VALUE_CHUNKY                     // Constant
+        //                TIFF_TAG_SAMPLE_FORMAT                  = 
+        //                
+        //                PREDICTOR_VALUE = 1 
+        //
+//
 
 
         final File testFile = my_writeFile(32, ByteOrder.LITTLE_ENDIAN, false, 1, 1, false);
@@ -343,21 +343,21 @@ public class TiffRoundTripInt32Test extends TiffBaseTest {
     @Test
     public void testGetRasterData_2() throws Exception {
         // Branch 52
-            '''
-            Requirements:
-                Directory
-                    TiffTagConstants
-                        TIFF_TAG_SAMPLE_FORMAT                  = SAMPLE_FORMAT_VALUE_TWOS_COMPLEMENT_SIGNED_INTEGER    // Constant
-                        TIFF_TAG_SAMPLES_PER_PIXEL              = 16
-                        TIFF_TAG_BITS_PER_SAMPLE                = bitsPerSample = 32 
-                        TIFF_TAG_COMPRESSION                    = COMPRESSION_VALUE_UNCOMPRESSED                        // Constant   
-                        TIFF_TAG_IMAGE_WIDTH                    = 48 
-                        TIFF_TAG_IMAGE_LENGTH                   = 23
-                        TIFF_TAG_PLANAR_CONFIGURATION           = PLANAR_CONFIGURATION_VALUE_CHUNKY                     // Constant
-                        
-                        
-                        PREDICTOR_VALUE = 1 
-        '''
+        //    
+        //    Requirements:
+        //        Directory
+        //            TiffTagConstants
+        //                TIFF_TAG_SAMPLE_FORMAT                  = SAMPLE_FORMAT_VALUE_TWOS_COMPLEMENT_SIGNED_INTEGER    // Constant
+        //                TIFF_TAG_SAMPLES_PER_PIXEL              = 16
+        //                TIFF_TAG_BITS_PER_SAMPLE                = bitsPerSample = 32 
+        //                TIFF_TAG_COMPRESSION                    = COMPRESSION_VALUE_UNCOMPRESSED                        // Constant   
+        //                TIFF_TAG_IMAGE_WIDTH                    = 48 
+        //                TIFF_TAG_IMAGE_LENGTH                   = 23
+        //                TIFF_TAG_PLANAR_CONFIGURATION           = PLANAR_CONFIGURATION_VALUE_CHUNKY                     // Constant
+        //                
+        //                
+        //                PREDICTOR_VALUE = 1 
+        //
         final File testFile = my_writeFile(32, ByteOrder.LITTLE_ENDIAN, false, 1, 16, false);
         final ByteSource byteSource = ByteSource.file(testFile);
         final TiffReader tiffReader = new TiffReader(true);
@@ -380,21 +380,21 @@ public class TiffRoundTripInt32Test extends TiffBaseTest {
     public void testGetRasterData_3() throws Exception {
         // Branch 55
 
-        '''
-            Requirements:
-                Directory
-                    TiffTagConstants
-                        TIFF_TAG_SAMPLE_FORMAT                  = SAMPLE_FORMAT_VALUE_TWOS_COMPLEMENT_SIGNED_INTEGER    // Constant
-                        TIFF_TAG_SAMPLES_PER_PIXEL              = 16
-                        TIFF_TAG_BITS_PER_SAMPLE                = bitsPerSample = 33 
-                        TIFF_TAG_COMPRESSION                    = COMPRESSION_VALUE_UNCOMPRESSED                        // Constant   
-                        TIFF_TAG_IMAGE_WIDTH                    = 48 
-                        TIFF_TAG_IMAGE_LENGTH                   = 23
-                        TIFF_TAG_PLANAR_CONFIGURATION           = PLANAR_CONFIGURATION_VALUE_CHUNKY                     // Constant
-                        
-                        
-                        PREDICTOR_VALUE = 1 
-        '''
+        //
+        //    Requirements:
+        //        Directory
+        //            TiffTagConstants
+        //                TIFF_TAG_SAMPLE_FORMAT                  = SAMPLE_FORMAT_VALUE_TWOS_COMPLEMENT_SIGNED_INTEGER    // Constant
+        //                TIFF_TAG_SAMPLES_PER_PIXEL              = 16
+        //                TIFF_TAG_BITS_PER_SAMPLE                = bitsPerSample = 33 
+        //                TIFF_TAG_COMPRESSION                    = COMPRESSION_VALUE_UNCOMPRESSED                        // Constant   
+        //                TIFF_TAG_IMAGE_WIDTH                    = 48 
+        //                TIFF_TAG_IMAGE_LENGTH                   = 23
+        //                TIFF_TAG_PLANAR_CONFIGURATION           = PLANAR_CONFIGURATION_VALUE_CHUNKY                     // Constant
+        //                
+        //                
+        //                PREDICTOR_VALUE = 1 
+        //
         final File testFile = my_writeFile(33, ByteOrder.LITTLE_ENDIAN, false, 1, 1, false);
         final ByteSource byteSource = ByteSource.file(testFile);
         final TiffReader tiffReader = new TiffReader(true);
@@ -414,21 +414,21 @@ public class TiffRoundTripInt32Test extends TiffBaseTest {
     
     @Test
     public void testGetRasterData_4() throws Exception {
-        '''
-            Requirements:
-                Directory
-                    TiffTagConstants
-                        TIFF_TAG_SAMPLE_FORMAT                  = 111
-                        TIFF_TAG_SAMPLES_PER_PIXEL              = 16
-                        TIFF_TAG_BITS_PER_SAMPLE                = bitsPerSample = 65 
-                        TIFF_TAG_COMPRESSION                    = COMPRESSION_VALUE_UNCOMPRESSED                        // Constant   
-                        TIFF_TAG_IMAGE_WIDTH                    = 48 
-                        TIFF_TAG_IMAGE_LENGTH                   = 23
-                        TIFF_TAG_PLANAR_CONFIGURATION           = PLANAR_CONFIGURATION_VALUE_CHUNKY                     // Constant
-                        
-                        
-                        PREDICTOR_VALUE = 1 
-        '''
+        //
+        //    Requirements:
+        //        Directory
+        //            TiffTagConstants
+        //                TIFF_TAG_SAMPLE_FORMAT                  = 111
+        //                TIFF_TAG_SAMPLES_PER_PIXEL              = 16
+        //                TIFF_TAG_BITS_PER_SAMPLE                = bitsPerSample = 65 
+        //                TIFF_TAG_COMPRESSION                    = COMPRESSION_VALUE_UNCOMPRESSED                        // Constant   
+        //                TIFF_TAG_IMAGE_WIDTH                    = 48 
+        //                TIFF_TAG_IMAGE_LENGTH                   = 23
+        //                TIFF_TAG_PLANAR_CONFIGURATION           = PLANAR_CONFIGURATION_VALUE_CHUNKY                     // Constant
+        //                
+        //                
+        //                PREDICTOR_VALUE = 1 
+        //
         // Branch 64
         final File testFile = my_writeFile(65, ByteOrder.LITTLE_ENDIAN, false, 1, 16, true);
         final ByteSource byteSource = ByteSource.file(testFile);
