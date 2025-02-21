@@ -626,6 +626,11 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
         return "Tiff-Custom";
     }
 
+    public PhotometricInterpreter getPhotometricInterpreterWrapper(final TiffDirectory directory, final int photometricInterpretation, final int bitsPerPixel,
+            final int[] bitsPerSample, final int predictor, final int samplesPerPixel, final int width, final int height) throws ImagingException {
+        return getPhotometricInterpreter(directory, photometricInterpretation, bitsPerPixel, bitsPerSample, predictor, samplesPerPixel, width, height);
+    }
+
     private PhotometricInterpreter getPhotometricInterpreter(final TiffDirectory directory, final int photometricInterpretation, final int bitsPerPixel,
             final int[] bitsPerSample, final int predictor, final int samplesPerPixel, final int width, final int height) throws ImagingException {
         switch (photometricInterpretation) {
