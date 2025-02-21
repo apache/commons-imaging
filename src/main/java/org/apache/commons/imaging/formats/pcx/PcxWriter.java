@@ -51,39 +51,50 @@ final class PcxWriter {
 
     public void writeImage(final BufferedImage src, final OutputStream os) throws IOException {
         final PaletteFactory paletteFactory = new PaletteFactory();
+        PcxCoverageLogger.logBranch_run(1);
         final SimplePalette palette = paletteFactory.makeExactRgbPaletteSimple(src, 256);
+        PcxCoverageLogger.logBranch_run(2);
         final BinaryOutputStream bos = BinaryOutputStream.littleEndian(os);
+        PcxCoverageLogger.logBranch_run(3);
         final int bitDepth;
         final int planes;
         if (palette == null || bitDepthWanted == 24 || bitDepthWanted == 32) {
             if (bitDepthWanted == 32) {
                 bitDepth = 32;
                 planes = 1;
+                PcxCoverageLogger.logBranch_run(4);
             } else {
                 bitDepth = 8;
                 planes = 3;
+                PcxCoverageLogger.logBranch_run(5);
             }
         } else if (palette.length() > 16 || bitDepthWanted == 8) {
             bitDepth = 8;
             planes = 1;
+            PcxCoverageLogger.logBranch_run(6);
         } else if (palette.length() > 8 || bitDepthWanted == 4) {
             if (planesWanted == 1) {
                 bitDepth = 4;
                 planes = 1;
+                PcxCoverageLogger.logBranch_run(7);
             } else {
                 bitDepth = 1;
                 planes = 4;
+                PcxCoverageLogger.logBranch_run(8);
             }
         } else if (palette.length() > 4 || bitDepthWanted == 3) {
             bitDepth = 1;
             planes = 3;
+            PcxCoverageLogger.logBranch_run(9);
         } else if (palette.length() > 2 || bitDepthWanted == 2) {
             if (planesWanted == 2) {
                 bitDepth = 1;
                 planes = 2;
+                PcxCoverageLogger.logBranch_run(10);
             } else {
                 bitDepth = 2;
                 planes = 1;
+                PcxCoverageLogger.logBranch_run(11);
             }
         } else {
             boolean onlyBlackAndWhite = true;
@@ -91,20 +102,34 @@ final class PcxWriter {
                 final int rgb = palette.getEntry(0);
                 if (rgb != 0 && rgb != 0xffffff) {
                     onlyBlackAndWhite = false;
+                    PcxCoverageLogger.logBranch_run(12);
                 }
+                else {
+                    PcxCoverageLogger.logBranch_run(13);
+                }
+            }else {
+                PcxCoverageLogger.logBranch_run(14);
             }
             if (palette.length() == 2) {
                 final int rgb = palette.getEntry(1);
                 if (rgb != 0 && rgb != 0xffffff) {
                     onlyBlackAndWhite = false;
+                    PcxCoverageLogger.logBranch_run(15);
                 }
+                else {
+                    PcxCoverageLogger.logBranch_run(16);
+                }
+            }else {
+                PcxCoverageLogger.logBranch_run(17);
             }
             if (onlyBlackAndWhite) {
                 bitDepth = 1;
                 planes = 1;
+                PcxCoverageLogger.logBranch_run(18);
             } else {
                 bitDepth = 1;
                 planes = 2;
+                PcxCoverageLogger.logBranch_run(19);
             }
         }
 
@@ -112,6 +137,9 @@ final class PcxWriter {
         if (bytesPerLine % 2 != 0) {
             // must be even:
             bytesPerLine++;
+            PcxCoverageLogger.logBranch_run(20);
+        }else {
+            PcxCoverageLogger.logBranch_run(21);
         }
 
         final byte[] palette16 = new byte[16 * 3];
@@ -121,8 +149,10 @@ final class PcxWriter {
             final int rgb;
             if (i < paletteLen) {
                 rgb = palette.getEntry(i);
+                PcxCoverageLogger.logBranch_run(22);
             } else {
                 rgb = 0;
+                PcxCoverageLogger.logBranch_run(23);
             }
             palette16[3 * i + 0] = (byte) (0xff & rgb >> 16);
             palette16[3 * i + 1] = (byte) (0xff & rgb >> 8);
@@ -151,8 +181,10 @@ final class PcxWriter {
 
         if (bitDepth == 32) {
             writePixels32(src, bytesPerLine, bos);
+            PcxCoverageLogger.logBranch_run(24);
         } else {
             writePixels(src, bitDepth, planes, bytesPerLine, palette, bos);
+            PcxCoverageLogger.logBranch_run(25);
         }
 
         if (bitDepth == 8 && planes == 1) {
@@ -162,13 +194,17 @@ final class PcxWriter {
                 final int rgb;
                 if (i < palette.length()) {
                     rgb = palette.getEntry(i);
+                    PcxCoverageLogger.logBranch_run(26);
                 } else {
                     rgb = 0;
+                    PcxCoverageLogger.logBranch_run(27);
                 }
                 bos.write(rgb >> 16 & 0xff);
                 bos.write(rgb >> 8 & 0xff);
                 bos.write(rgb & 0xff);
             }
+        }else {
+            PcxCoverageLogger.logBranch_run(28);
         }
     }
 
