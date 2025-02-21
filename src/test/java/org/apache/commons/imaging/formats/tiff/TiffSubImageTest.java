@@ -19,6 +19,7 @@ package org.apache.commons.imaging.formats.tiff;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.awt.image.BufferedImage;
@@ -28,7 +29,6 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
-import java.awt.Rectangle;
 
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
@@ -127,11 +127,17 @@ public class TiffSubImageTest extends TiffBaseTest {
             }
         }
     }
-
     @Test
     public void testValidateSubImage_ThrowsExceptionForInvalidWidth() {
-        //getRasterData-branch 13 (width < 1)
-        //getBufferedImage-branch 4
+        //  Branch 13
+        //
+        //    Requirement: 
+        //        if (subImage.width <= 0) throw new ImagingException("Negative or zero subimage width.");
+//
+        //        achives this branch by setting width = 0 
+//
+        //
+
         Rectangle invalidRect = new Rectangle(0, 0, 0, 10);
         assertThrows(ImagingException.class, 
             () -> TiffImageParser.validateSubImage(invalidRect, 100, 100));
@@ -139,8 +145,14 @@ public class TiffSubImageTest extends TiffBaseTest {
 
     @Test
     public void testValidateSubImage_ThrowsExceptionForInvalidHeight() {
-        // getRasterData-branch 15 (heigth < 1)
-        // getBufferedImage-branch 6
+        //  Branch 15
+        //
+        //    Requirement: 
+        //        if (subImage.height <= 0) throw new ImagingException("Negative or zero subimage height.");
+//
+        //        achives this branch by setting height = 0, and width = 10
+//
+        //
         Rectangle invalidRect = new Rectangle(0, 0, 10, 0);
         assertThrows(ImagingException.class, 
             () -> TiffImageParser.validateSubImage(invalidRect, 100, 100));
@@ -148,8 +160,18 @@ public class TiffSubImageTest extends TiffBaseTest {
 
     @Test
     public void testValidateSubImage_ThrowsExceptionForOutOfBoundsX() {
-        // getRasterData-branch 17 (x < 0)
-        // getBufferedImage-branch 8
+        //  BRacnh 17 and branch 18
+        //
+        //    Requirement: 
+        //        if (subImage.x < 0 || subImage.x >= width) throw new ImagingException("Subimage x is outside raster.");
+//
+        //        achives this branch by setting height = 10, and width = 10
+        //        and subimage.x = -1 
+//
+        //        achives other branch by then setting x > width
+//
+        
+
         Rectangle invalidRect = new Rectangle(-1, 0, 10, 10);
         assertThrows(ImagingException.class, 
             () -> TiffImageParser.validateSubImage(invalidRect, 100, 100));
@@ -161,8 +183,18 @@ public class TiffSubImageTest extends TiffBaseTest {
 
     @Test
     public void testValidateSubImage_ThrowsExceptionForOutOfBoundsY() {
-        // getRasterData-branch 18 (y < 0)
-        // getBufferedImage-branch 9
+        //  BRacnh 17 and branch 18
+        //
+        //    Requirement: 
+        //        if (subImage.y < 0 || subImage.y >= height) throw new ImagingException("Subimage y is outside raster.");
+//
+        //        achives this branch by setting height = 10, and width = 10
+        //        and subimage.y = -1 
+//
+        //        achives other branch by then setting y > height
+//
+        //
+
         Rectangle invalidRect = new Rectangle(0, -1, 10, 10);
         assertThrows(ImagingException.class, 
             () -> TiffImageParser.validateSubImage(invalidRect, 100, 100));
