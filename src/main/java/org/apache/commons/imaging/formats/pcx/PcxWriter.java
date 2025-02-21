@@ -53,10 +53,10 @@
          final int bitDepth;
          final int planes;
          if (palette == null || bitDepthWanted == 24 || bitDepthWanted == 32) {
-             if (bitDepthWanted == 32) {
+             if (bitDepthWanted == 32) { //Test req: bitDepthWanted == 32
                  bitDepth = 32;
                  planes = 1;
-             } else {
+             } else { //Test req: bitDepthWanted == 24
                  bitDepth = 8;
                  planes = 3;
              }
@@ -64,10 +64,10 @@
              bitDepth = 8;
              planes = 1;
          } else if (palette.length() > 8 || bitDepthWanted == 4) {
-             if (planesWanted == 1) {
+             if (planesWanted == 1) { //Test req: bitDepthWanted == 4 && planesWanted == 1
                  bitDepth = 4;
                  planes = 1;
-             } else {
+             } else { //Test req: bitDepthWanted == 4 && planesWanted != 1
                  bitDepth = 1;
                  planes = 4;
              }
@@ -75,7 +75,7 @@
              bitDepth = 1;
              planes = 3;
          } else if (palette.length() > 2 || bitDepthWanted == 2) {
-             if (planesWanted == 2) {
+             if (planesWanted == 2) { //Test req: bitDepthWanted == 2 && planesWanted == 2
                  bitDepth = 1;
                  planes = 2;
              } else {
@@ -86,7 +86,7 @@
              boolean onlyBlackAndWhite = true;
              if (palette.length() >= 1) {
                  final int rgb = palette.getEntry(0);
-                 if (rgb != 0 && rgb != 0xffffff) {
+                 if (rgb != 0 && rgb != 0xffffff) { //Test req: bitDepthWanted < 2 && rgb != 0 && rgb != 0xffffff (colored image)
                      onlyBlackAndWhite = false;
                  }
              }
@@ -100,7 +100,7 @@
                  bitDepth = 1;
                  planes = 1;
              } else {
-                 bitDepth = 1;
+                 bitDepth = 1;//Test req: bitDepthWanted < 2 && colored image
                  planes = 2;
              }
          }
@@ -126,10 +126,10 @@
              final int rgb;
              if (i < paletteLen) {
                  rgb = palette.getEntry(i);
-             } else {
+             } else {palette16
                  rgb = 0;
              }
-             palette16[3 * i + 0] = (byte) (0xff & rgb >> 16);
+             [3 * i + 0] = (byte) (0xff & rgb >> 16);
              palette16[3 * i + 1] = (byte) (0xff & rgb >> 8);
              palette16[3 * i + 2] = (byte) (0xff & rgb);
          }
