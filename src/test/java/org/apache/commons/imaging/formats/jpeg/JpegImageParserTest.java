@@ -48,4 +48,24 @@ public class JpegImageParserTest {
             () -> parser.getImageInfo(bytesource, parameters)
         );
     }
+    @Test
+    public void JpegImageParserTest3() throws ImagingException, IOException {
+        final File f = new File("src/test/resources/images/jpeg/invalid/FallHarvestKitKat_cm.jpg");
+        final ByteSource bytesource = ByteSource.file(f);
+        final JpegImagingParameters parameters = null;
+        final JpegImageParser parser = new JpegImageParser();
+        assertDoesNotThrow(
+            () -> parser.getImageInfo(bytesource, parameters)
+        );
+    }
+    @Test
+    public void JpegImageParserTest4() throws ImagingException, IOException {
+        final File f = new File("src/test/resources/images/jpeg/invalid/FallHarvesetKitKat_no_density_units.jpg");
+        final ByteSource bytesource = ByteSource.file(f);
+        final JpegImagingParameters parameters = null;
+        final JpegImageParser parser = new JpegImageParser();
+        assertDoesNotThrow(
+            () -> parser.getImageInfo(bytesource, parameters)
+        );
+    }
 }
