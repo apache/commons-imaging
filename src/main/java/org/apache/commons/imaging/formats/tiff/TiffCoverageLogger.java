@@ -33,7 +33,7 @@ public class TiffCoverageLogger {
     public static void print_run_getImageInfo() {
         System.out.println("\n\n    For function getRasterData:");
         int counter = 0;
-        int total_branch = 55;
+        int total_branch = 54;
         for (int i = 1; i <= total_branch; i++) {
             boolean is_covered = branchCoverage_run_getImageInfo.getOrDefault(i, false);
             System.out.println("    Branch " + i + ": " + (is_covered ? "True" : "False"));

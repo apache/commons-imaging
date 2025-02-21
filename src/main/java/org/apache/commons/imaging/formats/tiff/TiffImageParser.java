@@ -506,28 +506,28 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters>
                     physicalHeightDpi = (int) Math.round(yResolutionPixelsPerUnit * unitsPerInch);
                     physicalHeightInch = (float) (height / (yResolutionPixelsPerUnit * unitsPerInch));
                 } else {
-                    TiffCoverageLogger.logBranch_run_getImageInfo(20);
+                    TiffCoverageLogger.logBranch_run_getImageInfo(19);
                 }
             } else {
-                TiffCoverageLogger.logBranch_run_getImageInfo(21);
+                TiffCoverageLogger.logBranch_run_getImageInfo(20);
             }
         } else {
-            TiffCoverageLogger.logBranch_run_getImageInfo(22);
+            TiffCoverageLogger.logBranch_run_getImageInfo(21);
         }
 
         final TiffField bitsPerSampleField = directory.findField(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE);
 
         int bitsPerSample = 1;
         if (bitsPerSampleField != null) {
-            TiffCoverageLogger.logBranch_run_getImageInfo(23);
+            TiffCoverageLogger.logBranch_run_getImageInfo(22);
             if (bitsPerSampleField.getValue() != null) {
-                TiffCoverageLogger.logBranch_run_getImageInfo(24);
+                TiffCoverageLogger.logBranch_run_getImageInfo(23);
                 bitsPerSample = bitsPerSampleField.getIntValueOrArraySum();
             } else {
-                TiffCoverageLogger.logBranch_run_getImageInfo(25);
+                TiffCoverageLogger.logBranch_run_getImageInfo(24);
             }
         } else {
-            TiffCoverageLogger.logBranch_run_getImageInfo(26);
+            TiffCoverageLogger.logBranch_run_getImageInfo(25);
         }
 
         final int bitsPerPixel = bitsPerSample; // assume grayscale;
@@ -535,11 +535,11 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters>
 
         final List<String> comments = Allocator.arrayList(directory.size());
         for (final TiffField field : directory) {
-            TiffCoverageLogger.logBranch_run_getImageInfo(54);
+            TiffCoverageLogger.logBranch_run_getImageInfo(26);
             final String comment = field.toString();
             comments.add(comment);
         }
-        TiffCoverageLogger.logBranch_run_getImageInfo(55);
+        TiffCoverageLogger.logBranch_run_getImageInfo(27);
 
         final ImageFormat format = ImageFormats.TIFF;
         final String formatName = "TIFF Tag-based Image File Format";
@@ -555,44 +555,44 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters>
         boolean usesPalette = false;
         final TiffField colorMapField = directory.findField(TiffTagConstants.TIFF_TAG_COLOR_MAP);
         if (colorMapField != null) {
-            TiffCoverageLogger.logBranch_run_getImageInfo(27);
+            TiffCoverageLogger.logBranch_run_getImageInfo(28);
             usesPalette = true;
         } else {
-            TiffCoverageLogger.logBranch_run_getImageInfo(28);
+            TiffCoverageLogger.logBranch_run_getImageInfo(29);
         }
 
         final int photoInterp = 0xffff & directory.getFieldValue(TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION);
         final TiffField extraSamplesField = directory.findField(TiffTagConstants.TIFF_TAG_EXTRA_SAMPLES);
         final int extraSamples;
         if (extraSamplesField == null) {
-            TiffCoverageLogger.logBranch_run_getImageInfo(29);
+            TiffCoverageLogger.logBranch_run_getImageInfo(30);
             extraSamples = 0; // no extra samples value
         } else {
-            TiffCoverageLogger.logBranch_run_getImageInfo(30);
+            TiffCoverageLogger.logBranch_run_getImageInfo(31);
             extraSamples = extraSamplesField.getIntValue();
         }
         final TiffField samplesPerPixelField = directory.findField(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL);
         final int samplesPerPixel;
         if (samplesPerPixelField == null) {
-            TiffCoverageLogger.logBranch_run_getImageInfo(31);
+            TiffCoverageLogger.logBranch_run_getImageInfo(32);
             samplesPerPixel = 1;
         } else {
-            TiffCoverageLogger.logBranch_run_getImageInfo(32);
+            TiffCoverageLogger.logBranch_run_getImageInfo(33);
             samplesPerPixel = samplesPerPixelField.getIntValue();
         }
 
         final ImageInfo.ColorType colorType;
         switch (photoInterp) {
             case TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_BLACK_IS_ZERO:
-                TiffCoverageLogger.logBranch_run_getImageInfo(33);
-            case TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_WHITE_IS_ZERO:
                 TiffCoverageLogger.logBranch_run_getImageInfo(34);
+            case TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_WHITE_IS_ZERO:
+                TiffCoverageLogger.logBranch_run_getImageInfo(35);
                 // the ImageInfo.ColorType enumeration does not distinguish
                 // between monotone white is zero or black is zero
                 colorType = ImageInfo.ColorType.BW;
                 break;
             case TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_RGB:
-                TiffCoverageLogger.logBranch_run_getImageInfo(35);
+                TiffCoverageLogger.logBranch_run_getImageInfo(36);
                 colorType = ImageInfo.ColorType.RGB;
                 // even if 4 samples per pixel are included, TIFF
                 // doesn't specify transparent unless the optional "extra samples"
@@ -600,29 +600,29 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters>
                 transparent = samplesPerPixel == 4 && extraSamples != 0;
                 break;
             case TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_RGB_PALETTE:
-                TiffCoverageLogger.logBranch_run_getImageInfo(36);
+                TiffCoverageLogger.logBranch_run_getImageInfo(37);
                 colorType = ImageInfo.ColorType.RGB;
                 usesPalette = true;
                 break;
             case TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_CMYK:
-                TiffCoverageLogger.logBranch_run_getImageInfo(37);
+                TiffCoverageLogger.logBranch_run_getImageInfo(38);
                 colorType = ImageInfo.ColorType.CMYK;
                 break;
             case TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_YCB_CR:
-                TiffCoverageLogger.logBranch_run_getImageInfo(38);
+                TiffCoverageLogger.logBranch_run_getImageInfo(39);
                 colorType = ImageInfo.ColorType.YCbCr;
                 break;
             default:
-                TiffCoverageLogger.logBranch_run_getImageInfo(39);
+                TiffCoverageLogger.logBranch_run_getImageInfo(40);
                 colorType = ImageInfo.ColorType.UNKNOWN;
         }
 
         final short compressionFieldValue;
         if (directory.findField(TiffTagConstants.TIFF_TAG_COMPRESSION) != null) {
-            TiffCoverageLogger.logBranch_run_getImageInfo(40);
+            TiffCoverageLogger.logBranch_run_getImageInfo(41);
             compressionFieldValue = directory.getFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION);
         } else {
-            TiffCoverageLogger.logBranch_run_getImageInfo(41);
+            TiffCoverageLogger.logBranch_run_getImageInfo(42);
             compressionFieldValue = TiffConstants.COMPRESSION_UNCOMPRESSED_1;
         }
         final int compression = 0xffff & compressionFieldValue;
@@ -630,49 +630,49 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters>
 
         switch (compression) {
             case TiffConstants.COMPRESSION_UNCOMPRESSED_1:
-                TiffCoverageLogger.logBranch_run_getImageInfo(42);
+                TiffCoverageLogger.logBranch_run_getImageInfo(43);
                 compressionAlgorithm = ImageInfo.CompressionAlgorithm.NONE;
                 break;
             case TiffConstants.COMPRESSION_CCITT_1D:
-                TiffCoverageLogger.logBranch_run_getImageInfo(43);
+                TiffCoverageLogger.logBranch_run_getImageInfo(44);
                 compressionAlgorithm = ImageInfo.CompressionAlgorithm.CCITT_1D;
                 break;
             case TiffConstants.COMPRESSION_CCITT_GROUP_3:
-                TiffCoverageLogger.logBranch_run_getImageInfo(44);
+                TiffCoverageLogger.logBranch_run_getImageInfo(45);
                 compressionAlgorithm = ImageInfo.CompressionAlgorithm.CCITT_GROUP_3;
                 break;
             case TiffConstants.COMPRESSION_CCITT_GROUP_4:
-                TiffCoverageLogger.logBranch_run_getImageInfo(45);
+                TiffCoverageLogger.logBranch_run_getImageInfo(46);
                 compressionAlgorithm = ImageInfo.CompressionAlgorithm.CCITT_GROUP_4;
                 break;
             case TiffConstants.COMPRESSION_LZW:
-                TiffCoverageLogger.logBranch_run_getImageInfo(46);
+                TiffCoverageLogger.logBranch_run_getImageInfo(47);
                 compressionAlgorithm = ImageInfo.CompressionAlgorithm.LZW;
                 break;
             case TiffConstants.COMPRESSION_JPEG_OBSOLETE:
-                TiffCoverageLogger.logBranch_run_getImageInfo(47);
+                TiffCoverageLogger.logBranch_run_getImageInfo(48);
                 compressionAlgorithm = ImageInfo.CompressionAlgorithm.JPEG_TIFF_OBSOLETE;
                 break;
             case TiffConstants.COMPRESSION_JPEG:
-                TiffCoverageLogger.logBranch_run_getImageInfo(48);
+                TiffCoverageLogger.logBranch_run_getImageInfo(49);
                 compressionAlgorithm = ImageInfo.CompressionAlgorithm.JPEG;
                 break;
             case TiffConstants.COMPRESSION_UNCOMPRESSED_2:
-                TiffCoverageLogger.logBranch_run_getImageInfo(49);
+                TiffCoverageLogger.logBranch_run_getImageInfo(50);
                 compressionAlgorithm = ImageInfo.CompressionAlgorithm.NONE;
                 break;
             case TiffConstants.COMPRESSION_PACKBITS:
-                TiffCoverageLogger.logBranch_run_getImageInfo(50);
+                TiffCoverageLogger.logBranch_run_getImageInfo(51);
                 compressionAlgorithm = ImageInfo.CompressionAlgorithm.PACKBITS;
                 break;
             case TiffConstants.COMPRESSION_DEFLATE_PKZIP:
-                TiffCoverageLogger.logBranch_run_getImageInfo(51);
-            case TiffConstants.COMPRESSION_DEFLATE_ADOBE:
                 TiffCoverageLogger.logBranch_run_getImageInfo(52);
+            case TiffConstants.COMPRESSION_DEFLATE_ADOBE:
+                TiffCoverageLogger.logBranch_run_getImageInfo(53);
                 compressionAlgorithm = ImageInfo.CompressionAlgorithm.DEFLATE;
                 break;
             default:
-                TiffCoverageLogger.logBranch_run_getImageInfo(53);
+                TiffCoverageLogger.logBranch_run_getImageInfo(54);
                 compressionAlgorithm = ImageInfo.CompressionAlgorithm.UNKNOWN;
                 break;
         }
