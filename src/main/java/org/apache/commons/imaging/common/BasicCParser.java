@@ -466,40 +466,40 @@ public class BasicCParser {
      * * 100% coverage
      * * Complexity: 7
      */
-    // public String nextToken() throws IOException, ImagingException {
-    //     // I don't know how complete the C parsing in an XPM file
-    //     // is meant to be, this is just the very basics...
+    public String nextToken() throws IOException, ImagingException {
+        // I don't know how complete the C parsing in an XPM file
+        // is meant to be, this is just the very basics...
 
-    //     boolean hadBackSlash = false;
-    //     final StringBuilder token = new StringBuilder();
-    //     for (int c = is.read(); c != -1; c = is.read()) {
-    //         TiffCoverageLogger.logBranch_nextToken(0);
-    //         if (c == '"') {
-    //             TiffCoverageLogger.logBranch_nextToken(1);
-    //             token.append('"');
-    //             return processString(token, hadBackSlash);
-    //         } else if (Character.isLetterOrDigit(c)) {
-    //             TiffCoverageLogger.logBranch_nextToken(2);
-    //             token.append((char) c);
-    //             return processIdentifier(token);
-    //         } else if (c == '_') {
-    //             TiffCoverageLogger.logBranch_nextToken(3);
-    //             token.append((char) c);
-    //             return processIdentifier(token);
-    //         } else if (String.valueOf((char) c).matches("[{}\\[\\]*;=,]")) {
-    //             TiffCoverageLogger.logBranch_nextToken(4);
-    //             token.append((char) c);
-    //             return token.toString();
-    //         } else if (String.valueOf((char) c).matches("[\\t\\r\\n ]")) {
-    //             // Ignore
-    //         } else {
-    //             TiffCoverageLogger.logBranch_nextToken(5);
-    //             throw new ImagingException("Unhandled/invalid character '" + (char) c + "' found in XPM file");
-    //         }
-    //     }
-    //     TiffCoverageLogger.logBranch_nextToken(6);
-    //     return null;
-    // }
+        boolean hadBackSlash = false;
+        final StringBuilder token = new StringBuilder();
+        for (int c = is.read(); c != -1; c = is.read()) {
+            TiffCoverageLogger.logBranch_nextToken(0);
+            if (c == '"') {
+                TiffCoverageLogger.logBranch_nextToken(1);
+                token.append('"');
+                return processString(token, hadBackSlash);
+            } else if (Character.isLetterOrDigit(c)) {
+                TiffCoverageLogger.logBranch_nextToken(2);
+                token.append((char) c);
+                return processIdentifier(token);
+            } else if (c == '_') {
+                TiffCoverageLogger.logBranch_nextToken(3);
+                token.append((char) c);
+                return processIdentifier(token);
+            } else if (String.valueOf((char) c).matches("[{}\\[\\]*;=,]")) {
+                TiffCoverageLogger.logBranch_nextToken(4);
+                token.append((char) c);
+                return token.toString();
+            } else if (String.valueOf((char) c).matches("[\\t\\r\\n ]")) {
+                // Ignore
+            } else {
+                TiffCoverageLogger.logBranch_nextToken(5);
+                throw new ImagingException("Unhandled/invalid character '" + (char) c + "' found in XPM file");
+            }
+        }
+        TiffCoverageLogger.logBranch_nextToken(6);
+        return null;
+    }
 
     // ----------------------LOGGED AND SEPARATED------------------------------
     // public String nextToken() throws IOException, ImagingException {
@@ -636,66 +636,66 @@ public class BasicCParser {
 
 
     //----------------------ORIGINAL------------------------------
-    public String nextToken() throws IOException, ImagingException {
-        // I don't know how complete the C parsing in an XPM file
-        // is meant to be, this is just the very basics...
+    // public String nextToken() throws IOException, ImagingException {
+    //     // I don't know how complete the C parsing in an XPM file
+    //     // is meant to be, this is just the very basics...
 
-        boolean inString = false;
-        boolean inIdentifier = false;
-        boolean hadBackSlash = false;
-        final StringBuilder token = new StringBuilder();
-        for (int c = is.read(); c != -1; c = is.read()) {
-            if (inString) {
-                switch (c) {
-                case '\\':
-                    token.append('\\');
-                    hadBackSlash = !hadBackSlash;
-                    break;
-                case '"':
-                    token.append('"');
-                    if (!hadBackSlash) {
-                        return token.toString();
-                    }
-                    hadBackSlash = false;
-                    break;
-                case '\r':
-                case '\n':
-                    throw new ImagingException("Unterminated string in XPM file");
-                default:
-                    token.append((char) c);
-                    hadBackSlash = false;
-                    break;
-                }
-            } else if (inIdentifier) {
-                if (!Character.isLetterOrDigit(c) && c != '_') {
-                    is.unread(c);
-                    return token.toString();
-                }
-                token.append((char) c);
-            } else if (c == '"') {
-                token.append('"');
-                inString = true;
-            } else if (Character.isLetterOrDigit(c) || c == '_') {
-                token.append((char) c);
-                inIdentifier = true;
-            } else if (c == '{' || c == '}' || c == '[' || c == ']' || c == '*' || c == ';' || c == '=' || c == ',') {
-                token.append((char) c);
-                return token.toString();
-            } else if (c == ' ' || c == '\t' || c == '\r' || c == '\n') { // NOPMD
-                // ignore
-            } else {
-                throw new ImagingException("Unhandled/invalid character '" + (char) c + "' found in XPM file");
-            }
-        }
+    //     boolean inString = false;
+    //     boolean inIdentifier = false;
+    //     boolean hadBackSlash = false;
+    //     final StringBuilder token = new StringBuilder();
+    //     for (int c = is.read(); c != -1; c = is.read()) {
+    //         if (inString) {
+    //             switch (c) {
+    //             case '\\':
+    //                 token.append('\\');
+    //                 hadBackSlash = !hadBackSlash;
+    //                 break;
+    //             case '"':
+    //                 token.append('"');
+    //                 if (!hadBackSlash) {
+    //                     return token.toString();
+    //                 }
+    //                 hadBackSlash = false;
+    //                 break;
+    //             case '\r':
+    //             case '\n':
+    //                 throw new ImagingException("Unterminated string in XPM file");
+    //             default:
+    //                 token.append((char) c);
+    //                 hadBackSlash = false;
+    //                 break;
+    //             }
+    //         } else if (inIdentifier) {
+    //             if (!Character.isLetterOrDigit(c) && c != '_') {
+    //                 is.unread(c);
+    //                 return token.toString();
+    //             }
+    //             token.append((char) c);
+    //         } else if (c == '"') {
+    //             token.append('"');
+    //             inString = true;
+    //         } else if (Character.isLetterOrDigit(c) || c == '_') {
+    //             token.append((char) c);
+    //             inIdentifier = true;
+    //         } else if (c == '{' || c == '}' || c == '[' || c == ']' || c == '*' || c == ';' || c == '=' || c == ',') {
+    //             token.append((char) c);
+    //             return token.toString();
+    //         } else if (c == ' ' || c == '\t' || c == '\r' || c == '\n') { // NOPMD
+    //             // ignore
+    //         } else {
+    //             throw new ImagingException("Unhandled/invalid character '" + (char) c + "' found in XPM file");
+    //         }
+    //     }
 
-        if (inIdentifier) {
-            return token.toString();
-        }
-        if (inString) {
-            throw new ImagingException("Unterminated string ends XMP file");
-        }
-        return null;
-    }
+    //     if (inIdentifier) {
+    //         return token.toString();
+    //     }
+    //     if (inString) {
+    //         throw new ImagingException("Unterminated string ends XMP file");
+    //     }
+    //     return null;
+    // }
     
 
 }
