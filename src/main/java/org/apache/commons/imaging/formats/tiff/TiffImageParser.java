@@ -249,61 +249,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
             // Check for valid subimage specification. The following checks
             // are consistent with BufferedImage.getSubimage()
             TiffCoverageLogger.getBufferedImagelogBranch_run(3);
-            if (subImage.width <= 0) {
-                TiffCoverageLogger.getBufferedImagelogBranch_run(4);
-                throw new ImagingException("Negative or zero subimage width.");
-            }
-            else{
-
-                TiffCoverageLogger.getBufferedImagelogBranch_run(5);
-
-            }
-            if (subImage.height <= 0) {
-                TiffCoverageLogger.getBufferedImagelogBranch_run(6);
-                throw new ImagingException("Negative or zero subimage height.");
-            }
-            else{
-                TiffCoverageLogger.getBufferedImagelogBranch_run(7);
-            }
-            
-            if (subImage.x < 0) {
-                TiffCoverageLogger.getBufferedImagelogBranch_run(8);
-                throw new ImagingException("Subimage x is outside raster.");
-            }
-            else if(subImage.x >= width){
-                TiffCoverageLogger.getBufferedImagelogBranch_run(9);
-                throw new ImagingException("Subimage x is outside raster.");
-            }
-            else{
-                TiffCoverageLogger.getBufferedImagelogBranch_run(10);
-            }
-            
-            if (subImage.x + subImage.width > width) {
-                TiffCoverageLogger.getBufferedImagelogBranch_run(11);
-                throw new ImagingException("Subimage (x+width) is outside raster.");
-            }
-            else{
-                TiffCoverageLogger.getBufferedImagelogBranch_run(12);
-            }
-            if (subImage.y < 0) {
-                TiffCoverageLogger.getBufferedImagelogBranch_run(13);
-                throw new ImagingException("Subimage y is outside raster.");
-            }
-            else if(subImage.y >= height){
-
-                TiffCoverageLogger.getBufferedImagelogBranch_run(14);
-
-            }
-            else{
-                TiffCoverageLogger.getBufferedImagelogBranch_run(15);
-            }
-            if (subImage.y + subImage.height > height) {
-                TiffCoverageLogger.getBufferedImagelogBranch_run(16);
-                throw new ImagingException("Subimage (y+height) is outside raster.");
-            }
-            else{
-                TiffCoverageLogger.getBufferedImagelogBranch_run(17);
-            }
+            validateSubImage(subImage, width, height);
         
         }
         else{
@@ -1087,59 +1033,74 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
             // are consistent with BufferedImage.getSubimage()
             if (subImage.width <= 0) {
                 TiffCoverageLogger.logBranch_run(13);
+                TiffCoverageLogger.getBufferedImagelogBranch_run(4);
                 throw new ImagingException("Negative or zero subimage width.");
             }
             else{
                 TiffCoverageLogger.logBranch_run(14);
+                TiffCoverageLogger.getBufferedImagelogBranch_run(5);
             }
 
             if (subImage.height <= 0) {
                 TiffCoverageLogger.logBranch_run(15);
+                TiffCoverageLogger.getBufferedImagelogBranch_run(6);
                 throw new ImagingException("Negative or zero subimage height.");
             }
             else{
                 TiffCoverageLogger.logBranch_run(16);
+                TiffCoverageLogger.getBufferedImagelogBranch_run(7);
             }
 
             if (subImage.x < 0) {
                 TiffCoverageLogger.logBranch_run(17);
+                TiffCoverageLogger.getBufferedImagelogBranch_run(8);
                 throw new ImagingException("Subimage x is outside raster.");
             }
             else if(subImage.x >= width){
                 TiffCoverageLogger.logBranch_run(18);
+                TiffCoverageLogger.getBufferedImagelogBranch_run(9);
                 throw new ImagingException("Subimage x is outside raster.");
             }
             else{
                 TiffCoverageLogger.logBranch_run(19);
+                TiffCoverageLogger.getBufferedImagelogBranch_run(10);
             }
 
             if (subImage.x + subImage.width > width) {
                 TiffCoverageLogger.logBranch_run(20);
+                TiffCoverageLogger.getBufferedImagelogBranch_run(11);
                 throw new ImagingException("Subimage (x+width) is outside raster.");
             }
             else{
                 TiffCoverageLogger.logBranch_run(21);
+                TiffCoverageLogger.getBufferedImagelogBranch_run(12);
             }
 
             if (subImage.y < 0) {
                 TiffCoverageLogger.logBranch_run(22);
+                TiffCoverageLogger.getBufferedImagelogBranch_run(13);
                 throw new ImagingException("Subimage y is outside raster.");
             }
             else if(subImage.y >= height){
                 TiffCoverageLogger.logBranch_run(23);
+                TiffCoverageLogger.getBufferedImagelogBranch_run(14);
                 throw new ImagingException("Subimage y is outside raster.");
             }
             else{
                 TiffCoverageLogger.logBranch_run(24);
+                TiffCoverageLogger.getBufferedImagelogBranch_run(15);
             }
 
             if (subImage.y + subImage.height > height) {
                 TiffCoverageLogger.logBranch_run(25);
+                TiffCoverageLogger.getBufferedImagelogBranch_run(16);
                 throw new ImagingException("Subimage (y+height) is outside raster.");
             }
             else{
                 TiffCoverageLogger.logBranch_run(26);
+                TiffCoverageLogger.getBufferedImagelogBranch_run(17);
+
             }
-    }
-    
+    }       
 }
+

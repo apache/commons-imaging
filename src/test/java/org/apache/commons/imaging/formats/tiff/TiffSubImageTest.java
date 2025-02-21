@@ -19,7 +19,6 @@ package org.apache.commons.imaging.formats.tiff;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.awt.image.BufferedImage;
@@ -29,6 +28,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.awt.Rectangle;
 
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
@@ -127,8 +127,11 @@ public class TiffSubImageTest extends TiffBaseTest {
             }
         }
     }
+
     @Test
     public void testValidateSubImage_ThrowsExceptionForInvalidWidth() {
+        //getRasterData-branch 13 (width < 1)
+        //getBufferedImage-branch 4
         Rectangle invalidRect = new Rectangle(0, 0, 0, 10);
         assertThrows(ImagingException.class, 
             () -> TiffImageParser.validateSubImage(invalidRect, 100, 100));
@@ -136,6 +139,8 @@ public class TiffSubImageTest extends TiffBaseTest {
 
     @Test
     public void testValidateSubImage_ThrowsExceptionForInvalidHeight() {
+        // getRasterData-branch 15 (heigth < 1)
+        // getBufferedImage-branch 6
         Rectangle invalidRect = new Rectangle(0, 0, 10, 0);
         assertThrows(ImagingException.class, 
             () -> TiffImageParser.validateSubImage(invalidRect, 100, 100));
@@ -143,6 +148,8 @@ public class TiffSubImageTest extends TiffBaseTest {
 
     @Test
     public void testValidateSubImage_ThrowsExceptionForOutOfBoundsX() {
+        // getRasterData-branch 17 (x < 0)
+        // getBufferedImage-branch 8
         Rectangle invalidRect = new Rectangle(-1, 0, 10, 10);
         assertThrows(ImagingException.class, 
             () -> TiffImageParser.validateSubImage(invalidRect, 100, 100));
@@ -154,6 +161,8 @@ public class TiffSubImageTest extends TiffBaseTest {
 
     @Test
     public void testValidateSubImage_ThrowsExceptionForOutOfBoundsY() {
+        // getRasterData-branch 18 (y < 0)
+        // getBufferedImage-branch 9
         Rectangle invalidRect = new Rectangle(0, -1, 10, 10);
         assertThrows(ImagingException.class, 
             () -> TiffImageParser.validateSubImage(invalidRect, 100, 100));

@@ -27,6 +27,7 @@ import java.nio.ByteOrder;
 import java.nio.file.Path;
 
 import org.apache.commons.imaging.FormatCompliance;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
@@ -222,6 +223,7 @@ public class TiffRoundTripInt32Test extends TiffBaseTest {
     }
 
 
+
     private File my_writeFile(final int bitsPerSample, final ByteOrder byteOrder, final boolean useTiles, final int predict, final int set_TIFF_TAG_SAMPLES_PER_PIXEL, final boolean a_991a) throws IOException, ImagingException {
         final String name = String.format("Int32RoundTrip_%2d_%s_%s.tiff", bitsPerSample, byteOrder == ByteOrder.LITTLE_ENDIAN ? "LE" : "BE",
                 useTiles ? "Tiles" : "Strips");
@@ -299,6 +301,7 @@ public class TiffRoundTripInt32Test extends TiffBaseTest {
         }
         return outputFile;
     }
+
 
 
     @Test
@@ -383,4 +386,85 @@ public class TiffRoundTripInt32Test extends TiffBaseTest {
         
         assertEquals("TIFF does not provide a supported raster-data format", exception.getMessage());
     }
+
+    private File my1_writeFile(final int bitsPerSample, final ByteOrder byteOrder, final boolean useTiles) throws IOException, ImagingException {
+        final String name = String.format("Int32RoundTrip_%2d_%s_%s.tiff", bitsPerSample, 
+            byteOrder == ByteOrder.LITTLE_ENDIAN ? "LE" : "BE",
+            useTiles ? "Tiles" : "Strips");
+        final File outputFile = new File(tempDir.toFile(), name);
+    
+        final int bytesPerSample = bitsPerSample / 8;
+        final int nRowsInBlock;
+        final int nColsInBlock;
+        final int nBytesInBlock;
+        
+        if (useTiles) {
+            nRowsInBlock = 12;
+            nColsInBlock = 20;
+        } else {
+            nRowsInBlock = 2;
+            nColsInBlock = width;
+        }
+        nBytesInBlock = nRowsInBlock * nColsInBlock * bytesPerSample;
+    
+        final byte[][] blocks = getBytesForOutput32(sample, width, height, nRowsInBlock, nColsInBlock, byteOrder);
+    
+        final TiffOutputSet outputSet = new TiffOutputSet(byteOrder);
+        final TiffOutputDirectory outDir = outputSet.addRootDirectory();
+        
+        outDir.add(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH, width);
+        outDir.add(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH, height);
+        outDir.add(TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, (short) TiffTagConstants.SAMPLE_FORMAT_VALUE_TWOS_COMPLEMENT_SIGNED_INTEGER);
+        
+        // Introduce a mismatch in TIFF metadata
+        outDir.add(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL, (short) 3);  // Changed from 1 to 3
+        outDir.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE, new short[]{8, 8});  // Should have 3 values, but only 2 provided (mismatch)
+        
+    
+        outDir.add(TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION, (short) TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_BLACK_IS_ZERO);
+        outDir.add(TiffTagConstants.TIFF_TAG_COMPRESSION, (short) TiffTagConstants.COMPRESSION_VALUE_UNCOMPRESSED);
+        outDir.add(TiffTagConstants.TIFF_TAG_PLANAR_CONFIGURATION, (short) TiffTagConstants.PLANAR_CONFIGURATION_VALUE_CHUNKY);
+    
+        if (useTiles) {
+            outDir.add(TiffTagConstants.TIFF_TAG_TILE_WIDTH, nColsInBlock);
+            outDir.add(TiffTagConstants.TIFF_TAG_TILE_LENGTH, nRowsInBlock);
+            outDir.add(TiffTagConstants.TIFF_TAG_TILE_BYTE_COUNTS, nBytesInBlock);
+        } else {
+            outDir.add(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP, nRowsInBlock);
+            outDir.add(TiffTagConstants.TIFF_TAG_STRIP_BYTE_COUNTS, nBytesInBlock);
+        }
+    
+        final AbstractTiffElement.DataElement[] imageData = new AbstractTiffElement.DataElement[blocks.length];
+        for (int i = 0; i < blocks.length; i++) {
+            imageData[i] = new AbstractTiffImageData.Data(0, blocks[i].length, blocks[i]);
+        }
+    
+        final AbstractTiffImageData abstractTiffImageData;
+        if (useTiles) {
+            abstractTiffImageData = new AbstractTiffImageData.Tiles(imageData, nColsInBlock, nRowsInBlock);
+        } else {
+            abstractTiffImageData = new AbstractTiffImageData.Strips(imageData, nRowsInBlock);
+        }
+        outDir.setTiffImageData(abstractTiffImageData);
+    
+        try (FileOutputStream fos = new FileOutputStream(outputFile);
+                BufferedOutputStream bos = new BufferedOutputStream(fos)) {
+            final TiffImageWriterLossy writer = new TiffImageWriterLossy(byteOrder);
+            writer.write(bos, outputSet);
+            bos.flush();
+        }
+        return outputFile;
+    }
+
+public void testSamplesPerPixelMismatch() throws Exception {
+    // Arrange: Create a TIFF file with a mismatch using the modified writer
+    final File testFile = my1_writeFile(16, ByteOrder.LITTLE_ENDIAN, false); // 16-bit, little-endian, strips
+
+    // Act & Assert: Calling getBufferedImage() should trigger the error
+    assertThrows(ImagingException.class, () -> {
+        Imaging.getBufferedImage(testFile); // This internally checks samplesPerPixel != bitsPerSample.length
+    }, "Expected ImagingException due to SAMPLES_PER_PIXEL mismatch with BITS_PER_SAMPLE.");
+}
+    
+
 }
