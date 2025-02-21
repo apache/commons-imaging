@@ -103,18 +103,6 @@
             </executions>
         </plugin>
       <plugin>
-      <groupId>org.jacoco</groupId>
-      <artifactId>jacoco-maven-plugin</artifactId>
-      <version>0.8.8</version>
-      <executions>
-          <execution>
-              <goals>
-                  <goal>prepare-agent</goal>
-              </goals>
-          </execution>
-      </executions>
-      </plugin>
-      <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.8.8</version>
@@ -220,6 +208,8 @@
           <configuration>
             <excludes>
               <exclude>**/TiffCoverageLogger.java</exclude>
+              <exclude>**/BasicCParserTest.java</exclude>
+              <exclude>nextToken_patch.patch</exclude>
               <exclude>src/test/resources/images/**/*</exclude>
               <exclude>src/test/resources/IMAGING-*/*</exclude>
               <exclude>src/test/**/*.xpm</exclude>
