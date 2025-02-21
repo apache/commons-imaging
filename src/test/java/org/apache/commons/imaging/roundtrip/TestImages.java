@@ -17,7 +17,7 @@
 package org.apache.commons.imaging.roundtrip;
 
 import java.awt.image.BufferedImage;
-
+import java.util.Random;
 final class TestImages {
 
     static BufferedImage createArgbBitmapImage(final int width, final int height) {
@@ -60,12 +60,14 @@ final class TestImages {
     }
 
     static BufferedImage createFullColorImage(final int width, final int height) {
+        final Random random = new Random();
         final BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                final int red = x * 255 / width;
-                final int green = y * 255 / height;
-                final int blue = (x + y) * 255 / (width + height);
+                // random color
+                final int red = random.nextInt(256);
+                final int green = random.nextInt(256);
+                final int blue = random.nextInt(256);
                 final int argb = 0xff << 24 | red << 16 | green << 8 | blue << 0;
                 result.setRGB(x, y, argb);
             }
