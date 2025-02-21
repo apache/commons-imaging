@@ -114,4 +114,32 @@ public class BasicCParserTest {
         String unhandled = e.getMessage().substring(0, 9);
         assertEquals(unhandled, "Unhandled");
     }
+
+    /**
+     * Create a test which checks an invalid string which did not terminate
+     * correctly.
+     * which should throw an exception.
+     */
+    @Test
+    public void testInvalidString() throws IOException, ImagingException {
+        String input = "\"";
+        BasicCParser p = new BasicCParser(new ByteArrayInputStream(input.getBytes()));
+        Exception e = assertThrows(ImagingException.class, () -> {
+            p.nextToken();
+        });
+        String expectedMessage = "Unterminated string ends XMP file";
+
+        assertEquals(expectedMessage, e.getMessage());
+    }
+
+    /**
+     * Test that a string works with carriage return prefixing it
+     */
+    @Test
+    public void testValidString() throws IOException, ImagingException {
+        String input = "\r\"abc\"";
+        BasicCParser p = new BasicCParser(new ByteArrayInputStream(input.getBytes()));
+
+        assertEquals("\"abc\"", p.nextToken());
+    }
 }
