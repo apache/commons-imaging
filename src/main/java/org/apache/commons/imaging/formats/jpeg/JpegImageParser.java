@@ -69,7 +69,6 @@ import org.apache.commons.imaging.internal.Debug;
 
 public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> implements XmpEmbeddable<JpegImagingParameters> {
 
-    private static final String coveragePath = "src/main/resources/org/apache/commons/imaging/formats/jpeg/JpegImageParserBranchCoverage.txt";
     private static final Logger LOGGER = Logger.getLogger(JpegImageParser.class.getName());
 
     private static final String DEFAULT_EXTENSION = ImageFormats.JPEG.getDefaultExtension();
@@ -300,44 +299,9 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
         return bytes;
     }
 
-    static boolean[] readBranchCoverage(String filename) throws FileNotFoundException {
-        final File myObj = new File(filename);
-        final Scanner myReader = new Scanner(myObj);
-        final String data = myReader.nextLine();
-        myReader.close();
-        final boolean[] branchCoverage = new boolean[100];
-        final char[] ch = data.toCharArray();
-        for (int i = 0; i < ch.length; ++i) {
-            if (ch[i] == '1') {
-                branchCoverage[i] = true;
-            }
-        }
-        return branchCoverage;
-    }
-
-    static void writeBranchCoverage(boolean[] branchCoverage, String filename) throws IOException {
-        final StringBuilder strBuilder = new StringBuilder();
-        for (int i = 0; i < branchCoverage.length; ++i) {
-            if (branchCoverage[i]) {
-                strBuilder.append('1');
-            } else {
-                strBuilder.append('0');
-            }
-        }
-        final String str = strBuilder.toString();
-
-        final FileWriter myWriter = new FileWriter(filename);
-        myWriter.write(str);
-        myWriter.close();
-    }
-
     @Override
     public ImageInfo getImageInfo(final ByteSource byteSource, final JpegImagingParameters params) throws ImagingException, IOException {
         // List allSegments = readSegments(byteSource, null, false);
-        // boolean[] branchCoverage = new boolean[100];
-        final boolean[] branchCoverage = readBranchCoverage(coveragePath);
-        // branch 0
-        branchCoverage[0] = true;
 
         final List<AbstractSegment> SOF_segments = readSegments(byteSource, new int[] {
                 // kJFIFMarker,
@@ -348,9 +312,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
 
         }, false);
 
-        if (SOF_segments == null) { // branch 1
-            branchCoverage[1] = true;
-            writeBranchCoverage(branchCoverage, coveragePath);
+        if (SOF_segments == null) {
             throw new ImagingException("No SOFN Data Found.");
         }
 
@@ -364,9 +326,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
         // SofnSegment fSOFNSegment = (SofnSegment) findSegment(segments,
         // SOFNmarkers);
 
-        if (fSOFNSegment == null) { // branch 2
-            branchCoverage[2] = true;
-            writeBranchCoverage(branchCoverage, coveragePath);
+        if (fSOFNSegment == null) {
             throw new ImagingException("No SOFN Data Found.");
         }
 
@@ -375,15 +335,13 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
 
         JfifSegment jfifSegment = null;
 
-        if (jfifSegments != null && !jfifSegments.isEmpty()) { // branch 3
-            branchCoverage[3] = true;
+        if (jfifSegments != null && !jfifSegments.isEmpty()) {
             jfifSegment = (JfifSegment) jfifSegments.get(0);
         }
 
         final List<AbstractSegment> app14Segments = readSegments(byteSource, new int[] { JpegConstants.JPEG_APP14_MARKER }, true);
         App14Segment app14Segment = null;
-        if (app14Segments != null && !app14Segments.isEmpty()) { // branch 4
-            branchCoverage[4] = true;
+        if (app14Segments != null && !app14Segments.isEmpty()) {
             app14Segment = (App14Segment) app14Segments.get(0);
         }
 
@@ -397,8 +355,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
         // int JFIF_minor_version;
         final String formatDetails;
 
-        if (jfifSegment != null) { // branch 5
-            branchCoverage[5] = true;
+        if (jfifSegment != null) {
             xDensity = jfifSegment.xDensity;
             yDensity = jfifSegment.yDensity;
             final int densityUnits = jfifSegment.densityUnits;
@@ -408,60 +365,48 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
             formatDetails = "Jpeg/JFIF v." + jfifSegment.jfifMajorVersion + "." + jfifSegment.jfifMinorVersion;
 
             switch (densityUnits) {
-            case 0: // branch 6
-                branchCoverage[6] = true;
+            case 0:
                 break;
-            case 1: // inches // branch 7
-                branchCoverage[7] = true;
+            case 1: // inches
                 unitsPerInch = 1.0;
                 break;
-            case 2: // cms // branch 8
-                branchCoverage[8] = true;
+            case 2: // cms
                 unitsPerInch = 2.54;
                 break;
-            default: // branch 9
-                branchCoverage[9] = true;
+            default:
                 break;
             }
         } else {
             final JpegImageMetadata metadata = (JpegImageMetadata) getMetadata(byteSource, params);
 
-            if (metadata != null) { // branch 10
-                branchCoverage[10] = true;
+            if (metadata != null) {
                 {
                     final TiffField field = metadata.findExifValue(TiffTagConstants.TIFF_TAG_XRESOLUTION);
-                    if (field != null) { // branch 11
-                        branchCoverage[11] = true;
+                    if (field != null) {
                         xDensity = ((Number) field.getValue()).doubleValue();
                     }
                 }
                 {
                     final TiffField field = metadata.findExifValue(TiffTagConstants.TIFF_TAG_YRESOLUTION);
-                    if (field != null) { // branch 12
-                        branchCoverage[12] = true;
+                    if (field != null) {
                         yDensity = ((Number) field.getValue()).doubleValue();
                     }
                 }
                 {
                     final TiffField field = metadata.findExifValue(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT);
-                    if (field != null) { // branch 13
-                        branchCoverage[13] = true;
+                    if (field != null) {
                         final int densityUnits = ((Number) field.getValue()).intValue();
 
                         switch (densityUnits) {
-                        case 1: // branch 14
-                            branchCoverage[14] = true;
+                        case 1:
                             break;
-                        case 2: // inches // branch 15
-                            branchCoverage[15] = true;
+                        case 2: // inches
                             unitsPerInch = 1.0;
                             break;
-                        case 3: // cms // branch 16
-                            branchCoverage[16] = true;
+                        case 3: // cms
                             unitsPerInch = 2.54;
                             break;
-                        default: // branch 17
-                            branchCoverage[17] = true;
+                        default:
                             break;
                         }
                     }
@@ -478,8 +423,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
         int physicalWidthDpi = -1;
         float physicalWidthInch = -1;
 
-        if (unitsPerInch > 0) { // branch 18
-            branchCoverage[18] = true;
+        if (unitsPerInch > 0) {
             physicalWidthDpi = (int) Math.round(xDensity * unitsPerInch);
             physicalWidthInch = (float) (width / (xDensity * unitsPerInch));
             physicalHeightDpi = (int) Math.round(yDensity * unitsPerInch);
@@ -488,8 +432,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
 
         final List<AbstractSegment> commentSegments = readSegments(byteSource, new int[] { JpegConstants.COM_MARKER }, false);
         final List<String> comments = Allocator.arrayList(commentSegments.size());
-        for (final AbstractSegment commentSegment : commentSegments) { // branch 19
-            branchCoverage[19] = true;
+        for (final AbstractSegment commentSegment : commentSegments) {
             final ComSegment comSegment = (ComSegment) commentSegment;
             comments.add(new String(comSegment.getComment(), StandardCharsets.UTF_8));
         }
@@ -513,97 +456,73 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
         ImageInfo.ColorType colorType = ImageInfo.ColorType.UNKNOWN;
         // Some images have both JFIF/APP0 and APP14.
         // JFIF is meant to win but in them APP14 is clearly right, so make it win.
-        if (app14Segment != null && app14Segment.isAdobeJpegSegment()) { // branch 20
-            branchCoverage[20] = true;
+        if (app14Segment != null && app14Segment.isAdobeJpegSegment()) {
             final int colorTransform = app14Segment.getAdobeColorTransform();
             switch (colorTransform) {
-            case App14Segment.ADOBE_COLOR_TRANSFORM_UNKNOWN: // branch 21
-                branchCoverage[21] = true;
-                if (numberOfComponents == 3) { // branch 22
-                    branchCoverage[22] = true;
+            case App14Segment.ADOBE_COLOR_TRANSFORM_UNKNOWN:
+                if (numberOfComponents == 3) {
                     colorType = ImageInfo.ColorType.RGB;
-                } else if (numberOfComponents == 4) { // branch 23
-                    branchCoverage[23] = true;
+                } else if (numberOfComponents == 4) {
                     colorType = ImageInfo.ColorType.CMYK;
                 }
                 break;
-            case App14Segment.ADOBE_COLOR_TRANSFORM_YCbCr: // branch 24
-                branchCoverage[24] = true;
+            case App14Segment.ADOBE_COLOR_TRANSFORM_YCbCr:
                 colorType = ImageInfo.ColorType.YCbCr;
                 break;
-            case App14Segment.ADOBE_COLOR_TRANSFORM_YCCK: // branch 25
-                branchCoverage[25] = true;
+            case App14Segment.ADOBE_COLOR_TRANSFORM_YCCK:
                 colorType = ImageInfo.ColorType.YCCK;
                 break;
-            default: // branch 26
-                branchCoverage[26] = true;
+            default:
                 break;
             }
-        } else if (jfifSegment != null) { // branch 27
-            branchCoverage[27] = true;
-            if (numberOfComponents == 1) { // branch 28
-                branchCoverage[28] = true;
+        } else if (jfifSegment != null) {
+            if (numberOfComponents == 1) {
                 colorType = ImageInfo.ColorType.GRAYSCALE;
-            } else if (numberOfComponents == 3) { // branch 29
-                branchCoverage[29] = true;
+            } else if (numberOfComponents == 3) {
                 colorType = ImageInfo.ColorType.YCbCr;
             }
-        } else { // branch 30
-            branchCoverage[30] = true;
+        } else {
             switch (numberOfComponents) {
-            case 1: // branch 31
-                branchCoverage[31] = true;
+            case 1:
                 colorType = ImageInfo.ColorType.GRAYSCALE;
                 break;
-            case 2: // branch 32
-                branchCoverage[32] = true;
+            case 2:
                 colorType = ImageInfo.ColorType.GRAYSCALE;
                 transparent = true;
                 break;
-            case 3: // branch 33
-                branchCoverage[33] = true;
-            case 4: // branch 34
-                branchCoverage[34] = true;
+            case 3:
+            case 4:
                 boolean have1 = false;
                 boolean have2 = false;
                 boolean have3 = false;
                 boolean have4 = false;
                 boolean haveOther = false;
-                for (final SofnSegment.Component component : fSOFNSegment.getComponents()) { // branch[35]
-                    branchCoverage[35] = true;
+                for (final SofnSegment.Component component : fSOFNSegment.getComponents()) {
                     final int id = component.componentIdentifier;
                     switch (id) {
-                    case 1: // branch 36
-                        branchCoverage[36] = true;
+                    case 1:
                         have1 = true;
                         break;
-                    case 2: // branch 37
-                        branchCoverage[37] = true;
+                    case 2:
                         have2 = true;
                         break;
-                    case 3: // branch 38
-                        branchCoverage[38] = true;
+                    case 3:
                         have3 = true;
                         break;
-                    case 4: // branch 39
-                        branchCoverage[39] = true;
+                    case 4:
                         have4 = true;
                         break;
-                    default: // branch 40
-                        branchCoverage[40] = true;
+                    default:
                         haveOther = true;
                         break;
                     }
                 }
-                if (numberOfComponents == 3 && have1 && have2 && have3 && !have4 && !haveOther) { // branch 41
-                    branchCoverage[41] = true;
+                if (numberOfComponents == 3 && have1 && have2 && have3 && !have4 && !haveOther) {
                     colorType = ImageInfo.ColorType.YCbCr;
-                } else if (numberOfComponents == 4 && have1 && have2 && have3 && have4 && !haveOther) { // branch 42
-                    branchCoverage[42] = true;
+                } else if (numberOfComponents == 4 && have1 && have2 && have3 && have4 && !haveOther) {
                     colorType = ImageInfo.ColorType.YCbCr;
                     transparent = true;
-                } else { // branch 43
-                    branchCoverage[43] = true;
+                } else {
                     boolean haveR = false;
                     boolean haveG = false;
                     boolean haveB = false;
@@ -611,115 +530,88 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
                     boolean haveC = false;
                     boolean havec = false;
                     boolean haveY = false;
-                    for (final SofnSegment.Component component : fSOFNSegment.getComponents()) { // branch 44
-                        branchCoverage[44] = true;
+                    for (final SofnSegment.Component component : fSOFNSegment.getComponents()) {
                         final int id = component.componentIdentifier;
                         switch (id) {
-                        case 'R': // branch 45
-                            branchCoverage[45] = true;
+                        case 'R':
                             haveR = true;
                             break;
-                        case 'G': // branch 46
-                            branchCoverage[46] = true;
+                        case 'G':
                             haveG = true;
                             break;
-                        case 'B': // branch 47
-                            branchCoverage[47] = true;
+                        case 'B':
                             haveB = true;
                             break;
-                        case 'A': // branch 48
-                            branchCoverage[48] = true;
+                        case 'A':
                             haveA = true;
                             break;
-                        case 'C': // branch 49
-                            branchCoverage[49] = true;
+                        case 'C':
                             haveC = true;
                             break;
-                        case 'c': // branch 50
-                            branchCoverage[50] = true;
+                        case 'c':
                             havec = true;
                             break;
-                        case 'Y': // branch 51
-                            branchCoverage[51] = true;
+                        case 'Y':
                             haveY = true;
                             break;
-                        default: // branch 52
-                            branchCoverage[52] = true;
+                        default:
                             break;
                         }
                     }
-                    if (haveR && haveG && haveB && !haveA && !haveC && !havec && !haveY) { // branch 53
-                        branchCoverage[53] = true;
+                    if (haveR && haveG && haveB && !haveA && !haveC && !havec && !haveY) {
                         colorType = ImageInfo.ColorType.RGB;
-                    } else if (haveR && haveG && haveB && haveA && !haveC && !havec && !haveY) { // branch 54
-                        branchCoverage[54] = true;
+                    } else if (haveR && haveG && haveB && haveA && !haveC && !havec && !haveY) {
                         colorType = ImageInfo.ColorType.RGB;
                         transparent = true;
-                    } else if (haveY && haveC && havec && !haveR && !haveG && !haveB && !haveA) { // branch 55
-                        branchCoverage[55] = true;
+                    } else if (haveY && haveC && havec && !haveR && !haveG && !haveB && !haveA) {
                         colorType = ImageInfo.ColorType.YCC;
-                    } else if (haveY && haveC && havec && haveA && !haveR && !haveG && !haveB) { // branch 56
-                        branchCoverage[56] = true;
+                    } else if (haveY && haveC && havec && haveA && !haveR && !haveG && !haveB) {
                         colorType = ImageInfo.ColorType.YCC;
                         transparent = true;
-                    } else { // branch 57
-                        branchCoverage[57] = true;
+                    } else {
                         int minHorizontalSamplingFactor = Integer.MAX_VALUE;
                         int maxHorizontalSmaplingFactor = Integer.MIN_VALUE;
                         int minVerticalSamplingFactor = Integer.MAX_VALUE;
                         int maxVerticalSamplingFactor = Integer.MIN_VALUE;
-                        for (final SofnSegment.Component component : fSOFNSegment.getComponents()) { // branch 58
-                            branchCoverage[58] = true;
-                            if (minHorizontalSamplingFactor > component.horizontalSamplingFactor) { // branch 59
-                                branchCoverage[59] = true;
+                        for (final SofnSegment.Component component : fSOFNSegment.getComponents()) {
+                            if (minHorizontalSamplingFactor > component.horizontalSamplingFactor) {
                                 minHorizontalSamplingFactor = component.horizontalSamplingFactor;
                             }
-                            if (maxHorizontalSmaplingFactor < component.horizontalSamplingFactor) { // branch 60
-                                branchCoverage[60] = true;
+                            if (maxHorizontalSmaplingFactor < component.horizontalSamplingFactor) {
                                 maxHorizontalSmaplingFactor = component.horizontalSamplingFactor;
                             }
-                            if (minVerticalSamplingFactor > component.verticalSamplingFactor) { // branch 61
-                                branchCoverage[61] = true;
+                            if (minVerticalSamplingFactor > component.verticalSamplingFactor) {
                                 minVerticalSamplingFactor = component.verticalSamplingFactor;
                             }
-                            if (maxVerticalSamplingFactor < component.verticalSamplingFactor) { // branch 62
-                                branchCoverage[62] = true;
+                            if (maxVerticalSamplingFactor < component.verticalSamplingFactor) {
                                 maxVerticalSamplingFactor = component.verticalSamplingFactor;
                             }
                         }
                         final boolean isSubsampled = minHorizontalSamplingFactor != maxHorizontalSmaplingFactor
                                 || minVerticalSamplingFactor != maxVerticalSamplingFactor;
-                        if (numberOfComponents == 3) { // branch 63
-                            branchCoverage[63] = true;
-                            if (isSubsampled) { // branch 64
-                                branchCoverage[64] = true;
+                        if (numberOfComponents == 3) {
+                            if (isSubsampled) {
                                 colorType = ImageInfo.ColorType.YCbCr;
-                            } else { // branch 65
-                                branchCoverage[65] = true;
+                            } else {
                                 colorType = ImageInfo.ColorType.RGB;
                             }
-                        } else if (numberOfComponents == 4) { // branch 66
-                            branchCoverage[66] = true;
-                            if (isSubsampled) { // branch 67
-                                branchCoverage[67] = true;
+                        } else if (numberOfComponents == 4) {
+                            if (isSubsampled) {
                                 colorType = ImageInfo.ColorType.YCCK;
-                            } else { // branch 68
-                                branchCoverage[68] = true;
+                            } else {
                                 colorType = ImageInfo.ColorType.CMYK;
                             }
                         }
                     }
                 }
                 break;
-            default: // branch 69
-                branchCoverage[69] = true;
+            default:
                 break;
             }
         }
 
         final ImageInfo.CompressionAlgorithm compressionAlgorithm = ImageInfo.CompressionAlgorithm.JPEG;
 
-        writeBranchCoverage(branchCoverage, coveragePath);
         return new ImageInfo(formatDetails, bitsPerPixel, comments, format, formatName, height, mimeType, numberOfImages, physicalHeightDpi, physicalHeightInch,
                 physicalWidthDpi, physicalWidthInch, width, progressive, transparent, usesPalette, colorType, compressionAlgorithm);
     }
