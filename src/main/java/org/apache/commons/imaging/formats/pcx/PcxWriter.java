@@ -126,10 +126,10 @@
              final int rgb;
              if (i < paletteLen) {
                  rgb = palette.getEntry(i);
-             } else {palette16
+             } else {
                  rgb = 0;
              }
-             [3 * i + 0] = (byte) (0xff & rgb >> 16);
+             palette16[3 * i + 0] = (byte) (0xff & rgb >> 16);
              palette16[3 * i + 1] = (byte) (0xff & rgb >> 8);
              palette16[3 * i + 2] = (byte) (0xff & rgb);
          }
