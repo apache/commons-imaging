@@ -90,6 +90,13 @@
   <build>
     <defaultGoal>clean verify apache-rat:check checkstyle:check spotbugs:check javadoc:javadoc</defaultGoal>
     <plugins>
+
+      <plugin>
+        <groupId>org.openclover</groupId>
+        <artifactId>clover-maven-plugin</artifactId>
+        <version>4.2.1</version>
+      </plugin>
+
       <plugin>
         <groupId>org.openclover</groupId>
         <artifactId>clover-maven-plugin</artifactId>
@@ -200,6 +207,7 @@
               <exclude>src/test/**/*.tga</exclude>
               <exclude>src/test/**/*.hdr</exclude>
               <exclude>src/main/resources/org/apache/commons/imaging/formats/xpm/rgb.txt</exclude>
+              <exclude>src/main/resources/org/apache/commons/imaging/formats/jpeg/JpegImageParserBranchCoverage.txt</exclude>
               <exclude>.asf.yaml</exclude>
             </excludes>
           </configuration>

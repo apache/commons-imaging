@@ -22,6 +22,7 @@
   <suppress checks="JavadocMethod" files=".*[/\\]test[/\\].*"/>
   <suppress checks="JavadocPackage" files=".*[/\\]test[/\\].*"/>
   <suppress checks="MagicNumber" files="ColorConversions.java"/>
+  <suppress checks="FallThrough" files = "src/main/java/org/apache/commons/imaging/formats/jpeg/JpegImageParser.java"/>
   <!-- Due to fail in Checkstyle on Windows and in GH Actions -->
   <suppress checks="NewlineAtEndOfFile" files="target[/\\].*[/\\]pom.properties"/>
 </suppressions>
