@@ -455,8 +455,9 @@ public class TiffRoundTripInt32Test extends TiffBaseTest {
         }
         return outputFile;
     }
-
-public void testSamplesPerPixelMismatch() throws Exception {
+    @Test
+    public void testSamplesPerPixelMismatch() throws Exception {
+    // branch 25
     // Arrange: Create a TIFF file with a mismatch using the modified writer
     final File testFile = my1_writeFile(16, ByteOrder.LITTLE_ENDIAN, false); // 16-bit, little-endian, strips
 

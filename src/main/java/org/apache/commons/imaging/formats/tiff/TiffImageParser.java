@@ -157,7 +157,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormats.TIFF, //
+        return new ImageFormat[] { ImageFormats.TIFF, 
         };
     }
 
@@ -234,6 +234,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
             throws ImagingException, IOException {
         final short compressionFieldValue;
         if (directory.findField(TiffTagConstants.TIFF_TAG_COMPRESSION) != null) {
+            // Requirement: TIFF_TAG_COMPRESSION is not null.
             TiffCoverageLogger.getBufferedImagelogBranch_run(1);
             compressionFieldValue = directory.getFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION);
         } else {
@@ -248,6 +249,8 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
         if (subImage != null) {
             // Check for valid subimage specification. The following checks
             // are consistent with BufferedImage.getSubimage()
+
+            // Requirement: subImage is not null
             TiffCoverageLogger.getBufferedImagelogBranch_run(3);
             validateSubImage(subImage, width, height);
         
@@ -259,6 +262,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
         int samplesPerPixel = 1;
         final TiffField samplesPerPixelField = directory.findField(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL);
         if (samplesPerPixelField != null) {
+            // Requirement: samplesPerPixelField is not null
             TiffCoverageLogger.getBufferedImagelogBranch_run(19);
             samplesPerPixel = samplesPerPixelField.getIntValue();
         }
@@ -271,6 +275,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
         int bitsPerPixel = samplesPerPixel;
         final TiffField bitsPerSampleField = directory.findField(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE);
         if (bitsPerSampleField != null) {
+            // Requirement: bitsPerSampleField is not null
             TiffCoverageLogger.getBufferedImagelogBranch_run(21);
             bitsPerSample = bitsPerSampleField.getIntArrayValue();
             bitsPerPixel = bitsPerSampleField.getIntValueOrArraySum();
@@ -291,6 +296,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
             // dumpOptionalNumberTag(entries, TIFF_TAG_PLANAR_CONFIGURATION);
             final TiffField predictorField = directory.findField(TiffTagConstants.TIFF_TAG_PREDICTOR);
             if (null != predictorField) {
+                // Requirement: TIFF_TAG_PREDICTOR is not null
                 TiffCoverageLogger.getBufferedImagelogBranch_run(23);
                 predictor = predictorField.getIntValueOrArraySum();
             }
@@ -300,6 +306,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
         }
 
         if (samplesPerPixel != bitsPerSample.length) {
+            // Requirement: samplesPerPixel is not equal to bitsPerSample.length
             TiffCoverageLogger.getBufferedImagelogBranch_run(25);
             throw new ImagingException("Tiff: samplesPerPixel (" + samplesPerPixel + ")!=fBitsPerSample.length (" + bitsPerSample.length + ")");
         }
@@ -312,15 +319,20 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
         boolean hasAlpha = false;
         boolean isAlphaPremultiplied = false;
         if (photometricInterpretation == TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_RGB) {
+            //  Requirement: If the photometric interpretation is RGB, the TIFF file must correctly handle
+            // the presence of an alpha channel.
             TiffCoverageLogger.getBufferedImagelogBranch_run(27);
             if(samplesPerPixel == 4){
 
-            TiffCoverageLogger.getBufferedImagelogBranch_run(28);
-            final TiffField extraSamplesField = directory.findField(TiffTagConstants.TIFF_TAG_EXTRA_SAMPLES);
+                TiffCoverageLogger.getBufferedImagelogBranch_run(28);
+                final TiffField extraSamplesField = directory.findField(TiffTagConstants.TIFF_TAG_EXTRA_SAMPLES);
             if (extraSamplesField == null) {
                 // this state is not defined in the TIFF specification
                 // and so this code will interpret it as meaning that the
                 // proper handling would be ARGB.
+
+                 // Requirement: If the EXTRA_SAMPLES field is missing, assume the fourth channel is
+                // an unassociated alpha channel and interpret the image as ARGB.
                 TiffCoverageLogger.getBufferedImagelogBranch_run(29);
                 hasAlpha = true;
                 isAlphaPremultiplied = false;
@@ -329,17 +341,20 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
                 final int extraSamplesValue = extraSamplesField.getIntValue();
                 switch (extraSamplesValue) {
                 case TiffTagConstants.EXTRA_SAMPLE_UNASSOCIATED_ALPHA:
+                // Requirement: An unassociated alpha channel means the alpha values are not premultiplied.
                     TiffCoverageLogger.getBufferedImagelogBranch_run(31);
                     hasAlpha = true;
                     isAlphaPremultiplied = false;
                     break;
                 case TiffTagConstants.EXTRA_SAMPLE_ASSOCIATED_ALPHA:
+                // Requirement: An associated alpha channel means the color values are premultiplied by alpha.
                 TiffCoverageLogger.getBufferedImagelogBranch_run(32);
                     hasAlpha = true;
                     isAlphaPremultiplied = true;
                     break;
                 case 0:
                 default:
+                    // Requirement: If the extra samples value is 0 or an undefined value, assume no alpha channel.
                     TiffCoverageLogger.getBufferedImagelogBranch_run(33);
                     hasAlpha = false;
                     isAlphaPremultiplied = false;
@@ -355,6 +370,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
 
         PhotometricInterpreter photometricInterpreter = params == null ? null : params.getCustomPhotometricInterpreter();
         if (photometricInterpreter == null) {
+            // Requirement: If no custom photometric interpreter is provided in the parameters
             TiffCoverageLogger.getBufferedImagelogBranch_run(36);
             photometricInterpreter = getPhotometricInterpreter(directory, photometricInterpretation, bitsPerPixel, bitsPerSample, predictor, samplesPerPixel,
                     width, height);
@@ -374,13 +390,18 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
             // currently, we support the non-interleaved (non-chunky)
             // option only in the case of a 24-bit RBG photometric interpreter
             // and for strips (not for tiles).
+
+            // Requirement: Planar configuration 2 (PLANAR) is currently only supported for
+            // 24-bit RGB images stored in strips 
             TiffCoverageLogger.getBufferedImagelogBranch_run(38);
             if (photometricInterpretation != TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_RGB) {
+                // Requirement: Only RGB images can use PLANAR configuration. If another format is detected,
+                // an exception is raised.
                 TiffCoverageLogger.getBufferedImagelogBranch_run(39);
                 throw new ImagingException("For planar configuration 2, only 24 bit RGB is currently supported");
             }
             else if ( bitsPerPixel != 24){
-                
+                // Requirement: PLANAR configuration requires exactly 24 bits per pixel.
                 TiffCoverageLogger.getBufferedImagelogBranch_run(40);
             }
             else {
@@ -388,6 +409,8 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
                 TiffCoverageLogger.getBufferedImagelogBranch_run(41);
             }
             if (null == directory.findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS)) {
+                // Requirement: PLANAR configuration is only supported for strip-based images, not tiled images.
+                // If strip offsets are missing, throw an exception.
                 TiffCoverageLogger.getBufferedImagelogBranch_run(42);
                 throw new ImagingException("For planar configuration 2, only strips-organization is supported");
             }
