@@ -17,8 +17,10 @@
 
 package org.apache.commons.imaging.formats.jpeg;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.imaging.ImagingException;
@@ -33,6 +35,16 @@ public class JpegImageParserTest {
         final JpegImageParser parser = new JpegImageParser();
         assertThrows(
             ImagingException.class,
+            () -> parser.getImageInfo(bytesource, parameters)
+        );
+    }
+    @Test
+    public void JpegImageParserTest2() throws ImagingException, IOException {
+        final File f = new File("src/test/resources/images/jpeg/invalid/metadata_only.jpeg");
+        final ByteSource bytesource = ByteSource.file(f);
+        final JpegImagingParameters parameters = null;
+        final JpegImageParser parser = new JpegImageParser();
+        assertDoesNotThrow(
             () -> parser.getImageInfo(bytesource, parameters)
         );
     }
