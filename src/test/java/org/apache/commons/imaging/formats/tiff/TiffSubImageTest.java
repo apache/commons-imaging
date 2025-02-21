@@ -129,6 +129,15 @@ public class TiffSubImageTest extends TiffBaseTest {
     }
     @Test
     public void testValidateSubImage_ThrowsExceptionForInvalidWidth() {
+        //  Branch 13
+        '''
+            Requirement: 
+                if (subImage.width <= 0) throw new ImagingException("Negative or zero subimage width.");
+
+                achives this branch by setting width = 0 
+
+        '''
+
         Rectangle invalidRect = new Rectangle(0, 0, 0, 10);
         assertThrows(ImagingException.class, 
             () -> TiffImageParser.validateSubImage(invalidRect, 100, 100));
@@ -136,6 +145,14 @@ public class TiffSubImageTest extends TiffBaseTest {
 
     @Test
     public void testValidateSubImage_ThrowsExceptionForInvalidHeight() {
+        //  Branch 15
+        '''
+            Requirement: 
+                if (subImage.height <= 0) throw new ImagingException("Negative or zero subimage height.");
+
+                achives this branch by setting height = 0, and width = 10
+
+        '''
         Rectangle invalidRect = new Rectangle(0, 0, 10, 0);
         assertThrows(ImagingException.class, 
             () -> TiffImageParser.validateSubImage(invalidRect, 100, 100));
@@ -143,6 +160,18 @@ public class TiffSubImageTest extends TiffBaseTest {
 
     @Test
     public void testValidateSubImage_ThrowsExceptionForOutOfBoundsX() {
+        //  BRacnh 17 and branch 18
+        '''
+            Requirement: 
+                if (subImage.x < 0 || subImage.x >= width) throw new ImagingException("Subimage x is outside raster.");
+
+                achives this branch by setting height = 10, and width = 10
+                and subimage.x = -1 
+
+                achives other branch by then setting x > width
+
+        '''
+
         Rectangle invalidRect = new Rectangle(-1, 0, 10, 10);
         assertThrows(ImagingException.class, 
             () -> TiffImageParser.validateSubImage(invalidRect, 100, 100));
@@ -154,6 +183,18 @@ public class TiffSubImageTest extends TiffBaseTest {
 
     @Test
     public void testValidateSubImage_ThrowsExceptionForOutOfBoundsY() {
+        //  BRacnh 17 and branch 18
+        '''
+            Requirement: 
+                if (subImage.y < 0 || subImage.y >= height) throw new ImagingException("Subimage y is outside raster.");
+
+                achives this branch by setting height = 10, and width = 10
+                and subimage.y = -1 
+
+                achives other branch by then setting y > height
+
+        '''
+
         Rectangle invalidRect = new Rectangle(0, -1, 10, 10);
         assertThrows(ImagingException.class, 
             () -> TiffImageParser.validateSubImage(invalidRect, 100, 100));
