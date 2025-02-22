@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.imaging.internal;
 
 import java.io.IOException;
@@ -40,12 +41,10 @@ public final class ImageParserFactory {
         if (!format.equals(ImageFormats.UNKNOWN)) {
             return getImageParser(format);
         }
-
         final String fileName = byteSource.getFileName();
         if (fileName != null) {
             return getImageParser(fileName);
         }
-
         throw new IllegalArgumentException("Can't parse this format.");
     }
 
