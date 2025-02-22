@@ -27,7 +27,7 @@ import java.util.Objects;
  * </p>
  *
  * <p>
- * For example, if the comparator is created for the {@code ColorComponent.RED} channel, then it will compare the value of red of each {@code ColorCount} object
+ * For example, if the comparator is created for the {@link ColorComponent#RED} channel, then it will compare the value of red of each {@code ColorCount} object
  * in the array of elements.
  * </p>
  *

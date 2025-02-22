@@ -83,10 +83,22 @@ public final class ColorCieLab {
      */
     public static final ColorCieLab BLUE = new ColorCieLab(32, 79, -108);
 
+    /** lightness L*. */
     public final double l;
+
+    /** a* value. */
     public final double a;
+
+    /** b* value. */
     public final double b;
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param l perceptual lightness L*.
+     * @param a a* value.
+     * @param b b* value.
+     */
     public ColorCieLab(final double l, final double a, final double b) {
         this.l = l;
         this.a = a;
