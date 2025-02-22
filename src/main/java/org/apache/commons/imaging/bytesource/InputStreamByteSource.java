@@ -41,11 +41,11 @@ final class InputStreamByteSource extends ByteSource {
         private boolean triedNext;
 
         Block(final byte[] bytes) {
-            this.bytes = bytes;
+            this.bytes = Objects.requireNonNull(bytes);
         }
 
         Block getNext() throws IOException {
-            if (null != next) {
+            if (next != null) {
                 return next;
             }
             if (triedNext) {
@@ -54,6 +54,10 @@ final class InputStreamByteSource extends ByteSource {
             triedNext = true;
             next = readBlock();
             return next;
+        }
+
+        int length() {
+            return bytes.length;
         }
     }
 
@@ -65,21 +69,21 @@ final class InputStreamByteSource extends ByteSource {
 
         @Override
         public int read() throws IOException {
-            if (null == block) {
+            if (block == null) {
                 if (readFirst) {
                     return -1;
                 }
                 block = getFirstBlock();
                 readFirst = true;
             }
-            if (block != null && blockIndex >= block.bytes.length) {
+            if (block != null && blockIndex >= block.length()) {
                 block = block.getNext();
                 blockIndex = 0;
             }
-            if (null == block) {
+            if (block == null) {
                 return -1;
             }
-            if (blockIndex >= block.bytes.length) {
+            if (blockIndex >= block.length()) {
                 return -1;
             }
             return 0xff & block.bytes[blockIndex++];
@@ -95,24 +99,24 @@ final class InputStreamByteSource extends ByteSource {
                 return 0;
             }
             // optimized block read
-            if (null == block) {
+            if (block == null) {
                 if (readFirst) {
                     return -1;
                 }
                 block = getFirstBlock();
                 readFirst = true;
             }
-            if (block != null && blockIndex >= block.bytes.length) {
+            if (block != null && blockIndex >= block.length()) {
                 block = block.getNext();
                 blockIndex = 0;
             }
-            if (null == block) {
+            if (block == null) {
                 return -1;
             }
-            if (blockIndex >= block.bytes.length) {
+            if (blockIndex >= block.length()) {
                 return -1;
             }
-            final int readSize = Math.min(len, block.bytes.length - blockIndex);
+            final int readSize = Math.min(len, block.length() - blockIndex);
             System.arraycopy(block.bytes, blockIndex, array, off, readSize);
             blockIndex += readSize;
             return readSize;
@@ -126,7 +130,7 @@ final class InputStreamByteSource extends ByteSource {
             }
             while (remaining > 0) {
                 // read the first block
-                if (null == block) {
+                if (block == null) {
                     if (readFirst) {
                         return -1;
                     }
@@ -134,17 +138,17 @@ final class InputStreamByteSource extends ByteSource {
                     readFirst = true;
                 }
                 // get next block
-                if (block != null && blockIndex >= block.bytes.length) {
+                if (block != null && blockIndex >= block.length()) {
                     block = block.getNext();
                     blockIndex = 0;
                 }
-                if (null == block) {
+                if (block == null) {
                     break;
                 }
-                if (blockIndex >= block.bytes.length) {
+                if (blockIndex >= block.length()) {
                     break;
                 }
-                final int readSize = Math.min((int) Math.min(BLOCK_SIZE, remaining), block.bytes.length - blockIndex);
+                final int readSize = Math.min((int) Math.min(BLOCK_SIZE, remaining), block.length() - blockIndex);
                 blockIndex += readSize;
                 remaining -= readSize;
             }
