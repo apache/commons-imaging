@@ -40,6 +40,11 @@ public class ColorCountComparator implements Comparator<ColorCount> {
      */
     private final ColorComponent colorComponent;
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param colorComponent
+     */
     public ColorCountComparator(final ColorComponent colorComponent) {
         this.colorComponent = Objects.requireNonNull(colorComponent, "colorComponent");
     }
