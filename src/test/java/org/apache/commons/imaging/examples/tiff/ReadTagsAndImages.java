@@ -36,6 +36,7 @@ import org.apache.commons.imaging.formats.tiff.TiffReader;
 import org.apache.commons.imaging.formats.tiff.constants.GdalLibraryTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.GeoTiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Provides a example application showing how to access metadata and imagery from TIFF files using the low-level access routines. This approach is especially
@@ -346,7 +347,7 @@ public class ReadTagsAndImages {
         if (args.length == 2) {
             rootName = args[1];
         }
-        final boolean optionalImageReadingEnabled = rootName != null && !rootName.isEmpty();
+        final boolean optionalImageReadingEnabled = StringUtils.isNotEmpty(rootName);
 
         final ByteSource byteSource = ByteSource.file(target);
         final TiffImagingParameters params = new TiffImagingParameters();
