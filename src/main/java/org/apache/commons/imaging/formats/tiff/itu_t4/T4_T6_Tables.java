@@ -28,11 +28,7 @@ final class T4_T6_Tables {
 
         public void writeBits(final BitArrayOutputStream outputStream) {
             for (int i = 0; i < bitString.length(); i++) {
-                if (bitString.charAt(i) == '0') {
-                    outputStream.writeBit(0);
-                } else {
-                    outputStream.writeBit(1);
-                }
+                outputStream.writeBit(bitString.charAt(i) == '0' ? 0 : 1);
             }
         }
     }
