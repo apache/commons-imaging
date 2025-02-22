@@ -127,9 +127,7 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
     }
 
     public void dump() {
-        for (final TiffField entry : entries) {
-            entry.dump();
-        }
+        entries.forEach(TiffField::dump);
     }
 
     public TiffField findField(final TagInfo tag) throws ImagingException {
