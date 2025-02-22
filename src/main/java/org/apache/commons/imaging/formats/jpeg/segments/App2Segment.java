@@ -19,7 +19,6 @@ package org.apache.commons.imaging.formats.jpeg.segments;
 import static org.apache.commons.imaging.common.BinaryFunctions.readAndVerifyBytes;
 import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
 import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.startsWith;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -40,7 +39,7 @@ public class App2Segment extends AppnSegment implements Comparable<App2Segment> 
     public App2Segment(final int marker, int markerLength, final InputStream is2) throws ImagingException, IOException {
         super(marker, markerLength, is2);
 
-        if (startsWith(getSegmentData(), JpegConstants.ICC_PROFILE_LABEL)) {
+        if (JpegConstants.ICC_PROFILE_LABEL.isStartOf(getSegmentData())) {
             final InputStream is = new ByteArrayInputStream(getSegmentData());
 
             readAndVerifyBytes(is, JpegConstants.ICC_PROFILE_LABEL, "Not a Valid App2 Segment: missing ICC Profile label");

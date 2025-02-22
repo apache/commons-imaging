@@ -322,18 +322,6 @@ public final class BinaryFunctions {
         }
     }
 
-    public static boolean startsWith(final byte[] buffer, final BinaryConstant search) {
-        if (buffer == null || buffer.length < search.size()) {
-            return false;
-        }
-        for (int i = 0; i < search.size(); i++) {
-            if (buffer[i] != search.get(i)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     public static boolean startsWith(final byte[] buffer, final byte[] search) {
         if (search == null) {
             return false;

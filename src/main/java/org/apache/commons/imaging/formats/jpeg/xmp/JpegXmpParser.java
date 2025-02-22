@@ -21,7 +21,6 @@ import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFileParser;
-import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
 public class JpegXmpParser extends BinaryFileParser {
@@ -34,7 +33,7 @@ public class JpegXmpParser extends BinaryFileParser {
     }
 
     public boolean isXmpJpegSegment(final byte[] segmentData) {
-        return BinaryFunctions.startsWith(segmentData, JpegConstants.XMP_IDENTIFIER);
+        return JpegConstants.XMP_IDENTIFIER.isStartOf(segmentData);
     }
 
     public String parseXmpJpegSegment(final byte[] segmentData) throws ImagingException {

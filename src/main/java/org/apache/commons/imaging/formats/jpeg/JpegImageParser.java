@@ -17,7 +17,6 @@
 package org.apache.commons.imaging.formats.jpeg;
 
 import static org.apache.commons.imaging.common.BinaryFunctions.remainingBytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.startsWith;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
@@ -71,7 +70,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.JPEG.getExtensions();
 
     public static boolean isExifApp1Segment(final GenericSegment segment) {
-        return startsWith(segment.getSegmentData(), JpegConstants.EXIF_IDENTIFIER_CODE);
+        return JpegConstants.EXIF_IDENTIFIER_CODE.isStartOf(segment.getSegmentData());
     }
 
     /**
@@ -760,7 +759,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
                     return false;
                 }
 
-                if (marker == JpegConstants.JPEG_APP1_MARKER && startsWith(segmentData, JpegConstants.EXIF_IDENTIFIER_CODE)) {
+                if (marker == JpegConstants.JPEG_APP1_MARKER && JpegConstants.EXIF_IDENTIFIER_CODE.isStartOf(segmentData)) {
                     result[0] = true;
                     return false;
                 }

@@ -96,7 +96,7 @@ public class IptcParser extends BinaryFileParser {
     }
 
     public boolean isPhotoshopJpegSegment(final byte[] segmentData) {
-        if (!BinaryFunctions.startsWith(segmentData, JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING)) {
+        if (!JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.isStartOf(segmentData)) {
             return false;
         }
 

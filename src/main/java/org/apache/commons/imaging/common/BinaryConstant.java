@@ -56,6 +56,16 @@ public class BinaryConstant {
         return value.length;
     }
 
+    /**
+     * Tests whether the give buffer starts with this binary constant.
+     *
+     * @param buffer The buffer to test.
+     * @return Whether the give buffer starts with this binary constant.
+     */
+    public boolean isStartOf(final byte[] buffer) {
+        return BinaryFunctions.startsWith(buffer, value);
+    }
+
     public void writeTo(final OutputStream os) throws IOException {
         for (final byte element : value) {
             os.write(element);

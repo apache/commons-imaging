@@ -16,8 +16,6 @@
  */
 package org.apache.commons.imaging.formats.jpeg.xmp;
 
-import static org.apache.commons.imaging.common.BinaryFunctions.startsWith;
-
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -107,7 +105,7 @@ public class JpegRewriter extends BinaryFileParser {
             if (marker != JpegConstants.JPEG_APP1_MARKER) {
                 return false;
             }
-            if (!startsWith(segmentData, JpegConstants.EXIF_IDENTIFIER_CODE)) {
+            if (!JpegConstants.EXIF_IDENTIFIER_CODE.isStartOf(segmentData)) {
                 return false;
             }
             return true;
@@ -127,7 +125,7 @@ public class JpegRewriter extends BinaryFileParser {
             if (marker != JpegConstants.JPEG_APP1_MARKER) {
                 return false;
             }
-            if (!startsWith(segmentData, JpegConstants.XMP_IDENTIFIER)) {
+            if (!JpegConstants.XMP_IDENTIFIER.isStartOf(segmentData)) {
                 return false;
             }
             return true;

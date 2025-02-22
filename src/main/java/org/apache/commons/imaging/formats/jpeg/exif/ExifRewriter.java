@@ -17,7 +17,6 @@
 package org.apache.commons.imaging.formats.jpeg.exif;
 
 import static org.apache.commons.imaging.common.BinaryFunctions.remainingBytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.startsWith;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -149,7 +148,7 @@ public class ExifRewriter extends BinaryFileParser {
                     final byte[] segmentData) throws
             // ImageWriteException,
             ImagingException, IOException {
-                if (marker != JpegConstants.JPEG_APP1_MARKER || !startsWith(segmentData, JpegConstants.EXIF_IDENTIFIER_CODE)) {
+                if (marker != JpegConstants.JPEG_APP1_MARKER || !JpegConstants.EXIF_IDENTIFIER_CODE.isStartOf(segmentData)) {
                     pieces.add(new JFIFPieceSegment(marker, markerBytes, markerLengthBytes, segmentData));
                 } else {
                     final JFIFPiece piece = new JFIFPieceSegmentExif(marker, markerBytes, markerLengthBytes, segmentData);
