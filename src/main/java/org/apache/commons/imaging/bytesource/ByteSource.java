@@ -58,7 +58,7 @@ public class ByteSource {
         return is;
     }
 
-    public static ByteSource inputStream(final InputStream is, final String name) {
+    public static ByteSource inputStream(final InputStream is, final String name) throws IOException {
         return new InputStreamByteSource(is, name);
     }
 

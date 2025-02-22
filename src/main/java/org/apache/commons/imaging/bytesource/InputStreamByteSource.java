@@ -158,13 +158,14 @@ final class InputStreamByteSource extends ByteSource {
 
     private static final int BLOCK_SIZE = IOUtils.DEFAULT_BUFFER_SIZE;
     private final InputStream inputStream;
-    private Block headBlock;
-    private byte[] readBuffer;
+    private final Block headBlock;
+    //private byte[] readBuffer;
     private long streamLength = -1;
 
-    InputStreamByteSource(final InputStream inputStream, final String fileName) {
+    InputStreamByteSource(final InputStream inputStream, final String fileName) throws IOException {
         super(new InputStreamOrigin(inputStream), fileName);
         this.inputStream = new BufferedInputStream(inputStream);
+        headBlock = readBlock();
     }
 
     @SuppressWarnings("resource") // accesses input stream more than once, don't close here.
@@ -192,9 +193,6 @@ final class InputStreamByteSource extends ByteSource {
     }
 
     private Block getFirstBlock() throws IOException {
-        if (headBlock == null) {
-            headBlock = readBlock();
-        }
         return headBlock;
     }
 
@@ -204,21 +202,17 @@ final class InputStreamByteSource extends ByteSource {
     }
 
     private Block readBlock() throws IOException {
-        if (readBuffer == null) {
-            readBuffer = new byte[BLOCK_SIZE];
-        }
+        final byte[] readBuffer = new byte[BLOCK_SIZE];
         final int read = inputStream.read(readBuffer);
         if (read < 1) {
             return null;
         }
-        if (read < BLOCK_SIZE) {
+        if (read < readBuffer.length) {
             // return a copy.
             return new Block(Arrays.copyOf(readBuffer, read));
         }
         // return current buffer.
-        final byte[] result = readBuffer;
-        readBuffer = null;
-        return new Block(result);
+        return new Block(readBuffer);
     }
 
     @Override
