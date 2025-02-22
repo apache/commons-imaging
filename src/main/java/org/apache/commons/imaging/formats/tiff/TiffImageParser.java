@@ -465,8 +465,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
 
         final List<String> comments = Allocator.arrayList(directory.size());
         for (final TiffField field : directory) {
-            final String comment = field.toString();
-            comments.add(comment);
+            comments.add(field.toString());
         }
 
         final ImageFormat format = ImageFormats.TIFF;
