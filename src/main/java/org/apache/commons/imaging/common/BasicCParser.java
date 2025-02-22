@@ -24,6 +24,7 @@ import java.io.PushbackInputStream;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImagingException;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * A rudimentary preprocessor and parser for the C programming language.
@@ -342,14 +343,14 @@ public class BasicCParser {
         final String[] tokens = row.split("[ \t]");
         int numLiveTokens = 0;
         for (final String token : tokens) {
-            if (token != null && !token.isEmpty()) {
+            if (StringUtils.isNotEmpty(token)) {
                 ++numLiveTokens;
             }
         }
         final String[] liveTokens = Allocator.array(numLiveTokens, String[]::new, 24);
         int next = 0;
         for (final String token : tokens) {
-            if (token != null && !token.isEmpty()) {
+            if (StringUtils.isNotEmpty(token)) {
                 liveTokens[next++] = token;
             }
         }
