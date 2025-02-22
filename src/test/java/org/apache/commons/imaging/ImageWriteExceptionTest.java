@@ -29,7 +29,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 /**
  * Tests for {@link ImagingException}.
  */
-public class TestImageWriteException {
+public class ImageWriteExceptionTest {
 
     public static Stream<Object[]> data() {
         final ImagingException exception = new ImagingException((String) null);
