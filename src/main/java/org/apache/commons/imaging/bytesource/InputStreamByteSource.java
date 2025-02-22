@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.imaging.bytesource;
 
 import java.io.BufferedInputStream;
@@ -30,6 +31,9 @@ import org.apache.commons.io.build.AbstractOrigin.InputStreamOrigin;
 
 final class InputStreamByteSource extends ByteSource {
 
+    /**
+     * A block of bytes (a byte array).
+     */
     private final class Block {
 
         final byte[] bytes;
@@ -51,10 +55,10 @@ final class InputStreamByteSource extends ByteSource {
             next = readBlock();
             return next;
         }
-
     }
 
     private final class BlockInputStream extends InputStream {
+
         private Block block;
         private boolean readFirst;
         private int blockIndex;
@@ -83,7 +87,6 @@ final class InputStreamByteSource extends ByteSource {
 
         @Override
         public int read(final byte[] array, final int off, final int len) throws IOException {
-            // first section copied verbatim from InputStream
             Objects.requireNonNull(array, "array");
             if (off < 0 || off > array.length || len < 0 || off + len > array.length || off + len < 0) {
                 throw new IndexOutOfBoundsException();
@@ -147,7 +150,6 @@ final class InputStreamByteSource extends ByteSource {
             }
             return n - remaining;
         }
-
     }
 
     private static final int BLOCK_SIZE = IOUtils.DEFAULT_BUFFER_SIZE;
@@ -186,7 +188,7 @@ final class InputStreamByteSource extends ByteSource {
     }
 
     private Block getFirstBlock() throws IOException {
-        if (null == headBlock) {
+        if (headBlock == null) {
             headBlock = readBlock();
         }
         return headBlock;
@@ -198,10 +200,9 @@ final class InputStreamByteSource extends ByteSource {
     }
 
     private Block readBlock() throws IOException {
-        if (null == readBuffer) {
+        if (readBuffer == null) {
             readBuffer = new byte[BLOCK_SIZE];
         }
-
         final int read = inputStream.read(readBuffer);
         if (read < 1) {
             return null;
@@ -225,5 +226,4 @@ final class InputStreamByteSource extends ByteSource {
             return streamLength = IOUtils.consume(cis);
         }
     }
-
 }
