@@ -84,6 +84,13 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
         return result.toString();
     }
 
+    /**
+     * Constructs a new instance with the big-endian byte order.
+     */
+    public PngImageParser() {
+        // empty
+    }
+
     @Override
     public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource) throws ImagingException, IOException {
         final ImageInfo imageInfo = getImageInfo(byteSource);

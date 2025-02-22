@@ -156,6 +156,13 @@ public class WebPImageParser extends AbstractImageParser<WebPImagingParameters> 
         return fileSize;
     }
 
+    /**
+     * Constructs a new instance with the big-endian byte order.
+     */
+    public WebPImageParser() {
+        // empty
+    }
+
     @Override
     public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource) throws ImagingException, IOException {
         pw.println("webp.dumpImageFile");

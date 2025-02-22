@@ -105,6 +105,9 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
         }
     }
 
+    /**
+     * Constructs a new instance with the little-endian byte order.
+     */
     public GifImageParser() {
         super(ByteOrder.LITTLE_ENDIAN);
     }

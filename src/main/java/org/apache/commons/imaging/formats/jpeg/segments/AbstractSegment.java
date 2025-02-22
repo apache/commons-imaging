@@ -20,13 +20,24 @@ import java.io.PrintWriter;
 
 import org.apache.commons.imaging.common.BinaryFileParser;
 
+/**
+ * Abstracts segment implementations.
+ */
 public abstract class AbstractSegment extends BinaryFileParser {
+
+    /** Segment marker. */
     public final int marker;
+
+    /** Segment length. */
     public final int length;
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param marker segment marker.
+     * @param length segment length.
+     */
     public AbstractSegment(final int marker, final int length) {
-        // super();
-
         this.marker = marker;
         this.length = length;
     }
@@ -35,10 +46,19 @@ public abstract class AbstractSegment extends BinaryFileParser {
         // empty
     }
 
+    /**
+     * Gets the description.
+     *
+     * @return the description.
+     */
     public abstract String getDescription();
 
+    /**
+     * Gets the type.
+     *
+     * @return the type.
+     */
     public String getSegmentType() {
-
         switch (marker) {
         case 0xffc0:
             return "Start Of Frame, Baseline Dct, Huffman coding";
@@ -48,14 +68,12 @@ public abstract class AbstractSegment extends BinaryFileParser {
             return "Start Of Frame, Progressive Dct, Huffman coding";
         case 0xffc3:
             return "Start Of Frame, Lossless (sequential), Huffman coding";
-
         case 0xffc5:
             return "Start Of Frame, Differential sequential Dct, Huffman coding";
         case 0xffc6:
             return "Start Of Frame, Differential progressive Dct, Huffman coding";
         case 0xffc7:
             return "Start Of Frame, Differential lossless (sequential), Huffman coding";
-
         case 0xffc8:
             return "Start Of Frame, Reserved for JPEG extensions, arithmetic coding";
         case 0xffc9:
@@ -64,19 +82,16 @@ public abstract class AbstractSegment extends BinaryFileParser {
             return "Start Of Frame, Progressive Dct, arithmetic coding";
         case 0xffcb:
             return "Start Of Frame, Lossless (sequential), arithmetic coding";
-
         case 0xffcd:
             return "Start Of Frame, Differential sequential Dct, arithmetic coding";
         case 0xffce:
             return "Start Of Frame, Differential progressive Dct, arithmetic coding";
         case 0xffcf:
             return "Start Of Frame, Differential lossless (sequential), arithmetic coding";
-
         case 0xffc4:
             return "Define Huffman table(s)";
         case 0xffcc:
             return "Define arithmetic coding conditioning(s)";
-
         case 0xffd0:
             return "Restart with modulo 8 count 0";
         case 0xffd1:
@@ -93,7 +108,6 @@ public abstract class AbstractSegment extends BinaryFileParser {
             return "Restart with modulo 8 count 6";
         case 0xffd7:
             return "Restart with modulo 8 count 7";
-
         case 0xffd8:
             return "Start of image";
         case 0xffd9:
@@ -120,10 +134,8 @@ public abstract class AbstractSegment extends BinaryFileParser {
             return "For temporary private use in arithmetic coding";
         // case 0xffd8 :
         // return "Reserved";
-
         default:
         }
-
         if (marker >= 0xff02 && marker <= 0xffbf) {
             return "Reserved";
         }
@@ -133,9 +145,7 @@ public abstract class AbstractSegment extends BinaryFileParser {
         if (marker >= 0xfff0 && marker <= 0xfffd) {
             return "JPG" + (marker - 0xffe0);
         }
-
         return "Unknown";
-
     }
 
     @Override

@@ -160,10 +160,13 @@ public class JpegRewriter extends BinaryFileParser {
     private static final SegmentFilter PHOTOSHOP_APP13_SEGMENT_FILTER = JFIFPieceSegment::isPhotoshopApp13Segment;
 
     /**
-     * Constructs a new instance. to guess whether a file contains an image based on its file extension.
+     * Constructs a new instance with the default, big-endian, byte order.
+     * <p>
+     * Whether a file contains an image based on its file extension.
+     * </p>
      */
     public JpegRewriter() {
-        super(JPEG_BYTE_ORDER);
+        // empty
     }
 
     protected JFIFPieces analyzeJfif(final ByteSource byteSource) throws ImagingException, IOException {

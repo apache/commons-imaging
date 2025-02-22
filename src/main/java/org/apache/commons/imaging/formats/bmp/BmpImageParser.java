@@ -62,6 +62,9 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
     private static final int BITMAP_FILE_HEADER_SIZE = 14;
     private static final int BITMAP_INFO_HEADER_SIZE = 40;
 
+    /**
+     * Constructs a new instance with the little-endian byte order.
+     */
     public BmpImageParser() {
         super(ByteOrder.LITTLE_ENDIAN);
     }

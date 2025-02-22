@@ -74,6 +74,13 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
         return startsWith(segment.getSegmentData(), JpegConstants.EXIF_IDENTIFIER_CODE);
     }
 
+    /**
+     * Constructs a new instance with the big-endian byte order.
+     */
+    public JpegImageParser() {
+        // empty
+    }
+
     private byte[] assembleSegments(final List<App2Segment> segments) throws ImagingException {
         try {
             return assembleSegments(segments, false);

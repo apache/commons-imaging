@@ -228,6 +228,9 @@ public class IcoImageParser extends AbstractImageParser<IcoImagingParameters> {
 
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.ICO.getExtensions();
 
+    /**
+     * Constructs a new instance with the little-endian byte order.
+     */
     public IcoImageParser() {
         super(ByteOrder.LITTLE_ENDIAN);
     }

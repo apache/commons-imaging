@@ -33,10 +33,10 @@ public class BinaryFileParser {
     private ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
 
     /**
-     * Constructs a BinaryFileParser with the default, big-endian, byte order.
+     * Constructs a new instance with the default, big-endian, byte order.
      */
     public BinaryFileParser() {
-        // as above
+        // empty
     }
 
     public BinaryFileParser(final ByteOrder byteOrder) {

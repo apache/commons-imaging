@@ -35,8 +35,14 @@ import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 public class JpegXmpRewriter extends JpegRewriter {
 
     /**
+     * Constructs a new instance with the default, big-endian, byte order.
+     */
+    public JpegXmpRewriter() {
+        // empty
+    }
+
+    /**
      * Reads a JPEG image, removes all XMP XML (by removing the APP1 segment), and writes the result to a stream.
-     * <p>
      *
      * @param src Byte array containing JPEG image data.
      * @param os  OutputStream to write the image to.
@@ -50,7 +56,6 @@ public class JpegXmpRewriter extends JpegRewriter {
 
     /**
      * Reads a JPEG image, removes all XMP XML (by removing the APP1 segment), and writes the result to a stream.
-     * <p>
      *
      * @param byteSource ByteSource containing JPEG image data.
      * @param os         OutputStream to write the image to.
@@ -66,7 +71,6 @@ public class JpegXmpRewriter extends JpegRewriter {
 
     /**
      * Reads a JPEG image, removes all XMP XML (by removing the APP1 segment), and writes the result to a stream.
-     * <p>
      *
      * @param src Image file.
      * @param os  OutputStream to write the image to.
@@ -82,7 +86,6 @@ public class JpegXmpRewriter extends JpegRewriter {
 
     /**
      * Reads a JPEG image, removes all XMP XML (by removing the APP1 segment), and writes the result to a stream.
-     * <p>
      *
      * @param src InputStream containing JPEG image data.
      * @param os  OutputStream to write the image to.

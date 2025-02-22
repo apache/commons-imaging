@@ -24,7 +24,6 @@ import java.awt.color.ICC_Profile;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.ByteOrder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,8 +37,11 @@ public class IccProfileParser extends BinaryFileParser {
 
     private static final Logger LOGGER = Logger.getLogger(IccProfileParser.class.getName());
 
+    /**
+     * Constructs a new instance with the default, big-endian, byte order.
+     */
     public IccProfileParser() {
-        super(ByteOrder.BIG_ENDIAN);
+        // empty
     }
 
     public IccProfileInfo getIccProfileInfo(final byte[] bytes) throws IOException {

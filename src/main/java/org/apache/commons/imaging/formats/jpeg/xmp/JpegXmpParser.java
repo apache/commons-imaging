@@ -17,7 +17,6 @@
 
 package org.apache.commons.imaging.formats.jpeg.xmp;
 
-import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.imaging.ImagingException;
@@ -27,8 +26,11 @@ import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
 public class JpegXmpParser extends BinaryFileParser {
 
+    /**
+     * Constructs a new instance with the default, big-endian, byte order.
+     */
     public JpegXmpParser() {
-        super(ByteOrder.BIG_ENDIAN);
+        // empty
     }
 
     public boolean isXmpJpegSegment(final byte[] segmentData) {

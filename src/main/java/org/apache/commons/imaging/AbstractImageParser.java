@@ -98,10 +98,18 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
         );
     }
 
+    /**
+     * Constructs a new instance with the default, big-endian, byte order.
+     */
     public AbstractImageParser() {
-        // defaults to big-endian
+        // empty
     }
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param byteOrder the byte order.
+     */
     public AbstractImageParser(final ByteOrder byteOrder) {
         super(byteOrder);
     }

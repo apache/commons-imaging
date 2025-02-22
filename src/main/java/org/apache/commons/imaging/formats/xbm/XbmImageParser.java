@@ -117,6 +117,13 @@ public class XbmImageParser extends AbstractImageParser<XbmImagingParameters> {
         return "0x0" + s;
     }
 
+    /**
+     * Constructs a new instance with the big-endian byte order.
+     */
+    public XbmImageParser() {
+        // empty
+    }
+
     @Override
     public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource) throws ImagingException, IOException {
         readXbmHeader(byteSource).dump(pw);

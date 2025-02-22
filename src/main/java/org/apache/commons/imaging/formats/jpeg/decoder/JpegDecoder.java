@@ -144,6 +144,13 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
 
     private boolean useTiffRgb;
 
+    /**
+     * Constructs a new instance with the default, big-endian, byte order.
+     */
+    public JpegDecoder() {
+        // empty
+    }
+
     private Block[] allocateMcuMemory() throws ImagingException {
         final Block[] mcu = Allocator.array(sosSegment.numberOfComponents, Block[]::new, Block.SHALLOW_SIZE);
         for (int i = 0; i < sosSegment.numberOfComponents; i++) {

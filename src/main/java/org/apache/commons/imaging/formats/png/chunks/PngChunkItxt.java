@@ -43,6 +43,17 @@ public class PngChunkItxt extends AbstractPngTextChunk {
 
     private final String translatedKeyword;
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param length    chunk length.
+     * @param chunkType chunk type.
+     * @param crc       CRC computed over the chunk type and chunk data (but not the length).
+     * @param bytes     chunk data bytes.
+     * @throws ImagingException Thrown on a parsing error.
+     * @throws IOException Thrown on reading error.
+     * @throws NullPointerException if {@code bytes} is null.
+     */
     public PngChunkItxt(final int length, final int chunkType, final int crc, final byte[] bytes) throws ImagingException, IOException {
         super(length, chunkType, crc, bytes);
         int terminator = BinaryFunctions.findNull(bytes, "PNG iTXt chunk keyword is not terminated.");

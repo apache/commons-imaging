@@ -18,7 +18,6 @@ package org.apache.commons.imaging.formats.jpeg;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
@@ -117,8 +116,11 @@ public class JpegUtils extends BinaryFileParser {
         }
     }
 
+    /**
+     * Constructs a new instance with the default, big-endian, byte order.
+     */
     public JpegUtils() {
-        super(ByteOrder.BIG_ENDIAN);
+        // empty
     }
 
     public void dumpJfif(final ByteSource byteSource) throws ImagingException, IOException {

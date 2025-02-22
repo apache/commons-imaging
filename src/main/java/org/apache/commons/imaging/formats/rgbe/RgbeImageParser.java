@@ -42,6 +42,13 @@ import org.apache.commons.imaging.common.ImageMetadata;
  */
 public class RgbeImageParser extends AbstractImageParser<RgbeImagingParameters> {
 
+    /**
+     * Constructs a new instance with the big-endian byte order.
+     */
+    public RgbeImageParser() {
+        // empty
+    }
+
     @Override
     protected String[] getAcceptedExtensions() {
         return ImageFormats.RGBE.getExtensions();

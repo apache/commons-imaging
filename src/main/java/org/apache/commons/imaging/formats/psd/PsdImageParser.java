@@ -62,6 +62,13 @@ public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> im
     public static final int IMAGE_RESOURCE_ID_XMP = 0x0424;
     public static final String BLOCK_NAME_XMP = "XMP";
 
+    /**
+     * Constructs a new instance with the big-endian byte order.
+     */
+    public PsdImageParser() {
+        // empty
+    }
+
     @Override
     public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource) throws ImagingException, IOException {
         pw.println("gif.dumpImageFile");

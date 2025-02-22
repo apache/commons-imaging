@@ -64,6 +64,13 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
     private static final String DEFAULT_EXTENSION = ImageFormats.TIFF.getDefaultExtension();
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.TIFF.getExtensions();
 
+    /**
+     * Constructs a new instance with the big-endian byte order.
+     */
+    public TiffImageParser() {
+        // empty
+    }
+
     private Rectangle checkForSubImage(final TiffImagingParameters params) {
         // the params class enforces a correct specification for the
         // sub-image, but does not have knowledge of the actual

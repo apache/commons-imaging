@@ -151,6 +151,9 @@ public class PcxImageParser extends AbstractImageParser<PcxImagingParameters> {
 
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.PCX.getExtensions();
 
+    /**
+     * Constructs a new instance with the little-endian byte order.
+     */
     public PcxImageParser() {
         super(ByteOrder.LITTLE_ENDIAN);
     }

@@ -63,8 +63,11 @@ public class IptcParser extends BinaryFileParser {
     private static final int ENV_TAG_CODED_CHARACTER_SET = 90;
     private static final byte[] CHARACTER_ESCAPE_SEQUENCE = { '\u001B', '%', 'G' };
 
+    /**
+     * Constructs a new instance with the default, big-endian, byte order.
+     */
     public IptcParser() {
-        super(ByteOrder.BIG_ENDIAN);
+        // empty
     }
 
     private Charset findCharset(final byte[] codedCharset) {

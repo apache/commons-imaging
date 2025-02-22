@@ -67,6 +67,9 @@ public class PnmImageParser extends AbstractImageParser<PnmImagingParameters> {
         ACCEPTED_EXTENSIONS = Stream.of(IMAGE_FORMATS).map(ImageFormat::getDefaultExtension).toArray(String[]::new);
     }
 
+    /**
+     * Constructs a new instance with the little-endian byte order.
+     */
     public PnmImageParser() {
         super(ByteOrder.LITTLE_ENDIAN);
     }

@@ -55,6 +55,7 @@ public final class BinaryFunctions {
         return true;
     }
 
+
     public static int findNull(final byte[] src, final int start, final String message) throws ImagingException {
         for (int i = start; i < src.length; i++) {
             if (src[i] == 0) {

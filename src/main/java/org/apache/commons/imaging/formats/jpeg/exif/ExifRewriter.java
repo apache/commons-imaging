@@ -114,7 +114,10 @@ public class ExifRewriter extends BinaryFileParser {
     }
 
     /**
-     * Constructs a new instance. to guess whether a file contains an image based on its file extension.
+     * Constructs a new instance with the default, big-endian, byte order.
+     * <p>
+     * Whether a file contains an image based on its file extension.
+     * </p>
      */
     public ExifRewriter() {
         this(ByteOrder.BIG_ENDIAN);
@@ -122,7 +125,6 @@ public class ExifRewriter extends BinaryFileParser {
 
     /**
      * Constructs a new instance.
-     * <p>
      *
      * @param byteOrder byte order of EXIF segment.
      */

@@ -98,6 +98,13 @@ public class IcnsImageParser extends AbstractImageParser<IcnsImagingParameters> 
 
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.ICNS.getExtensions();
 
+    /**
+     * Constructs a new instance with the big-endian byte order.
+     */
+    public IcnsImageParser() {
+        // empty
+    }
+
     @Override
     public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource) throws ImagingException, IOException {
         final IcnsContents icnsContents = readImage(byteSource);

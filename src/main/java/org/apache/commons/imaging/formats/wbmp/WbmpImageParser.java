@@ -67,6 +67,13 @@ public class WbmpImageParser extends AbstractImageParser<WbmpImagingParameters> 
 
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.WBMP.getExtensions();
 
+    /**
+     * Constructs a new instance with the big-endian byte order.
+     */
+    public WbmpImageParser() {
+        // empty
+    }
+
     @Override
     public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource) throws ImagingException, IOException {
         readWbmpHeader(byteSource).dump(pw);
