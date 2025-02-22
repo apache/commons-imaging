@@ -52,10 +52,6 @@ public class BinaryConstant {
         return Arrays.hashCode(value);
     }
 
-    public int size() {
-        return value.length;
-    }
-
     /**
      * Tests whether the give buffer starts with this binary constant.
      *
@@ -64,6 +60,14 @@ public class BinaryConstant {
      */
     public boolean isStartOf(final byte[] buffer) {
         return BinaryFunctions.startsWith(buffer, value);
+    }
+
+    byte[] rawValue() {
+        return value;
+    }
+
+    public int size() {
+        return value.length;
     }
 
     public void writeTo(final OutputStream os) throws IOException {

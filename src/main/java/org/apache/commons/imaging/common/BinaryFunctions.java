@@ -228,16 +228,7 @@ public final class BinaryFunctions {
     }
 
     public static void readAndVerifyBytes(final InputStream is, final BinaryConstant expected, final String exception) throws ImagingException, IOException {
-        for (int i = 0; i < expected.size(); i++) {
-            final int data = is.read();
-            final byte b = (byte) (0xff & data);
-            if (data < 0) {
-                throw new ImagingException("Unexpected EOF.");
-            }
-            if (b != expected.get(i)) {
-                throw new ImagingException(exception);
-            }
-        }
+        readAndVerifyBytes(is, expected.rawValue(), exception);
     }
 
     public static void readAndVerifyBytes(final InputStream is, final byte[] expected, final String exception) throws ImagingException, IOException {
