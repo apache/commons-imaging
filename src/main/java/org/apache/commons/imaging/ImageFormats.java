@@ -16,19 +16,21 @@
  */
 package org.apache.commons.imaging;
 
+import java.util.Objects;
+
 /**
  * Enumerates known image formats.
  */
 public enum ImageFormats implements ImageFormat {
 
     // @formatter:off
-    UNKNOWN(),
+    UNKNOWN("bin"),
     BMP("bmp", "dib"),
     DCX("dcx"),
     GIF("gif"),
     ICNS("icns"),
     ICO("ico"),
-    JBIG2(),
+    JBIG2("jbig2"),
     JPEG("jpg", "jpeg"),
     PAM("pam"),
     PSD("psd"),
@@ -39,7 +41,7 @@ public enum ImageFormats implements ImageFormat {
     PCX("pcx", "pcc"),
     PNG("png"),
     RGBE("hdr", "pic"),
-    TGA(),
+    TGA("tga"),
     TIFF("tif", "tiff"),
     WBMP("wbmp"),
     WEBP("webp"),
@@ -50,12 +52,12 @@ public enum ImageFormats implements ImageFormat {
     private final String[] extensions;
 
     ImageFormats(final String... extensions) {
-        this.extensions = extensions;
+        this.extensions = Objects.requireNonNull(extensions);
     }
 
     @Override
     public String getDefaultExtension() {
-        return this.extensions != null ? this.extensions[0] : null;
+        return extensions[0];
     }
 
     @Override

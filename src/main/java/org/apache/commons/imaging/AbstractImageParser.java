@@ -52,6 +52,7 @@ import org.apache.commons.imaging.formats.wbmp.WbmpImageParser;
 import org.apache.commons.imaging.formats.webp.WebPImageParser;
 import org.apache.commons.imaging.formats.xbm.XbmImageParser;
 import org.apache.commons.imaging.formats.xpm.XpmImageParser;
+import org.apache.commons.lang3.ArrayUtils;
 
 /**
  * Provides the abstract base class for all image reading and writing utilities. ImageParser implementations are expected to extend this class providing logic
@@ -135,32 +136,23 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
         if (extensions == null) {
             return true;
         }
-
         final int index = fileName.lastIndexOf('.');
         if (index >= 0) {
-            final String fileNameExtension = fileName.substring(index + 1).toLowerCase(Locale.ROOT);
-            for (final String extension : extensions) {
-                if (extension.equals(fileNameExtension)) {
-                    return true;
-                }
+            if (ArrayUtils.contains(extensions, fileName.substring(index + 1).toLowerCase(Locale.ROOT))) {
+                return true;
             }
         }
         return false;
     }
 
     /**
-     * Indicates whether the ImageParser implementation can accept the specified format
+     * Tests whether the ImageParser implementation can accept the specified format.
      *
-     * @param type An instance of ImageFormat.
+     * @param imageFormat An instance of ImageFormat.
      * @return If the parser can accept the format, true; otherwise, false.
      */
-    public boolean canAcceptType(final ImageFormat type) {
-        for (final ImageFormat format : getAcceptedTypes()) {
-            if (format.equals(type)) {
-                return true;
-            }
-        }
-        return false;
+    public boolean canAcceptType(final ImageFormat imageFormat) {
+        return ArrayUtils.contains(getAcceptedTypes(), imageFormat);
     }
 
     /**
