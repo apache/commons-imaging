@@ -155,10 +155,8 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
      * @return If the parser can accept the format, true; otherwise, false.
      */
     public boolean canAcceptType(final ImageFormat type) {
-        final ImageFormat[] types = getAcceptedTypes();
-
-        for (final ImageFormat type2 : types) {
-            if (type2.equals(type)) {
+        for (final ImageFormat format : getAcceptedTypes()) {
+            if (format.equals(type)) {
                 return true;
             }
         }
