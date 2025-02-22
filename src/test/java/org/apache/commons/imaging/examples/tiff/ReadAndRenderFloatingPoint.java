@@ -31,6 +31,7 @@ import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.formats.tiff.TiffReader;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PhotometricInterpreterFloat;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * A simple example application that reads the content of a TIFF file containing floating-point data and renders it using a gray-scale palette. TIFF files are
@@ -63,7 +64,7 @@ public class ReadAndRenderFloatingPoint {
         if (args.length == 2) {
             outputPath = args[1];
         }
-        final boolean optionalImageWritingEnabled = outputPath != null && !outputPath.isEmpty();
+        final boolean optionalImageWritingEnabled = StringUtils.isNotEmpty(outputPath);
 
         final ByteSource byteSource = ByteSource.file(target);
 
