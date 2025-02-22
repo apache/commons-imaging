@@ -46,6 +46,7 @@ import org.apache.commons.imaging.formats.psd.dataparsers.DataParserRgb;
 import org.apache.commons.imaging.formats.psd.datareaders.CompressedDataReader;
 import org.apache.commons.imaging.formats.psd.datareaders.DataReader;
 import org.apache.commons.imaging.formats.psd.datareaders.UncompressedDataReader;
+import org.apache.commons.lang3.ArrayUtils;
 
 public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> implements XmpEmbeddable {
 
@@ -490,17 +491,7 @@ public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> im
     }
 
     private boolean keepImageResourceBlock(final int id, final int[] imageResourceIDs) {
-        if (imageResourceIDs == null) {
-            return true;
-        }
-
-        for (final int imageResourceID : imageResourceIDs) {
-            if (id == imageResourceID) {
-                return true;
-            }
-        }
-
-        return false;
+        return ArrayUtils.contains(imageResourceIDs, id);
     }
 
     private PsdHeaderInfo readHeader(final ByteSource byteSource) throws ImagingException, IOException {

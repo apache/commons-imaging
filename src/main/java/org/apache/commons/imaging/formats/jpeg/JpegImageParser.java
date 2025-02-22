@@ -61,6 +61,7 @@ import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.internal.Debug;
+import org.apache.commons.lang3.ArrayUtils;
 
 public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> implements XmpEmbeddable<JpegImagingParameters> {
 
@@ -852,17 +853,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
     }
 
     private boolean keepMarker(final int marker, final int[] markers) {
-        if (markers == null) {
-            return true;
-        }
-
-        for (final int marker2 : markers) {
-            if (marker2 == marker) {
-                return true;
-            }
-        }
-
-        return false;
+        return ArrayUtils.contains(markers, marker);
     }
 
     public List<AbstractSegment> readSegments(final ByteSource byteSource, final int[] markers, final boolean returnAfterFirst)
