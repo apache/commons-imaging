@@ -617,9 +617,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
 
             final List<TiffField> entries = dir.getDirectoryEntries();
 
-            for (final TiffField entry : entries) {
-                metadataDirectory.add(entry);
-            }
+            entries.forEach(metadataDirectory::add);
 
             result.add(metadataDirectory);
         }
