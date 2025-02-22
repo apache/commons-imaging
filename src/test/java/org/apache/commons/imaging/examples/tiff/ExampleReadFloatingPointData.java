@@ -39,6 +39,7 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingp
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PaletteEntryForRange;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PaletteEntryForValue;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PhotometricInterpreterFloat;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * A simple example application that reads the content of a TIFF file containing floating-point data and extracts its content. TIFF files are * sometimes used
@@ -71,7 +72,7 @@ public class ExampleReadFloatingPointData {
         if (args.length >= 2) {
             outputPath = args[1];
         }
-        final boolean optionalImageWritingEnabled = outputPath != null && !outputPath.isEmpty();
+        final boolean optionalImageWritingEnabled = StringUtils.isNotEmpty(outputPath);
 
         final ByteSource byteSource = ByteSource.file(target);
 
