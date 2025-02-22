@@ -21,17 +21,22 @@ package org.apache.commons.imaging;
  */
 public interface ImageFormat {
 
+    /**
+     * Gets the default file extension.
+     *
+     * @return the default file extension.
+     */
     String getDefaultExtension();
 
     /**
-     * Gets the file extension associated with this {@link ImageFormat}.
+     * Gets the file extension.
      *
      * @return String extension
      */
     String[] getExtensions();
 
     /**
-     * Gets the name of this {@link ImageFormat}.
+     * Gets the name.
      *
      * @return String name
      */
