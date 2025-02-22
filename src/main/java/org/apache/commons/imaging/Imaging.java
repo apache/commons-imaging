@@ -206,8 +206,7 @@ public final class Imaging {
     }
 
     private static BufferedImage getBufferedImage(final ByteSource byteSource) throws ImagingException, IOException {
-        final AbstractImageParser<?> imageParser = ImageParserFactory.getImageParser(byteSource);
-        return imageParser.getBufferedImage(byteSource, null);
+        return ImageParserFactory.getImageParser(byteSource).getBufferedImage(byteSource, null);
     }
 
     /**
