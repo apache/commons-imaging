@@ -253,7 +253,7 @@ public class IptcParser extends BinaryFileParser {
                 return elements;
             }
 
-            final byte[] recordData = BinaryFunctions.slice(bytes, index, recordSize);
+            final byte[] recordData = BinaryFunctions.copyOfRange(bytes, index, recordSize);
             index += recordSize;
 
             // Debug.debug("recordSize", recordSize + " (0x"

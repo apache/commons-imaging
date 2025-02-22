@@ -75,7 +75,7 @@ public class PngChunkIccp extends PngChunk {
     public PngChunkIccp(final int length, final int chunkType, final int crc, final byte[] bytes) throws ImagingException, IOException {
         super(length, chunkType, crc, bytes);
 
-        final int index = BinaryFunctions.findNull(bytes, "PngChunkIccp: No Profile Name");
+        final int index = BinaryFunctions.indexOf0(bytes, "PngChunkIccp: No Profile Name");
         final byte[] nameBytes = Arrays.copyOf(bytes, index);
         profileName = new String(nameBytes, StandardCharsets.ISO_8859_1);
 

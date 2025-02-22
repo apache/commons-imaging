@@ -21,17 +21,20 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
 import java.nio.ByteOrder;
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.RandomAccessFiles;
+import org.apache.commons.lang3.ArrayUtils;
 
 /**
  * Convenience methods for various binary and I/O operations.
  */
 public final class BinaryFunctions {
 
+    private static final byte NUL = (byte) 0;
     private static final Logger LOGGER = Logger.getLogger(BinaryFunctions.class.getName());
 
     public static int charsToQuad(final char c1, final char c2, final char c3, final char c4) {
@@ -45,28 +48,38 @@ public final class BinaryFunctions {
         if (b.length < bStart + length) {
             return false;
         }
-
         for (int i = 0; i < length; i++) {
             if (a[aStart + i] != b[bStart + i]) {
                 return false;
             }
         }
-
         return true;
     }
 
-
-    public static int findNull(final byte[] src, final int start, final String message) throws ImagingException {
-        for (int i = start; i < src.length; i++) {
-            if (src[i] == 0) {
-                return i;
-            }
-        }
-        throw new ImagingException(message);
+    /**
+     * Copies the specified range of the specified array into a new array.
+     *
+     * @param original the array from which a range is to be copied.
+     * @param from     the initial index of the range to be copied, inclusive.
+     * @param count    the amount of bytes to copy.
+     * @return a new array containing the specified range from the original array, truncated or padded with zeros to obtain the required length.
+     */
+    public static byte[] copyOfRange(final byte[] original, final int from, final int count) {
+        return Arrays.copyOfRange(original, from, from + Allocator.checkByteArray(count));
     }
 
-    public static int findNull(final byte[] src, final String message) throws ImagingException {
-        return findNull(src, 0, message);
+    /**
+     * Copies the start of the specified array into a new array.
+     *
+     * @param original the array from which a range is to be copied.
+     * @param count    the amount of bytes to copy.
+     * @return a new array containing the specified range from the original array, truncated or padded with zeros to obtain the required length.
+     */
+    public static byte[] copyOfStart(final byte[] original, int count) {
+        if (count > original.length) {
+            count = original.length;
+        }
+        return copyOfRange(original, 0, count);
     }
 
     public static byte[] getBytes(final RandomAccessFile raf, final long pos, final int length, final String exception) throws IOException {
@@ -78,11 +91,33 @@ public final class BinaryFunctions {
 
     }
 
-    public static byte[] head(final byte[] bytes, int count) {
-        if (count > bytes.length) {
-            count = bytes.length;
+    /**
+     * Finds the index of the first 0 in the array starting at the given index.
+     *
+     * @param src  the array to search through for the object, may be {@code null}
+     * @param start  the index to start searching at
+     * @param message The ImagingException message if 0 is not found.
+     * @return the index of the value within the array,
+     * @throws ImagingException Thrown if 0 is not found.
+     */
+    public static int indexOf0(final byte[] src, final int start, final String message) throws ImagingException {
+        final int i = ArrayUtils.indexOf(src, NUL, start);
+        if (i < 0) {
+            throw new ImagingException(message);
         }
-        return slice(bytes, 0, count);
+        return i;
+    }
+
+    /**
+     * Finds the index of the first 0 in the array starting at the given index.
+     *
+     * @param src  the array to search through for the object, may be {@code null}
+     * @param message The ImagingException message if 0 is not found.
+     * @return the index of the value within the array,
+     * @throws ImagingException Thrown if 0 is not found.
+     */
+    public static int indexOf0(final byte[] src, final String message) throws ImagingException {
+        return indexOf0(src, 0, message);
     }
 
     public static void logByteBits(final String msg, final byte i) {
@@ -96,7 +131,6 @@ public final class BinaryFunctions {
 
     public static void printCharQuad(final PrintWriter pw, final String msg, final int i) {
         pw.println(msg + ": '" + (char) (0xff & i >> 24) + (char) (0xff & i >> 16) + (char) (0xff & i >> 8) + (char) (0xff & i >> 0) + "'");
-
     }
 
     /**
@@ -120,14 +154,12 @@ public final class BinaryFunctions {
         if ((byte0 | byte1) < 0) {
             throw new IOException(exception);
         }
-
         final int result;
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
             result = byte0 << 8 | byte1;
         } else {
             result = byte1 << 8 | byte0;
         }
-
         return result;
     }
 
@@ -138,14 +170,12 @@ public final class BinaryFunctions {
         if ((byte0 | byte1 | byte2) < 0) {
             throw new IOException(exception);
         }
-
         final int result;
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
             result = byte0 << 16 | byte1 << 8 | byte2 << 0;
         } else {
             result = byte2 << 16 | byte1 << 8 | byte0 << 0;
         }
-
         return result;
     }
 
@@ -157,14 +187,12 @@ public final class BinaryFunctions {
         if ((byte0 | byte1 | byte2 | byte3) < 0) {
             throw new IOException(exception);
         }
-
         final int result;
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
             result = byte0 << 24 | byte1 << 16 | byte2 << 8 | byte3 << 0;
         } else {
             result = byte3 << 24 | byte2 << 16 | byte1 << 8 | byte0 << 0;
         }
-
         return result;
     }
 
@@ -179,7 +207,6 @@ public final class BinaryFunctions {
      * @throws IOException in the event of a non-recoverable error, such as an attempt to read past the end of file.
      */
     public static long read8Bytes(final String name, final InputStream is, final String exception, final ByteOrder byteOrder) throws IOException {
-
         final long byte0 = is.read();
         final long byte1 = is.read();
         final long byte2 = is.read();
@@ -188,18 +215,15 @@ public final class BinaryFunctions {
         final long byte5 = is.read();
         final long byte6 = is.read();
         final long byte7 = is.read();
-
         if ((byte0 | byte1 | byte2 | byte3 | byte4 | byte5 | byte6 | byte7) < 0) {
             throw new IOException(exception);
         }
-
         final long result;
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
             result = byte0 << 56 | byte1 << 48 | byte2 << 40 | byte3 << 32 | byte4 << 24 | byte5 << 16 | byte6 << 8 | byte7 << 0;
         } else {
             result = byte7 << 56 | byte6 << 48 | byte5 << 40 | byte4 << 32 | byte3 << 24 | byte2 << 16 | byte1 << 8 | byte0 << 0;
         }
-
         return result;
     }
 
@@ -207,11 +231,9 @@ public final class BinaryFunctions {
         for (int i = 0; i < expected.size(); i++) {
             final int data = is.read();
             final byte b = (byte) (0xff & data);
-
             if (data < 0) {
                 throw new ImagingException("Unexpected EOF.");
             }
-
             if (b != expected.get(i)) {
                 throw new ImagingException(exception);
             }
@@ -222,11 +244,9 @@ public final class BinaryFunctions {
         for (final byte element : expected) {
             final int data = is.read();
             final byte b = (byte) (0xff & data);
-
             if (data < 0) {
                 throw new ImagingException("Unexpected EOF.");
             }
-
             if (b != element) {
                 throw new ImagingException(exception);
             }
@@ -258,7 +278,7 @@ public final class BinaryFunctions {
     }
 
     public static byte[] remainingBytes(final String name, final byte[] bytes, final int count) {
-        return slice(bytes, count, bytes.length - count);
+        return copyOfRange(bytes, count, bytes.length - count);
     }
 
     /**
@@ -302,23 +322,15 @@ public final class BinaryFunctions {
         }
     }
 
-    public static byte[] slice(final byte[] bytes, final int start, final int count) {
-        final byte[] result = Allocator.byteArray(count);
-        System.arraycopy(bytes, start, result, 0, count);
-        return result;
-    }
-
     public static boolean startsWith(final byte[] buffer, final BinaryConstant search) {
         if (buffer == null || buffer.length < search.size()) {
             return false;
         }
-
         for (int i = 0; i < search.size(); i++) {
             if (buffer[i] != search.get(i)) {
                 return false;
             }
         }
-
         return true;
     }
 
@@ -332,13 +344,11 @@ public final class BinaryFunctions {
         if (search.length > buffer.length) {
             return false;
         }
-
         for (int i = 0; i < search.length; i++) {
             if (search[i] != buffer[i]) {
                 return false;
             }
         }
-
         return true;
     }
 

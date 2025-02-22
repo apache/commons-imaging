@@ -35,7 +35,7 @@ public class PngChunkScal extends PngChunk {
             throw new ImagingException("PNG sCAL invalid unit specifier: " + getUnitSpecifier());
         }
 
-        final int separator = BinaryFunctions.findNull(bytes, "PNG sCAL x and y axis value separator not found.");
+        final int separator = BinaryFunctions.indexOf0(bytes, "PNG sCAL x and y axis value separator not found.");
         final int xIndex = 1;
         final String xStr = new String(bytes, xIndex, separator - 1, StandardCharsets.ISO_8859_1);
         unitsPerPixelXAxis = toDouble(xStr);

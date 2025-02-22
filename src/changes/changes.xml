@@ -68,6 +68,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action dev="ggregory" type="update" due-to="Dependabot">Bump org.codehaus.mojo:taglist-maven-plugin from 3.1.0 to 3.2.1 #453.</action>
       <!-- REMOVE -->
       <action dev="ggregory" type="remove" due-to="Dependabot">Remove direct dependency on org.hamcrest:hamcrest.</action>
+      <action dev="ggregory" type="remove" due-to="Dependabot">Rename methods BinaryFunctions.findNull() to indexOf0() like String.</action>
+      <action dev="ggregory" type="remove" due-to="Dependabot">Rename method BinaryFunctions.slice() to copyOfRange() like Arrays.</action>
+      <action dev="ggregory" type="remove" due-to="Dependabot">Rename method BinaryFunctions.head() to copyOfStart() like Arrays.</action>
     </release>
     <release version="1.0.0-alpha5" date="2024-04-15" description="The 1.0.0-alpha5 release requires Java 8.">
       <!-- FIX -->

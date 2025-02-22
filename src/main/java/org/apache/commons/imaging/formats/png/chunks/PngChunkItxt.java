@@ -56,7 +56,7 @@ public class PngChunkItxt extends AbstractPngTextChunk {
      */
     public PngChunkItxt(final int length, final int chunkType, final int crc, final byte[] bytes) throws ImagingException, IOException {
         super(length, chunkType, crc, bytes);
-        int terminator = BinaryFunctions.findNull(bytes, "PNG iTXt chunk keyword is not terminated.");
+        int terminator = BinaryFunctions.indexOf0(bytes, "PNG iTXt chunk keyword is not terminated.");
 
         keyword = new String(bytes, 0, terminator, StandardCharsets.ISO_8859_1);
         int index = terminator + 1;
@@ -73,11 +73,11 @@ public class PngChunkItxt extends AbstractPngTextChunk {
             throw new ImagingException("PNG iTXt chunk has unexpected compression method: " + compressionMethod);
         }
 
-        terminator = BinaryFunctions.findNull(bytes, index, "PNG iTXt chunk language tag is not terminated.");
+        terminator = BinaryFunctions.indexOf0(bytes, index, "PNG iTXt chunk language tag is not terminated.");
         languageTag = new String(bytes, index, terminator - index, StandardCharsets.ISO_8859_1);
         index = terminator + 1;
 
-        terminator = BinaryFunctions.findNull(bytes, index, "PNG iTXt chunk translated keyword is not terminated.");
+        terminator = BinaryFunctions.indexOf0(bytes, index, "PNG iTXt chunk translated keyword is not terminated.");
         translatedKeyword = new String(bytes, index, terminator - index, StandardCharsets.UTF_8);
         index = terminator + 1;
 

@@ -110,7 +110,7 @@ public class TiffField {
      * @return the value of the field, in the byte order of the field.
      */
     public byte[] getByteArrayValue() {
-        return BinaryFunctions.head(value, getBytesLength());
+        return BinaryFunctions.copyOfStart(value, getBytesLength());
     }
 
     /**
