@@ -32,9 +32,9 @@ public final class ColorCieLuv {
      * A constant for color black. Color components are:
      *
      * <pre>
-     *     L: 0.000
-     *     u: 0.000
-     *     v: 0.000
+     *     L*: 0.000
+     *     u*: 0.000
+     *     v*: 0.000
      * </pre>
      */
     public static final ColorCieLuv BLACK = new ColorCieLuv(0, 0, 0);
@@ -43,9 +43,9 @@ public final class ColorCieLuv {
      * A constant for color white. Color components are:
      *
      * <pre>
-     *     L: 100.000
-     *     u:   0.000
-     *     v:  -0.017
+     *     L*: 100.000
+     *     u*:   0.000
+     *     v*:  -0.017
      * </pre>
      */
     public static final ColorCieLuv WHITE = new ColorCieLuv(100, 0, -0.017);
@@ -54,9 +54,9 @@ public final class ColorCieLuv {
      * A constant for color red. Color components are:
      *
      * <pre>
-     *     L:  53.233
-     *     u: 175.053
-     *     v:  37.751
+     *     L*:  53.233
+     *     u*: 175.053
+     *     v*:  37.751
      * </pre>
      */
     public static final ColorCieLuv RED = new ColorCieLuv(53.233, 175.053, 37.751);
@@ -65,9 +65,9 @@ public final class ColorCieLuv {
      * A constant for color green. Color components are:
      *
      * <pre>
-     *     L:  87.737
-     *     u: -83.080
-     *     v: 107.401
+     *     L*:  87.737
+     *     u*: -83.080
+     *     v*: 107.401
      * </pre>
      */
     public static final ColorCieLuv GREEN = new ColorCieLuv(87.737, -83.080, 107.401);
@@ -76,17 +76,29 @@ public final class ColorCieLuv {
      * A constant for color blue. Color components are:
      *
      * <pre>
-     *     L:   32.303
-     *     u:   -9.400
-     *     v: -130.358
+     *     L*:   32.303
+     *     u*:   -9.400
+     *     v*: -130.358
      * </pre>
      */
     public static final ColorCieLuv BLUE = new ColorCieLuv(32.303, -9.400, -130.358);
 
+    /** Luminance L*. */
     public final double l;
+
+    /** Chromaticity component u*. */
     public final double u;
+
+    /** Chromaticity component v*. */
     public final double v;
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param l Luminance L*.
+     * @param u Chromaticity component u*.
+     * @param v Chromaticity component v*.
+     */
     public ColorCieLuv(final double l, final double u, final double v) {
         this.l = l;
         this.u = u;

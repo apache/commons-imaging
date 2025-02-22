@@ -33,8 +33,8 @@ public final class ColorCieLch {
      * A constant for color black. Color components are:
      *
      * <pre>
-     *     L: 0
-     *     c: 0
+     *     L*: 0
+     *     C*: 0
      *     h: 0
      * </pre>
      */
@@ -44,8 +44,8 @@ public final class ColorCieLch {
      * A constant for color white. Color components are:
      *
      * <pre>
-     *     L: 100
-     *     c:   0
+     *     L*: 100
+     *     C*:   0
      *     h: 297
      * </pre>
      */
@@ -55,8 +55,8 @@ public final class ColorCieLch {
      * A constant for color red. Color components are:
      *
      * <pre>
-     *     L: 53
-     *     c: 80
+     *     L*: 53
+     *     C*: 80
      *     h: 67
      * </pre>
      */
@@ -66,8 +66,8 @@ public final class ColorCieLch {
      * A constant for color green. Color components are:
      *
      * <pre>
-     *     L:  88
-     *     c: -86
+     *     L*:  88
+     *     C*: -86
      *     h:  83
      * </pre>
      */
@@ -77,17 +77,29 @@ public final class ColorCieLch {
      * A constant for color blue. Color components are:
      *
      * <pre>
-     *     L:   32
-     *     c:   79
+     *     L*:   32
+     *     C*:   79
      *     h: -108
      * </pre>
      */
     public static final ColorCieLch BLUE = new ColorCieLch(32, 79, -108);
 
+    /** L* lightness. */
     public final double l;
+
+    /** C* chroma. */
     public final double c;
+
+    /** Hue. */
     public final double h;
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param l L* lightness.
+     * @param c chroma.
+     * @param h hue.
+     */
     public ColorCieLch(final double l, final double c, final double h) {
         this.l = l;
         this.c = c;

@@ -32,9 +32,9 @@ public final class ColorCieLab {
      * A constant for color black. Color components are:
      *
      * <pre>
-     *     L: 0
-     *     a: 0
-     *     b: 0
+     *     L*: 0
+     *     a*: 0
+     *     b*: 0
      * </pre>
      */
     public static final ColorCieLab BLACK = new ColorCieLab(0, 0, 0);
@@ -43,9 +43,9 @@ public final class ColorCieLab {
      * A constant for color white. Color components are:
      *
      * <pre>
-     *     L: 100
-     *     a: 0
-     *     b: 0
+     *     L*: 100
+     *     a*: 0
+     *     b*: 0
      * </pre>
      */
     public static final ColorCieLab WHITE = new ColorCieLab(100, 0, 0);
@@ -54,9 +54,9 @@ public final class ColorCieLab {
      * A constant for color red. Color components are:
      *
      * <pre>
-     *     L: 53
-     *     a: 80
-     *     b: 67
+     *     L*: 53
+     *     a*: 80
+     *     b*: 67
      * </pre>
      */
     public static final ColorCieLab RED = new ColorCieLab(53, 80, 67);
@@ -65,9 +65,9 @@ public final class ColorCieLab {
      * A constant for color green. Color components are:
      *
      * <pre>
-     *     L:  88
-     *     a: -86
-     *     b:  83
+     *     L*:  88
+     *     a*: -86
+     *     b*:  83
      * </pre>
      */
     public static final ColorCieLab GREEN = new ColorCieLab(88, -86, 83);
@@ -76,14 +76,14 @@ public final class ColorCieLab {
      * A constant for color blue. Color components are:
      *
      * <pre>
-     *     L:   32
-     *     a:   79
-     *     b: -108
+     *     L*:   32
+     *     a*:   79
+     *     b*: -108
      * </pre>
      */
     public static final ColorCieLab BLUE = new ColorCieLab(32, 79, -108);
 
-    /** lightness L*. */
+    /** Lightness L*. */
     public final double l;
 
     /** a* value. */

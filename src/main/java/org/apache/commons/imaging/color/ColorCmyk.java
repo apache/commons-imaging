@@ -124,11 +124,26 @@ public final class ColorCmyk {
      */
     public static final ColorCmyk BLUE = new ColorCmyk(100, 100, 0, 0);
 
+    /** Cyan. */
     public final double c;
+
+    /** Magenta. */
     public final double m;
+
+    /** Yellow. */
     public final double y;
+
+    /** Key. */
     public final double k;
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param c cyan.
+     * @param m magenta.
+     * @param y yellow.
+     * @param k key.
+     */
     public ColorCmyk(final double c, final double m, final double y, final double k) {
         this.c = c;
         this.m = m;

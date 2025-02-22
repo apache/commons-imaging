@@ -116,10 +116,23 @@ public final class ColorCmy {
      */
     public static final ColorCmy BLUE = new ColorCmy(100, 100, 0);
 
+
+    /** Cyan. */
     public final double c;
+
+    /** Magenta. */
     public final double m;
+
+    /** Yellow. */
     public final double y;
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param c cyan.
+     * @param m magenta.
+     * @param y yellow.
+     */
     public ColorCmy(final double c, final double m, final double y) {
         this.c = c;
         this.m = m;
