@@ -38,6 +38,7 @@ import org.apache.commons.imaging.common.XmpEmbeddable;
 import org.apache.commons.imaging.icc.IccProfileInfo;
 import org.apache.commons.imaging.icc.IccProfileParser;
 import org.apache.commons.imaging.internal.ImageParserFactory;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * The primary application programming interface (API) to the Imaging library.
@@ -802,11 +803,11 @@ public final class Imaging {
             }
             return Stream.of(ImageFormats.values()).filter(imageFormat -> Stream.of(imageFormat.getExtensions()).anyMatch(extension -> {
                 final String fileName = byteSource.getFileName();
-                if (fileName == null || fileName.trim().isEmpty()) {
+                if (StringUtils.isEmpty(fileName)) {
                     return false;
                 }
                 final String fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1);
-                return extension != null && !extension.trim().isEmpty() && fileExtension.equalsIgnoreCase(extension);
+                return fileExtension.equalsIgnoreCase(extension);
             })).findFirst().orElse(ImageFormats.UNKNOWN);
         }
     }
