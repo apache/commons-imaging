@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.imaging.formats.rgbe;
 
 import java.io.IOException;
@@ -21,14 +22,15 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.ImagingException;
 
-final class InfoHeaderReader {
+final class InfoHeader {
+
     private final InputStream is;
 
-    InfoHeaderReader(final InputStream is) {
+    InfoHeader(final InputStream is) {
         this.is = is;
     }
 
-    private char read() throws IOException {
+    private char readChar() throws IOException {
         final int result = is.read();
         if (result < 0) {
             throw new ImagingException("HDR: Unexpected EOF");
@@ -36,14 +38,12 @@ final class InfoHeaderReader {
         return (char) result;
     }
 
-    public String readNextLine() throws IOException {
+    String line() throws IOException {
         final StringBuilder buffer = new StringBuilder();
         char c;
-
-        while ((c = read()) != '\n') {
+        while ((c = readChar()) != '\n') {
             buffer.append(c);
         }
-
         return buffer.toString();
     }
 }
