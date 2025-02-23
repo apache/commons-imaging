@@ -46,6 +46,7 @@ import org.apache.commons.imaging.formats.psd.dataparsers.DataParserRgb;
 import org.apache.commons.imaging.formats.psd.datareaders.CompressedDataReader;
 import org.apache.commons.imaging.formats.psd.datareaders.DataReader;
 import org.apache.commons.imaging.formats.psd.datareaders.UncompressedDataReader;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
 public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> implements XmpEmbeddable {
@@ -436,8 +437,8 @@ public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> im
             }
             notFound = true;
         } finally {
-            if (notFound && is != null) {
-                is.close();
+            if (notFound) {
+                IOUtils.close(is);
             }
         }
         throw new ImagingException("getInputStream: Unknown Section: " + section);
