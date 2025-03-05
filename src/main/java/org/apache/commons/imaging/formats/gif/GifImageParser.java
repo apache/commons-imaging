@@ -829,7 +829,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
         return result;
     }
 
-    private void writeAsSubBlocks(final OutputStream os, final byte[] bytes) throws IOException {
+    private void writeAsSubBlocks(final byte[] bytes, final OutputStream os) throws IOException {
         int index = 0;
 
         while (index < bytes.length) {
@@ -1039,7 +1039,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
                 }
 
                 final byte[] compressed = compressor.compress(imageData);
-                writeAsSubBlocks(bos, compressed);
+                writeAsSubBlocks(compressed, bos);
 //            image_data_total += compressed.length;
             }
 
