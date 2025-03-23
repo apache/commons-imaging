@@ -116,7 +116,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     }
 
     /**
-     * Indicates whether the ImageParser implementation can accept the specified file based on its extension.
+     * Tests whether the ImageParser implementation can accept the specified file based on its extension.
      *
      * @param file An valid file reference.
      * @return If the parser can accept the format, true; otherwise, false.
@@ -126,7 +126,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     }
 
     /**
-     * Indicates whether the ImageParser implementation can accept the specified file name based on its extension.
+     * Tests whether the ImageParser implementation can accept the specified file name based on its extension.
      *
      * @param fileName A valid string giving a file name or file path.
      * @return If the parser can accept the format, true; otherwise, false.
