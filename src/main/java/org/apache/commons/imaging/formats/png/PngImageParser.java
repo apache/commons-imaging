@@ -68,6 +68,9 @@ import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.icc.IccProfileParser;
 
+/**
+ * Parses PNG images.
+ */
 public class PngImageParser extends AbstractImageParser<PngImagingParameters> implements XmpEmbeddable<PngImagingParameters> {
 
     private static final Logger LOGGER = Logger.getLogger(PngImageParser.class.getName());
@@ -545,6 +548,14 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
     }
 
     /**
+     * Gets TIFF image metadata for a byte source and TIFF parameters.
+     *
+     * @param byteSource The source of the image.
+     * @param params     Optional instructions for special-handling or interpretation of the input data (null objects are permitted and must be supported by
+     *                   implementations).
+     * @return TIFF image metadata.
+     * @throws ImagingException
+     * @throws IOException
      * @since 1.0-alpha6
      */
     public TiffImageMetadata getExifMetadata(final ByteSource byteSource, TiffImagingParameters params)
@@ -562,6 +573,12 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
     }
 
     /**
+     * Gets TIFF image metadata for a byte source.
+     *
+     * @param byteSource The source of the image.
+     * @return TIFF image metadata.
+     * @throws ImagingException
+     * @throws IOException
      * @since 1.0-alpha6
      */
     public byte[] getExifRawData(final ByteSource byteSource) throws ImagingException, IOException {
@@ -705,8 +722,15 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
 
     }
 
-    public void readSignature(final InputStream is) throws ImagingException, IOException {
-        BinaryFunctions.readAndVerifyBytes(is, PngConstants.PNG_SIGNATURE, "Not a Valid PNG Segment: Incorrect Signature");
+    /**
+     * Reads reads the signature.
+     *
+     * @param in an input stream.
+     * @throws ImagingException
+     * @throws IOException
+     */
+    public void readSignature(final InputStream in) throws ImagingException, IOException {
+        BinaryFunctions.readAndVerifyBytes(in, PngConstants.PNG_SIGNATURE, "Not a Valid PNG Segment: Incorrect Signature");
 
     }
 

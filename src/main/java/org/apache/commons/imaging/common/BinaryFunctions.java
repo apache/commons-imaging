@@ -148,9 +148,9 @@ public final class BinaryFunctions {
         return arr;
     }
 
-    public static int read2Bytes(final String name, final InputStream is, final String exception, final ByteOrder byteOrder) throws IOException {
-        final int byte0 = is.read();
-        final int byte1 = is.read();
+    public static int read2Bytes(final String name, final InputStream in, final String exception, final ByteOrder byteOrder) throws IOException {
+        final int byte0 = in.read();
+        final int byte1 = in.read();
         if ((byte0 | byte1) < 0) {
             throw new IOException(exception);
         }
@@ -163,10 +163,10 @@ public final class BinaryFunctions {
         return result;
     }
 
-    public static int read3Bytes(final String name, final InputStream is, final String exception, final ByteOrder byteOrder) throws IOException {
-        final int byte0 = is.read();
-        final int byte1 = is.read();
-        final int byte2 = is.read();
+    public static int read3Bytes(final String name, final InputStream in, final String exception, final ByteOrder byteOrder) throws IOException {
+        final int byte0 = in.read();
+        final int byte1 = in.read();
+        final int byte2 = in.read();
         if ((byte0 | byte1 | byte2) < 0) {
             throw new IOException(exception);
         }
@@ -179,11 +179,11 @@ public final class BinaryFunctions {
         return result;
     }
 
-    public static int read4Bytes(final String name, final InputStream is, final String exception, final ByteOrder byteOrder) throws IOException {
-        final int byte0 = is.read();
-        final int byte1 = is.read();
-        final int byte2 = is.read();
-        final int byte3 = is.read();
+    public static int read4Bytes(final String name, final InputStream in, final String exception, final ByteOrder byteOrder) throws IOException {
+        final int byte0 = in.read();
+        final int byte1 = in.read();
+        final int byte2 = in.read();
+        final int byte3 = in.read();
         if ((byte0 | byte1 | byte2 | byte3) < 0) {
             throw new IOException(exception);
         }
@@ -200,21 +200,21 @@ public final class BinaryFunctions {
      * Read eight bytes from the specified input stream, adjust for byte order, and return a long integer.
      *
      * @param name      a descriptive identifier used for diagnostic purposes
-     * @param is        a valid input stream
+     * @param in        a valid input stream
      * @param exception application-defined message to be used for constructing an exception if an error condition is triggered.
      * @param byteOrder the order in which the InputStream marshals data
      * @return a long integer interpreted from next 8 bytes in the InputStream
      * @throws IOException in the event of a non-recoverable error, such as an attempt to read past the end of file.
      */
-    public static long read8Bytes(final String name, final InputStream is, final String exception, final ByteOrder byteOrder) throws IOException {
-        final long byte0 = is.read();
-        final long byte1 = is.read();
-        final long byte2 = is.read();
-        final long byte3 = is.read();
-        final long byte4 = is.read();
-        final long byte5 = is.read();
-        final long byte6 = is.read();
-        final long byte7 = is.read();
+    public static long read8Bytes(final String name, final InputStream in, final String exception, final ByteOrder byteOrder) throws IOException {
+        final long byte0 = in.read();
+        final long byte1 = in.read();
+        final long byte2 = in.read();
+        final long byte3 = in.read();
+        final long byte4 = in.read();
+        final long byte5 = in.read();
+        final long byte6 = in.read();
+        final long byte7 = in.read();
         if ((byte0 | byte1 | byte2 | byte3 | byte4 | byte5 | byte6 | byte7) < 0) {
             throw new IOException(exception);
         }
@@ -227,13 +227,13 @@ public final class BinaryFunctions {
         return result;
     }
 
-    public static void readAndVerifyBytes(final InputStream is, final BinaryConstant expected, final String exception) throws ImagingException, IOException {
-        readAndVerifyBytes(is, expected.rawValue(), exception);
+    public static void readAndVerifyBytes(final InputStream in, final BinaryConstant expected, final String exception) throws ImagingException, IOException {
+        readAndVerifyBytes(in, expected.rawValue(), exception);
     }
 
-    public static void readAndVerifyBytes(final InputStream is, final byte[] expected, final String exception) throws ImagingException, IOException {
+    public static void readAndVerifyBytes(final InputStream in, final byte[] expected, final String exception) throws ImagingException, IOException {
         for (final byte element : expected) {
-            final int data = is.read();
+            final int data = in.read();
             final byte b = (byte) (0xff & data);
             if (data < 0) {
                 throw new ImagingException("Unexpected EOF.");
@@ -244,25 +244,25 @@ public final class BinaryFunctions {
         }
     }
 
-    public static byte readByte(final String name, final InputStream is, final String exceptionMessage) throws IOException {
-        final int result = is.read();
+    public static byte readByte(final String name, final InputStream in, final String exceptionMessage) throws IOException {
+        final int result = in.read();
         if (result < 0) {
             throw new IOException(exceptionMessage);
         }
         return (byte) (0xff & result);
     }
 
-    public static byte[] readBytes(final InputStream is, final int count) throws IOException {
-        return readBytes("", is, count, "Unexpected EOF");
+    public static byte[] readBytes(final InputStream in, final int count) throws IOException {
+        return readBytes("", in, count, "Unexpected EOF");
     }
 
-    public static byte[] readBytes(final String name, final InputStream is, final int length) throws IOException {
-        return readBytes(name, is, length, name + " could not be read.");
+    public static byte[] readBytes(final String name, final InputStream in, final int length) throws IOException {
+        return readBytes(name, in, length, name + " could not be read.");
     }
 
-    public static byte[] readBytes(final String name, final InputStream is, final int length, final String exception) throws IOException {
+    public static byte[] readBytes(final String name, final InputStream in, final int length, final String exception) throws IOException {
         try {
-            return IOUtils.toByteArray(is, Allocator.check(length));
+            return IOUtils.toByteArray(in, Allocator.check(length));
         } catch (final IOException e) {
             throw new IOException(exception + ", name: " + name + ", length: " + length);
         }
@@ -280,15 +280,15 @@ public final class BinaryFunctions {
      * Returns {@code true} if it found the quad, and {@code false} otherwise.
      *
      * @param quad a quad (the needle)
-     * @param bis  an input stream (the haystack)
+     * @param in  an input stream (the haystack)
      * @return {@code true} if it found the quad, and {@code false} otherwise
      * @throws IOException if it fails to read from the given input stream
      */
-    public static boolean searchQuad(final int quad, final InputStream bis) throws IOException {
+    public static boolean searchQuad(final int quad, final InputStream in) throws IOException {
         final byte[] needle = quadsToByteArray(quad);
         int b = -1;
         int position = 0;
-        while ((b = bis.read()) != -1) {
+        while ((b = in.read()) != -1) {
             if (needle[position] == b) {
                 position++;
                 if (position == needle.length) {
@@ -301,13 +301,13 @@ public final class BinaryFunctions {
         return false;
     }
 
-    public static long skipBytes(final InputStream is, final long skip) throws IOException {
-        return skipBytes(is, skip, "Couldn't skip bytes");
+    public static long skipBytes(final InputStream in, final long skip) throws IOException {
+        return skipBytes(in, skip, "Couldn't skip bytes");
     }
 
-    public static long skipBytes(final InputStream is, final long skip, final String exMessage) throws IOException {
+    public static long skipBytes(final InputStream in, final long skip, final String exMessage) throws IOException {
         try {
-            return IOUtils.skip(is, skip);
+            return IOUtils.skip(in, skip);
         } catch (final IOException e) {
             throw new IOException(exMessage, e);
         }
