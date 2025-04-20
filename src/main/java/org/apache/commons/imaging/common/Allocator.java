@@ -119,7 +119,7 @@ public class Allocator {
     /**
      * Checks a request for meeting allocation limits.
      * <p>
-     * The default limit is {@value #DEFAULT}, override with the system property "org.apache.commons.imaging.common.mylzw.AllocationChecker".
+     * The default limit is {@code #DEFAULT}, override with the system property "org.apache.commons.imaging.common.mylzw.AllocationChecker".
      * </p>
      *
      * @param request an allocation request.
@@ -136,7 +136,7 @@ public class Allocator {
     /**
      * Checks a request for meeting allocation limits.
      * <p>
-     * The default limit is {@value #DEFAULT}, override with the system property "org.apache.commons.imaging.common.mylzw.AllocationChecker".
+     * The default limit is {@code #DEFAULT}, override with the system property "org.apache.commons.imaging.common.mylzw.AllocationChecker".
      * </p>
      *
      * @param request     an allocation request count.
@@ -160,7 +160,7 @@ public class Allocator {
     /**
      * Checks a request for meeting allocation limits.
      * <p>
-     * The default limit is {@value #DEFAULT}, override with the system property "org.apache.commons.imaging.common.mylzw.AllocationChecker".
+     * The default limit is {@code #DEFAULT}, override with the system property "org.apache.commons.imaging.common.mylzw.AllocationChecker".
      * </p>
      *
      * @param request     an allocation request count is cast down to an int.
