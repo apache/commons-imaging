@@ -554,8 +554,8 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
      * @param params     Optional instructions for special-handling or interpretation of the input data (null objects are permitted and must be supported by
      *                   implementations).
      * @return TIFF image metadata.
-     * @throws ImagingException
-     * @throws IOException
+     * @throws ImagingException In the event that the specified content does not conform to the format of the specific parser implementation.
+     * @throws IOException      In the event of unsuccessful data read operation.
      * @since 1.0-alpha6
      */
     public TiffImageMetadata getExifMetadata(final ByteSource byteSource, TiffImagingParameters params)
@@ -577,8 +577,8 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
      *
      * @param byteSource The source of the image.
      * @return TIFF image metadata.
-     * @throws ImagingException
-     * @throws IOException
+     * @throws ImagingException In the event that the specified content does not conform to the format of the specific parser implementation.
+     * @throws IOException      In the event of unsuccessful data read operation.
      * @since 1.0-alpha6
      */
     public byte[] getExifRawData(final ByteSource byteSource) throws ImagingException, IOException {
@@ -726,8 +726,8 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
      * Reads reads the signature.
      *
      * @param in an input stream.
-     * @throws ImagingException
-     * @throws IOException
+     * @throws ImagingException In the event that the specified content does not conform to the format of the specific parser implementation.
+     * @throws IOException      In the event of unsuccessful data read operation.
      */
     public void readSignature(final InputStream in) throws ImagingException, IOException {
         BinaryFunctions.readAndVerifyBytes(in, PngConstants.PNG_SIGNATURE, "Not a Valid PNG Segment: Incorrect Signature");
