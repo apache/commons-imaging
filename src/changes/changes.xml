@@ -62,7 +62,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action dev="kinow"    type="add" due-to="Glavo">Support Extensions from PNG 1.2 Specification, Version 1.5.0 #269.</action>
       <action dev="ggregory" type="add" due-to="Thomas Stieler, Gary Gregory">Optionally force UTF-8 encoding for IPTC records #477.</action>  
       <!-- UPDATE -->
-      <action dev="ggregory" type="update" due-to="Dependabot, Gary Gregory">Bump org.apache.commons:commons-parent from 69 to 79 #400, #406, #428, #430, #436, #442, #445, #545.</action>
+      <action dev="ggregory" type="update" due-to="Dependabot, Gary Gregory">Bump org.apache.commons:commons-parent from 69 to 81 #400, #406, #428, #430, #436, #442, #445, #545.</action>
       <action dev="ggregory" type="update" due-to="Dependabot">Bump org.apache.commons:commons-lang3 from 3.14.0 to 3.17.0 #416, #423, #431.</action>
       <action dev="ggregory" type="update" due-to="Dependabot">Bump commons-io:commons-io from 2.16.1 to 2.19.0 #437, #464.</action>
       <action dev="ggregory" type="update" due-to="Dependabot">Bump org.codehaus.mojo:taglist-maven-plugin from 3.1.0 to 3.2.1 #453.</action>
