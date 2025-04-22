@@ -33,7 +33,7 @@ import org.apache.commons.imaging.ImagingException;
  * }</pre>
  *
  * @see <a href="https://developers.google.com/speed/webp/docs/riff_container#color_profile">Extended File Format#Color Profile</a>
- * @since 1.0-alpha4
+ * @since 1.0.0-alpha4
  */
 public final class WebPChunkIccp extends WebPChunk {
 

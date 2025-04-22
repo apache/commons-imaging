@@ -26,7 +26,7 @@ import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 /**
  * WebP image metadata.
  *
- * @since 1.0-alpha4
+ * @since 1.0.0-alpha4
  */
 public final class WebPImageMetadata extends GenericImageMetadata {
 

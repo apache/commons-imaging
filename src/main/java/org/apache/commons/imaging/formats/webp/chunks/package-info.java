@@ -18,6 +18,6 @@
 /**
  * WebP image format chunks.
  *
- * @since 1.0-alpha4
+ * @since 1.0.0-alpha4
  */
 package org.apache.commons.imaging.formats.webp.chunks;

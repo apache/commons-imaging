@@ -21,7 +21,7 @@ import org.apache.commons.imaging.common.XmpImagingParameters;
 /**
  * WebP format parameters.
  *
- * @since 1.0-alpha4
+ * @since 1.0.0-alpha4
  */
 public class WebPImagingParameters extends XmpImagingParameters<WebPImagingParameters> {
 }

@@ -29,7 +29,7 @@ import org.apache.commons.imaging.internal.SafeOperations;
  * A WebP image is composed of several chunks. This is the base class for the chunks, used by the parser.
  *
  * @see <a href="https://developers.google.com/speed/webp/docs/riff_container">WebP Container Specification</a>
- * @since 1.0-alpha4
+ * @since 1.0.0-alpha4
  */
 public abstract class WebPChunk extends BinaryFileParser {
     private final int type;

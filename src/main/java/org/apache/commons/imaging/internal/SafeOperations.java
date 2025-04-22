@@ -21,7 +21,7 @@ import java.util.Arrays;
 /**
  * Provides safe arithmetic operations to avoid, for example, numeric overflows.
  *
- * @since 1.0-alpha4
+ * @since 1.0.0-alpha4
  */
 public final class SafeOperations {
 

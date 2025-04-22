@@ -21,7 +21,7 @@ import org.apache.commons.imaging.ImagingException;
 /**
  * XYZW (unknown) chunk.
  *
- * @since 1.0-alpha4
+ * @since 1.0.0-alpha4
  */
 public final class WebPChunkXyzw extends WebPChunk {
 

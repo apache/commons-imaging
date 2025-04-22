@@ -21,7 +21,7 @@ import org.apache.commons.imaging.common.BinaryConstant;
 /**
  * Constants used for the WebP image format.
  *
- * @since 1.0-alpha4
+ * @since 1.0.0-alpha4
  */
 public final class WebPConstants {
 

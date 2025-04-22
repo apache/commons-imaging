@@ -49,7 +49,7 @@ import org.apache.commons.imaging.internal.SafeOperations;
 /**
  * WebP image parser.
  *
- * @since 1.0-alpha4
+ * @since 1.0.0-alpha4
  */
 public class WebPImageParser extends AbstractImageParser<WebPImagingParameters> implements XmpEmbeddable<WebPImagingParameters> {
 

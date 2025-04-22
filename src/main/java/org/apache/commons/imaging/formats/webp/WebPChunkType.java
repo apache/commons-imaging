@@ -35,7 +35,7 @@ import org.apache.commons.imaging.formats.webp.chunks.WebPChunkXyzw;
 /**
  * WebP chunk type.
  *
- * @since 1.0-alpha4
+ * @since 1.0.0-alpha4
  */
 public enum WebPChunkType {
 
