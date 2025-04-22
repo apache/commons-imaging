@@ -136,14 +136,14 @@ public enum ChunkType {
     /**
      * Image offset
      *
-     * @since 1.0-alpha6
+     * @since 1.0.0-alpha6
      */
     oFFs(Extension.PNGEXT),
 
     /**
      * Calibration of pixel values
      *
-     * @since 1.0-alpha6
+     * @since 1.0.0-alpha6
      */
     pCAL(Extension.PNGEXT),
 
@@ -155,28 +155,28 @@ public enum ChunkType {
     /**
      * GIF Graphic Control Extension
      *
-     * @since 1.0-alpha6
+     * @since 1.0.0-alpha6
      */
     gIFg(Extension.PNGEXT),
 
     /**
      * GIF Application Extension
      *
-     * @since 1.0-alpha6
+     * @since 1.0.0-alpha6
      */
     gIFx(Extension.PNGEXT),
 
     /**
      * Indicator of Stereo Image
      *
-     * @since 1.0-alpha6
+     * @since 1.0.0-alpha6
      */
     sTER(Extension.PNGEXT),
 
     /**
      * Exchangeable Image File (Exif) Profile
      *
-     * @since 1.0-alpha6
+     * @since 1.0.0-alpha6
      */
     eXIf(Extension.PNGEXT),
 
