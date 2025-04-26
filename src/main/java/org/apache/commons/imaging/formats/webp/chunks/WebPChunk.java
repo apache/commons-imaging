@@ -32,10 +32,29 @@ import org.apache.commons.imaging.internal.SafeOperations;
  * @since 1.0.0-alpha4
  */
 public abstract class WebPChunk extends BinaryFileParser {
+
+    private static boolean checkArgs(final int size, final byte[] bytes) throws ImagingException {
+        if (size != bytes.length) {
+            throw new ImagingException("Chunk size must match bytes length");
+        }
+        return true;
+    }
+
     private final int type;
     private final int size;
     protected final byte[] bytes;
     private final int chunkSize;
+
+    private WebPChunk(final int type, final int size, final byte[] bytes, final boolean ignored) {
+        super(ByteOrder.LITTLE_ENDIAN);
+        this.type = type;
+        this.size = bytes.length;
+        this.bytes = bytes;
+        // if chunk size is odd, a single padding byte is added
+        final int padding = size % 2 != 0 ? 1 : 0;
+        // Chunk FourCC (4 bytes) + Chunk Size (4 bytes) + Chunk Payload (n bytes) + Padding
+        this.chunkSize = SafeOperations.add(4, 4, size, padding);
+    }
 
     /**
      * Create a new WebP chunk.
@@ -45,22 +64,8 @@ public abstract class WebPChunk extends BinaryFileParser {
      * @param bytes chunk data.
      * @throws ImagingException if the chunk data and the size provided do not match.
      */
-    WebPChunk(final int type, final int size, final byte[] bytes) throws ImagingException {
-        super(ByteOrder.LITTLE_ENDIAN);
-
-        if (size != bytes.length) {
-            throw new ImagingException("Chunk size must match bytes length");
-        }
-
-        this.type = type;
-        this.size = size;
-        this.bytes = bytes;
-
-        // if chunk size is odd, a single padding byte is added
-        final int padding = size % 2 != 0 ? 1 : 0;
-
-        // Chunk FourCC (4 bytes) + Chunk Size (4 bytes) + Chunk Payload (n bytes) + Padding
-        this.chunkSize = SafeOperations.add(4, 4, size, padding);
+    public WebPChunk(final int type, final int size, final byte[] bytes) throws ImagingException {
+        this(type, size, bytes, checkArgs(size, bytes));
     }
 
     /**
