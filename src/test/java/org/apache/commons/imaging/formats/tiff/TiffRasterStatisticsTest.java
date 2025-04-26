@@ -33,7 +33,7 @@ public class TiffRasterStatisticsTest {
     int width = 11;
     int height = 10;
     float[] data;
-    TiffRasterData raster;
+    AbstractTiffRasterData raster;
     float meanValue;
     TiffRasterStatistics stat0;
     TiffRasterStatistics stat1;
@@ -101,7 +101,7 @@ public class TiffRasterStatisticsTest {
 
         final float[] zero = new float[100];
         Arrays.fill(zero, 10);
-        final TiffRasterData zeroData = new TiffRasterDataFloat(10, 10, zero);
+        final AbstractTiffRasterData zeroData = new TiffRasterDataFloat(10, 10, zero);
         final TiffRasterStatistics zeroStat = zeroData.getSimpleStatistics(10);
         assertEquals(0.0f, zeroStat.getMeanValue(), "Invalid mean data for excluded value");
     }

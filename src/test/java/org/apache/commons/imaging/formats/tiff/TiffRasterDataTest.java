@@ -31,7 +31,7 @@ public class TiffRasterDataTest {
     int width = 11;
     int height = 10;
     float[] data;
-    TiffRasterData raster;
+    AbstractTiffRasterData raster;
     float meanValue;
 
     public TiffRasterDataTest() {
@@ -69,7 +69,7 @@ public class TiffRasterDataTest {
     @Test
     public void testBadCoordinates() {
         final float[] f = new float[100];
-        final TiffRasterData instance = new TiffRasterDataFloat(10, 10, 1, f);
+        final AbstractTiffRasterData instance = new TiffRasterDataFloat(10, 10, 1, f);
         assertThrows(IllegalArgumentException.class, () -> instance.getValue(11, 11), "Access method getValue() did not detect bad coordinates");
         assertThrows(IllegalArgumentException.class, () -> instance.setValue(11, 11, 5.0f), "Access method setValue() did not detect bad coordinates");
         assertThrows(IllegalArgumentException.class, () -> instance.getValue(1, 1, 2), "Access method setValue() did not detect bad sample index");
@@ -185,7 +185,7 @@ public class TiffRasterDataTest {
      */
     @Test
     public void testSetValue() {
-        final TiffRasterData instance = new TiffRasterDataFloat(width, height);
+        final AbstractTiffRasterData instance = new TiffRasterDataFloat(width, height);
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 final int index = y * width + height;
@@ -204,7 +204,7 @@ public class TiffRasterDataTest {
      */
     @Test
     public void testSetValue2() {
-        final TiffRasterData instance = new TiffRasterDataFloat(width, height, 2);
+        final AbstractTiffRasterData instance = new TiffRasterDataFloat(width, height, 2);
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 final int index = y * width + height;

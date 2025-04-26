@@ -26,15 +26,15 @@ import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.formats.psd.PsdHeaderInfo;
 import org.apache.commons.imaging.formats.psd.PsdImageContents;
-import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
+import org.apache.commons.imaging.formats.psd.dataparsers.AbstractDataParser;
 import org.apache.commons.imaging.mylzw.BitsToByteInputStream;
 import org.apache.commons.imaging.mylzw.MyBitInputStream;
 
 public class UncompressedDataReader implements DataReader {
 
-    private final DataParser dataParser;
+    private final AbstractDataParser dataParser;
 
-    public UncompressedDataReader(final DataParser dataParser) {
+    public UncompressedDataReader(final AbstractDataParser dataParser) {
         this.dataParser = dataParser;
     }
 

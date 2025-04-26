@@ -39,7 +39,7 @@ import org.apache.commons.imaging.internal.SafeOperations;
  * @see <a href="https://developers.google.com/speed/webp/docs/riff_container#simple_file_format_lossless">Simple File Format (Lossless)</a>
  * @since 1.0.0-alpha4
  */
-public final class WebPChunkVp8l extends WebPChunk {
+public final class WebPChunkVp8l extends AbstractWebPChunk {
     private final int imageWidth;
     private final int imageHeight;
     private final boolean hasAlpha;

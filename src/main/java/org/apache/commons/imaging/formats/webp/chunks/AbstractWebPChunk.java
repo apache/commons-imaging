@@ -31,7 +31,7 @@ import org.apache.commons.imaging.internal.SafeOperations;
  * @see <a href="https://developers.google.com/speed/webp/docs/riff_container">WebP Container Specification</a>
  * @since 1.0.0-alpha4
  */
-public abstract class WebPChunk extends BinaryFileParser {
+public abstract class AbstractWebPChunk extends BinaryFileParser {
 
     private static boolean checkArgs(final int size, final byte[] bytes) throws ImagingException {
         if (size != bytes.length) {
@@ -45,7 +45,7 @@ public abstract class WebPChunk extends BinaryFileParser {
     protected final byte[] bytes;
     private final int chunkSize;
 
-    private WebPChunk(final int type, final int size, final byte[] bytes, final boolean ignored) {
+    private AbstractWebPChunk(final int type, final int size, final byte[] bytes, final boolean ignored) {
         super(ByteOrder.LITTLE_ENDIAN);
         this.type = type;
         this.size = bytes.length;
@@ -64,7 +64,7 @@ public abstract class WebPChunk extends BinaryFileParser {
      * @param bytes chunk data.
      * @throws ImagingException if the chunk data and the size provided do not match.
      */
-    public WebPChunk(final int type, final int size, final byte[] bytes) throws ImagingException {
+    public AbstractWebPChunk(final int type, final int size, final byte[] bytes) throws ImagingException {
         this(type, size, bytes, checkArgs(size, bytes));
     }
 

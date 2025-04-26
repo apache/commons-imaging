@@ -32,8 +32,8 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.PixelDensity;
+import org.apache.commons.imaging.common.AbstractBinaryOutputStream;
 import org.apache.commons.imaging.common.Allocator;
-import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.PackBits;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.common.ZlibDeflate;
@@ -588,11 +588,11 @@ public abstract class AbstractTiffImageWriter {
         write(os, outputSet);
     }
 
-    protected void writeImageFileHeader(final BinaryOutputStream bos) throws IOException {
+    protected void writeImageFileHeader(final AbstractBinaryOutputStream bos) throws IOException {
         writeImageFileHeader(bos, TiffConstants.HEADER_SIZE);
     }
 
-    protected void writeImageFileHeader(final BinaryOutputStream bos, final long offsetToFirstIFD) throws IOException {
+    protected void writeImageFileHeader(final AbstractBinaryOutputStream bos, final long offsetToFirstIFD) throws IOException {
         if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
             bos.write('I');
             bos.write('I');

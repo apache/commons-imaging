@@ -21,7 +21,7 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
-public class PhotometricInterpreterRgb extends PhotometricInterpreter {
+public class PhotometricInterpreterRgb extends AbstractPhotometricInterpreter {
     public PhotometricInterpreterRgb(final int samplesPerPixel, final int[] bitsPerSample, final int predictor, final int width, final int height) {
         super(samplesPerPixel, bitsPerSample, predictor, width, height);
     }

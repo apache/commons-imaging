@@ -23,7 +23,7 @@ import java.nio.ByteOrder;
 import java.util.Arrays;
 
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.common.BinaryOutputStream;
+import org.apache.commons.imaging.common.AbstractBinaryOutputStream;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 
@@ -138,7 +138,7 @@ public class TiffOutputField {
         return result.toString();
     }
 
-    protected void writeField(final BinaryOutputStream bos) throws IOException, ImagingException {
+    protected void writeField(final AbstractBinaryOutputStream bos) throws IOException, ImagingException {
         bos.write2Bytes(tag);
         bos.write2Bytes(abstractFieldType.getType());
         bos.write4Bytes(count);

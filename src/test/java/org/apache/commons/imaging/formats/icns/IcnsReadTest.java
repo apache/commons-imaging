@@ -37,7 +37,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class IcnsReadTest extends IcnsBaseTest {
+public class IcnsReadTest extends AbstractIcnsTest {
 
     public static Stream<File> data() throws Exception {
         return getIcnsImages().stream();

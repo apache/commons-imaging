@@ -27,21 +27,21 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.tiff.AbstractTiffImageData;
+import org.apache.commons.imaging.formats.tiff.AbstractTiffRasterData;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
-import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.TiffRasterDataFloat;
 import org.apache.commons.imaging.formats.tiff.TiffRasterDataInt;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
-import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
+import org.apache.commons.imaging.formats.tiff.photometricinterpreters.AbstractPhotometricInterpreter;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterRgb;
 
 /**
  * Provides a data reader for TIFF file images organized by tiles.
  * <p>
- * See {@link ImageDataReader} for notes discussing design and development with particular emphasis on run-time performance.
+ * See {@link AbstractImageDataReader} for notes discussing design and development with particular emphasis on run-time performance.
  */
-public final class DataReaderStrips extends ImageDataReader {
+public final class DataReaderStrips extends AbstractImageDataReader {
 
     private final int bitsPerPixel;
     private final int compression;
@@ -52,7 +52,7 @@ public final class DataReaderStrips extends ImageDataReader {
     private int y;
     private final AbstractTiffImageData.Strips imageData;
 
-    public DataReaderStrips(final TiffDirectory directory, final PhotometricInterpreter photometricInterpreter, final int bitsPerPixel,
+    public DataReaderStrips(final TiffDirectory directory, final AbstractPhotometricInterpreter photometricInterpreter, final int bitsPerPixel,
             final int[] bitsPerSample, final int predictor, final int samplesPerPixel, final int sampleFormat, final int width, final int height,
             final int compression, final TiffPlanarConfiguration planarConfiguration, final ByteOrder byteOrder, final int rowsPerStrip,
             final AbstractTiffImageData.Strips imageData) {
@@ -335,7 +335,7 @@ public final class DataReaderStrips extends ImageDataReader {
     }
 
     @Override
-    public TiffRasterData readRasterData(final Rectangle subImage) throws ImagingException, IOException {
+    public AbstractTiffRasterData readRasterData(final Rectangle subImage) throws ImagingException, IOException {
         switch (sampleFormat) {
         case TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT:
             return readRasterDataFloat(subImage);
@@ -346,7 +346,7 @@ public final class DataReaderStrips extends ImageDataReader {
         }
     }
 
-    private TiffRasterData readRasterDataFloat(final Rectangle subImage) throws ImagingException, IOException {
+    private AbstractTiffRasterData readRasterDataFloat(final Rectangle subImage) throws ImagingException, IOException {
         final int xRaster;
         final int yRaster;
         final int rasterWidth;
@@ -391,7 +391,7 @@ public final class DataReaderStrips extends ImageDataReader {
         return new TiffRasterDataFloat(rasterWidth, rasterHeight, samplesPerPixel, rasterDataFloat);
     }
 
-    private TiffRasterData readRasterDataInt(final Rectangle subImage) throws ImagingException, IOException {
+    private AbstractTiffRasterData readRasterDataInt(final Rectangle subImage) throws ImagingException, IOException {
         final int xRaster;
         final int yRaster;
         final int rasterWidth;

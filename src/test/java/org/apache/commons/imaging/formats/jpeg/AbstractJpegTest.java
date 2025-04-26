@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.commons.imaging.formats.tiff;
+package org.apache.commons.imaging.formats.jpeg;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,17 +27,17 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
 
-public abstract class TiffBaseTest extends AbstractImagingTest {
+public abstract class AbstractJpegTest extends AbstractImagingTest {
 
-    private static final ImageFilter IMAGE_FILTER = TiffBaseTest::isTiff;
+    public static final ImageFilter imageFilter = AbstractJpegTest::isJpeg;
 
-    private static boolean isTiff(final File file) throws IOException {
-        final ImageFormat format = Imaging.guessFormat(file);
-        return format == ImageFormats.TIFF;
+    protected static List<File> getJpegImages() throws IOException, ImagingException {
+        return getTestImages(imageFilter);
     }
 
-    protected List<File> getTiffImages() throws IOException, ImagingException {
-        return getTestImages(IMAGE_FILTER);
+    protected static boolean isJpeg(final File file) throws IOException {
+        final ImageFormat format = Imaging.guessFormat(file);
+        return format == ImageFormats.JPEG;
     }
 
 }

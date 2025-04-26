@@ -21,7 +21,7 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
-public class AppnSegment extends GenericSegment {
+public class AppnSegment extends AbstractGenericSegment {
 
     public AppnSegment(final int marker, final int markerLength, final InputStream is) throws IOException {
         super(marker, markerLength, is);

@@ -31,7 +31,7 @@ import org.apache.commons.imaging.formats.tiff.itu_t4.T4AndT6Compression;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 
-public class TiffCcittTest extends TiffBaseTest {
+public class TiffCcittTest extends AbstractTiffTest {
 
     /**
      * Generates the next combination of elements in the sequence array, with each element having a maximum value of max. Initially, the sequence should be set

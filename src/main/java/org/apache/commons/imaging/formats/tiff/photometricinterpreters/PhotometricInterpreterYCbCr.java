@@ -21,7 +21,7 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
-public class PhotometricInterpreterYCbCr extends PhotometricInterpreter {
+public class PhotometricInterpreterYCbCr extends AbstractPhotometricInterpreter {
 
     /**
      * This method converts a YUV (aka YCbCr) colorspace to a RGB colorspace. This is handy when trying to reconstruct an image in Java from YCbCr transmitted

@@ -31,7 +31,7 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
-import org.apache.commons.imaging.common.BinaryOutputStream;
+import org.apache.commons.imaging.common.AbstractBinaryOutputStream;
 import org.apache.commons.imaging.common.GenericImageMetadata.GenericImageMetadataItem;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
@@ -94,7 +94,7 @@ public class IptcParserTest {
         // Write prefix including (optional)
         final byte[] prefix;
         try (ByteArrayOutputStream envelopeRecordStream = new ByteArrayOutputStream();
-                BinaryOutputStream bos = BinaryOutputStream.create(envelopeRecordStream, parser.getByteOrder())) {
+                AbstractBinaryOutputStream bos = AbstractBinaryOutputStream.create(envelopeRecordStream, parser.getByteOrder())) {
             if (forceUtf8 || value.contains("€")) {
                 // Either using UTF-8 is forced of the value contains € (which isn't a character defined in ISO-8859-1):
                 bos.write(IptcConstants.IPTC_RECORD_TAG_MARKER);
@@ -121,7 +121,7 @@ public class IptcParserTest {
 
         final byte[] applicationRecord;
         try (ByteArrayOutputStream applicationRecordStream = new ByteArrayOutputStream();
-                BinaryOutputStream bos = BinaryOutputStream.create(applicationRecordStream, parser.getByteOrder())) {
+                AbstractBinaryOutputStream bos = AbstractBinaryOutputStream.create(applicationRecordStream, parser.getByteOrder())) {
             bos.write(IptcConstants.IPTC_RECORD_TAG_MARKER);
             bos.write(IptcConstants.IPTC_APPLICATION_2_RECORD_NUMBER);
             bos.write(IptcTypes.CAPTION_ABSTRACT.type);

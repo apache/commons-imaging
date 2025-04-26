@@ -12,7 +12,7 @@
  *  limitations under the License.
  *  under the License.
  */
-package org.apache.commons.imaging.formats.wbmp;
+package org.apache.commons.imaging.formats.xbm;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,14 +21,15 @@ import java.util.List;
 import org.apache.commons.imaging.AbstractImagingTest;
 import org.apache.commons.imaging.ImagingException;
 
-public abstract class WbmpBaseTest extends AbstractImagingTest {
-    private static final ImageFilter IMAGE_FILTER = WbmpBaseTest::isWbmp;
+public abstract class AbstractXbmTest extends AbstractImagingTest {
 
-    private static boolean isWbmp(final File file) {
-        return file.getName().toLowerCase().endsWith(".wbmp");
+    private static final ImageFilter IMAGE_FILTER = AbstractXbmTest::isXbm;
+
+    private static boolean isXbm(final File file) {
+        return file.getName().toLowerCase().endsWith(".xbm");
     }
 
-    protected List<File> getWbmpImages() throws IOException, ImagingException {
+    protected List<File> getXbmImages() throws IOException, ImagingException {
         return getTestImages(IMAGE_FILTER);
     }
 }

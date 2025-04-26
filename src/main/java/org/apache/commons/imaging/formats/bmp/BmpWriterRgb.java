@@ -20,7 +20,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import org.apache.commons.imaging.common.BinaryOutputStream;
+import org.apache.commons.imaging.common.AbstractBinaryOutputStream;
 
 final class BmpWriterRgb implements BmpWriter {
     // private final boolean alpha;
@@ -76,7 +76,7 @@ final class BmpWriterRgb implements BmpWriter {
     }
 
     @Override
-    public void writePalette(final BinaryOutputStream bos) throws IOException {
+    public void writePalette(final AbstractBinaryOutputStream bos) throws IOException {
         // no palette
     }
 }

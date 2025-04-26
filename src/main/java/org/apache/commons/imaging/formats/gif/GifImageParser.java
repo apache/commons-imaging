@@ -37,9 +37,9 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
+import org.apache.commons.imaging.common.AbstractBinaryOutputStream;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFunctions;
-import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.XmpEmbeddable;
@@ -874,7 +874,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
         }
         final int paletteSize = palette2.length() + (hasAlpha ? 1 : 0);
 
-        try (BinaryOutputStream bos = BinaryOutputStream.littleEndian(os)) {
+        try (AbstractBinaryOutputStream bos = AbstractBinaryOutputStream.littleEndian(os)) {
 
             // write Header
             os.write(0x47); // G magic numbers

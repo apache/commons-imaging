@@ -20,7 +20,7 @@ package org.apache.commons.imaging.common;
 import java.io.IOException;
 import java.io.OutputStream;
 
-final class BigEndianBinaryOutputStream extends BinaryOutputStream {
+final class BigEndianBinaryOutputStream extends AbstractBinaryOutputStream {
 
     BigEndianBinaryOutputStream(final OutputStream os) {
         super(os);

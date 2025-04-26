@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-public class ComSegment extends GenericSegment {
+public class ComSegment extends AbstractGenericSegment {
     public ComSegment(final int marker, final byte[] segmentData) {
         super(marker, segmentData);
     }

@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-package org.apache.commons.imaging.formats.jpeg;
+package org.apache.commons.imaging.formats.webp;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.apache.commons.imaging.AbstractImagingTest;
 import org.apache.commons.imaging.ImageFormat;
@@ -27,17 +28,24 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
 
-public abstract class JpegBaseTest extends AbstractImagingTest {
+public abstract class AbstractWebPTest extends AbstractImagingTest {
 
-    public static final ImageFilter imageFilter = JpegBaseTest::isJpeg;
+    private static final ImageFilter IMAGE_FILTER = AbstractWebPTest::isWebP;
 
-    protected static List<File> getJpegImages() throws IOException, ImagingException {
-        return getTestImages(imageFilter);
+    protected static List<File> getWebPImages() throws IOException, ImagingException {
+        return getTestImages(IMAGE_FILTER);
     }
 
-    protected static boolean isJpeg(final File file) throws IOException {
+    protected static Stream<File> images() throws IOException {
+        final List<File> images = getWebPImages();
+        final File emptyWebP = new File(WebPReadTest.class.getResource("/images/webp/empty/empty-100x100.webp").getFile());
+        final File animationWebP = new File(WebPReadTest.class.getResource("/images/webp/animation/example.webp").getFile());
+        final File exifWebP = new File(WebPReadTest.class.getResource("/images/webp/exif/_DSC6099.webp").getFile());
+        return Stream.concat(images.stream(), Stream.of(emptyWebP, animationWebP, exifWebP));
+    }
+
+    private static boolean isWebP(final File file) throws IOException {
         final ImageFormat format = Imaging.guessFormat(file);
-        return format == ImageFormats.JPEG;
+        return format == ImageFormats.WEBP;
     }
-
 }

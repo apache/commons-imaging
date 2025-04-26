@@ -43,7 +43,7 @@ import org.apache.commons.imaging.ImagingException;
  * @see <a href="https://developers.google.com/speed/webp/docs/riff_container#animation">Extended File Format#Animation</a>
  * @since 1.0.0-alpha4
  */
-public final class WebPChunkAnmf extends WebPChunk {
+public final class WebPChunkAnmf extends AbstractWebPChunk {
 
     /**
      * Create an ANMF chunk.

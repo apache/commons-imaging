@@ -22,7 +22,7 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.color.ColorConversions;
 import org.apache.commons.imaging.common.ImageBuilder;
 
-public class PhotometricInterpreterCmyk extends PhotometricInterpreter {
+public class PhotometricInterpreterCmyk extends AbstractPhotometricInterpreter {
     public PhotometricInterpreterCmyk(final int samplesPerPixel, final int[] bitsPerSample, final int predictor, final int width, final int height) {
         super(samplesPerPixel, bitsPerSample, predictor, width, height);
     }

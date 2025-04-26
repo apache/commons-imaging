@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.psd.dataparsers;
 import org.apache.commons.imaging.color.ColorConversions;
 import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
-public class DataParserLab extends DataParser {
+public class DataParserLab extends AbstractDataParser {
 
     @Override
     public int getBasicChannelsCount() {

@@ -18,7 +18,7 @@ package org.apache.commons.imaging.formats.psd.dataparsers;
 
 import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
-public class DataParserGrayscale extends DataParser {
+public class DataParserGrayscale extends AbstractDataParser {
     @Override
     public int getBasicChannelsCount() {
         return 1;

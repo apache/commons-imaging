@@ -39,7 +39,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 /**
  * Tests that read WebP images.
  */
-public class WebPReadTest extends WebPBaseTest {
+public class WebPReadTest extends AbstractWebPTest {
 
     /**
      * Not implemented yet.

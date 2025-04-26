@@ -37,7 +37,7 @@ import org.apache.commons.imaging.ImagingException;
  * @see <a href="https://developers.google.com/speed/webp/docs/riff_container#metadata">Extended File Format#Metadata</a>
  * @since 1.0.0-alpha4
  */
-public final class WebPChunkXml extends WebPChunk {
+public final class WebPChunkXml extends AbstractWebPChunk {
     private final String xml;
 
     /**

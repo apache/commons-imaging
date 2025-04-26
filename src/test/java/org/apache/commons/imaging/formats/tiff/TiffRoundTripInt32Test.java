@@ -41,7 +41,7 @@ import org.junit.jupiter.api.io.TempDir;
  * matches the original values. The primary purpose of this test is to verify that the TIFF data reader classes behave correctly when reading raster data in
  * various formats.
  */
-public class TiffRoundTripInt32Test extends TiffBaseTest {
+public class TiffRoundTripInt32Test extends AbstractTiffTest {
 
     @TempDir
     Path tempDir;
@@ -124,14 +124,14 @@ public class TiffRoundTripInt32Test extends TiffBaseTest {
             final TiffContents contents = tiffReader.readDirectories(byteSource, true, // indicates that application should read image data, if present
                     FormatCompliance.getDefault());
             final TiffDirectory directory = contents.directories.get(0);
-            final TiffRasterData rdInt = directory.getRasterData(null);
+            final AbstractTiffRasterData rdInt = directory.getRasterData(null);
             final int[] test = rdInt.getIntData();
             for (int j = 0; j < sample.length; j++) {
                 assertEquals(sample[j], test[j], "Extracted data does not match original, test " + name + ": " + i + ", index " + j);
             }
             final TiffImagingParameters params = new TiffImagingParameters();
             params.setSubImage(2, 2, width - 4, height - 4);
-            final TiffRasterData rdSub = directory.getRasterData(params);
+            final AbstractTiffRasterData rdSub = directory.getRasterData(params);
             assertEquals(width - 4, rdSub.getWidth(), "Invalid sub-image width");
             assertEquals(height - 4, rdSub.getHeight(), "Invalid sub-image height");
             for (int x = 2; x < width - 2; x++) {

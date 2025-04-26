@@ -22,7 +22,7 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.color.ColorConversions;
 import org.apache.commons.imaging.common.ImageBuilder;
 
-public class PhotometricInterpreterCieLab extends PhotometricInterpreter {
+public class PhotometricInterpreterCieLab extends AbstractPhotometricInterpreter {
     public PhotometricInterpreterCieLab(final int samplesPerPixel, final int[] bitsPerSample, final int predictor, final int width, final int height) {
         super(samplesPerPixel, bitsPerSample, predictor, width, height);
     }

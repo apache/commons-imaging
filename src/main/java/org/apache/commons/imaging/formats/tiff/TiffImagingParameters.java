@@ -16,7 +16,7 @@
 package org.apache.commons.imaging.formats.tiff;
 
 import org.apache.commons.imaging.common.XmpImagingParameters;
-import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
+import org.apache.commons.imaging.formats.tiff.photometricinterpreters.AbstractPhotometricInterpreter;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 
 /**
@@ -68,7 +68,7 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
      * The value supplied with this key should be a valid instance of a class that implements PhotometricInterpreter.
      * </p>
      */
-    private PhotometricInterpreter customPhotometricInterpreter;
+    private AbstractPhotometricInterpreter customPhotometricInterpreter;
 
     /**
      * TIFF compression algorithm, if any.
@@ -112,7 +112,7 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
         return compression;
     }
 
-    public PhotometricInterpreter getCustomPhotometricInterpreter() {
+    public AbstractPhotometricInterpreter getCustomPhotometricInterpreter() {
         return customPhotometricInterpreter;
     }
 
@@ -191,7 +191,7 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
         return asThis();
     }
 
-    public TiffImagingParameters setCustomPhotometricInterpreter(final PhotometricInterpreter customPhotometricInterpreter) {
+    public TiffImagingParameters setCustomPhotometricInterpreter(final AbstractPhotometricInterpreter customPhotometricInterpreter) {
         this.customPhotometricInterpreter = customPhotometricInterpreter;
         return asThis();
     }

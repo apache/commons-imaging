@@ -32,8 +32,8 @@ import java.util.Map;
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
+import org.apache.commons.imaging.common.AbstractBinaryOutputStream;
 import org.apache.commons.imaging.common.Allocator;
-import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.formats.tiff.AbstractTiffElement;
 import org.apache.commons.imaging.formats.tiff.AbstractTiffElement.DataElement;
 import org.apache.commons.imaging.formats.tiff.AbstractTiffImageData;
@@ -288,7 +288,7 @@ public class TiffImageWriterLossless extends AbstractTiffImageWriter {
         System.arraycopy(exifBytes, 0, output, 0, Math.min(exifBytes.length, output.length));
 
         try (BufferOutputStream headerStream = new BufferOutputStream(output, 0);
-                BinaryOutputStream headerBinaryStream = BinaryOutputStream.create(headerStream, byteOrder)) {
+                AbstractBinaryOutputStream headerBinaryStream = AbstractBinaryOutputStream.create(headerStream, byteOrder)) {
             writeImageFileHeader(headerBinaryStream, rootDirectory.getOffset());
         }
 
@@ -300,7 +300,7 @@ public class TiffImageWriterLossless extends AbstractTiffImageWriter {
 
         // write in the new items
         for (final AbstractTiffOutputItem outputItem : outputItems) {
-            try (BinaryOutputStream bos = BinaryOutputStream.create(new BufferOutputStream(output, (int) outputItem.getOffset()), byteOrder)) {
+            try (AbstractBinaryOutputStream bos = AbstractBinaryOutputStream.create(new BufferOutputStream(output, (int) outputItem.getOffset()), byteOrder)) {
                 outputItem.writeItem(bos);
             }
         }

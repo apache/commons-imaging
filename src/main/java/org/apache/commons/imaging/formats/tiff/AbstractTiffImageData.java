@@ -22,10 +22,10 @@ import java.nio.ByteOrder;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
+import org.apache.commons.imaging.formats.tiff.datareaders.AbstractImageDataReader;
 import org.apache.commons.imaging.formats.tiff.datareaders.DataReaderStrips;
 import org.apache.commons.imaging.formats.tiff.datareaders.DataReaderTiled;
-import org.apache.commons.imaging.formats.tiff.datareaders.ImageDataReader;
-import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
+import org.apache.commons.imaging.formats.tiff.photometricinterpreters.AbstractPhotometricInterpreter;
 
 public abstract class AbstractTiffImageData {
 
@@ -54,9 +54,9 @@ public abstract class AbstractTiffImageData {
         }
 
         @Override
-        public ImageDataReader getDataReader(final TiffDirectory directory, final PhotometricInterpreter photometricInterpreter, final int bitsPerPixel,
-                final int[] bitsPerSample, final int predictor, final int samplesPerPixel, final int width, final int height, final int compression,
-                final TiffPlanarConfiguration planarConfiguration, final ByteOrder byteorder) throws IOException, ImagingException {
+        public AbstractImageDataReader getDataReader(final TiffDirectory directory, final AbstractPhotometricInterpreter photometricInterpreter,
+                final int bitsPerPixel, final int[] bitsPerSample, final int predictor, final int samplesPerPixel, final int width, final int height,
+                final int compression, final TiffPlanarConfiguration planarConfiguration, final ByteOrder byteorder) throws IOException, ImagingException {
             final int sampleFormat = extractSampleFormat(directory);
             return new DataReaderStrips(directory, photometricInterpreter, bitsPerPixel, bitsPerSample, predictor, samplesPerPixel, sampleFormat, width, height,
                     compression, planarConfiguration, byteorder, rowsPerStrip, this);
@@ -97,9 +97,9 @@ public abstract class AbstractTiffImageData {
         }
 
         @Override
-        public ImageDataReader getDataReader(final TiffDirectory directory, final PhotometricInterpreter photometricInterpreter, final int bitsPerPixel,
-                final int[] bitsPerSample, final int predictor, final int samplesPerPixel, final int width, final int height, final int compression,
-                final TiffPlanarConfiguration planarConfiguration, final ByteOrder byteOrder) throws IOException, ImagingException {
+        public AbstractImageDataReader getDataReader(final TiffDirectory directory, final AbstractPhotometricInterpreter photometricInterpreter,
+                final int bitsPerPixel, final int[] bitsPerSample, final int predictor, final int samplesPerPixel, final int width, final int height,
+                final int compression, final TiffPlanarConfiguration planarConfiguration, final ByteOrder byteOrder) throws IOException, ImagingException {
             final int sampleFormat = extractSampleFormat(directory);
             return new DataReaderTiled(directory, photometricInterpreter, tileWidth, tileLength, bitsPerPixel, bitsPerSample, predictor, samplesPerPixel,
                     sampleFormat, width, height, compression, planarConfiguration, byteOrder, this);
@@ -149,9 +149,9 @@ public abstract class AbstractTiffImageData {
         return 0; // unspecified format
     }
 
-    public abstract ImageDataReader getDataReader(TiffDirectory directory, PhotometricInterpreter photometricInterpreter, int bitsPerPixel, int[] bitsPerSample,
-            int predictor, int samplesPerPixel, int width, int height, int compression, TiffPlanarConfiguration planarConfiguration, ByteOrder byteOrder)
-            throws IOException, ImagingException;
+    public abstract AbstractImageDataReader getDataReader(TiffDirectory directory, AbstractPhotometricInterpreter photometricInterpreter, int bitsPerPixel,
+            int[] bitsPerSample, int predictor, int samplesPerPixel, int width, int height, int compression, TiffPlanarConfiguration planarConfiguration,
+            ByteOrder byteOrder) throws IOException, ImagingException;
 
     public abstract AbstractTiffElement.DataElement[] getImageData();
 

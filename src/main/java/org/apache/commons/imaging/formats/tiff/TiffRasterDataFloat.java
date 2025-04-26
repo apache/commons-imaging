@@ -36,7 +36,7 @@ import org.apache.commons.imaging.common.Allocator;
  * index = y * width + x + iSample * width * height;
  * </pre>
  */
-public final class TiffRasterDataFloat extends TiffRasterData {
+public final class TiffRasterDataFloat extends AbstractTiffRasterData {
 
     private final float[] data;
 

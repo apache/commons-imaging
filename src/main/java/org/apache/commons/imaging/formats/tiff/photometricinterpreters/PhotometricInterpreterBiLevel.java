@@ -21,7 +21,7 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
-public class PhotometricInterpreterBiLevel extends PhotometricInterpreter {
+public class PhotometricInterpreterBiLevel extends AbstractPhotometricInterpreter {
     private final boolean invert;
 
     // private final int bitsPerPixel;

@@ -43,11 +43,11 @@ import org.junit.jupiter.api.Test;
  */
 public class TiffFloatingPointReadTest {
 
-    private void checkSubImage(final File target, final TiffRasterData fullRaster, final int x0, final int y0, final int width, final int height)
+    private void checkSubImage(final File target, final AbstractTiffRasterData fullRaster, final int x0, final int y0, final int width, final int height)
             throws ImagingException, IOException {
         final TiffImagingParameters params = new TiffImagingParameters();
         params.setSubImage(x0, y0, width, height);
-        final TiffRasterData partRaster = readRasterFromTIFF(target, params);
+        final AbstractTiffRasterData partRaster = readRasterFromTIFF(target, params);
         assertEquals(width, partRaster.getWidth(), "Invalid width in partial for " + target.getName());
         assertEquals(height, partRaster.getHeight(), "Invalid height in partial for " + target.getName());
         for (int y = y0; y < y0 + height; y++) {
@@ -116,7 +116,7 @@ public class TiffFloatingPointReadTest {
      * @throws ImagingException in the event of an unsupported or malformed file data element.
      * @throws IOException      in the event of an I/O error
      */
-    private TiffRasterData readRasterFromTIFF(final File target, final TiffImagingParameters params) throws ImagingException, IOException {
+    private AbstractTiffRasterData readRasterFromTIFF(final File target, final TiffImagingParameters params) throws ImagingException, IOException {
         final ByteSource byteSource = ByteSource.file(target);
         final TiffReader tiffReader = new TiffReader(true);
         final TiffContents contents = tiffReader.readDirectories(byteSource, true, // indicates that application should read image data, if present
@@ -155,7 +155,7 @@ public class TiffFloatingPointReadTest {
         // that the source file is organized using strips of 2 rows each.
         // The source file is of dimensions 451x337.
         // The dimensions of the sub-image are arbitrary
-        TiffRasterData fullRaster = readRasterFromTIFF(target, new TiffImagingParameters());
+        AbstractTiffRasterData fullRaster = readRasterFromTIFF(target, new TiffImagingParameters());
         int height = fullRaster.getHeight();
         int width = fullRaster.getWidth();
         // checks based on the 2-rows per strip model

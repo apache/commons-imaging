@@ -35,7 +35,7 @@ import org.apache.commons.imaging.mylzw.MyLzwDecompressor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-public class TiffLzwTest extends TiffBaseTest {
+public class TiffLzwTest extends AbstractTiffTest {
 
     private void compressRoundtripAndValidate(final byte[] src) throws IOException, ImagingException {
         final boolean DEBUG = false;

@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.jpeg.segments;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class UnknownSegment extends GenericSegment {
+public class UnknownSegment extends AbstractGenericSegment {
     public UnknownSegment(final int marker, final byte[] bytes) {
         super(marker, bytes);
     }

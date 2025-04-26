@@ -18,7 +18,7 @@ package org.apache.commons.imaging.formats.psd.dataparsers;
 
 import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
-public class DataParserStub extends DataParser {
+public class DataParserStub extends AbstractDataParser {
     @Override
     public int getBasicChannelsCount() {
         return 1;

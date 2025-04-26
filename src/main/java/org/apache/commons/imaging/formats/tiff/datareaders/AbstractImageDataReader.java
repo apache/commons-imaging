@@ -28,14 +28,14 @@ import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.PackBits;
 import org.apache.commons.imaging.common.ZlibDeflate;
+import org.apache.commons.imaging.formats.tiff.AbstractTiffRasterData;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffField;
-import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.itu_t4.T4AndT6Compression;
-import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
+import org.apache.commons.imaging.formats.tiff.photometricinterpreters.AbstractPhotometricInterpreter;
 import org.apache.commons.imaging.mylzw.MyLzwDecompressor;
 
 /**
@@ -129,10 +129,10 @@ import org.apache.commons.imaging.mylzw.MyLzwDecompressor;
  * compression in the case where different sample sets have different statistical properties. Because separated groups often have more uniformity and
  * predictability than interleaved data sets, they sometimes lead to a small improvement in storage-size reduction when data compression is used.
  */
-public abstract class ImageDataReader {
+public abstract class AbstractImageDataReader {
 
     protected final TiffDirectory directory;
-    protected final PhotometricInterpreter photometricInterpreter;
+    protected final AbstractPhotometricInterpreter photometricInterpreter;
     private final int[] bitsPerSample;
     protected final int bitsPerSampleLength;
     private final int[] last;
@@ -145,8 +145,9 @@ public abstract class ImageDataReader {
 
     protected final TiffPlanarConfiguration planarConfiguration;
 
-    public ImageDataReader(final TiffDirectory directory, final PhotometricInterpreter photometricInterpreter, final int[] bitsPerSample, final int predictor,
-            final int samplesPerPixel, final int sampleFormat, final int width, final int height, final TiffPlanarConfiguration planarConfiguration) {
+    public AbstractImageDataReader(final TiffDirectory directory, final AbstractPhotometricInterpreter photometricInterpreter, final int[] bitsPerSample,
+            final int predictor, final int samplesPerPixel, final int sampleFormat, final int width, final int height,
+            final TiffPlanarConfiguration planarConfiguration) {
         this.directory = directory;
         this.photometricInterpreter = photometricInterpreter;
         this.bitsPerSample = bitsPerSample;
@@ -158,7 +159,6 @@ public abstract class ImageDataReader {
         this.height = height;
         this.planarConfiguration = planarConfiguration;
         last = Allocator.intArray(samplesPerPixel);
-
     }
 
     protected int[] applyPredictor(final int[] samples) {
@@ -323,7 +323,7 @@ public abstract class ImageDataReader {
      * @throws ImagingException in the event of an incompatible data form.
      * @throws IOException      in the event of I/O error.
      */
-    public abstract TiffRasterData readRasterData(Rectangle subImage) throws ImagingException, IOException;
+    public abstract AbstractTiffRasterData readRasterData(Rectangle subImage) throws ImagingException, IOException;
 
     protected void resetPredictor() {
         Arrays.fill(last, 0);

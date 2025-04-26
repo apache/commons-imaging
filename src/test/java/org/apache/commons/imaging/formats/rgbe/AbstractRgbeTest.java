@@ -26,9 +26,9 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
 
-public abstract class RgbeBaseTest extends AbstractImagingTest {
+public abstract class AbstractRgbeTest extends AbstractImagingTest {
 
-    private static final ImageFilter IMAGE_FILTER = RgbeBaseTest::isRgbe;
+    private static final ImageFilter IMAGE_FILTER = AbstractRgbeTest::isRgbe;
 
     private static boolean isRgbe(final File file) throws IOException {
         final ImageFormat format = Imaging.guessFormat(file);

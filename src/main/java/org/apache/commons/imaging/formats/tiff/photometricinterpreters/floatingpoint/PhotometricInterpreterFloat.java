@@ -24,7 +24,7 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
-import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
+import org.apache.commons.imaging.formats.tiff.photometricinterpreters.AbstractPhotometricInterpreter;
 
 /**
  * Implements a custom photometric interpreter that can be supplied by applications in order to render Java images from real-valued TIFF data products. Most
@@ -45,7 +45,7 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
  * <p>
  * To use this class, an application must access the TIFF file using the low-level, TIFF-specific API provided by the Apache Commons Imaging library.
  */
-public final class PhotometricInterpreterFloat extends PhotometricInterpreter {
+public final class PhotometricInterpreterFloat extends AbstractPhotometricInterpreter {
 
     ArrayList<PaletteEntry> rangePaletteEntries = new ArrayList<>();
     ArrayList<PaletteEntry> singleValuePaletteEntries = new ArrayList<>();

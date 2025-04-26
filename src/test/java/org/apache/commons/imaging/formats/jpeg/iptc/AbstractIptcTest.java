@@ -26,8 +26,8 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 
-public abstract class IptcBaseTest extends AbstractImagingTest {
-    private static final ImageFilter HAS_IPTC_IMAGE_FILTER = IptcBaseTest::hasIptcData;
+public abstract class AbstractIptcTest extends AbstractImagingTest {
+    private static final ImageFilter HAS_IPTC_IMAGE_FILTER = AbstractIptcTest::hasIptcData;
 
     private static final ImageFilter JPEG_IMAGE_FILTER = file -> file.getName().toLowerCase().endsWith(".jpg");
 

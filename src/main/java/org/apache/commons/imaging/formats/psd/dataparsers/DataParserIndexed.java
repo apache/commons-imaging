@@ -20,7 +20,7 @@ import java.util.Arrays;
 
 import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
-public class DataParserIndexed extends DataParser {
+public class DataParserIndexed extends AbstractDataParser {
     private final int[] colorTable;
 
     public DataParserIndexed(final byte[] colorModeData) {

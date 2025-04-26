@@ -23,7 +23,7 @@ import org.apache.commons.imaging.ImagingException;
  *
  * @since 1.0.0-alpha4
  */
-public final class WebPChunkXyzw extends WebPChunk {
+public final class WebPChunkXyzw extends AbstractWebPChunk {
 
     /**
      * Create a XYZW chunk.

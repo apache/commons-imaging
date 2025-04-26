@@ -41,7 +41,7 @@ import org.apache.commons.imaging.formats.tiff.TiffImageParser;
  * @see <a href="https://developers.google.com/speed/webp/docs/riff_container#metadata">Extended File Format#Metadata</a>
  * @since 1.0.0-alpha4
  */
-public final class WebPChunkExif extends WebPChunk {
+public final class WebPChunkExif extends AbstractWebPChunk {
 
     /**
      * Create an Exif chunk.

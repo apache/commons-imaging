@@ -42,7 +42,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.bytesource.ByteSource;
-import org.apache.commons.imaging.common.BinaryOutputStream;
+import org.apache.commons.imaging.common.AbstractBinaryOutputStream;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.palette.PaletteFactory;
@@ -633,7 +633,7 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
         }
 
         final byte[] imageData = writer.getImageData(src);
-        final BinaryOutputStream bos = BinaryOutputStream.littleEndian(os);
+        final AbstractBinaryOutputStream bos = AbstractBinaryOutputStream.littleEndian(os);
 
         // write BitmapFileHeader
         os.write(0x42); // B, Windows 3.1x, 95, NT, Bitmap

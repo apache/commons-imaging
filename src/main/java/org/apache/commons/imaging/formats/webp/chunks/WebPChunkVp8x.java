@@ -46,7 +46,7 @@ import org.apache.commons.imaging.ImagingException;
  * @see <a href="https://developers.google.com/speed/webp/docs/riff_container#extended_file_format">Extended File Format</a>
  * @since 1.0.0-alpha4
  */
-public final class WebPChunkVp8x extends WebPChunk {
+public final class WebPChunkVp8x extends AbstractWebPChunk {
     private final boolean hasIcc;
     private final boolean hasAlpha;
     private final boolean hasExif;

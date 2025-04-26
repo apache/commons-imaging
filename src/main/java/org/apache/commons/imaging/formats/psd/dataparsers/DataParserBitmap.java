@@ -18,7 +18,7 @@ package org.apache.commons.imaging.formats.psd.dataparsers;
 
 import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
-public class DataParserBitmap extends DataParser {
+public class DataParserBitmap extends AbstractDataParser {
 
     @Override
     public int getBasicChannelsCount() {

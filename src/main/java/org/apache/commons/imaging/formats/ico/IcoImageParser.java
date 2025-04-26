@@ -40,8 +40,8 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.bytesource.ByteSource;
+import org.apache.commons.imaging.common.AbstractBinaryOutputStream;
 import org.apache.commons.imaging.common.Allocator;
-import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.formats.bmp.BmpImageParser;
 import org.apache.commons.imaging.palette.PaletteFactory;
@@ -423,7 +423,7 @@ public class IcoImageParser extends AbstractImageParser<IcoImagingParameters> {
         final int bitmapSize = 14 + 56 + restOfFile.length;
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream(Allocator.checkByteArray(bitmapSize));
-        try (BinaryOutputStream bos = BinaryOutputStream.littleEndian(baos)) {
+        try (AbstractBinaryOutputStream bos = AbstractBinaryOutputStream.littleEndian(baos)) {
             bos.write('B');
             bos.write('M');
             bos.write4Bytes(bitmapSize);
@@ -625,7 +625,7 @@ public class IcoImageParser extends AbstractImageParser<IcoImagingParameters> {
             bitCount = 8;
         }
 
-        try (BinaryOutputStream bos = BinaryOutputStream.littleEndian(os)) {
+        try (AbstractBinaryOutputStream bos = AbstractBinaryOutputStream.littleEndian(os)) {
 
             int scanlineSize = (bitCount * src.getWidth() + 7) / 8;
             if (scanlineSize % 4 != 0) {

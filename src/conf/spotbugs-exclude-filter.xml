@@ -80,7 +80,7 @@
     <Bug pattern="EI_EXPOSE_REP2" />
   </Match>
   <Match>
-    <Class name="org.apache.commons.imaging.formats.tiff.datareaders.ImageDataReader" />
+    <Class name="org.apache.commons.imaging.formats.tiff.datareaders.AbstractImageDataReader" />
     <Bug pattern="EI_EXPOSE_REP2" />
   </Match>
   <Match>

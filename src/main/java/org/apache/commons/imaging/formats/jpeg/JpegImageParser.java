@@ -44,13 +44,13 @@ import org.apache.commons.imaging.common.XmpImagingParameters;
 import org.apache.commons.imaging.formats.jpeg.decoder.JpegDecoder;
 import org.apache.commons.imaging.formats.jpeg.iptc.IptcParser;
 import org.apache.commons.imaging.formats.jpeg.iptc.PhotoshopApp13Data;
+import org.apache.commons.imaging.formats.jpeg.segments.AbstractGenericSegment;
 import org.apache.commons.imaging.formats.jpeg.segments.AbstractSegment;
 import org.apache.commons.imaging.formats.jpeg.segments.App13Segment;
 import org.apache.commons.imaging.formats.jpeg.segments.App14Segment;
 import org.apache.commons.imaging.formats.jpeg.segments.App2Segment;
 import org.apache.commons.imaging.formats.jpeg.segments.ComSegment;
 import org.apache.commons.imaging.formats.jpeg.segments.DqtSegment;
-import org.apache.commons.imaging.formats.jpeg.segments.GenericSegment;
 import org.apache.commons.imaging.formats.jpeg.segments.JfifSegment;
 import org.apache.commons.imaging.formats.jpeg.segments.SofnSegment;
 import org.apache.commons.imaging.formats.jpeg.segments.UnknownSegment;
@@ -70,7 +70,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
     private static final String DEFAULT_EXTENSION = ImageFormats.JPEG.getDefaultExtension();
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.JPEG.getExtensions();
 
-    public static boolean isExifApp1Segment(final GenericSegment segment) {
+    public static boolean isExifApp1Segment(final AbstractGenericSegment segment) {
         return JpegConstants.EXIF_IDENTIFIER_CODE.isStartOf(segment.getSegmentData());
     }
 
@@ -190,7 +190,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
         final List<AbstractSegment> result = new ArrayList<>();
 
         for (final AbstractSegment s : abstractSegments) {
-            final GenericSegment segment = (GenericSegment) s;
+            final AbstractGenericSegment segment = (AbstractGenericSegment) s;
             if (isExifApp1Segment(segment)) {
                 result.add(segment);
             }
@@ -264,7 +264,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
                     "Imaging currently can't parse EXIF metadata split across multiple APP1 segments.  " + "Please send this image to the Imaging project.");
         }
 
-        final GenericSegment segment = (GenericSegment) exifSegments.get(0);
+        final AbstractGenericSegment segment = (AbstractGenericSegment) exifSegments.get(0);
         final byte[] bytes = segment.getSegmentData();
 
         // byte[] head = readBytearray("exif head", bytes, 0, 6);

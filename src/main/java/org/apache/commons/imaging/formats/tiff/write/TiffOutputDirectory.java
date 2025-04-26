@@ -31,8 +31,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.imaging.ImagingException;
+import org.apache.commons.imaging.common.AbstractBinaryOutputStream;
 import org.apache.commons.imaging.common.Allocator;
-import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.AbstractTiffElement;
 import org.apache.commons.imaging.formats.tiff.AbstractTiffImageData;
@@ -603,7 +603,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     }
 
     @Override
-    public void writeItem(final BinaryOutputStream bos) throws IOException, ImagingException {
+    public void writeItem(final AbstractBinaryOutputStream bos) throws IOException, ImagingException {
         // Write Directory Field Count
         bos.write2Bytes(fields.size()); // DirectoryFieldCount
 

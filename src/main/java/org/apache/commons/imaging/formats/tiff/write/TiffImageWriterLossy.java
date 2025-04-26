@@ -24,7 +24,7 @@ import java.nio.ByteOrder;
 import java.util.List;
 
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.common.BinaryOutputStream;
+import org.apache.commons.imaging.common.AbstractBinaryOutputStream;
 
 public class TiffImageWriterLossy extends AbstractTiffImageWriter {
 
@@ -59,13 +59,13 @@ public class TiffImageWriterLossy extends AbstractTiffImageWriter {
 
         outputSummary.updateOffsets(byteOrder);
 
-        final BinaryOutputStream bos = BinaryOutputStream.create(os, byteOrder);
+        final AbstractBinaryOutputStream bos = AbstractBinaryOutputStream.create(os, byteOrder);
 
         // NB: resource is intentionally left open
         writeStep(bos, outputItems);
     }
 
-    private void writeStep(final BinaryOutputStream bos, final List<AbstractTiffOutputItem> outputItems) throws IOException, ImagingException {
+    private void writeStep(final AbstractBinaryOutputStream bos, final List<AbstractTiffOutputItem> outputItems) throws IOException, ImagingException {
         writeImageFileHeader(bos);
 
         for (final AbstractTiffOutputItem outputItem : outputItems) {

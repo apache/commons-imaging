@@ -28,7 +28,7 @@ import org.apache.commons.imaging.common.ImageBuilder;
  *
  * @see <a href= "https://www.awaresystems.be/imaging/tiff/tifftags/photometricinterpretation.html"> Baseline TIFF Tag PhotometricInterpretation</a>
  */
-public abstract class PhotometricInterpreter {
+public abstract class AbstractPhotometricInterpreter {
 
     protected final int samplesPerPixel;
     private final int[] bitsPerSample;
@@ -36,7 +36,7 @@ public abstract class PhotometricInterpreter {
     protected final int width;
     protected final int height;
 
-    public PhotometricInterpreter(final int samplesPerPixel, final int[] bitsPerSample, final int predictor, final int width, final int height) {
+    public AbstractPhotometricInterpreter(final int samplesPerPixel, final int[] bitsPerSample, final int predictor, final int width, final int height) {
         this.samplesPerPixel = samplesPerPixel;
         this.bitsPerSample = Objects.requireNonNull(bitsPerSample, "bitsPerSample");
         this.predictor = predictor;

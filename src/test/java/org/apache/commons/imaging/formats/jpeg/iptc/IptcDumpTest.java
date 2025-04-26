@@ -30,7 +30,7 @@ import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class IptcDumpTest extends IptcBaseTest {
+public class IptcDumpTest extends AbstractIptcTest {
 
     public static Stream<File> data() throws Exception {
         return getImagesWithIptcData().stream();

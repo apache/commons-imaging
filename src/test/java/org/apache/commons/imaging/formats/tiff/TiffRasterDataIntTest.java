@@ -31,7 +31,7 @@ public class TiffRasterDataIntTest {
     int width = 11;
     int height = 10;
     int[] data;
-    TiffRasterData raster;
+    AbstractTiffRasterData raster;
     float meanValue;
 
     public TiffRasterDataIntTest() {
@@ -72,7 +72,7 @@ public class TiffRasterDataIntTest {
 
         try {
             final int[] sample = new int[100];
-            final TiffRasterData raster = new TiffRasterDataInt(10, 10, sample);
+            final AbstractTiffRasterData raster = new TiffRasterDataInt(10, 10, sample);
             raster.getIntValue(11, 11);
             fail("Access method getValue() did not detect bad coordinates");
         } catch (final IllegalArgumentException illArgEx) {
@@ -80,7 +80,7 @@ public class TiffRasterDataIntTest {
         }
         try {
             final int[] sample = new int[100];
-            final TiffRasterData raster = new TiffRasterDataInt(10, 10, sample);
+            final AbstractTiffRasterData raster = new TiffRasterDataInt(10, 10, sample);
             raster.setValue(11, 11, 5.0f);
             fail("Access method setValue() did not detect bad coordinates");
         } catch (final IllegalArgumentException illArgEx) {
@@ -192,7 +192,7 @@ public class TiffRasterDataIntTest {
      */
     @Test
     public void testSetValue() {
-        final TiffRasterData instance = new TiffRasterDataInt(width, height);
+        final AbstractTiffRasterData instance = new TiffRasterDataInt(width, height);
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 final int index = y * width + height;
@@ -211,7 +211,7 @@ public class TiffRasterDataIntTest {
      */
     @Test
     public void testSetValue2() {
-        final TiffRasterData instance = new TiffRasterDataInt(width, height, 2);
+        final AbstractTiffRasterData instance = new TiffRasterDataInt(width, height, 2);
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 final int index = y * width + height;

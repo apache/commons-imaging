@@ -44,8 +44,8 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffEpTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
-import org.apache.commons.imaging.formats.tiff.datareaders.ImageDataReader;
-import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
+import org.apache.commons.imaging.formats.tiff.datareaders.AbstractImageDataReader;
+import org.apache.commons.imaging.formats.tiff.photometricinterpreters.AbstractPhotometricInterpreter;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterBiLevel;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterCieLab;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterCmyk;
@@ -336,7 +336,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
             }
         }
 
-        PhotometricInterpreter photometricInterpreter = params == null ? null : params.getCustomPhotometricInterpreter();
+        AbstractPhotometricInterpreter photometricInterpreter = params == null ? null : params.getCustomPhotometricInterpreter();
         if (photometricInterpreter == null) {
             photometricInterpreter = getPhotometricInterpreter(directory, photometricInterpretation, bitsPerPixel, bitsPerSample, predictor, samplesPerPixel,
                     width, height);
@@ -361,9 +361,8 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
 
         final AbstractTiffImageData imageData = directory.getTiffImageData();
 
-        final ImageDataReader dataReader = imageData.getDataReader(directory, photometricInterpreter, bitsPerPixel, bitsPerSample, predictor, samplesPerPixel,
-                width, height, compression, planarConfiguration, byteOrder);
-
+        final AbstractImageDataReader dataReader = imageData.getDataReader(directory, photometricInterpreter, bitsPerPixel, bitsPerSample, predictor,
+                samplesPerPixel, width, height, compression, planarConfiguration, byteOrder);
         final ImageBuilder iBuilder = dataReader.readImageData(subImage, hasAlpha, isAlphaPremultiplied);
         return iBuilder.getBufferedImage();
     }
@@ -575,7 +574,6 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
             compressionAlgorithm = ImageInfo.CompressionAlgorithm.UNKNOWN;
             break;
         }
-
         return new ImageInfo(formatDetails, bitsPerPixel, comments, format, formatName, height, mimeType, numberOfImages, physicalHeightDpi, physicalHeightInch,
                 physicalWidthDpi, physicalWidthInch, width, progressive, transparent, usesPalette, colorType, compressionAlgorithm);
     }
@@ -630,24 +628,20 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
         return "Tiff-Custom";
     }
 
-    private PhotometricInterpreter getPhotometricInterpreter(final TiffDirectory directory, final int photometricInterpretation, final int bitsPerPixel,
+    private AbstractPhotometricInterpreter getPhotometricInterpreter(final TiffDirectory directory, final int photometricInterpretation, final int bitsPerPixel,
             final int[] bitsPerSample, final int predictor, final int samplesPerPixel, final int width, final int height) throws ImagingException {
         switch (photometricInterpretation) {
         case 0:
         case 1:
             final boolean invert = photometricInterpretation == 0;
-
             return new PhotometricInterpreterBiLevel(samplesPerPixel, bitsPerSample, predictor, width, height, invert);
         case 3: {
             // Palette
             final int[] colorMap = directory.findField(TiffTagConstants.TIFF_TAG_COLOR_MAP, true).getIntArrayValue();
-
             final int expectedColormapSize = 3 * (1 << bitsPerPixel);
-
             if (colorMap.length != expectedColormapSize) {
                 throw new ImagingException("Tiff: fColorMap.length (" + colorMap.length + ") != expectedColormapSize (" + expectedColormapSize + ")");
             }
-
             return new PhotometricInterpreterPalette(samplesPerPixel, bitsPerSample, predictor, width, height, colorMap);
         }
         case 2: // RGB
@@ -669,19 +663,15 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
 //            final double[] referenceBlackWhite = directory.findField(
 //                    TiffTagConstants.TIFF_TAG_REFERENCE_BLACK_WHITE, true)
 //                    .getDoubleArrayValue();
-
             return new PhotometricInterpreterYCbCr(samplesPerPixel, bitsPerSample, predictor, width, height);
         }
-
         case 8:
             return new PhotometricInterpreterCieLab(samplesPerPixel, bitsPerSample, predictor, width, height);
-
         case 32844:
         case 32845: {
 //            final boolean yonly = (photometricInterpretation == 32844);
             return new PhotometricInterpreterLogLuv(samplesPerPixel, bitsPerSample, predictor, width, height);
         }
-
         default:
             throw new ImagingException("TIFF: Unknown fPhotometricInterpretation: " + photometricInterpretation);
         }
@@ -714,22 +704,20 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
      * @throws ImagingException in the event of incompatible or malformed data
      * @throws IOException      in the event of an I/O error
      */
-    TiffRasterData getRasterData(final TiffDirectory directory, final ByteOrder byteOrder, TiffImagingParameters params) throws ImagingException, IOException {
+    AbstractTiffRasterData getRasterData(final TiffDirectory directory, final ByteOrder byteOrder, TiffImagingParameters params)
+            throws ImagingException, IOException {
         if (params == null) {
             params = getDefaultParameters();
         }
-
         final short[] sSampleFmt = directory.getFieldValue(TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, true);
         if (sSampleFmt == null || sSampleFmt.length < 1) {
             throw new ImagingException("Directory does not specify numeric raster data");
         }
-
         int samplesPerPixel = 1;
         final TiffField samplesPerPixelField = directory.findField(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL);
         if (samplesPerPixelField != null) {
             samplesPerPixel = samplesPerPixelField.getIntValue();
         }
-
         int[] bitsPerSample = { 1 };
         int bitsPerPixel = samplesPerPixel;
         final TiffField bitsPerSampleField = directory.findField(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE);
@@ -737,7 +725,6 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
             bitsPerSample = bitsPerSampleField.getIntArrayValue();
             bitsPerPixel = bitsPerSampleField.getIntValueOrArraySum();
         }
-
         final short compressionFieldValue;
         if (directory.findField(TiffTagConstants.TIFF_TAG_COMPRESSION) != null) {
             compressionFieldValue = directory.getFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION);
@@ -745,10 +732,8 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
             compressionFieldValue = TiffConstants.COMPRESSION_UNCOMPRESSED_1;
         }
         final int compression = 0xffff & compressionFieldValue;
-
         final int width = directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH);
         final int height = directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH);
-
         Rectangle subImage = checkForSubImage(params);
         if (subImage != null) {
             // Check for valid subimage specification. The following checks
@@ -771,14 +756,12 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
             if (subImage.y + subImage.height > height) {
                 throw new ImagingException("Subimage (y+height) is outside raster.");
             }
-
             // if the subimage is just the same thing as the whole
             // image, suppress the subimage processing
             if (subImage.x == 0 && subImage.y == 0 && subImage.width == width && subImage.height == height) {
                 subImage = null;
             }
         }
-
         // int bitsPerPixel = getTagAsValueOrArraySum(entries,
         // TIFF_TAG_BITS_PER_SAMPLE);
         int predictor = -1;
@@ -793,31 +776,25 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
                 predictor = predictorField.getIntValueOrArraySum();
             }
         }
-
         // Obtain the planar configuration
         final TiffField pcField = directory.findField(TiffTagConstants.TIFF_TAG_PLANAR_CONFIGURATION);
         final TiffPlanarConfiguration planarConfiguration = pcField == null ? TiffPlanarConfiguration.CHUNKY
                 : TiffPlanarConfiguration.lenientValueOf(pcField.getIntValue());
-
         if (sSampleFmt[0] == TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT) {
             if (bitsPerSample[0] != 32 && bitsPerSample[0] != 64) {
                 throw new ImagingException("TIFF floating-point data uses unsupported bits-per-sample: " + bitsPerSample[0]);
             }
-
             if (predictor != -1 && predictor != TiffTagConstants.PREDICTOR_VALUE_NONE
                     && predictor != TiffTagConstants.PREDICTOR_VALUE_FLOATING_POINT_DIFFERENCING) {
                 throw new ImagingException("TIFF floating-point data uses unsupported horizontal-differencing predictor");
             }
         } else if (sSampleFmt[0] == TiffTagConstants.SAMPLE_FORMAT_VALUE_TWOS_COMPLEMENT_SIGNED_INTEGER) {
-
             if (samplesPerPixel != 1) {
                 throw new ImagingException("TIFF integer data uses unsupported samples per pixel: " + samplesPerPixel);
             }
-
             if (bitsPerPixel != 16 && bitsPerPixel != 32) {
                 throw new ImagingException("TIFF integer data uses unsupported bits-per-pixel: " + bitsPerPixel);
             }
-
             if (predictor != -1 && predictor != TiffTagConstants.PREDICTOR_VALUE_NONE
                     && predictor != TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING) {
                 throw new ImagingException("TIFF integer data uses unsupported horizontal-differencing predictor");
@@ -825,17 +802,13 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
         } else {
             throw new ImagingException("TIFF does not provide a supported raster-data format");
         }
-
         // The photometric interpreter is not used, but the image-based
         // data reader classes require one. So we create a dummy interpreter.
-        final PhotometricInterpreter photometricInterpreter = new PhotometricInterpreterBiLevel(samplesPerPixel, bitsPerSample, predictor, width, height,
-                false);
-
+        final AbstractPhotometricInterpreter photometricInterpreter = new PhotometricInterpreterBiLevel(samplesPerPixel, bitsPerSample, predictor, width,
+                height, false);
         final AbstractTiffImageData imageData = directory.getTiffImageData();
-
-        final ImageDataReader dataReader = imageData.getDataReader(directory, photometricInterpreter, bitsPerPixel, bitsPerSample, predictor, samplesPerPixel,
-                width, height, compression, planarConfiguration, byteOrder);
-
+        final AbstractImageDataReader dataReader = imageData.getDataReader(directory, photometricInterpreter, bitsPerPixel, bitsPerSample, predictor,
+                samplesPerPixel, width, height, compression, planarConfiguration, byteOrder);
         return dataReader.readRasterData(subImage);
     }
 

@@ -26,7 +26,7 @@ import org.apache.commons.imaging.common.ImageBuilder;
  *
  * @see <a href="https://en.wikipedia.org/wiki/Logluv_TIFF">Logluv TIFF</a>
  */
-public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
+public class PhotometricInterpreterLogLuv extends AbstractPhotometricInterpreter {
 
     /**
      * Rgb values (reg-green-blue, as R-G-B, as in the RGB color model).

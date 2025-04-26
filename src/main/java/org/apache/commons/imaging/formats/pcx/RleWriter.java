@@ -17,7 +17,7 @@ package org.apache.commons.imaging.formats.pcx;
 
 import java.io.IOException;
 
-import org.apache.commons.imaging.common.BinaryOutputStream;
+import org.apache.commons.imaging.common.AbstractBinaryOutputStream;
 
 final class RleWriter {
     private final boolean isCompressed;
@@ -28,7 +28,7 @@ final class RleWriter {
         this.isCompressed = isCompressed;
     }
 
-    void flush(final BinaryOutputStream bos) throws IOException {
+    void flush(final AbstractBinaryOutputStream bos) throws IOException {
         if (repeatCount > 0) {
             if (repeatCount != 1 || (previousByte & 0xc0) == 0xc0) {
                 bos.write(0xc0 | repeatCount);
@@ -37,7 +37,7 @@ final class RleWriter {
         }
     }
 
-    void write(final BinaryOutputStream bos, final byte[] samples) throws IOException {
+    void write(final AbstractBinaryOutputStream bos, final byte[] samples) throws IOException {
         if (isCompressed) {
             for (final byte element : samples) {
                 if ((element & 0xff) == previousByte && repeatCount < 63) {

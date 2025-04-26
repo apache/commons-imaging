@@ -36,7 +36,7 @@ import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.XmpEmbeddable;
 import org.apache.commons.imaging.common.XmpImagingParameters;
-import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
+import org.apache.commons.imaging.formats.psd.dataparsers.AbstractDataParser;
 import org.apache.commons.imaging.formats.psd.dataparsers.DataParserBitmap;
 import org.apache.commons.imaging.formats.psd.dataparsers.DataParserCmyk;
 import org.apache.commons.imaging.formats.psd.dataparsers.DataParserGrayscale;
@@ -151,7 +151,7 @@ public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> im
         final boolean hasAlpha = false;
         final BufferedImage result = getBufferedImageFactory(params).getColorBufferedImage(width, height, hasAlpha);
 
-        final DataParser dataParser;
+        final AbstractDataParser dataParser;
         switch (imageContents.header.mode) {
         case 0: // bitmap
             dataParser = new DataParserBitmap();

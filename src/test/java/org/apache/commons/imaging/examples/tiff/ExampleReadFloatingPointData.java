@@ -29,10 +29,10 @@ import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.ImageBuilder;
+import org.apache.commons.imaging.formats.tiff.AbstractTiffRasterData;
 import org.apache.commons.imaging.formats.tiff.TiffContents;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
-import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.TiffRasterStatistics;
 import org.apache.commons.imaging.formats.tiff.TiffReader;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PaletteEntry;
@@ -105,7 +105,7 @@ public class ExampleReadFloatingPointData {
         // See the Javadoc for readFloatingPointRasterData for more details.
         final long time0Nanos = System.nanoTime();
         final TiffImagingParameters params = new TiffImagingParameters();
-        final TiffRasterData rasterData = directory.getRasterData(params);
+        final AbstractTiffRasterData rasterData = directory.getRasterData(params);
         final long time1Nanos = System.nanoTime();
         System.out.println("Data read in " + (time1Nanos - time0Nanos) / 1.0e+6 + " ms");
 

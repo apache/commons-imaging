@@ -33,19 +33,19 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.tiff.AbstractTiffImageData;
+import org.apache.commons.imaging.formats.tiff.AbstractTiffRasterData;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
-import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.TiffRasterDataFloat;
 import org.apache.commons.imaging.formats.tiff.TiffRasterDataInt;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
-import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
+import org.apache.commons.imaging.formats.tiff.photometricinterpreters.AbstractPhotometricInterpreter;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterRgb;
 
 /**
  * Provides a data reader for TIFF file images organized by tiles.
  */
-public final class DataReaderTiled extends ImageDataReader {
+public final class DataReaderTiled extends AbstractImageDataReader {
 
     private final int tileWidth;
     private final int tileLength;
@@ -57,18 +57,15 @@ public final class DataReaderTiled extends ImageDataReader {
 
     private final AbstractTiffImageData.Tiles imageData;
 
-    public DataReaderTiled(final TiffDirectory directory, final PhotometricInterpreter photometricInterpreter, final int tileWidth, final int tileLength,
-            final int bitsPerPixel, final int[] bitsPerSample, final int predictor, final int samplesPerPixel, final int sampleFormat, final int width,
-            final int height, final int compression, final TiffPlanarConfiguration planarConfiguration, final ByteOrder byteOrder,
+    public DataReaderTiled(final TiffDirectory directory, final AbstractPhotometricInterpreter photometricInterpreter, final int tileWidth,
+            final int tileLength, final int bitsPerPixel, final int[] bitsPerSample, final int predictor, final int samplesPerPixel, final int sampleFormat,
+            final int width, final int height, final int compression, final TiffPlanarConfiguration planarConfiguration, final ByteOrder byteOrder,
             final AbstractTiffImageData.Tiles imageData) {
         super(directory, photometricInterpreter, bitsPerSample, predictor, samplesPerPixel, sampleFormat, width, height, planarConfiguration);
-
         this.tileWidth = tileWidth;
         this.tileLength = tileLength;
-
         this.bitsPerPixel = bitsPerPixel;
         this.compression = compression;
-
         this.imageData = imageData;
         this.byteOrder = byteOrder;
     }
@@ -271,7 +268,7 @@ public final class DataReaderTiled extends ImageDataReader {
     }
 
     @Override
-    public TiffRasterData readRasterData(final Rectangle subImage) throws ImagingException, IOException {
+    public AbstractTiffRasterData readRasterData(final Rectangle subImage) throws ImagingException, IOException {
         switch (sampleFormat) {
         case TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT:
             return readRasterDataFloat(subImage);
@@ -282,7 +279,7 @@ public final class DataReaderTiled extends ImageDataReader {
         }
     }
 
-    private TiffRasterData readRasterDataFloat(final Rectangle subImage) throws ImagingException, IOException {
+    private AbstractTiffRasterData readRasterDataFloat(final Rectangle subImage) throws ImagingException, IOException {
         final int bitsPerRow = tileWidth * bitsPerPixel;
         final int bytesPerRow = (bitsPerRow + 7) / 8;
         final int bytesPerTile = bytesPerRow * tileLength;
@@ -328,7 +325,7 @@ public final class DataReaderTiled extends ImageDataReader {
         return new TiffRasterDataFloat(rasterWidth, rasterHeight, samplesPerPixel, rasterDataFloat);
     }
 
-    private TiffRasterData readRasterDataInt(final Rectangle subImage) throws ImagingException, IOException {
+    private AbstractTiffRasterData readRasterDataInt(final Rectangle subImage) throws ImagingException, IOException {
         final int bitsPerRow = tileWidth * bitsPerPixel;
         final int bytesPerRow = (bitsPerRow + 7) / 8;
         final int bytesPerTile = bytesPerRow * tileLength;

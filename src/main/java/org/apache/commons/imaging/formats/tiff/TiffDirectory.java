@@ -622,7 +622,7 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
      * @throws ImagingException in the event of incompatible or malformed data
      * @throws IOException      in the event of an I/O error
      */
-    public TiffRasterData getRasterData(final TiffImagingParameters params) throws ImagingException, IOException {
+    public AbstractTiffRasterData getRasterData(final TiffImagingParameters params) throws ImagingException, IOException {
 
         final TiffImageParser parser = new TiffImageParser();
         return parser.getRasterData(this, headerByteOrder, params);

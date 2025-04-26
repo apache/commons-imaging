@@ -22,7 +22,7 @@ import java.awt.image.DataBuffer;
 import org.apache.commons.imaging.formats.psd.PsdHeaderInfo;
 import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
-public abstract class DataParser {
+public abstract class AbstractDataParser {
     public abstract int getBasicChannelsCount();
 
     protected abstract int getRgb(int[][][] data, int x, int y, PsdImageContents imageContents);

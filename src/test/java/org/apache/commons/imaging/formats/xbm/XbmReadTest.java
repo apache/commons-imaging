@@ -27,7 +27,7 @@ import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 
-public class XbmReadTest extends XbmBaseTest {
+public class XbmReadTest extends AbstractXbmTest {
 
     @Test
     public void test() throws Exception {

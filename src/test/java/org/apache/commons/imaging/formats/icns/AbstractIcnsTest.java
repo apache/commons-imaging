@@ -27,9 +27,9 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
 
-public abstract class IcnsBaseTest extends AbstractImagingTest {
+public abstract class AbstractIcnsTest extends AbstractImagingTest {
 
-    private static final ImageFilter IMAGE_FILTER = IcnsBaseTest::isIcns;
+    private static final ImageFilter IMAGE_FILTER = AbstractIcnsTest::isIcns;
 
     protected static List<File> getIcnsImages() throws IOException, ImagingException {
         return getTestImages(IMAGE_FILTER);

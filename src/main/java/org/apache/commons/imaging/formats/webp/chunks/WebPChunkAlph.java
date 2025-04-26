@@ -35,7 +35,7 @@ import org.apache.commons.imaging.ImagingException;
  * @see <a href="https://developers.google.com/speed/webp/docs/riff_container#alpha">Extended File Format#Alpha</a>
  * @since 1.0.0-alpha4
  */
-public final class WebPChunkAlph extends WebPChunk {
+public final class WebPChunkAlph extends AbstractWebPChunk {
 
     /**
      * Create an ALPH chunk.

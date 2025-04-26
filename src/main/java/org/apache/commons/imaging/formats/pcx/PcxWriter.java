@@ -21,8 +21,8 @@ import java.io.OutputStream;
 import java.util.Arrays;
 
 import org.apache.commons.imaging.PixelDensity;
+import org.apache.commons.imaging.common.AbstractBinaryOutputStream;
 import org.apache.commons.imaging.common.Allocator;
-import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 
@@ -52,7 +52,7 @@ final class PcxWriter {
     public void writeImage(final BufferedImage src, final OutputStream os) throws IOException {
         final PaletteFactory paletteFactory = new PaletteFactory();
         final SimplePalette palette = paletteFactory.makeExactRgbPaletteSimple(src, 256);
-        final BinaryOutputStream bos = BinaryOutputStream.littleEndian(os);
+        final AbstractBinaryOutputStream bos = AbstractBinaryOutputStream.littleEndian(os);
         final int bitDepth;
         final int planes;
         if (palette == null || bitDepthWanted == 24 || bitDepthWanted == 32) {
@@ -173,7 +173,7 @@ final class PcxWriter {
     }
 
     private void writePixels(final BufferedImage src, final int bitDepth, final int planes, final int bytesPerLine, final SimplePalette palette,
-            final BinaryOutputStream bos) throws IOException {
+            final AbstractBinaryOutputStream bos) throws IOException {
         final byte[] plane0 = Allocator.byteArray(bytesPerLine);
         final byte[] plane1 = Allocator.byteArray(bytesPerLine);
         final byte[] plane2 = Allocator.byteArray(bytesPerLine);
@@ -254,7 +254,7 @@ final class PcxWriter {
         rleWriter.flush(bos);
     }
 
-    private void writePixels32(final BufferedImage src, final int bytesPerLine, final BinaryOutputStream bos) throws IOException {
+    private void writePixels32(final BufferedImage src, final int bytesPerLine, final AbstractBinaryOutputStream bos) throws IOException {
 
         final int[] rgbs = Allocator.intArray(src.getWidth());
         final byte[] plane = Allocator.byteArray(4 * bytesPerLine);

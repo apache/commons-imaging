@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.bmp;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import org.apache.commons.imaging.common.BinaryOutputStream;
+import org.apache.commons.imaging.common.AbstractBinaryOutputStream;
 
 interface BmpWriter {
 
@@ -29,5 +29,5 @@ interface BmpWriter {
 
     int getPaletteSize();
 
-    void writePalette(BinaryOutputStream bos) throws IOException;
+    void writePalette(AbstractBinaryOutputStream bos) throws IOException;
 }
