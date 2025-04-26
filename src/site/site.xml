@@ -15,39 +15,38 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-<project name="Commons Imaging">
-  <bannerRight>
-    <name>Commons Imaging</name>
-    <src>/images/logo.png</src>
-    <href>/index.html</href>
-    <alt>Commons Imaging&amp;trade; logo</alt>
+<site xmlns="http://maven.apache.org/SITE/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SITE/2.0.0 http://maven.apache.org/xsd/site-2.0.0.xsd" name="Apache Commons Imaging">
+  <bannerRight name="Commons Imaging" href="/index.html">
+    <image src="/images/logo.png" />
   </bannerRight>
-
   <body>
-
-    <menu name="Imaging">
-      <item name="Overview"                           href="/index.html"/>
-      <item name="Mailing Lists"                      href="/mail-lists.html"/>
-      <item name="Issue Tracking"                     href="/issue-tracking.html"/>
-      <item name="Source Repository"                  href="/scm.html"/>
-      <item name="Javadoc"                            href="/apidocs/index.html"/>
-      <item name="Javadoc Archive"                    href="https://javadoc.io/doc/org.apache.commons/commons-imaging/"/>
-      <item name="Download"                           href="/download_imaging.cgi"/>
-      <item name="Security"                           href="/security.html"/>
+    <menu name="Commons Imaging">
+      <!-- Start: For all components. -->
+      <item name="About" href="/index.html" />
+      <item name="Asking Questions" href="/mail-lists.html" />
+      <item name="Release History" href="/changes.html" />
+      <item name="Issue Tracking" href="/issue-management.html" />
+      <item name="Dependency Management" href="/dependency-info.html" />
+      <item name="Sources" href="/scm.html" />
+      <item name="Security" href="/security.html" />
+      <item name="License" href="https://www.apache.org/licenses/LICENSE-2.0" />
+      <item name="Code of Conduct" href="https://www.apache.org/foundation/policies/conduct.html" />
+      <item name="Download" href="/download_io.cgi" />
+      <item name="Javadoc">
+        <item name="Javadoc Current" href="/apidocs/index.html" />
+        <item name="Javadoc Archive" href="https://javadoc.io/doc/org.apache.commons/commons-imaging/" />
+      </item>
+      <!-- End: For all components. -->
+      <item name="Why Use Imaging" href="/whyimaging.html" />
+      <item name="Getting Started" href="/gettingstarted.html" />
+      <item name="Sample Usage" href="/sampleusage.html" />
+      <item name="Format Support" href="/formatsupport.html" />
+      <item name="History" href="/history.html" />
+      <item name="Incubation Status Reports (old)" href="/sanselan-incubation-status-reports.html" />
+      <item name="References" href="/references.html" />
+      <item name="Sample Images" href="/sampleimages.html" />
+      <item name="Roadmap" href="/roadmap.html" />
     </menu>
-
-    <menu name="Documentation">
-      <item name="Why Use Imaging"                    href="/whyimaging.html"/>
-      <item name="Getting Started"                    href="/gettingstarted.html"/>
-      <item name="Sample Usage"                       href="/sampleusage.html"/>
-      <item name="Format Support"                     href="/formatsupport.html"/>
-      <item name="History"                            href="/history.html"/>
-      <item name="Sanselan Incubation Status Reports" href="/sanselan-incubation-status-reports.html"/>
-      <item name="References"                         href="/references.html"/>
-      <item name="Sample Images"                      href="/sampleimages.html"/>
-      <item name="Roadmap"                            href="/roadmap.html"/>
-    </menu>
-
   </body>
-
-</project>
+</site>
