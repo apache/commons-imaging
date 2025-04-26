@@ -70,13 +70,7 @@ public class ImageBuilder {
      * @throws RasterFormatException if {@code width} or {@code height} are equal or less than zero
      */
     public ImageBuilder(final int width, final int height, final boolean hasAlpha) {
-        checkDimensions(width, height);
-
-        data = Allocator.intArray(width * height);
-        this.width = width;
-        this.height = height;
-        this.hasAlpha = hasAlpha;
-        this.isAlphaPremultiplied = false;
+        this(width, height, hasAlpha, false);
     }
 
     /**
