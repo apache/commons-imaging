@@ -25,7 +25,7 @@ import org.apache.commons.imaging.common.AllocationRequestException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ImageBuilder;
 
-public class PhotometricInterpreterPalette extends PhotometricInterpreter {
+public final class PhotometricInterpreterPalette extends PhotometricInterpreter {
 
     /**
      * The color map of integer ARGB values tied to the pixel index of the palette.

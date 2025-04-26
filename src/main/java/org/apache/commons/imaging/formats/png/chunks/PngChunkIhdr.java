@@ -26,7 +26,7 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.png.InterlaceMethod;
 import org.apache.commons.imaging.formats.png.PngColorType;
 
-public class PngChunkIhdr extends PngChunk {
+public final class PngChunkIhdr extends PngChunk {
 
     private final int width;
     private final int height;

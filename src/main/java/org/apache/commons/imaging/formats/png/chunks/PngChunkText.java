@@ -24,7 +24,7 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.formats.png.AbstractPngText;
 
-public class PngChunkText extends AbstractPngTextChunk {
+public final class PngChunkText extends AbstractPngTextChunk {
 
     private static final Logger LOGGER = Logger.getLogger(PngChunkText.class.getName());
 

@@ -45,7 +45,7 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
  * <p>
  * To use this class, an application must access the TIFF file using the low-level, TIFF-specific API provided by the Apache Commons Imaging library.
  */
-public class PhotometricInterpreterFloat extends PhotometricInterpreter {
+public final class PhotometricInterpreterFloat extends PhotometricInterpreter {
 
     ArrayList<PaletteEntry> rangePaletteEntries = new ArrayList<>();
     ArrayList<PaletteEntry> singleValuePaletteEntries = new ArrayList<>();

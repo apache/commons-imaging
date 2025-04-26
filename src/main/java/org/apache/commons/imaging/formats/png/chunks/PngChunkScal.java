@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFunctions;
 
-public class PngChunkScal extends PngChunk {
+public final class PngChunkScal extends PngChunk {
 
     private final double unitsPerPixelXAxis;
     private final double unitsPerPixelYAxis;

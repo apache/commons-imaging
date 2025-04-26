@@ -35,7 +35,7 @@ import org.apache.commons.io.IOUtils;
  *
  * @see <a href="http://www.libpng.org/pub/png/spec/1.2/PNG-Chunks.html">PNG Specification</a>
  */
-public class PngChunkIccp extends PngChunk {
+public final class PngChunkIccp extends PngChunk {
 
     /*
      * Logger.

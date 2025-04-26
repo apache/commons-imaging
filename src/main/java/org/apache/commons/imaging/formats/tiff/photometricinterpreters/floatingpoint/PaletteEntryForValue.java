@@ -22,7 +22,7 @@ import java.awt.Color;
  * Provides a palette entry for a color assignment to a single value. This class will assign a color to a value only if it is an exact match for the input. This
  * class will also support Float.NaN
  */
-public class PaletteEntryForValue implements PaletteEntry {
+public final class PaletteEntryForValue implements PaletteEntry {
 
     private final float value;
     private final int iColor;

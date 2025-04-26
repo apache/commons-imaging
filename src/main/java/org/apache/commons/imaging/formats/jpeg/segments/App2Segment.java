@@ -27,7 +27,7 @@ import java.io.InputStream;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
-public class App2Segment extends AppnSegment implements Comparable<App2Segment> {
+public final class App2Segment extends AppnSegment implements Comparable<App2Segment> {
     private final byte[] iccBytes;
     public final int curMarker;
     public final int numMarkers;

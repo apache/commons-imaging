@@ -28,7 +28,7 @@ import org.apache.commons.imaging.formats.png.AbstractPngText;
 import org.apache.commons.imaging.formats.png.PngConstants;
 import org.apache.commons.io.IOUtils;
 
-public class PngChunkItxt extends AbstractPngTextChunk {
+public final class PngChunkItxt extends AbstractPngTextChunk {
 
     private final String keyword;
     private final String text;

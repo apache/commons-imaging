@@ -25,7 +25,7 @@ import java.awt.Color;
  * In keeping with the conventions of many Geographic Information Systems (GIS) and art applications, this instance "covered" values in the range v0 &le; f &lt;
  * v1. Thus, a value that exactly matches the upper bound of the range is not considered "covered".
  */
-public class PaletteEntryForRange implements PaletteEntry {
+public final class PaletteEntryForRange implements PaletteEntry {
 
     private final float v0;
     private final float v1;

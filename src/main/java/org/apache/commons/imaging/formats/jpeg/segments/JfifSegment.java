@@ -28,7 +28,7 @@ import java.io.InputStream;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
-public class JfifSegment extends AbstractSegment {
+public final class JfifSegment extends AbstractSegment {
     public final int jfifMajorVersion;
     public final int jfifMinorVersion;
     public final int densityUnits;

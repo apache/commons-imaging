@@ -53,7 +53,7 @@ import java.util.Properties;
 /**
  * A utility class primary intended for storing data obtained by reading image files.
  */
-public class ImageBuilder {
+public final class ImageBuilder {
     private final int[] data;
     private final int width;
     private final int height;

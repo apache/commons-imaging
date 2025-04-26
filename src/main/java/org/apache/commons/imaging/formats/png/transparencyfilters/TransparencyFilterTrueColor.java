@@ -23,7 +23,7 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImagingException;
 
-public class TransparencyFilterTrueColor extends AbstractTransparencyFilter {
+public final class TransparencyFilterTrueColor extends AbstractTransparencyFilter {
     private final int transparentColor;
 
     public TransparencyFilterTrueColor(final byte[] bytes) throws IOException {

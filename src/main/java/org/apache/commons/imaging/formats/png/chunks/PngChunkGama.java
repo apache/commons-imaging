@@ -21,7 +21,7 @@ import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-public class PngChunkGama extends PngChunk {
+public final class PngChunkGama extends PngChunk {
 
     private final int gamma;
 

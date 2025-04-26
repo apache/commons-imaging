@@ -22,7 +22,7 @@ import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-public class PngChunkPhys extends PngChunk {
+public final class PngChunkPhys extends PngChunk {
 
     private final int pixelsPerUnitXAxis;
     private final int pixelsPerUnitYAxis;
