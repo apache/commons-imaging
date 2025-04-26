@@ -187,7 +187,7 @@ public enum ChunkType {
         PngChunk make(int length, int chunkType, int crc, byte[] bytes) throws IOException;
     }
 
-    private static final ChunkType[] types = ChunkType.values();
+    private static final ChunkType[] types = values();
 
     static ChunkType findType(final int chunkType) {
         for (final ChunkType type : types) {
