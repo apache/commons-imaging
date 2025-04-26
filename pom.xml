@@ -88,7 +88,7 @@
   </issueManagement>
   <inceptionYear>2007</inceptionYear>
   <build>
-    <defaultGoal>clean verify apache-rat:check checkstyle:check spotbugs:check javadoc:javadoc</defaultGoal>
+    <defaultGoal>clean verify apache-rat:check checkstyle:check spotbugs:check pmd:check javadoc:javadoc</defaultGoal>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
