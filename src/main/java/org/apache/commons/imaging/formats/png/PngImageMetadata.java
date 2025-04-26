@@ -86,8 +86,7 @@ public class PngImageMetadata implements ImageMetadata {
             return textualInformation.getItems();
         }
 
-        final ArrayList<ImageMetadataItem> result = new ArrayList<>();
-        result.addAll(textualInformation.getItems());
+        final ArrayList<ImageMetadataItem> result = new ArrayList<>(textualInformation.getItems());
         result.addAll(exif.getItems());
         return result;
     }
