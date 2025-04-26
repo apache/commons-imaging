@@ -137,10 +137,8 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
             return true;
         }
         final int index = fileName.lastIndexOf('.');
-        if (index >= 0) {
-            if (ArrayUtils.contains(extensions, fileName.substring(index + 1).toLowerCase(Locale.ROOT))) {
-                return true;
-            }
+        if (index >= 0 && ArrayUtils.contains(extensions, fileName.substring(index + 1).toLowerCase(Locale.ROOT))) {
+            return true;
         }
         return false;
     }
