@@ -26,14 +26,14 @@ public class PhotoshopApp13Data {
     private final List<IptcRecord> records;
     private final List<IptcBlock> rawBlocks;
 
+    public PhotoshopApp13Data(final List<IptcRecord> records, final List<IptcBlock> rawBlocks) {
+        this(records, rawBlocks, false);
+    }
+
     public PhotoshopApp13Data(final List<IptcRecord> records, final List<IptcBlock> rawBlocks, final boolean forceUtf8Encoding) {
         this.rawBlocks = rawBlocks == null ? Collections.emptyList() : Collections.unmodifiableList(rawBlocks);
         this.records = records == null ? Collections.emptyList() : Collections.unmodifiableList(records);
         this.forceUtf8Encoding = forceUtf8Encoding;
-    }
-
-    public PhotoshopApp13Data(final List<IptcRecord> records, final List<IptcBlock> rawBlocks) {
-        this(records, rawBlocks, false);
     }
 
     public List<IptcBlock> getNonIptcBlocks() {

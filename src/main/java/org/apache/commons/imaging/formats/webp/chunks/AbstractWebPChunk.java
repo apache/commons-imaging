@@ -45,17 +45,6 @@ public abstract class AbstractWebPChunk extends BinaryFileParser {
     protected final byte[] bytes;
     private final int chunkSize;
 
-    private AbstractWebPChunk(final int type, final int size, final byte[] bytes, final boolean ignored) {
-        super(ByteOrder.LITTLE_ENDIAN);
-        this.type = type;
-        this.size = bytes.length;
-        this.bytes = bytes;
-        // if chunk size is odd, a single padding byte is added
-        final int padding = size % 2 != 0 ? 1 : 0;
-        // Chunk FourCC (4 bytes) + Chunk Size (4 bytes) + Chunk Payload (n bytes) + Padding
-        this.chunkSize = SafeOperations.add(4, 4, size, padding);
-    }
-
     /**
      * Create a new WebP chunk.
      *
@@ -66,6 +55,17 @@ public abstract class AbstractWebPChunk extends BinaryFileParser {
      */
     public AbstractWebPChunk(final int type, final int size, final byte[] bytes) throws ImagingException {
         this(type, size, bytes, checkArgs(size, bytes));
+    }
+
+    private AbstractWebPChunk(final int type, final int size, final byte[] bytes, final boolean ignored) {
+        super(ByteOrder.LITTLE_ENDIAN);
+        this.type = type;
+        this.size = bytes.length;
+        this.bytes = bytes;
+        // if chunk size is odd, a single padding byte is added
+        final int padding = size % 2 != 0 ? 1 : 0;
+        // Chunk FourCC (4 bytes) + Chunk Size (4 bytes) + Chunk Payload (n bytes) + Padding
+        this.chunkSize = SafeOperations.add(4, 4, size, padding);
     }
 
     /**

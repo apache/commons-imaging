@@ -49,26 +49,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 public class IptcParserTest {
 
     /**
-     * Tests for IptcParser encoding support. See IMAGING-168 and pull request #124 for more.
-     *
-     * @throws IOException      when reading input
-     * @throws ImagingException when parsing file
-     */
-    @Test
-    public void testEncodingSupport() throws IOException, ImagingException {
-        // NOTE: We use the JpegParser, so it will send only the block/segment that IptcParser needs for the test image
-        final File file = TestResources.resourceToFile("/images/jpeg/iptc/IMAGING-168/111083453-c07f1880-851e-11eb-8b61-2757f7d934bf.jpg");
-        final JpegImageParser parser = new JpegImageParser();
-        final JpegImageMetadata metadata = (JpegImageMetadata) parser.getMetadata(file);
-        final JpegPhotoshopMetadata photoshopMetadata = metadata.getPhotoshop();
-        @SuppressWarnings("unchecked")
-        final List<GenericImageMetadataItem> items = (List<GenericImageMetadataItem>) photoshopMetadata.getItems();
-        final GenericImageMetadataItem thanksInMandarin = items.get(3);
-        // converted the thank-you in chinese characters to unicode for comparison here
-        assertArrayEquals("\u8c22\u8c22".getBytes(StandardCharsets.UTF_8), thanksInMandarin.getText().getBytes(StandardCharsets.UTF_8));
-    }
-
-    /**
      * Tests the correct encoding when writing IptcRecords with method {@link IptcParser#writeIptcBlock(List, boolean)}.
      * <p>
      * The encoding has to be UTF-8, if either the parameter {@code forceUtf8Encoding} is set to true or if a value from the passed {@link IptcRecord} instances
@@ -136,6 +116,26 @@ public class IptcParserTest {
 
         assertArrayEquals(prefix, actualPrefix);
         assertArrayEquals(applicationRecord, actualApplicationRecord);
+    }
+
+    /**
+     * Tests for IptcParser encoding support. See IMAGING-168 and pull request #124 for more.
+     *
+     * @throws IOException      when reading input
+     * @throws ImagingException when parsing file
+     */
+    @Test
+    public void testEncodingSupport() throws IOException, ImagingException {
+        // NOTE: We use the JpegParser, so it will send only the block/segment that IptcParser needs for the test image
+        final File file = TestResources.resourceToFile("/images/jpeg/iptc/IMAGING-168/111083453-c07f1880-851e-11eb-8b61-2757f7d934bf.jpg");
+        final JpegImageParser parser = new JpegImageParser();
+        final JpegImageMetadata metadata = (JpegImageMetadata) parser.getMetadata(file);
+        final JpegPhotoshopMetadata photoshopMetadata = metadata.getPhotoshop();
+        @SuppressWarnings("unchecked")
+        final List<GenericImageMetadataItem> items = (List<GenericImageMetadataItem>) photoshopMetadata.getItems();
+        final GenericImageMetadataItem thanksInMandarin = items.get(3);
+        // converted the thank-you in chinese characters to unicode for comparison here
+        assertArrayEquals("\u8c22\u8c22".getBytes(StandardCharsets.UTF_8), thanksInMandarin.getText().getBytes(StandardCharsets.UTF_8));
     }
 
     /**

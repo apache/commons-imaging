@@ -214,12 +214,12 @@ public enum ChunkType {
         this(null, null);
     }
 
-    ChunkType(final Extension extension) {
-        this(extension, null);
-    }
-
     ChunkType(final ChunkConstructor constructor) {
         this(null, constructor);
+    }
+
+    ChunkType(final Extension extension) {
+        this(extension, null);
     }
 
     ChunkType(final Extension extension, final ChunkConstructor constructor) {

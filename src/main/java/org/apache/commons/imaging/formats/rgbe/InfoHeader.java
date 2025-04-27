@@ -30,14 +30,6 @@ final class InfoHeader {
         this.is = is;
     }
 
-    private char readChar() throws IOException {
-        final int result = is.read();
-        if (result < 0) {
-            throw new ImagingException("HDR: Unexpected EOF");
-        }
-        return (char) result;
-    }
-
     String line() throws IOException {
         final StringBuilder buffer = new StringBuilder();
         char c;
@@ -45,5 +37,13 @@ final class InfoHeader {
             buffer.append(c);
         }
         return buffer.toString();
+    }
+
+    private char readChar() throws IOException {
+        final int result = is.read();
+        if (result < 0) {
+            throw new ImagingException("HDR: Unexpected EOF");
+        }
+        return (char) result;
     }
 }
