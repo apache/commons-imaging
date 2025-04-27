@@ -175,6 +175,7 @@ public class DcxImageParser extends AbstractImageParser<PcxImagingParameters> {
     public void writeImage(final BufferedImage src, final OutputStream os, final PcxImagingParameters params) throws ImagingException, IOException {
         final int headerSize = 4 + 1024 * 4;
 
+        @SuppressWarnings("resource") // Caller closes 'os'.
         final AbstractBinaryOutputStream bos = AbstractBinaryOutputStream.littleEndian(os);
         bos.write4Bytes(DcxHeader.DCX_ID);
         // Some apps may need a full 1024 entry table
