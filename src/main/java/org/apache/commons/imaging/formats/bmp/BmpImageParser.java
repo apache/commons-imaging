@@ -633,6 +633,7 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
         }
 
         final byte[] imageData = writer.getImageData(src);
+        @SuppressWarnings("resource") // Caller closes 'os'.
         final AbstractBinaryOutputStream bos = AbstractBinaryOutputStream.littleEndian(os);
 
         // write BitmapFileHeader
