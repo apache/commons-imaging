@@ -118,7 +118,7 @@ public final class Imaging {
     }
 
     /**
-     * Write the ImageInfo and format-specific information for the image content of the specified byte array to a string.
+     * Writes the ImageInfo and format-specific information for the image content of the specified byte array to a string.
      *
      * @param bytes A valid array of bytes.
      * @return A valid string.
@@ -135,7 +135,7 @@ public final class Imaging {
     }
 
     /**
-     * Write the ImageInfo and format-specific information for the image content of the specified file to a string.
+     * Writes the ImageInfo and format-specific information for the image content of the specified file to a string.
      *
      * @param file A valid file reference.
      * @return A valid string.

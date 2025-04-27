@@ -154,7 +154,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     }
 
     /**
-     * Write the ImageInfo and format-specific information for the image content of the specified byte array to a string.
+     * Writes the ImageInfo and format-specific information for the image content of the specified byte array to a string.
      *
      * @param bytes A valid array of bytes.
      * @return A valid string.
@@ -166,7 +166,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     }
 
     /**
-     * Write the ImageInfo and format-specific information for the image content of the specified byte source to a string.
+     * Writes the ImageInfo and format-specific information for the image content of the specified byte source to a string.
      *
      * @param byteSource A valid byte source.
      * @return A valid string.
@@ -185,7 +185,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     }
 
     /**
-     * Write the ImageInfo and format-specific information for the image content of the specified file to a string.
+     * Writes the ImageInfo and format-specific information for the image content of the specified file to a string.
      *
      * @param file A valid file reference.
      * @return A valid string.
@@ -205,7 +205,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     }
 
     /**
-     * Write the ImageInfo and format-specific information for the image content of the specified byte source to a PrintWriter
+     * Writes the ImageInfo and format-specific information for the image content of the specified byte source to a PrintWriter
      *
      * @param pw         print writer used for writing the ImageInfo
      * @param byteSource A valid byte source.
