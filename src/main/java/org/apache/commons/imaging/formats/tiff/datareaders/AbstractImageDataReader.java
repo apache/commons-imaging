@@ -302,7 +302,7 @@ public abstract class AbstractImageDataReader {
     }
 
     /**
-     * Read the image data from the IFD associated with this instance of ImageDataReader using the optional sub-image specification if desired.
+     * Reads the image data from the IFD associated with this instance of ImageDataReader using the optional sub-image specification if desired.
      *
      * @param subImageSpecification a rectangle describing a sub-region of the image for reading, or a null if the whole image is to be read.
      * @param hasAlpha              indicates that the image has an alpha (transparency) channel (RGB color model only).

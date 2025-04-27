@@ -72,7 +72,7 @@ public class TiffFloatingPointReadTest {
     }
 
     /**
-     * Read a TIFF file using a PhotometricInterpreter with entries for the specified range of values and an arbitrary no-data value. If the image is
+     * Reads a TIFF file using a PhotometricInterpreter with entries for the specified range of values and an arbitrary no-data value. If the image is
      * successfully read, the interpreter instance will be returned.
      *
      * @param target the specified TIFF file
@@ -108,7 +108,7 @@ public class TiffFloatingPointReadTest {
     }
 
     /**
-     * Read the floating-point content from a TIFF file.
+     * Reads the floating-point content from a TIFF file.
      *
      * @param target the specified TIFF file
      * @param params an optional map of parameters for reading.

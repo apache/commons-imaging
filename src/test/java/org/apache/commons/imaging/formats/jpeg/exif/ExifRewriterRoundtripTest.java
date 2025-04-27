@@ -47,7 +47,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.opentest4j.TestSkippedException;
 
 /**
- * Read and write EXIF data, and verify that it's identical, and no data corruption occurred.
+ * Reads and write EXIF data, and verify that it's identical, and no data corruption occurred.
  */
 public class ExifRewriterRoundtripTest extends AbstractExifTest {
 

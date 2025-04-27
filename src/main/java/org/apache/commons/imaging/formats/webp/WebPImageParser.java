@@ -134,7 +134,7 @@ public class WebPImageParser extends AbstractImageParser<WebPImagingParameters> 
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.WEBP.getExtensions();
 
     /**
-     * Read the file header of WebP file.
+     * Reads the file header of WebP file.
      *
      * @return file size in file header (including the WebP signature, excluding the TIFF signature and the file size field).
      */
