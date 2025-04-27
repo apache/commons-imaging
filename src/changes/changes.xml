@@ -46,7 +46,7 @@ The <action> type attribute can be add,update,fix,remove.
     <title>Apache Commons Imaging Release Notes</title>
   </properties>
   <body>
-    <release version="1.0.0-alpha6" date="YYYY-MM-DD" description="The 1.0.0-alpha6 release requires Java 8.">
+    <release version="1.0.0-alpha6" date="2025-04-27" description="The 1.0.0-alpha6 release requires Java 8.">
       <!-- FIX -->
       <action dev="ggregory" type="fix" due-to="Gary Gregory">Replace Locale.ENGLISH with Locale.ROOT processing file names.</action>
       <action dev="ggregory" type="fix" due-to="Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName.</action>

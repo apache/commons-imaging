@@ -1,3 +1,66 @@
+Apache Commons Imaging 1.0.0-alpha6 Release Notes
+------------------------------------------------_
+
+The Apache Commons Imaging team is pleased to announce the release of Apache Commons Imaging 1.0.0-alpha6.
+
+Apache Commons Imaging (previously Sanselan) is a pure-Java image library.
+
+The 1.0.0-alpha6 release requires Java 8.
+
+
+New features
+------------
+
+*               Add an Imaging-specific security page #439. Thanks to Arnout Engelen.
+*               Add Maven property commons.taglist.version for debugging. Thanks to Gary Gregory.
+*               Add support of GPSHPositioningError in GpsTagConstants #451. Thanks to Stefal, Gary Gregory.
+*               Support Extensions from PNG 1.2 Specification, Version 1.5.0 #269. Thanks to Glavo.
+*               Optionally force UTF-8 encoding for IPTC records #477. Thanks to Thomas Stieler, Gary Gregory.
+*               Add Maven PMD check to the default build. Thanks to Gary Gregory.
+
+Fixed Bugs
+----------
+
+*               Replace Locale.ENGLISH with Locale.ROOT processing file names. Thanks to Gary Gregory.
+*               Fix PMD UnnecessaryFullyQualifiedName. Thanks to Gary Gregory.
+*               Fix PMD TooManyStaticImports. Thanks to Gary Gregory.
+*               Fix PMD UnusedFormalParameter. Thanks to Gary Gregory.
+*               Fix PMD UnusedLocalVariable. Thanks to Gary Gregory.
+*               Increase default block size in byte sources from 1024 to 8192 bytes. Thanks to Gary Gregory.
+*               Remove double ImagingException from method signatures #462. Thanks to Sebastian Schlatow.
+*               Fix all PMD issues. Thanks to Gary Gregory.
+*               Fix SpotBugs CT_CONSTRUCTOR_THROW. Thanks to Gary Gregory.
+
+Changes
+-------
+
+*               Bump org.apache.commons:commons-parent from 69 to 81 #400, #406, #428, #430, #436, #442, #445, #545. Thanks to Dependabot, Gary Gregory.
+*               Bump org.apache.commons:commons-lang3 from 3.14.0 to 3.17.0 #416, #423, #431. Thanks to Dependabot.
+*               Bump commons-io:commons-io from 2.16.1 to 2.19.0 #437, #464. Thanks to Dependabot.
+*               Bump org.codehaus.mojo:taglist-maven-plugin from 3.1.0 to 3.2.1 #453. Thanks to Dependabot.
+
+Removed
+-------
+
+*               Remove direct dependency on org.hamcrest:hamcrest. Thanks to Dependabot.
+*               Rename methods BinaryFunctions.findNull() to indexOf0() like String. Thanks to Dependabot.
+*               Rename method BinaryFunctions.slice() to copyOfRange() like Arrays. Thanks to Dependabot.
+*               Rename method BinaryFunctions.head() to copyOfStart() like Arrays. Thanks to Dependabot.
+*               Replace BinaryFunctions.startsWith(byte[], BinaryConstant) with BinaryConstant.isStartOf(byte[]). Thanks to Dependabot.
+
+Historical list of changes: https://commons.apache.org/proper/commons-imaging//changes.html
+
+For complete information on Apache Commons Imaging, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Commons Imaging website:
+
+https://commons.apache.org/proper/commons-imaging/
+
+Download page: https://commons.apache.org/proper/commons-imaging//download_imaging.cgi
+
+Have fun!
+-Apache Commons Team
+
+-----------------------------------------------------------------------------
 Apache Commons Imaging 1.0.0-alpha5 Release Notes
 -------------------------------------------------
 
