@@ -71,7 +71,6 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
      */
     public TiffRasterDataInt(final int width, final int height, final int samplesPerPixel, final int[] data) {
         super(width, height, samplesPerPixel);
-
         if (data == null || data.length < nCells) {
             throw new IllegalArgumentException("Specified data does not contain sufficient elements");
         }
@@ -87,7 +86,6 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
      */
     public TiffRasterDataInt(final int width, final int height, final int[] data) {
         super(width, height, 1);
-
         if (data == null || data.length < nCells) {
             throw new IllegalArgumentException("Specified data does not contain sufficient elements");
         }
@@ -141,8 +139,7 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
      */
     @Override
     public int getIntValue(final int x, final int y) {
-        final int index = checkCoordinatesAndComputeIndex(x, y, 0);
-        return data[index];
+        return data[checkCoordinatesAndComputeIndex(x, y, 0)];
     }
 
     /**
@@ -155,8 +152,7 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
      */
     @Override
     public int getIntValue(final int x, final int y, final int i) {
-        final int index = checkCoordinatesAndComputeIndex(x, y, i);
-        return data[index];
+        return data[checkCoordinatesAndComputeIndex(x, y, i)];
     }
 
     /**
@@ -189,8 +185,7 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
      */
     @Override
     public float getValue(final int x, final int y) {
-        final int index = checkCoordinatesAndComputeIndex(x, y, 0);
-        return data[index];
+        return data[checkCoordinatesAndComputeIndex(x, y, 0)];
     }
 
     /**
@@ -203,8 +198,7 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
      */
     @Override
     public float getValue(final int x, final int y, final int i) {
-        final int index = checkCoordinatesAndComputeIndex(x, y, i);
-        return data[index];
+        return data[checkCoordinatesAndComputeIndex(x, y, i)];
     }
 
     /**
@@ -216,8 +210,7 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
      */
     @Override
     public void setIntValue(final int x, final int y, final int value) {
-        final int index = checkCoordinatesAndComputeIndex(x, y, 0);
-        data[index] = value;
+        data[checkCoordinatesAndComputeIndex(x, y, 0)] = value;
     }
 
     /**
@@ -230,8 +223,7 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
      */
     @Override
     public void setIntValue(final int x, final int y, final int i, final int value) {
-        final int index = checkCoordinatesAndComputeIndex(x, y, i);
-        data[index] = value;
+        data[checkCoordinatesAndComputeIndex(x, y, i)] = value;
     }
 
     /**
@@ -243,8 +235,7 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
      */
     @Override
     public void setValue(final int x, final int y, final float value) {
-        final int index = checkCoordinatesAndComputeIndex(x, y, 0);
-        data[index] = (int) value;
+        data[checkCoordinatesAndComputeIndex(x, y, 0)] = (int) value;
     }
 
     /**
@@ -257,7 +248,6 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
      */
     @Override
     public void setValue(final int x, final int y, final int i, final float value) {
-        final int index = checkCoordinatesAndComputeIndex(x, y, i);
-        data[index] = (int) value;
+        data[checkCoordinatesAndComputeIndex(x, y, i)] = (int) value;
     }
 }
