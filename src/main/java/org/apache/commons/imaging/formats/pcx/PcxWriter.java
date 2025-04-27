@@ -52,6 +52,7 @@ final class PcxWriter {
     public void writeImage(final BufferedImage src, final OutputStream os) throws IOException {
         final PaletteFactory paletteFactory = new PaletteFactory();
         final SimplePalette palette = paletteFactory.makeExactRgbPaletteSimple(src, 256);
+        @SuppressWarnings("resource") // Caller closes 'os'.
         final AbstractBinaryOutputStream bos = AbstractBinaryOutputStream.littleEndian(os);
         final int bitDepth;
         final int planes;
