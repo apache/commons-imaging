@@ -1,5 +1,5 @@
 Apache Commons Imaging 1.0.0-alpha6 Release Notes
-------------------------------------------------_
+-------------------------------------------------
 
 The Apache Commons Imaging team is pleased to announce the release of Apache Commons Imaging 1.0.0-alpha6.
 
