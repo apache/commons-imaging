@@ -24,7 +24,7 @@
   </parent>
   <artifactId>commons-imaging</artifactId>
   <name>Apache Commons Imaging</name>
-  <version>1.0.0-alpha6-SNAPSHOT</version>
+  <version>1.0.0-alpha7-SNAPSHOT</version>
   <!--
     Keep the description on a single line. Otherwise Maven might generate
     a corrupted MANIFEST.MF (see https://issues.apache.org/jira/browse/MJAR-4)
@@ -59,7 +59,7 @@
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/imaging</commons.distSvnStagingUrl>
     <!-- project.build.outputTimestamp is managed by Maven plugins, see https://maven.apache.org/guides/mini/guide-reproducible-builds.html -->
-    <project.build.outputTimestamp>2024-04-18T14:55:29Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2025-04-30T17:58:25Z</project.build.outputTimestamp>
     <!-- JaCoCo: Don't make code coverage worse than: -->
     <commons.jacoco.haltOnFailure>true</commons.jacoco.haltOnFailure>
     <commons.jacoco.classRatio>0.96</commons.jacoco.classRatio>
