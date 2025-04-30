@@ -52,9 +52,9 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <commons.conf.dir>src/conf</commons.conf.dir>
     <!-- Commons Release Plugin -->
-    <commons.release.version>1.0.0-alpha6</commons.release.version>
-    <commons.release.next>1.0.0-alpha7</commons.release.next>
-    <commons.bc.version>1.0.0-alpha5</commons.bc.version>
+    <commons.release.version>1.0.0-alpha7</commons.release.version>
+    <commons.release.next>1.0.0-alpha8</commons.release.next>
+    <commons.bc.version>1.0.0-alpha6</commons.bc.version>
     <commons.rc.version>RC1</commons.rc.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/imaging</commons.distSvnStagingUrl>
