@@ -55,7 +55,7 @@ patches, or suggestions for improvement, see the Apache Commons Imaging website:
 
 https://commons.apache.org/proper/commons-imaging/
 
-Download page: https://commons.apache.org/proper/commons-imaging//download_imaging.cgi
+Download page: https://commons.apache.org/proper/commons-imaging/download_imaging.cgi
 
 Have fun!
 -Apache Commons Team
@@ -91,7 +91,7 @@ patches, or suggestions for improvement, see the Apache Commons Imaging website:
 
 https://commons.apache.org/proper/commons-imaging/
 
-Download page: https://commons.apache.org/proper/commons-imaging//download_imaging.cgi
+Download page: https://commons.apache.org/proper/commons-imaging/download_imaging.cgi
 
 Have fun!
 -Apache Commons Team
@@ -162,7 +162,7 @@ patches, or suggestions for improvement, see the Apache Commons Imaging website:
 
 https://commons.apache.org/proper/commons-imaging/
 
-Download page: https://commons.apache.org/proper/commons-imaging//download_imaging.cgi
+Download page: https://commons.apache.org/proper/commons-imaging/download_imaging.cgi
 
 Have fun!
 -Apache Commons Team
