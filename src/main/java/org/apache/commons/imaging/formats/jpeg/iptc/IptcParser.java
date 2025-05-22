@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -89,7 +88,7 @@ public class IptcParser extends BinaryFileParser {
             }
         }
 
-        if (Objects.deepEquals(codedCharsetNormalized, CHARACTER_ESCAPE_SEQUENCE)) {
+        if (Arrays.equals(codedCharsetNormalized, CHARACTER_ESCAPE_SEQUENCE)) {
             return StandardCharsets.UTF_8;
         }
         return DEFAULT_CHARSET;
