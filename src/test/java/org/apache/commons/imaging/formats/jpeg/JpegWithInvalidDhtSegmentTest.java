@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
 public class JpegWithInvalidDhtSegmentTest {
 
     @Test
-    public void testSingleImage() {
+    void testSingleImage() {
         // we cannot use ImagingTest and getImageByFileName, as it would cause others
         // tests to fail
         final File imageFile = TestResources.resourceToFile("/IMAGING-215/ArrayIndexOutOfBoundsException_DhtSegment_79.jpeg");

@@ -39,7 +39,7 @@ public class PixelDensityRoundtrip extends RoundtripBase {
 
     @ParameterizedTest
     @MethodSource
-    public void testPixelDensityRoundtrip(final FormatInfo formatInfo) throws Exception {
+    void testPixelDensityRoundtrip(final FormatInfo formatInfo) throws Exception {
         final BufferedImage testImage = TestImages.createFullColorImage(2, 2);
 
         final TiffImagingParameters params = new TiffImagingParameters();

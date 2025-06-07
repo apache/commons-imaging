@@ -35,7 +35,7 @@ import org.junit.jupiter.api.Test;
 public class TiffReadTest extends AbstractTiffTest {
 
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         final List<File> images = getTiffImages();
         for (final File imageFile : images) {
 
@@ -55,7 +55,7 @@ public class TiffReadTest extends AbstractTiffTest {
     }
 
     @Test
-    public void testReadAllImages() throws Exception {
+    void testReadAllImages() throws Exception {
         // same as above, but test read all Images
         for (final File imageFile : getTiffImages()) {
             // the "bad offsets" file will cause an exception to be thrown.
@@ -69,7 +69,7 @@ public class TiffReadTest extends AbstractTiffTest {
     }
 
     @Test
-    public void testReadDirectories() throws Exception {
+    void testReadDirectories() throws Exception {
         // same as above, but test reading the TIFF directories
         final List<File> images = getTiffImages();
         for (final File imageFile : images) {

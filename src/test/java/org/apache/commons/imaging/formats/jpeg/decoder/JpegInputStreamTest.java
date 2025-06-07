@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
 public class JpegInputStreamTest {
 
     @Test
-    public void testNextBitThrowsImageReadExceptionOne() {
+    void testNextBitThrowsImageReadExceptionOne() {
         final int[] byteArray = new int[6];
         byteArray[0] = (byte) -1;
         byteArray[1] = (byte) 74;
@@ -40,7 +40,7 @@ public class JpegInputStreamTest {
     }
 
     @Test
-    public void testNextBitThrowsImageReadExceptionTwo() {
+    void testNextBitThrowsImageReadExceptionTwo() {
         final int[] byteArray = {};
         final JpegInputStream jpegInputStream = new JpegInputStream(byteArray);
 

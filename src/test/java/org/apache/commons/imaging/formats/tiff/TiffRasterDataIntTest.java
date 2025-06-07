@@ -54,7 +54,7 @@ public class TiffRasterDataIntTest {
      */
 
     @Test
-    public void testBadConstructor() {
+    void testBadConstructor() {
         assertThrows(IllegalArgumentException.class, () -> new TiffRasterDataInt(-1, 10), "Constructor did not detect bad width");
         assertThrows(IllegalArgumentException.class, () -> new TiffRasterDataInt(10, -1), "Constructor did not detect bad height");
         assertThrows(IllegalArgumentException.class, () -> new TiffRasterDataInt(1, 1, 0), "Constructor did not detect bad samplesPerPixel");
@@ -68,7 +68,7 @@ public class TiffRasterDataIntTest {
      * Test of access with bad coordinates, of class TiffRasterData.
      */
     @Test
-    public void testBadCoordinates() {
+    void testBadCoordinates() {
 
         try {
             final int[] sample = new int[100];
@@ -92,7 +92,7 @@ public class TiffRasterDataIntTest {
      * Test of getData method, of class TiffRasterData.
      */
     @Test
-    public void testGetData() {
+    void testGetData() {
         final float[] result = raster.getData();
         for (int i = 0; i < result.length; i++) {
             assertEquals((int) result[i], data[i]);
@@ -105,7 +105,7 @@ public class TiffRasterDataIntTest {
      * Test of getData method, of class TiffRasterData.
      */
     @Test
-    public void testGetDataType() {
+    void testGetDataType() {
         final TiffRasterDataType dataType = raster.getDataType();
         assertEquals(dataType, TiffRasterDataType.INTEGER, "Unexpected data type " + dataType.name());
     }
@@ -114,7 +114,7 @@ public class TiffRasterDataIntTest {
      * Test of getHeight method, of class TiffRasterData.
      */
     @Test
-    public void testGetHeight() {
+    void testGetHeight() {
         assertEquals(width, raster.getWidth(), "Improper height stored");
     }
 
@@ -122,7 +122,7 @@ public class TiffRasterDataIntTest {
      * Test of getSimpleStatistics method, of class TiffRasterData.
      */
     @Test
-    public void testGetSimpleStatistics_0args() {
+    void testGetSimpleStatistics_0args() {
 
         final TiffRasterStatistics result = raster.getSimpleStatistics();
         assertEquals(0, result.getMinValue(), "Min value failure");
@@ -134,7 +134,7 @@ public class TiffRasterDataIntTest {
      * Test of getSimpleStatistics method, of class TiffRasterData.
      */
     @Test
-    public void testGetSimpleStatistics_float() {
+    void testGetSimpleStatistics_float() {
         // exclude the maximum value (width*height-1). This will result
         // in a max value of width*height-2
         final TiffRasterStatistics result = raster.getSimpleStatistics(width * height - 1);
@@ -145,7 +145,7 @@ public class TiffRasterDataIntTest {
      * Test of getValue method, of class TiffRasterData.
      */
     @Test
-    public void testGetValue() {
+    void testGetValue() {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 final int index = y * width + x;
@@ -161,7 +161,7 @@ public class TiffRasterDataIntTest {
      * Test of getValue method, of class TiffRasterData.
      */
     @Test
-    public void testGetValue2() {
+    void testGetValue2() {
         final int[] data = new int[width * height * 2];
         data[width * height] = 77;
         final TiffRasterDataInt instance = new TiffRasterDataInt(width, height, 2, data);
@@ -183,7 +183,7 @@ public class TiffRasterDataIntTest {
      * Test of getWidth method, of class TiffRasterData.
      */
     @Test
-    public void testGetWidth() {
+    void testGetWidth() {
         assertEquals(width, raster.getWidth(), "Improper width stored");
     }
 
@@ -191,7 +191,7 @@ public class TiffRasterDataIntTest {
      * Test of setValue method, of class TiffRasterData.
      */
     @Test
-    public void testSetValue() {
+    void testSetValue() {
         final AbstractTiffRasterData instance = new TiffRasterDataInt(width, height);
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -210,7 +210,7 @@ public class TiffRasterDataIntTest {
      * Test of setValue method, of class TiffRasterData.
      */
     @Test
-    public void testSetValue2() {
+    void testSetValue2() {
         final AbstractTiffRasterData instance = new TiffRasterDataInt(width, height, 2);
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {

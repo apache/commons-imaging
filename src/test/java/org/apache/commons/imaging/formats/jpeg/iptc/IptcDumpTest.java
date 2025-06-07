@@ -38,7 +38,7 @@ public class IptcDumpTest extends AbstractIptcTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void test(final File imageFile) throws Exception {
+    void test(final File imageFile) throws Exception {
         final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(imageFile);
         assertNotNull(metadata);
         assertNotNull(metadata.getPhotoshop());

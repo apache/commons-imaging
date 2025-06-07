@@ -46,7 +46,7 @@ public class WriteExifMetadataExampleTest extends AbstractExifTest {
      */
     @ParameterizedTest
     @MethodSource("data")
-    public void testOddOffsets(final File imageFile) throws Exception {
+    void testOddOffsets(final File imageFile) throws Exception {
         Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
         final File tempFile = Files.createTempFile("test", ".jpg").toFile();

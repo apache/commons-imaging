@@ -64,7 +64,7 @@ public class ImageBuilderTest {
      * Test of bad bounds in sub-image
      */
     @Test
-    public void testBoundsCheck() {
+    void testBoundsCheck() {
 
         final ImageBuilder imageBuilder = new ImageBuilder(100, 100, false);
 
@@ -80,7 +80,7 @@ public class ImageBuilderTest {
      * Test of bad dimensions in constructor
      */
     @Test
-    public void testConstructorBounds() {
+    void testConstructorBounds() {
         executeBadConstructor(0, 10);
         executeBadConstructor(10, 0);
     }
@@ -115,7 +115,7 @@ public class ImageBuilderTest {
      * Test whether sub-image is consistent with source
      */
     @Test
-    public void testSubimageAccess() {
+    void testSubimageAccess() {
         final ImageBuilder imageBuilder = new ImageBuilder(100, 100, false);
         populate(imageBuilder);
         final BufferedImage bImage = imageBuilder.getSubimage(25, 25, 25, 25);

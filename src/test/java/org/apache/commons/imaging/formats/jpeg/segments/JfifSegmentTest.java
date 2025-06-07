@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 public class JfifSegmentTest {
 
     @Test
-    public void testCreatesJfifSegment() throws IOException {
+    void testCreatesJfifSegment() throws IOException {
         final byte[] byteArray = new byte[25];
 
         try {

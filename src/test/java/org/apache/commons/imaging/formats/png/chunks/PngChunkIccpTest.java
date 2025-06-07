@@ -40,13 +40,13 @@ public class PngChunkIccpTest {
     private static final int chunkType = 1766015824;
 
     @Test
-    public void testErrorOnNoProfileName() {
+    void testErrorOnNoProfileName() {
         final byte[] data = ImagingConstants.EMPTY_BYTE_ARRAY;
         assertThrows(ImagingException.class, () -> new PngChunkIccp(0, chunkType, 0, data));
     }
 
     @Test
-    public void testParsingIccpChunk() throws ImagingException, IOException {
+    void testParsingIccpChunk() throws ImagingException, IOException {
         final List<Byte> bytes = new ArrayList<>();
         final String profileName = "my-profile-01";
         for (final byte b : profileName.getBytes(StandardCharsets.ISO_8859_1)) {

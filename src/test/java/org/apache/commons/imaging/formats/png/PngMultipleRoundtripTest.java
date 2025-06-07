@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
 public class PngMultipleRoundtripTest extends AbstractPngTest {
 
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         final String imagesFolderPath = FilenameUtils.separatorsToSystem(ImagingTestConstants.TEST_DATA_SOURCE_FOLDER + "/images/png/3");
         final File imagesFolder = new File(imagesFolderPath);
         assertTrue(imagesFolder.exists() && imagesFolder.isDirectory());

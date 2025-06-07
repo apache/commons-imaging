@@ -50,7 +50,7 @@ import org.junit.jupiter.api.Test;
 public class TiffTagIntegrityTest extends AbstractImagingTest {
 
     @Test
-    public void testTagIntegrity() {
+    void testTagIntegrity() {
         verifyFields(AdobePageMaker6TagConstants.class, AdobePageMaker6TagConstants.ALL_ADOBE_PAGEMAKER_6_TAGS);
         verifyFields(AdobePhotoshopTagConstants.class, AdobePhotoshopTagConstants.ALL_ADOBE_PHOTOSHOP_TAGS);
         verifyFields(AliasSketchbookProTagConstants.class, AliasSketchbookProTagConstants.ALL_ALIAS_SKETCHBOOK_PRO_TAGS);

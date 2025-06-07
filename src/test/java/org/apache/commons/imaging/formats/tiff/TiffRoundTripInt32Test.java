@@ -111,7 +111,7 @@ public class TiffRoundTripInt32Test extends AbstractTiffTest {
     }
 
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         final File[] testFile = new File[4];
         testFile[0] = writeFile(32, ByteOrder.LITTLE_ENDIAN, false);
         testFile[1] = writeFile(32, ByteOrder.BIG_ENDIAN, false);

@@ -44,7 +44,7 @@ import org.junit.jupiter.api.Test;
 public class PngReadTest extends AbstractPngTest {
 
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         Debug.debug("start");
 
         final List<File> images = getPngImages();
@@ -79,7 +79,7 @@ public class PngReadTest extends AbstractPngTest {
      * @throws ImagingException if it fails to read the test image
      */
     @Test
-    public void testReadExif() throws IOException, ImagingException {
+    void testReadExif() throws IOException, ImagingException {
         final String input = "/images/png/IMAGING-340/image-with-exif.png";
         final String file = PngReadTest.class.getResource(input).getFile();
         final PngImageParser parser = new PngImageParser();
@@ -107,7 +107,7 @@ public class PngReadTest extends AbstractPngTest {
      * @throws ImagingException if it fails to read the test image
      */
     @Test
-    public void testReadMetadataFromItxtChunk() throws IOException, ImagingException {
+    void testReadMetadataFromItxtChunk() throws IOException, ImagingException {
         final File file = TestResources.resourceToFile("/images/png/IMAGING-342/utf8-comment.png");
         final PngImageParser parser = new PngImageParser();
 
@@ -131,7 +131,7 @@ public class PngReadTest extends AbstractPngTest {
      * @throws IOException if it fails to read the test image
      */
     @Test
-    public void testUncaughtExceptionOssFuzz33691() throws IOException {
+    void testUncaughtExceptionOssFuzz33691() throws IOException {
         final File file = TestResources.resourceToFile("/images/png/oss-fuzz-33691/clusterfuzz-testcase-minimized-ImagingPngFuzzer-6177282101215232");
         final PngImageParser parser = new PngImageParser();
         assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(file), new PngImagingParameters()));
@@ -147,7 +147,7 @@ public class PngReadTest extends AbstractPngTest {
      * @throws IOException if it fails to read the test image
      */
     @Test
-    public void testUncaughtExceptionOssFuzz37607() throws IOException {
+    void testUncaughtExceptionOssFuzz37607() throws IOException {
         final File file = TestResources.resourceToFile("/images/png/IMAGING-317/clusterfuzz-testcase-minimized-ImagingPngFuzzer-6242400830357504");
         final PngImageParser parser = new PngImageParser();
         assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(file), new PngImagingParameters()));

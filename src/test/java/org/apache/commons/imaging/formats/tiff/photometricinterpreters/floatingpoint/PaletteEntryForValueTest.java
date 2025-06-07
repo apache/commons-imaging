@@ -36,7 +36,7 @@ public class PaletteEntryForValueTest {
     }
 
     @Test
-    public void testFaultyConstructors() {
+    void testFaultyConstructors() {
         assertThrows(IllegalArgumentException.class, () -> new PaletteEntryForValue(0.0f, null), "Constructor failed to detect invalid color");
     }
 
@@ -44,7 +44,7 @@ public class PaletteEntryForValueTest {
      * Test of getARGB method, of class PaletteEntryForValue.
      */
     @Test
-    public void testGetARGB() {
+    void testGetARGB() {
         final Color c0 = new Color(0xff0000ff);
         PaletteEntryForValue instance = new PaletteEntryForValue(0.0f, c0);
         int a0 = instance.getArgb(0.0f);
@@ -64,7 +64,7 @@ public class PaletteEntryForValueTest {
      * Test of getColor method, of class PaletteEntryForValue.
      */
     @Test
-    public void testGetColor() {
+    void testGetColor() {
         final Color cTest = new Color(0xff0000ff);
         PaletteEntryForValue instance = new PaletteEntryForValue(0.0f, cTest);
         Color c0 = instance.getColor(0.0f);
@@ -86,7 +86,7 @@ public class PaletteEntryForValueTest {
      * Test of isCovered method, of class PaletteEntryForValue.
      */
     @Test
-    public void testIsCovered() {
+    void testIsCovered() {
         final Color c0 = new Color(0xff0000ff);
         PaletteEntryForValue instance = new PaletteEntryForValue(0.0f, c0);
         assertTrue(instance.isCovered(0.0f), "Zero value must be covered");

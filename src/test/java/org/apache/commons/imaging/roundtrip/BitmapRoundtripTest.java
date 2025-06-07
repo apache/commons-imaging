@@ -43,7 +43,7 @@ public class BitmapRoundtripTest extends RoundtripBase {
 
     @ParameterizedTest
     @MethodSource
-    public void testBitmapRoundtrip(final BufferedImage testImage, final FormatInfo formatInfo) throws Exception {
+    void testBitmapRoundtrip(final BufferedImage testImage, final FormatInfo formatInfo) throws Exception {
         roundtrip(formatInfo, testImage, "bitmap", true);
     }
 }

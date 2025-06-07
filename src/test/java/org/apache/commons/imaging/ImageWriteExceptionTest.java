@@ -52,20 +52,20 @@ public class ImageWriteExceptionTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testCreateExceptionWithData(final Object data, final String expectedType) {
+    void testCreateExceptionWithData(final Object data, final String expectedType) {
         final ImagingException exception = new ImagingException("imaging", data);
         assertEquals(String.format("imaging: %s (%s)", data, expectedType), exception.getMessage());
     }
 
     @Test
-    public void testCreateExceptionWithMessage() {
+    void testCreateExceptionWithMessage() {
         final ImagingException exception = new ImagingException("imaging");
         assertEquals("imaging", exception.getMessage());
         assertNull(exception.getCause());
     }
 
     @Test
-    public void testCreateExceptionWithMessageAndCause() {
+    void testCreateExceptionWithMessageAndCause() {
         final ImagingException exception = new ImagingException("imaging", new Exception("cause"));
         assertEquals("imaging", exception.getMessage());
         assertNotNull(exception.getCause());

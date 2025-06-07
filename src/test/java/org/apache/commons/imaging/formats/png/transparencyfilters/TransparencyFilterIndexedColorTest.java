@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 public class TransparencyFilterIndexedColorTest {
 
     @Test
-    public void testFilterWithNegativeAndNegative() {
+    void testFilterWithNegativeAndNegative() {
         final byte[] byteArray = ImagingConstants.EMPTY_BYTE_ARRAY;
         final TransparencyFilterIndexedColor transparencyFilterIndexedColor = new TransparencyFilterIndexedColor(byteArray);
 

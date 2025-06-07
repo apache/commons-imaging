@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
 public class TiffTagsTest {
 
     @Test
-    public void testGetTagWithNegativeAndPositive() {
+    void testGetTagWithNegativeAndPositive() {
         final TagInfo tagInfo = TiffTags.getTag(-1, 50933);
 
         assertEquals(-1, tagInfo.tag);

@@ -72,7 +72,7 @@ public class TiffAlphaRoundTripTest {
     }
 
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
 
         // This test will exercise two passes to test the implementation
         // of the TIFF support for writing and reading images containing

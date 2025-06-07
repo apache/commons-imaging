@@ -126,7 +126,7 @@ public class TiffFloatingPointReadTest {
     }
 
     @Test
-    public void test() throws ImagingException, IOException {
+    void test() throws ImagingException, IOException {
         // These TIFF sample data includes files that contain known
         // floating-point values in various formats. We know the range
         // of values from inspection using separate utilies. This

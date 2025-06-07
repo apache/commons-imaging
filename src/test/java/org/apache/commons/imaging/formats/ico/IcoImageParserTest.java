@@ -31,7 +31,7 @@ public class IcoImageParserTest {
      * <p>There is a problem with loading bitmap stored in given ICO file, so the exception is originally thrown by BmpImageParser.</p>
      */
     @Test
-    public void testImageWithInvalidBmpHeaders() {
+    void testImageWithInvalidBmpHeaders() {
         final File ico = TestResources.resourceToFile("/IMAGING-373/OutOfMemory_epine.ico");
         final IcoImageParser parser = new IcoImageParser();
         assertThrows(ImagingException.class, () -> parser.getAllBufferedImages(ico));

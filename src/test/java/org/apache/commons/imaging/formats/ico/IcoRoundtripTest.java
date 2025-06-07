@@ -271,7 +271,7 @@ public class IcoRoundtripTest extends AbstractIcoTest {
     }
 
     @Test
-    public void test32bitMask() throws Exception {
+    void test32bitMask() throws Exception {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -288,7 +288,7 @@ public class IcoRoundtripTest extends AbstractIcoTest {
     }
 
     @Test
-    public void testAlphaVersusANDMask() throws Exception {
+    void testAlphaVersusANDMask() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (AbstractBinaryOutputStream bos = AbstractBinaryOutputStream.littleEndian(baos)) {
             final byte[] bitmap = new GeneratorFor32BitBitmaps().generate32bitRGBABitmap(0xFF000000, 0x00000000, 0, true);
@@ -304,7 +304,7 @@ public class IcoRoundtripTest extends AbstractIcoTest {
     }
 
     @Test
-    public void testBadICONDIRENTRYIcons() throws Exception {
+    void testBadICONDIRENTRYIcons() throws Exception {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
         // Windows ignores the ICONDIRENTRY values when parsing the ICO file.
@@ -334,7 +334,7 @@ public class IcoRoundtripTest extends AbstractIcoTest {
     }
 
     @Test
-    public void testBitfieldCompression() throws Exception {
+    void testBitfieldCompression() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (AbstractBinaryOutputStream bos = AbstractBinaryOutputStream.littleEndian(baos)) {
             final byte[] bitmap = new GeneratorFor32BitBitmaps().generate32bitRGBABitmap(0xFFFF0000, 0xFFFFFFFF, 0, true);
@@ -351,7 +351,7 @@ public class IcoRoundtripTest extends AbstractIcoTest {
     }
 
     @Test
-    public void testColorsUsed() throws Exception {
+    void testColorsUsed() throws Exception {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
         for (final Map.Entry<Integer, BitmapGenerator> entry : generatorMap.entrySet()) {
@@ -372,7 +372,7 @@ public class IcoRoundtripTest extends AbstractIcoTest {
     }
 
     @Test
-    public void testFullyTransparent32bitRGBA() throws Exception {
+    void testFullyTransparent32bitRGBA() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (AbstractBinaryOutputStream bos = AbstractBinaryOutputStream.littleEndian(baos)) {
             final byte[] bitmap = new GeneratorFor32BitBitmaps().generate32bitRGBABitmap(0x00000000, 0x00FFFFFF, 0, true);
@@ -387,7 +387,7 @@ public class IcoRoundtripTest extends AbstractIcoTest {
     }
 
     @Test
-    public void testNormalIcons() throws Exception {
+    void testNormalIcons() throws Exception {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
         for (final Map.Entry<Integer, BitmapGenerator> entry : generatorMap.entrySet()) {
@@ -408,7 +408,7 @@ public class IcoRoundtripTest extends AbstractIcoTest {
     }
 
     @Test
-    public void testZeroColorPlanes() throws Exception {
+    void testZeroColorPlanes() throws Exception {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
         for (final Map.Entry<Integer, BitmapGenerator> entry : generatorMap.entrySet()) {

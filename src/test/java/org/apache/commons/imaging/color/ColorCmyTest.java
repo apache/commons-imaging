@@ -35,12 +35,12 @@ public class ColorCmyTest {
     }
 
     @Test
-    public void testCAssignment() {
+    void testCAssignment() {
         assertEquals(1.0, color.c, 0.0);
     }
 
     @Test
-    public void testCreatesColorCmy() {
+    void testCreatesColorCmy() {
         final ColorCmy colorCmy = new ColorCmy(0.0, -1668.733868772, -1568.733868772);
         final ColorCmy colorCmyTwo = ColorCmy.YELLOW;
 
@@ -50,23 +50,23 @@ public class ColorCmyTest {
     }
 
     @Test
-    public void testEquals() {
+    void testEquals() {
         assertTrue(color.equals(colorCopy) && colorCopy.equals(color));
         assertEquals(colorCopy.hashCode(), color.hashCode());
     }
 
     @Test
-    public void testMAssignment() {
+    void testMAssignment() {
         assertEquals(2.0, color.m, 0.0);
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         assertEquals("{C: 1.0, M: 2.0, Y: 3.0}", color.toString());
     }
 
     @Test
-    public void testYAssignment() {
+    void testYAssignment() {
         assertEquals(3.0, color.y, 0.0);
     }
 

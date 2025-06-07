@@ -36,7 +36,7 @@ public class NullParametersRoundtripTest extends RoundtripBase {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testNullParametersRoundtrip(final FormatInfo formatInfo) throws Exception {
+    void testNullParametersRoundtrip(final FormatInfo formatInfo) throws Exception {
         final BufferedImage testImage = TestImages.createFullColorImage(1, 1);
         final byte[] temp1;
         try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {

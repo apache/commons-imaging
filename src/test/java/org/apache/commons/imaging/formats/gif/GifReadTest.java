@@ -55,7 +55,7 @@ public class GifReadTest extends AbstractGifTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testBufferedImage(final File imageFile) throws Exception {
+    void testBufferedImage(final File imageFile) throws Exception {
         final BufferedImage image = Imaging.getBufferedImage(imageFile);
         assertNotNull(image);
         // TODO assert more
@@ -63,25 +63,25 @@ public class GifReadTest extends AbstractGifTest {
 
     @ParameterizedTest
     @MethodSource("animatedImageData")
-    public void testBufferedImagesForAnimatedImageGif(final File imageFile) throws Exception {
+    void testBufferedImagesForAnimatedImageGif(final File imageFile) throws Exception {
         final List<BufferedImage> images = Imaging.getAllBufferedImages(imageFile);
         assertTrue(images.size() > 1);
     }
 
     @ParameterizedTest
     @MethodSource("singleImageData")
-    public void testBufferedImagesForSingleImageGif(final File imageFile) throws Exception {
+    void testBufferedImagesForSingleImageGif(final File imageFile) throws Exception {
         final List<BufferedImage> images = Imaging.getAllBufferedImages(imageFile);
         assertEquals(1, images.size());
     }
 
     @Test
-    public void testConvertInvalidDisposalMethodValues() {
+    void testConvertInvalidDisposalMethodValues() {
         assertThrows(ImagingException.class, () -> GifImageParser.createDisposalMethodFromIntValue(8));
     }
 
     @Test
-    public void testConvertValidDisposalMethodValues() throws ImagingException {
+    void testConvertValidDisposalMethodValues() throws ImagingException {
         final DisposalMethod unspecified = GifImageParser.createDisposalMethodFromIntValue(0);
         final DisposalMethod doNotDispose = GifImageParser.createDisposalMethodFromIntValue(1);
         final DisposalMethod restoreToBackground = GifImageParser.createDisposalMethodFromIntValue(2);
@@ -101,7 +101,7 @@ public class GifReadTest extends AbstractGifTest {
     }
 
     @Test
-    public void testCreateMetadataWithDisposalMethods() {
+    void testCreateMetadataWithDisposalMethods() {
         for (final DisposalMethod disposalMethod : DisposalMethod.values()) {
             final GifImageMetadataItem metadataItem = new GifImageMetadataItem(0, 0, 0, disposalMethod);
             assertEquals(disposalMethod, metadataItem.getDisposalMethod());
@@ -110,7 +110,7 @@ public class GifReadTest extends AbstractGifTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testImageDimensions(final File imageFile) throws Exception {
+    void testImageDimensions(final File imageFile) throws Exception {
         final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
         final GifImageMetadata metadata = (GifImageMetadata) Imaging.getMetadata(imageFile);
         final List<BufferedImage> images = Imaging.getAllBufferedImages(imageFile);
@@ -134,7 +134,7 @@ public class GifReadTest extends AbstractGifTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testImageInfo(final File imageFile) throws Exception {
+    void testImageInfo(final File imageFile) throws Exception {
         final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
         assertNotNull(imageInfo);
         // TODO assert more
@@ -142,7 +142,7 @@ public class GifReadTest extends AbstractGifTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testMetadata(final File imageFile) throws IOException {
+    void testMetadata(final File imageFile) throws IOException {
         final ImageMetadata metadata = Imaging.getMetadata(imageFile);
         assertNotNull(metadata);
         assertInstanceOf(GifImageMetadata.class, metadata);
@@ -163,7 +163,7 @@ public class GifReadTest extends AbstractGifTest {
      * @throws IOException if it fails to read the test image
      */
     @Test
-    public void testUncaughtExceptionOssFuzz33464() throws IOException {
+    void testUncaughtExceptionOssFuzz33464() throws IOException {
         final File file = TestResources.resourceToFile("/images/gif/oss-fuzz-33464/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5174009164595200");
         final GifImageParser parser = new GifImageParser();
         assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(file), new GifImagingParameters()));
@@ -179,7 +179,7 @@ public class GifReadTest extends AbstractGifTest {
      * @throws IOException if it fails to read the test image
      */
     @Test
-    public void testUncaughtExceptionOssFuzz33501() throws IOException {
+    void testUncaughtExceptionOssFuzz33501() throws IOException {
         final File file = TestResources.resourceToFile("/images/gif/oss-fuzz-33501/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5914278319226880");
         final GifImageParser parser = new GifImageParser();
         assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(file), new GifImagingParameters()));
@@ -195,7 +195,7 @@ public class GifReadTest extends AbstractGifTest {
      * @throws IOException if it fails to read the test image
      */
     @Test
-    public void testUncaughtExceptionOssFuzz34185() throws IOException {
+    void testUncaughtExceptionOssFuzz34185() throws IOException {
         final File file = TestResources.resourceToFile("/images/gif/IMAGING-318/clusterfuzz-testcase-minimized-ImagingGifFuzzer-5005192379629568");
         final GifImageParser parser = new GifImageParser();
         assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(file), new GifImagingParameters()));

@@ -39,7 +39,7 @@ public class BmpImageParserTest {
      * @throws ImagingException
      */
     @Test
-    public void testImageForNegativeArraySizeException() throws ImagingException, IOException {
+    void testImageForNegativeArraySizeException() throws ImagingException, IOException {
         final File bmp = TestResources.resourceToFile("/images/bmp/IMAGING-279/negative_array_size_exception.bmp");
         final BmpImageParser parser = new BmpImageParser();
         assertThrows(IllegalArgumentException.class, () -> parser.getImageInfo(bmp, new BmpImagingParameters()));
@@ -52,7 +52,7 @@ public class BmpImageParserTest {
      * @throws ImagingException
      */
     @Test
-    public void testImageWidthRounding() throws ImagingException, IOException {
+    void testImageWidthRounding() throws ImagingException, IOException {
         final File bmp = TestResources.resourceToFile("/images/bmp/IMAGING-264/test-72_6-dpi.bmp");
         final BmpImageParser parser = new BmpImageParser();
         final ImageInfo imageInfo = parser.getImageInfo(bmp, new BmpImagingParameters());

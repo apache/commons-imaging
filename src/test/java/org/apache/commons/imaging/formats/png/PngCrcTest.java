@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 public class PngCrcTest {
 
     @Test
-    public void testCrc() {
+    void testCrc() {
 
         final PngCrc pngCrc = new PngCrc();
         final byte[] byteArray = new byte[4];

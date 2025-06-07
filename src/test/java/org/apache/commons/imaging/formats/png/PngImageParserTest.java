@@ -39,7 +39,7 @@ public class PngImageParserTest extends AbstractPngTest {
     }
 
     @Test
-    public void testGetImageSize() {
+    void testGetImageSize() {
         final byte[] bytes = {
                 // Header
                 (byte) 0x89, 'P', 'N', 'G', '\r', '\n', 0x1A, '\n',
@@ -51,7 +51,7 @@ public class PngImageParserTest extends AbstractPngTest {
     }
 
     @Test
-    public void testNoPalette() throws IOException {
+    void testNoPalette() throws IOException {
         final BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
         image.setRGB(1, 1, 0x00FFffFF);
         final PngImagingParameters params = new PngImagingParameters();
@@ -62,7 +62,7 @@ public class PngImageParserTest extends AbstractPngTest {
     }
 
     @Test
-    public void testPalette() throws IOException {
+    void testPalette() throws IOException {
         final BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
         image.setRGB(1, 1, 0x00FFffFF);
         final PngImagingParameters params = new PngImagingParameters();

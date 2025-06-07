@@ -37,7 +37,7 @@ public class IcoReadTest extends AbstractIcoTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testBufferedImage(final File imageFile) throws Exception {
+    void testBufferedImage(final File imageFile) throws Exception {
         final BufferedImage image = Imaging.getBufferedImage(imageFile);
         assertNotNull(image);
         // TODO assert more
@@ -46,14 +46,14 @@ public class IcoReadTest extends AbstractIcoTest {
     @Disabled(value = "RoundtripTest has to be fixed before implementation can throw UnsupportedOperationException")
     @ParameterizedTest
     @MethodSource("data")
-    public void testImageInfo(final File imageFile) {
+    void testImageInfo(final File imageFile) {
         assertThrows(UnsupportedOperationException.class, () -> Imaging.getImageInfo(imageFile));
     }
 
     @Disabled(value = "RoundtripTest has to be fixed before implementation can throw UnsupportedOperationException")
     @ParameterizedTest
     @MethodSource("data")
-    public void testMetadata(final File imageFile) {
+    void testMetadata(final File imageFile) {
         assertThrows(UnsupportedOperationException.class, () -> Imaging.getMetadata(imageFile));
     }
 }

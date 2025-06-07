@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 public class TagInfoSBytesTest {
 
     @Test
-    public void testCreatesTagInfoSBytesAndCallsEncodeValue() {
+    void testCreatesTagInfoSBytesAndCallsEncodeValue() {
         final TiffDirectoryType tiffDirectoryType = TiffDirectoryType.TIFF_DIRECTORY_IFD3;
         final TagInfoSBytes tagInfoSBytes = new TagInfoSBytes("", -198, 10, tiffDirectoryType);
         final ByteOrder byteOrder = ByteOrder.LITTLE_ENDIAN;

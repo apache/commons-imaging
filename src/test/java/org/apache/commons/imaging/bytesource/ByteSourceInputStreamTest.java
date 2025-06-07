@@ -37,7 +37,7 @@ final class ByteSourceInputStreamTest {
     public static final int ICO_IMAGE_HEIGHT = 225;
 
     @Test
-    public void testReadFromStream() throws IOException, ImagingException {
+    void testReadFromStream() throws IOException, ImagingException {
 
         final String imagePath = FilenameUtils.separatorsToSystem(ICO_IMAGE_FILE);
         final File imageFile = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, imagePath);

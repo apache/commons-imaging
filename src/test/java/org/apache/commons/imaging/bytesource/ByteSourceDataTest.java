@@ -89,25 +89,25 @@ public class ByteSourceDataTest extends AbstractByteSourceTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testByteSourceFileFactory(final byte[] testByteArray) throws Exception {
+    void testByteSourceFileFactory(final byte[] testByteArray) throws Exception {
         writeAndReadBytes(new ByteSourceFileFactory(), testByteArray);
     }
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testByteSourceInputStreamFileFactory(final byte[] testByteArray) throws Exception {
+    void testByteSourceInputStreamFileFactory(final byte[] testByteArray) throws Exception {
         writeAndReadBytes(new ByteSourceInputStreamFileFactory(), testByteArray);
     }
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testByteSourceInputStreamRawFactory(final byte[] testByteArray) throws Exception {
+    void testByteSourceInputStreamRawFactory(final byte[] testByteArray) throws Exception {
         writeAndReadBytes(new ByteSourceInputStreamRawFactory(), testByteArray);
     }
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testByteSourcePathFactory(final byte[] testByteArray) throws Exception {
+    void testByteSourcePathFactory(final byte[] testByteArray) throws Exception {
         writeAndReadBytes(new ByteSourcePathFactory(), testByteArray);
     }
 

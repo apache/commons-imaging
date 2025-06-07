@@ -34,28 +34,28 @@ public class ColorXyzTest {
     }
 
     @Test
-    public void testHashCodeAndEquals() {
+    void testHashCodeAndEquals() {
         assertTrue(color.equals(colorCopy) && colorCopy.equals(color));
         assertEquals(colorCopy.hashCode(), color.hashCode());
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         assertEquals("{X: 1.0, Y: 2.0, Z: 3.0}", color.toString());
     }
 
     @Test
-    public void testXAssignment() {
+    void testXAssignment() {
         assertEquals(1.0, color.x, 0.0);
     }
 
     @Test
-    public void testYAssignment() {
+    void testYAssignment() {
         assertEquals(2.0, color.y, 0.0);
     }
 
     @Test
-    public void testZAssignment() {
+    void testZAssignment() {
         assertEquals(3.0, color.z, 0.0);
     }
 }

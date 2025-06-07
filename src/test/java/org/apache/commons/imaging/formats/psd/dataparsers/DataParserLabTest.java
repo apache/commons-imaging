@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
 public class DataParserLabTest {
 
     @Test
-    public void testGetBasicChannelsCount() {
+    void testGetBasicChannelsCount() {
         final DataParserLab dataParserLab = new DataParserLab();
 
         assertEquals(3, dataParserLab.getBasicChannelsCount());

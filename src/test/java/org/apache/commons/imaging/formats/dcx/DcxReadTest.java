@@ -37,7 +37,7 @@ public class DcxReadTest extends AbstractDcxTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testBufferedImage(final File imageFile) throws Exception {
+    void testBufferedImage(final File imageFile) throws Exception {
         final BufferedImage image = Imaging.getBufferedImage(imageFile);
         assertNotNull(image);
         // TODO assert more
@@ -46,14 +46,14 @@ public class DcxReadTest extends AbstractDcxTest {
     @Disabled(value = "RoundtripTest has to be fixed before implementation can throw UnsupportedOperationException")
     @ParameterizedTest
     @MethodSource("data")
-    public void testImageInfo(final File imageFile) throws Exception {
+    void testImageInfo(final File imageFile) throws Exception {
         Imaging.getImageInfo(imageFile);
     }
 
     @Disabled(value = "RoundtripTest has to be fixed before implementation can throw UnsupportedOperationException")
     @ParameterizedTest
     @MethodSource("data")
-    public void testImageMetadata(final File imageFile) {
+    void testImageMetadata(final File imageFile) {
         assertThrows(UnsupportedOperationException.class, () -> Imaging.getMetadata(imageFile));
     }
 

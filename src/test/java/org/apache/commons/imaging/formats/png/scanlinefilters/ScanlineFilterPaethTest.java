@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 public class ScanlineFilterPaethTest {
 
     @Test
-    public void testUnfilter() throws IOException, ImagingException {
+    void testUnfilter() throws IOException, ImagingException {
         final ScanlineFilterPaeth scanlineFilterPaeth = new ScanlineFilterPaeth(0);
         final byte[] byteArray = new byte[5];
         scanlineFilterPaeth.unfilter(byteArray, byteArray, null);

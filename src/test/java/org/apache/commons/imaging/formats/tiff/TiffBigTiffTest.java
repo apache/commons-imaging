@@ -49,7 +49,7 @@ public class TiffBigTiffTest extends AbstractTiffTest {
     }
 
     @Test
-    public void test() throws IOException {
+    void test() throws IOException {
         final File tiffFolder = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, "tiff");
         final File bigTiffFolder = new File(tiffFolder, "13");
 

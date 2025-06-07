@@ -61,7 +61,7 @@ public class PngWriterTest extends AbstractPngTest {
     }
 
     @Test
-    public void testNullParameters() throws IOException {
+    void testNullParameters() throws IOException {
         for (final String[] testTarget : testSet) {
             final String filePath = testTarget[0];
             final File imageFile = getPngFile(filePath);
@@ -78,7 +78,7 @@ public class PngWriterTest extends AbstractPngTest {
     }
 
     @Test
-    public void testPaletteFactory() throws IOException {
+    void testPaletteFactory() throws IOException {
         for (final String[] testTarget : testSet) {
             final String filePath = testTarget[0];
             final File imageFile = getPngFile(filePath);

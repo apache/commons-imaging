@@ -26,7 +26,7 @@ public class PhysicalScaleTest {
     private static final double delta = 0.01;
 
     @Test
-    public void testCreateFromMeters() {
+    void testCreateFromMeters() {
         final PhysicalScale physicalScale = PhysicalScale.createFromMeters(1.0, 2.0);
 
         assertTrue(physicalScale.isInMeters());
@@ -36,7 +36,7 @@ public class PhysicalScaleTest {
     }
 
     @Test
-    public void testCreateFromRadians() {
+    void testCreateFromRadians() {
         final PhysicalScale physicalScale = PhysicalScale.createFromRadians(2.0, 1.0);
 
         assertFalse(physicalScale.isInMeters());

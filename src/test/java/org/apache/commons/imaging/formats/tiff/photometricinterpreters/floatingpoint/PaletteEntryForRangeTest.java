@@ -37,7 +37,7 @@ public class PaletteEntryForRangeTest {
      * Test of coversSingleEntry method, of class PaletteEntryForRange.
      */
     @Test
-    public void testCoversSingleEntry() {
+    void testCoversSingleEntry() {
         final Color c0 = new Color(0xff0000ff);
         final Color c1 = new Color(0xff00ff00);
         final PaletteEntryForRange instance = new PaletteEntryForRange(0.0f, 1.0f, c0, c1);
@@ -45,7 +45,7 @@ public class PaletteEntryForRangeTest {
     }
 
     @Test
-    public void testFaultyConstructors() {
+    void testFaultyConstructors() {
         final Color c0 = new Color(0xff0000ff);
         final Color c1 = new Color(0xff00ff00);
 
@@ -66,7 +66,7 @@ public class PaletteEntryForRangeTest {
      * Test of getARGB method, of class PaletteEntryForRange.
      */
     @Test
-    public void testGetARGB() {
+    void testGetARGB() {
         final Color c0 = new Color(0xff0000ff);
         final Color c1 = new Color(0xff00ff00);
         final PaletteEntryForRange instance = new PaletteEntryForRange(0.0f, 1.0f, c0, c1);
@@ -80,7 +80,7 @@ public class PaletteEntryForRangeTest {
      * Test of getColor method, of class PaletteEntryForRange.
      */
     @Test
-    public void testGetColor() {
+    void testGetColor() {
         Color c0 = new Color(0xff0000ff);
         Color c1 = new Color(0xff00ff00);
         final PaletteEntryForRange instance = new PaletteEntryForRange(0.0f, 1.0f, c0, c1);
@@ -97,7 +97,7 @@ public class PaletteEntryForRangeTest {
      * Test of getLowerBound method, of class PaletteEntryForRange.
      */
     @Test
-    public void testGetLowerBound() {
+    void testGetLowerBound() {
         final Color c0 = new Color(0xff0000ff);
         final Color c1 = new Color(0xff00ff00);
         final PaletteEntryForRange instance = new PaletteEntryForRange(0.0f, 1.0f, c0, c1);
@@ -108,7 +108,7 @@ public class PaletteEntryForRangeTest {
      * Test of getUpperBound method, of class PaletteEntryForRange.
      */
     @Test
-    public void testGetUpperBound() {
+    void testGetUpperBound() {
         final Color c0 = new Color(0xff0000ff);
         final Color c1 = new Color(0xff00ff00);
         final PaletteEntryForRange instance = new PaletteEntryForRange(0.0f, 1.0f, c0, c1);
@@ -119,7 +119,7 @@ public class PaletteEntryForRangeTest {
      * Test of isCovered method, of class PaletteEntryForRange.
      */
     @Test
-    public void testIsCovered() {
+    void testIsCovered() {
         final Color c0 = new Color(0xff0000ff);
         final Color c1 = new Color(0xff00ff00);
         final PaletteEntryForRange instance = new PaletteEntryForRange(0.0f, 1.0f, c0, c1);

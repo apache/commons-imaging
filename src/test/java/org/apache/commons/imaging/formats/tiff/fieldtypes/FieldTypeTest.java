@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
 public class FieldTypeTest {
 
     @Test
-    public void testGetFieldTypeWithNegative() {
+    void testGetFieldTypeWithNegative() {
         try {
             AbstractFieldType.getFieldType(-748);
             fail("Expecting exception: Exception");

@@ -44,7 +44,7 @@ public class IptcAddTest extends AbstractIptcTest {
      */
     @ParameterizedTest
     @MethodSource("data")
-    public void testAddIptcData(final File imageFile) throws Exception {
+    void testAddIptcData(final File imageFile) throws Exception {
         final ByteSource byteSource = ByteSource.file(imageFile);
 
         final JpegImagingParameters params = new JpegImagingParameters();

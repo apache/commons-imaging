@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 public class PngWriteForceTrueColorText extends AbstractPngTest {
 
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         final PngImageParser pngImageParser = new PngImageParser();
         final List<File> images = getPngImages();
         for (final File imageFile : images) {

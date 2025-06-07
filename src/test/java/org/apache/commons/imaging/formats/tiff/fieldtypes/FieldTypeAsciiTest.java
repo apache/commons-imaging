@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
 public class FieldTypeAsciiTest {
 
     @Test
-    public void testCreatesFieldTypeAsciiAndCallsWriteData() {
+    void testCreatesFieldTypeAsciiAndCallsWriteData() {
         final FieldTypeAscii fieldTypeAscii = new FieldTypeAscii(0, "1");
         final byte[] byteArray = new byte[1];
         final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
@@ -44,7 +44,7 @@ public class FieldTypeAsciiTest {
     }
 
     @Test
-    public void testCreatesFieldTypeAsciiAndWriteDataUsingByteArray() throws ImagingException {
+    void testCreatesFieldTypeAsciiAndWriteDataUsingByteArray() throws ImagingException {
         final FieldTypeAscii fieldTypeAscii = new FieldTypeAscii(0, "1");
         final byte[] byteArray = new byte[1];
         final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
@@ -54,7 +54,7 @@ public class FieldTypeAsciiTest {
     }
 
     @Test
-    public void testCreatesFieldTypeAsciiAndWriteDataUsingString() throws ImagingException {
+    void testCreatesFieldTypeAsciiAndWriteDataUsingString() throws ImagingException {
         final FieldTypeAscii fieldTypeAscii = new FieldTypeAscii(0, "1");
         final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
         final byte[] byteArrayTwo = fieldTypeAscii.writeData("asdf", byteOrder);

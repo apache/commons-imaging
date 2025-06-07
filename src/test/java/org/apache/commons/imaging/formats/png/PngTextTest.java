@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
 public class PngTextTest extends AbstractPngTest {
 
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         final int width = 1;
         final int height = 1;
         final BufferedImage srcImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);

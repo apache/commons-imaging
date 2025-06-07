@@ -49,7 +49,7 @@ public class TiffSubImageTest extends AbstractTiffTest {
     }
 
     @Test
-    public void testBadSubImage() throws ImagingException, IOException {
+    void testBadSubImage() throws ImagingException, IOException {
         final TiffImageParser tiffImageParser = new TiffImageParser();
         final File target = imageFileList.get(0);
         final BufferedImage referenceImage = Imaging.getBufferedImage(target);
@@ -72,7 +72,7 @@ public class TiffSubImageTest extends AbstractTiffTest {
     }
 
     @Test
-    public void testSubImage() throws ImagingException, ImagingException, IOException {
+    void testSubImage() throws ImagingException, ImagingException, IOException {
         final TiffImageParser tiffImageParser = new TiffImageParser();
         final BufferedImage src = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
         final TiffImagingParameters params = new TiffImagingParameters();
@@ -89,7 +89,7 @@ public class TiffSubImageTest extends AbstractTiffTest {
     }
 
     @Test
-    public void testSubImageCorrectness() throws ImagingException, IOException {
+    void testSubImageCorrectness() throws ImagingException, IOException {
         final TiffImageParser tiffImageParser = new TiffImageParser();
         for (final File target : imageFileList) {
             final BufferedImage referenceImage = Imaging.getBufferedImage(target);

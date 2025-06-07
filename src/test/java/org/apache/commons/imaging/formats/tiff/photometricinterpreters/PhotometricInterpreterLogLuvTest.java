@@ -43,7 +43,7 @@ public class PhotometricInterpreterLogLuvTest {
     }
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         assertEquals(samplesPerPixel, p.samplesPerPixel);
         for (int i = 0; i < bitsPerSample.length; i++) {
             assertEquals(bitsPerSample[i], p.getBitsPerSample(i));
@@ -54,7 +54,7 @@ public class PhotometricInterpreterLogLuvTest {
     }
 
     @Test
-    public void testGetRgbValues() {
+    void testGetRgbValues() {
         // any value equals 0 will have its pow(N, 3) equal to 0
         final TristimulusValues triValues = new TristimulusValues();
         triValues.x = 0;
@@ -72,7 +72,7 @@ public class PhotometricInterpreterLogLuvTest {
     }
 
     @Test
-    public void testGetTristimulusValues() {
+    void testGetTristimulusValues() {
         // any value equals 0 will have its pow(N, 3) equal to 0
         assertEquals(0.0d, p.getTristimulusValues(0, 0, 0).x, 0.001d);
         assertEquals(0.0d, p.getTristimulusValues(0, 0, 0).y, 0.001d);
@@ -88,7 +88,7 @@ public class PhotometricInterpreterLogLuvTest {
     }
 
     @Test
-    public void testInterpretPixel() throws ImagingException, IOException {
+    void testInterpretPixel() throws ImagingException, IOException {
         final ImageBuilder imgBuilder = new ImageBuilder(600, 400, /* alpha */ true);
         final int x = 10;
         final int y = 20;
@@ -97,12 +97,12 @@ public class PhotometricInterpreterLogLuvTest {
     }
 
     @Test
-    public void testInterpretPixelEmptySamples() {
+    void testInterpretPixelEmptySamples() {
         assertThrows(ImagingException.class, () -> p.interpretPixel(null, new int[] {}, 0, 0));
     }
 
     @Test
-    public void testInterpretPixelNullSamples() {
+    void testInterpretPixelNullSamples() {
         assertThrows(ImagingException.class, () -> p.interpretPixel(null, null, 0, 0));
     }
 }

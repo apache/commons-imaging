@@ -71,7 +71,7 @@ public abstract class AbstractByteSourceTest extends AbstractImagingTest {
     }
 
     @Test
-    public void testGetInputStreamThrowsNullPointerException() {
+    void testGetInputStreamThrowsNullPointerException() {
         assertThrows(NullPointerException.class, () -> ByteSource.array(null));
     }
 

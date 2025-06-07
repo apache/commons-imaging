@@ -70,7 +70,7 @@ public class TiffReadImageInfoTest extends AbstractTiffTest {
     }
 
     @Test
-    public void testImageInfoElements() throws Exception {
+    void testImageInfoElements() throws Exception {
         for (final String[] testTarget : testSet) {
             final File targetFile = getTiffFile(testTarget[0]);
             final ImageInfo info = Imaging.getImageInfo(targetFile);

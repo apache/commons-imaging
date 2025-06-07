@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
 public class SimplePaletteTest {
 
     @Test
-    public void testGetPaletteIndexReturningNegative() {
+    void testGetPaletteIndexReturningNegative() {
 
         final int[] intArray = new int[1];
         final SimplePalette simplePalette = new SimplePalette(intArray);

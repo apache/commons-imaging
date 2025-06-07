@@ -31,21 +31,21 @@ public class ImageFormatsTest {
 
     @ParameterizedTest
     @EnumSource(ImageFormats.class)
-    public void testDefaultExtension(final ImageFormats imageFormats) {
+    void testDefaultExtension(final ImageFormats imageFormats) {
         assertNotNull(imageFormats.getDefaultExtension());
         assertFalse(imageFormats.getDefaultExtension().isEmpty());
     }
 
     @ParameterizedTest
     @EnumSource(ImageFormats.class)
-    public void testExtensions(final ImageFormats imageFormats) {
+    void testExtensions(final ImageFormats imageFormats) {
         assertNotNull(imageFormats.getExtensions());
         assertNotEquals(0, imageFormats.getExtensions().length);
     }
 
     @ParameterizedTest
     @EnumSource(ImageFormats.class)
-    public void testName(final ImageFormats imageFormats) {
+    void testName(final ImageFormats imageFormats) {
         assertNotNull(imageFormats.getName());
         assertFalse(imageFormats.getName().isEmpty());
     }

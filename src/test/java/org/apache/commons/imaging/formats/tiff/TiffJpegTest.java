@@ -136,7 +136,7 @@ public class TiffJpegTest extends AbstractTiffTest {
      * Verify that TIFF files using JPEG compression provide a pixel-by-pixel match with source files that use a lossless compression.
      */
     @Test
-    public void testFullPixelMatch() throws IOException {
+    void testFullPixelMatch() throws IOException {
 
         // testSet1 is more comprehensive than testSet0 and
         // would be sufficient to cover all cases. The test files for testSet0
@@ -157,7 +157,7 @@ public class TiffJpegTest extends AbstractTiffTest {
      * Verify that a sub-image extraction supports a pixel-by-pixel match with the full image extraction.
      */
     @Test
-    public void testSubImage() throws IOException {
+    void testSubImage() throws IOException {
         performSubImageTest("TestJpegProgressive.tiff"); // strips
         performSubImageTest("TestJpegTiles264x264.tiff"); // tiles
         performSubImageTest("TestJpegRgb127x127.tiff");

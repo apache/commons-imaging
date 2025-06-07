@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 public class T4_T6_TablesTest {
 
     @Test
-    public void testCreatesT4_T6_TablesTakingNoArgumentsAndCallsWriteBits() {
+    void testCreatesT4_T6_TablesTakingNoArgumentsAndCallsWriteBits() {
         try (BitArrayOutputStream bitArrayOutputStream = new BitArrayOutputStream(2309)) {
             T4_T6_Tables.EOL16.writeBits(bitArrayOutputStream);
 

@@ -108,7 +108,7 @@ public class RationalNumberTest extends AbstractImagingTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testRationalNumber(final double testValue) {
+    void testRationalNumber(final double testValue) {
         final RationalNumber rational = RationalNumber.valueOf(testValue);
         final double difference = Math.abs(testValue - rational.doubleValue());
 
@@ -124,7 +124,7 @@ public class RationalNumberTest extends AbstractImagingTest {
     }
 
     @Test
-    public void testSpecialRationalNumber() {
+    void testSpecialRationalNumber() {
         final RationalNumber test = new RationalNumber(0xF5937B1F, 70_000_000, true);
         assertEquals(58.858331871428570, test.doubleValue(), 1.0e-14, "Unsigned integer support failed for double conversion");
         assertEquals(58.858334f, test.floatValue(), 1.0e-6f, "Float conversion failed");

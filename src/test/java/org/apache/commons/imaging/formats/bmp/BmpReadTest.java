@@ -43,7 +43,7 @@ public class BmpReadTest extends AbstractBmpTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testBufferedImage(final File imageFile) throws Exception {
+    void testBufferedImage(final File imageFile) throws Exception {
         final BufferedImage image = Imaging.getBufferedImage(imageFile);
         assertNotNull(image);
         // TODO assert more
@@ -56,14 +56,14 @@ public class BmpReadTest extends AbstractBmpTest {
      * @throws ImagingException
      */
     @Test
-    public void testGetMaskShiftZeroMask() throws ImagingException, IOException {
+    void testGetMaskShiftZeroMask() throws ImagingException, IOException {
         final File inputFile = new File(ImagingTestConstants.TEST_IMAGE_FOLDER + "/bmp/5/@broken/timeout-bd15dbfa26b4e88070de540c6603039e8a88626f");
         new BmpImageParser().dumpImageFile(ByteSource.file(inputFile));
     }
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testImageInfo(final File imageFile) throws ImagingException, IOException {
+    void testImageInfo(final File imageFile) throws ImagingException, IOException {
         final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
         assertNotNull(imageInfo);
         // TODO assert more
@@ -72,12 +72,12 @@ public class BmpReadTest extends AbstractBmpTest {
     @Disabled(value = "RoundtripTest has to be fixed before implementation can throw UnsupportedOperationException")
     @ParameterizedTest
     @MethodSource("data")
-    public void testMetaData(final File imageFile) {
+    void testMetaData(final File imageFile) {
         assertThrows(UnsupportedOperationException.class, () -> Imaging.getMetadata(imageFile));
     }
 
     @Test
-    public void testNegativePaletteLength() {
+    void testNegativePaletteLength() {
         final File inputFile = TestResources.resourceToFile("/images/bmp/IMAGING-325/crash-3afb569de74522535ef65922233e1920455cdc14.bmp");
         assertThrows(ImagingException.class, () -> new BmpImageParser().dumpImageFile(ByteSource.file(inputFile)));
     }

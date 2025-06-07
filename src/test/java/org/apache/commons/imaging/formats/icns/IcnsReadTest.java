@@ -59,7 +59,7 @@ public class IcnsReadTest extends AbstractIcnsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testBufferedImage(final File imageFile) throws Exception {
+    void testBufferedImage(final File imageFile) throws Exception {
         final BufferedImage image = Imaging.getBufferedImage(imageFile);
         assertNotNull(image);
         // TODO assert more
@@ -73,7 +73,7 @@ public class IcnsReadTest extends AbstractIcnsTest {
      */
     @ParameterizedTest()
     @MethodSource("provideIcnsImagesWithMonoAndJpegPngData")
-    public void testIcnsElementMonoPngJpeg(final String file, final int numberOfImages) throws ImagingException, IOException {
+    void testIcnsElementMonoPngJpeg(final String file, final int numberOfImages) throws ImagingException, IOException {
         final File testFile = TestResources.resourceToFile(file);
         final List<BufferedImage> images = new IcnsImageParser().getAllBufferedImages(testFile);
         assertEquals(numberOfImages, images.size());
@@ -81,7 +81,7 @@ public class IcnsReadTest extends AbstractIcnsTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testImageInfo(final File imageFile) throws Exception {
+    void testImageInfo(final File imageFile) throws Exception {
         final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
         assertNotNull(imageInfo);
     }
@@ -89,7 +89,7 @@ public class IcnsReadTest extends AbstractIcnsTest {
     @Disabled(value = "RoundtripTest has to be fixed befor implementation can throw UnsupportedOperationException")
     @ParameterizedTest
     @MethodSource("data")
-    public void testImageMetadata(final File imageFile) {
+    void testImageMetadata(final File imageFile) {
         assertThrows(UnsupportedOperationException.class, () -> Imaging.getMetadata(imageFile));
     }
 }

@@ -36,7 +36,7 @@ public class TiffOutputDirectoryTest {
     }
 
     @Test
-    public void testFindField() throws Exception {
+    void testFindField() throws Exception {
         directory.add(TIFF_TAG_DOCUMENT_NAME, "Test.tiff");
 
         final TiffOutputField field = directory.findField(TIFF_TAG_DOCUMENT_NAME);

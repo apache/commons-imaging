@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 public class WbmpReadTest extends AbstractWbmpTest {
 
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         Debug.debug("start");
 
         final List<File> images = getWbmpImages();

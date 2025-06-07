@@ -34,12 +34,12 @@ public class ColorCmykTest {
     }
 
     @Test
-    public void testCAssignment() {
+    void testCAssignment() {
         assertEquals(1.0, color.c, 0.0);
     }
 
     @Test
-    public void testHashCodeAndEquals() {
+    void testHashCodeAndEquals() {
         assertTrue(color.equals(colorCopy) && colorCopy.equals(color));
         assertEquals(colorCopy.hashCode(), color.hashCode());
     }
@@ -47,22 +47,22 @@ public class ColorCmykTest {
     /**
      */
     @Test
-    public void testKAssignment() {
+    void testKAssignment() {
         assertEquals(4.0, color.k, 0.0);
     }
 
     @Test
-    public void testMAssignment() {
+    void testMAssignment() {
         assertEquals(2.0, color.m, 0.0);
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         assertEquals("{C: 1.0, M: 2.0, Y: 3.0, K: 4.0}", color.toString());
     }
 
     @Test
-    public void testYAssignment() {
+    void testYAssignment() {
         assertEquals(3.0, color.y, 0.0);
     }
 }

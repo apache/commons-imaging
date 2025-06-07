@@ -67,7 +67,7 @@ public abstract class AbstractSpecificExifTagTest extends AbstractExifTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testAllImages(final File imageFile) throws Exception {
+    void testAllImages(final File imageFile) throws Exception {
         if (imageFile.getParentFile().getName().toLowerCase().equals("@broken")) {
             return;
         }

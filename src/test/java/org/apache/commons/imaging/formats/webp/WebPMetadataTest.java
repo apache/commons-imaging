@@ -38,7 +38,7 @@ public class WebPMetadataTest extends AbstractWebPTest {
      * @throws Exception if it cannot open the images.
      */
     @Test
-    public void testReadAlpha() throws Exception {
+    void testReadAlpha() throws Exception {
         final File imageFile = new File(WebPMetadataTest.class.getResource("/images/webp/alpha/alpha.webp").getFile());
         final WebPImageParser parser = new WebPImageParser();
         final ImageInfo imageInfo = parser.getImageInfo(ByteSource.file(imageFile), parser.getDefaultParameters());
@@ -49,7 +49,7 @@ public class WebPMetadataTest extends AbstractWebPTest {
      * @throws Exception if it cannot open the images.
      */
     @Test
-    public void testReadMetadata() throws Exception {
+    void testReadMetadata() throws Exception {
         final File imageFile = new File(WebPMetadataTest.class.getResource("/images/webp/exif/_DSC6099.webp").getFile());
         final WebPImageParser parser = new WebPImageParser();
         final WebPImageMetadata metadata = parser.getMetadata(ByteSource.file(imageFile), parser.getDefaultParameters());
@@ -68,7 +68,7 @@ public class WebPMetadataTest extends AbstractWebPTest {
      * @throws Exception if it cannot open the images.
      */
     @Test
-    public void testReadXmp() throws Exception {
+    void testReadXmp() throws Exception {
         final File imageFile = new File(WebPMetadataTest.class.getResource("/images/webp/xmp/test.webp").getFile());
         final WebPImageParser parser = new WebPImageParser();
 

@@ -41,7 +41,7 @@ public class GpsTest extends AbstractExifTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void test(final File imageFile) throws Exception {
+    void test(final File imageFile) throws Exception {
         if (imageFile.getParentFile().getName().toLowerCase().equals("@broken")) {
             return;
         }
@@ -74,7 +74,7 @@ public class GpsTest extends AbstractExifTest {
      * @throws Exception if it cannot open the images.
      */
     @Test
-    public void testReadMetadata() throws Exception {
+    void testReadMetadata() throws Exception {
         final File imageFile = new File(GpsTest.class.getResource("/images/jpeg/exif/2024-04-30_G012.JPG").getFile());
         final JpegImageMetadata jpegMetadata = (JpegImageMetadata) Imaging.getMetadata(imageFile);
         final TiffField gpsHPosErrorField = jpegMetadata.findExifValueWithExactMatch(GpsTagConstants.GPS_TAG_GPS_HOR_POSITIONING_ERROR);

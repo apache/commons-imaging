@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 public class ImageDumpTest {
 
     @Test
-    public void testDump() throws IOException {
+    void testDump() throws IOException {
         final ImageDump imageDump = new ImageDump();
         final BufferedImage bufferedImage = new BufferedImage(10, 10, 10);
         imageDump.dump(bufferedImage);
@@ -36,7 +36,7 @@ public class ImageDumpTest {
     }
 
     @Test
-    public void testDumpColorSpace() throws IOException {
+    void testDumpColorSpace() throws IOException {
         final ImageDump imageDump = new ImageDump();
         final ColorSpace colorSpace = ColorSpace.getInstance(1004);
         imageDump.dumpColorSpace("Ku&]N>!4'C#Jzn+", colorSpace);

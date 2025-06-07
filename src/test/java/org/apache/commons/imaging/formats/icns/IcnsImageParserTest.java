@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 public class IcnsImageParserTest {
 
     @Test
-    public void testGetImageSize() throws Exception {
+    void testGetImageSize() throws Exception {
         final byte[] bytes = {
                 // Header
                 'i', 'c', 'n', 's',

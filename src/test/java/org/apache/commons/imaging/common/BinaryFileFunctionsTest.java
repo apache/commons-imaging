@@ -27,7 +27,7 @@ public class BinaryFileFunctionsTest extends AbstractImagingTest {
     private static final long TARGET_LONG = 0x01020304_05060708L;
 
     @Test
-    public void testDoubleToByteConversion() {
+    void testDoubleToByteConversion() {
         final byte[] bytesLE = ByteConversions.toBytes(1.0, ByteOrder.LITTLE_ENDIAN);
         assertEquals(ByteConversions.toDouble(bytesLE, ByteOrder.LITTLE_ENDIAN), 1.0, 0);
 
@@ -36,7 +36,7 @@ public class BinaryFileFunctionsTest extends AbstractImagingTest {
     }
 
     @Test
-    public void testFloatToByteConversion() {
+    void testFloatToByteConversion() {
         final byte[] bytesLE = ByteConversions.toBytes(1.0f, ByteOrder.LITTLE_ENDIAN);
         assertEquals(ByteConversions.toFloat(bytesLE, ByteOrder.LITTLE_ENDIAN), 1.0f, 0f);
 
@@ -45,7 +45,7 @@ public class BinaryFileFunctionsTest extends AbstractImagingTest {
     }
 
     @Test
-    public void testLongToByteConversion() {
+    void testLongToByteConversion() {
         final byte[] bytesLE = ByteConversions.toBytes(TARGET_LONG, ByteOrder.LITTLE_ENDIAN);
         assertEquals(ByteConversions.toLong(bytesLE, ByteOrder.LITTLE_ENDIAN), TARGET_LONG);
 

@@ -39,7 +39,7 @@ public class JpegImageParserTest {
      * @throws IOException
      */
     @Test
-    public void testGetBufferedImage10() throws ImagingException, IOException {
+    void testGetBufferedImage10() throws ImagingException, IOException {
         final File imageFile = TestResources.resourceToFile("/IMAGING-136/1402522741337.jpg");
         final JpegImageParser parser = new JpegImageParser();
         final BufferedImage image = parser.getBufferedImage(ByteSource.file(imageFile), null);

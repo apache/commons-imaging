@@ -38,7 +38,7 @@ import org.junit.jupiter.api.Test;
 public class XmpUpdateTest<E extends XmpImagingParameters<E>> extends AbstractImagingTest {
 
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         final List<File> images = getTestImages();
         for (final File imageFile : images) {
 

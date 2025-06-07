@@ -51,7 +51,7 @@ public class IptcUpdateTest extends AbstractIptcTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testInsert(final File imageFile) throws Exception {
+    void testInsert(final File imageFile) throws Exception {
         final ByteSource byteSource = ByteSource.file(imageFile);
 
         final JpegImagingParameters params = new JpegImagingParameters();
@@ -84,7 +84,7 @@ public class IptcUpdateTest extends AbstractIptcTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testNoChangeUpdate(final File imageFile) throws Exception {
+    void testNoChangeUpdate(final File imageFile) throws Exception {
         final ByteSource byteSource = ByteSource.file(imageFile);
 
         final JpegImagingParameters params = new JpegImagingParameters();
@@ -120,7 +120,7 @@ public class IptcUpdateTest extends AbstractIptcTest {
      */
     @ParameterizedTest
     @MethodSource("data")
-    public void testRemove(final File imageFile) throws Exception {
+    void testRemove(final File imageFile) throws Exception {
         final ByteSource byteSource = ByteSource.file(imageFile);
 
         final JpegImagingParameters params = new JpegImagingParameters();
@@ -138,7 +138,7 @@ public class IptcUpdateTest extends AbstractIptcTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testUpdate(final File imageFile) throws Exception {
+    void testUpdate(final File imageFile) throws Exception {
         final ByteSource byteSource = ByteSource.file(imageFile);
 
         final JpegImagingParameters params = new JpegImagingParameters();

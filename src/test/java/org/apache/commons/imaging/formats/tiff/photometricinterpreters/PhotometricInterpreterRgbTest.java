@@ -41,7 +41,7 @@ public class PhotometricInterpreterRgbTest {
     }
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         assertEquals(samplesPerPixel, p.samplesPerPixel);
         for (int i = 0; i < bitsPerSample.length; i++) {
             assertEquals(bitsPerSample[i], p.getBitsPerSample(i));
@@ -52,7 +52,7 @@ public class PhotometricInterpreterRgbTest {
     }
 
     @Test
-    public void testInterpretPixel() throws ImagingException, IOException {
+    void testInterpretPixel() throws ImagingException, IOException {
         final ImageBuilder imgBuilder = new ImageBuilder(600, 400, /* alpha */ true);
         final int x = 10;
         final int y = 20;

@@ -34,28 +34,28 @@ public class ColorHunterLabTest {
     }
 
     @Test
-    public void testAAssignment() {
+    void testAAssignment() {
         assertEquals(2.0, color.a, 0.0);
     }
 
     @Test
-    public void testBAssignment() {
+    void testBAssignment() {
         assertEquals(3.0, color.b, 0.0);
     }
 
     @Test
-    public void testHashCodeAndEquals() {
+    void testHashCodeAndEquals() {
         assertTrue(color.equals(colorCopy) && colorCopy.equals(color));
         assertEquals(colorCopy.hashCode(), color.hashCode());
     }
 
     @Test
-    public void testLAssignment() {
+    void testLAssignment() {
         assertEquals(1.0, color.l, 0.0);
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         assertEquals("{L: 1.0, a: 2.0, b: 3.0}", color.toString());
     }
 }

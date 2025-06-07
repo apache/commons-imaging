@@ -38,7 +38,7 @@ public class FullColorRoundtrip extends RoundtripBase {
 
     @ParameterizedTest
     @MethodSource
-    public void testFullColorRoundtrip(final BufferedImage testImage, final FormatInfo formatInfo) throws Exception {
+    void testFullColorRoundtrip(final BufferedImage testImage, final FormatInfo formatInfo) throws Exception {
         boolean imageExact = true;
         if (formatInfo.colorSupport == FormatInfo.COLOR_BITMAP) {
             imageExact = false;

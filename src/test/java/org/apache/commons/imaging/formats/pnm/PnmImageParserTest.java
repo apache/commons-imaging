@@ -37,7 +37,7 @@ public class PnmImageParserTest {
     private static final Charset US_ASCII = StandardCharsets.US_ASCII;
 
     @Test
-    public void testGetImageInfo_happyCase() throws ImagingException, IOException {
+    void testGetImageInfo_happyCase() throws ImagingException, IOException {
         final byte[] bytes = "P1\n3 2\n0 1 0\n1 0 1\n".getBytes(US_ASCII);
         final PnmImagingParameters params = new PnmImagingParameters();
         final PnmImageParser underTest = new PnmImageParser();
@@ -49,7 +49,7 @@ public class PnmImageParserTest {
     }
 
     @Test
-    public void testGetImageInfo_invalidHeight() {
+    void testGetImageInfo_invalidHeight() {
         final byte[] bytes = "P1\n2 a\n0 0\n0 0\n0 0\n0 0\n0 0\n0 1\n1 1\n1 1\n1 1\n1 1\n1 1\n".getBytes(US_ASCII);
         final PnmImagingParameters params = new PnmImagingParameters();
         final PnmImageParser underTest = new PnmImageParser();
@@ -60,7 +60,7 @@ public class PnmImageParserTest {
      * If an invalid width is specified, should throw {@link ImagingException} rather than {@link NumberFormatException}.
      */
     @Test
-    public void testGetImageInfo_invalidWidth() {
+    void testGetImageInfo_invalidWidth() {
         final byte[] bytes = "P1\na 2\n0 0 0 0 0 0 0 0 0 0 0\n1 1 1 1 1 1 1 1 1 1 1\n".getBytes(US_ASCII);
         final PnmImagingParameters params = new PnmImagingParameters();
         final PnmImageParser underTest = new PnmImageParser();
@@ -68,7 +68,7 @@ public class PnmImageParserTest {
     }
 
     @Test
-    public void testGetImageInfo_missingWidthValue() {
+    void testGetImageInfo_missingWidthValue() {
         final byte[] bytes = "P7\nWIDTH \n".getBytes(US_ASCII);
         final PnmImagingParameters params = new PnmImagingParameters();
         final PnmImageParser underTest = new PnmImageParser();
@@ -76,7 +76,7 @@ public class PnmImageParserTest {
     }
 
     @Test
-    public void testWriteImageRaw_happyCase() throws ImagingException, ImagingException, IOException {
+    void testWriteImageRaw_happyCase() throws ImagingException, ImagingException, IOException {
         final BufferedImage srcImage = new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
 
         final byte[] dstBytes = Imaging.writeImageToBytes(srcImage, ImageFormats.PNM);

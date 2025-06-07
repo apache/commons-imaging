@@ -44,7 +44,7 @@ public class IcnsRoundTripTest extends AbstractIcnsTest {
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
 
     @Test
-    public void test1BPPIconMaskVersus8BPPMask() throws Exception {
+    void test1BPPIconMaskVersus8BPPMask() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0xff000000;
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -81,7 +81,7 @@ public class IcnsRoundTripTest extends AbstractIcnsTest {
     }
 
     @Test
-    public void test32BPPHalfMaskedIcon() throws Exception {
+    void test32BPPHalfMaskedIcon() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0xff0000ff;
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -127,7 +127,7 @@ public class IcnsRoundTripTest extends AbstractIcnsTest {
     }
 
     @Test
-    public void test32BPPMaskedIcon() throws Exception {
+    void test32BPPMaskedIcon() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0x000000ff;
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -183,7 +183,7 @@ public class IcnsRoundTripTest extends AbstractIcnsTest {
     }
 
     @Test
-    public void test32BPPMaskMissingIcon() throws Exception {
+    void test32BPPMaskMissingIcon() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0xff0000ff;
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -213,7 +213,7 @@ public class IcnsRoundTripTest extends AbstractIcnsTest {
     }
 
     @Test
-    public void test8BPPIcon1BPPMaskVersus8BPPMask() throws Exception {
+    void test8BPPIcon1BPPMaskVersus8BPPMask() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0x00cccccc;
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -270,7 +270,7 @@ public class IcnsRoundTripTest extends AbstractIcnsTest {
     }
 
     @Test
-    public void test8BPPIcon8BPPMask() throws Exception {
+    void test8BPPIcon8BPPMask() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0x00cccccc;
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -307,7 +307,7 @@ public class IcnsRoundTripTest extends AbstractIcnsTest {
     }
 
     @Test
-    public void test8BPPIcon8BPPMaskVersus1BPPMask() throws Exception {
+    void test8BPPIcon8BPPMaskVersus1BPPMask() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0x00cccccc;
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -364,7 +364,7 @@ public class IcnsRoundTripTest extends AbstractIcnsTest {
     }
 
     @Test
-    public void test8BPPIconNoMask() throws Exception {
+    void test8BPPIconNoMask() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0xffcccccc;
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream();

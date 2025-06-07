@@ -33,14 +33,14 @@ import org.junit.jupiter.api.Test;
 public class FieldTypeRationalTest {
 
     @Test
-    public void testWriteDataWithNonNull() {
+    void testWriteDataWithNonNull() {
         final FieldTypeRational fieldTypeRational = new FieldTypeRational(-922, "z_AX");
         final ByteOrder byteOrder = ByteOrder.nativeOrder();
         assertThrows(ImagingException.class, () -> fieldTypeRational.writeData("z_AX", byteOrder));
     }
 
     @Test
-    public void testWriteDataWithNull() throws ImagingException {
+    void testWriteDataWithNull() throws ImagingException {
         final FieldTypeRational fieldTypeRational = new FieldTypeRational(9, null);
         final Double doubleOne = 2.2d;
         final byte[] byteArray = fieldTypeRational.writeData(doubleOne, null);

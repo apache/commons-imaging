@@ -27,32 +27,32 @@ public class PngChunkScalTest {
     private static final int chunkType = 1933787468;
 
     @Test
-    public void testConstruct_InvalidDblValue() {
+    void testConstruct_InvalidDblValue() {
         assertThrows(ImagingException.class, () -> new PngChunkScal(10, chunkType, 0, new byte[] { 2, 65, 46, 48, 49, 0, 48, 46, 48, 50 }));
     }
 
     @Test
-    public void testConstruct_InvalidUnitSpecifier() {
+    void testConstruct_InvalidUnitSpecifier() {
         assertThrows(ImagingException.class, () -> new PngChunkScal(10, chunkType, 0, new byte[] { 3, 48, 46, 48, 49, 0, 48, 46, 48, 50 }));
     }
 
     @Test
-    public void testConstruct_MissingSeparator() {
+    void testConstruct_MissingSeparator() {
         assertThrows(ImagingException.class, () -> new PngChunkScal(9, chunkType, 0, new byte[] { 1, 48, 46, 48, 49, 48, 46, 48, 50 }));
     }
 
     @Test
-    public void testConstruct_MissingXValue() {
+    void testConstruct_MissingXValue() {
         assertThrows(ImagingException.class, () -> new PngChunkScal(2, chunkType, 0, new byte[] { 2, 0 }));
     }
 
     @Test
-    public void testConstruct_MissingYValue() {
+    void testConstruct_MissingYValue() {
         assertThrows(ImagingException.class, () -> new PngChunkScal(6, chunkType, 0, new byte[] { 2, 48, 46, 48, 49, 0 }));
     }
 
     @Test
-    public void testConstructMeters() throws ImagingException {
+    void testConstructMeters() throws ImagingException {
         final PngChunkScal pngChunkScal = new PngChunkScal(10, chunkType, 0, new byte[] { 1, 48, 46, 48, 49, 0, 48, 46, 48, 50 });
 
         assertEquals(pngChunkScal.getUnitSpecifier(), 1);
@@ -61,7 +61,7 @@ public class PngChunkScalTest {
     }
 
     @Test
-    public void testConstructRadians() throws ImagingException {
+    void testConstructRadians() throws ImagingException {
         final PngChunkScal pngChunkScal = new PngChunkScal(10, chunkType, 0, new byte[] { 2, 48, 46, 48, 49, 0, 48, 46, 48, 50 });
 
         assertEquals(pngChunkScal.getUnitSpecifier(), 2);

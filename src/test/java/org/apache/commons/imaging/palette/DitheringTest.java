@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
 public class DitheringTest {
 
     @Test
-    public void testApplyFloydSteinbergDitheringWithNonNullOne() throws ImagingException {
+    void testApplyFloydSteinbergDitheringWithNonNullOne() throws ImagingException {
         final BufferedImage bufferedImage = new BufferedImage(8, 8, 8);
         bufferedImage.setRGB(2, 2, 2);
         final List<ColorSpaceSubset> linkedList = new LinkedList<>();
@@ -48,7 +48,7 @@ public class DitheringTest {
     }
 
     @Test
-    public void testApplyFloydSteinbergDitheringWithNonNullTwo() throws ImagingException {
+    void testApplyFloydSteinbergDitheringWithNonNullTwo() throws ImagingException {
         final BufferedImage bufferedImage = new BufferedImage(3, 3, 3);
         bufferedImage.setRGB(1, 2, 4);
         final List<ColorSpaceSubset> linkedList = new LinkedList<>();

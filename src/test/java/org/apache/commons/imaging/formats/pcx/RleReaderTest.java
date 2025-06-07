@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 public class RleReaderTest {
 
     @Test
-    public void testReadWithNonNull() {
+    void testReadWithNonNull() {
         final RleReader rleReader = new RleReader(false);
         final byte[] byteArray = new byte[1];
         final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArray, (byte) -64, (byte) -64);

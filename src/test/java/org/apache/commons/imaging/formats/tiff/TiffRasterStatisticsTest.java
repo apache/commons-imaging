@@ -60,7 +60,7 @@ public class TiffRasterStatisticsTest {
      * Test of getCountOfNulls method, of class TiffRasterStatistics.
      */
     @Test
-    public void testGetCountOfNulls() {
+    void testGetCountOfNulls() {
         assertEquals(1, stat0.getCountOfNulls());
         assertEquals(1, stat1.getCountOfNulls());
     }
@@ -69,7 +69,7 @@ public class TiffRasterStatisticsTest {
      * Test of getCountOfSamples method, of class TiffRasterStatistics.
      */
     @Test
-    public void testGetCountOfSamples() {
+    void testGetCountOfSamples() {
         assertEquals(width * height - 1, stat0.getCountOfSamples());
         assertEquals(width * height - 2, stat1.getCountOfSamples());
     }
@@ -78,7 +78,7 @@ public class TiffRasterStatisticsTest {
      * Test of getExcludedValue method, of class TiffRasterStatistics.
      */
     @Test
-    public void testGetExcludedValue() {
+    void testGetExcludedValue() {
         assertTrue(Float.isNaN(stat0.getExcludedValue()));
         assertEquals(width * height - 1, stat1.getExcludedValue());
     }
@@ -87,7 +87,7 @@ public class TiffRasterStatisticsTest {
      * Test of getMaxValue method, of class TiffRasterStatistics.
      */
     @Test
-    public void testGetMaxValue() {
+    void testGetMaxValue() {
         assertEquals(width * height - 1, stat0.getMaxValue());
         assertEquals(width * height - 2, stat1.getMaxValue());
     }
@@ -96,7 +96,7 @@ public class TiffRasterStatisticsTest {
      * Test of getMeanValue method, of class TiffRasterStatistics.
      */
     @Test
-    public void testGetMeanValue() {
+    void testGetMeanValue() {
         assertNotEquals(0, stat0.getMeanValue());
 
         final float[] zero = new float[100];
@@ -110,7 +110,7 @@ public class TiffRasterStatisticsTest {
      * Test of getMinValue method, of class TiffRasterStatistics.
      */
     @Test
-    public void testGetMinValue() {
+    void testGetMinValue() {
         assertEquals(0, stat0.getMinValue());
         assertEquals(0, stat1.getMinValue());
     }
@@ -119,7 +119,7 @@ public class TiffRasterStatisticsTest {
      * Test of isAnExcludedValueSet method, of class TiffRasterStatistics.
      */
     @Test
-    public void testIsAnExcludedValueSet() {
+    void testIsAnExcludedValueSet() {
         assertFalse(stat0.isAnExcludedValueSet());
         assertTrue(stat1.isAnExcludedValueSet());
     }

@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
 public class ImageInfoTest {
 
     @Test
-    public void testColorType() {
+    void testColorType() {
         // ColorType is an enum within ImageInfo. We don't want to test every value
         // of the enum. Just that one has the right values should be enough.
         assertEquals("RGB", ColorType.RGB.toString());
@@ -37,13 +37,13 @@ public class ImageInfoTest {
     }
 
     @Test
-    public void testCompressionAlgorithm() {
+    void testCompressionAlgorithm() {
         assertEquals("LZW", CompressionAlgorithm.LZW.toString());
         assertEquals(CompressionAlgorithm.LZW, CompressionAlgorithm.valueOf("LZW"));
     }
 
     @Test
-    public void testImageInfo() {
+    void testImageInfo() {
         final String formatDetails = "image-info-format-details";
         final int bitsPerPixel = 2;
         final List<String> comments = Arrays.asList("a", "b", "c");
@@ -87,7 +87,7 @@ public class ImageInfoTest {
     }
 
     @Test
-    public void testToStringEmptyComments() {
+    void testToStringEmptyComments() {
         final ImageInfo imageInfo = new ImageInfo(null, 0, new ArrayList<>(), ImageFormats.DCX, null, 0, null, 0, 0, 0.0f, 0, 0.0f, 0, false, false, false,
                 ColorType.BW, null);
         final String expected = "Format Details: null\n" + "Bits Per Pixel: 0\n" + "Comments: 0\n" + "Format: DCX\n" + "Format Name: null\n"
@@ -99,27 +99,27 @@ public class ImageInfoTest {
     }
 
     @Test
-    public void testToStringErrorWhenColorPaletteIsNull() {
+    void testToStringErrorWhenColorPaletteIsNull() {
         final ImageInfo imageInfo = new ImageInfo(null, 0, new ArrayList<>(), ImageFormats.DCX, null, 0, null, 0, 0, 0.0f, 0, 0.0f, 0, false, false, false,
                 null, null);
         assertEquals("Image Data: Error", imageInfo.toString());
     }
 
     @Test
-    public void testToStringErrorWhenCommentsIsNull() {
+    void testToStringErrorWhenCommentsIsNull() {
         final ImageInfo imageInfo = new ImageInfo(null, 0, null, null, null, 0, null, 0, 0, 0.0f, 0, 0.0f, 0, false, false, false, null, null);
         assertEquals("Image Data: Error", imageInfo.toString());
     }
 
     @Test
-    public void testToStringErrorWhenFormatIsNull() {
+    void testToStringErrorWhenFormatIsNull() {
         final ImageInfo imageInfo = new ImageInfo(null, 0, new ArrayList<>(), null, null, 0, null, 0, 0, 0.0f, 0, 0.0f, 0, false, false, false, ColorType.BW,
                 null);
         assertEquals("Image Data: Error", imageInfo.toString());
     }
 
     @Test
-    public void testToStringWithComments() {
+    void testToStringWithComments() {
         final ImageInfo imageInfo = new ImageInfo(null, 0, Arrays.asList("a", "b"), ImageFormats.DCX, null, 0, null, 0, 0, 0.0f, 0, 0.0f, 0, false, false,
                 false, ColorType.BW, null);
         final String expected = "Format Details: null\n" + "Bits Per Pixel: 0\n" + "Comments: 2\n" + "\t0: 'a'\n" + "\t1: 'b'\n" + "Format: DCX\n"

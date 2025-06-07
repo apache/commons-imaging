@@ -39,7 +39,7 @@ public class ExifDumpTest extends AbstractExifTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testDumpJFIF(final File imageFile) throws Exception {
+    void testDumpJFIF(final File imageFile) throws Exception {
         final ByteSource byteSource = ByteSource.file(imageFile);
         Debug.debug("Segments:");
         new JpegUtils().dumpJfif(byteSource);
@@ -48,7 +48,7 @@ public class ExifDumpTest extends AbstractExifTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testMetadata(final File imageFile) throws Exception {
+    void testMetadata(final File imageFile) throws Exception {
         final JpegImagingParameters params = new JpegImagingParameters();
 
         final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(imageFile);

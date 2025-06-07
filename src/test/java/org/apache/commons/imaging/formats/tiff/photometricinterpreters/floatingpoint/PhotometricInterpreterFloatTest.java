@@ -115,7 +115,7 @@ public class PhotometricInterpreterFloatTest {
     }
 
     @Test
-    public void testConstructors() {
+    void testConstructors() {
         new PhotometricInterpreterFloat(0, 1);
         new PhotometricInterpreterFloat(1, 0);
 
@@ -130,7 +130,7 @@ public class PhotometricInterpreterFloatTest {
      * Test of getMaxFound method, of class PhotometricInterpreterFloat.
      */
     @Test
-    public void testGetMaxFound() {
+    void testGetMaxFound() {
         final float expResult = 1.0F;
         final float result = pInterp.getMinFound();
         assertEquals(expResult, result, 1.0, "Invalid maximum value");
@@ -140,7 +140,7 @@ public class PhotometricInterpreterFloatTest {
      * Test of getMaxXY method, of class PhotometricInterpreterFloat.
      */
     @Test
-    public void testGetMaxXY() {
+    void testGetMaxXY() {
         final int[] expResult = { 256, 256 };
         final int[] result = pInterp.getMaxXY();
         assertArrayEquals(expResult, result);
@@ -150,7 +150,7 @@ public class PhotometricInterpreterFloatTest {
      * Test of getMeanFound method, of class PhotometricInterpreterFloat.
      */
     @Test
-    public void testGetMeanFound() {
+    void testGetMeanFound() {
         final float expResult = 0.5F;
         final float result = pInterp.getMinFound();
         assertEquals(expResult, result, 1.0, "Invalid mean value");
@@ -160,7 +160,7 @@ public class PhotometricInterpreterFloatTest {
      * Test of getMinFound method, of class PhotometricInterpreterFloat.
      */
     @Test
-    public void testGetMinFound() {
+    void testGetMinFound() {
         final float expResult = 0.0F;
         final float result = pInterp.getMinFound();
         assertEquals(expResult, result, 0.0, "Invalid minimum value");
@@ -170,7 +170,7 @@ public class PhotometricInterpreterFloatTest {
      * Test of getMinXY method, of class PhotometricInterpreterFloat.
      */
     @Test
-    public void testGetMinXY() {
+    void testGetMinXY() {
         final int[] expResult = { 0, 0 };
         final int[] result = pInterp.getMinXY();
         assertArrayEquals(expResult, result);
@@ -180,7 +180,7 @@ public class PhotometricInterpreterFloatTest {
      * Test of interpretPixel method, of class PhotometricInterpreterFloat.
      */
     @Test
-    public void testInterpretPixel() {
+    void testInterpretPixel() {
         for (int i = 0; i < 256; i++) {
             final int lowTest = i / 32 * 32;
             final int argb = imageBuilder.getRgb(i, i);
@@ -211,7 +211,7 @@ public class PhotometricInterpreterFloatTest {
      * Test of interpretPixel method, of class PhotometricInterpreterFloat.
      */
     @Test
-    public void testMapValueToARGB() {
+    void testMapValueToARGB() {
 
         int argb = pInterp.mapValueToArgb(0.5f);
         int test = imageBuilder.getRgb(128, 128);
@@ -235,7 +235,7 @@ public class PhotometricInterpreterFloatTest {
      * Test of overlapping entries
      */
     @Test
-    public void testOverlappingEntriesEntry() throws ImagingException, IOException {
+    void testOverlappingEntriesEntry() throws ImagingException, IOException {
         final Color c0 = new Color(0xff0000ff);
         final Color c1 = new Color(0xff00ff00);
         final List<PaletteEntry> overlapList = new ArrayList<>();

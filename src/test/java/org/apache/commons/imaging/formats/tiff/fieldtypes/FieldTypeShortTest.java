@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 public class FieldTypeShortTest {
 
     @Test
-    public void testCreatesFieldTypeShortAndCallsWriteData() {
+    void testCreatesFieldTypeShortAndCallsWriteData() {
         final FieldTypeShort fieldTypeShort = new FieldTypeShort(1234, "");
         final ByteOrder byteOrder = ByteOrder.LITTLE_ENDIAN;
 

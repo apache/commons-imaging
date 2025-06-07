@@ -34,28 +34,28 @@ public class ColorCieLuvTest {
     }
 
     @Test
-    public void testHashCodeAndEquals() {
+    void testHashCodeAndEquals() {
         assertTrue(color.equals(colorCopy) && colorCopy.equals(color));
         assertEquals(colorCopy.hashCode(), color.hashCode());
     }
 
     @Test
-    public void testLAssignment() {
+    void testLAssignment() {
         assertEquals(1.0, color.l, 0.0);
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         assertEquals("{L: 1.0, u: 2.0, v: 3.0}", color.toString());
     }
 
     @Test
-    public void testUAssignment() {
+    void testUAssignment() {
         assertEquals(2.0, color.u, 0.0);
     }
 
     @Test
-    public void testVAssignment() {
+    void testVAssignment() {
         assertEquals(3.0, color.v, 0.0);
     }
 }

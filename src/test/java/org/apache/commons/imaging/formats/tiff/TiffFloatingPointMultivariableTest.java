@@ -194,7 +194,7 @@ public class TiffFloatingPointMultivariableTest extends AbstractTiffTest {
     }
 
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         // we set up the 32 and 64 bit test cases. At this time,
         // the Tile format is not supported for floating-point samples by the
         // TIFF datareaders classes. So that format is not yet exercised.

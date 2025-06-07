@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
 public class TagInfoByteTest {
 
     @Test
-    public void testCreatesTagInfoByteTakingFourArgumentsAndCallsEncodeValue() {
+    void testCreatesTagInfoByteTakingFourArgumentsAndCallsEncodeValue() {
         final TiffDirectoryType tiffDirectoryType = TiffDirectoryType.TIFF_DIRECTORY_IFD0;
         final TagInfoByte tagInfoByte = new TagInfoByte("", 347, tiffDirectoryType);
 

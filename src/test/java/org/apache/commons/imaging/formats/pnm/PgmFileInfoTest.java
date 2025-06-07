@@ -25,17 +25,17 @@ import org.junit.jupiter.api.Test;
 public class PgmFileInfoTest {
 
     @Test
-    public void testCreateThrowsImageReadExceptionOne() {
+    void testCreateThrowsImageReadExceptionOne() {
         assertThrows(ImagingException.class, () -> new PgmFileInfo(16711680, 16711680, false, 16711680));
     }
 
     @Test
-    public void testCreateThrowsImageReadExceptionTwo() {
+    void testCreateThrowsImageReadExceptionTwo() {
         assertThrows(ImagingException.class, () -> new PgmFileInfo(0, 0, true, 0));
     }
 
     @Test
-    public void testGetBitDepth() throws ImagingException {
+    void testGetBitDepth() throws ImagingException {
         final PgmFileInfo pgmFileInfo = new PgmFileInfo(65535, 65535, false, 65535);
 
         assertEquals(65535, pgmFileInfo.getBitDepth());

@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 public class TagInfoByteOrShortTest {
 
     @Test
-    public void testEncodeValueTakingByteOrderAndByteArrayOne() {
+    void testEncodeValueTakingByteOrderAndByteArrayOne() {
         final TiffDirectoryType tiffDirectoryType = TiffDirectoryType.EXIF_DIRECTORY_MAKER_NOTES;
         final TagInfoByteOrShort tagInfoByteOrShort = new TagInfoByteOrShort("r", 500, 500, tiffDirectoryType);
         final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
@@ -38,7 +38,7 @@ public class TagInfoByteOrShortTest {
     }
 
     @Test
-    public void testEncodeValueTakingByteOrderAndByteArrayTwo() {
+    void testEncodeValueTakingByteOrderAndByteArrayTwo() {
         final TiffDirectoryType tiffDirectoryType = TiffDirectoryType.EXIF_DIRECTORY_MAKER_NOTES;
         final TagInfoByteOrShort tagInfoByteOrShort = new TagInfoByteOrShort("r", 500, 500, tiffDirectoryType);
         final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;

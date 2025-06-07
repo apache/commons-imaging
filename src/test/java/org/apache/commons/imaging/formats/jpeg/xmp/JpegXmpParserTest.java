@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
 public class JpegXmpParserTest {
 
     @Test
-    public void testCreatesJpegXmpParserAndCallsParseXmpJpegSegment() {
+    void testCreatesJpegXmpParserAndCallsParseXmpJpegSegment() {
         final JpegXmpParser jpegXmpParser = new JpegXmpParser();
         final byte[] byteArray = new byte[1];
 

@@ -85,7 +85,7 @@ public class PaletteQuantizationTest extends AbstractImagingTest {
     }
 
     @Test
-    public void testPaletteQuantization() throws ImagingException {
+    void testPaletteQuantization() throws ImagingException {
         final BufferedImage whiteImage = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
         for (int y = 0; y < whiteImage.getHeight(); y++) {
             for (int x = 0; x < whiteImage.getWidth(); x++) {

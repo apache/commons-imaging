@@ -47,7 +47,7 @@ public class WebPReadTest extends AbstractWebPTest {
      * @throws IOException if it failed to read the image.
      */
     @Test
-    public void testBufferedImageNotSupported() throws IOException {
+    void testBufferedImageNotSupported() throws IOException {
         final File emptyWebP = new File(WebPReadTest.class.getResource("/images/webp/empty/empty-100x100.webp").getFile());
         final WebPImageParser parser = new WebPImageParser();
         final ImagingException exception = assertThrows(ImagingException.class, () -> {
@@ -60,7 +60,7 @@ public class WebPReadTest extends AbstractWebPTest {
      * Basic features of the parser.
      */
     @Test
-    public void testParser() {
+    void testParser() {
         final WebPImageParser parser = new WebPImageParser();
         assertEquals("WebP-Custom", parser.getName());
         assertEquals("webp", parser.getDefaultExtension());
@@ -72,7 +72,7 @@ public class WebPReadTest extends AbstractWebPTest {
      */
     @ParameterizedTest
     @MethodSource("images")
-    public void testRead(final File imageFile) throws Exception {
+    void testRead(final File imageFile) throws Exception {
         Debug.debug("start");
 
         Debug.debug("imageFile", imageFile);
@@ -90,7 +90,7 @@ public class WebPReadTest extends AbstractWebPTest {
      * Test that the given size, and the byte array length match.
      */
     @Test
-    public void testWebPChunkInvalidSizeBytes() {
+    void testWebPChunkInvalidSizeBytes() {
         final ImagingException exception = assertThrows(ImagingException.class, () -> {
             new WebPChunkIccp(0, 10, new byte[] {});
         });

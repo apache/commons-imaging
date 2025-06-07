@@ -40,7 +40,7 @@ public class WebPDumpTest extends AbstractWebPTest {
      */
     @ParameterizedTest
     @MethodSource("images")
-    public void testDump(final File imageFile) throws Exception {
+    void testDump(final File imageFile) throws Exception {
         Debug.debug("imageFile", imageFile);
         Debug.debug();
 

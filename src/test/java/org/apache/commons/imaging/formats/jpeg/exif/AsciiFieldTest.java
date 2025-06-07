@@ -37,7 +37,7 @@ import org.junit.jupiter.api.Test;
 public class AsciiFieldTest extends AbstractExifTest {
 
     @Test
-    public void testSingleImage() throws Exception {
+    void testSingleImage() throws Exception {
         final File imageFile = getTestImageByName("Canon Powershot SD750 - 2007.12.26.n.IMG_3704.JPG");
 
         final ImageMetadata metadata = Imaging.getMetadata(imageFile);

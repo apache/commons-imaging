@@ -172,7 +172,7 @@ public class ByteSourceImageTest extends AbstractByteSourceTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void test(final File imageFile) throws Exception {
+    void test(final File imageFile) throws Exception {
         Debug.debug("imageFile", imageFile);
         assertNotNull(imageFile);
 

@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 public class BmpWriterRgbTest {
 
     @Test
-    public void testGetImageData() {
+    void testGetImageData() {
         final BmpWriterRgb bmpWriterRgb = new BmpWriterRgb();
         final BufferedImage bufferedImage = new BufferedImage(2, 2, 5);
         final byte[] byteArray = bmpWriterRgb.getImageData(bufferedImage);

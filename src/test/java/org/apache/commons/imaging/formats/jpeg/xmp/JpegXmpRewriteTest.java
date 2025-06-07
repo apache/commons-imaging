@@ -39,7 +39,7 @@ public class JpegXmpRewriteTest extends AbstractJpegXmpTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testRemoveInsertUpdate(final File imageFile) throws Exception {
+    void testRemoveInsertUpdate(final File imageFile) throws Exception {
         final ByteSource byteSource = ByteSource.file(imageFile);
         final JpegImagingParameters params = new JpegImagingParameters();
         final String xmpXml = new JpegImageParser().getXmpXml(byteSource, params);

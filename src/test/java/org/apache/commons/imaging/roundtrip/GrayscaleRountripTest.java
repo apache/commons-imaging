@@ -43,7 +43,7 @@ public class GrayscaleRountripTest extends RoundtripBase {
 
     @ParameterizedTest
     @MethodSource
-    public void testGrayscaleRoundtrip(final BufferedImage testImage, final FormatInfo formatInfo) throws Exception {
+    void testGrayscaleRoundtrip(final BufferedImage testImage, final FormatInfo formatInfo) throws Exception {
         final boolean imageExact = formatInfo.colorSupport != FormatInfo.COLOR_BITMAP;
 
         roundtrip(formatInfo, testImage, "gray", imageExact);

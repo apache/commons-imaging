@@ -35,7 +35,7 @@ public class PngWithInvalidPngChunkSizeTest {
      * Test that an image with an invalid negative PNG chunk size causes an ImageReadException instead of other exception types.
      */
     @Test
-    public void testPngWithInvalidNegativePngChunkSize() {
+    void testPngWithInvalidNegativePngChunkSize() {
         final File imageFile = TestResources.resourceToFile("/IMAGING-210/testfile.png");
         final PngImagingParameters params = new PngImagingParameters();
         params.setBufferedImageFactory(new ManagedImageBufferedImageFactory());
@@ -47,7 +47,7 @@ public class PngWithInvalidPngChunkSizeTest {
      * Test that an image with an invalid PNG chunk size causes an ImageReadException instead of other exception types.
      */
     @Test
-    public void testPngWithInvalidPngChunkSize() {
+    void testPngWithInvalidPngChunkSize() {
         final File imageFile = TestResources.resourceToFile("/IMAGING-211/testfile_2.png");
         final PngImagingParameters params = new PngImagingParameters();
         params.setBufferedImageFactory(new ManagedImageBufferedImageFactory());

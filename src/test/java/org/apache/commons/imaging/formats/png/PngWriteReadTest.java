@@ -101,7 +101,7 @@ public class PngWriteReadTest extends AbstractImagingTest {
     }
 
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         final int[][] smallBlackPixels = getSimpleRawData(256, 256, 0);
         final int[][] singleBlackPixel = getSimpleRawData(1, 1, 0);
         final int[][] smallRedPixels = getSimpleRawData(256, 256, 0xffff0000);
@@ -117,14 +117,14 @@ public class PngWriteReadTest extends AbstractImagingTest {
     }
 
     @Test
-    public void testMultipletEXt() throws Exception {
+    void testMultipletEXt() throws Exception {
         final int[][] smallBlackPixels = getSimpleRawData(256, 256, 0);
 
         writeAndReadMultipleEXt(smallBlackPixels);
     }
 
     @Test
-    public void testPhysicalScaleMeters() throws Exception {
+    void testPhysicalScaleMeters() throws Exception {
         final PngImageParser pngImageParser = new PngImageParser();
         final PngImagingParameters optionalParams = new PngImagingParameters();
         optionalParams.setPhysicalScale(PhysicalScale.createFromMeters(0.01, 0.02));
@@ -143,7 +143,7 @@ public class PngWriteReadTest extends AbstractImagingTest {
     }
 
     @Test
-    public void testPhysicalScaleRadians() throws Exception {
+    void testPhysicalScaleRadians() throws Exception {
         final PngImageParser pngImageParser = new PngImageParser();
         final PngImagingParameters optionalParams = new PngImagingParameters();
         optionalParams.setPhysicalScale(PhysicalScale.createFromRadians(0.01, 0.02));
@@ -162,7 +162,7 @@ public class PngWriteReadTest extends AbstractImagingTest {
     }
 
     @Test
-    public void testTransparency() throws Exception {
+    void testTransparency() throws Exception {
         // Test for https://issues.apache.org/jira/browse/SANSELAN-52
         final int[][] smallAscendingPixels = getAscendingRawData(256, 256);
         final byte[] pngBytes = Imaging.writeImageToBytes(imageDataToBufferedImage(smallAscendingPixels), ImageFormats.PNG);

@@ -30,12 +30,12 @@ import org.junit.jupiter.api.Test;
 public class PpmFileInfoTest {
 
     @Test
-    public void testCreatesPpmFileInfoOne() {
+    void testCreatesPpmFileInfoOne() {
         assertThrows(ImagingException.class, () -> new PpmFileInfo(0, 0, false, 16711680));
     }
 
     @Test
-    public void testCreatesPpmFileInfoThree() {
+    void testCreatesPpmFileInfoThree() {
         assertThrows(ImagingException.class, () -> new PpmFileInfo(0, 0, true, 0));
     }
 
