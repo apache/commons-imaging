@@ -28,7 +28,7 @@ import org.apache.commons.imaging.Imaging;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class NullParametersRoundtripTest extends RoundtripBase {
+class NullParametersRoundtripTest extends RoundtripBase {
 
     public static Stream<FormatInfo> data() {
         return Stream.of(FormatInfo.READ_WRITE_FORMATS);

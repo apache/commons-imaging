@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Reads files in the BigTIFF samples folder and compares the BigTIFF files against the standard "classic" tiff image.
  */
-public class TiffJpegTest extends AbstractTiffTest {
+class TiffJpegTest extends AbstractTiffTest {
 
     static final String[] testSet0 = { "TestSample.tiff", "TestJpegStrips.tiff", "TestJpegTiles.tiff", "TestJpegStripsRgb.tiff", "TestJpegTilesRgb.tiff",
             "TestJpegCMYK.tiff" };

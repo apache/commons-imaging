@@ -32,7 +32,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 /**
  * Test the methods that dump data into streams.
  */
-public class WebPDumpTest extends AbstractWebPTest {
+class WebPDumpTest extends AbstractWebPTest {
 
     /**
      * @param imageFile parameterized test image.

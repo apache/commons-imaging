@@ -24,7 +24,7 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.test.TestResources;
 import org.junit.jupiter.api.Test;
 
-public class IcoImageParserTest {
+class IcoImageParserTest {
 
     /**
      * For <a href="https://issues.apache.org/jira/browse/IMAGING-373">IMAGING-373</a>.

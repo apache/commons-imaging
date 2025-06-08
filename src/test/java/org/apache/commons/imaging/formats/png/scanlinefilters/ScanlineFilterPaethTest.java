@@ -23,7 +23,7 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Test;
 
-public class ScanlineFilterPaethTest {
+class ScanlineFilterPaethTest {
 
     @Test
     void testUnfilter() throws IOException, ImagingException {

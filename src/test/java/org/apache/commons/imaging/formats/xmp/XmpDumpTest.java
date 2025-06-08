@@ -26,7 +26,7 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 
-public class XmpDumpTest extends AbstractImagingTest {
+class XmpDumpTest extends AbstractImagingTest {
 
     @Test
     void test() throws Exception {

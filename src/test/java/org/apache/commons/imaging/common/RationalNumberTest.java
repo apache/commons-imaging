@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class RationalNumberTest extends AbstractImagingTest {
+class RationalNumberTest extends AbstractImagingTest {
 
     public static Stream<Double> data() {
         return Arrays.asList(0d, //

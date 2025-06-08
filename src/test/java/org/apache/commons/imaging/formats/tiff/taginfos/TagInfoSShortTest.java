@@ -23,7 +23,7 @@ import java.nio.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.junit.jupiter.api.Test;
 
-public class TagInfoSShortTest {
+class TagInfoSShortTest {
 
     @Test
     void testGetValue() {

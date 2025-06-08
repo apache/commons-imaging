@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Provides a unit test for the TIFF photometric interpreter used for mapping floating-point values to a color palette.
  */
-public class PhotometricInterpreterFloatTest {
+class PhotometricInterpreterFloatTest {
 
     private static PhotometricInterpreterFloat pInterp;
     private static PhotometricInterpreterFloat bandedInterp;

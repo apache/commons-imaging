@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Provides a test for the PngWriter using predictors
  */
-public class PngWritePredictorTest {
+class PngWritePredictorTest {
 
     @BeforeAll
     public static void setUpClass() {

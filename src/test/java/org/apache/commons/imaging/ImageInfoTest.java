@@ -26,7 +26,7 @@ import org.apache.commons.imaging.ImageInfo.ColorType;
 import org.apache.commons.imaging.ImageInfo.CompressionAlgorithm;
 import org.junit.jupiter.api.Test;
 
-public class ImageInfoTest {
+class ImageInfoTest {
 
     @Test
     void testColorType() {

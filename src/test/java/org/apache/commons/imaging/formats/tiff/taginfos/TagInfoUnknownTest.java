@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.junit.jupiter.api.Test;
 
-public class TagInfoUnknownTest {
+class TagInfoUnknownTest {
 
     @Test
     void testCreatesTagInfoUnknown() {

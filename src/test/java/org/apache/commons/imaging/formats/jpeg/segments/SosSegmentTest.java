@@ -22,7 +22,7 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-public class SosSegmentTest {
+class SosSegmentTest {
 
     @Test
     void testCreatesSosSegmentTakingThreeArguments() throws IOException {

@@ -41,7 +41,7 @@ import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.imaging.test.TestResources;
 import org.junit.jupiter.api.Test;
 
-public class PngReadTest extends AbstractPngTest {
+class PngReadTest extends AbstractPngTest {
 
     @Test
     void test() throws Exception {

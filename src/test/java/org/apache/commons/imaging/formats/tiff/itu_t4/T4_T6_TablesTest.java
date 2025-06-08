@@ -22,7 +22,7 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-public class T4_T6_TablesTest {
+class T4_T6_TablesTest {
 
     @Test
     void testCreatesT4_T6_TablesTakingNoArgumentsAndCallsWriteBits() {

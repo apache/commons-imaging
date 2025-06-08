@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class GpsTest extends AbstractExifTest {
+class GpsTest extends AbstractExifTest {
 
     public static Stream<File> data() throws Exception {
         return getImagesWithExifData().stream();

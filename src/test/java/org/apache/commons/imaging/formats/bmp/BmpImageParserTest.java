@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for the {@link BmpImageParser}.
  */
-public class BmpImageParserTest {
+class BmpImageParserTest {
 
     /**
      * For https://issues.apache.org/jira/browse/IMAGING-279.

@@ -23,7 +23,7 @@ import java.io.ByteArrayInputStream;
 
 import org.junit.jupiter.api.Test;
 
-public class RleReaderTest {
+class RleReaderTest {
 
     @Test
     void testReadWithNonNull() {

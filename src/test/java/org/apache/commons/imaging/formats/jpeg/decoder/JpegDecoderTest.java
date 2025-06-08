@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for the JpegDecoder.
  */
-public class JpegDecoderTest {
+class JpegDecoderTest {
 
     /**
      * Test that a bad file does not hang or take too long to be processed.

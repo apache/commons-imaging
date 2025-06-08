@@ -30,7 +30,7 @@ import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 
-public class PamReadTest extends AbstractPamTest {
+class PamReadTest extends AbstractPamTest {
 
     @Test
     void test() throws Exception {

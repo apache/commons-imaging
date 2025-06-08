@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for {@link ImagingException}.
  */
-public class ImageReadExceptionTest {
+class ImageReadExceptionTest {
 
     @Test
     void testCreateExceptionWithMessage() {

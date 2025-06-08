@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Provides unit tests for the ImageBuilder class.
  */
-public class ImageBuilderTest {
+class ImageBuilderTest {
 
     void executeBadBounds(final ImageBuilder imageBuilder, final int x, final int y, final int w, final int h) {
         try {

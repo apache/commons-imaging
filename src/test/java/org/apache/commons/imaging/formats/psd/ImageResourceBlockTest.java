@@ -22,7 +22,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.Test;
 
-public class ImageResourceBlockTest {
+class ImageResourceBlockTest {
 
     @Test
     void testCreatesImageResourceBlockAndCallsGetName() {

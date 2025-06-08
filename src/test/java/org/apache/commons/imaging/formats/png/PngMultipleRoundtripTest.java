@@ -31,7 +31,7 @@ import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.io.FilenameUtils;
 import org.junit.jupiter.api.Test;
 
-public class PngMultipleRoundtripTest extends AbstractPngTest {
+class PngMultipleRoundtripTest extends AbstractPngTest {
 
     @Test
     void test() throws Exception {

@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
  * @see PpmFileInfo
  *
  **/
-public class PpmFileInfoTest {
+class PpmFileInfoTest {
 
     @Test
     void testCreatesPpmFileInfoOne() {

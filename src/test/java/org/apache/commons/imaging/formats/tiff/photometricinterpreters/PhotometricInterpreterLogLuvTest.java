@@ -27,7 +27,7 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class PhotometricInterpreterLogLuvTest {
+class PhotometricInterpreterLogLuvTest {
 
     private PhotometricInterpreterLogLuv p;
 

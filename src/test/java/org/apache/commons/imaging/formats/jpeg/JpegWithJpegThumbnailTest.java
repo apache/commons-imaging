@@ -27,7 +27,7 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.junit.jupiter.api.Test;
 
-public class JpegWithJpegThumbnailTest extends AbstractImagingTest {
+class JpegWithJpegThumbnailTest extends AbstractImagingTest {
 
     @Test
     void testSingleImage() throws Exception {

@@ -24,7 +24,7 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Test;
 
-public class JfifSegmentTest {
+class JfifSegmentTest {
 
     @Test
     void testCreatesJfifSegment() throws IOException {

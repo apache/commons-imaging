@@ -29,7 +29,7 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Test;
 
-public class TiffSubImageTest extends AbstractTiffTest {
+class TiffSubImageTest extends AbstractTiffTest {
     final List<File> imageFileList;
 
     TiffSubImageTest() throws IOException, ImagingException {

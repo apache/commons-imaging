@@ -25,7 +25,7 @@ import java.io.InputStream;
 
 import org.junit.jupiter.api.Test;
 
-public class PbmFileInfoTest {
+class PbmFileInfoTest {
 
     @Test
     void testGetRGBThrowsIOException() throws IOException {

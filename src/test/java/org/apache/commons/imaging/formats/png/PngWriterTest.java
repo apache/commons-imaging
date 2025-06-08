@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for class {@link PngWriter}.
  */
-public class PngWriterTest extends AbstractPngTest {
+class PngWriterTest extends AbstractPngTest {
 
     // The form of the test set is
     // 0. target file name

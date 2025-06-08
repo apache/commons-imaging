@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.apache.commons.imaging.ImagingConstants;
 import org.junit.jupiter.api.Test;
 
-public class TransparencyFilterIndexedColorTest {
+class TransparencyFilterIndexedColorTest {
 
     @Test
     void testFilterWithNegativeAndNegative() {

@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Test;
 
-public class HuffmanTreeExceptionTest {
+class HuffmanTreeExceptionTest {
 
     @Test
     void testCreatesHuffmanTreeExceptionTakingString() {

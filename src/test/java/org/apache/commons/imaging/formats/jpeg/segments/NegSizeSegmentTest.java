@@ -30,7 +30,7 @@ import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.formats.jpeg.JpegUtils;
 import org.junit.jupiter.api.Test;
 
-public class NegSizeSegmentTest {
+class NegSizeSegmentTest {
 
     @Test
     void testCreatesNegSizeSegment() throws IOException {

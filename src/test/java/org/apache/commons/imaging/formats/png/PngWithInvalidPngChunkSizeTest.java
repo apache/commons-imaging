@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for PNG files with invalid chunk sizes.
  */
-public class PngWithInvalidPngChunkSizeTest {
+class PngWithInvalidPngChunkSizeTest {
 
     /**
      * Test that an image with an invalid negative PNG chunk size causes an ImageReadException instead of other exception types.

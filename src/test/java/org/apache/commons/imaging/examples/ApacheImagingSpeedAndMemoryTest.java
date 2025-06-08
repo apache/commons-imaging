@@ -166,7 +166,7 @@ import org.apache.commons.lang3.ArrayUtils;
 /**
  * A "test stand" for evaluating the speed an memory use of different Apache Imaging operations
  */
-public class ApacheImagingSpeedAndMemoryTest {
+class ApacheImagingSpeedAndMemoryTest {
 
     /**
      * Create an instance of the speed and memory test class and execute a test loop for the specified file.

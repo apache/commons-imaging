@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
  * @see PngCrc
  *
  **/
-public class PngCrcTest {
+class PngCrcTest {
 
     @Test
     void testCrc() {

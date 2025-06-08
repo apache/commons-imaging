@@ -23,7 +23,7 @@ import java.awt.image.BufferedImage;
 
 import org.junit.jupiter.api.Test;
 
-public class BmpWriterRgbTest {
+class BmpWriterRgbTest {
 
     @Test
     void testGetImageData() {

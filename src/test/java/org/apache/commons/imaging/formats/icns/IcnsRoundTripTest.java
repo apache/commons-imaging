@@ -32,7 +32,7 @@ import org.apache.commons.imaging.common.AbstractBinaryOutputStream;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 
-public class IcnsRoundTripTest extends AbstractIcnsTest {
+class IcnsRoundTripTest extends AbstractIcnsTest {
     // 16x16 test image
     private static final int[][] IMAGE = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 },

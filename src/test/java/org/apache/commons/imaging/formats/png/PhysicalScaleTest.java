@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-public class PhysicalScaleTest {
+class PhysicalScaleTest {
     private static final double delta = 0.01;
 
     @Test

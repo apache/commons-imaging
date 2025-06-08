@@ -32,7 +32,7 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Test;
 
-public class PnmImageParserTest {
+class PnmImageParserTest {
 
     private static final Charset US_ASCII = StandardCharsets.US_ASCII;
 

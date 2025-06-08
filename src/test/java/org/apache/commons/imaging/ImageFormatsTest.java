@@ -27,7 +27,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 /**
  * Tests {@link ImageFormats}.
  */
-public class ImageFormatsTest {
+class ImageFormatsTest {
 
     @ParameterizedTest
     @EnumSource(ImageFormats.class)

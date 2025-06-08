@@ -46,7 +46,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 /**
  * Tests for the {#link {@link IptcParser} class.
  */
-public class IptcParserTest {
+class IptcParserTest {
 
     /**
      * Tests the correct encoding when writing IptcRecords with method {@link IptcParser#writeIptcBlock(List, boolean)}.

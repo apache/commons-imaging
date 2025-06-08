@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for the WebP metadata.
  */
-public class WebPMetadataTest extends AbstractWebPTest {
+class WebPMetadataTest extends AbstractWebPTest {
 
     /**
      * @throws Exception if it cannot open the images.

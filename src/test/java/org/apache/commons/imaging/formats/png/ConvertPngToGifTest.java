@@ -29,7 +29,7 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 
-public class ConvertPngToGifTest extends AbstractPngTest {
+class ConvertPngToGifTest extends AbstractPngTest {
 
     @Test
     void test() throws Exception {

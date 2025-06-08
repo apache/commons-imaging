@@ -24,7 +24,7 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-public class WhiteSpaceReaderTest {
+class WhiteSpaceReaderTest {
 
     @Test
     void testReadLineReturningNonEmptyString() throws IOException {

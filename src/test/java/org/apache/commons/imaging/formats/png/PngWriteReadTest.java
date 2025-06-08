@@ -37,7 +37,7 @@ import org.apache.commons.imaging.common.GenericImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.junit.jupiter.api.Test;
 
-public class PngWriteReadTest extends AbstractImagingTest {
+class PngWriteReadTest extends AbstractImagingTest {
 
     private int[][] bufferedImageToImageData(final BufferedImage image) {
         final int width = image.getWidth();

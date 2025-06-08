@@ -23,7 +23,7 @@ import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.junit.jupiter.api.Test;
 
-public class PngChunkTextTest {
+class PngChunkTextTest {
 
     @Test
     void testCreatesPngChunkText() {

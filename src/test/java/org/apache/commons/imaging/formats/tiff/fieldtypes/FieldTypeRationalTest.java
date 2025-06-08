@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
  * @see FieldTypeRational
  *
  **/
-public class FieldTypeRationalTest {
+class FieldTypeRationalTest {
 
     @Test
     void testWriteDataWithNonNull() {

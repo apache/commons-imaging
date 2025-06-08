@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
  * @see FieldTypeAscii
  *
  **/
-public class FieldTypeAsciiTest {
+class FieldTypeAsciiTest {
 
     @Test
     void testCreatesFieldTypeAsciiAndCallsWriteData() {

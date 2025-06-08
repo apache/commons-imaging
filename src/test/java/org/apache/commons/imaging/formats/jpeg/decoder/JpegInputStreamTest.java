@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
  *
  * @see JpegInputStream
  **/
-public class JpegInputStreamTest {
+class JpegInputStreamTest {
 
     @Test
     void testNextBitThrowsImageReadExceptionOne() {

@@ -24,7 +24,7 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-public class ImageDumpTest {
+class ImageDumpTest {
 
     @Test
     void testDump() throws IOException {

@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.junit.jupiter.api.Test;
 
-public class TiffTagsTest {
+class TiffTagsTest {
 
     @Test
     void testGetTagWithNegativeAndPositive() {

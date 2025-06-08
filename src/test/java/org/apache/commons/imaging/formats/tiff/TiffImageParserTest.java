@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests Google oss-fuzz issue 53669.
  */
-public class TiffImageParserTest {
+class TiffImageParserTest {
 
     @Test
     void testOssFuzzIssue53669() {

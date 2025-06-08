@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Provides unit test for the raster-data class.
  */
-public class TiffRasterDataTest {
+class TiffRasterDataTest {
 
     int width = 11;
     int height = 10;

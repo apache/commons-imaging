@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
  *
  * @see App2Segment
  **/
-public class App2SegmentTest {
+class App2SegmentTest {
 
     @Test
     void testCompareTo() throws IOException, ImagingException {

@@ -24,7 +24,7 @@ import org.apache.commons.imaging.AbstractImagingTest;
 import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Test;
 
-public class PaletteQuantizationTest extends AbstractImagingTest {
+class PaletteQuantizationTest extends AbstractImagingTest {
 
     private void checkPaletteDetails(final BufferedImage image, final int limit, final int expectedSize) throws ImagingException {
         final PaletteFactory paletteFactory = new PaletteFactory();

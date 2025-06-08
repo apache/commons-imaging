@@ -24,7 +24,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class GrayscaleRountripTest extends RoundtripBase {
+class GrayscaleRountripTest extends RoundtripBase {
 
     public static BufferedImage[] images = { TestImages.createArgbBitmapImage(1, 1), // minimal
             TestImages.createArgbGrayscaleImage(2, 2), //

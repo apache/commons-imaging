@@ -39,7 +39,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class GifReadTest extends AbstractGifTest {
+class GifReadTest extends AbstractGifTest {
 
     public static Stream<File> animatedImageData() throws Exception {
         return getAnimatedGifImages().stream();

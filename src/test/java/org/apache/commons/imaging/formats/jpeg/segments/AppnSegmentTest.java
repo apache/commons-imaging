@@ -25,7 +25,7 @@ import java.io.InputStream;
 import org.apache.commons.imaging.ImagingConstants;
 import org.junit.jupiter.api.Test;
 
-public class AppnSegmentTest {
+class AppnSegmentTest {
 
     @Test
     void testCreatesAppnSegment() throws IOException {

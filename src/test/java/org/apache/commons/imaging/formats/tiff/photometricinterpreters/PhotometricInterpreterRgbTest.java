@@ -25,7 +25,7 @@ import org.apache.commons.imaging.common.ImageBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class PhotometricInterpreterRgbTest {
+class PhotometricInterpreterRgbTest {
 
     private PhotometricInterpreterRgb p;
 

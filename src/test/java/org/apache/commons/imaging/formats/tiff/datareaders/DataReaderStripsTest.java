@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.junit.jupiter.api.Test;
 
-public class DataReaderStripsTest {
+class DataReaderStripsTest {
     @Test
     void testApplyPredictor() {
         final int[] bitsPerPixel = { 1, 2, 3 };

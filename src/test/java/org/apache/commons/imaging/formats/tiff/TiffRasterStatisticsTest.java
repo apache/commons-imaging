@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Provides unit tests for the TIFF simple-statistics class
  */
-public class TiffRasterStatisticsTest {
+class TiffRasterStatisticsTest {
 
     int width = 11;
     int height = 10;

@@ -31,7 +31,7 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 
-public class TiffRoundtripTest extends AbstractTiffTest {
+class TiffRoundtripTest extends AbstractTiffTest {
 
     @Test
     void test() throws Exception {

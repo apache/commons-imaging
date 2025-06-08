@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Test;
 
-public class PgmFileInfoTest {
+class PgmFileInfoTest {
 
     @Test
     void testCreateThrowsImageReadExceptionOne() {

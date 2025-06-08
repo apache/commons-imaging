@@ -49,7 +49,7 @@ import org.opentest4j.TestSkippedException;
 /**
  * Reads and write EXIF data, and verify that it's identical, and no data corruption occurred.
  */
-public class ExifRewriterRoundtripTest extends AbstractExifTest {
+class ExifRewriterRoundtripTest extends AbstractExifTest {
 
     /**
      * Test data.

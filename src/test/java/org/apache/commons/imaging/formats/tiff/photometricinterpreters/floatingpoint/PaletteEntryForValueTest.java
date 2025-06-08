@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Performs unit tests for palette entries based on single-value targets.
  */
-public class PaletteEntryForValueTest {
+class PaletteEntryForValueTest {
 
     public PaletteEntryForValueTest() {
     }

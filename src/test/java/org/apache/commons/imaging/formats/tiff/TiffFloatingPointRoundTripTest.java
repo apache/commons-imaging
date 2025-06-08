@@ -46,7 +46,7 @@ import org.junit.jupiter.api.io.TempDir;
  * At this time, Commons Imaging does not fully implement the floating-point specification. Currently, this class only tests the use of uncompressed floating
  * point values in the Strips format. The Tiles format is not exercised.
  */
-public class TiffFloatingPointRoundTripTest extends AbstractTiffTest {
+class TiffFloatingPointRoundTripTest extends AbstractTiffTest {
 
     @TempDir
     Path tempDir;

@@ -48,7 +48,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class ByteSourceImageTest extends AbstractByteSourceTest {
+class ByteSourceImageTest extends AbstractByteSourceTest {
 
     public static Stream<File> data() throws Exception {
         return getTestImages().stream();

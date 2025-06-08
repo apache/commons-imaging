@@ -47,7 +47,7 @@ import org.apache.commons.imaging.formats.tiff.constants.WangTagConstants;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.junit.jupiter.api.Test;
 
-public class TiffTagIntegrityTest extends AbstractImagingTest {
+class TiffTagIntegrityTest extends AbstractImagingTest {
 
     @Test
     void testTagIntegrity() {

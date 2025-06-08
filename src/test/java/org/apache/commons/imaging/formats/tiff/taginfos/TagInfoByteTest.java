@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.junit.jupiter.api.Test;
 
-public class TagInfoByteTest {
+class TagInfoByteTest {
 
     @Test
     void testCreatesTagInfoByteTakingFourArgumentsAndCallsEncodeValue() {

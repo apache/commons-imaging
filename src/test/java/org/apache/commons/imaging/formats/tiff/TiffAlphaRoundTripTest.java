@@ -41,7 +41,7 @@ import org.junit.jupiter.api.io.TempDir;
 /**
  * Performs a round-trip that writes an image containing Alpha and then reads it back. Selected non-opaque pixels are tested for correctness,
  */
-public class TiffAlphaRoundTripTest {
+class TiffAlphaRoundTripTest {
 
     @TempDir
     Path tempDir;

@@ -35,7 +35,7 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.junit.jupiter.api.Test;
 
-public class TiffReadWriteTagsTest extends AbstractTiffTest {
+class TiffReadWriteTagsTest extends AbstractTiffTest {
 
     @Test
     void testReadWriteTags() throws ImagingException, ImagingException, IOException {

@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-public class DctTest {
+class DctTest {
 
     private static double[] REFERENCE_forwardDCT(final float[] vector) {
         final double[] ret = new double[8];

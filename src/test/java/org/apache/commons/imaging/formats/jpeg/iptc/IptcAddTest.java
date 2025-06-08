@@ -33,7 +33,7 @@ import org.apache.commons.imaging.formats.jpeg.JpegPhotoshopMetadata;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class IptcAddTest extends AbstractIptcTest {
+class IptcAddTest extends AbstractIptcTest {
 
     public static Stream<File> data() throws Exception {
         return getJpegImages().stream();

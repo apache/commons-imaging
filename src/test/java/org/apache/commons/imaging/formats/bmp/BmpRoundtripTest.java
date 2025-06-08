@@ -30,7 +30,7 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 
-public class BmpRoundtripTest extends AbstractBmpTest {
+class BmpRoundtripTest extends AbstractBmpTest {
 
     private int[][] bufferedImageToImageData(final BufferedImage image) {
         final int width = image.getWidth();

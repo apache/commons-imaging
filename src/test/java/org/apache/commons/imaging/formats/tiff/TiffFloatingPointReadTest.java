@@ -41,7 +41,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Performs tests that access the content of TIFF files containing floating point data.
  */
-public class TiffFloatingPointReadTest {
+class TiffFloatingPointReadTest {
 
     private void checkSubImage(final File target, final AbstractTiffRasterData fullRaster, final int x0, final int y0, final int width, final int height)
             throws ImagingException, IOException {

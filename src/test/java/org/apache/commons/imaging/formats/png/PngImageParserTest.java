@@ -29,7 +29,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.common.AllocationRequestException;
 import org.junit.jupiter.api.Test;
 
-public class PngImageParserTest extends AbstractPngTest {
+class PngImageParserTest extends AbstractPngTest {
 
     private static byte[] getPngImageBytes(final BufferedImage image, final PngImagingParameters params) throws IOException {
         try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {

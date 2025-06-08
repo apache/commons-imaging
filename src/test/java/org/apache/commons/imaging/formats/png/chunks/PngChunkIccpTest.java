@@ -35,7 +35,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for {@link PngChunkIccp}.
  */
-public class PngChunkIccpTest {
+class PngChunkIccpTest {
 
     private static final int chunkType = 1766015824;
 

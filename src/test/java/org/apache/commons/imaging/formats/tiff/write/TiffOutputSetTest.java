@@ -23,7 +23,7 @@ import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TiffOutputSetTest {
+class TiffOutputSetTest {
 
     private TiffOutputSet tiffOutputSet;
 

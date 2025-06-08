@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.apache.commons.imaging.common.AllocationRequestException;
 import org.junit.jupiter.api.Test;
 
-public class IcnsImageParserTest {
+class IcnsImageParserTest {
 
     @Test
     void testGetImageSize() throws Exception {

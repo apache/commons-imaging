@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.apache.commons.imaging.ImagingException;
 import org.junit.jupiter.api.Test;
 
-public class PngChunkScalTest {
+class PngChunkScalTest {
     private static final double delta = 0.001;
     private static final int chunkType = 1933787468;
 

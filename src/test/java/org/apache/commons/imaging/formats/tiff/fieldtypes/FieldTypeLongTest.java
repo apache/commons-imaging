@@ -23,7 +23,7 @@ import java.nio.ByteOrder;
 
 import org.junit.jupiter.api.Test;
 
-public class FieldTypeLongTest {
+class FieldTypeLongTest {
 
     @Test
     void testWriteDataWithNonNull() {

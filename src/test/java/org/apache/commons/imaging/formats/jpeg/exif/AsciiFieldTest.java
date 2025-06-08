@@ -34,7 +34,7 @@ import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.junit.jupiter.api.Test;
 
-public class AsciiFieldTest extends AbstractExifTest {
+class AsciiFieldTest extends AbstractExifTest {
 
     @Test
     void testSingleImage() throws Exception {

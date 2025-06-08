@@ -23,7 +23,7 @@ import java.awt.image.DirectColorModel;
 
 import org.junit.jupiter.api.Test;
 
-public class RgbBufferedImageFactoryTest {
+class RgbBufferedImageFactoryTest {
 
     @Test
     void testGetColorBufferedImageThrowsIllegalArgumentException() {

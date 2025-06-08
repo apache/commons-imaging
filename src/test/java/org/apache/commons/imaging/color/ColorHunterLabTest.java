@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class ColorHunterLabTest {
+class ColorHunterLabTest {
 
     private ColorHunterLab color;
     private ColorHunterLab colorCopy;

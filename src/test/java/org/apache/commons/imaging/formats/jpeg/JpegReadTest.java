@@ -37,7 +37,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class JpegReadTest extends AbstractJpegTest {
+class JpegReadTest extends AbstractJpegTest {
 
     public static Stream<File> data() throws Exception {
         return getJpegImages().stream();

@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class IcoReadTest extends AbstractIcoTest {
+class IcoReadTest extends AbstractIcoTest {
 
     public static Stream<File> data() throws Exception {
         return getIcoImages().stream();

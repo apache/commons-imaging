@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for class {@link Dithering}.
  **/
-public class DitheringTest {
+class DitheringTest {
 
     @Test
     void testApplyFloydSteinbergDitheringWithNonNullOne() throws ImagingException {

@@ -22,7 +22,7 @@ import java.nio.ByteOrder;
 import org.apache.commons.imaging.AbstractImagingTest;
 import org.junit.jupiter.api.Test;
 
-public class BinaryFileFunctionsTest extends AbstractImagingTest {
+class BinaryFileFunctionsTest extends AbstractImagingTest {
 
     private static final long TARGET_LONG = 0x01020304_05060708L;
 

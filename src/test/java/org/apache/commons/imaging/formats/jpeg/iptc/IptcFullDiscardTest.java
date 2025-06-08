@@ -28,7 +28,7 @@ import javax.imageio.ImageIO;
 
 import org.junit.jupiter.api.Test;
 
-public class IptcFullDiscardTest {
+class IptcFullDiscardTest {
 
     private byte[] addMetaData(final byte[] bytes) throws Exception {
         final IptcRecord record = new IptcRecord(IptcTypes.KEYWORDS, "meta; data");

@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class DcxReadTest extends AbstractDcxTest {
+class DcxReadTest extends AbstractDcxTest {
 
     public static Stream<File> data() throws Exception {
         return getDcxImages().stream();

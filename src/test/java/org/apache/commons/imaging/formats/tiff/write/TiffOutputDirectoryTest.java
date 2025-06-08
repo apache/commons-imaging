@@ -26,7 +26,7 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TiffOutputDirectoryTest {
+class TiffOutputDirectoryTest {
 
     private TiffOutputDirectory directory;
 

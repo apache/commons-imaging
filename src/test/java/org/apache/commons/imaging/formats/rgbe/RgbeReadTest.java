@@ -33,7 +33,7 @@ import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.imaging.test.TestResources;
 import org.junit.jupiter.api.Test;
 
-public class RgbeReadTest extends AbstractRgbeTest {
+class RgbeReadTest extends AbstractRgbeTest {
 
     @Test
     void test() throws IOException, ImagingException {
