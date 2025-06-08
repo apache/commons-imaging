@@ -34,7 +34,7 @@ class TiffRasterDataIntTest {
     AbstractTiffRasterData raster;
     float meanValue;
 
-    public TiffRasterDataIntTest() {
+    TiffRasterDataIntTest() {
         double sum = 0;
         data = new int[width * height];
         int k = 0;

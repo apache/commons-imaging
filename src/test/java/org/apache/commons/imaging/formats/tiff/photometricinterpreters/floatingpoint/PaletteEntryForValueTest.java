@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
  */
 class PaletteEntryForValueTest {
 
-    public PaletteEntryForValueTest() {
+    PaletteEntryForValueTest() {
     }
 
     @Test

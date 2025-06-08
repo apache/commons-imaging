@@ -51,7 +51,7 @@ class TiffShortIntRoundTripTest extends AbstractTiffTest {
 
     short[] sample = new short[width * height];
 
-    public TiffShortIntRoundTripTest() {
+    TiffShortIntRoundTripTest() {
         // populate the image data
         for (int iCol = 0; iCol < width; iCol++) {
             for (int iRow = 0; iRow < height; iRow++) {

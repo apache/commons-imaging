@@ -51,7 +51,7 @@ class TiffRoundTripInt32Test extends AbstractTiffTest {
 
     int[] sample = new int[width * height];
 
-    public TiffRoundTripInt32Test() {
+    TiffRoundTripInt32Test() {
         // populate the image data
         for (int iCol = 0; iCol < width; iCol++) {
             for (int iRow = 0; iRow < height; iRow++) {

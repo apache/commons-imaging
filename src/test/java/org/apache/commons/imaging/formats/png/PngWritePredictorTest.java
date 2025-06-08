@@ -39,7 +39,7 @@ class PngWritePredictorTest {
     public static void setUpClass() {
     }
 
-    public PngWritePredictorTest() {
+    PngWritePredictorTest() {
     }
 
     /**

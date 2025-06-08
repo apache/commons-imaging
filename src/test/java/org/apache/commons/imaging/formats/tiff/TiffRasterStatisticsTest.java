@@ -38,7 +38,7 @@ class TiffRasterStatisticsTest {
     TiffRasterStatistics stat0;
     TiffRasterStatistics stat1;
 
-    public TiffRasterStatisticsTest() {
+    TiffRasterStatisticsTest() {
         double sum = 0;
         data = new float[width * height];
         int k = 0;

@@ -58,7 +58,7 @@ class TiffFloatingPointRoundTripTest extends AbstractTiffTest {
     float[] f = new float[width * height];
     int[] argb = new int[width * height];
 
-    public TiffFloatingPointRoundTripTest() throws ImagingException, IOException {
+    TiffFloatingPointRoundTripTest() throws ImagingException, IOException {
         // populate the image data
         for (int iCol = 0; iCol < width; iCol++) {
             final float s = iCol / (float) (width - 1);

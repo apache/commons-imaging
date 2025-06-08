@@ -58,7 +58,7 @@ class TiffFloatingPointMultivariableTest extends AbstractTiffTest {
     float f1 = 1.0F;
     float[] fSample = new float[width * height * samplesPerPixel];
 
-    public TiffFloatingPointMultivariableTest() {
+    TiffFloatingPointMultivariableTest() {
         for (int iPlane = 0; iPlane < 2; iPlane++) {
             final int pOffset = iPlane * width * height;
             for (int iRow = 0; iRow < height; iRow++) {

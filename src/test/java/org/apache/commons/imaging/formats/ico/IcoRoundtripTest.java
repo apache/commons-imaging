@@ -261,7 +261,7 @@ class IcoRoundtripTest extends AbstractIcoTest {
 
     private final Map<Integer, BitmapGenerator> generatorMap = new HashMap<>();
 
-    public IcoRoundtripTest() {
+    IcoRoundtripTest() {
         generatorMap.put(1, new GeneratorFor1BitBitmaps());
         generatorMap.put(4, new GeneratorFor4BitBitmaps());
         generatorMap.put(8, new GeneratorFor8BitBitmaps());

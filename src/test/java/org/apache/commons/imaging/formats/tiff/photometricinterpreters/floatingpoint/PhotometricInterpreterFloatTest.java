@@ -111,7 +111,7 @@ class PhotometricInterpreterFloatTest {
         }
     }
 
-    public PhotometricInterpreterFloatTest() {
+    PhotometricInterpreterFloatTest() {
     }
 
     @Test
