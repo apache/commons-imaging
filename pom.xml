@@ -86,6 +86,10 @@
     <system>jira</system>
     <url>https://issues.apache.org/jira/browse/IMAGING</url>
   </issueManagement>
+  <ciManagement>
+    <system>GitHub</system>
+    <url>https://github.com/apache/commons-imaging/actions</url>
+  </ciManagement>
   <inceptionYear>2007</inceptionYear>
   <build>
     <defaultGoal>clean verify apache-rat:check checkstyle:check spotbugs:check pmd:check javadoc:javadoc</defaultGoal>
