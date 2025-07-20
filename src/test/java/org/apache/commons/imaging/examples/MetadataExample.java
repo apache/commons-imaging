@@ -34,6 +34,8 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 
 public class MetadataExample {
+    private static final String INDENT = "    ";
+
     public static void metadataExample(final File file) throws ImagingException, IOException {
         // get all metadata stored in EXIF format (ie. from JPEG or TIFF).
         final ImageMetadata metadata = Imaging.getMetadata(file);
@@ -77,9 +79,9 @@ public class MetadataExample {
                     final double longitude = gpsInfo.getLongitudeAsDegreesEast();
                     final double latitude = gpsInfo.getLatitudeAsDegreesNorth();
 
-                    System.out.println("    " + "GPS Description: " + gpsDescription);
-                    System.out.println("    " + "GPS Longitude (Degrees East): " + longitude);
-                    System.out.println("    " + "GPS Latitude (Degrees North): " + latitude);
+                    System.out.println(INDENT + "GPS Description: " + gpsDescription);
+                    System.out.println(INDENT + "GPS Longitude (Degrees East): " + longitude);
+                    System.out.println(INDENT + "GPS Latitude (Degrees North): " + latitude);
                 }
             }
 
@@ -108,9 +110,9 @@ public class MetadataExample {
                 // gpsLatitude: 8 degrees, 40 minutes, 42.2 seconds S
                 // gpsLongitude: 115 degrees, 26 minutes, 21.8 seconds E
 
-                System.out.println("    " + "GPS Latitude: " + gpsLatitudeDegrees.toDisplayString() + " degrees, " + gpsLatitudeMinutes.toDisplayString()
+                System.out.println(INDENT + "GPS Latitude: " + gpsLatitudeDegrees.toDisplayString() + " degrees, " + gpsLatitudeMinutes.toDisplayString()
                         + " minutes, " + gpsLatitudeSeconds.toDisplayString() + " seconds " + gpsLatitudeRef);
-                System.out.println("    " + "GPS Longitude: " + gpsLongitudeDegrees.toDisplayString() + " degrees, " + gpsLongitudeMinutes.toDisplayString()
+                System.out.println(INDENT + "GPS Longitude: " + gpsLongitudeDegrees.toDisplayString() + " degrees, " + gpsLongitudeMinutes.toDisplayString()
                         + " minutes, " + gpsLongitudeSeconds.toDisplayString() + " seconds " + gpsLongitudeRef);
 
             }
@@ -119,7 +121,7 @@ public class MetadataExample {
 
             final List<ImageMetadataItem> items = jpegMetadata.getItems();
             for (final ImageMetadataItem item : items) {
-                System.out.println("    " + "item: " + item);
+                System.out.println(INDENT + "item: " + item);
             }
 
             System.out.println();
