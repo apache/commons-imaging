@@ -33,7 +33,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
@@ -50,6 +49,7 @@ import org.apache.commons.imaging.common.BasicCParser;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
+import org.apache.commons.lang3.StringUtils;
 
 public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
 
@@ -156,7 +156,7 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
                             final int green = Integer.parseInt(line.substring(4, 7).trim());
                             final int blue = Integer.parseInt(line.substring(8, 11).trim());
                             final String colorName = line.substring(11).trim();
-                            colors.put(colorName.toLowerCase(Locale.ROOT), 0xff000000 | red << 16 | green << 8 | blue);
+                            colors.put(StringUtils.toRootLowerCase(colorName), 0xff000000 | red << 16 | green << 8 | blue);
                         } catch (final NumberFormatException nfe) {
                             throw new ImagingException("Couldn't parse color in rgb.txt", nfe);
                         }
@@ -289,7 +289,7 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
             return 0x00000000;
         }
         loadColorNames();
-        final String colorLowercase = color.toLowerCase(Locale.ROOT);
+        final String colorLowercase = StringUtils.toRootLowerCase(color);
         return colorNames.getOrDefault(colorLowercase, 0x00000000);
     }
 
