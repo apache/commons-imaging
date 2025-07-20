@@ -27,7 +27,6 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -53,6 +52,7 @@ import org.apache.commons.imaging.formats.webp.WebPImageParser;
 import org.apache.commons.imaging.formats.xbm.XbmImageParser;
 import org.apache.commons.imaging.formats.xpm.XpmImageParser;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Provides the abstract base class for all image reading and writing utilities. ImageParser implementations are expected to extend this class providing logic
@@ -137,7 +137,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
             return true;
         }
         final int index = fileName.lastIndexOf('.');
-        if (index >= 0 && ArrayUtils.contains(extensions, fileName.substring(index + 1).toLowerCase(Locale.ROOT))) {
+        if (index >= 0 && ArrayUtils.contains(extensions, StringUtils.toRootLowerCase(fileName.substring(index + 1)))) {
             return true;
         }
         return false;
