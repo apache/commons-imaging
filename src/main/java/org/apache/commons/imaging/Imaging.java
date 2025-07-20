@@ -28,7 +28,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -854,17 +853,14 @@ public final class Imaging {
         if (fileName == null) {
             return false;
         }
-
-        final String normalizedFileName = fileName.toLowerCase(Locale.ROOT);
-
+        final String normalizedFileName = StringUtils.toRootLowerCase(fileName);
         for (final AbstractImageParser<?> imageParser : AbstractImageParser.getAllImageParsers()) {
             for (final String extension : imageParser.getAcceptedExtensions()) {
-                if (normalizedFileName.endsWith(extension.toLowerCase(Locale.ROOT))) {
+                if (normalizedFileName.endsWith(StringUtils.toRootLowerCase(extension))) {
                     return true;
                 }
             }
         }
-
         return false;
     }
 
