@@ -196,7 +196,7 @@ public class IcnsImageParser extends AbstractImageParser<IcnsImagingParameters> 
         // Length of data (4 bytes), in bytes, including this header
         final int elementSize = read4Bytes("ElementSize", is, "Not a valid ICNS file", getByteOrder());
         if (elementSize > remainingSize) {
-            throw new IOException(String.format("Corrupted ICNS file: element size %d is greater than " + "remaining size %d", elementSize, remainingSize));
+            throw new IOException(String.format("Corrupted ICNS file: element size %d is greater than remaining size %d", elementSize, remainingSize));
         }
         final byte[] data = readBytes("Data", is, elementSize - 8, "Not a valid ICNS file");
 
@@ -208,7 +208,7 @@ public class IcnsImageParser extends AbstractImageParser<IcnsImagingParameters> 
         final int fileSize = read4Bytes("FileSize", is, "Not a Valid ICNS File", getByteOrder());
 
         if (magic != ICNS_MAGIC) {
-            throw new ImagingException("Not a Valid ICNS File: " + "magic is 0x" + Integer.toHexString(magic));
+            throw new ImagingException("Not a Valid ICNS File: magic is 0x" + Integer.toHexString(magic));
         }
 
         return new IcnsHeader(magic, fileSize);

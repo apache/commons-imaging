@@ -231,7 +231,7 @@ public class XbmImageParser extends AbstractImageParser<XbmImagingParameters> {
         }
         token = cParser.nextToken();
         if (token == null) {
-            throw new ImagingException("Parsing XBM file failed, no 'unsigned' " + "or 'char' or 'short' token");
+            throw new ImagingException("Parsing XBM file failed, no 'unsigned' or 'char' or 'short' token");
         }
         if ("unsigned".equals(token)) {
             token = cParser.nextToken();
@@ -252,12 +252,12 @@ public class XbmImageParser extends AbstractImageParser<XbmImagingParameters> {
             throw new ImagingException("Parsing XBM file failed, no variable name");
         }
         if (name.charAt(0) != '_' && !Character.isLetter(name.charAt(0))) {
-            throw new ImagingException("Parsing XBM file failed, variable name " + "doesn't start with letter or underscore");
+            throw new ImagingException("Parsing XBM file failed, variable name doesn't start with letter or underscore");
         }
         for (int i = 0; i < name.length(); i++) {
             final char c = name.charAt(i);
             if (!Character.isLetterOrDigit(c) && c != '_') {
-                throw new ImagingException("Parsing XBM file failed, variable name " + "contains non-letter non-digit non-underscore");
+                throw new ImagingException("Parsing XBM file failed, variable name contains non-letter non-digit non-underscore");
             }
         }
         token = cParser.nextToken();
@@ -284,10 +284,10 @@ public class XbmImageParser extends AbstractImageParser<XbmImagingParameters> {
             for (int x = 0; x < xbmHeader.width; x += inputWidth) {
                 token = cParser.nextToken();
                 if (token == null || !token.startsWith("0x")) {
-                    throw new ImagingException("Parsing XBM file failed, " + "hex value missing");
+                    throw new ImagingException("Parsing XBM file failed, hex value missing");
                 }
                 if (token.length() > hexWidth) {
-                    throw new ImagingException("Parsing XBM file failed, " + "hex value too long");
+                    throw new ImagingException("Parsing XBM file failed, hex value too long");
                 }
                 final int value = Integer.parseInt(token.substring(2), 16);
                 final int flipped = Integer.reverse(value) >>> 32 - inputWidth;
@@ -302,10 +302,10 @@ public class XbmImageParser extends AbstractImageParser<XbmImagingParameters> {
 
                 token = cParser.nextToken();
                 if (token == null) {
-                    throw new ImagingException("Parsing XBM file failed, " + "premature end of file");
+                    throw new ImagingException("Parsing XBM file failed, premature end of file");
                 }
                 if (!",".equals(token) && (i < imageData.length || !"}".equals(token))) {
-                    throw new ImagingException("Parsing XBM file failed, " + "punctuation error");
+                    throw new ImagingException("Parsing XBM file failed, punctuation error");
                 }
             }
         }

@@ -149,6 +149,6 @@ enum IcnsType {
 
     @Override
     public String toString() {
-        return getClass().getName() + "[" + "width=" + width + "," + "height=" + height + "," + "bpp=" + bitsPerPixel + "," + "hasMask=" + hasMask + "]";
+        return getClass().getName() + "[width=" + width + ",height=" + height + ",bpp=" + bitsPerPixel + ",hasMask=" + hasMask + "]";
     }
 }

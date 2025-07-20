@@ -63,7 +63,7 @@ public class FormatCompliance {
 
     public boolean checkBounds(final String name, final int min, final int max, final int actual) throws ImagingException {
         if (actual < min || actual > max) {
-            addComment(name + ": " + "bounds check: " + min + " <= " + actual + " <= " + max + ": false");
+            addComment(name + ": bounds check: " + min + " <= " + actual + " <= " + max + ": false");
             return false;
         }
 
@@ -103,7 +103,7 @@ public class FormatCompliance {
 
     public boolean compareBytes(final String name, final byte[] expected, final byte[] actual) throws ImagingException {
         if (expected.length != actual.length) {
-            addComment(name + ": " + "Unexpected length: (expected: " + expected.length + ", actual: " + actual.length + ")");
+            addComment(name + ": Unexpected length: (expected: " + expected.length + ", actual: " + actual.length + ")");
             return false;
         }
         for (int i = 0; i < expected.length; i++) {
@@ -112,7 +112,7 @@ public class FormatCompliance {
             // + getValueDescription(actual[i]) + ")");
             if (expected[i] != actual[i]) {
                 addComment(
-                        name + ": " + "Unexpected value: (expected: " + getValueDescription(expected[i]) + ", actual: " + getValueDescription(actual[i]) + ")");
+                        name + ": Unexpected value: (expected: " + getValueDescription(expected[i]) + ", actual: " + getValueDescription(actual[i]) + ")");
                 return false;
             }
         }
@@ -136,7 +136,7 @@ public class FormatCompliance {
         pw.println("Format Compliance: " + description);
 
         if (comments.isEmpty()) {
-            pw.println("\t" + "No comments.");
+            pw.println("\tNo comments.");
         } else {
             for (int i = 0; i < comments.size(); i++) {
                 pw.println("\t" + (i + 1) + ": " + comments.get(i));

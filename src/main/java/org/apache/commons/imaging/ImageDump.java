@@ -34,7 +34,7 @@ public class ImageDump {
     private static final Logger LOGGER = Logger.getLogger(ImageDump.class.getName());
 
     private String colorSpaceTypeToName(final ColorSpace cs) {
-        // System.out.println(prefix + ": " + "type: "
+        // System.out.println(prefix + ": type: "
         // + cs.getType() );
         switch (cs.getType()) {
         case ColorSpace.TYPE_CMYK:
@@ -61,7 +61,7 @@ public class ImageDump {
     }
 
     public void dump(final String prefix, final BufferedImage src) throws IOException {
-        LOGGER.fine(prefix + ": " + "dump");
+        LOGGER.fine(prefix + ": dump");
         dumpColorSpace(prefix, src.getColorModel().getColorSpace());
         dumpBiProps(prefix, src);
     }
@@ -78,10 +78,10 @@ public class ImageDump {
     }
 
     public void dumpColorSpace(final String prefix, final ColorSpace cs) throws IOException {
-        LOGGER.fine(prefix + ": " + "type: " + cs.getType() + " (" + colorSpaceTypeToName(cs) + ")");
+        LOGGER.fine(prefix + ": type: " + cs.getType() + " (" + colorSpaceTypeToName(cs) + ")");
 
         if (!(cs instanceof ICC_ColorSpace)) {
-            LOGGER.fine(prefix + ": " + "Unknown ColorSpace: " + cs.getClass().getName());
+            LOGGER.fine(prefix + ": Unknown ColorSpace: " + cs.getClass().getName());
             return;
         }
 

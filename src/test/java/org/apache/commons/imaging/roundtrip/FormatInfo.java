@@ -91,7 +91,7 @@ final class FormatInfo {
 
     @Override
     public String toString() {
-        return "FormatInfo{" + "format=" + format + ", canRead=" + canRead + ", canWrite=" + canWrite + ", colorSupport=" + colorSupport
+        return "FormatInfo{format=" + format + ", canRead=" + canRead + ", canWrite=" + canWrite + ", colorSupport=" + colorSupport
                 + ", identicalSecondWrite=" + identicalSecondWrite + ", preservesResolution=" + preservesResolution + '}';
     }
 }

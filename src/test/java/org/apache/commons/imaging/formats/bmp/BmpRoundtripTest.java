@@ -60,7 +60,7 @@ class BmpRoundtripTest extends AbstractBmpTest {
                 final int rgbB = 0xffffff & b[y][x];
 
                 if (rgbA != rgbB) {
-                    Debug.debug("x: " + x + ", y: " + y + ", rgbA: " + rgbA + " (0x" + Integer.toHexString(rgbA) + ")" + ", rgbB: " + rgbB + " (0x"
+                    Debug.debug("x: " + x + ", y: " + y + ", rgbA: " + rgbA + " (0x" + Integer.toHexString(rgbA) + "), rgbB: " + rgbB + " (0x"
                             + Integer.toHexString(rgbB) + ")");
                 }
                 assertEquals(rgbA, rgbB);

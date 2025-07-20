@@ -68,7 +68,7 @@ public class SurveyTiffFile {
         final int k1 = n - 4 - k0;
 
         final String header = String.format("%" + k0 + "sPath%" + k1 + "s%s", "", "",
-                "    Size     Layout  Blk_sz     P_conf  Compress  " + "Predict  Data_Fmt   B/P B/S      Photo     ICC_Pro");
+                "    Size     Layout  Blk_sz     P_conf  Compress  Predict  Data_Fmt   B/P B/S      Photo     ICC_Pro");
         if (csv) {
             return reformatHeaderForCsv(header);
         }

@@ -59,7 +59,7 @@ final class JpegInputStream {
                     if (b2 == (0xff & JpegConstants.DNL_MARKER)) {
                         throw new ImagingException("DNL not yet supported");
                     }
-                    throw new ImagingException("Invalid marker found " + "in entropy data: 0xFF " + Integer.toHexString(b2));
+                    throw new ImagingException("Invalid marker found in entropy data: 0xFF " + Integer.toHexString(b2));
                 }
             }
         }

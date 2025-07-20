@@ -283,7 +283,7 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
             return 0x00000000;
         }
         if (color.charAt(0) == '%') {
-            throw new ImagingException("HSV colors are not implemented " + "even in the XPM specification!");
+            throw new ImagingException("HSV colors are not implemented even in the XPM specification!");
         }
         if ("None".equals(color)) {
             return 0x00000000;
@@ -297,7 +297,7 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
         stringBuilder.setLength(0);
         String token = cParser.nextToken();
         if (token.charAt(0) != '"') {
-            throw new ImagingException("Parsing XPM file failed, " + "no string found where expected");
+            throw new ImagingException("Parsing XPM file failed, no string found where expected");
         }
         BasicCParser.unescapeString(stringBuilder, token);
         for (token = cParser.nextToken(); token.charAt(0) == '"'; token = cParser.nextToken()) {
@@ -309,7 +309,7 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
         if ("}".equals(token)) {
             return false;
         }
-        throw new ImagingException("Parsing XPM file failed, " + "no ',' or '}' found where expected");
+        throw new ImagingException("Parsing XPM file failed, no ',' or '}' found where expected");
     }
 
     private void parsePaletteEntries(final XpmHeader xpmHeader, final BasicCParser cParser) throws IOException, ImagingException {
@@ -318,7 +318,7 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
             row.setLength(0);
             final boolean hasMore = parseNextString(cParser, row);
             if (!hasMore) {
-                throw new ImagingException("Parsing XPM file failed, " + "file ended while reading palette");
+                throw new ImagingException("Parsing XPM file failed, file ended while reading palette");
             }
             final String name = row.substring(0, xpmHeader.numCharsPerPixel);
             final String[] tokens = BasicCParser.tokenizeRow(row.substring(xpmHeader.numCharsPerPixel));
@@ -380,12 +380,12 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
             throw new ImagingException("Parsing XPM file failed, no variable name");
         }
         if (name.charAt(0) != '_' && !Character.isLetter(name.charAt(0))) {
-            throw new ImagingException("Parsing XPM file failed, variable name " + "doesn't start with letter or underscore");
+            throw new ImagingException("Parsing XPM file failed, variable name doesn't start with letter or underscore");
         }
         for (int i = 0; i < name.length(); i++) {
             final char c = name.charAt(i);
             if (!Character.isLetterOrDigit(c) && c != '_') {
-                throw new ImagingException("Parsing XPM file failed, variable name " + "contains non-letter non-digit non-underscore");
+                throw new ImagingException("Parsing XPM file failed, variable name contains non-letter non-digit non-underscore");
             }
         }
         token = cParser.nextToken();
@@ -408,7 +408,7 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
         final StringBuilder row = new StringBuilder();
         final boolean hasMore = parseNextString(cParser, row);
         if (!hasMore) {
-            throw new ImagingException("Parsing XPM file failed, " + "file too short");
+            throw new ImagingException("Parsing XPM file failed, file too short");
         }
         final XpmHeader xpmHeader = parseXpmValuesSection(row.toString());
         parsePaletteEntries(xpmHeader, cParser);
@@ -420,7 +420,7 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
             final StringBuilder firstComment = new StringBuilder();
             final ByteArrayOutputStream preprocessedFile = BasicCParser.preprocess(is, firstComment, null);
             if (!"XPM".equals(firstComment.toString().trim())) {
-                throw new ImagingException("Parsing XPM file failed, " + "signature isn't '/* XPM */'");
+                throw new ImagingException("Parsing XPM file failed, signature isn't '/* XPM */'");
             }
 
             final XpmParseResult xpmParseResult = new XpmParseResult();
@@ -433,7 +433,7 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
     private XpmHeader parseXpmValuesSection(final String row) throws ImagingException {
         final String[] tokens = BasicCParser.tokenizeRow(row);
         if (tokens.length < 4 || tokens.length > 7) {
-            throw new ImagingException("Parsing XPM file failed, " + "<Values> section has incorrect tokens");
+            throw new ImagingException("Parsing XPM file failed, <Values> section has incorrect tokens");
         }
         try {
             final int width = Integer.parseInt(tokens[0]);
@@ -449,13 +449,13 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
             }
             if (tokens.length == 5 || tokens.length == 7) {
                 if (!"XPMEXT".equals(tokens[tokens.length - 1])) {
-                    throw new ImagingException("Parsing XPM file failed, " + "can't parse <Values> section XPMEXT");
+                    throw new ImagingException("Parsing XPM file failed, can't parse <Values> section XPMEXT");
                 }
                 xpmExt = true;
             }
             return new XpmHeader(width, height, numColors, numCharsPerPixel, xHotSpot, yHotSpot, xpmExt);
         } catch (final NumberFormatException nfe) {
-            throw new ImagingException("Parsing XPM file failed, " + "error parsing <Values> section", nfe);
+            throw new ImagingException("Parsing XPM file failed, error parsing <Values> section", nfe);
         }
     }
 
@@ -569,14 +569,14 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
             row.setLength(0);
             hasMore = parseNextString(cParser, row);
             if (y < xpmHeader.height - 1 && !hasMore) {
-                throw new ImagingException("Parsing XPM file failed, " + "insufficient image rows in file");
+                throw new ImagingException("Parsing XPM file failed, insufficient image rows in file");
             }
             final int rowOffset = y * xpmHeader.width;
             for (int x = 0; x < xpmHeader.width; x++) {
                 final String index = row.substring(x * xpmHeader.numCharsPerPixel, (x + 1) * xpmHeader.numCharsPerPixel);
                 final PaletteEntry paletteEntry = xpmHeader.palette.get(index);
                 if (paletteEntry == null) {
-                    throw new ImagingException("No palette entry was defined " + "for " + index);
+                    throw new ImagingException("No palette entry was defined for " + index);
                 }
                 if (bpp <= 16) {
                     dataBuffer.setElem(rowOffset + x, paletteEntry.index);

@@ -499,11 +499,11 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
 
         // if (pngChunkpHYs != null)
         // {
-        // System.out.println("\t" + "pngChunkpHYs.UnitSpecifier: " +
+        // System.out.println("\tpngChunkpHYs.UnitSpecifier: " +
         // pngChunkpHYs.UnitSpecifier );
-        // System.out.println("\t" + "pngChunkpHYs.PixelsPerUnitYAxis: " +
+        // System.out.println("\tpngChunkpHYs.PixelsPerUnitYAxis: " +
         // pngChunkpHYs.PixelsPerUnitYAxis );
-        // System.out.println("\t" + "pngChunkpHYs.PixelsPerUnitXAxis: " +
+        // System.out.println("\tpngChunkpHYs.PixelsPerUnitXAxis: " +
         // pngChunkpHYs.PixelsPerUnitXAxis );
         // }
         if (pngChunkpHYs != null && pngChunkpHYs.getUnitSpecifier() == 1) { // meters

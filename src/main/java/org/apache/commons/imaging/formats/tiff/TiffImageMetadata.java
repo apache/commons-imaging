@@ -110,7 +110,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
 
                     // if (tagInfo.isUnknown())
                     // Debug.debug(
-                    // "\t" + "unknown tag(0x"
+                    // "\tunknown tag(0x"
                     // + Integer.toHexString(srcField.tag)
                     // + ") bytes", bytes);
 

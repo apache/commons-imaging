@@ -62,7 +62,7 @@ public final class PngChunkPlte extends PngChunk {
     // Debug.debug();
     // Debug.debug("palette");
     // for (int i = 0; i < rgb.length; i++) {
-    // Debug.debug("\t" + "palette[" + i + "];", rgb[i] + " (0x"
+    // Debug.debug("\tpalette[" + i + "];", rgb[i] + " (0x"
     // + Integer.toHexString(rgb[i]) + ")");
     //
     // }

@@ -712,7 +712,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
      */
     public final ImageMetadata getMetadata(final File file, final T params) throws ImagingException, IOException {
         if (LOGGER.isLoggable(Level.FINEST)) {
-            LOGGER.finest(getName() + ".getMetadata" + ": " + file.getName());
+            LOGGER.finest(getName() + ".getMetadata: " + file.getName());
         }
 
         if (!canAcceptExtension(file)) {

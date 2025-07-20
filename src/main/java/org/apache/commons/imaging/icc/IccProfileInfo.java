@@ -105,27 +105,27 @@ public class IccProfileInfo {
         final StringWriter sw = new StringWriter();
         final PrintWriter pw = new PrintWriter(sw);
 
-        pw.println(prefix + ": " + "data length: " + data.length);
+        pw.println(prefix + ": data length: " + data.length);
 
-        printCharQuad(pw, prefix + ": " + "ProfileDeviceClassSignature", profileDeviceClassSignature);
-        printCharQuad(pw, prefix + ": " + "CMMTypeSignature", cmmTypeSignature);
-        printCharQuad(pw, prefix + ": " + "ProfileDeviceClassSignature", profileDeviceClassSignature);
-        printCharQuad(pw, prefix + ": " + "ColorSpace", colorSpace);
-        printCharQuad(pw, prefix + ": " + "ProfileConnectionSpace", profileConnectionSpace);
-        printCharQuad(pw, prefix + ": " + "ProfileFileSignature", profileFileSignature);
-        printCharQuad(pw, prefix + ": " + "PrimaryPlatformSignature", primaryPlatformSignature);
-        printCharQuad(pw, prefix + ": " + "ProfileFileSignature", profileFileSignature);
-        printCharQuad(pw, prefix + ": " + "DeviceManufacturer", deviceManufacturer);
-        printCharQuad(pw, prefix + ": " + "DeviceModel", deviceModel);
-        printCharQuad(pw, prefix + ": " + "RenderingIntent", renderingIntent);
-        printCharQuad(pw, prefix + ": " + "ProfileCreatorSignature", profileCreatorSignature);
+        printCharQuad(pw, prefix + ": ProfileDeviceClassSignature", profileDeviceClassSignature);
+        printCharQuad(pw, prefix + ": CMMTypeSignature", cmmTypeSignature);
+        printCharQuad(pw, prefix + ": ProfileDeviceClassSignature", profileDeviceClassSignature);
+        printCharQuad(pw, prefix + ": ColorSpace", colorSpace);
+        printCharQuad(pw, prefix + ": ProfileConnectionSpace", profileConnectionSpace);
+        printCharQuad(pw, prefix + ": ProfileFileSignature", profileFileSignature);
+        printCharQuad(pw, prefix + ": PrimaryPlatformSignature", primaryPlatformSignature);
+        printCharQuad(pw, prefix + ": ProfileFileSignature", profileFileSignature);
+        printCharQuad(pw, prefix + ": DeviceManufacturer", deviceManufacturer);
+        printCharQuad(pw, prefix + ": DeviceModel", deviceModel);
+        printCharQuad(pw, prefix + ": RenderingIntent", renderingIntent);
+        printCharQuad(pw, prefix + ": ProfileCreatorSignature", profileCreatorSignature);
 
         for (int i = 0; i < tags.length; i++) {
             final IccTag tag = tags[i];
             tag.dump(pw, "\t" + i + ": ");
         }
 
-        pw.println(prefix + ": " + "isSrgb: " + isSrgb());
+        pw.println(prefix + ": isSrgb: " + isSrgb());
         pw.flush();
 
         return sw.getBuffer().toString();

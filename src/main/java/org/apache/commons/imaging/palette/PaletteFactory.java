@@ -125,7 +125,7 @@ public class PaletteFactory {
                 return;
             }
             if (LOGGER.isLoggable(Level.FINEST)) {
-                LOGGER.finest("\t" + "area: " + maxArea);
+                LOGGER.finest("\tarea: " + maxArea);
             }
 
             final DivisionCandidate dc = divideSubset2(table, maxSubset, precision);

@@ -441,7 +441,7 @@ class IcoRoundtripTest extends AbstractIcoTest {
                 final int dataARGB = data.getRGB(x, y);
 
                 if (imageARGB != dataARGB) {
-                    Debug.debug("x: " + x + ", y: " + y + ", image: " + imageARGB + " (0x" + Integer.toHexString(imageARGB) + ")" + ", data: " + dataARGB
+                    Debug.debug("x: " + x + ", y: " + y + ", image: " + imageARGB + " (0x" + Integer.toHexString(imageARGB) + "), data: " + dataARGB
                             + " (0x" + Integer.toHexString(dataARGB) + ")");
                 }
                 assertEquals(imageARGB, dataARGB);

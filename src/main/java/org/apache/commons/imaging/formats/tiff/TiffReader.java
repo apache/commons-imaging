@@ -335,7 +335,7 @@ public class TiffReader extends BinaryFileParser {
                 if (valueLength > entryMaxValueLength) {
                     if (offset < 0 || offset + valueLength > byteSource.size()) {
                         if (strict) {
-                            throw new IOException("Attempt to read byte range starting from " + offset + " " + "of length " + valueLength + " "
+                            throw new IOException("Attempt to read byte range starting from " + offset + " of length " + valueLength + " "
                                     + "which is outside the file's size of " + byteSource.size());
                         }
                         // corrupt field, ignore it

@@ -558,7 +558,7 @@ public abstract class AbstractImageDataReader {
             // that can be used for testing and analysis.
             if (bitsPerPixel / samplesPerPixel != 32) {
                 throw new ImagingException(
-                        "Imaging does not yet support floating-point data" + " with predictor type 3 for " + bitsPerPixel + " bits per sample");
+                        "Imaging does not yet support floating-point data with predictor type 3 for " + bitsPerPixel + " bits per sample");
             }
 
             if (planarConfiguration == TiffPlanarConfiguration.CHUNKY) {

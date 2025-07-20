@@ -611,7 +611,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         for (final TiffOutputField field : fields) {
             field.writeField(bos);
 
-            // Debug.debug("\t" + "writing field (" + field.tag + ", 0x" +
+            // Debug.debug("\twriting field (" + field.tag + ", 0x" +
             // Integer.toHexString(field.tag) + ")", field.tagInfo);
             // if (field.tagInfo.isOffset())
             // Debug.debug("\t\tOFFSET!", field.bytes);

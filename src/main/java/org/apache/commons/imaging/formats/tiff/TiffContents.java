@@ -44,10 +44,10 @@ public class TiffContents {
         long lastEnd = 0;
         for (final AbstractTiffElement element : elements) {
             if (element.offset > lastEnd) {
-                Debug.debug("\t" + "gap: " + (element.offset - lastEnd));
+                Debug.debug("\tgap: " + (element.offset - lastEnd));
             }
             if (element.offset < lastEnd) {
-                Debug.debug("\t" + "overlap");
+                Debug.debug("\toverlap");
             }
 
             Debug.debug("element, start: " + element.offset + ", length: " + element.length + ", end: " + (element.offset + element.length) + ": "

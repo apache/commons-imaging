@@ -66,7 +66,7 @@ public class IccTag {
                     + ")");
 
             if (itdt == null) {
-                pw.println(prefix + "IccTagType : " + "unknown");
+                pw.println(prefix + "IccTagType : unknown");
             } else {
                 pw.println(prefix + "IccTagType : " + itdt.getName());
                 itdt.dump(prefix, data);
@@ -108,7 +108,7 @@ public class IccTag {
             itdt = getIccTagDataType(dataTypeSignature);
             // if (itdt != null)
             // {
-            // System.out.println("\t\t\t" + "itdt: " + itdt.name);
+            // System.out.println("\t\t\titdt: " + itdt.name);
             // }
         }
     }

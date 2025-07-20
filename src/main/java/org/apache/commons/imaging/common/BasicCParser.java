@@ -47,7 +47,7 @@ public class BasicCParser {
      */
     private static int appendHex(int i, final StringBuilder stringBuilder, final String string) throws ImagingException {
         if (i + 2 >= string.length()) {
-            throw new ImagingException("Parsing XPM file failed, " + "hex constant in string too short");
+            throw new ImagingException("Parsing XPM file failed, hex constant in string too short");
         }
         final char hex1 = string.charAt(i + 1);
         final char hex2 = string.charAt(i + 2);
@@ -56,7 +56,7 @@ public class BasicCParser {
         try {
             constant = Integer.parseInt(hex1 + Character.toString(hex2), 16);
         } catch (final NumberFormatException nfe) {
-            throw new ImagingException("Parsing XPM file failed, " + "hex constant invalid", nfe);
+            throw new ImagingException("Parsing XPM file failed, hex constant invalid", nfe);
         }
         stringBuilder.append((char) constant);
         return i;
@@ -153,7 +153,7 @@ public class BasicCParser {
             stringBuilder.append((char) 0x0b);
             break;
         default:
-            throw new ImagingException("Parsing XPM file failed, " + "invalid escape sequence");
+            throw new ImagingException("Parsing XPM file failed, invalid escape sequence");
         }
         return i;
 
@@ -265,7 +265,7 @@ public class BasicCParser {
                         throw new ImagingException("Bad preprocessor directive");
                     }
                     if (!tokens[0].equals("define")) {
-                        throw new ImagingException("Invalid/unsupported " + "preprocessor directive '" + tokens[0] + "'");
+                        throw new ImagingException("Invalid/unsupported preprocessor directive '" + tokens[0] + "'");
                     }
                     defines.put(tokens[1], tokens.length == 3 ? tokens[2] : null);
                     directiveBuffer.setLength(0);
@@ -359,10 +359,10 @@ public class BasicCParser {
 
     public static void unescapeString(final StringBuilder stringBuilder, final String string) throws ImagingException {
         if (string.length() < 2) {
-            throw new ImagingException("Parsing XPM file failed, " + "string is too short");
+            throw new ImagingException("Parsing XPM file failed, string is too short");
         }
         if (string.charAt(0) != '"' || string.charAt(string.length() - 1) != '"') {
-            throw new ImagingException("Parsing XPM file failed, " + "string not surrounded by '\"'");
+            throw new ImagingException("Parsing XPM file failed, string not surrounded by '\"'");
         }
         boolean hadBackSlash = false;
         for (int i = 1; i < string.length() - 1; i++) {
@@ -373,13 +373,13 @@ public class BasicCParser {
             } else if (c == '\\') {
                 hadBackSlash = true;
             } else if (c == '"') {
-                throw new ImagingException("Parsing XPM file failed, " + "extra '\"' found in string");
+                throw new ImagingException("Parsing XPM file failed, extra '\"' found in string");
             } else {
                 stringBuilder.append(c);
             }
         }
         if (hadBackSlash) {
-            throw new ImagingException("Parsing XPM file failed, " + "unterminated escape sequence found in string");
+            throw new ImagingException("Parsing XPM file failed, unterminated escape sequence found in string");
         }
     }
 

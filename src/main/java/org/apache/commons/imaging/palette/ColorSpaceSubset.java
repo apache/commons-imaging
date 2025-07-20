@@ -104,18 +104,18 @@ final class ColorSpaceSubset {
         // + (100.0 * (double) total / (double) total_area)
         // + " %)"
         );
-        LOGGER.fine("\t" + "rgb: " + Integer.toHexString(rgb) + ", " + "red: " + Integer.toHexString(mins[0] << 8 - precision) + ", "
-                + Integer.toHexString(maxs[0] << 8 - precision) + ", " + "green: " + Integer.toHexString(mins[1] << 8 - precision) + ", "
-                + Integer.toHexString(maxs[1] << 8 - precision) + ", " + "blue: " + Integer.toHexString(mins[2] << 8 - precision) + ", "
+        LOGGER.fine("\trgb: " + Integer.toHexString(rgb) + ", red: " + Integer.toHexString(mins[0] << 8 - precision) + ", "
+                + Integer.toHexString(maxs[0] << 8 - precision) + ", green: " + Integer.toHexString(mins[1] << 8 - precision) + ", "
+                + Integer.toHexString(maxs[1] << 8 - precision) + ", blue: " + Integer.toHexString(mins[2] << 8 - precision) + ", "
                 + Integer.toHexString(maxs[2] << 8 - precision));
-        LOGGER.fine("\t" + "red: " + mins[0] + ", " + maxs[0] + ", " + "green: " + mins[1] + ", " + maxs[1] + ", " + "blue: " + mins[2] + ", " + maxs[2]);
-        LOGGER.fine("\t" + "rdiff: " + rdiff + ", " + "gdiff: " + gdiff + ", " + "bdiff: " + bdiff + ", " + "colorArea: " + colorArea);
+        LOGGER.fine("\tred: " + mins[0] + ", " + maxs[0] + ", green: " + mins[1] + ", " + maxs[1] + ", blue: " + mins[2] + ", " + maxs[2]);
+        LOGGER.fine("\trdiff: " + rdiff + ", gdiff: " + gdiff + ", bdiff: " + bdiff + ", colorArea: " + colorArea);
     }
 
     public void dumpJustRgb(final String prefix) {
-        LOGGER.fine("\t" + "rgb: " + Integer.toHexString(rgb) + ", " + "red: " + Integer.toHexString(mins[0] << 8 - precision) + ", "
-                + Integer.toHexString(maxs[0] << 8 - precision) + ", " + "green: " + Integer.toHexString(mins[1] << 8 - precision) + ", "
-                + Integer.toHexString(maxs[1] << 8 - precision) + ", " + "blue: " + Integer.toHexString(mins[2] << 8 - precision) + ", "
+        LOGGER.fine("\trgb: " + Integer.toHexString(rgb) + ", red: " + Integer.toHexString(mins[0] << 8 - precision) + ", "
+                + Integer.toHexString(maxs[0] << 8 - precision) + ", green: " + Integer.toHexString(mins[1] << 8 - precision) + ", "
+                + Integer.toHexString(maxs[1] << 8 - precision) + ", blue: " + Integer.toHexString(mins[2] << 8 - precision) + ", "
                 + Integer.toHexString(maxs[2] << 8 - precision));
     }
 

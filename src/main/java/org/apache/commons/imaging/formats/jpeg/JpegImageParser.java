@@ -249,7 +249,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
 
         final List<AbstractSegment> exifSegments = filterApp1Segments(abstractSegments);
         if (LOGGER.isLoggable(Level.FINEST)) {
-            LOGGER.finest("exifSegments.size()" + ": " + exifSegments.size());
+            LOGGER.finest("exifSegments.size(): " + exifSegments.size());
         }
 
         // Debug.debug("segments", segments);
@@ -261,7 +261,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
         }
         if (exifSegments.size() > 1) {
             throw new ImagingException(
-                    "Imaging currently can't parse EXIF metadata split across multiple APP1 segments.  " + "Please send this image to the Imaging project.");
+                    "Imaging currently can't parse EXIF metadata split across multiple APP1 segments.  Please send this image to the Imaging project.");
         }
 
         final AbstractGenericSegment segment = (AbstractGenericSegment) exifSegments.get(0);
@@ -296,7 +296,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
         final byte[] bytes = assembleSegments(filtered);
 
         if (LOGGER.isLoggable(Level.FINEST)) {
-            LOGGER.finest("bytes" + ": " + bytes.length);
+            LOGGER.finest("bytes: " + bytes.length);
         }
 
         return bytes;

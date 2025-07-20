@@ -357,7 +357,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
 
         if (Arrays.binarySearch(sofnSegments, marker) >= 0) {
             if (marker != JpegConstants.SOF0_MARKER) {
-                throw new ImagingException("Only sequential, baseline JPEGs " + "are supported at the moment");
+                throw new ImagingException("Only sequential, baseline JPEGs are supported at the moment");
             }
             sofnSegment = new SofnSegment(marker, segmentData);
         } else if (marker == JpegConstants.DQT_MARKER) {

@@ -95,11 +95,11 @@ public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> im
         // System.out.println("gif.blocks: " + blocks.blocks.size());
         for (int i = 0; i < blocks.size(); i++) {
             final ImageResourceBlock block = blocks.get(i);
-            pw.println("\t" + i + " (" + Integer.toHexString(block.id) + ", " + "'" + new String(block.nameData, StandardCharsets.ISO_8859_1) + "' ("
+            pw.println("\t" + i + " (" + Integer.toHexString(block.id) + ", '" + new String(block.nameData, StandardCharsets.ISO_8859_1) + "' ("
                     + block.nameData.length + "), "
                     // + block.getClass().getName()
                     // + ", "
-                    + " data: " + block.data.length + " type: '" + ImageResourceType.getDescription(block.id) + "' " + ")");
+                    + " data: " + block.data.length + " type: '" + ImageResourceType.getDescription(block.id) + "' )");
         }
 
         pw.println("");
