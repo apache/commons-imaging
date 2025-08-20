@@ -62,7 +62,7 @@ public class ImagingParameters<E extends ImagingParameters<E>> {
      * (B) this
      * </pre>
      *
-     * @return this instance typed as the subclass type {@code E}.
+     * @return {@code this} instance typed as the subclass type {@code E}.
      */
     @SuppressWarnings("unchecked")
     public E asThis() {
