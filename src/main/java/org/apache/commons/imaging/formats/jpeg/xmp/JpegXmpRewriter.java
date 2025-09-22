@@ -74,10 +74,10 @@ public class JpegXmpRewriter extends JpegRewriter {
      *
      * @param src Image file.
      * @param os  OutputStream to write the image to.
-     * @see java.io.File
-     * @see java.io.OutputStream
      * @throws ImagingException if it fails to read the JFIF segments
      * @throws IOException      if it fails to read or write the data from the segments
+     * @see File
+     * @see OutputStream
      */
     public void removeXmpXml(final File src, final OutputStream os) throws ImagingException, IOException {
         final ByteSource byteSource = ByteSource.file(src);

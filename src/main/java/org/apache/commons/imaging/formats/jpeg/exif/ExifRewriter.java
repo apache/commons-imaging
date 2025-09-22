@@ -221,10 +221,8 @@ public class ExifRewriter extends BinaryFileParser {
      * @throws ImagingException if it fails to read the JFIF segments
      * @throws IOException      if it fails to read the image data
      * @throws ImagingException if it fails to write the updated data
-     * @see java.io.File
-     * @see java.io.OutputStream
-     * @see java.io.File
-     * @see java.io.OutputStream
+     * @see File
+     * @see OutputStream
      */
     public void removeExifMetadata(final File src, final OutputStream os) throws ImagingException, IOException, ImagingException {
         final ByteSource byteSource = ByteSource.file(src);
