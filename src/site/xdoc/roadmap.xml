@@ -40,7 +40,7 @@ limitations under the License.
     <li>Add a structured way to write IPTC image metadata to JPEG files.</li>
     <li>Reading all images from .gif files isn't working. see: getAllBufferedImages().</li>
     <li>Add DNG metadata/image info read. Perhaps some RAW formats as well.</li>
-    <li>Other file formats, eg. WebP.</li>
+    <li>Other file formats, for example, WebP.</li>
   </ul>
   <h4>API</h4>
   <ul>
