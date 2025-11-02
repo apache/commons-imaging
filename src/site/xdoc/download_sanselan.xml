@@ -64,7 +64,7 @@ limitations under the License.
     <subsection name="Using a Mirror">
       <p>
         We recommend you use a mirror to download our release
-        builds, but you <strong>must</strong> <a href="http://www.apache.org/info/verification.html">verify the integrity</a> of
+        builds, but you <strong>must</strong> <a href="https://www.apache.org/info/verification.html">verify the integrity</a> of
         the downloaded files using signatures downloaded from our main
         distribution directories. Recent releases (48 hours) may not yet
         be available from all the mirrors.

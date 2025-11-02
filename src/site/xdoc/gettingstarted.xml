@@ -55,7 +55,7 @@ limitations under the License.
   There are two steps to building Commons Imaging from the latest source:
   <ul>
       <li>Check out the latest source from <a href="scm.html">git</a></li>
-      <li>Build using <a href="http://maven.apache.org">Maven 2</a></li>
+      <li>Build using <a href="https://maven.apache.org">Maven 2</a></li>
           <ul>
               <li>1. Install the latest version of Maven</li>
               <li>2. cd imaging-snapshot (if you are not already in the project directory)</li>

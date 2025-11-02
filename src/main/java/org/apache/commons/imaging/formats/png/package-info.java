@@ -19,10 +19,10 @@
  * The PNG (Portable Network Graphics) image format.
  * <p>
  * The implementation is based on the
- * <a href="http://www.libpng.org/pub/png/spec/1.2/">PNG specification version 1.2</a>,
+ * <a href="https://www.libpng.org/pub/png/spec/1.2/">PNG specification version 1.2</a>,
  * and supports the following extensions:
  * <ul>
- *     <li><a href="http://ftp-osl.osuosl.org/pub/libpng/documents/pngext-1.5.0.html">Extensions to the PNG 1.2 Specification, Version 1.5.0</a></li>
+ *     <li><a href="https://ftp-osl.osuosl.org/pub/libpng/documents/pngext-1.5.0.html">Extensions to the PNG 1.2 Specification, Version 1.5.0</a></li>
  * </ul>
  */
 package org.apache.commons.imaging.formats.png;

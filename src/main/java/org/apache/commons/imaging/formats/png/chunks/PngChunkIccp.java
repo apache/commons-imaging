@@ -33,7 +33,7 @@ import org.apache.commons.io.IOUtils;
  * The PNG iCCP chunk. If "present, the image samples conform to the color space represented by the embedded ICC profile as defined by the International Color
  * Consortium".
  *
- * @see <a href="http://www.libpng.org/pub/png/spec/1.2/PNG-Chunks.html">PNG Specification</a>
+ * @see <a href="https://www.libpng.org/pub/png/spec/1.2/PNG-Chunks.html">PNG Specification</a>
  */
 public final class PngChunkIccp extends PngChunk {
 

@@ -42,7 +42,7 @@ limitations under the License.
     </td>
     <td>
        No spec, see:
-       <a href="http://en.wikipedia.org/wiki/Windows_bitmap">wikipedia</a>
+       <a href="https://en.wikipedia.org/wiki/Windows_bitmap">wikipedia</a>
     </td>
   </tr>
 
@@ -55,8 +55,8 @@ limitations under the License.
         Controlling the exact format when writing is incomplete.
     </td>
     <td>
-       <a href="http://www.w3.org/Graphics/GIF/spec-gif89a.txt">spec</a>
-       <a href="http://en.wikipedia.org/wiki/GIF">wikipedia</a>
+       <a href="https://www.w3.org/Graphics/GIF/spec-gif89a.txt">spec</a>
+       <a href="https://en.wikipedia.org/wiki/GIF">wikipedia</a>
     </td>
   </tr>
 
@@ -70,9 +70,9 @@ limitations under the License.
         Provides JPEG comments in ImageInfo.
     </td>
     <td>
-       <a href="http://www.jpeg.org/public/jfif.pdf">JFIF spec</a>
-       <a href="http://www.jpeg.org/jpeg/index.html">JPEG Group</a>
-       <a href="http://en.wikipedia.org/wiki/JPEG">wikipedia</a>
+       <a href="https://www.jpeg.org/public/jfif.pdf">JFIF spec</a>
+       <a href="https://www.jpeg.org/jpeg/index.html">JPEG Group</a>
+       <a href="https://en.wikipedia.org/wiki/JPEG">wikipedia</a>
     </td>
   </tr>
 
@@ -84,7 +84,7 @@ limitations under the License.
         Extensively tested for correctness against MacOS X, including behavior with missing masks.
     </td>
     <td>
-       <a href="http://en.wikipedia.org/wiki/Apple_Icon_Image">wikipedia</a>
+       <a href="https://en.wikipedia.org/wiki/Apple_Icon_Image">wikipedia</a>
     </td>
   </tr>
 
@@ -98,7 +98,7 @@ limitations under the License.
     </td>
     <td>
        No spec, see:
-       <a href="http://en.wikipedia.org/wiki/ICO_(icon_image_file_format)">wikipedia</a>
+       <a href="https://en.wikipedia.org/wiki/ICO_(icon_image_file_format)">wikipedia</a>
     </td>
   </tr>
 
@@ -121,8 +121,8 @@ limitations under the License.
         Reading complete. PAM writing only in RGB_ALPHA format.
     </td>
     <td>
-       <a href="http://netpbm.sourceforge.net/doc/index.html">spec</a>
-       <a href="http://en.wikipedia.org/wiki/Portable_pixmap">wikipedia</a>
+       <a href="https://netpbm.sourceforge.net/doc/index.html">spec</a>
+       <a href="https://en.wikipedia.org/wiki/Portable_pixmap">wikipedia</a>
     </td>
   </tr>
 
@@ -134,8 +134,8 @@ limitations under the License.
         Controlling the exact format when writing is incomplete.
     </td>
     <td>
-       <a href="http://www.libpng.org/pub/png/">spec</a>
-       <a href="http://en.wikipedia.org/wiki/Portable_Network_Graphics">wikipedia</a>
+       <a href="https://www.libpng.org/pub/png/">spec</a>
+       <a href="https://en.wikipedia.org/wiki/Portable_Network_Graphics">wikipedia</a>
     </td>
   </tr>
 
@@ -147,9 +147,9 @@ limitations under the License.
         Supports all modes except Multichannel. Can read some image metadata.
     </td>
     <td>
-       <a href="http://www.fileformat.info/format/psd/egff.htm">Unofficial spec</a>
-       <a href="http://www.fileformat.info/format/psd/egff.htm">spec</a>
-       <a href="http://en.wikipedia.org/wiki/PSD">wikipedia</a>
+       <a href="https://www.fileformat.info/format/psd/egff.htm">Unofficial spec</a>
+       <a href="https://www.fileformat.info/format/psd/egff.htm">spec</a>
+       <a href="https://en.wikipedia.org/wiki/PSD">wikipedia</a>
     </td>
   </tr>
 
@@ -160,7 +160,7 @@ limitations under the License.
         Basic support.
     </td>
     <td>
-      <a href="http://en.wikipedia.org/wiki/RGBE_image_format">Wikipedia</a>
+      <a href="https://en.wikipedia.org/wiki/RGBE_image_format">Wikipedia</a>
     </td>
   </tr>
 
@@ -178,8 +178,8 @@ limitations under the License.
     <td>
        <a href="https://www.web.archive.org/web/20060116011057/https://partners.adobe.com/public/developer/tiff/index.html">Adobe</a>
        <a href="https://www.web.archive.org/web/20050828212121/https://partners.adobe.com/public/developer/en/tiff/TIFF6.pdf">spec</a>
-       <a href="http://en.wikipedia.org/wiki/TIFF">wikipedia</a>
-       <a href="http://www.awaresystems.be/imaging/tiff/tifftags.html">AWare Systems TIFF Tag Reference</a>
+       <a href="https://en.wikipedia.org/wiki/TIFF">wikipedia</a>
+       <a href="https://www.awaresystems.be/imaging/tiff/tifftags.html">AWare Systems TIFF Tag Reference</a>
     </td>
   </tr>
 
@@ -190,7 +190,7 @@ limitations under the License.
         Complete support for WBMP type 0 bitmaps.
     </td>
     <td>
-       <a href="http://en.wikipedia.org/wiki/WBMP">wikipedia</a>
+       <a href="https://en.wikipedia.org/wiki/WBMP">wikipedia</a>
        <a href="https://www.web.archive.org/web/20050824034208/http://www.wapforum.org:80/what/technical/SPEC-WAESpec-19990524.pdf">spec</a>
     </td>
   </tr>
@@ -202,8 +202,8 @@ limitations under the License.
         Complete.
     </td>
     <td>
-       <a href="http://en.wikipedia.org/wiki/XBM">wikipedia</a>
-       <a href="http://www.xfree86.org/current/xlib.pdf">spec</a>
+       <a href="https://en.wikipedia.org/wiki/XBM">wikipedia</a>
+       <a href="https://www.xfree86.org/current/xlib.pdf">spec</a>
     </td>
   </tr>
 
@@ -216,8 +216,8 @@ limitations under the License.
         Writing only writes color data.
     </td>
     <td>
-       <a href="http://en.wikipedia.org/wiki/X_PixMap">wikipedia</a>
-       <a href="http://www.xfree86.org/current/xpm.pdf">spec</a>
+       <a href="https://en.wikipedia.org/wiki/X_PixMap">wikipedia</a>
+       <a href="https://www.xfree86.org/current/xpm.pdf">spec</a>
     </td>
   </tr>
 </table>
@@ -244,11 +244,11 @@ limitations under the License.
         Can read and write EXIF data to and from existing JPEG/JFIF files WITHOUT modifying image data.
     </td>
     <td>
-       <a href="http://www.exif.org/">Exif Specs, etc.</a>
-       <a href="http://en.wikipedia.org/wiki/Exif">wikipedia</a>
-       <a href="http://www.awaresystems.be/imaging/tiff/tifftags.html">AWare Systems TIFF Tag Reference</a> (JPEG EXIF metadata is stored in TIFF directories)
-       <a href="http://www.sno.phy.queensu.ca/~phil/exiftool/index.html">Phil Harvey's exiftool and metadata reference</a>
-       <a href="http://www.sno.phy.queensu.ca/~phil/exiftool/writing.html">Phil Harvey on writing EXIF</a>
+       <a href="https://www.exif.org/">Exif Specs, etc.</a>
+       <a href="https://en.wikipedia.org/wiki/Exif">wikipedia</a>
+       <a href="https://www.awaresystems.be/imaging/tiff/tifftags.html">AWare Systems TIFF Tag Reference</a> (JPEG EXIF metadata is stored in TIFF directories)
+       <a href="https://www.sno.phy.queensu.ca/~phil/exiftool/index.html">Phil Harvey's exiftool and metadata reference</a>
+       <a href="https://www.sno.phy.queensu.ca/~phil/exiftool/writing.html">Phil Harvey on writing EXIF</a>
     </td>
   </tr>
 
@@ -259,9 +259,9 @@ limitations under the License.
         Can read IPTC data from existing JPEG/JFIF files WITHOUT modifying image data.
     </td>
     <td>
-       <a href="http://www.iptc.org/cms/site/index.html?channel=CH0108">IPTC Specs, etc.</a>
-       <a href="http://en.wikipedia.org/wiki/IPTC_(image_meta-data)">wikipedia</a>
-       <a href="http://www2.computer.org/portal/web/csdl/doi/10.1109/MMUL.2005.50">IEEE article</a>
+       <a href="https://www.iptc.org/cms/site/index.html?channel=CH0108">IPTC Specs, etc.</a>
+       <a href="https://en.wikipedia.org/wiki/IPTC_(image_meta-data)">wikipedia</a>
+       <a href="https://www2.computer.org/portal/web/csdl/doi/10.1109/MMUL.2005.50">IEEE article</a>
     </td>
   </tr>
 
@@ -274,8 +274,8 @@ limitations under the License.
         Can remove, insert and update XMP XML into existing JPEG files.
     </td>
     <td>
-       <a href="http://www.adobe.com/devnet/xmp/">Adobe site with Spec</a>
-       <a href="http://en.wikipedia.org/wiki/Extensible_Metadata_Platform">wikipedia</a>
+       <a href="https://www.adobe.com/devnet/xmp/">Adobe site with Spec</a>
+       <a href="https://en.wikipedia.org/wiki/Extensible_Metadata_Platform">wikipedia</a>
     </td>
   </tr>
 </table>
