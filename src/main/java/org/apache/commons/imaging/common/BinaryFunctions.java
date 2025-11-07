@@ -262,7 +262,7 @@ public final class BinaryFunctions {
 
     public static byte[] readBytes(final String name, final InputStream in, final int length, final String exception) throws IOException {
         try {
-            return IOUtils.toByteArray(in, Allocator.check(length));
+            return in == null ? ArrayUtils.EMPTY_BYTE_ARRAY : IOUtils.toByteArray(in, Allocator.check(length));
         } catch (final IOException e) {
             throw new IOException(exception + ", name: " + name + ", length: " + length);
         }

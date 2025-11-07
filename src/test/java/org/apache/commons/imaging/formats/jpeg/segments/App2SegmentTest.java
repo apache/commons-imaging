@@ -34,7 +34,6 @@ class App2SegmentTest {
     @Test
     void testCompareTo() throws IOException, ImagingException {
         final App2Segment app2Segment = new App2Segment(0, 0, null);
-
         assertEquals(0, app2Segment.compareTo(app2Segment));
     }
 
@@ -42,15 +41,12 @@ class App2SegmentTest {
     void testEqualsReturningFalse() throws IOException, ImagingException {
         final byte[] byteArray = new byte[3];
         final App2Segment app2Segment = new App2Segment(65475, byteArray);
-
         assertNotEquals(app2Segment, byteArray);
     }
 
     @Test
     void testEqualsReturningTrue() throws IOException, ImagingException {
         final App2Segment app2Segment = new App2Segment(0, 0, null);
-
         assertEquals(app2Segment, app2Segment);
     }
-
 }
