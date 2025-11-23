@@ -185,21 +185,21 @@
           <groupId>org.apache.rat</groupId>
           <artifactId>apache-rat-plugin</artifactId>
           <configuration>
-            <excludes>
-              <exclude>src/test/resources/images/**/*</exclude>
-              <exclude>src/test/resources/IMAGING-*/*</exclude>
-              <exclude>src/test/**/*.xpm</exclude>
-              <exclude>src/test/**/*.pam</exclude>
-              <exclude>src/test/**/*.pbm</exclude>
-              <exclude>src/test/**/*.pgm</exclude>
-              <exclude>src/test/**/*.ppm</exclude>
-              <exclude>src/test/**/*.xbm</exclude>
-              <exclude>src/test/**/*.bmp</exclude>
-              <exclude>src/test/**/*.tga</exclude>
-              <exclude>src/test/**/*.hdr</exclude>
-              <exclude>src/main/resources/org/apache/commons/imaging/formats/xpm/rgb.txt</exclude>
-              <exclude>.asf.yaml</exclude>
-            </excludes>
+            <inputExcludes>
+              <inputExclude>src/test/resources/images/**/*</inputExclude>
+              <inputExclude>src/test/resources/IMAGING-*/*</inputExclude>
+              <inputExclude>src/test/**/*.xpm</inputExclude>
+              <inputExclude>src/test/**/*.pam</inputExclude>
+              <inputExclude>src/test/**/*.pbm</inputExclude>
+              <inputExclude>src/test/**/*.pgm</inputExclude>
+              <inputExclude>src/test/**/*.ppm</inputExclude>
+              <inputExclude>src/test/**/*.xbm</inputExclude>
+              <inputExclude>src/test/**/*.bmp</inputExclude>
+              <inputExclude>src/test/**/*.tga</inputExclude>
+              <inputExclude>src/test/**/*.hdr</inputExclude>
+              <inputExclude>src/main/resources/org/apache/commons/imaging/formats/xpm/rgb.txt</inputExclude>
+              <inputExclude>.asf.yaml</inputExclude>
+            </inputExcludes>
           </configuration>
         </plugin>
         <plugin>
@@ -312,21 +312,21 @@
         <groupId>org.apache.rat</groupId>
         <artifactId>apache-rat-plugin</artifactId>
         <configuration>
-          <excludes>
-            <exclude>src/test/resources/images/**/*</exclude>
-            <exclude>src/test/resources/IMAGING-*/*</exclude>
-            <exclude>src/test/data/**/*.xpm</exclude>
-            <exclude>src/test/data/**/*.pam</exclude>
-            <exclude>src/test/data/**/*.pbm</exclude>
-            <exclude>src/test/data/**/*.pgm</exclude>
-            <exclude>src/test/data/**/*.ppm</exclude>
-            <exclude>src/test/data/**/*.xbm</exclude>
-            <exclude>src/test/data/**/*.bmp</exclude>
-            <exclude>src/test/data/**/*.tga</exclude>
-            <exclude>src/test/data/**/*.hdr</exclude>
-            <exclude>src/main/resources/org/apache/commons/imaging/formats/xpm/rgb.txt</exclude>
-            <exclude>.asf.yaml</exclude>
-          </excludes>
+          <inputExcludes>
+            <inputExclude>src/test/resources/images/**/*</inputExclude>
+            <inputExclude>src/test/resources/IMAGING-*/*</inputExclude>
+            <inputExclude>src/test/data/**/*.xpm</inputExclude>
+            <inputExclude>src/test/data/**/*.pam</inputExclude>
+            <inputExclude>src/test/data/**/*.pbm</inputExclude>
+            <inputExclude>src/test/data/**/*.pgm</inputExclude>
+            <inputExclude>src/test/data/**/*.ppm</inputExclude>
+            <inputExclude>src/test/data/**/*.xbm</inputExclude>
+            <inputExclude>src/test/data/**/*.bmp</inputExclude>
+            <inputExclude>src/test/data/**/*.tga</inputExclude>
+            <inputExclude>src/test/data/**/*.hdr</inputExclude>
+            <inputExclude>src/main/resources/org/apache/commons/imaging/formats/xpm/rgb.txt</inputExclude>
+            <inputExclude>.asf.yaml</inputExclude>
+          </inputExcludes>
         </configuration>
       </plugin>
     </plugins>
