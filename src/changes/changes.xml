@@ -51,9 +51,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix Apache RAT plugin console warnings.</action>
       <!-- ADD -->
       <!-- UPDATE -->
-      <action dev="ggregory" type="update" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 83 to 93 #527, #530, #539, #544, #546.</action>
-      <action dev="ggregory" type="update" due-to="Gary Gregory">Bump org.apache.commons:commons-lang3 from 3.17.0 to 3.20.0 #515.</action>
-      <action dev="ggregory" type="update" due-to="Gary Gregory">Bump commons-io:commons-io from 2.19.0 to 2.21.0.</action>
+      <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 83 to 93 #527, #530, #539, #544, #546.</action>
+      <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-lang3 from 3.17.0 to 3.20.0 #515.</action>
+      <action type="update" dev="ggregory" due-to="Gary Gregory">Bump commons-io:commons-io from 2.19.0 to 2.21.0.</action>
     </release>
     <release version="1.0.0-alpha6" date="2025-04-27" description="This release requires Java 8.">
       <!-- FIX -->
