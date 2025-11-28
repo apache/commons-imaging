@@ -94,8 +94,8 @@ public final class BinaryFunctions {
     /**
      * Finds the index of the first 0 in the array starting at the given index.
      *
-     * @param src  the array to search for the object, may be {@code null}
-     * @param start  the index to start searching at
+     * @param src  the array to search for the object, may be {@code null}.
+     * @param start  the index to start searching.
      * @param message The ImagingException message if 0 is not found.
      * @return the index of the value within the array,
      * @throws ImagingException Thrown if 0 is not found.
@@ -111,7 +111,7 @@ public final class BinaryFunctions {
     /**
      * Finds the index of the first 0 in the array starting at the given index.
      *
-     * @param src  the array to search for the object, may be {@code null}
+     * @param src  the array to search for the object, may be {@code null}.
      * @param message The ImagingException message if 0 is not found.
      * @return the index of the value within the array,
      * @throws ImagingException Thrown if 0 is not found.
