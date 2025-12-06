@@ -14,3 +14,7 @@ release.properties
 /.project
 /nbproject/
 /commons-imaging.iml
+
+# NetBeans files
+nb-configuration.xml
+nbactions.xml
