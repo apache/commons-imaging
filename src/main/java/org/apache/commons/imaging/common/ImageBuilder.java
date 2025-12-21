@@ -157,7 +157,7 @@ public final class ImageBuilder {
     }
 
     /**
-     * Gets the RGB or ARGB value for the pixel at the position (x,y) within the image builder pixel field. For performance reasons no bounds checking is
+     * Gets the RGB or ARGB value for the pixel at the position (x, y) within the image builder pixel field. For performance reasons no bounds checking is
      * applied.
      *
      * @param x the X coordinate of the pixel to be read
@@ -246,7 +246,7 @@ public final class ImageBuilder {
     }
 
     /**
-     * Sets the RGB or ARGB value for the pixel at position (x,y) within the image builder pixel field. For performance reasons, no bounds checking is applied.
+     * Sets the RGB or ARGB value for the pixel at position (x, y) within the image builder pixel field. For performance reasons, no bounds checking is applied.
      *
      * @param x    the X coordinate of the pixel to be set.
      * @param y    the Y coordinate of the pixel to be set.

@@ -83,7 +83,7 @@ public final class ColorConversions {
     }
 
     public static ColorCieLch convertCieLabToCieLch(final double l, final double a, final double b) {
-        // atan2(y,x) returns atan(y/x)
+        // atan2(y, x) returns atan(y/x)
         final double atanba = Math.atan2(b, a); // Quadrant by signs
 
         final double h = atanba > 0 //

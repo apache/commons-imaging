@@ -147,7 +147,7 @@ public final class PhotometricInterpreterFloat extends AbstractPhotometricInterp
     }
 
     /**
-     * Gets the coordinates (x,y) at which the maximum value was identified during processing
+     * Gets the coordinates (x, y) at which the maximum value was identified during processing
      *
      * @return a valid array of length 2.
      */
@@ -177,7 +177,7 @@ public final class PhotometricInterpreterFloat extends AbstractPhotometricInterp
     }
 
     /**
-     * Gets the coordinates (x,y) at which the minimum value was identified during processing
+     * Gets the coordinates (x, y) at which the minimum value was identified during processing
      *
      * @return a valid array of length 2.
      */
