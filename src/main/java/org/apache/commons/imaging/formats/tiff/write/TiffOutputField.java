@@ -64,6 +64,7 @@ public class TiffOutputField {
 
     /**
      * Return a copy of the data in this TIFF output field.
+     *
      * @return a copy of the data in this TIFF output field.
      */
     public byte[] getData() {
