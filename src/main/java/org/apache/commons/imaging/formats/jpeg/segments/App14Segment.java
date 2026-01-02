@@ -24,30 +24,63 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 /**
- * [BROKEN URL] http://www.aiim.org/documents/standards/PDF-Ref/References/Adobe/5116.DCT_Filter.pdf
+ * Represents a JPEG APP14 segment, used for Adobe color transform information.
+ *
+ * @see <a href="http://www.aiim.org/documents/standards/PDF-Ref/References/Adobe/5116.DCT_Filter.pdf">Adobe DCT Filter</a>
  */
 public class App14Segment extends AppnSegment {
     private static final byte[] ADOBE_PREFIX;
+
+    /** Adobe color transform unknown. */
     public static final int ADOBE_COLOR_TRANSFORM_UNKNOWN = 0;
+
+    /** Adobe color transform YCbCr. */
     public static final int ADOBE_COLOR_TRANSFORM_YCbCr = 1;
+
+    /** Adobe color transform YCCK. */
     public static final int ADOBE_COLOR_TRANSFORM_YCCK = 2;
 
     static {
         ADOBE_PREFIX = "Adobe".getBytes(StandardCharsets.US_ASCII);
     }
 
+    /**
+     * Constructs an APP14 segment from segment data.
+     *
+     * @param marker the segment marker.
+     * @param segmentData the segment data.
+     * @throws IOException if an I/O error occurs.
+     */
     public App14Segment(final int marker, final byte[] segmentData) throws IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
+    /**
+     * Constructs an APP14 segment by reading from an input stream.
+     *
+     * @param marker the segment marker.
+     * @param markerLength the marker length.
+     * @param is the input stream to read from.
+     * @throws IOException if an I/O error occurs.
+     */
     public App14Segment(final int marker, final int markerLength, final InputStream is) throws IOException {
         super(marker, markerLength, is);
     }
 
+    /**
+     * Gets the Adobe color transform value.
+     *
+     * @return the color transform value.
+     */
     public int getAdobeColorTransform() {
         return 0xff & getSegmentData(11);
     }
 
+    /**
+     * Checks if this segment is an Adobe JPEG segment.
+     *
+     * @return {@code true} if this is an Adobe segment, {@code false} otherwise.
+     */
     public boolean isAdobeJpegSegment() {
         return startsWith(getSegmentData(), ADOBE_PREFIX);
     }

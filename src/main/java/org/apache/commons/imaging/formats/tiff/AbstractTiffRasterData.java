@@ -34,18 +34,27 @@ package org.apache.commons.imaging.formats.tiff;
  */
 public abstract class AbstractTiffRasterData {
 
+    /** The width of the raster. */
     protected final int width;
+
+    /** The height of the raster. */
     protected final int height;
+
+    /** The number of samples per pixel. */
     protected final int samplesPerPixel;
+
+    /** The total number of cells in the raster. */
     protected final int nCells;
+
+    /** The planar offset for multi-sample data. */
     protected final int planarOffset;
 
     /**
      * Constructs an instance allocating memory for the specified dimensions.
      *
-     * @param width           a value of 1 or greater
-     * @param height          a value of 1 or greater
-     * @param samplesPerPixel a value of 1 or greater
+     * @param width           a value of 1 or greater.
+     * @param height          a value of 1 or greater.
+     * @param samplesPerPixel a value of 1 or greater.
      */
     public AbstractTiffRasterData(final int width, final int height, final int samplesPerPixel) {
         if (width <= 0 || height <= 0) {
@@ -61,6 +70,15 @@ public abstract class AbstractTiffRasterData {
         planarOffset = width * height;
     }
 
+    /**
+     * Checks that coordinates and sample index are within valid ranges and computes the array index.
+     *
+     * @param x the x coordinate.
+     * @param y the y coordinate.
+     * @param i the sample index.
+     * @return the computed array index.
+     * @throws IllegalArgumentException if coordinates or sample index are out of range.
+     */
     protected final int checkCoordinatesAndComputeIndex(final int x, final int y, final int i) {
         if (x < 0 || x >= width || y < 0 || y >= height) {
             throw new IllegalArgumentException("Coordinates out of range (" + x + ", " + y + ")");
@@ -116,19 +134,19 @@ public abstract class AbstractTiffRasterData {
     /**
      * Gets the value stored at the specified raster coordinates.
      *
-     * @param x integer coordinate in the columnar direction
-     * @param y integer coordinate in the row direction
-     * @return the value stored at the specified location
+     * @param x integer coordinate in the columnar direction.
+     * @param y integer coordinate in the row direction.
+     * @return the value stored at the specified location.
      */
     public abstract int getIntValue(int x, int y);
 
     /**
      * Gets the value stored at the specified raster coordinates.
      *
-     * @param x integer coordinate in the columnar direction
-     * @param y integer coordinate in the row direction
+     * @param x integer coordinate in the columnar direction.
+     * @param y integer coordinate in the row direction.
      * @param i integer sample index (for data sets giving multiple samples per raster cell).
-     * @return the value stored at the specified location
+     * @return the value stored at the specified location.
      */
     public abstract int getIntValue(int x, int y, int i);
 
@@ -159,8 +177,8 @@ public abstract class AbstractTiffRasterData {
     /**
      * Gets the value stored at the specified raster coordinates.
      *
-     * @param x integer coordinate in the columnar direction
-     * @param y integer coordinate in the row direction
+     * @param x integer coordinate in the columnar direction.
+     * @param y integer coordinate in the row direction.
      * @return the value stored at the specified location; potentially a Float&#46;NaN.
      */
     public abstract float getValue(int x, int y);
@@ -168,9 +186,9 @@ public abstract class AbstractTiffRasterData {
     /**
      * Gets the value stored at the specified raster coordinates.
      *
-     * @param x integer coordinate in the columnar direction
-     * @param y integer coordinate in the row direction
-     * @param i integer sample index
+     * @param x integer coordinate in the columnar direction.
+     * @param y integer coordinate in the row direction.
+     * @param i integer sample index.
      * @return the value stored at the specified location; potentially a Float&#46;NaN.
      */
     public abstract float getValue(int x, int y, int i);
@@ -187,8 +205,8 @@ public abstract class AbstractTiffRasterData {
     /**
      * Sets the value stored at the specified raster coordinates.
      *
-     * @param x     integer coordinate in the columnar direction
-     * @param y     integer coordinate in the row direction
+     * @param x     integer coordinate in the columnar direction.
+     * @param y     integer coordinate in the row direction.
      * @param value the value to be stored at the specified location.
      */
     public abstract void setIntValue(int x, int y, int value);
@@ -196,8 +214,8 @@ public abstract class AbstractTiffRasterData {
     /**
      * Sets the value stored at the specified raster coordinates.
      *
-     * @param x     integer coordinate in the columnar direction
-     * @param y     integer coordinate in the row direction
+     * @param x     integer coordinate in the columnar direction.
+     * @param y     integer coordinate in the row direction.
      * @param i     integer sample index (for data sets giving multiple samples per raster cell).
      * @param value the value to be stored at the specified location.
      */
@@ -206,8 +224,8 @@ public abstract class AbstractTiffRasterData {
     /**
      * Sets the value stored at the specified raster coordinates.
      *
-     * @param x     integer coordinate in the columnar direction
-     * @param y     integer coordinate in the row direction
+     * @param x     integer coordinate in the columnar direction.
+     * @param y     integer coordinate in the row direction.
      * @param value the value to be stored at the specified location; potentially a Float&#46;NaN.
      */
     public abstract void setValue(int x, int y, float value);
@@ -215,8 +233,8 @@ public abstract class AbstractTiffRasterData {
     /**
      * Sets the value stored at the specified raster coordinates.
      *
-     * @param x     integer coordinate in the columnar direction
-     * @param y     integer coordinate in the row direction
+     * @param x     integer coordinate in the columnar direction.
+     * @param y     integer coordinate in the row direction.
      * @param i     integer sample index (for data sets giving multiple samples per raster cell).
      * @param value the value to be stored at the specified location; potentially a Float&#46;NaN.
      */

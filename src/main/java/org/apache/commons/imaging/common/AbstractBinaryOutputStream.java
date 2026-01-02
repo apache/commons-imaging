@@ -22,12 +22,29 @@ import java.io.OutputStream;
 import java.nio.ByteOrder;
 import java.util.Objects;
 
+/**
+ * Abstract class for binary output streams that provides methods for writing multi-byte values.
+ */
 public abstract class AbstractBinaryOutputStream extends FilterOutputStream {
 
+    /**
+     * Creates a big-endian binary output stream.
+     *
+     * @param outputStream the underlying output stream.
+     * @return a big-endian binary output stream.
+     */
     public static BigEndianBinaryOutputStream bigEndian(final OutputStream outputStream) {
         return new BigEndianBinaryOutputStream(outputStream);
     }
 
+    /**
+     * Creates a binary output stream with the specified byte order.
+     *
+     * @param outputStream the underlying output stream.
+     * @param byteOrder the byte order.
+     * @return a binary output stream with the specified byte order.
+     * @throws UnsupportedOperationException if the byte order is not supported.
+     */
     @SuppressWarnings("resource")
     public static AbstractBinaryOutputStream create(final OutputStream outputStream, final ByteOrder byteOrder) {
         Objects.requireNonNull(outputStream, "outputStream");
@@ -41,17 +58,46 @@ public abstract class AbstractBinaryOutputStream extends FilterOutputStream {
         throw new UnsupportedOperationException(byteOrder.toString());
     }
 
+    /**
+     * Creates a little-endian binary output stream.
+     *
+     * @param outputStream the underlying output stream.
+     * @return a little-endian binary output stream.
+     */
     public static LittleEndianBinaryOutputStream littleEndian(final OutputStream outputStream) {
         return new LittleEndianBinaryOutputStream(outputStream);
     }
 
+    /**
+     * Constructs a new binary output stream.
+     *
+     * @param outputStream the underlying output stream.
+     */
     public AbstractBinaryOutputStream(final OutputStream outputStream) {
         super(outputStream);
     }
 
+    /**
+     * Writes a 2-byte value.
+     *
+     * @param value the value to write.
+     * @throws IOException if an I/O error occurs.
+     */
     public abstract void write2Bytes(int value) throws IOException;
 
+    /**
+     * Writes a 3-byte value.
+     *
+     * @param value the value to write.
+     * @throws IOException if an I/O error occurs.
+     */
     public abstract void write3Bytes(int value) throws IOException;
 
+    /**
+     * Writes a 4-byte value.
+     *
+     * @param value the value to write.
+     * @throws IOException if an I/O error occurs.
+     */
     public abstract void write4Bytes(int value) throws IOException;
 }

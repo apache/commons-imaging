@@ -18,16 +18,42 @@ package org.apache.commons.imaging.formats.png.chunks;
 
 import org.apache.commons.imaging.formats.png.AbstractPngText;
 
+/**
+ * Abstract class for PNG text chunks.
+ */
 public abstract class AbstractPngTextChunk extends PngChunk {
 
+    /**
+     * Constructs a new PNG text chunk.
+     *
+     * @param length the length of the chunk data.
+     * @param chunkType the chunk type.
+     * @param crc the CRC value.
+     * @param bytes the chunk data bytes.
+     */
     public AbstractPngTextChunk(final int length, final int chunkType, final int crc, final byte[] bytes) {
         super(length, chunkType, crc, bytes);
     }
 
+    /**
+     * Gets the text contents of this chunk.
+     *
+     * @return the text contents.
+     */
     public abstract AbstractPngText getContents();
 
+    /**
+     * Gets the keyword of this text chunk.
+     *
+     * @return the keyword.
+     */
     public abstract String getKeyword();
 
+    /**
+     * Gets the text value of this text chunk.
+     *
+     * @return the text.
+     */
     public abstract String getText();
 
 }

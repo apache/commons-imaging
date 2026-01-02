@@ -27,15 +27,39 @@ import java.io.InputStream;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
+/**
+ * Represents a JPEG APP2 segment, typically used for ICC color profiles.
+ */
 public final class App2Segment extends AppnSegment implements Comparable<App2Segment> {
     private final byte[] iccBytes;
+
+    /** The current marker index. */
     public final int curMarker;
+
+    /** The total number of markers. */
     public final int numMarkers;
 
+    /**
+     * Constructs an APP2 segment from segment data.
+     *
+     * @param marker the segment marker.
+     * @param segmentData the segment data.
+     * @throws ImagingException if the image format is invalid.
+     * @throws IOException if an I/O error occurs.
+     */
     public App2Segment(final int marker, final byte[] segmentData) throws ImagingException, IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
+    /**
+     * Constructs an APP2 segment by reading from an input stream.
+     *
+     * @param marker the segment marker.
+     * @param markerLength the marker length.
+     * @param is2 the input stream to read from.
+     * @throws ImagingException if the image format is invalid.
+     * @throws IOException if an I/O error occurs.
+     */
     public App2Segment(final int marker, int markerLength, final InputStream is2) throws ImagingException, IOException {
         super(marker, markerLength, is2);
 
@@ -74,7 +98,9 @@ public final class App2Segment extends AppnSegment implements Comparable<App2Seg
     }
 
     /**
-     * @return the iccBytes
+     * Gets the ICC profile bytes.
+     *
+     * @return the ICC bytes, or {@code null} if not present.
      */
     public byte[] getIccBytes() {
         return iccBytes != null ? iccBytes.clone() : null;

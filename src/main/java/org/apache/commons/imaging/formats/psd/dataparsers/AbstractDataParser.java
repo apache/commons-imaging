@@ -22,11 +22,43 @@ import java.awt.image.DataBuffer;
 import org.apache.commons.imaging.formats.psd.PsdHeaderInfo;
 import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
+/**
+ * Abstract class for parsing PSD image data.
+ */
 public abstract class AbstractDataParser {
+
+    /**
+     * Constructs a new data parser.
+     */
+    protected AbstractDataParser() {
+        // Default constructor
+    }
+
+    /**
+     * Gets the number of basic color channels.
+     *
+     * @return the number of basic channels.
+     */
     public abstract int getBasicChannelsCount();
 
+    /**
+     * Gets the RGB value for a pixel at the specified coordinates.
+     *
+     * @param data the image data array.
+     * @param x the x coordinate.
+     * @param y the y coordinate.
+     * @param imageContents the image contents.
+     * @return the RGB value.
+     */
     protected abstract int getRgb(int[][][] data, int x, int y, PsdImageContents imageContents);
 
+    /**
+     * Parses the image data and populates a BufferedImage.
+     *
+     * @param data the image data array.
+     * @param bi the BufferedImage to populate.
+     * @param imageContents the image contents.
+     */
     public final void parseData(final int[][][] data, final BufferedImage bi, final PsdImageContents imageContents) {
         final DataBuffer buffer = bi.getRaster().getDataBuffer();
 

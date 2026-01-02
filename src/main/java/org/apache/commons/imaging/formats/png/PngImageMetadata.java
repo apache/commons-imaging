@@ -25,6 +25,8 @@ import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.internal.Debug;
 
 /**
+ * Represents metadata information contained in a PNG image.
+ *
  * @since 1.0-alpha6
  */
 public class PngImageMetadata implements ImageMetadata {

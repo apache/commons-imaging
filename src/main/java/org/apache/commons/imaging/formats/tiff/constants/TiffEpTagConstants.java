@@ -33,6 +33,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShorts;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUndefineds;
 
 /**
+ * Constants for TIFF/EP (Electronic Photography) tags.
  */
 public final class TiffEpTagConstants {
 

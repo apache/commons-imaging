@@ -21,8 +21,19 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
+/**
+ * Represents a generic JPEG APPn segment.
+ */
 public class AppnSegment extends AbstractGenericSegment {
 
+    /**
+     * Constructs an APPn segment by reading from an input stream.
+     *
+     * @param marker the segment marker.
+     * @param markerLength the marker length.
+     * @param is the input stream to read from.
+     * @throws IOException if an I/O error occurs.
+     */
     public AppnSegment(final int marker, final int markerLength, final InputStream is) throws IOException {
         super(marker, markerLength, is);
     }

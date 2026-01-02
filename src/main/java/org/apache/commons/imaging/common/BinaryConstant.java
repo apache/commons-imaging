@@ -20,13 +20,27 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
 
+/**
+ * Represents a constant binary value used for pattern matching in binary data.
+ */
 public class BinaryConstant {
     private final byte[] value;
 
+    /**
+     * Constructs a binary constant from a byte array.
+     *
+     * @param value the byte array value.
+     */
     public BinaryConstant(final byte[] value) {
         this.value = value.clone();
     }
 
+    /**
+     * Tests whether the given byte array equals this constant.
+     *
+     * @param bytes the byte array to compare.
+     * @return {@code true} if the arrays are equal, {@code false} otherwise.
+     */
     public boolean equals(final byte[] bytes) {
         return Arrays.equals(value, bytes);
     }
@@ -43,6 +57,12 @@ public class BinaryConstant {
         return equals(other.value);
     }
 
+    /**
+     * Gets the byte at the specified index.
+     *
+     * @param i the index.
+     * @return the byte at the specified index.
+     */
     public byte get(final int i) {
         return value[i];
     }
@@ -62,14 +82,30 @@ public class BinaryConstant {
         return BinaryFunctions.startsWith(buffer, value);
     }
 
+    /**
+     * Gets the raw byte array value (internal use).
+     *
+     * @return the raw value.
+     */
     byte[] rawValue() {
         return value;
     }
 
+    /**
+     * Gets the size of this binary constant.
+     *
+     * @return the size in bytes.
+     */
     public int size() {
         return value.length;
     }
 
+    /**
+     * Writes this binary constant to an output stream.
+     *
+     * @param os the output stream.
+     * @throws IOException if an I/O error occurs.
+     */
     public void writeTo(final OutputStream os) throws IOException {
         for (final byte element : value) {
             os.write(element);

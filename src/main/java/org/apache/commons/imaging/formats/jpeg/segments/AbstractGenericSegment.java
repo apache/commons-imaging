@@ -23,15 +23,32 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
 
+/**
+ * Abstract class for generic JPEG segments.
+ */
 public abstract class AbstractGenericSegment extends AbstractSegment {
     private final byte[] segmentData;
 
+    /**
+     * Constructs a generic segment with the given marker and segment data.
+     *
+     * @param marker the segment marker.
+     * @param bytes the segment data.
+     */
     public AbstractGenericSegment(final int marker, final byte[] bytes) {
         super(marker, bytes.length);
 
         this.segmentData = bytes.clone();
     }
 
+    /**
+     * Constructs a generic segment by reading from an input stream.
+     *
+     * @param marker the segment marker.
+     * @param markerLength the length of the marker data.
+     * @param is the input stream to read from.
+     * @throws IOException if an I/O error occurs.
+     */
     public AbstractGenericSegment(final int marker, final int markerLength, final InputStream is) throws IOException {
         super(marker, markerLength);
 
@@ -43,6 +60,12 @@ public abstract class AbstractGenericSegment extends AbstractSegment {
         dump(pw, 0);
     }
 
+    /**
+     * Dumps the segment data to a print writer.
+     *
+     * @param pw the print writer.
+     * @param start the starting offset in the segment data.
+     */
     public void dump(final PrintWriter pw, final int start) {
         for (int i = 0; i < 50 && i + start < segmentData.length; i++) {
             debugNumber(pw, "\t" + (i + start), segmentData[i + start], 1);
@@ -52,7 +75,7 @@ public abstract class AbstractGenericSegment extends AbstractSegment {
     /**
      * Returns a copy of the segment's contents, excluding the marker and length bytes at the beginning.
      *
-     * @return the segment's contents
+     * @return the segment's contents.
      */
     public byte[] getSegmentData() {
         return segmentData.clone();
@@ -61,9 +84,9 @@ public abstract class AbstractGenericSegment extends AbstractSegment {
     /**
      * Returns a specific byte of the segment's contents, excluding the marker and length bytes at the beginning.
      *
-     * @param offset segment offset
+     * @param offset segment offset.
+     * @return the bye in the segment's contents.
      * @see AbstractGenericSegment#getSegmentData()
-     * @return the bye in the segment's contents
      */
     protected byte getSegmentData(final int offset) {
         return segmentData[offset];

@@ -23,6 +23,9 @@ import java.nio.ByteOrder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Base class for parsing binary file formats.
+ */
 public class BinaryFileParser {
 
     private static final Logger LOGGER = Logger.getLogger(BinaryFileParser.class.getName());

@@ -18,26 +18,59 @@ package org.apache.commons.imaging.formats.tiff;
 
 import java.util.Comparator;
 
+/**
+ * Abstract class for TIFF elements.
+ */
 public abstract class AbstractTiffElement {
+
+    /**
+     * Represents a TIFF element that contains data.
+     */
     public abstract static class DataElement extends AbstractTiffElement {
         private final byte[] data;
 
+        /**
+         * Constructs a new data element.
+         *
+         * @param offset the offset in the TIFF file.
+         * @param length the length of the element.
+         * @param data the element data.
+         */
         public DataElement(final long offset, final int length, final byte[] data) {
             super(offset, length);
 
             this.data = data;
         }
 
+        /**
+         * Gets a copy of the element data.
+         *
+         * @return the data.
+         */
         public byte[] getData() {
             return data.clone();
         }
 
+        /**
+         * Gets the length of the data.
+         *
+         * @return the data length.
+         */
         public int getDataLength() {
             return data.length;
         }
     }
 
+    /**
+     * Represents a stub TIFF element with no specific data.
+     */
     public static final class Stub extends AbstractTiffElement {
+        /**
+         * Constructs a new stub element.
+         *
+         * @param offset the offset in the TIFF file.
+         * @param length the length of the element.
+         */
         public Stub(final long offset, final int length) {
             super(offset, length);
         }
@@ -49,16 +82,30 @@ public abstract class AbstractTiffElement {
 
     }
 
+    /** Comparator for sorting TIFF elements by offset. */
     public static final Comparator<AbstractTiffElement> COMPARATOR = Comparator.comparingLong(e -> e.offset);
 
+    /** The offset of this element in the TIFF file. */
     public final long offset;
 
+    /** The length of this element. */
     public final int length;
 
+    /**
+     * Constructs a new TIFF element.
+     *
+     * @param offset the offset in the TIFF file.
+     * @param length the length of the element.
+     */
     public AbstractTiffElement(final long offset, final int length) {
         this.offset = offset;
         this.length = length;
     }
 
+    /**
+     * Gets a description of this element.
+     *
+     * @return the element description.
+     */
     public abstract String getElementDescription();
 }

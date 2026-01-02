@@ -21,6 +21,9 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFileParser;
 
+/**
+ * Abstract class for PNG transparency filters.
+ */
 public abstract class AbstractTransparencyFilter extends BinaryFileParser {
 
     private final byte[] bytes;
@@ -34,6 +37,15 @@ public abstract class AbstractTransparencyFilter extends BinaryFileParser {
         this.bytes = bytes.clone();
     }
 
+    /**
+     * Filters a pixel's RGB value based on transparency information.
+     *
+     * @param rgb the RGB value.
+     * @param index the pixel index.
+     * @return the filtered RGB value.
+     * @throws ImagingException if the image format is invalid.
+     * @throws IOException if an I/O error occurs.
+     */
     public abstract int filter(int rgb, int index) throws ImagingException, IOException;
 
     /**

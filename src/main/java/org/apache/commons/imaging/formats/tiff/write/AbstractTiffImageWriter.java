@@ -47,20 +47,38 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.itu_t4.T4AndT6Compression;
 import org.apache.commons.imaging.mylzw.MyLzwCompressor;
 
+/**
+ * Abstract class for writing TIFF images.
+ */
 public abstract class AbstractTiffImageWriter {
 
     private static final int MAX_PIXELS_FOR_RGB = 1024 * 1024;
 
+    /**
+     * Calculates the padding length needed for image data alignment.
+     *
+     * @param dataLength the length of the data.
+     * @return the padding length.
+     */
     protected static int imageDataPaddingLength(final int dataLength) {
         return (4 - dataLength % 4) % 4;
     }
 
+    /** The byte order for writing TIFF data. */
     protected final ByteOrder byteOrder;
 
+    /**
+     * Constructs a new TIFF image writer with the default byte order.
+     */
     public AbstractTiffImageWriter() {
         this.byteOrder = TiffConstants.DEFAULT_TIFF_BYTE_ORDER;
     }
 
+    /**
+     * Constructs a new TIFF image writer with the specified byte order.
+     *
+     * @param byteOrder the byte order to use.
+     */
     public AbstractTiffImageWriter(final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
     }
@@ -79,7 +97,7 @@ public abstract class AbstractTiffImageWriter {
     /**
      * Check an image to see if any of its pixels are non-opaque.
      *
-     * @param src a valid image
+     * @param src a valid image.
      * @return true if at least one non-opaque pixel is found.
      */
     private boolean checkForActualAlpha(final BufferedImage src) {
@@ -198,6 +216,13 @@ public abstract class AbstractTiffImageWriter {
         return result;
     }
 
+    /**
+     * Validates the TIFF output set directories and returns a summary.
+     *
+     * @param outputSet the output set to validate.
+     * @return a summary of the output set.
+     * @throws ImagingException if the directories are invalid.
+     */
     protected TiffOutputSummary validateDirectories(final TiffOutputSet outputSet) throws ImagingException {
         if (outputSet.isEmpty()) {
             throw new ImagingException("No directories.");
@@ -355,8 +380,25 @@ public abstract class AbstractTiffImageWriter {
         // Debug.debug();
     }
 
+    /**
+     * Writes a TIFF output set to an output stream.
+     *
+     * @param os the output stream.
+     * @param outputSet the TIFF output set to write.
+     * @throws IOException if an I/O error occurs.
+     * @throws ImagingException if the image format is invalid.
+     */
     public abstract void write(OutputStream os, TiffOutputSet outputSet) throws IOException, ImagingException;
 
+    /**
+     * Writes a BufferedImage to an output stream in TIFF format.
+     *
+     * @param src the source image.
+     * @param os the output stream.
+     * @param params the imaging parameters.
+     * @throws ImagingException if the image format is invalid.
+     * @throws IOException if an I/O error occurs.
+     */
     public void writeImage(final BufferedImage src, final OutputStream os, final TiffImagingParameters params) throws ImagingException, IOException {
         final TiffOutputSet userExif = params.getOutputSet();
 
@@ -588,10 +630,23 @@ public abstract class AbstractTiffImageWriter {
         write(os, outputSet);
     }
 
+    /**
+     * Writes the TIFF image file header with the default header size.
+     *
+     * @param bos the binary output stream.
+     * @throws IOException if an I/O error occurs.
+     */
     protected void writeImageFileHeader(final AbstractBinaryOutputStream bos) throws IOException {
         writeImageFileHeader(bos, TiffConstants.HEADER_SIZE);
     }
 
+    /**
+     * Writes the TIFF image file header with the specified offset to the first IFD.
+     *
+     * @param bos the binary output stream.
+     * @param offsetToFirstIFD the offset to the first Image File Directory.
+     * @throws IOException if an I/O error occurs.
+     */
     protected void writeImageFileHeader(final AbstractBinaryOutputStream bos, final long offsetToFirstIFD) throws IOException {
         if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
             bos.write('I');

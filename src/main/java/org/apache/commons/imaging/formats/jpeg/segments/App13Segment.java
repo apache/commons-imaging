@@ -26,34 +26,53 @@ import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.formats.jpeg.iptc.IptcParser;
 import org.apache.commons.imaging.formats.jpeg.iptc.PhotoshopApp13Data;
 
+/**
+ * Represents a JPEG APP13 segment, typically used for Photoshop/IPTC metadata.
+ */
 public class App13Segment extends AppnSegment {
 
+    /**
+     * Constructs an APP13 segment from segment data.
+     *
+     * @param marker the segment marker.
+     * @param segmentData the segment data.
+     * @throws IOException if an I/O error occurs.
+     */
     public App13Segment(final int marker, final byte[] segmentData) throws IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
+    /**
+     * Constructs an APP13 segment by reading from an input stream.
+     *
+     * @param marker the segment marker.
+     * @param markerLength the marker length.
+     * @param is the input stream to read from.
+     * @throws IOException if an I/O error occurs.
+     */
     public App13Segment(final int marker, final int markerLength, final InputStream is) throws IOException {
         super(marker, markerLength, is);
 
-        // isIPTCJpegSegment = new IptcParser().isIPTCJpegSegment(bytes);
-        // if (isIPTCJpegSegment)
-        // {
-        // /*
-        // * In practice, App13 segments are only used for Photoshop/IPTC
-        // * metadata. However, we should not treat App13 signatures without
-        // * Photoshop's signature as Photoshop/IPTC segments.
-        // */
-        // boolean verbose = false;
-        // boolean strict = false;
-        // elements.addAll(new IptcParser().parseIPTCJPEGSegment(bytes,
-        // verbose, strict));
-        // }
+        // ...existing code...
     }
 
+    /**
+     * Checks if this segment is a Photoshop JPEG segment.
+     *
+     * @return {@code true} if this is a Photoshop segment, {@code false} otherwise.
+     */
     public boolean isPhotoshopJpegSegment() {
         return new IptcParser().isPhotoshopJpegSegment(getSegmentData());
     }
 
+    /**
+     * Parses the Photoshop segment data.
+     *
+     * @param params the imaging parameters.
+     * @return the parsed Photoshop APP13 data, or {@code null} if not a Photoshop segment.
+     * @throws ImagingException if the image format is invalid.
+     * @throws IOException if an I/O error occurs.
+     */
     public PhotoshopApp13Data parsePhotoshopSegment(final ImagingParameters<JpegImagingParameters> params) throws ImagingException, IOException {
         /*
          * In practice, App13 segments are only used for Photoshop/IPTC metadata. However, we should not treat App13 signatures without Photoshop's signature as

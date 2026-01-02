@@ -30,12 +30,29 @@ import org.apache.commons.imaging.common.ImageBuilder;
  */
 public abstract class AbstractPhotometricInterpreter {
 
+    /** The number of samples per pixel. */
     protected final int samplesPerPixel;
+
     private final int[] bitsPerSample;
+
+    /** The predictor value. */
     protected final int predictor;
+
+    /** The image width. */
     protected final int width;
+
+    /** The image height. */
     protected final int height;
 
+    /**
+     * Constructs a new photometric interpreter.
+     *
+     * @param samplesPerPixel the number of samples per pixel.
+     * @param bitsPerSample the bits per sample array.
+     * @param predictor the predictor value.
+     * @param width the image width.
+     * @param height the image height.
+     */
     public AbstractPhotometricInterpreter(final int samplesPerPixel, final int[] bitsPerSample, final int predictor, final int width, final int height) {
         this.samplesPerPixel = samplesPerPixel;
         this.bitsPerSample = Objects.requireNonNull(bitsPerSample, "bitsPerSample");
@@ -44,9 +61,25 @@ public abstract class AbstractPhotometricInterpreter {
         this.height = height;
     }
 
+    /**
+     * Gets the bits per sample at the specified offset.
+     *
+     * @param offset the sample offset.
+     * @return the bits per sample.
+     */
     protected int getBitsPerSample(final int offset) {
         return bitsPerSample[offset];
     }
 
+    /**
+     * Interprets a pixel and adds it to the image builder.
+     *
+     * @param imageBuilder the image builder.
+     * @param samples the pixel sample values.
+     * @param x the x coordinate.
+     * @param y the y coordinate.
+     * @throws ImagingException if the image format is invalid.
+     * @throws IOException if an I/O error occurs.
+     */
     public abstract void interpretPixel(ImageBuilder imageBuilder, int[] samples, int x, int y) throws ImagingException, IOException;
 }
