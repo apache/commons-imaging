@@ -24,7 +24,7 @@ import java.util.function.IntFunction;
 /**
  * Checks inputs for meeting allocation limits and allocates arrays.
  */
-public class Allocator {
+public final class Allocator {
 
     private static final String CANONICAL_NAME = Allocator.class.getCanonicalName();
 
@@ -34,6 +34,13 @@ public class Allocator {
 
     static {
         LIMIT = Integer.getInteger(CANONICAL_NAME, DEFAULT);
+    }
+
+    /**
+     * Private constructor to prevent instantiation of utility class.
+     */
+    private Allocator() {
+        // Utility class
     }
 
     /**
