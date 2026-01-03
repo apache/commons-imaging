@@ -33,7 +33,13 @@ public class ImageDump {
 
     private static final Logger LOGGER = Logger.getLogger(ImageDump.class.getName());
 
-    private String colorSpaceTypeToName(final ColorSpace cs) {
+    /**
+     * Constructs a new instance.
+     */
+    public ImageDump() {
+    }
+
+    private String toName(final ColorSpace cs) {
         // System.out.println(prefix + ": type: "
         // + cs.getType() );
         switch (cs.getType()) {
@@ -56,16 +62,35 @@ public class ImageDump {
         }
     }
 
+    /**
+     * Dumps image information.
+     *
+     * @param src the source image.
+     * @throws IOException if an I/O error occurs.
+     */
     public void dump(final BufferedImage src) throws IOException {
         dump("", src);
     }
 
+    /**
+     * Dumps image information with a prefix.
+     *
+     * @param prefix the prefix for output.
+     * @param src the source image.
+     * @throws IOException if an I/O error occurs.
+     */
     public void dump(final String prefix, final BufferedImage src) throws IOException {
         LOGGER.fine(prefix + ": dump");
         dumpColorSpace(prefix, src.getColorModel().getColorSpace());
         dumpBiProps(prefix, src);
     }
 
+    /**
+     * Dumps BufferedImage properties.
+     *
+     * @param prefix the prefix for output.
+     * @param src the source image.
+     */
     public void dumpBiProps(final String prefix, final BufferedImage src) {
         final String[] keys = src.getPropertyNames();
         if (keys == null) {
@@ -77,8 +102,15 @@ public class ImageDump {
         }
     }
 
+    /**
+     * Dumps color space information.
+     *
+     * @param prefix the prefix for output.
+     * @param cs the color space.
+     * @throws IOException if an I/O error occurs.
+     */
     public void dumpColorSpace(final String prefix, final ColorSpace cs) throws IOException {
-        LOGGER.fine(prefix + ": type: " + cs.getType() + " (" + colorSpaceTypeToName(cs) + ")");
+        LOGGER.fine(prefix + ": type: " + cs.getType() + " (" + toName(cs) + ")");
 
         if (!(cs instanceof ICC_ColorSpace)) {
             LOGGER.fine(prefix + ": Unknown ColorSpace: " + cs.getClass().getName());
