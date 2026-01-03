@@ -301,8 +301,10 @@ public final class MicrosoftHdPhotoTagConstants {
     /** Alpha data discard value: Highpass and low pass frequency data discarded. */
     public static final int ALPHA_DATA_DISCARD_VALUE_HIGHPASS_AND_LOW_PASS_FREQUENCY_DATA_DISCARDED = 3;
 
+    /** EXIF tag: Padding. */
     public static final TagInfoUndefineds EXIF_TAG_PADDING = new TagInfoUndefineds("Padding", 0xea1c, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
+    /** List of all Microsoft HD Photo tags. */
     public static final List<TagInfo> ALL_MICROSOFT_HD_PHOTO_TAGS = Collections
             .unmodifiableList(Arrays.asList(EXIF_TAG_PIXEL_FORMAT, EXIF_TAG_TRANSFORMATION, EXIF_TAG_UNCOMPRESSED, EXIF_TAG_IMAGE_TYPE, EXIF_TAG_IMAGE_WIDTH,
                     EXIF_TAG_IMAGE_HEIGHT, EXIF_TAG_WIDTH_RESOLUTION, EXIF_TAG_HEIGHT_RESOLUTION, EXIF_TAG_IMAGE_OFFSET, EXIF_TAG_IMAGE_BYTE_COUNT,
