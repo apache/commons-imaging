@@ -19,12 +19,21 @@ package org.apache.commons.imaging.formats.png;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Handles gamma correction for PNG images.
+ */
 public class GammaCorrection {
 
     private static final Logger LOGGER = Logger.getLogger(GammaCorrection.class.getName());
 
     private final int[] lookupTable;
 
+    /**
+     * Constructs a gamma correction with the specified source and destination gamma values.
+     *
+     * @param srcGamma the source gamma value.
+     * @param dstGamma the destination gamma value.
+     */
     public GammaCorrection(final double srcGamma, final double dstGamma) {
 
         if (LOGGER.isLoggable(Level.FINEST)) {
@@ -41,6 +50,12 @@ public class GammaCorrection {
         }
     }
 
+    /**
+     * Corrects an ARGB pixel value for gamma.
+     *
+     * @param pixel the ARGB pixel value.
+     * @return the gamma-corrected pixel value.
+     */
     public int correctArgb(final int pixel) {
         final int alpha = 0xff000000 & pixel;
         int red = pixel >> 16 & 0xff;
@@ -54,6 +69,12 @@ public class GammaCorrection {
         return alpha | (0xff & red) << 16 | (0xff & green) << 8 | (0xff & blue) << 0;
     }
 
+    /**
+     * Corrects a sample value using the lookup table.
+     *
+     * @param sample the sample value.
+     * @return the corrected sample value.
+     */
     public int correctSample(final int sample) {
         return lookupTable[sample];
     }
