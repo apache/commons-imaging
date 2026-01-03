@@ -26,13 +26,28 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.internal.Debug;
 
+/**
+ * Implements median cut color quantization for reducing the number of colors in an image.
+ */
 public class MedianCutQuantizer {
     private final boolean ignoreAlpha;
 
+    /**
+     * Constructs a new median cut quantizer.
+     *
+     * @param ignoreAlpha whether to ignore the alpha channel during quantization.
+     */
     public MedianCutQuantizer(final boolean ignoreAlpha) {
         this.ignoreAlpha = ignoreAlpha;
     }
 
+    /**
+     * Groups colors in the image into a palette of at most maxColors colors.
+     *
+     * @param image the image to quantize.
+     * @param maxColors the maximum number of colors in the result.
+     * @return a map of colors to their counts.
+     */
     public Map<Integer, ColorCount> groupColors(final BufferedImage image, final int maxColors) {
         final int max = Integer.MAX_VALUE;
 

@@ -22,6 +22,9 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImagingException;
 
+/**
+ * Median cut implementation that cuts along the longest axis.
+ */
 public class LongestAxisMedianCut implements MedianCut {
     private static final Comparator<ColorGroup> COMPARATOR = (cg1, cg2) -> {
         if (cg1.maxDiff == cg2.maxDiff) {

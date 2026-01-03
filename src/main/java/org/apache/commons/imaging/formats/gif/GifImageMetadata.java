@@ -22,6 +22,9 @@ import java.util.List;
 
 import org.apache.commons.imaging.common.ImageMetadata;
 
+/**
+ * Metadata for GIF images.
+ */
 public class GifImageMetadata implements ImageMetadata {
 
     private static final String NEWLINE = System.lineSeparator();
@@ -35,6 +38,11 @@ public class GifImageMetadata implements ImageMetadata {
         this.items = Collections.unmodifiableList(new ArrayList<>(items));
     }
 
+    /**
+     * Gets the image height.
+     *
+     * @return the height in pixels.
+     */
     public int getHeight() {
         return height;
     }
@@ -44,6 +52,11 @@ public class GifImageMetadata implements ImageMetadata {
         return Collections.unmodifiableList(items);
     }
 
+    /**
+     * Gets the image width.
+     *
+     * @return the width in pixels.
+     */
     public int getWidth() {
         return width;
     }

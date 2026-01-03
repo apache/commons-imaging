@@ -14,12 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.imaging.palette;
 
 import java.util.List;
 
 import org.apache.commons.imaging.ImagingException;
 
+/**
+ * Performs median cut algorithms used in color quantization.
+ */
 public interface MedianCut {
+
+    /**
+     * Performs the next median cut operation.
+     *
+     * @param colorGroups the list of color groups.
+     * @param ignoreAlpha whether to ignore alpha channel.
+     * @return true if the cut was performed, false otherwise.
+     * @throws ImagingException if an imaging error occurs.
+     */
     boolean performNextMedianCut(List<ColorGroup> colorGroups, boolean ignoreAlpha) throws ImagingException;
 }
