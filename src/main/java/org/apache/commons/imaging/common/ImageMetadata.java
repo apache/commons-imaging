@@ -18,15 +18,38 @@ package org.apache.commons.imaging.common;
 
 import java.util.List;
 
+/**
+ * Image metadata.
+ */
 public interface ImageMetadata {
+    /**
+     * Represents a single metadata item.
+     */
     interface ImageMetadataItem {
         @Override
         String toString();
 
+        /**
+         * Gets a string representation with a prefix.
+         *
+         * @param prefix the prefix to use.
+         * @return the string representation.
+         */
         String toString(String prefix);
     }
 
+    /**
+     * Gets the list of metadata items.
+     *
+     * @return the list of metadata items.
+     */
     List<? extends ImageMetadataItem> getItems();
 
+    /**
+     * Gets a string representation with a prefix.
+     *
+     * @param prefix the prefix to use.
+     * @return the string representation.
+     */
     String toString(String prefix);
 }

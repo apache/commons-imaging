@@ -69,37 +69,81 @@ public class ImagingParameters<E extends ImagingParameters<E>> {
         return (E) this;
     }
 
+    /**
+     * Gets the buffered image factory.
+     *
+     * @return the buffered image factory, or null if not set.
+     */
     public BufferedImageFactory getBufferedImageFactory() {
         return bufferedImageFactory;
     }
 
+    /**
+     * Gets the file name.
+     *
+     * @return the file name, or null if not set.
+     */
     public String getFileName() {
         return fileName;
     }
 
+    /**
+     * Gets the pixel density.
+     *
+     * @return the pixel density, or null if not set.
+     */
     public PixelDensity getPixelDensity() {
         return pixelDensity;
     }
 
+    /**
+     * Gets whether strict mode is enabled.
+     *
+     * @return true if strict mode is enabled, false otherwise.
+     */
     public boolean isStrict() {
         return strict;
     }
 
+    /**
+     * Sets the buffered image factory.
+     *
+     * @param bufferedImageFactory the buffered image factory.
+     * @return this instance.
+     */
     public E setBufferedImageFactory(final BufferedImageFactory bufferedImageFactory) {
         this.bufferedImageFactory = bufferedImageFactory;
         return asThis();
     }
 
+    /**
+     * Sets the file name.
+     *
+     * @param fileName the file name.
+     * @return this instance.
+     */
     public E setFileName(final String fileName) {
         this.fileName = fileName;
         return asThis();
     }
 
+    /**
+     * Sets the pixel density.
+     *
+     * @param pixelDensity the pixel density.
+     * @return this instance.
+     */
     public E setPixelDensity(final PixelDensity pixelDensity) {
         this.pixelDensity = pixelDensity;
         return asThis();
     }
 
+    /**
+     * Sets whether strict mode is enabled.
+     *
+     * @param strict true to enable strict mode, false otherwise.
+     * @return this instance.
+     */
     public E setStrict(final boolean strict) {
         this.strict = strict;
         return asThis();
