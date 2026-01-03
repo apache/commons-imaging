@@ -35,6 +35,14 @@ import org.apache.commons.imaging.bytesource.ByteSource;
  */
 public final class ImageParserFactory {
 
+    /**
+     * Gets an image parser for the given byte source.
+     *
+     * @param <T> the imaging parameters type.
+     * @param byteSource the byte source.
+     * @return the image parser.
+     * @throws IOException if an I/O error occurs.
+     */
     public static <T extends ImagingParameters<T>> AbstractImageParser<T> getImageParser(final ByteSource byteSource) throws IOException {
         // TODO: circular dependency between Imaging and internal Util class below.
         final ImageFormat format = Imaging.guessFormat(byteSource);
@@ -48,6 +56,13 @@ public final class ImageParserFactory {
         throw new IllegalArgumentException("Can't parse this format.");
     }
 
+    /**
+     * Gets an image parser for the given image format.
+     *
+     * @param <T> the imaging parameters type.
+     * @param format the image format.
+     * @return the image parser.
+     */
     public static <T extends ImagingParameters<T>> AbstractImageParser<T> getImageParser(final ImageFormat format) {
         return getImageParser(parser -> parser.canAcceptType(format), () -> new IllegalArgumentException("Unknown ImageFormat: " + format));
     }
@@ -60,6 +75,13 @@ public final class ImageParserFactory {
         return (AbstractImageParser<T>) AbstractImageParser.getAllImageParsers().stream().filter(pred).findFirst().orElseThrow(supplier);
     }
 
+    /**
+     * Gets an image parser for the given file extension.
+     *
+     * @param <T> the imaging parameters type.
+     * @param fileExtension the file extension.
+     * @return the image parser.
+     */
     public static <T extends ImagingParameters<T>> AbstractImageParser<T> getImageParser(final String fileExtension) {
         return getImageParser(parser -> parser.canAcceptExtension(fileExtension), () -> new IllegalArgumentException("Unknown extension: " + fileExtension));
     }

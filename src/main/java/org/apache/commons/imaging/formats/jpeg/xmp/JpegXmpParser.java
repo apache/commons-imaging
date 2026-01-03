@@ -23,6 +23,9 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
+/**
+ * Parses XMP metadata in JPEG images.
+ */
 public class JpegXmpParser extends BinaryFileParser {
 
     /**
@@ -32,10 +35,23 @@ public class JpegXmpParser extends BinaryFileParser {
         // empty
     }
 
+    /**
+     * Checks if the segment data contains XMP metadata.
+     *
+     * @param segmentData the segment data.
+     * @return true if this is an XMP segment, false otherwise.
+     */
     public boolean isXmpJpegSegment(final byte[] segmentData) {
         return JpegConstants.XMP_IDENTIFIER.isStartOf(segmentData);
     }
 
+    /**
+     * Parses XMP metadata from a JPEG segment.
+     *
+     * @param segmentData the segment data.
+     * @return the XMP metadata as a string.
+     * @throws ImagingException if the segment is not a valid XMP segment.
+     */
     public String parseXmpJpegSegment(final byte[] segmentData) throws ImagingException {
         if (!isXmpJpegSegment(segmentData)) {
             throw new ImagingException("Invalid JPEG XMP Segment.");

@@ -24,10 +24,19 @@ import org.apache.commons.imaging.formats.jpeg.iptc.IptcTypes;
 import org.apache.commons.imaging.formats.jpeg.iptc.PhotoshopApp13Data;
 import org.apache.commons.imaging.internal.Debug;
 
+/**
+ * Metadata extracted from Photoshop APP13 segment in JPEG images.
+ */
 public class JpegPhotoshopMetadata extends GenericImageMetadata {
 
+    /** The Photoshop APP13 data. */
     public final PhotoshopApp13Data photoshopApp13Data;
 
+    /**
+     * Constructs metadata from Photoshop APP13 data.
+     *
+     * @param photoshopApp13Data the Photoshop APP13 data.
+     */
     public JpegPhotoshopMetadata(final PhotoshopApp13Data photoshopApp13Data) {
         this.photoshopApp13Data = photoshopApp13Data;
 
@@ -40,6 +49,9 @@ public class JpegPhotoshopMetadata extends GenericImageMetadata {
         }
     }
 
+    /**
+     * Dumps the metadata to debug output.
+     */
     public void dump() {
         Debug.debug(this.toString());
     }
