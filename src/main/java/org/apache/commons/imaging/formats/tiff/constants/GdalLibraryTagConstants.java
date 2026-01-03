@@ -34,10 +34,13 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
  */
 public final class GdalLibraryTagConstants {
 
+    /** GDAL metadata tag. */
     public static final TagInfoAscii EXIF_TAG_GDAL_METADATA = new TagInfoAscii("GDALMetadata", 0xa480, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
+    /** GDAL no data tag. */
     public static final TagInfoAscii EXIF_TAG_GDAL_NO_DATA = new TagInfoAscii("GDALNoData", 0xa481, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
+    /** List of all GDAL library tags. */
     public static final List<TagInfo> ALL_GDAL_LIBRARY_TAGS = Collections
             .unmodifiableList(Arrays.<TagInfo>asList(EXIF_TAG_GDAL_METADATA, EXIF_TAG_GDAL_NO_DATA));
 

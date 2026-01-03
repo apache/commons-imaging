@@ -24,16 +24,24 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLong;
 
+/**
+ * HylaFAX TIFF tag constants.
+ */
 public final class HylaFaxTagConstants {
 
+    /** Fax receive parameters tag. */
     public static final TagInfoLong EXIF_TAG_FAX_RECV_PARAMS = new TagInfoLong("FaxRecvParams", 0x885c, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
+    /** Fax sub-address tag. */
     public static final TagInfoAscii EXIF_TAG_FAX_SUB_ADDRESS = new TagInfoAscii("FaxSubAddress", 0x885d, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
+    /** Fax receive time tag. */
     public static final TagInfoLong EXIF_TAG_FAX_RECV_TIME = new TagInfoLong("FaxRecvTime", 0x885e, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
+    /** Fax DCS (Digital Command Signal) tag. */
     public static final TagInfoAscii EXIF_TAG_FAX_DCS = new TagInfoAscii("FaxDCS", 0x885f, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
+    /** List of all HylaFAX tags. */
     public static final List<TagInfo> ALL_HYLAFAX_TAGS = Collections
             .unmodifiableList(Arrays.asList(EXIF_TAG_FAX_RECV_PARAMS, EXIF_TAG_FAX_SUB_ADDRESS, EXIF_TAG_FAX_RECV_TIME, EXIF_TAG_FAX_DCS));
 
