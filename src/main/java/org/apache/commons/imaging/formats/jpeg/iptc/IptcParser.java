@@ -43,6 +43,9 @@ import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.internal.Debug;
 
+/**
+ * Parser for IPTC (International Press Telecommunications Council) metadata in JPEG images.
+ */
 public class IptcParser extends BinaryFileParser {
 
     private static final Logger LOGGER = Logger.getLogger(IptcParser.class.getName());
@@ -94,6 +97,12 @@ public class IptcParser extends BinaryFileParser {
         return DEFAULT_CHARSET;
     }
 
+    /**
+     * Checks if the segment data contains Photoshop JPEG segment data.
+     *
+     * @param segmentData the segment data to check.
+     * @return true if this is a Photoshop JPEG segment, false otherwise.
+     */
     public boolean isPhotoshopJpegSegment(final byte[] segmentData) {
         if (!JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.isStartOf(segmentData)) {
             return false;
@@ -197,6 +206,12 @@ public class IptcParser extends BinaryFileParser {
         }
     }
 
+    /**
+     * Parses IPTC records from a block of bytes.
+     *
+     * @param bytes the byte array containing IPTC data.
+     * @return a list of IPTC records.
+     */
     protected List<IptcRecord> parseIptcBlock(final byte[] bytes) {
         Charset charset = DEFAULT_CHARSET;
         final List<IptcRecord> elements = new ArrayList<>();
@@ -320,6 +335,15 @@ public class IptcParser extends BinaryFileParser {
         return elements;
     }
 
+    /**
+     * Parses Photoshop APP13 segment data to extract IPTC metadata.
+     *
+     * @param bytes the segment data bytes.
+     * @param strict whether to use strict parsing mode.
+     * @return the parsed Photoshop APP13 data.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     public PhotoshopApp13Data parsePhotoshopSegment(final byte[] bytes, final boolean strict) throws ImagingException, IOException {
         final List<IptcRecord> records = new ArrayList<>();
 
@@ -365,6 +389,12 @@ public class IptcParser extends BinaryFileParser {
      * The exception is the first record in the block, which must always be a record version record, whose value is a two-byte number; the value is 0x02.
      *
      * Some IPTC blocks are missing this first "record version" record, so we don't require it.
+     *
+     * @param bytes the segment data bytes.
+     * @param params the imaging parameters.
+     * @return the parsed Photoshop APP13 data.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
      */
     public PhotoshopApp13Data parsePhotoshopSegment(final byte[] bytes, final ImagingParameters<JpegImagingParameters> params)
             throws ImagingException, IOException {
@@ -373,10 +403,27 @@ public class IptcParser extends BinaryFileParser {
         return parsePhotoshopSegment(bytes, strict);
     }
 
+    /**
+     * Writes IPTC records to a byte array block.
+     *
+     * @param elements the list of IPTC records to write.
+     * @return the byte array containing the IPTC block.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     public byte[] writeIptcBlock(final List<IptcRecord> elements) throws ImagingException, IOException {
         return writeIptcBlock(elements, false);
     }
 
+    /**
+     * Writes IPTC records to a byte array block with optional UTF-8 encoding.
+     *
+     * @param elements the list of IPTC records to write.
+     * @param forceUtf8Encoding whether to force UTF-8 encoding.
+     * @return the byte array containing the IPTC block.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     public byte[] writeIptcBlock(List<IptcRecord> elements, final boolean forceUtf8Encoding) throws ImagingException, IOException {
         Charset charset;
         if (forceUtf8Encoding) {
@@ -448,6 +495,14 @@ public class IptcParser extends BinaryFileParser {
         return baos.toByteArray();
     }
 
+    /**
+     * Writes Photoshop APP13 segment data.
+     *
+     * @param data the Photoshop APP13 data to write.
+     * @return the byte array containing the APP13 segment.
+     * @throws IOException if an I/O error occurs.
+     * @throws ImagingException if an imaging error occurs.
+     */
     public byte[] writePhotoshopApp13Segment(final PhotoshopApp13Data data) throws IOException, ImagingException {
         try (ByteArrayOutputStream os = new ByteArrayOutputStream();
                 AbstractBinaryOutputStream bos = AbstractBinaryOutputStream.bigEndian(os)) {
