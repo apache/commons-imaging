@@ -23,7 +23,10 @@ package org.apache.commons.imaging.formats.png;
  */
 public enum InterlaceMethod {
 
-    NONE(false), ADAM7(true);
+    /** No interlacing. */
+    NONE(false),
+    /** Adam7 interlacing. */
+    ADAM7(true);
 
     private final boolean progressive;
 
@@ -31,6 +34,11 @@ public enum InterlaceMethod {
         this.progressive = progressive;
     }
 
+    /**
+     * Checks if this interlace method is progressive.
+     *
+     * @return true if progressive, false otherwise.
+     */
     public boolean isProgressive() {
         return progressive;
     }

@@ -16,9 +16,22 @@
  */
 package org.apache.commons.imaging.formats.jpeg.iptc;
 
+/**
+ * IPTC metadata types.
+ */
 public interface IptcType {
+    /**
+     * Gets the name of this IPTC type.
+     *
+     * @return the name.
+     */
     String getName();
 
+    /**
+     * Gets the type number.
+     *
+     * @return the type number.
+     */
     int getType();
 
     @Override
