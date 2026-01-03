@@ -31,18 +31,23 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
  */
 public final class OceScanjobTagConstants {
 
+    /** EXIF tag: Oce Scanjob Description. */
     public static final TagInfoAscii EXIF_TAG_OCE_SCANJOB_DESCRIPTION = new TagInfoAscii("Oce Scanjob Description", 0xc427, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
+    /** EXIF tag: Oce Application Selector. */
     public static final TagInfoAscii EXIF_TAG_OCE_APPLICATION_SELECTOR = new TagInfoAscii("Oce Application Selector", 0xc428, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
+    /** EXIF tag: Oce Identification Number. */
     public static final TagInfoAscii EXIF_TAG_OCE_IDENTIFICATION_NUMBER = new TagInfoAscii("Oce Identification Number", 0xc429, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
+    /** EXIF tag: Oce ImageLogic Characteristics. */
     public static final TagInfoAscii EXIF_TAG_OCE_IMAGE_LOGIC_CHARACTERISTICS = new TagInfoAscii("Oce ImageLogic Characteristics", 0xc42a, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
+    /** List of all Oce Scanjob tags. */
     public static final List<TagInfo> ALL_OCE_SCANJOB_TAGS = Collections.unmodifiableList(Arrays.<TagInfo>asList(EXIF_TAG_OCE_SCANJOB_DESCRIPTION,
             EXIF_TAG_OCE_APPLICATION_SELECTOR, EXIF_TAG_OCE_IDENTIFICATION_NUMBER, EXIF_TAG_OCE_IMAGE_LOGIC_CHARACTERISTICS));
 
