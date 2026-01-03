@@ -23,5 +23,10 @@ import org.apache.commons.imaging.ImagingParameters;
  * @since 1.0-alpha3
  */
 public class IcnsImagingParameters extends ImagingParameters<IcnsImagingParameters> {
-    // empty
+
+    /**
+     * Constructs a new instance.
+     */
+    public IcnsImagingParameters() {
+    }
 }

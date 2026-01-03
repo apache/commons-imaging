@@ -23,5 +23,10 @@ import org.apache.commons.imaging.ImagingParameters;
  * @since 1.0-alpha3
  */
 public class IcoImagingParameters extends ImagingParameters<IcoImagingParameters> {
-    // empty
+
+    /**
+     * Constructs a new instance.
+     */
+    public IcoImagingParameters() {
+    }
 }

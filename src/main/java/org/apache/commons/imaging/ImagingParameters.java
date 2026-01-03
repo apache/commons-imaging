@@ -31,6 +31,12 @@ import org.apache.commons.imaging.common.BufferedImageFactory;
 public class ImagingParameters<E extends ImagingParameters<E>> {
 
     /**
+     * Constructs a new instance.
+     */
+    public ImagingParameters() {
+    }
+
+    /**
      * Whether to throw an exception when any issue occurs during reading or writing a file format. Default is {@code false}.
      */
     private boolean strict;

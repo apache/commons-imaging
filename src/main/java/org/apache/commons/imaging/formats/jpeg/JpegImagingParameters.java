@@ -23,5 +23,10 @@ import org.apache.commons.imaging.common.XmpImagingParameters;
  * @since 1.0-alpha3
  */
 public class JpegImagingParameters extends XmpImagingParameters<JpegImagingParameters> {
-    // empty
+
+    /**
+     * Constructs a new instance.
+     */
+    public JpegImagingParameters() {
+    }
 }

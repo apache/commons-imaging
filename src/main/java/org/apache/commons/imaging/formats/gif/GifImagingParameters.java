@@ -26,16 +26,38 @@ import org.apache.commons.imaging.common.XmpImagingParameters;
  */
 public class GifImagingParameters extends XmpImagingParameters<GifImagingParameters> {
 
+    /**
+     * Constructs a new instance.
+     */
+    public GifImagingParameters() {
+    }
+
+    /**
+     * Gets whether to stop reading before image data from the parameters.
+     *
+     * @param params the parameters.
+     * @return true if should stop reading before image data, false otherwise.
+     */
     public static boolean getStopReadingBeforeImageData(final GifImagingParameters params) {
         return params != null && params.getStopReadingBeforeImageData();
     }
 
     private boolean stopReadingBeforeImageData;
 
+    /**
+     * Gets whether to stop reading before image data.
+     *
+     * @return true if should stop reading before image data, false otherwise.
+     */
     public boolean getStopReadingBeforeImageData() {
         return stopReadingBeforeImageData;
     }
 
+    /**
+     * Sets whether to stop reading before image data.
+     *
+     * @param stopReadingBeforeImageData true to stop reading before image data, false otherwise.
+     */
     public void setStopReadingBeforeImageData(final boolean stopReadingBeforeImageData) {
         this.stopReadingBeforeImageData = stopReadingBeforeImageData;
     }
