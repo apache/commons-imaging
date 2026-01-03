@@ -28,8 +28,26 @@ import java.util.logging.Logger;
  */
 public class ImageInfo {
 
+    /** Color type enumeration for images. */
     public enum ColorType {
-        BW("Black and White"), GRAYSCALE("Grayscale"), RGB("RGB"), CMYK("CMYK"), YCbCr("YCbCr"), YCCK("YCCK"), YCC("YCC"), OTHER("Other"), UNKNOWN("Unknown");
+        /** Black and white images. */
+        BW("Black and White"),
+        /** Grayscale images. */
+        GRAYSCALE("Grayscale"),
+        /** RGB color images. */
+        RGB("RGB"),
+        /** CMYK color images. */
+        CMYK("CMYK"),
+        /** YCbCr color images. */
+        YCbCr("YCbCr"),
+        /** YCCK color images. */
+        YCCK("YCCK"),
+        /** YCC color images. */
+        YCC("YCC"),
+        /** Other color type. */
+        OTHER("Other"),
+        /** Unknown color type. */
+        UNKNOWN("Unknown");
 
         private final String description;
 
@@ -43,10 +61,35 @@ public class ImageInfo {
         }
     }
 
+    /** Compression algorithm enumeration for images. */
     public enum CompressionAlgorithm {
-        UNKNOWN("Unknown"), NONE("None"), LZW("LZW"), PACKBITS("PackBits"), JPEG_TIFF_OBSOLETE("JPEG Obsolete (TIFF only)"), JPEG("JPEG"),
-        RLE("RLE: Run-Length Encoding"), ADAPTIVE_RLE("Adaptive RLE"), PSD("Photoshop"), PNG_FILTER("PNG Filter"),
-        CCITT_GROUP_3("CCITT Group 3 1-Dimensional Modified Huffman run-length encoding."), CCITT_GROUP_4("CCITT Group 4"), CCITT_1D("CCITT 1D"),
+        /** Unknown compression. */
+        UNKNOWN("Unknown"),
+        /** No compression. */
+        NONE("None"),
+        /** LZW compression. */
+        LZW("LZW"),
+        /** PackBits compression. */
+        PACKBITS("PackBits"),
+        /** JPEG compression (TIFF obsolete). */
+        JPEG_TIFF_OBSOLETE("JPEG Obsolete (TIFF only)"),
+        /** JPEG compression. */
+        JPEG("JPEG"),
+        /** RLE: Run-Length Encoding. */
+        RLE("RLE: Run-Length Encoding"),
+        /** Adaptive RLE compression. */
+        ADAPTIVE_RLE("Adaptive RLE"),
+        /** Photoshop compression. */
+        PSD("Photoshop"),
+        /** PNG Filter compression. */
+        PNG_FILTER("PNG Filter"),
+        /** CCITT Group 3 1-Dimensional Modified Huffman run-length encoding. */
+        CCITT_GROUP_3("CCITT Group 3 1-Dimensional Modified Huffman run-length encoding."),
+        /** CCITT Group 4 compression. */
+        CCITT_GROUP_4("CCITT Group 4"),
+        /** CCITT 1D compression. */
+        CCITT_1D("CCITT 1D"),
+        /** DEFLATE (ZIP) compression. */
         DEFLATE("DEFLATE (ZIP)");
 
         private final String description;
@@ -88,6 +131,28 @@ public class ImageInfo {
 
     private final CompressionAlgorithm compressionAlgorithm;
 
+    /**
+     * Constructs a new ImageInfo with the specified properties.
+     *
+     * @param formatDetails the format version details.
+     * @param bitsPerPixel the number of bits per pixel.
+     * @param comments the list of comments.
+     * @param format the image format.
+     * @param formatName the format name.
+     * @param height the image height.
+     * @param mimeType the MIME type.
+     * @param numberOfImages the number of images.
+     * @param physicalHeightDpi the physical height DPI.
+     * @param physicalHeightInch the physical height in inches.
+     * @param physicalWidthDpi the physical width DPI.
+     * @param physicalWidthInch the physical width in inches.
+     * @param width the image width.
+     * @param progressive whether the image is progressive.
+     * @param transparent whether the image has transparency.
+     * @param usesPalette whether the image uses a palette.
+     * @param colorType the color type.
+     * @param compressionAlgorithm the compression algorithm.
+     */
     public ImageInfo(final String formatDetails, final int bitsPerPixel, final List<String> comments, final ImageFormat format, final String formatName,
             final int height, final String mimeType, final int numberOfImages, final int physicalHeightDpi, final float physicalHeightInch,
             final int physicalWidthDpi, final float physicalWidthInch, final int width, final boolean progressive, final boolean transparent,
@@ -117,6 +182,9 @@ public class ImageInfo {
         this.compressionAlgorithm = compressionAlgorithm;
     }
 
+    /**
+     * Dumps the image information to the logger.
+     */
     public void dump() {
         LOGGER.fine(toString());
     }
