@@ -26,13 +26,24 @@ import java.util.List;
 
 import org.apache.commons.imaging.common.Allocator;
 
+/**
+ * A JPEG DHT (Define Huffman Table) segment.
+ */
 public final class DhtSegment extends AbstractSegment {
 
+    /**
+     * Represents a Huffman table for JPEG decoding.
+     */
     public static class HuffmanTable {
         // some arrays are better off one-based
         // to avoid subtractions by one later when indexing them
+
+        /** The table class (0=DC, 1=AC). */
         public final int tableClass;
+
+        /** The destination identifier. */
         public final int destinationIdentifier;
+
         private final int[] huffVal; // 0-based
 
         // derived properties:
@@ -117,29 +128,69 @@ public final class DhtSegment extends AbstractSegment {
 
         }
 
+        /**
+         * Gets the Huffman value at the specified index.
+         *
+         * @param i the index.
+         * @return the Huffman value.
+         */
         public int getHuffVal(final int i) {
             return huffVal[i];
         }
 
+        /**
+         * Gets the maximum code for the specified bit length.
+         *
+         * @param i the bit length.
+         * @return the maximum code.
+         */
         public int getMaxCode(final int i) {
             return maxCode[i];
         }
 
+        /**
+         * Gets the minimum code for the specified bit length.
+         *
+         * @param i the bit length.
+         * @return the minimum code.
+         */
         public int getMinCode(final int i) {
             return minCode[i];
         }
 
+        /**
+         * Gets the value pointer for the specified bit length.
+         *
+         * @param i the bit length.
+         * @return the value pointer.
+         */
         public int getValPtr(final int i) {
             return valPtr[i];
         }
     }
 
+    /** The list of Huffman tables in this segment. */
     public final List<HuffmanTable> huffmanTables;
 
+    /**
+     * Constructs a DHT segment from segment data.
+     *
+     * @param marker the segment marker.
+     * @param segmentData the segment data.
+     * @throws IOException if an I/O error occurs.
+     */
     public DhtSegment(final int marker, final byte[] segmentData) throws IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
+    /**
+     * Constructs a DHT segment by reading from an input stream.
+     *
+     * @param marker the segment marker.
+     * @param length the segment length.
+     * @param is the input stream to read from.
+     * @throws IOException if an I/O error occurs.
+     */
     public DhtSegment(final int marker, int length, final InputStream is) throws IOException {
         super(marker, length);
 

@@ -53,7 +53,19 @@ public class App13Segment extends AppnSegment {
     public App13Segment(final int marker, final int markerLength, final InputStream is) throws IOException {
         super(marker, markerLength, is);
 
-        // ...existing code...
+        // isIPTCJpegSegment = new IptcParser().isIPTCJpegSegment(bytes);
+        // if (isIPTCJpegSegment)
+        // {
+        // /*
+        // * In practice, App13 segments are only used for Photoshop/IPTC
+        // * metadata. However, we should not treat App13 signatures without
+        // * Photoshop's signature as Photoshop/IPTC segments.
+        // */
+        // boolean verbose = false;
+        // boolean strict = false;
+        // elements.addAll(new IptcParser().parseIPTCJPEGSegment(bytes,
+        // verbose, strict));
+        // }
     }
 
     /**

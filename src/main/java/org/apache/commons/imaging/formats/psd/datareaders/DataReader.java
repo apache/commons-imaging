@@ -24,8 +24,21 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
+/**
+ * Reads PSD image data.
+ */
 public interface DataReader {
 
+    /**
+     * Reads image data from an input stream into a BufferedImage.
+     *
+     * @param is the input stream.
+     * @param bi the BufferedImage to populate.
+     * @param imageContents the PSD image contents.
+     * @param bfp the binary file parser.
+     * @throws ImagingException if the image format is invalid.
+     * @throws IOException if an I/O error occurs.
+     */
     void readData(InputStream is, BufferedImage bi, PsdImageContents imageContents, BinaryFileParser bfp) throws ImagingException, IOException;
 
 }

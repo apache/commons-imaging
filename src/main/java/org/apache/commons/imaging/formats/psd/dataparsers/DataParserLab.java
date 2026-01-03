@@ -19,7 +19,17 @@ package org.apache.commons.imaging.formats.psd.dataparsers;
 import org.apache.commons.imaging.color.ColorConversions;
 import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
+/**
+ * Parser for Lab color mode PSD image data.
+ */
 public class DataParserLab extends AbstractDataParser {
+
+    /**
+     * Constructs a new Lab data parser.
+     */
+    public DataParserLab() {
+        super();
+    }
 
     @Override
     public int getBasicChannelsCount() {

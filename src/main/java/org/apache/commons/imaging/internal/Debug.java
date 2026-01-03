@@ -69,12 +69,20 @@ public final class Debug {
         return buffer.toString();
     }
 
+    /**
+     * Logs a debug message (newline only).
+     */
     public static void debug() {
         if (LOGGER.isLoggable(Level.FINEST)) {
             LOGGER.finest(NEWLINE);
         }
     }
 
+    /**
+     * Logs a debug message.
+     *
+     * @param message the message to log.
+     */
     public static void debug(final String message) {
         if (LOGGER.isLoggable(Level.FINEST)) {
             LOGGER.finest(message);

@@ -18,7 +18,17 @@ package org.apache.commons.imaging.formats.psd.dataparsers;
 
 import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
+/**
+ * Parser for bitmap mode PSD image data.
+ */
 public class DataParserBitmap extends AbstractDataParser {
+
+    /**
+     * Constructs a new bitmap data parser.
+     */
+    public DataParserBitmap() {
+        super();
+    }
 
     @Override
     public int getBasicChannelsCount() {

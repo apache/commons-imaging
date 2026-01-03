@@ -26,12 +26,22 @@ package org.apache.commons.imaging.color;
  */
 public final class ColorDin99Lab {
 
+    /** The lightness component. */
     public final double l99;
 
+    /** The a color component. */
     public final double a99;
 
+    /** The b color component. */
     public final double b99;
 
+    /**
+     * Constructs a new ColorDin99Lab.
+     *
+     * @param l99 the lightness component.
+     * @param a99 the a color component.
+     * @param b99 the b color component.
+     */
     public ColorDin99Lab(final double l99, final double a99, final double b99) {
         this.l99 = l99;
         this.a99 = a99;

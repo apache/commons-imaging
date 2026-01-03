@@ -83,10 +83,22 @@ public final class ColorHsl {
      */
     public static final ColorHsl BLUE = new ColorHsl(240, 100, 100);
 
+    /** The hue component (0-360). */
     public final double h;
+
+    /** The saturation component (0-100). */
     public final double s;
+
+    /** The lightness component (0-100). */
     public final double l;
 
+    /**
+     * Constructs a new ColorHsl.
+     *
+     * @param h the hue component (0-360).
+     * @param s the saturation component (0-100).
+     * @param l the lightness component (0-100).
+     */
     public ColorHsl(final double h, final double s, final double l) {
         this.h = h;
         this.s = s;

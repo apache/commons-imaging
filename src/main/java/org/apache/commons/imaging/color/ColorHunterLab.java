@@ -83,10 +83,22 @@ public final class ColorHunterLab {
      */
     public static final ColorHunterLab BLUE = new ColorHunterLab(26.870, 72.885, -190.923);
 
+    /** The lightness component. */
     public final double l;
+
+    /** The a color component. */
     public final double a;
+
+    /** The b color component. */
     public final double b;
 
+    /**
+     * Constructs a new ColorHunterLab.
+     *
+     * @param l the lightness component.
+     * @param a the a color component.
+     * @param b the b color component.
+     */
     public ColorHunterLab(final double l, final double a, final double b) {
         this.l = l;
         this.a = a;

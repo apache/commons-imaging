@@ -19,8 +19,28 @@ package org.apache.commons.imaging.common;
 
 import java.awt.image.BufferedImage;
 
+/**
+ * Creates BufferedImage instances.
+ */
 public interface BufferedImageFactory {
+
+    /**
+     * Creates a color BufferedImage with the specified dimensions.
+     *
+     * @param width the image width.
+     * @param height the image height.
+     * @param hasAlpha whether the image has an alpha channel.
+     * @return a new BufferedImage.
+     */
     BufferedImage getColorBufferedImage(int width, int height, boolean hasAlpha);
 
+    /**
+     * Creates a grayscale BufferedImage with the specified dimensions.
+     *
+     * @param width the image width.
+     * @param height the image height.
+     * @param hasAlpha whether the image has an alpha channel.
+     * @return a new BufferedImage.
+     */
     BufferedImage getGrayscaleBufferedImage(int width, int height, boolean hasAlpha);
 }

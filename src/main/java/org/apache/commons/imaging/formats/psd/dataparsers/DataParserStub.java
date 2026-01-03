@@ -18,7 +18,18 @@ package org.apache.commons.imaging.formats.psd.dataparsers;
 
 import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
+/**
+ * Stub parser for unsupported PSD color modes.
+ */
 public class DataParserStub extends AbstractDataParser {
+
+    /**
+     * Constructs a new stub data parser.
+     */
+    public DataParserStub() {
+        super();
+    }
+
     @Override
     public int getBasicChannelsCount() {
         return 1;

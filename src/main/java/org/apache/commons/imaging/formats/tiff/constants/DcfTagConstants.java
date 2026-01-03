@@ -33,20 +33,31 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShortOrLong;
  */
 public final class DcfTagConstants {
 
+    /** Related image file format tag. */
     public static final TagInfoAscii EXIF_TAG_RELATED_IMAGE_FILE_FORMAT = new TagInfoAscii("RelatedImageFileFormat", 0x1000, -1,
             TiffDirectoryType.EXIF_DIRECTORY_INTEROP_IFD);
 
+    /** Related image width tag. */
     public static final TagInfoShortOrLong EXIF_TAG_RELATED_IMAGE_WIDTH = new TagInfoShortOrLong("RelatedImageWidth", 0x1001, 1,
             TiffDirectoryType.EXIF_DIRECTORY_INTEROP_IFD);
 
+    /** Related image length tag. */
     public static final TagInfoShortOrLong EXIF_TAG_RELATED_IMAGE_LENGTH = new TagInfoShortOrLong("RelatedImageLength", 0x1002, 1,
             TiffDirectoryType.EXIF_DIRECTORY_INTEROP_IFD);
 
+    /** Color space tag. */
     public static final TagInfoShort EXIF_TAG_COLOR_SPACE = new TagInfoShort("ColorSpace", 0xa001, TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+
+    /** Color space value: sRGB. */
     public static final int COLOR_SPACE_VALUE_SRGB = 1;
+
+    /** Color space value: Adobe RGB. */
     public static final int COLOR_SPACE_VALUE_ADOBE_RGB = 2;
+
+    /** Color space value: uncalibrated. */
     public static final int COLOR_SPACE_VALUE_UNCALIBRATED = 65535;
 
+    /** List of all DCF tags. */
     public static final List<TagInfo> ALL_DCF_TAGS = Collections.unmodifiableList(
             Arrays.asList(EXIF_TAG_RELATED_IMAGE_FILE_FORMAT, EXIF_TAG_RELATED_IMAGE_WIDTH, EXIF_TAG_RELATED_IMAGE_LENGTH, EXIF_TAG_COLOR_SPACE));
 

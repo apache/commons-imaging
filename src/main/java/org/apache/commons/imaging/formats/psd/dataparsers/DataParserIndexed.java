@@ -20,9 +20,17 @@ import java.util.Arrays;
 
 import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
+/**
+ * Parser for indexed color mode PSD image data.
+ */
 public class DataParserIndexed extends AbstractDataParser {
     private final int[] colorTable;
 
+    /**
+     * Constructs a new indexed color data parser.
+     *
+     * @param colorModeData the color mode data containing the color table.
+     */
     public DataParserIndexed(final byte[] colorModeData) {
         colorTable = new int[256];
         Arrays.setAll(colorTable, i -> {

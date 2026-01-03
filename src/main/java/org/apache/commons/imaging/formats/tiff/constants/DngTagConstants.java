@@ -146,27 +146,68 @@ public final class DngTagConstants {
     public static final int MAKER_NOTE_SAFETY_VALUE_UNSAFE = 0;
     public static final int MAKER_NOTE_SAFETY_VALUE_SAFE = 1;
 
+    /** Calibration illuminant 1 tag. */
     public static final TagInfoShort EXIF_TAG_CALIBRATION_ILLUMINANT_1 = new TagInfoShort("CalibrationIlluminant1", 0xc65a,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
+
+    /** Calibration illuminant 1 value: daylight. */
     public static final int CALIBRATION_ILLUMINANT_1_VALUE_DAYLIGHT = 1;
+
+    /** Calibration illuminant 1 value: fluorescent. */
     public static final int CALIBRATION_ILLUMINANT_1_VALUE_FLUORESCENT = 2;
+
+    /** Calibration illuminant 1 value: tungsten. */
     public static final int CALIBRATION_ILLUMINANT_1_VALUE_TUNGSTEN = 3;
+
+    /** Calibration illuminant 1 value: flash. */
     public static final int CALIBRATION_ILLUMINANT_1_VALUE_FLASH = 4;
+
+    /** Calibration illuminant 1 value: fine weather. */
     public static final int CALIBRATION_ILLUMINANT_1_VALUE_FINE_WEATHER = 9;
+
+    /** Calibration illuminant 1 value: cloudy. */
     public static final int CALIBRATION_ILLUMINANT_1_VALUE_CLOUDY = 10;
+
+    /** Calibration illuminant 1 value: shade. */
     public static final int CALIBRATION_ILLUMINANT_1_VALUE_SHADE = 11;
+
+    /** Calibration illuminant 1 value: daylight fluorescent. */
     public static final int CALIBRATION_ILLUMINANT_1_VALUE_DAYLIGHT_FLUORESCENT = 12;
+
+    /** Calibration illuminant 1 value: day white fluorescent. */
     public static final int CALIBRATION_ILLUMINANT_1_VALUE_DAY_WHITE_FLUORESCENT = 13;
+
+    /** Calibration illuminant 1 value: cool white fluorescent. */
     public static final int CALIBRATION_ILLUMINANT_1_VALUE_COOL_WHITE_FLUORESCENT = 14;
+
+    /** Calibration illuminant 1 value: white fluorescent. */
     public static final int CALIBRATION_ILLUMINANT_1_VALUE_WHITE_FLUORESCENT = 15;
+
+    /** Calibration illuminant 1 value: standard light A. */
     public static final int CALIBRATION_ILLUMINANT_1_VALUE_STANDARD_LIGHT_A = 17;
+
+    /** Calibration illuminant 1 value: standard light B. */
     public static final int CALIBRATION_ILLUMINANT_1_VALUE_STANDARD_LIGHT_B = 18;
+
+    /** Calibration illuminant 1 value: standard light C. */
     public static final int CALIBRATION_ILLUMINANT_1_VALUE_STANDARD_LIGHT_C = 19;
+
+    /** Calibration illuminant 1 value: D55. */
     public static final int CALIBRATION_ILLUMINANT_1_VALUE_D55 = 20;
+
+    /** Calibration illuminant 1 value: D65. */
     public static final int CALIBRATION_ILLUMINANT_1_VALUE_D65 = 21;
+
+    /** Calibration illuminant 1 value: D75. */
     public static final int CALIBRATION_ILLUMINANT_1_VALUE_D75 = 22;
+
+    /** Calibration illuminant 1 value: D50. */
     public static final int CALIBRATION_ILLUMINANT_1_VALUE_D50 = 23;
+
+    /** Calibration illuminant 1 value: ISO studio tungsten. */
     public static final int CALIBRATION_ILLUMINANT_1_VALUE_ISO_STUDIO_TUNGSTEN = 24;
+
+    /** Calibration illuminant 1 value: other. */
     public static final int CALIBRATION_ILLUMINANT_1_VALUE_OTHER = 255;
 
     public static final TagInfoShort EXIF_TAG_CALIBRATION_ILLUMINANT_2 = new TagInfoShort("CalibrationIlluminant2", 0xc65b,
@@ -277,6 +318,7 @@ public final class DngTagConstants {
     public static final TagInfoBytes EXIF_TAG_PREVIEW_SETTINGS_DIGEST = new TagInfoBytes("PreviewSettingsDigest", 0xc719, 16,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
+    /** Preview colorspace tag. */
     public static final TagInfoLong EXIF_TAG_PREVIEW_COLORSPACE = new TagInfoLong("PreviewColorspace", 0xc71a, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final int PREVIEW_COLORSPACE_VALUE_UNKNOWN = 0;
     public static final int PREVIEW_COLORSPACE_VALUE_GRAY_GAMMA_2_2 = 1;

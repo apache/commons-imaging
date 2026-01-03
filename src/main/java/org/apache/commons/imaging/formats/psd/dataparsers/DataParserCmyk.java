@@ -19,7 +19,18 @@ package org.apache.commons.imaging.formats.psd.dataparsers;
 import org.apache.commons.imaging.color.ColorConversions;
 import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
+/**
+ * Parser for CMYK mode PSD image data.
+ */
 public class DataParserCmyk extends AbstractDataParser {
+
+    /**
+     * Constructs a new CMYK data parser.
+     */
+    public DataParserCmyk() {
+        super();
+    }
+
     @Override
     public int getBasicChannelsCount() {
         return 4;

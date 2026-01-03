@@ -18,7 +18,18 @@ package org.apache.commons.imaging.formats.psd.dataparsers;
 
 import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
+/**
+ * Parser for grayscale mode PSD image data.
+ */
 public class DataParserGrayscale extends AbstractDataParser {
+
+    /**
+     * Constructs a new grayscale data parser.
+     */
+    public DataParserGrayscale() {
+        super();
+    }
+
     @Override
     public int getBasicChannelsCount() {
         return 1;

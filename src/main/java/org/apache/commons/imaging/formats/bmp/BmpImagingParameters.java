@@ -25,5 +25,11 @@ import org.apache.commons.imaging.ImagingParameters;
  * @since 1.0-alpha3
  */
 public class BmpImagingParameters extends ImagingParameters<BmpImagingParameters> {
-    // empty
+
+    /**
+     * Constructs a new BmpImagingParameters.
+     */
+    public BmpImagingParameters() {
+        // Default constructor
+    }
 }

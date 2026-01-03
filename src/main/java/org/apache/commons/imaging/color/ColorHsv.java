@@ -83,10 +83,22 @@ public final class ColorHsv {
      */
     public static final ColorHsv BLUE = new ColorHsv(240, 100, 100);
 
+    /** The hue component (0-360). */
     public final double h;
+
+    /** The saturation component (0-100). */
     public final double s;
+
+    /** The value component (0-100). */
     public final double v;
 
+    /**
+     * Constructs a new ColorHsv.
+     *
+     * @param h the hue component (0-360).
+     * @param s the saturation component (0-100).
+     * @param v the value component (0-100).
+     */
     public ColorHsv(final double h, final double s, final double v) {
         this.h = h;
         this.s = s;

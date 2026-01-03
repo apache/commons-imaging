@@ -57,6 +57,25 @@ public final class DataReaderTiled extends AbstractImageDataReader {
 
     private final AbstractTiffImageData.Tiles imageData;
 
+    /**
+     * Constructs a new data reader for tile-based TIFF images.
+     *
+     * @param directory the TIFF directory.
+     * @param photometricInterpreter the photometric interpreter.
+     * @param tileWidth the tile width.
+     * @param tileLength the tile length.
+     * @param bitsPerPixel the bits per pixel.
+     * @param bitsPerSample the bits per sample array.
+     * @param predictor the predictor value.
+     * @param samplesPerPixel the samples per pixel.
+     * @param sampleFormat the sample format.
+     * @param width the image width.
+     * @param height the image height.
+     * @param compression the compression type.
+     * @param planarConfiguration the planar configuration.
+     * @param byteOrder the byte order.
+     * @param imageData the tile image data.
+     */
     public DataReaderTiled(final TiffDirectory directory, final AbstractPhotometricInterpreter photometricInterpreter, final int tileWidth,
             final int tileLength, final int bitsPerPixel, final int[] bitsPerSample, final int predictor, final int samplesPerPixel, final int sampleFormat,
             final int width, final int height, final int compression, final TiffPlanarConfiguration planarConfiguration, final ByteOrder byteOrder,

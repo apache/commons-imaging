@@ -23,6 +23,14 @@ import java.util.Arrays;
  * Convenience methods for converting data types to and from byte arrays.
  */
 public final class ByteConversions {
+
+    /**
+     * Converts a double value to a byte array in the specified byte order.
+     *
+     * @param value the double value.
+     * @param byteOrder the byte order.
+     * @return the byte array.
+     */
     public static byte[] toBytes(final double value, final ByteOrder byteOrder) {
         final byte[] result = new byte[8];
         toBytes(value, byteOrder, result, 0);
@@ -52,6 +60,13 @@ public final class ByteConversions {
         }
     }
 
+    /**
+     * Converts a double array to a byte array in the specified byte order.
+     *
+     * @param values the double array.
+     * @param byteOrder the byte order.
+     * @return the byte array.
+     */
     public static byte[] toBytes(final double[] values, final ByteOrder byteOrder) {
         return toBytes(values, 0, values.length, byteOrder);
     }
@@ -64,6 +79,13 @@ public final class ByteConversions {
         return result;
     }
 
+    /**
+     * Converts a float value to a byte array in the specified byte order.
+     *
+     * @param value the float value.
+     * @param byteOrder the byte order.
+     * @return the byte array.
+     */
     public static byte[] toBytes(final float value, final ByteOrder byteOrder) {
         final byte[] result = new byte[4];
         toBytes(value, byteOrder, result, 0);
@@ -85,6 +107,13 @@ public final class ByteConversions {
         }
     }
 
+    /**
+     * Converts a float array to a byte array in the specified byte order.
+     *
+     * @param values the float array.
+     * @param byteOrder the byte order.
+     * @return the byte array.
+     */
     public static byte[] toBytes(final float[] values, final ByteOrder byteOrder) {
         return toBytes(values, 0, values.length, byteOrder);
     }
@@ -97,6 +126,13 @@ public final class ByteConversions {
         return result;
     }
 
+    /**
+     * Converts an int value to a byte array in the specified byte order.
+     *
+     * @param value the int value.
+     * @param byteOrder the byte order.
+     * @return the byte array.
+     */
     public static byte[] toBytes(final int value, final ByteOrder byteOrder) {
         final byte[] result = new byte[4];
         toBytes(value, byteOrder, result, 0);
@@ -117,6 +153,13 @@ public final class ByteConversions {
         }
     }
 
+    /**
+     * Converts an int array to a byte array in the specified byte order.
+     *
+     * @param values the int array.
+     * @param byteOrder the byte order.
+     * @return the byte array.
+     */
     public static byte[] toBytes(final int[] values, final ByteOrder byteOrder) {
         return toBytes(values, 0, values.length, byteOrder);
     }
@@ -132,9 +175,9 @@ public final class ByteConversions {
     /**
      * Encodes an eight-byte (long) into an array of bytes based on the specified byte order.
      *
-     * @param value     a standard data primitive of type long
-     * @param byteOrder the byte order to be used for encoding
-     * @return an array of length 8
+     * @param value     a standard data primitive of type long.
+     * @param byteOrder the byte order to be used for encoding.
+     * @return an array of length 8.
      */
     public static byte[] toBytes(final long value, final ByteOrder byteOrder) {
         final byte[] result = new byte[8];
@@ -164,6 +207,13 @@ public final class ByteConversions {
         }
     }
 
+    /**
+     * Converts a RationalNumber to a byte array in the specified byte order.
+     *
+     * @param value the RationalNumber.
+     * @param byteOrder the byte order.
+     * @return the byte array.
+     */
     public static byte[] toBytes(final RationalNumber value, final ByteOrder byteOrder) {
         final byte[] result = new byte[8];
         toBytes(value, byteOrder, result, 0);
@@ -192,6 +242,13 @@ public final class ByteConversions {
         }
     }
 
+    /**
+     * Converts a RationalNumber array to a byte array in the specified byte order.
+     *
+     * @param values the RationalNumber array.
+     * @param byteOrder the byte order.
+     * @return the byte array.
+     */
     public static byte[] toBytes(final RationalNumber[] values, final ByteOrder byteOrder) {
         return toBytes(values, 0, values.length, byteOrder);
     }
@@ -204,6 +261,13 @@ public final class ByteConversions {
         return result;
     }
 
+    /**
+     * Converts a short value to a byte array in the specified byte order.
+     *
+     * @param value the short value.
+     * @param byteOrder the byte order.
+     * @return the byte array.
+     */
     public static byte[] toBytes(final short value, final ByteOrder byteOrder) {
         final byte[] result = new byte[2];
         toBytes(value, byteOrder, result, 0);
@@ -220,6 +284,13 @@ public final class ByteConversions {
         }
     }
 
+    /**
+     * Converts a short array to a byte array in the specified byte order.
+     *
+     * @param values the short array.
+     * @param byteOrder the byte order.
+     * @return the byte array.
+     */
     public static byte[] toBytes(final short[] values, final ByteOrder byteOrder) {
         return toBytes(values, 0, values.length, byteOrder);
     }
@@ -232,6 +303,13 @@ public final class ByteConversions {
         return result;
     }
 
+    /**
+     * Converts a byte array to a double in the specified byte order.
+     *
+     * @param bytes the byte array.
+     * @param byteOrder the byte order.
+     * @return the double value.
+     */
     public static double toDouble(final byte[] bytes, final ByteOrder byteOrder) {
         return toDouble(bytes, 0, byteOrder);
     }
@@ -254,6 +332,13 @@ public final class ByteConversions {
         return Double.longBitsToDouble(bits);
     }
 
+    /**
+     * Converts a byte array to a double array in the specified byte order.
+     *
+     * @param bytes the byte array.
+     * @param byteOrder the byte order.
+     * @return the double array.
+     */
     public static double[] toDoubles(final byte[] bytes, final ByteOrder byteOrder) {
         return toDoubles(bytes, 0, bytes.length, byteOrder);
     }
@@ -264,6 +349,13 @@ public final class ByteConversions {
         return result;
     }
 
+    /**
+     * Converts a byte array to a float in the specified byte order.
+     *
+     * @param bytes the byte array.
+     * @param byteOrder the byte order.
+     * @return the float value.
+     */
     public static float toFloat(final byte[] bytes, final ByteOrder byteOrder) {
         return toFloat(bytes, 0, byteOrder);
     }
@@ -282,6 +374,13 @@ public final class ByteConversions {
         return Float.intBitsToFloat(bits);
     }
 
+    /**
+     * Converts a byte array to a float array in the specified byte order.
+     *
+     * @param bytes the byte array.
+     * @param byteOrder the byte order.
+     * @return the float array.
+     */
     public static float[] toFloats(final byte[] bytes, final ByteOrder byteOrder) {
         return toFloats(bytes, 0, bytes.length, byteOrder);
     }
@@ -294,10 +393,25 @@ public final class ByteConversions {
         return result;
     }
 
+    /**
+     * Converts a byte array to an int in the specified byte order.
+     *
+     * @param bytes the byte array.
+     * @param byteOrder the byte order.
+     * @return the int value.
+     */
     public static int toInt(final byte[] bytes, final ByteOrder byteOrder) {
         return toInt(bytes, 0, byteOrder);
     }
 
+    /**
+     * Converts a byte array to an int in the specified byte order starting at an offset.
+     *
+     * @param bytes the byte array.
+     * @param offset the starting offset.
+     * @param byteOrder the byte order.
+     * @return the int value.
+     */
     public static int toInt(final byte[] bytes, final int offset, final ByteOrder byteOrder) {
         final int byte0 = 0xff & bytes[offset + 0];
         final int byte1 = 0xff & bytes[offset + 1];
@@ -309,6 +423,13 @@ public final class ByteConversions {
         return byte3 << 24 | byte2 << 16 | byte1 << 8 | byte0;
     }
 
+    /**
+     * Converts a byte array to an int array in the specified byte order.
+     *
+     * @param bytes the byte array.
+     * @param byteOrder the byte order.
+     * @return the int array.
+     */
     public static int[] toInts(final byte[] bytes, final ByteOrder byteOrder) {
         return toInts(bytes, 0, bytes.length, byteOrder);
     }
@@ -398,6 +519,14 @@ public final class ByteConversions {
         return new RationalNumber(numerator, divisor, unsignedType);
     }
 
+    /**
+     * Converts a byte array to a RationalNumber array in the specified byte order.
+     *
+     * @param bytes the byte array.
+     * @param byteOrder the byte order.
+     * @param unsignedType indicates whether the extracted value is an unsigned type.
+     * @return the RationalNumber array.
+     */
     public static RationalNumber[] toRationals(final byte[] bytes, final ByteOrder byteOrder, final boolean unsignedType) {
         return toRationals(bytes, 0, bytes.length, byteOrder, unsignedType);
     }
@@ -408,6 +537,13 @@ public final class ByteConversions {
         return result;
     }
 
+    /**
+     * Converts a byte array to a short in the specified byte order.
+     *
+     * @param bytes the byte array.
+     * @param byteOrder the byte order.
+     * @return the short value.
+     */
     public static short toShort(final byte[] bytes, final ByteOrder byteOrder) {
         return toShort(bytes, 0, byteOrder);
     }
@@ -416,6 +552,13 @@ public final class ByteConversions {
         return (short) toUInt16(bytes, offset, byteOrder);
     }
 
+    /**
+     * Converts a byte array to a short array in the specified byte order.
+     *
+     * @param bytes the byte array.
+     * @param byteOrder the byte order.
+     * @return the short array.
+     */
     public static short[] toShorts(final byte[] bytes, final ByteOrder byteOrder) {
         return toShorts(bytes, 0, bytes.length, byteOrder);
     }
@@ -428,10 +571,25 @@ public final class ByteConversions {
         return result;
     }
 
+    /**
+     * Converts a byte array to an unsigned 16-bit integer in the specified byte order.
+     *
+     * @param bytes the byte array.
+     * @param byteOrder the byte order.
+     * @return the unsigned 16-bit integer value.
+     */
     public static int toUInt16(final byte[] bytes, final ByteOrder byteOrder) {
         return toUInt16(bytes, 0, byteOrder);
     }
 
+    /**
+     * Converts a byte array to an unsigned 16-bit integer in the specified byte order starting at an offset.
+     *
+     * @param bytes the byte array.
+     * @param offset the starting offset.
+     * @param byteOrder the byte order.
+     * @return the unsigned 16-bit integer value.
+     */
     public static int toUInt16(final byte[] bytes, final int offset, final ByteOrder byteOrder) {
         final int byte0 = 0xff & bytes[offset + 0];
         final int byte1 = 0xff & bytes[offset + 1];
@@ -441,6 +599,13 @@ public final class ByteConversions {
         return byte1 << 8 | byte0;
     }
 
+    /**
+     * Converts a byte array to an array of unsigned 16-bit integers in the specified byte order.
+     *
+     * @param bytes the byte array.
+     * @param byteOrder the byte order.
+     * @return the array of unsigned 16-bit integers.
+     */
     public static int[] toUInt16s(final byte[] bytes, final ByteOrder byteOrder) {
         return toUInt16s(bytes, 0, bytes.length, byteOrder);
     }

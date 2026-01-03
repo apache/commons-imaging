@@ -37,10 +37,29 @@ public final class BinaryFunctions {
     private static final byte NUL = (byte) 0;
     private static final Logger LOGGER = Logger.getLogger(BinaryFunctions.class.getName());
 
+    /**
+     * Converts four characters to a 32-bit integer (quad).
+     *
+     * @param c1 the first character.
+     * @param c2 the second character.
+     * @param c3 the third character.
+     * @param c4 the fourth character.
+     * @return the 32-bit integer value.
+     */
     public static int charsToQuad(final char c1, final char c2, final char c3, final char c4) {
         return (0xff & c1) << 24 | (0xff & c2) << 16 | (0xff & c3) << 8 | (0xff & c4) << 0;
     }
 
+    /**
+     * Compares byte arrays for equality within specified ranges.
+     *
+     * @param a the first byte array.
+     * @param aStart the starting index in the first array.
+     * @param b the second byte array.
+     * @param bStart the starting index in the second array.
+     * @param length the number of bytes to compare.
+     * @return {@code true} if the ranges are equal, {@code false} otherwise.
+     */
     public static boolean compareBytes(final byte[] a, final int aStart, final byte[] b, final int bStart, final int length) {
         if (a.length < aStart + length) {
             return false;
@@ -82,6 +101,16 @@ public final class BinaryFunctions {
         return copyOfRange(original, 0, count);
     }
 
+    /**
+     * Reads bytes from a RandomAccessFile at a specified position.
+     *
+     * @param raf the RandomAccessFile to read from.
+     * @param pos the position to start reading.
+     * @param length the number of bytes to read.
+     * @param exception the exception message if length is invalid.
+     * @return the bytes read.
+     * @throws IOException if an I/O error occurs or length is invalid.
+     */
     public static byte[] getBytes(final RandomAccessFile raf, final long pos, final int length, final String exception) throws IOException {
         if (length < 0) {
             throw new IOException(String.format("%s, invalid length: %d", exception, length));
@@ -120,15 +149,34 @@ public final class BinaryFunctions {
         return indexOf0(src, 0, message);
     }
 
+    /**
+     * Logs the binary representation of a byte.
+     *
+     * @param msg the message prefix.
+     * @param i the byte value.
+     */
     public static void logByteBits(final String msg, final byte i) {
         LOGGER.finest(msg + ": '" + Integer.toBinaryString(0xff & i));
     }
 
+    /**
+     * Logs a quad as a character string.
+     *
+     * @param msg the message prefix.
+     * @param i the quad value.
+     */
     public static void logCharQuad(final String msg, final int i) {
         LOGGER.finest(msg + ": '" + (char) (0xff & i >> 24) + (char) (0xff & i >> 16) + (char) (0xff & i >> 8) + (char) (0xff & i >> 0) + "'");
 
     }
 
+    /**
+     * Prints a quad as a character string to a PrintWriter.
+     *
+     * @param pw the PrintWriter.
+     * @param msg the message prefix.
+     * @param i the quad value.
+     */
     public static void printCharQuad(final PrintWriter pw, final String msg, final int i) {
         pw.println(msg + ": '" + (char) (0xff & i >> 24) + (char) (0xff & i >> 16) + (char) (0xff & i >> 8) + (char) (0xff & i >> 0) + "'");
     }
@@ -136,8 +184,8 @@ public final class BinaryFunctions {
     /**
      * Convert a quad into a byte array.
      *
-     * @param quad quad
-     * @return a byte array
+     * @param quad quad.
+     * @return a byte array.
      */
     public static byte[] quadsToByteArray(final int quad) {
         final byte[] arr = new byte[4];
@@ -148,6 +196,16 @@ public final class BinaryFunctions {
         return arr;
     }
 
+    /**
+     * Reads 2 bytes from an input stream in the specified byte order.
+     *
+     * @param name the field name (for debugging).
+     * @param in the input stream.
+     * @param exception the exception message if read fails.
+     * @param byteOrder the byte order.
+     * @return the 16-bit value.
+     * @throws IOException if an I/O error occurs.
+     */
     public static int read2Bytes(final String name, final InputStream in, final String exception, final ByteOrder byteOrder) throws IOException {
         final int byte0 = in.read();
         final int byte1 = in.read();
@@ -163,6 +221,16 @@ public final class BinaryFunctions {
         return result;
     }
 
+    /**
+     * Reads 3 bytes from an input stream in the specified byte order.
+     *
+     * @param name the field name (for debugging).
+     * @param in the input stream.
+     * @param exception the exception message if read fails.
+     * @param byteOrder the byte order.
+     * @return the 24-bit value.
+     * @throws IOException if an I/O error occurs.
+     */
     public static int read3Bytes(final String name, final InputStream in, final String exception, final ByteOrder byteOrder) throws IOException {
         final int byte0 = in.read();
         final int byte1 = in.read();
@@ -179,6 +247,16 @@ public final class BinaryFunctions {
         return result;
     }
 
+    /**
+     * Reads 4 bytes from an input stream in the specified byte order.
+     *
+     * @param name the field name (for debugging).
+     * @param in the input stream.
+     * @param exception the exception message if read fails.
+     * @param byteOrder the byte order.
+     * @return the 32-bit value.
+     * @throws IOException if an I/O error occurs.
+     */
     public static int read4Bytes(final String name, final InputStream in, final String exception, final ByteOrder byteOrder) throws IOException {
         final int byte0 = in.read();
         final int byte1 = in.read();
@@ -227,10 +305,28 @@ public final class BinaryFunctions {
         return result;
     }
 
+    /**
+     * Reads and verifies bytes match a BinaryConstant.
+     *
+     * @param in the input stream.
+     * @param expected the expected binary constant.
+     * @param exception the exception message if bytes don't match.
+     * @throws ImagingException if the bytes don't match or EOF is reached.
+     * @throws IOException if an I/O error occurs.
+     */
     public static void readAndVerifyBytes(final InputStream in, final BinaryConstant expected, final String exception) throws ImagingException, IOException {
         readAndVerifyBytes(in, expected.rawValue(), exception);
     }
 
+    /**
+     * Reads and verifies bytes match an expected byte array.
+     *
+     * @param in the input stream.
+     * @param expected the expected byte array.
+     * @param exception the exception message if bytes don't match.
+     * @throws ImagingException if the bytes don't match or EOF is reached.
+     * @throws IOException if an I/O error occurs.
+     */
     public static void readAndVerifyBytes(final InputStream in, final byte[] expected, final String exception) throws ImagingException, IOException {
         for (final byte element : expected) {
             final int data = in.read();
@@ -244,6 +340,15 @@ public final class BinaryFunctions {
         }
     }
 
+    /**
+     * Reads a single byte from an input stream.
+     *
+     * @param name the field name (for debugging).
+     * @param in the input stream.
+     * @param exceptionMessage the exception message if read fails.
+     * @return the byte read.
+     * @throws IOException if an I/O error occurs.
+     */
     public static byte readByte(final String name, final InputStream in, final String exceptionMessage) throws IOException {
         final int result = in.read();
         if (result < 0) {
@@ -252,14 +357,41 @@ public final class BinaryFunctions {
         return (byte) (0xff & result);
     }
 
+    /**
+     * Reads a specified number of bytes from an input stream.
+     *
+     * @param in the input stream.
+     * @param count the number of bytes to read.
+     * @return the bytes read.
+     * @throws IOException if an I/O error occurs.
+     */
     public static byte[] readBytes(final InputStream in, final int count) throws IOException {
         return readBytes("", in, count, "Unexpected EOF");
     }
 
+    /**
+     * Reads a specified number of bytes from an input stream.
+     *
+     * @param name the field name (for debugging).
+     * @param in the input stream.
+     * @param length the number of bytes to read.
+     * @return the bytes read.
+     * @throws IOException if an I/O error occurs.
+     */
     public static byte[] readBytes(final String name, final InputStream in, final int length) throws IOException {
         return readBytes(name, in, length, name + " could not be read.");
     }
 
+    /**
+     * Reads a specified number of bytes from an input stream with a custom exception message.
+     *
+     * @param name the field name (for debugging).
+     * @param in the input stream.
+     * @param length the number of bytes to read.
+     * @param exception the exception message if read fails.
+     * @return the bytes read.
+     * @throws IOException if an I/O error occurs.
+     */
     public static byte[] readBytes(final String name, final InputStream in, final int length, final String exception) throws IOException {
         try {
             return in == null ? ArrayUtils.EMPTY_BYTE_ARRAY : IOUtils.toByteArray(in, Allocator.check(length));
@@ -268,6 +400,14 @@ public final class BinaryFunctions {
         }
     }
 
+    /**
+     * Gets the remaining bytes from a byte array starting at a specified offset.
+     *
+     * @param name the field name (for debugging).
+     * @param bytes the source byte array.
+     * @param count the starting offset.
+     * @return the remaining bytes.
+     */
     public static byte[] remainingBytes(final String name, final byte[] bytes, final int count) {
         return copyOfRange(bytes, count, bytes.length - count);
     }
@@ -279,10 +419,10 @@ public final class BinaryFunctions {
      * <p>
      * Returns {@code true} if it found the quad, and {@code false} otherwise.
      *
-     * @param quad a quad (the needle)
-     * @param in  an input stream (the haystack)
-     * @return {@code true} if it found the quad, and {@code false} otherwise
-     * @throws IOException if it fails to read from the given input stream
+     * @param quad a quad (the needle).
+     * @param in  an input stream (the haystack).
+     * @return {@code true} if it found the quad, and {@code false} otherwise.
+     * @throws IOException if it fails to read from the given input stream.
      */
     public static boolean searchQuad(final int quad, final InputStream in) throws IOException {
         final byte[] needle = quadsToByteArray(quad);
@@ -301,10 +441,27 @@ public final class BinaryFunctions {
         return false;
     }
 
+    /**
+     * Skips a specified number of bytes in an input stream.
+     *
+     * @param in the input stream.
+     * @param skip the number of bytes to skip.
+     * @return the number of bytes actually skipped.
+     * @throws IOException if an I/O error occurs.
+     */
     public static long skipBytes(final InputStream in, final long skip) throws IOException {
         return skipBytes(in, skip, "Couldn't skip bytes");
     }
 
+    /**
+     * Skips a specified number of bytes in an input stream with a custom exception message.
+     *
+     * @param in the input stream.
+     * @param skip the number of bytes to skip.
+     * @param exMessage the exception message if skip fails.
+     * @return the number of bytes actually skipped.
+     * @throws IOException if an I/O error occurs.
+     */
     public static long skipBytes(final InputStream in, final long skip, final String exMessage) throws IOException {
         try {
             return IOUtils.skip(in, skip);
@@ -313,6 +470,13 @@ public final class BinaryFunctions {
         }
     }
 
+    /**
+     * Tests whether a byte array starts with a specified byte sequence.
+     *
+     * @param buffer the buffer to test.
+     * @param search the byte sequence to search for.
+     * @return {@code true} if the buffer starts with the search sequence, {@code false} otherwise.
+     */
     public static boolean startsWith(final byte[] buffer, final byte[] search) {
         if (search == null) {
             return false;
