@@ -29,21 +29,34 @@ import java.util.logging.Logger;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFunctions;
 
+/**
+ * Represents an ICC profile tag.
+ */
 public class IccTag {
 
     static final int SHALLOW_SIZE = 40;
     private static final Logger LOGGER = Logger.getLogger(IccTag.class.getName());
 
+    /** The tag signature. */
     public final int signature;
+    /** The offset of the tag data. */
     public final int offset;
+    /** The length of the tag data. */
     public final int length;
+    /** The ICC tag type. */
     public final IccTagType fIccTagType;
     private byte[] data;
     private IccTagDataType itdt;
     private int dataTypeSignature;
 
-    // public final byte[] data;
-
+    /**
+     * Constructs a new ICC tag.
+     *
+     * @param signature the tag signature.
+     * @param offset the offset of the tag data.
+     * @param length the length of the tag data.
+     * @param fIccTagType the ICC tag type.
+     */
     public IccTag(final int signature, final int offset, final int length, final IccTagType fIccTagType) {
         this.signature = signature;
         this.offset = offset;
@@ -51,6 +64,14 @@ public class IccTag {
         this.fIccTagType = fIccTagType;
     }
 
+    /**
+     * Dumps the tag information to the specified PrintWriter.
+     *
+     * @param pw the PrintWriter to write to.
+     * @param prefix the prefix to use for output lines.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     public void dump(final PrintWriter pw, final String prefix) throws ImagingException, IOException {
         pw.println(prefix + "tag signature: " + Integer.toHexString(signature) + " (" + new String(new byte[] { (byte) (0xff & signature >> 24),
                 (byte) (0xff & signature >> 16), (byte) (0xff & signature >> 8), (byte) (0xff & signature >> 0), }, StandardCharsets.US_ASCII) + ")");
@@ -79,6 +100,13 @@ public class IccTag {
 
     }
 
+    /**
+     * Dumps the tag information to the logger.
+     *
+     * @param prefix the prefix to use for output lines.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     public void dump(final String prefix) throws ImagingException, IOException {
         try (StringWriter sw = new StringWriter();
                 PrintWriter pw = new PrintWriter(sw)) {
@@ -99,6 +127,12 @@ public class IccTag {
         return null;
     }
 
+    /**
+     * Sets the tag data.
+     *
+     * @param bytes the tag data bytes.
+     * @throws IOException if an I/O error occurs.
+     */
     public void setData(final byte[] bytes) throws IOException {
         data = bytes;
 
