@@ -205,10 +205,24 @@ public final class ColorConversions {
         return new ColorDin99Lab(l99o, a99o, b99o);
     }
 
+    /**
+     * Converts CIE L*a*b* to CIE XYZ.
+     *
+     * @param cielab the CIE L*a*b* color.
+     * @return the CIE XYZ color.
+     */
     public static ColorXyz convertCieLabToXyz(final ColorCieLab cielab) {
         return convertCieLabToXyz(cielab.l, cielab.a, cielab.b);
     }
 
+    /**
+     * Converts CIE L*a*b* to CIE XYZ.
+     *
+     * @param l the L* value.
+     * @param a the a* value.
+     * @param b the b* value.
+     * @return the CIE XYZ color.
+     */
     public static ColorXyz convertCieLabToXyz(final double l, final double a, final double b) {
         double varY = (l + 16) / 116.0;
         double varX = a / 500 + varY;
@@ -254,10 +268,24 @@ public final class ColorConversions {
         return new ColorCieLab(l, a, b);
     }
 
+    /**
+     * Converts CIE Luv to CIE XYZ.
+     *
+     * @param cielch the CIE Luv color.
+     * @return the CIE XYZ color.
+     */
     public static ColorXyz convertCieLuvToXyz(final ColorCieLuv cielch) {
         return convertCieLuvToXyz(cielch.l, cielch.u, cielch.v);
     }
 
+    /**
+     * Converts CIE Luv to CIE XYZ.
+     *
+     * @param l the L* value.
+     * @param u the u* value.
+     * @param v the v* value.
+     * @return the CIE XYZ color.
+     */
     public static ColorXyz convertCieLuvToXyz(final double l, final double u, final double v) {
         // problems here with div by zero
 
@@ -275,10 +303,25 @@ public final class ColorConversions {
         return new ColorXyz(x, y, z);
     }
 
+    /**
+     * Converts CMYK to CMY.
+     *
+     * @param cmyk the CMYK color.
+     * @return the CMY color.
+     */
     public static ColorCmy convertCmykToCmy(final ColorCmyk cmyk) {
         return convertCmykToCmy(cmyk.c, cmyk.m, cmyk.y, cmyk.k);
     }
 
+    /**
+     * Converts CMYK to CMY.
+     *
+     * @param c the cyan value.
+     * @param m the magenta value.
+     * @param y the yellow value.
+     * @param k the black value.
+     * @return the CMY color.
+     */
     public static ColorCmy convertCmykToCmy(double c, double m, double y, final double k) {
         // Where CMYK and CMY values = 0 ÷ 1
 
@@ -289,6 +332,15 @@ public final class ColorConversions {
         return new ColorCmy(c, m, y);
     }
 
+    /**
+     * Converts CMYK to RGB.
+     *
+     * @param c the cyan value.
+     * @param m the magenta value.
+     * @param y the yellow value.
+     * @param k the black value.
+     * @return the RGB color as int.
+     */
     public static int convertCmykToRgb(final int c, final int m, final int y, final int k) {
         final double C = c / 255.0;
         final double M = m / 255.0;
@@ -298,6 +350,15 @@ public final class ColorConversions {
         return convertCmyToRgb(convertCmykToCmy(C, M, Y, K));
     }
 
+    /**
+     * Converts CMYK to RGB using Adobe formula.
+     *
+     * @param sc the cyan value.
+     * @param sm the magenta value.
+     * @param sy the yellow value.
+     * @param sk the black value.
+     * @return the RGB color as int.
+     */
     public static int convertCmykToRgbAdobe(final int sc, final int sm, final int sy, final int sk) {
         final int red = 255 - (sc + sk);
         final int green = 255 - (sm + sk);
@@ -306,6 +367,12 @@ public final class ColorConversions {
         return convertRgbToRgb(red, green, blue);
     }
 
+    /**
+     * Converts CMY to CMYK.
+     *
+     * @param cmy the CMY color.
+     * @return the CMYK color.
+     */
     public static ColorCmyk convertCmyToCmyk(final ColorCmy cmy) {
         // Where CMYK and CMY values = 0 ÷ 1
 
@@ -336,6 +403,12 @@ public final class ColorConversions {
         return new ColorCmyk(c, m, y, varK);
     }
 
+    /**
+     * Converts CMY to RGB.
+     *
+     * @param cmy the CMY color.
+     * @return the RGB color as int.
+     */
     public static int convertCmyToRgb(final ColorCmy cmy) {
         // From Ghostscript's gdevcdj.c:
         // * Ghostscript: R = (1.0 - C) * (1.0 - K)
@@ -353,10 +426,24 @@ public final class ColorConversions {
         return convertRgbToRgb(r, g, b);
     }
 
+    /**
+     * Converts DIN99b Lab to CIE L*a*b*.
+     *
+     * @param dinb the DIN99b Lab color.
+     * @return the CIE L*a*b* color.
+     */
     public static ColorCieLab convertDin99bLabToCieLab(final ColorDin99Lab dinb) {
         return convertDin99bLabToCieLab(dinb.l99, dinb.a99, dinb.b99);
     }
 
+    /**
+     * Converts DIN99b Lab to CIE L*a*b*.
+     *
+     * @param L99b the L99 value.
+     * @param a99b the a99 value.
+     * @param b99b the b99 value.
+     * @return the CIE L*a*b* color.
+     */
     public static ColorCieLab convertDin99bLabToCieLab(final double L99b, final double a99b, final double b99b) {
         final double kE = 1.0; // brightness factor, 1.0 for CIE reference conditions
         final double kCH = 1.0; // chroma and hue factor, 1.0 for CIE reference conditions
@@ -420,10 +507,24 @@ public final class ColorConversions {
         return new ColorCieLab(l, a, b);
     }
 
+    /**
+     * Converts HSL to RGB.
+     *
+     * @param hsl the HSL color.
+     * @return the RGB color as int.
+     */
     public static int convertHslToRgb(final ColorHsl hsl) {
         return convertHslToRgb(hsl.h, hsl.s, hsl.l);
     }
 
+    /**
+     * Converts HSL to RGB.
+     *
+     * @param h the hue value.
+     * @param s the saturation value.
+     * @param l the lightness value.
+     * @return the RGB color as int.
+     */
     public static int convertHslToRgb(final double h, final double s, final double l) {
         final double r;
         final double g;
@@ -452,10 +553,24 @@ public final class ColorConversions {
         return convertRgbToRgb(r, g, b);
     }
 
+    /**
+     * Converts HSV to RGB.
+     *
+     * @param HSV the HSV color.
+     * @return the RGB color as int.
+     */
     public static int convertHsvToRgb(final ColorHsv HSV) {
         return convertHsvToRgb(HSV.h, HSV.s, HSV.v);
     }
 
+    /**
+     * Converts HSV to RGB.
+     *
+     * @param h the hue value.
+     * @param s the saturation value.
+     * @param v the value (brightness) value.
+     * @return the RGB color as int.
+     */
     public static int convertHsvToRgb(final double h, final double s, final double v) {
         final double r;
         final double g;
@@ -532,10 +647,24 @@ public final class ColorConversions {
         return v1;
     }
 
+    /**
+     * Converts Hunter Lab to CIE XYZ.
+     *
+     * @param cielab the Hunter Lab color.
+     * @return the CIE XYZ color.
+     */
     public static ColorXyz convertHunterLabToXyz(final ColorHunterLab cielab) {
         return convertHunterLabToXyz(cielab.l, cielab.a, cielab.b);
     }
 
+    /**
+     * Converts Hunter Lab to CIE XYZ.
+     *
+     * @param l the L value.
+     * @param a the a value.
+     * @param b the b value.
+     * @return the CIE XYZ color.
+     */
     public static ColorXyz convertHunterLabToXyz(final double l, final double a, final double b) {
         final double varY = l / 10;
         final double varX = a / 17.5 * l / 10;
@@ -548,6 +677,12 @@ public final class ColorConversions {
         return new ColorXyz(x, y, z);
     }
 
+    /**
+     * Converts RGB to CMY.
+     *
+     * @param rgb the RGB color as int.
+     * @return the CMY color.
+     */
     public static ColorCmy convertRgbToCmy(final int rgb) {
         final int r = 0xff & rgb >> 16;
         final int g = 0xff & rgb >> 8;
@@ -563,6 +698,12 @@ public final class ColorConversions {
         return new ColorCmy(c, m, y);
     }
 
+    /**
+     * Converts RGB to HSL.
+     *
+     * @param rgb the RGB color as int.
+     * @return the HSL color.
+     */
     public static ColorHsl convertRgbToHsl(final int rgb) {
 
         final int r = 0xff & rgb >> 16;
@@ -639,6 +780,12 @@ public final class ColorConversions {
         return new ColorHsl(h, s, l);
     }
 
+    /**
+     * Converts RGB to HSV.
+     *
+     * @param rgb the RGB color as int.
+     * @return the HSV color.
+     */
     public static ColorHsv convertRgbToHsv(final int rgb) {
         final int r = 0xff & rgb >> 16;
         final int g = 0xff & rgb >> 8;
@@ -723,8 +870,12 @@ public final class ColorConversions {
         return alpha << 24 | red << 16 | green << 8 | blue << 0;
     }
 
-    // See also c# implementation:
-    // https://github.com/muak/ColorMinePortable/blob/master/ColorMinePortable/ColorSpaces/Conversions/XyzConverter.cs
+    /**
+     * Converts RGB to CIE XYZ.
+     *
+     * @param rgb the RGB color as int.
+     * @return the CIE XYZ color.
+     */
     public static ColorXyz convertRgbToXyz(final int rgb) {
         final int r = 0xff & rgb >> 16;
         final int g = 0xff & rgb >> 8;
@@ -757,6 +908,14 @@ public final class ColorConversions {
         return new ColorXyz(X, Y, Z);
     }
 
+    /**
+     * Converts XYZ to CIE Luv.
+     *
+     * @param x the X value.
+     * @param y the Y value.
+     * @param z the Z value.
+     * @return the CIE Luv color.
+     */
     public static ColorCieLuv convertXuzToCieLuv(final double x, final double y, final double z) {
         // problems here with div by zero
 
@@ -786,10 +945,24 @@ public final class ColorConversions {
         return new ColorCieLuv(l, u, v);
     }
 
+    /**
+     * Converts CIE XYZ to CIE L*a*b*.
+     *
+     * @param xyz the CIE XYZ color.
+     * @return the CIE L*a*b* color.
+     */
     public static ColorCieLab convertXyzToCieLab(final ColorXyz xyz) {
         return convertXyzToCieLab(xyz.x, xyz.y, xyz.z);
     }
 
+    /**
+     * Converts CIE XYZ to CIE L*a*b*.
+     *
+     * @param x the X value.
+     * @param y the Y value.
+     * @param z the Z value.
+     * @return the CIE L*a*b* color.
+     */
     public static ColorCieLab convertXyzToCieLab(final double x, final double y, final double z) {
 
         double varX = x / REF_X; // REF_X = 95.047 Observer= 2°, Illuminant= D65
@@ -808,14 +981,34 @@ public final class ColorConversions {
         return new ColorCieLab(l, a, b);
     }
 
+    /**
+     * Converts CIE XYZ to CIE Luv.
+     *
+     * @param xyz the CIE XYZ color.
+     * @return the CIE Luv color.
+     */
     public static ColorCieLuv convertXyzToCieLuv(final ColorXyz xyz) {
         return convertXuzToCieLuv(xyz.x, xyz.y, xyz.z);
     }
 
+    /**
+     * Converts CIE XYZ to Hunter Lab.
+     *
+     * @param xyz the CIE XYZ color.
+     * @return the Hunter Lab color.
+     */
     public static ColorHunterLab convertXyzToHunterLab(final ColorXyz xyz) {
         return convertXyzToHunterLab(xyz.x, xyz.y, xyz.z);
     }
 
+    /**
+     * Converts CIE XYZ to Hunter Lab.
+     *
+     * @param x the X value.
+     * @param y the Y value.
+     * @param z the Z value.
+     * @return the Hunter Lab color.
+     */
     public static ColorHunterLab convertXyzToHunterLab(final double x, final double y, final double z) {
         final double l = 10 * Math.sqrt(y);
         final double a = y == 0.0 ? 0.0 : 17.5 * ((1.02 * x - y) / Math.sqrt(y));
@@ -824,10 +1017,24 @@ public final class ColorConversions {
         return new ColorHunterLab(l, a, b);
     }
 
+    /**
+     * Converts CIE XYZ to RGB.
+     *
+     * @param xyz the CIE XYZ color.
+     * @return the RGB color as int.
+     */
     public static int convertXyzToRgb(final ColorXyz xyz) {
         return convertXyzToRgb(xyz.x, xyz.y, xyz.z);
     }
 
+    /**
+     * Converts CIE XYZ to RGB.
+     *
+     * @param x the X value.
+     * @param y the Y value.
+     * @param z the Z value.
+     * @return the RGB color as int.
+     */
     public static int convertXyzToRgb(final double x, final double y, final double z) {
         // Observer = 2°, Illuminant = D65
         final double varX = x / 100.0; // Where X = 0 ÷ 95.047
@@ -854,6 +1061,12 @@ public final class ColorConversions {
         return convertRgbToRgb(r, g, b);
     }
 
+    /**
+     * Converts degrees to radians.
+     *
+     * @param degree the angle in degrees.
+     * @return the angle in radians.
+     */
     public static double degree2radian(final double degree) {
         return degree * Math.PI / 180.0;
     }
@@ -876,6 +1089,12 @@ public final class ColorConversions {
         return n;
     }
 
+    /**
+     * Converts radians to degrees.
+     *
+     * @param radian the angle in radians.
+     * @return the angle in degrees.
+     */
     public static double radian2degree(final double radian) {
         return radian * 180.0 / Math.PI;
     }
