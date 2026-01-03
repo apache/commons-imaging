@@ -18,6 +18,9 @@ package org.apache.commons.imaging.formats.gif;
 
 import org.apache.commons.imaging.common.ImageMetadata;
 
+/**
+ * Metadata for a single frame in a GIF image.
+ */
 public class GifImageMetadataItem implements ImageMetadata.ImageMetadataItem {
     private static final String NEWLINE = System.lineSeparator();
     private final int delay;
@@ -32,18 +35,38 @@ public class GifImageMetadataItem implements ImageMetadata.ImageMetadataItem {
         this.disposalMethod = disposalMethod;
     }
 
+    /**
+     * Gets the frame delay in milliseconds.
+     *
+     * @return the delay.
+     */
     public int getDelay() {
         return delay;
     }
 
+    /**
+     * Gets the disposal method for this frame.
+     *
+     * @return the disposal method.
+     */
     public DisposalMethod getDisposalMethod() {
         return disposalMethod;
     }
 
+    /**
+     * Gets the left position of the frame.
+     *
+     * @return the left position in pixels.
+     */
     public int getLeftPosition() {
         return leftPosition;
     }
 
+    /**
+     * Gets the top position of the frame.
+     *
+     * @return the top position in pixels.
+     */
     public int getTopPosition() {
         return topPosition;
     }
