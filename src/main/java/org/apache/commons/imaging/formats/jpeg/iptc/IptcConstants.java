@@ -14,78 +14,216 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.imaging.formats.jpeg.iptc;
 
+/**
+ * IPTC (International Press Telecommunications Council) metadata constants.
+ */
 public final class IptcConstants {
+
+    /** Maximum size for non-extended IPTC records. */
     public static final int IPTC_NON_EXTENDED_RECORD_MAXIMUM_SIZE = 32767;
 
+    /** Image resource block: Photoshop 2.0 info. */
     public static final int IMAGE_RESOURCE_BLOCK_PHOTOSHOP2_INFO = 0x03e8;
+
+    /** Image resource block: Macintosh print info. */
     public static final int IMAGE_RESOURCE_BLOCK_MACINTOSH_PRINT_INFO = 0x03e9;
+
+    /** Image resource block: XML data. */
     public static final int IMAGE_RESOURCE_BLOCK_XML_DATA = 0x03ea;
+
+    /** Image resource block: Photoshop 2.0 color table. */
     public static final int IMAGE_RESOURCE_BLOCK_PHOTOSHOP2_COLOR_TABLE = 0x03eb;
+
+    /** Image resource block: resolution info. */
     public static final int IMAGE_RESOURCE_BLOCK_RESOLUTION_INFO = 0x03ed;
+
+    /** Image resource block: alpha channels names. */
     public static final int IMAGE_RESOURCE_BLOCK_ALPHA_CHANNELS_NAMES = 0x03ee;
+
+    /** Image resource block: display info. */
     public static final int IMAGE_RESOURCE_BLOCK_DISPLAY_INFO = 0x03ef;
+
+    /** Image resource block: PString caption. */
     public static final int IMAGE_RESOURCE_BLOCK_PSTRING_CAPTION = 0x03f0;
+
+    /** Image resource block: border information. */
     public static final int IMAGE_RESOURCE_BLOCK_BORDER_INFORMATION = 0x03f1;
+
+    /** Image resource block: background color. */
     public static final int IMAGE_RESOURCE_BLOCK_BACKGROUND_COLOR = 0x03f2;
+
+    /** Image resource block: print flags. */
     public static final int IMAGE_RESOURCE_BLOCK_PRINT_FLAGS = 0x03f3;
+
+    /** Image resource block: black and white halftoning info. */
     public static final int IMAGE_RESOURCE_BLOCK_BW_HALFTONING_INFO = 0x03f4;
+
+    /** Image resource block: color halftoning info. */
     public static final int IMAGE_RESOURCE_BLOCK_COLOR_HALFTONING_INFO = 0x03f5;
+
+    /** Image resource block: duotone halftoning info. */
     public static final int IMAGE_RESOURCE_BLOCK_DUOTONE_HALFTONING_INFO = 0x03f6;
+
+    /** Image resource block: black and white transfer function. */
     public static final int IMAGE_RESOURCE_BLOCK_BW_TRANSFER_FUNC = 0x03f7;
+
+    /** Image resource block: color transfer functions. */
     public static final int IMAGE_RESOURCE_BLOCK_COLOR_TRANSFER_FUNCS = 0x03f8;
+
+    /** Image resource block: duotone transfer functions. */
     public static final int IMAGE_RESOURCE_BLOCK_DUOTONE_TRANSFER_FUNCS = 0x03f9;
+
+    /** Image resource block: duotone image info. */
     public static final int IMAGE_RESOURCE_BLOCK_DUOTONE_IMAGE_INFO = 0x03fa;
+
+    /** Image resource block: effective black and white. */
     public static final int IMAGE_RESOURCE_BLOCK_EFFECTIVE_BW = 0x03fb;
+
+    /** Image resource block: obsolete Photoshop tag 1. */
     public static final int IMAGE_RESOURCE_BLOCK_OBSOLETE_PHOTOSHOP_TAG1 = 0x03fc;
+
+    /** Image resource block: EPS options. */
     public static final int IMAGE_RESOURCE_BLOCK_EPS_OPTIONS = 0x03fd;
+
+    /** Image resource block: quick mask info. */
     public static final int IMAGE_RESOURCE_BLOCK_QUICK_MASK_INFO = 0x03fe;
+
+    /** Image resource block: obsolete Photoshop tag 2. */
     public static final int IMAGE_RESOURCE_BLOCK_OBSOLETE_PHOTOSHOP_TAG2 = 0x03ff;
+
+    /** Image resource block: layer state info. */
     public static final int IMAGE_RESOURCE_BLOCK_LAYER_STATE_INFO = 0x0400;
+
+    /** Image resource block: working path. */
     public static final int IMAGE_RESOURCE_BLOCK_WORKING_PATH = 0x0401;
+
+    /** Image resource block: layers group info. */
     public static final int IMAGE_RESOURCE_BLOCK_LAYERS_GROUP_INFO = 0x0402;
+
+    /** Image resource block: obsolete Photoshop tag 3. */
     public static final int IMAGE_RESOURCE_BLOCK_OBSOLETE_PHOTOSHOP_TAG3 = 0x0403;
+
+    /** Image resource block: IPTC data. */
     public static final int IMAGE_RESOURCE_BLOCK_IPTC_DATA = 0x0404;
+
+    /** Image resource block: raw image mode. */
     public static final int IMAGE_RESOURCE_BLOCK_RAW_IMAGE_MODE = 0x0405;
+
+    /** Image resource block: JPEG quality. */
     public static final int IMAGE_RESOURCE_BLOCK_JPEG_QUALITY = 0x0406;
+
+    /** Image resource block: grid and guides info. */
     public static final int IMAGE_RESOURCE_BLOCK_GRID_GUIDES_INFO = 0x0408;
+
+    /** Image resource block: Photoshop BGR thumbnail. */
     public static final int IMAGE_RESOURCE_BLOCK_PHOTOSHOP_BGR_THUMBNAIL = 0x0409;
+
+    /** Image resource block: copyright flag. */
     public static final int IMAGE_RESOURCE_BLOCK_COPYRIGHT_FLAG = 0x040a;
+
+    /** Image resource block: URL. */
     public static final int IMAGE_RESOURCE_BLOCK_URL = 0x040b;
+
+    /** Image resource block: Photoshop thumbnail. */
     public static final int IMAGE_RESOURCE_BLOCK_PHOTOSHOP_THUMBNAIL = 0x040c;
+
+    /** Image resource block: global angle. */
     public static final int IMAGE_RESOURCE_BLOCK_GLOBAL_ANGLE = 0x040d;
+
+    /** Image resource block: color samplers resource. */
     public static final int IMAGE_RESOURCE_BLOCK_COLOR_SAMPLERS_RESOURCE = 0x040e;
+
+    /** Image resource block: ICC profile. */
     public static final int IMAGE_RESOURCE_BLOCK_ICC_PROFILE = 0x040f;
+
+    /** Image resource block: watermark. */
     public static final int IMAGE_RESOURCE_BLOCK_WATERMARK = 0x0410;
+
+    /** Image resource block: ICC untagged. */
     public static final int IMAGE_RESOURCE_BLOCK_ICC_UNTAGGED = 0x0411;
+
+    /** Image resource block: effects visible. */
     public static final int IMAGE_RESOURCE_BLOCK_EFFECTS_VISIBLE = 0x0412;
+
+    /** Image resource block: spot halftone. */
     public static final int IMAGE_RESOURCE_BLOCK_SPOT_HALFTONE = 0x0413;
+
+    /** Image resource block: IDs base value. */
     public static final int IMAGE_RESOURCE_BLOCK_IDS_BASE_VALUE = 0x0414;
+
+    /** Image resource block: Unicode alpha names. */
     public static final int IMAGE_RESOURCE_BLOCK_UNICODE_ALPHA_NAMES = 0x0415;
+
+    /** Image resource block: indexed colour table count. */
     public static final int IMAGE_RESOURCE_BLOCK_INDEXED_COLOUR_TABLE_COUNT = 0x0416;
+
+    /** Image resource block: transparent index. */
     public static final int IMAGE_RESOURCE_BLOCK_TRANSPARENT_INDEX = 0x0417;
+
+    /** Image resource block: global altitude. */
     public static final int IMAGE_RESOURCE_BLOCK_GLOBAL_ALTITUDE = 0x0419;
+
+    /** Image resource block: slices. */
     public static final int IMAGE_RESOURCE_BLOCK_SLICES = 0x041a;
+
+    /** Image resource block: workflow URL. */
     public static final int IMAGE_RESOURCE_BLOCK_WORKFLOW_URL = 0x041b;
+
+    /** Image resource block: jump to XPEP. */
     public static final int IMAGE_RESOURCE_BLOCK_JUMP_TO_XPEP = 0x041c;
+
+    /** Image resource block: alpha identifiers. */
     public static final int IMAGE_RESOURCE_BLOCK_ALPHA_IDENTIFIERS = 0x041d;
+
+    /** Image resource block: URL list. */
     public static final int IMAGE_RESOURCE_BLOCK_URL_LIST = 0x041e;
+
+    /** Image resource block: version info. */
     public static final int IMAGE_RESOURCE_BLOCK_VERSION_INFO = 0x0421;
+
+    /** Image resource block: EXIF info. */
     public static final int IMAGE_RESOURCE_BLOCK_EXIFINFO = 0x0422;
+
+    /** Image resource block: EXIF info 2. */
     public static final int IMAGE_RESOURCE_BLOCK_EXIF_INFO2 = 0x0423;
+
+    /** Image resource block: XMP metadata. */
     public static final int IMAGE_RESOURCE_BLOCK_XMP = 0x0424;
+
+    /** Image resource block: caption digest. */
     public static final int IMAGE_RESOURCE_BLOCK_CAPTION_DIGEST = 0x0425;
+
+    /** Image resource block: print scale. */
     public static final int IMAGE_RESOURCE_BLOCK_PRINT_SCALE = 0x0426;
+
+    /** Image resource block: pixel aspect ratio. */
     public static final int IMAGE_RESOURCE_BLOCK_PIXEL_ASPECT_RATIO = 0x0428;
+
+    /** Image resource block: layer comps. */
     public static final int IMAGE_RESOURCE_BLOCK_LAYER_COMPS = 0x0429;
+
+    /** Image resource block: alternate duotone colors. */
     public static final int IMAGE_RESOURCE_BLOCK_ALTERNATE_DUOTONE_COLORS = 0x042a;
+
+    /** Image resource block: alternate spot colors. */
     public static final int IMAGE_RESOURCE_BLOCK_ALTERNATE_SPOT_COLORS = 0x042b;
+
+    /** Image resource block: clipping path name. */
     public static final int IMAGE_RESOURCE_BLOCK_CLIPPING_PATH_NAME = 0x0bb7;
+
+    /** Image resource block: print flags info. */
     public static final int IMAGE_RESOURCE_BLOCK_PRINT_FLAGS_INFO = 0x2710;
 
+    /** IPTC record tag marker. */
     public static final int IPTC_RECORD_TAG_MARKER = 0x1c;
+
+    /** IPTC envelope record number. */
     public static final int IPTC_ENVELOPE_RECORD_NUMBER = 0x01;
+
+    /** IPTC application 2 record number. */
     public static final int IPTC_APPLICATION_2_RECORD_NUMBER = 0x02;
 
     private IptcConstants() {
