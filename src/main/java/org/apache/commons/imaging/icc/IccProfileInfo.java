@@ -23,27 +23,63 @@ import java.util.logging.Logger;
 
 import org.apache.commons.imaging.ImagingException;
 
+/**
+ * Provides information about an ICC color profile.
+ */
 public class IccProfileInfo {
 
     private static final Logger LOGGER = Logger.getLogger(IccProfileInfo.class.getName());
 
     private final byte[] data;
+    /** The profile size in bytes. */
     public final int profileSize;
+    /** The CMM type signature. */
     public final int cmmTypeSignature;
+    /** The profile version. */
     public final int profileVersion;
+    /** The profile/device class signature. */
     public final int profileDeviceClassSignature;
+    /** The color space signature. */
     public final int colorSpace;
+    /** The profile connection space signature. */
     public final int profileConnectionSpace;
+    /** The profile file signature. */
     public final int profileFileSignature;
+    /** The primary platform signature. */
     public final int primaryPlatformSignature;
+    /** Various profile flags. */
     public final int variousFlags;
+    /** The device manufacturer signature. */
     public final int deviceManufacturer;
+    /** The device model signature. */
     public final int deviceModel;
+    /** The rendering intent. */
     public final int renderingIntent;
+    /** The profile creator signature. */
     public final int profileCreatorSignature;
     private final byte[] profileId;
     private final IccTag[] tags;
 
+    /**
+     * Constructs a new ICC profile information object.
+     *
+     * @param data the raw profile data.
+     * @param profileSize the profile size in bytes.
+     * @param cmmTypeSignature the CMM type signature.
+     * @param profileVersion the profile version.
+     * @param profileDeviceClassSignature the profile/device class signature.
+     * @param colorSpace the color space signature.
+     * @param profileConnectionSpace the profile connection space signature.
+     * @param profileFileSignature the profile file signature.
+     * @param primaryPlatformSignature the primary platform signature.
+     * @param variousFlags various profile flags.
+     * @param deviceManufacturer the device manufacturer signature.
+     * @param deviceModel the device model signature.
+     * @param renderingIntent the rendering intent.
+     * @param profileCreatorSignature the profile creator signature.
+     * @param profileId the profile ID.
+     * @param tags the ICC tags.
+     */
     public IccProfileInfo(final byte[] data, final int profileSize, final int cmmTypeSignature, final int profileVersion, final int profileDeviceClassSignature,
             final int colorSpace, final int profileConnectionSpace, final int profileFileSignature, final int primaryPlatformSignature, final int variousFlags,
             final int deviceManufacturer, final int deviceModel, final int renderingIntent, final int profileCreatorSignature, final byte[] profileId,
@@ -68,22 +104,47 @@ public class IccProfileInfo {
         this.tags = tags;
     }
 
+    /**
+     * Dumps the profile information to the logger.
+     *
+     * @param prefix the prefix to use for output lines.
+     */
     public void dump(final String prefix) {
         LOGGER.fine(toString());
     }
 
+    /**
+     * Gets a copy of the raw profile data.
+     *
+     * @return a copy of the profile data bytes.
+     */
     public byte[] getData() {
         return data.clone();
     }
 
+    /**
+     * Gets a copy of the profile ID.
+     *
+     * @return a copy of the profile ID bytes.
+     */
     public byte[] getProfileId() {
         return profileId.clone();
     }
 
+    /**
+     * Gets the ICC tags.
+     *
+     * @return the array of ICC tags.
+     */
     public IccTag[] getTags() {
         return tags;
     }
 
+    /**
+     * Checks if this profile is an sRGB profile.
+     *
+     * @return true if this is an sRGB profile, false otherwise.
+     */
     public boolean isSrgb() {
         return deviceManufacturer == IccConstants.IEC && deviceModel == IccConstants.sRGB;
     }
@@ -101,6 +162,14 @@ public class IccProfileInfo {
         }
     }
 
+    /**
+     * Gets a string representation of this ICC profile information with a prefix.
+     *
+     * @param prefix the prefix to use for output lines.
+     * @return a string representation of the profile information.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     public String toString(final String prefix) throws ImagingException, IOException {
         final StringWriter sw = new StringWriter();
         final PrintWriter pw = new PrintWriter(sw);

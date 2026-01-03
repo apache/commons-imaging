@@ -21,7 +21,16 @@ import java.nio.ByteOrder;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 
+/**
+ * TIFF field type for byte values.
+ */
 public class FieldTypeByte extends AbstractFieldType {
+    /**
+     * Constructs a new byte field type.
+     *
+     * @param type the type number.
+     * @param name the type name.
+     */
     public FieldTypeByte(final int type, final String name) {
         super(type, name, 1);
     }

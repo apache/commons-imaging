@@ -19,22 +19,44 @@ package org.apache.commons.imaging.common;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Generic implementation of image metadata.
+ */
 public class GenericImageMetadata implements ImageMetadata {
 
+    /**
+     * A generic image metadata item consisting of a keyword-text pair.
+     */
     public static class GenericImageMetadataItem implements ImageMetadataItem {
 
         private final String keyword;
         private final String text;
 
+        /**
+         * Constructs a new generic image metadata item.
+         *
+         * @param keyword the metadata keyword.
+         * @param text the metadata text value.
+         */
         public GenericImageMetadataItem(final String keyword, final String text) {
             this.keyword = keyword;
             this.text = text;
         }
 
+        /**
+         * Gets the keyword.
+         *
+         * @return the keyword.
+         */
         public String getKeyword() {
             return keyword;
         }
 
+        /**
+         * Gets the text value.
+         *
+         * @return the text value.
+         */
         public String getText() {
             return text;
         }
@@ -58,10 +80,28 @@ public class GenericImageMetadata implements ImageMetadata {
 
     private final List<ImageMetadataItem> items = new ArrayList<>();
 
+    /**
+     * Constructs a new GenericImageMetadata instance.
+     */
+    public GenericImageMetadata() {
+        // Default constructor
+    }
+
+    /**
+     * Adds a metadata item.
+     *
+     * @param item the metadata item to add.
+     */
     public void add(final ImageMetadataItem item) {
         items.add(item);
     }
 
+    /**
+     * Adds a metadata item with the specified keyword and text.
+     *
+     * @param keyword the metadata keyword.
+     * @param text the metadata text value.
+     */
     public void add(final String keyword, final String text) {
         add(new GenericImageMetadataItem(keyword, text));
     }

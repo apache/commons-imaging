@@ -23,7 +23,16 @@ import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 
+/**
+ * TIFF field type for 32-bit unsigned long values.
+ */
 public class FieldTypeLong extends AbstractFieldType {
+    /**
+     * Constructs a new long field type.
+     *
+     * @param type the type number.
+     * @param name the type name.
+     */
     public FieldTypeLong(final int type, final String name) {
         super(type, name, 4);
     }

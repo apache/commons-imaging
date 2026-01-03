@@ -24,7 +24,16 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 
+/**
+ * TIFF field type for ASCII strings.
+ */
 public class FieldTypeAscii extends AbstractFieldType {
+    /**
+     * Constructs a new ASCII field type.
+     *
+     * @param type the type number.
+     * @param name the type name.
+     */
     public FieldTypeAscii(final int type, final String name) {
         super(type, name, 1);
     }

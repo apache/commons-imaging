@@ -31,6 +31,11 @@ public class FormatCompliance {
 
     private static final Logger LOGGER = Logger.getLogger(FormatCompliance.class.getName());
 
+    /**
+     * Gets the default format compliance instance.
+     *
+     * @return a default FormatCompliance instance that ignores errors.
+     */
     public static FormatCompliance getDefault() {
         return new FormatCompliance("ignore", false);
     }
@@ -40,16 +45,33 @@ public class FormatCompliance {
 
     private final List<String> comments = new ArrayList<>();
 
+    /**
+     * Constructs a new FormatCompliance with the specified description.
+     *
+     * @param description the description of the format compliance.
+     */
     public FormatCompliance(final String description) {
         this.description = description;
         this.failOnError = false;
     }
 
+    /**
+     * Constructs a new FormatCompliance with the specified description and fail-on-error flag.
+     *
+     * @param description the description of the format compliance.
+     * @param failOnError true to throw exceptions on errors, false to only collect comments.
+     */
     public FormatCompliance(final String description, final boolean failOnError) {
         this.description = description;
         this.failOnError = failOnError;
     }
 
+    /**
+     * Adds a comment about a compliance issue.
+     *
+     * @param comment the comment to add.
+     * @throws ImagingException if failOnError is true.
+     */
     public void addComment(final String comment) throws ImagingException {
         comments.add(comment);
         if (failOnError) {
@@ -57,10 +79,27 @@ public class FormatCompliance {
         }
     }
 
+    /**
+     * Adds a comment about a compliance issue with a value.
+     *
+     * @param comment the comment to add.
+     * @param value the value associated with the comment.
+     * @throws ImagingException if failOnError is true.
+     */
     public void addComment(final String comment, final int value) throws ImagingException {
         addComment(comment + ": " + getValueDescription(value));
     }
 
+    /**
+     * Checks if a value is within specified bounds.
+     *
+     * @param name the name of the value being checked.
+     * @param min the minimum allowed value.
+     * @param max the maximum allowed value.
+     * @param actual the actual value to check.
+     * @return true if the value is within bounds, false otherwise.
+     * @throws ImagingException if failOnError is true and the check fails.
+     */
     public boolean checkBounds(final String name, final int min, final int max, final int actual) throws ImagingException {
         if (actual < min || actual > max) {
             addComment(name + ": bounds check: " + min + " <= " + actual + " <= " + max + ": false");
@@ -70,10 +109,28 @@ public class FormatCompliance {
         return true;
     }
 
+    /**
+     * Compares an actual value against a valid value.
+     *
+     * @param name the name of the value being compared.
+     * @param valid the valid value.
+     * @param actual the actual value to compare.
+     * @return true if the actual value matches the valid value, false otherwise.
+     * @throws ImagingException if failOnError is true and the comparison fails.
+     */
     public boolean compare(final String name, final int valid, final int actual) throws ImagingException {
         return compare(name, new int[] { valid, }, actual);
     }
 
+    /**
+     * Compares an actual value against an array of valid values.
+     *
+     * @param name the name of the value being compared.
+     * @param valid the array of valid values.
+     * @param actual the actual value to compare.
+     * @return true if the actual value matches any valid value, false otherwise.
+     * @throws ImagingException if failOnError is true and the comparison fails.
+     */
     public boolean compare(final String name, final int[] valid, final int actual) throws ImagingException {
         for (final int element : valid) {
             if (actual == element) {
@@ -101,6 +158,15 @@ public class FormatCompliance {
         return false;
     }
 
+    /**
+     * Compares two byte arrays for equality.
+     *
+     * @param name the name of the byte arrays being compared.
+     * @param expected the expected byte array.
+     * @param actual the actual byte array to compare.
+     * @return true if the arrays are equal, false otherwise.
+     * @throws ImagingException if failOnError is true and the comparison fails.
+     */
     public boolean compareBytes(final String name, final byte[] expected, final byte[] actual) throws ImagingException {
         if (expected.length != actual.length) {
             addComment(name + ": Unexpected length: (expected: " + expected.length + ", actual: " + actual.length + ")");
@@ -120,6 +186,9 @@ public class FormatCompliance {
         return true;
     }
 
+    /**
+     * Dumps the format compliance information to the logger.
+     */
     public void dump() {
         try (StringWriter sw = new StringWriter();
                 PrintWriter pw = new PrintWriter(sw)) {
@@ -132,6 +201,11 @@ public class FormatCompliance {
         }
     }
 
+    /**
+     * Dumps the format compliance information to the specified PrintWriter.
+     *
+     * @param pw the PrintWriter to write to.
+     */
     public void dump(final PrintWriter pw) {
         pw.println("Format Compliance: " + description);
 

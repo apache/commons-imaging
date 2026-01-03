@@ -24,7 +24,16 @@ import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 
+/**
+ * TIFF field type for double-precision floating point values.
+ */
 public class FieldTypeDouble extends AbstractFieldType {
+    /**
+     * Constructs a new double field type.
+     *
+     * @param type the type number.
+     * @param name the type name.
+     */
     public FieldTypeDouble(final int type, final String name) {
         super(type, name, 8);
     }

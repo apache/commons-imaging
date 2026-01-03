@@ -25,7 +25,16 @@ import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 
+/**
+ * TIFF field type for rational number values.
+ */
 public class FieldTypeRational extends AbstractFieldType {
+    /**
+     * Constructs a new rational field type.
+     *
+     * @param type the type number.
+     * @param name the type name.
+     */
     public FieldTypeRational(final int type, final String name) {
         super(type, name, 8);
     }
