@@ -18,23 +18,41 @@ package org.apache.commons.imaging.formats.jpeg.iptc;
 
 import java.util.Comparator;
 
-/*
+/**
  * Represents an IPTC record, a single key-value pair of Photoshop IPTC data.
  */
 public class IptcRecord {
+    /** Comparator for sorting IPTC records by type. */
     public static final Comparator<IptcRecord> COMPARATOR = Comparator.comparingInt(e -> e.iptcType.getType());
+    /** The IPTC type. */
     public final IptcType iptcType;
     private final String value;
 
+    /**
+     * Constructs a new IPTC record.
+     *
+     * @param iptcType the IPTC type.
+     * @param value the value.
+     */
     public IptcRecord(final IptcType iptcType, final String value) {
         this.iptcType = iptcType;
         this.value = value;
     }
 
+    /**
+     * Gets the IPTC type name.
+     *
+     * @return the IPTC type name.
+     */
     public String getIptcTypeName() {
         return iptcType.getName();
     }
 
+    /**
+     * Gets the value.
+     *
+     * @return the value.
+     */
     public String getValue() {
         return value;
     }

@@ -30,24 +30,51 @@ public class IptcBlock {
     private final byte[] blockNameBytes;
     private final byte[] blockData;
 
+    /**
+     * Constructs a new IPTC block.
+     *
+     * @param blockType the block type.
+     * @param blockNameBytes the block name bytes.
+     * @param blockData the block data.
+     */
     public IptcBlock(final int blockType, final byte[] blockNameBytes, final byte[] blockData) {
         this.blockData = Objects.requireNonNull(blockData, "blockData");
         this.blockNameBytes = Objects.requireNonNull(blockNameBytes, "blockNameBytes");
         this.blockType = blockType;
     }
 
+    /**
+     * Gets a copy of the block data.
+     *
+     * @return a copy of the block data bytes.
+     */
     public byte[] getBlockData() {
         return blockData.clone();
     }
 
+    /**
+     * Gets a copy of the block name bytes.
+     *
+     * @return a copy of the block name bytes.
+     */
     public byte[] getBlockNameBytes() {
         return blockNameBytes.clone();
     }
 
+    /**
+     * Gets the block type.
+     *
+     * @return the block type.
+     */
     public int getBlockType() {
         return blockType;
     }
 
+    /**
+     * Checks if this is an IPTC data block.
+     *
+     * @return true if this is an IPTC data block, false otherwise.
+     */
     public boolean isIptcBlock() {
         return blockType == IptcConstants.IMAGE_RESOURCE_BLOCK_IPTC_DATA;
     }
