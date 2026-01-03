@@ -138,6 +138,12 @@ public final class Debug {
         debug(getDebug(message, map));
     }
 
+    /**
+     * Logs a debug message with an object value.
+     *
+     * @param message the message prefix.
+     * @param value the object value to log.
+     */
     public static void debug(final String message, final Object value) {
         if (value == null) {
             debug(message, "null");
@@ -170,10 +176,21 @@ public final class Debug {
         debug(message + " " + value);
     }
 
+    /**
+     * Logs a debug message for a throwable.
+     *
+     * @param e the throwable to log.
+     */
     public static void debug(final Throwable e) {
         debug(getDebug(e));
     }
 
+    /**
+     * Logs a debug message for a throwable with an integer value.
+     *
+     * @param e the throwable to log.
+     * @param value the integer value.
+     */
     public static void debug(final Throwable e, final int value) {
         debug(getDebug(e, value));
     }

@@ -159,6 +159,16 @@ public class BasicCParser {
 
     }
 
+    /**
+     * Preprocesses a C-style input stream by handling comments, strings, and directives.
+     *
+     * @param is the input stream to preprocess.
+     * @param firstComment StringBuilder to capture the first comment, or null to ignore.
+     * @param defines map to store preprocessor definitions.
+     * @return the preprocessed output as a ByteArrayOutputStream.
+     * @throws IOException if an I/O error occurs.
+     * @throws ImagingException if parsing fails.
+     */
     public static ByteArrayOutputStream preprocess(final InputStream is, final StringBuilder firstComment, final Map<String, String> defines)
             throws IOException, ImagingException {
         boolean inSingleQuotes = false;
@@ -339,6 +349,12 @@ public class BasicCParser {
         return out;
     }
 
+    /**
+     * Tokenizes a row by splitting on whitespace.
+     *
+     * @param row the row to tokenize.
+     * @return the array of tokens.
+     */
     public static String[] tokenizeRow(final String row) {
         final String[] tokens = row.split("[ \t]");
         int numLiveTokens = 0;
@@ -357,6 +373,13 @@ public class BasicCParser {
         return liveTokens;
     }
 
+    /**
+     * Unescapes a C-style string.
+     *
+     * @param stringBuilder the builder to append unescaped characters to.
+     * @param string the string to unescape.
+     * @throws ImagingException if parsing fails.
+     */
     public static void unescapeString(final StringBuilder stringBuilder, final String string) throws ImagingException {
         if (string.length() < 2) {
             throw new ImagingException("Parsing XPM file failed, string is too short");
@@ -385,10 +408,22 @@ public class BasicCParser {
 
     private final PushbackInputStream is;
 
+    /**
+     * Constructs a new BasicCParser.
+     *
+     * @param is the input stream to parse.
+     */
     public BasicCParser(final ByteArrayInputStream is) {
         this.is = new PushbackInputStream(is);
     }
 
+    /**
+     * Reads the next token from the input stream.
+     *
+     * @return the next token as a string, or null if end of stream.
+     * @throws IOException if an I/O error occurs.
+     * @throws ImagingException if parsing fails.
+     */
     public String nextToken() throws IOException, ImagingException {
         // I don't know how complete the C parsing in an XPM file
         // is meant to be, this is just the very basics...

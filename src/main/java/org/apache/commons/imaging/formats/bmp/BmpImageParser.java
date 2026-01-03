@@ -48,6 +48,9 @@ import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 
+/**
+ * Parser for BMP (Windows Bitmap) image format.
+ */
 public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
 
     private static final Logger LOGGER = Logger.getLogger(BmpImageParser.class.getName());
@@ -122,6 +125,15 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
         }
     }
 
+    /**
+     * Gets a BufferedImage from an input stream.
+     *
+     * @param inputStream the input stream to read from.
+     * @param params the imaging parameters.
+     * @return the BufferedImage.
+     * @throws ImagingException if the image format is invalid.
+     * @throws IOException if an I/O error occurs.
+     */
     public BufferedImage getBufferedImage(final InputStream inputStream, final BmpImagingParameters params) throws ImagingException, IOException {
         final BmpImageContents ic = readImageContents(inputStream, FormatCompliance.getDefault());
 

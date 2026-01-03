@@ -26,12 +26,30 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImagingException;
 
+/**
+ * A JPEG DQT (Define Quantization Table) segment.
+ */
 public final class DqtSegment extends AbstractSegment {
+
+    /**
+     * A quantization table for JPEG compression.
+     */
     public static class QuantizationTable {
+        /** The precision of the quantization table (0=8-bit, 1=16-bit). */
         public final int precision;
+
+        /** The destination identifier. */
         public final int destinationIdentifier;
+
         private final int[] elements;
 
+        /**
+         * Constructs a new quantization table.
+         *
+         * @param precision the precision (0=8-bit, 1=16-bit).
+         * @param destinationIdentifier the destination identifier.
+         * @param elements the quantization table elements.
+         */
         public QuantizationTable(final int precision, final int destinationIdentifier, final int[] elements) {
             this.precision = precision;
             this.destinationIdentifier = destinationIdentifier;
@@ -39,19 +57,39 @@ public final class DqtSegment extends AbstractSegment {
         }
 
         /**
-         * @return the elements
+         * Gets the quantization table elements.
+         *
+         * @return the elements.
          */
         public int[] getElements() {
             return elements;
         }
     }
 
+    /** The list of quantization tables in this segment. */
     public final List<QuantizationTable> quantizationTables = new ArrayList<>();
 
+    /**
+     * Constructs a DQT segment from segment data.
+     *
+     * @param marker the segment marker.
+     * @param segmentData the segment data.
+     * @throws ImagingException if the image format is invalid.
+     * @throws IOException if an I/O error occurs.
+     */
     public DqtSegment(final int marker, final byte[] segmentData) throws ImagingException, IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
+    /**
+     * Constructs a DQT segment by reading from an input stream.
+     *
+     * @param marker the segment marker.
+     * @param length the segment length.
+     * @param is the input stream to read from.
+     * @throws ImagingException if the image format is invalid.
+     * @throws IOException if an I/O error occurs.
+     */
     public DqtSegment(final int marker, int length, final InputStream is) throws ImagingException, IOException {
         super(marker, length);
 
