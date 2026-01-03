@@ -17,10 +17,18 @@
 
 package org.apache.commons.imaging;
 
+/**
+ * Exception thrown when an overflow occurs during imaging operations.
+ */
 public class ImagingOverflowException extends ImagingException {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Constructs a new imaging overflow exception with the specified message.
+     *
+     * @param message the detail message.
+     */
     public ImagingOverflowException(final String message) {
         super(message);
     }
