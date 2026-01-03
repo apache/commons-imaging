@@ -22,6 +22,14 @@ import org.apache.commons.imaging.ImagingException;
 
 interface IccTagDataType {
 
+    /**
+     * Dumps the tag data type information.
+     *
+     * @param prefix the prefix for output.
+     * @param bytes the data bytes.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     void dump(String prefix, byte[] bytes) throws ImagingException, IOException;
 
     String getName();

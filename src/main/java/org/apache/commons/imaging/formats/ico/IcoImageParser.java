@@ -47,6 +47,9 @@ import org.apache.commons.imaging.formats.bmp.BmpImageParser;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 
+/**
+ * Parser for Windows Icon (.ico) format.
+ */
 public class IcoImageParser extends AbstractImageParser<IcoImagingParameters> {
     private static final class BitmapHeader {
         public final int size;

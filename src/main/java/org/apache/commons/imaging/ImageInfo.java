@@ -390,6 +390,12 @@ public class ImageInfo {
         }
     }
 
+    /**
+     * Writes the image information to a PrintWriter with a prefix.
+     *
+     * @param pw the PrintWriter.
+     * @param prefix the prefix (currently unused).
+     */
     public void toString(final PrintWriter pw, final String prefix) {
         pw.println("Format Details: " + formatDetails);
 

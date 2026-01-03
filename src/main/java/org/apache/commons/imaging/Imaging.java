@@ -310,6 +310,14 @@ public final class Imaging {
         return getIccProfile(ByteSource.array(bytes));
     }
 
+    /**
+     * Gets the ICC profile from a byte source.
+     *
+     * @param byteSource the byte source.
+     * @return the ICC profile, or null if not found.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     protected static ICC_Profile getIccProfile(final ByteSource byteSource) throws ImagingException, IOException {
         final byte[] bytes = getIccProfileBytes(byteSource);
         if (bytes == null) {
