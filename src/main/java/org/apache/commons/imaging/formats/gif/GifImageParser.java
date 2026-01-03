@@ -49,6 +49,9 @@ import org.apache.commons.imaging.mylzw.MyLzwDecompressor;
 import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
 
+/**
+ * Parses GIF (Graphics Interchange Format) images.
+ */
 public class GifImageParser extends AbstractImageParser<GifImagingParameters> implements XmpEmbeddable<GifImagingParameters> {
 
     private static final Logger LOGGER = Logger.getLogger(GifImageParser.class.getName());

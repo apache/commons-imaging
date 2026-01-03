@@ -112,6 +112,15 @@ public class IptcParser extends BinaryFileParser {
         return index + 4 <= segmentData.length && ByteConversions.toInt(segmentData, index, APP13_BYTE_ORDER) == JpegConstants.CONST_8BIM;
     }
 
+    /**
+     * Parses all IPTC blocks from the byte array.
+     *
+     * @param bytes the byte array containing IPTC data.
+     * @param strict whether to use strict parsing mode.
+     * @return a list of IPTC blocks.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     protected List<IptcBlock> parseAllBlocks(final byte[] bytes, final boolean strict) throws ImagingException, IOException {
         final List<IptcBlock> blocks = new ArrayList<>();
 

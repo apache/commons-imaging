@@ -45,6 +45,9 @@ import org.apache.commons.imaging.formats.jpeg.segments.DqtSegment.QuantizationT
 import org.apache.commons.imaging.formats.jpeg.segments.SofnSegment;
 import org.apache.commons.imaging.formats.jpeg.segments.SosSegment;
 
+/**
+ * Decodes JPEG images.
+ */
 public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
 
     private static final int[] BAND_MASK_ARGB = { 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000 };
@@ -176,6 +179,14 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
         return true;
     }
 
+    /**
+     * Decodes a JPEG image from a byte source.
+     *
+     * @param byteSource the byte source containing the JPEG data.
+     * @return the decoded BufferedImage.
+     * @throws IOException if an I/O error occurs.
+     * @throws ImagingException if an imaging error occurs.
+     */
     public BufferedImage decode(final ByteSource byteSource) throws IOException, ImagingException {
         final JpegUtils jpegUtils = new JpegUtils();
         jpegUtils.traverseJfif(byteSource, this);
