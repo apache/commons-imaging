@@ -33,13 +33,6 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.AbstractP
 public abstract class AbstractTiffImageData {
 
     /**
-     * Constructs a new TIFF image data instance.
-     */
-    protected AbstractTiffImageData() {
-        // Default constructor
-    }
-
-    /**
      * Represents a data element containing TIFF image data.
      */
     public static class Data extends AbstractTiffElement.DataElement {
@@ -199,6 +192,13 @@ public abstract class AbstractTiffImageData {
             return sSampleFmt[0];
         }
         return 0; // unspecified format
+    }
+
+    /**
+     * Constructs a new TIFF image data instance.
+     */
+    protected AbstractTiffImageData() {
+        // Default constructor
     }
 
     /**

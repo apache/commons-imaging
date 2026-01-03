@@ -37,13 +37,6 @@ public final class Allocator {
     }
 
     /**
-     * Private constructor to prevent instantiation of utility class.
-     */
-    private Allocator() {
-        // Utility class
-    }
-
-    /**
      * Allocates an Object of type T of the requested size.
      *
      * @param <T>     The return array type
@@ -251,6 +244,13 @@ public final class Allocator {
      */
     public static short[] shortArray(final int request) {
         return new short[check(request, Short.BYTES)];
+    }
+
+    /**
+     * Private constructor to prevent instantiation of utility class.
+     */
+    private Allocator() {
+        // Utility class
     }
 
 }
