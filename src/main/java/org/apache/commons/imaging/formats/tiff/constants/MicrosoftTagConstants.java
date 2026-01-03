@@ -29,20 +29,28 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoXpString;
  */
 public final class MicrosoftTagConstants {
 
+    /** EXIF tag: Rating. */
     public static final TagInfoShort EXIF_TAG_RATING = new TagInfoShort("Rating", 0x4746, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
+    /** EXIF tag: Rating Percent. */
     public static final TagInfoShort EXIF_TAG_RATING_PERCENT = new TagInfoShort("RatingPercent", 0x4749, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
+    /** EXIF tag: XP Title. */
     public static final TagInfoXpString EXIF_TAG_XPTITLE = new TagInfoXpString("XPTitle", 0x9c9b, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
+    /** EXIF tag: XP Comment. */
     public static final TagInfoXpString EXIF_TAG_XPCOMMENT = new TagInfoXpString("XPComment", 0x9c9c, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
+    /** EXIF tag: XP Author. */
     public static final TagInfoXpString EXIF_TAG_XPAUTHOR = new TagInfoXpString("XPAuthor", 0x9c9d, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
+    /** EXIF tag: XP Keywords. */
     public static final TagInfoXpString EXIF_TAG_XPKEYWORDS = new TagInfoXpString("XPKeywords", 0x9c9e, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
+    /** EXIF tag: XP Subject. */
     public static final TagInfoXpString EXIF_TAG_XPSUBJECT = new TagInfoXpString("XPSubject", 0x9c9f, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
+    /** List of all Microsoft tags. */
     public static final List<TagInfo> ALL_MICROSOFT_TAGS = Collections.unmodifiableList(Arrays.asList(EXIF_TAG_RATING, EXIF_TAG_RATING_PERCENT,
             EXIF_TAG_XPTITLE, EXIF_TAG_XPCOMMENT, EXIF_TAG_XPAUTHOR, EXIF_TAG_XPKEYWORDS, EXIF_TAG_XPSUBJECT));
 

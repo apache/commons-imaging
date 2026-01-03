@@ -21,7 +21,16 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImagingException;
 
+/**
+ * Median cut implementation that cuts the most populated color boxes first.
+ */
 public class MostPopulatedBoxesMedianCut implements MedianCut {
+
+    /**
+     * Constructs a new instance.
+     */
+    public MostPopulatedBoxesMedianCut() {
+    }
 
     @Override
     public boolean performNextMedianCut(final List<ColorGroup> colorGroups, final boolean ignoreAlpha) throws ImagingException {
