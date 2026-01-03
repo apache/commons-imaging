@@ -29,20 +29,50 @@ import org.apache.commons.io.build.AbstractOrigin.ByteArrayOrigin;
 import org.apache.commons.io.build.AbstractOrigin.FileOrigin;
 import org.apache.commons.io.build.AbstractOrigin.PathOrigin;
 
+/**
+ * A source of bytes for reading image data.
+ */
 public class ByteSource {
 
+    /**
+     * Creates a ByteSource from a byte array.
+     *
+     * @param array the byte array.
+     * @return the ByteSource.
+     */
     public static ByteSource array(final byte[] array) {
         return new ByteSource(new ByteArrayOrigin(array), null);
     }
 
+    /**
+     * Creates a ByteSource from a byte array with a name.
+     *
+     * @param array the byte array.
+     * @param name the name.
+     * @return the ByteSource.
+     */
     public static ByteSource array(final byte[] array, final String name) {
         return new ByteSource(new ByteArrayOrigin(array), name);
     }
 
+    /**
+     * Creates a ByteSource from a file.
+     *
+     * @param file the file.
+     * @return the ByteSource.
+     */
     public static ByteSource file(final File file) {
         return new ByteSource(new FileOrigin(file), file.getName());
     }
 
+    /**
+     * Gets an input stream from a ByteSource, skipping the specified number of bytes.
+     *
+     * @param byteSource the byte source.
+     * @param skip the number of bytes to skip.
+     * @return the input stream.
+     * @throws IOException if an I/O error occurs.
+     */
     public static final InputStream getInputStream(final ByteSource byteSource, final long skip) throws IOException {
         InputStream is = null;
         boolean succeeded = false;
@@ -58,10 +88,24 @@ public class ByteSource {
         return is;
     }
 
+    /**
+     * Creates a ByteSource from an input stream.
+     *
+     * @param is the input stream.
+     * @param name the name.
+     * @return the ByteSource.
+     * @throws IOException if an I/O error occurs.
+     */
     public static ByteSource inputStream(final InputStream is, final String name) throws IOException {
         return new InputStreamByteSource(is, name);
     }
 
+    /**
+     * Creates a ByteSource from a path.
+     *
+     * @param file the path.
+     * @return the ByteSource.
+     */
     public static ByteSource path(final Path file) {
         return new ByteSource(new PathOrigin(file), Objects.toString(file.getFileName(), null));
     }
@@ -69,19 +113,44 @@ public class ByteSource {
     private final String fileName;
     private final AbstractOrigin<?, ?> origin;
 
+    /**
+     * Constructs a new ByteSource.
+     *
+     * @param origin the origin.
+     * @param fileName the file name.
+     */
     ByteSource(final AbstractOrigin<?, ?> origin, final String fileName) {
         this.origin = Objects.requireNonNull(origin, "origin");
         this.fileName = fileName; // may be null
     }
 
+    /**
+     * Gets a byte array from the specified position.
+     *
+     * @param position the position.
+     * @param length the length.
+     * @return the byte array.
+     * @throws IOException if an I/O error occurs.
+     */
     public byte[] getByteArray(final long position, final int length) throws IOException {
         return origin.getByteArray(position, length);
     }
 
+    /**
+     * Gets the file name.
+     *
+     * @return the file name.
+     */
     public final String getFileName() {
         return fileName;
     }
 
+    /**
+     * Gets an input stream.
+     *
+     * @return the input stream.
+     * @throws IOException if an I/O error occurs.
+     */
     public InputStream getInputStream() throws IOException {
         return origin.getInputStream();
     }
@@ -89,8 +158,8 @@ public class ByteSource {
     /**
      * This operation can be VERY expensive; for InputStream byte sources, the entire stream must be drained to determine its length.
      *
-     * @return the byte source length
-     * @throws IOException if it fails to read the byte source data
+     * @return the length.
+     * @throws IOException if an I/O error occurs.
      */
     public long size() throws IOException {
         return origin.size();

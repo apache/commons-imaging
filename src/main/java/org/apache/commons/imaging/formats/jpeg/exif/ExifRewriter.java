@@ -214,7 +214,6 @@ public class ExifRewriter extends BinaryFileParser {
 
     /**
      * Reads a JPEG image, removes all EXIF metadata (by removing the APP1 segment), and writes the result to a stream.
-     * <p>
      *
      * @param src Image file.
      * @param os  OutputStream to write the image to.

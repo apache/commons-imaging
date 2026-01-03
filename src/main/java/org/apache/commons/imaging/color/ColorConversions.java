@@ -16,6 +16,9 @@
  */
 package org.apache.commons.imaging.color;
 
+/**
+ * Color space conversions.
+ */
 public final class ColorConversions {
 
     // White reference
@@ -34,6 +37,14 @@ public final class ColorConversions {
     /** See: https://en.wikipedia.org/wiki/CIELAB_color_space#From_CIEXYZ_to_CIELAB[10] */
     private static final double XYZ_t0 = 0.008856;
 
+    /**
+     * Converts CIE L*a*b* color to ARGB (test version).
+     *
+     * @param cieL the L* value.
+     * @param cieA the a* value.
+     * @param cieB the b* value.
+     * @return the ARGB color value.
+     */
     public static int convertCieLabToArgbTest(final int cieL, final int cieA, final int cieB) {
         final double x;
         final double y;
@@ -78,10 +89,24 @@ public final class ColorConversions {
         return convertRgbToRgb(r, g, b);
     }
 
+    /**
+     * Converts CIE L*a*b* to CIE LCH.
+     *
+     * @param cielab the CIE L*a*b* color.
+     * @return the CIE LCH color.
+     */
     public static ColorCieLch convertCieLabToCieLch(final ColorCieLab cielab) {
         return convertCieLabToCieLch(cielab.l, cielab.a, cielab.b);
     }
 
+    /**
+     * Converts CIE L*a*b* to CIE LCH.
+     *
+     * @param l the L* value.
+     * @param a the a* value.
+     * @param b the b* value.
+     * @return the CIE LCH color.
+     */
     public static ColorCieLch convertCieLabToCieLch(final double l, final double a, final double b) {
         // atan2(y, x) returns atan(y/x)
         final double atanba = Math.atan2(b, a); // Quadrant by signs
@@ -96,10 +121,24 @@ public final class ColorConversions {
         return new ColorCieLch(l, C, h);
     }
 
+    /**
+     * Converts CIE L*a*b* to DIN99b Lab.
+     *
+     * @param cie the CIE L*a*b* color.
+     * @return the DIN99b Lab color.
+     */
     public static ColorDin99Lab convertCieLabToDin99bLab(final ColorCieLab cie) {
         return convertCieLabToDin99bLab(cie.l, cie.a, cie.b);
     }
 
+    /**
+     * Converts CIE L*a*b* to DIN99b Lab.
+     *
+     * @param l the L* value.
+     * @param a the a* value.
+     * @param b the b* value.
+     * @return the DIN99b Lab color.
+     */
     public static ColorDin99Lab convertCieLabToDin99bLab(final double l, final double a, final double b) {
         final double fac1 = 100.0 / Math.log(129.0 / 50.0); // = 105.51
         final double kE = 1.0; // brightness factor, 1.0 for CIE reference conditions
@@ -187,10 +226,24 @@ public final class ColorConversions {
         return new ColorXyz(x, y, z);
     }
 
+    /**
+     * Converts CIE LCH to CIE L*a*b*.
+     *
+     * @param cielch the CIE LCH color.
+     * @return the CIE L*a*b* color.
+     */
     public static ColorCieLab convertCieLchToCieLab(final ColorCieLch cielch) {
         return convertCieLchToCieLab(cielch.l, cielch.c, cielch.h);
     }
 
+    /**
+     * Converts CIE LCH to CIE L*a*b*.
+     *
+     * @param l the L* value.
+     * @param c the C* value.
+     * @param h the h° value.
+     * @return the CIE L*a*b* color.
+     */
     public static ColorCieLab convertCieLchToCieLab(final double l, final double c, final double h) {
         // Where CIE-H° = 0 ÷ 360°
 
