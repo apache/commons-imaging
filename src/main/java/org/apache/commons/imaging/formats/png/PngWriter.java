@@ -32,9 +32,12 @@ import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
 
+/**
+ * PNG image writer.
+ */
 public class PngWriter {
 
-    /*
+    /**
      * 1. IHDR: image header, which is the first chunk in a PNG data stream. 2. PLTE: palette table associated with indexed PNG images. 3. IDAT: image data
      * chunks. 4. IEND: image trailer, which is the last chunk in a PNG data stream.
      *
@@ -44,7 +47,6 @@ public class PngWriter {
      * space information). 3. Textual information: iTXt, tEXt, zTXt (see 11.3.4: Textual information). 4. Miscellaneous information: bKGD, hIST, pHYs, sPLT (see
      * 11.3.5: Miscellaneous information). 5. Time information: tIME (see 11.3.6: Time stamp information).
      */
-
     private static final class ImageHeader {
         public final int width;
         public final int height;
@@ -65,6 +67,13 @@ public class PngWriter {
             this.interlaceMethod = interlaceMethod;
         }
 
+    }
+
+    /**
+     * Constructs a new PNG writer.
+     */
+    public PngWriter() {
+        // Default constructor
     }
 
     private byte[] deflate(final byte[] bytes) throws IOException {
@@ -254,6 +263,15 @@ public class PngWriter {
         writeChunk(os, ChunkType.iTXt, baos.toByteArray());
     }
 
+    /*
+     * between two chunk types indicates alternatives. Table 5.3 - Chunk ordering rules Critical chunks (shall appear in this order, except PLTE is optional)
+     * Chunk name Multiple allowed Ordering constraints IHDR No Shall be first PLTE No Before first IDAT IDAT Yes Multiple IDAT chunks shall be consecutive IEND
+     * No Shall be last Ancillary chunks (need not appear in this order) Chunk name Multiple allowed Ordering constraints cHRM No Before PLTE and IDAT gAMA No
+     * Before PLTE and IDAT iCCP No Before PLTE and IDAT. If the iCCP chunk is present, the sRGB chunk should not be present. sBIT No Before PLTE and IDAT sRGB
+     * No Before PLTE and IDAT. If the sRGB chunk is present, the iCCP chunk should not be present. bKGD No After PLTE; before IDAT hIST No After PLTE; before
+     * IDAT tRNS No After PLTE; before IDAT pHYs No Before IDAT sCAL No Before IDAT sPLT Yes Before IDAT tIME No None iTXt Yes None tEXt Yes None zTXt Yes None
+     */
+
     private void writeChunkzTXt(final OutputStream os, final AbstractPngText.Ztxt text) throws IOException, ImagingException {
         if (!isValidISO_8859_1(text.keyword)) {
             throw new ImagingException("PNG zTXt chunk keyword is not ISO-8859-1: " + text.keyword);
@@ -276,15 +294,6 @@ public class PngWriter {
 
         writeChunk(os, ChunkType.zTXt, baos.toByteArray());
     }
-
-    /*
-     * between two chunk types indicates alternatives. Table 5.3 - Chunk ordering rules Critical chunks (shall appear in this order, except PLTE is optional)
-     * Chunk name Multiple allowed Ordering constraints IHDR No Shall be first PLTE No Before first IDAT IDAT Yes Multiple IDAT chunks shall be consecutive IEND
-     * No Shall be last Ancillary chunks (need not appear in this order) Chunk name Multiple allowed Ordering constraints cHRM No Before PLTE and IDAT gAMA No
-     * Before PLTE and IDAT iCCP No Before PLTE and IDAT. If the iCCP chunk is present, the sRGB chunk should not be present. sBIT No Before PLTE and IDAT sRGB
-     * No Before PLTE and IDAT. If the sRGB chunk is present, the iCCP chunk should not be present. bKGD No After PLTE; before IDAT hIST No After PLTE; before
-     * IDAT tRNS No After PLTE; before IDAT pHYs No Before IDAT sCAL No Before IDAT sPLT Yes Before IDAT tIME No None iTXt Yes None tEXt Yes None zTXt Yes None
-     */
 
     /**
      * Writes an image to an output stream.

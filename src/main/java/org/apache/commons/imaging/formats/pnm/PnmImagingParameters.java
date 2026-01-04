@@ -27,24 +27,54 @@ import org.apache.commons.imaging.ImagingParameters;
 public class PnmImagingParameters extends ImagingParameters<PnmImagingParameters> {
 
     private boolean rawBits = true;
+
     /**
      * Pnm format subtype (e.g. pam, pbm, etc).
      */
     private ImageFormats subtype;
 
+    /**
+     * Constructs a new instance.
+     */
+    public PnmImagingParameters() {
+        // Default constructor
+    }
+
+    /**
+     * Gets the subtype.
+     *
+     * @return the subtype.
+     */
     public ImageFormats getSubtype() {
         return subtype;
     }
 
+    /**
+     * Checks if using raw bits.
+     *
+     * @return true if using raw bits, false otherwise.
+     */
     public boolean isRawBits() {
         return rawBits;
     }
 
+    /**
+     * Sets whether to use raw bits.
+     *
+     * @param rawBits whether to use raw bits.
+     * @return this instance.
+     */
     public PnmImagingParameters setRawBits(final boolean rawBits) {
         this.rawBits = rawBits;
         return asThis();
     }
 
+    /**
+     * Sets the subtype.
+     *
+     * @param subtype the subtype.
+     * @return this instance.
+     */
     public PnmImagingParameters setSubtype(final ImageFormats subtype) {
         this.subtype = subtype;
         return asThis();

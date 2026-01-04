@@ -27,7 +27,12 @@ import java.util.logging.Logger;
 
 import org.apache.commons.imaging.ImagingException;
 
+/**
+ * ICC tag data types enumeration.
+ */
 public enum IccTagDataTypes implements IccTagDataType {
+
+    /** Description type. */
     DESC_TYPE("descType", 0x64657363) {
         @Override
         public void dump(final String prefix, final byte[] bytes) throws ImagingException, IOException {
@@ -46,6 +51,7 @@ public enum IccTagDataTypes implements IccTagDataType {
 
     },
 
+    /** Data type. */
     DATA_TYPE("dataType", 0x64617461) {
         @Override
         public void dump(final String prefix, final byte[] bytes) throws ImagingException, IOException {
@@ -56,6 +62,7 @@ public enum IccTagDataTypes implements IccTagDataType {
 
     },
 
+    /** Multi-localized Unicode type. */
     MULTI_LOCALIZED_UNICODE_TYPE("multiLocalizedUnicodeType", 0x6D6C7563) {
         @Override
         public void dump(final String prefix, final byte[] bytes) throws ImagingException, IOException {
@@ -66,6 +73,7 @@ public enum IccTagDataTypes implements IccTagDataType {
 
     },
 
+    /** Signature type. */
     SIGNATURE_TYPE("signatureType", 0x73696720) {
         @Override
         public void dump(final String prefix, final byte[] bytes) throws ImagingException, IOException {
@@ -82,6 +90,7 @@ public enum IccTagDataTypes implements IccTagDataType {
 
     },
 
+    /** Text type. */
     TEXT_TYPE("textType", 0x74657874) {
         @Override
         public void dump(final String prefix, final byte[] bytes) throws ImagingException, IOException {
@@ -97,7 +106,10 @@ public enum IccTagDataTypes implements IccTagDataType {
 
     private static final Logger LOGGER = Logger.getLogger(IccTagDataTypes.class.getName());
 
+    /** Name of the tag data type. */
     public final String name;
+
+    /** Signature of the tag data type. */
     public final int signature;
 
     IccTagDataTypes(final String name, final int signature) {

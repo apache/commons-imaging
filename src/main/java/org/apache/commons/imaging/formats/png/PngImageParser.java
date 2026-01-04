@@ -78,6 +78,12 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
     private static final String DEFAULT_EXTENSION = ImageFormats.PNG.getDefaultExtension();
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.PNG.getExtensions();
 
+    /**
+     * Gets the chunk type name from chunk type integer.
+     *
+     * @param chunkType the chunk type.
+     * @return the chunk type name as a string.
+     */
     public static String getChunkTypeName(final int chunkType) {
         final StringBuilder result = new StringBuilder();
         result.append((char) (0xff & chunkType >> 24));
@@ -647,6 +653,15 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
     // BinaryFileParser
     // I may not have always preserved byte order correctly.
 
+    /**
+     * Checks if the PNG image has the specified chunk type.
+     *
+     * @param byteSource the byte source.
+     * @param chunkType the chunk type to check.
+     * @return true if chunk type exists, false otherwise.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     public boolean hasChunkType(final ByteSource byteSource, final ChunkType chunkType) throws ImagingException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             readSignature(is);

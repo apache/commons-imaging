@@ -26,12 +26,29 @@ import java.util.Arrays;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 
+/**
+ * LZW decompressor.
+ */
 public final class MyLzwDecompressor {
 
+    /**
+     * Listener for decompression events.
+     */
     public interface Listener {
 
+        /**
+         * Called for each code.
+         *
+         * @param code the code.
+         */
         void code(int code);
 
+        /**
+         * Called on initialization.
+         *
+         * @param clearCode the clear code.
+         * @param eoiCode the end-of-information code.
+         */
         void init(int clearCode, int eoiCode);
     }
 
@@ -47,10 +64,27 @@ public final class MyLzwDecompressor {
     private int written;
     private final boolean tiffLZWMode;
 
+    /**
+     * Constructs a decompressor.
+     *
+     * @param initialCodeSize initial code size.
+     * @param byteOrder byte order.
+     * @param tiffLZWMode whether TIFF LZW mode.
+     * @throws ImagingException if error occurs.
+     */
     public MyLzwDecompressor(final int initialCodeSize, final ByteOrder byteOrder, final boolean tiffLZWMode) throws ImagingException {
         this(initialCodeSize, byteOrder, tiffLZWMode, null);
     }
 
+    /**
+     * Constructs a decompressor with listener.
+     *
+     * @param initialCodeSize initial code size.
+     * @param byteOrder byte order.
+     * @param tiffLZWMode whether TIFF LZW mode.
+     * @param listener listener for events.
+     * @throws ImagingException if error occurs.
+     */
     public MyLzwDecompressor(final int initialCodeSize, final ByteOrder byteOrder, final boolean tiffLZWMode, final Listener listener) throws ImagingException {
         this.listener = listener;
         this.byteOrder = byteOrder;
@@ -102,6 +136,14 @@ public final class MyLzwDecompressor {
         incrementCodeSize();
     }
 
+    /**
+     * Decompresses data.
+     *
+     * @param is input stream.
+     * @param expectedLength expected length.
+     * @return decompressed bytes.
+     * @throws IOException if I/O error occurs.
+     */
     public byte[] decompress(final InputStream is, final int expectedLength) throws IOException {
         int code;
         int oldCode = -1;

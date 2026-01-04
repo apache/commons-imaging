@@ -21,6 +21,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteOrder;
 
+/**
+ * Bit-oriented input stream for LZW decompression.
+ */
 public class MyBitInputStream extends FilterInputStream {
     private final ByteOrder byteOrder;
     private final boolean tiffLZWMode;
@@ -28,17 +31,32 @@ public class MyBitInputStream extends FilterInputStream {
     private int bitsInCache;
     private int bitCache;
 
+    /**
+     * Constructs a bit input stream.
+     *
+     * @param is input stream.
+     * @param byteOrder byte order.
+     * @param tiffLZWMode whether TIFF LZW mode.
+     */
     public MyBitInputStream(final InputStream is, final ByteOrder byteOrder, final boolean tiffLZWMode) {
         super(is);
         this.byteOrder = byteOrder;
         this.tiffLZWMode = tiffLZWMode;
     }
 
+    /**
+     * Flushes the bit cache.
+     */
     public void flushCache() {
         bitsInCache = 0;
         bitCache = 0;
     }
 
+    /**
+     * Gets the number of bytes read.
+     *
+     * @return bytes read.
+     */
     public long getBytesRead() {
         return bytesRead;
     }
@@ -48,6 +66,13 @@ public class MyBitInputStream extends FilterInputStream {
         return readBits(8);
     }
 
+    /**
+     * Reads specified number of bits.
+     *
+     * @param sampleBits number of bits to read.
+     * @return the bits as an integer.
+     * @throws IOException if I/O error occurs.
+     */
     public int readBits(final int sampleBits) throws IOException {
         while (bitsInCache < sampleBits) {
             final int next = in.read();
