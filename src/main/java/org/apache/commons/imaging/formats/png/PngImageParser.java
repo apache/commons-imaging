@@ -322,6 +322,8 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
     }
 
     /**
+     * Reads PNG chunk types from an input stream.
+     *
      * @param is PNG image input stream
      * @return List of String-formatted chunk types, ie. "tRNs".
      * @throws ImagingException if it fail to read the PNG chunks

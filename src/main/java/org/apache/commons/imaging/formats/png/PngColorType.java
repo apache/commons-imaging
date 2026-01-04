@@ -19,12 +19,26 @@ package org.apache.commons.imaging.formats.png;
 
 import java.util.Arrays;
 
+/**
+ * PNG color type enumeration.
+ */
 public enum PngColorType {
 
     // FIXME can this be merged with ImageInfo.ColorType?
 
-    GREYSCALE(0, true, false, 1, new int[] { 1, 2, 4, 8, 16 }), TRUE_COLOR(2, false, false, 3, new int[] { 8, 16 }),
-    INDEXED_COLOR(3, false, false, 1, new int[] { 1, 2, 4, 8 }), GREYSCALE_WITH_ALPHA(4, true, true, 2, new int[] { 8, 16 }),
+    /** Grayscale color type. */
+    GREYSCALE(0, true, false, 1, new int[] { 1, 2, 4, 8, 16 }),
+
+    /** True color (RGB) type. */
+    TRUE_COLOR(2, false, false, 3, new int[] { 8, 16 }),
+
+    /** Indexed color (palette) type. */
+    INDEXED_COLOR(3, false, false, 1, new int[] { 1, 2, 4, 8 }),
+
+    /** Grayscale with alpha channel type. */
+    GREYSCALE_WITH_ALPHA(4, true, true, 2, new int[] { 8, 16 }),
+
+    /** True color with alpha channel type. */
     TRUE_COLOR_WITH_ALPHA(6, false, true, 4, new int[] { 8, 16 });
 
     static PngColorType getColorType(final boolean alpha, final boolean grayscale) {
@@ -40,6 +54,12 @@ public enum PngColorType {
         return TRUE_COLOR;
     }
 
+    /**
+     * Gets the color type corresponding to the given value.
+     *
+     * @param value the color type value.
+     * @return the color type, or null if not found.
+     */
     public static PngColorType getColorType(final int value) {
         for (final PngColorType type : values()) {
             if (type.value == value) {

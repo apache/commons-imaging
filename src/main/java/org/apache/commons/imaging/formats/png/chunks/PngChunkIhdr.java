@@ -26,6 +26,9 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.png.InterlaceMethod;
 import org.apache.commons.imaging.formats.png.PngColorType;
 
+/**
+ * PNG IHDR chunk with image header.
+ */
 public final class PngChunkIhdr extends PngChunk {
 
     private final int width;
@@ -36,6 +39,16 @@ public final class PngChunkIhdr extends PngChunk {
     private final int filterMethod;
     private final InterlaceMethod interlaceMethod;
 
+    /**
+     * Constructs a PNG IHDR chunk.
+     *
+     * @param length the chunk length.
+     * @param chunkType the chunk type.
+     * @param crc the CRC.
+     * @param bytes the chunk bytes.
+     * @throws ImagingException if the chunk is corrupt.
+     * @throws IOException if an I/O error occurs.
+     */
     public PngChunkIhdr(final int length, final int chunkType, final int crc, final byte[] bytes) throws ImagingException, IOException {
         super(length, chunkType, crc, bytes);
 
@@ -57,30 +70,65 @@ public final class PngChunkIhdr extends PngChunk {
         interlaceMethod = InterlaceMethod.values()[method];
     }
 
+    /**
+     * Gets the bit depth.
+     *
+     * @return the bit depth.
+     */
     public int getBitDepth() {
         return bitDepth;
     }
 
+    /**
+     * Gets the compression method.
+     *
+     * @return the compression method.
+     */
     public int getCompressionMethod() {
         return compressionMethod;
     }
 
+    /**
+     * Gets the filter method.
+     *
+     * @return the filter method.
+     */
     public int getFilterMethod() {
         return filterMethod;
     }
 
+    /**
+     * Gets the image height.
+     *
+     * @return the height.
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * Gets the interlace method.
+     *
+     * @return the interlace method.
+     */
     public InterlaceMethod getInterlaceMethod() {
         return interlaceMethod;
     }
 
+    /**
+     * Gets the PNG color type.
+     *
+     * @return the PNG color type.
+     */
     public PngColorType getPngColorType() {
         return pngColorType;
     }
 
+    /**
+     * Gets the image width.
+     *
+     * @return the width.
+     */
     public int getWidth() {
         return width;
     }

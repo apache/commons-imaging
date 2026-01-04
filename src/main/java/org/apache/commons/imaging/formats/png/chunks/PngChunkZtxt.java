@@ -28,11 +28,24 @@ import org.apache.commons.imaging.formats.png.AbstractPngText;
 import org.apache.commons.imaging.formats.png.PngConstants;
 import org.apache.commons.io.IOUtils;
 
+/**
+ * PNG zTXt chunk with compressed textual data.
+ */
 public final class PngChunkZtxt extends AbstractPngTextChunk {
 
     private final String keyword;
     private final String text;
 
+    /**
+     * Constructs a PNG zTXt chunk.
+     *
+     * @param length the chunk length.
+     * @param chunkType the chunk type.
+     * @param crc the CRC.
+     * @param bytes the chunk bytes.
+     * @throws ImagingException if the chunk is corrupt.
+     * @throws IOException if an I/O error occurs.
+     */
     public PngChunkZtxt(final int length, final int chunkType, final int crc, final byte[] bytes) throws ImagingException, IOException {
         super(length, chunkType, crc, bytes);
 

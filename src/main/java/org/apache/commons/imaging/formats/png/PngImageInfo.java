@@ -22,11 +22,38 @@ import java.util.List;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageInfo;
 
+/**
+ * PNG image information.
+ */
 public class PngImageInfo extends ImageInfo {
 
     private final List<AbstractPngText> textChunks;
     private final PhysicalScale physicalScale;
 
+    /**
+     * Constructs PNG image info.
+     *
+     * @param formatDetails format details.
+     * @param bitsPerPixel bits per pixel.
+     * @param comments image comments.
+     * @param format image format.
+     * @param formatName format name.
+     * @param height image height.
+     * @param mimeType MIME type.
+     * @param numberOfImages number of images.
+     * @param physicalHeightDpi physical height DPI.
+     * @param physicalHeightInch physical height in inches.
+     * @param physicalWidthDpi physical width DPI.
+     * @param physicalWidthInch physical width in inches.
+     * @param width image width.
+     * @param progressive whether progressive.
+     * @param transparent whether transparent.
+     * @param usesPalette whether uses palette.
+     * @param colorType color type.
+     * @param compressionAlgorithm compression algorithm.
+     * @param textChunks text chunks.
+     * @param physicalScale physical scale.
+     */
     PngImageInfo(final String formatDetails, final int bitsPerPixel, final List<String> comments, final ImageFormat format, final String formatName,
             final int height, final String mimeType, final int numberOfImages, final int physicalHeightDpi, final float physicalHeightInch,
             final int physicalWidthDpi, final float physicalWidthInch, final int width, final boolean progressive, final boolean transparent,
@@ -48,6 +75,11 @@ public class PngImageInfo extends ImageInfo {
         return physicalScale;
     }
 
+    /**
+     * Gets the text chunks.
+     *
+     * @return list of text chunks.
+     */
     public List<AbstractPngText> getTextChunks() {
         return new ArrayList<>(textChunks);
     }

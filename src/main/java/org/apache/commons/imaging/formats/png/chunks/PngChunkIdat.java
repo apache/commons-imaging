@@ -16,8 +16,19 @@
  */
 package org.apache.commons.imaging.formats.png.chunks;
 
+/**
+ * PNG IDAT chunk with image data.
+ */
 public class PngChunkIdat extends PngChunk {
 
+    /**
+     * Constructs a PNG IDAT chunk.
+     *
+     * @param length the chunk length.
+     * @param chunkType the chunk type.
+     * @param crc the CRC.
+     * @param bytes the chunk bytes.
+     */
     public PngChunkIdat(final int length, final int chunkType, final int crc, final byte[] bytes) {
         super(length, chunkType, crc, bytes);
     }

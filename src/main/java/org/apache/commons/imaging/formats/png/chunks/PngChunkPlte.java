@@ -26,9 +26,22 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.formats.png.GammaCorrection;
 
+/**
+ * PNG PLTE chunk with palette.
+ */
 public final class PngChunkPlte extends PngChunk {
     private final int[] rgb;
 
+    /**
+     * Constructs a PNG PLTE chunk.
+     *
+     * @param length the chunk length.
+     * @param chunkType the chunk type.
+     * @param crc the CRC.
+     * @param bytes the chunk bytes.
+     * @throws ImagingException if the chunk is corrupt.
+     * @throws IOException if an I/O error occurs.
+     */
     public PngChunkPlte(final int length, final int chunkType, final int crc, final byte[] bytes) throws ImagingException, IOException {
         super(length, chunkType, crc, bytes);
 
@@ -50,10 +63,20 @@ public final class PngChunkPlte extends PngChunk {
         }
     }
 
+    /**
+     * Applies gamma correction to the palette.
+     *
+     * @param gammaCorrection the gamma correction to apply.
+     */
     public void correct(final GammaCorrection gammaCorrection) {
         Arrays.setAll(rgb, i -> gammaCorrection.correctArgb(rgb[i]));
     }
 
+    /**
+     * Gets a copy of the RGB palette.
+     *
+     * @return the RGB palette.
+     */
     public int[] getRgb() {
         return rgb.clone();
     }
@@ -69,6 +92,13 @@ public final class PngChunkPlte extends PngChunk {
     // Debug.debug();
     // }
 
+    /**
+     * Gets the RGB value at the specified palette index.
+     *
+     * @param index the palette index.
+     * @return the RGB value.
+     * @throws ImagingException if the index is out of bounds.
+     */
     public int getRgb(final int index) throws ImagingException {
         if (index < 0 || index >= rgb.length) {
             throw new ImagingException("PNG: unknown Palette reference: " + index);

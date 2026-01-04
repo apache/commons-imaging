@@ -22,12 +22,24 @@ import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+/**
+ * PNG pHYs chunk with physical pixel dimensions.
+ */
 public final class PngChunkPhys extends PngChunk {
 
     private final int pixelsPerUnitXAxis;
     private final int pixelsPerUnitYAxis;
     private final int unitSpecifier;
 
+    /**
+     * Constructs a PNG pHYs chunk.
+     *
+     * @param length the chunk length.
+     * @param chunkType the chunk type.
+     * @param crc the CRC.
+     * @param bytes the chunk bytes.
+     * @throws IOException if an I/O error occurs.
+     */
     public PngChunkPhys(final int length, final int chunkType, final int crc, final byte[] bytes) throws IOException {
         super(length, chunkType, crc, bytes);
         final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
@@ -36,14 +48,29 @@ public final class PngChunkPhys extends PngChunk {
         unitSpecifier = readByte("Unit specifier", is, "Not a Valid PNG File: pHYs Corrupt");
     }
 
+    /**
+     * Gets the pixels per unit on the X axis.
+     *
+     * @return pixels per unit on the X axis.
+     */
     public int getPixelsPerUnitXAxis() {
         return pixelsPerUnitXAxis;
     }
 
+    /**
+     * Gets the pixels per unit on the Y axis.
+     *
+     * @return pixels per unit on the Y axis.
+     */
     public int getPixelsPerUnitYAxis() {
         return pixelsPerUnitYAxis;
     }
 
+    /**
+     * Gets the unit specifier (0 = unknown, 1 = meter).
+     *
+     * @return the unit specifier.
+     */
     public int getUnitSpecifier() {
         return unitSpecifier;
     }

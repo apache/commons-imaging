@@ -36,19 +36,38 @@ public class PngImageMetadata implements ImageMetadata {
     private final ImageMetadata textualInformation;
     private final TiffImageMetadata exif;
 
+    /**
+     * Constructs PNG image metadata.
+     *
+     * @param textualInformation textual information.
+     */
     public PngImageMetadata(final ImageMetadata textualInformation) {
         this(textualInformation, null);
     }
 
+    /**
+     * Constructs PNG image metadata.
+     *
+     * @param textualInformation textual information.
+     * @param exif EXIF metadata.
+     */
     public PngImageMetadata(final ImageMetadata textualInformation, final TiffImageMetadata exif) {
         this.textualInformation = Objects.requireNonNull(textualInformation);
         this.exif = exif;
     }
 
+    /**
+     * Dumps metadata to debug output.
+     */
     public void dump() {
         Debug.debug(this.toString());
     }
 
+    /**
+     * Gets EXIF metadata.
+     *
+     * @return EXIF metadata, or null if none.
+     */
     public TiffImageMetadata getExif() {
         return exif;
     }
@@ -64,6 +83,11 @@ public class PngImageMetadata implements ImageMetadata {
         return result;
     }
 
+    /**
+     * Gets textual information.
+     *
+     * @return textual information.
+     */
     public ImageMetadata getTextualInformation() {
         return textualInformation;
     }

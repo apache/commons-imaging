@@ -28,6 +28,9 @@ import org.apache.commons.imaging.formats.png.AbstractPngText;
 import org.apache.commons.imaging.formats.png.PngConstants;
 import org.apache.commons.io.IOUtils;
 
+/**
+ * PNG iTXt chunk with international textual data.
+ */
 public final class PngChunkItxt extends AbstractPngTextChunk {
 
     private final String keyword;
@@ -115,6 +118,11 @@ public final class PngChunkItxt extends AbstractPngTextChunk {
         return text;
     }
 
+    /**
+     * Gets the translated keyword.
+     *
+     * @return the translated keyword.
+     */
     public String getTranslatedKeyword() {
         return translatedKeyword;
     }

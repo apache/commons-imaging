@@ -21,12 +21,24 @@ import java.nio.charset.StandardCharsets;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.BinaryFunctions;
 
+/**
+ * PNG sCAL chunk with physical scale of image subjects.
+ */
 public final class PngChunkScal extends PngChunk {
 
     private final double unitsPerPixelXAxis;
     private final double unitsPerPixelYAxis;
     private final int unitSpecifier;
 
+    /**
+     * Constructs a PNG sCAL chunk.
+     *
+     * @param length the chunk length.
+     * @param chunkType the chunk type.
+     * @param crc the CRC.
+     * @param bytes the chunk bytes.
+     * @throws ImagingException if the chunk is corrupt.
+     */
     public PngChunkScal(final int length, final int chunkType, final int crc, final byte[] bytes) throws ImagingException {
         super(length, chunkType, crc, bytes);
 
@@ -49,14 +61,29 @@ public final class PngChunkScal extends PngChunk {
         unitsPerPixelYAxis = toDouble(yStr);
     }
 
+    /**
+     * Gets the unit specifier (1 = meter, 2 = radian).
+     *
+     * @return the unit specifier.
+     */
     public int getUnitSpecifier() {
         return unitSpecifier;
     }
 
+    /**
+     * Gets the units per pixel on the X axis.
+     *
+     * @return units per pixel on the X axis.
+     */
     public double getUnitsPerPixelXAxis() {
         return unitsPerPixelXAxis;
     }
 
+    /**
+     * Gets the units per pixel on the Y axis.
+     *
+     * @return units per pixel on the Y axis.
+     */
     public double getUnitsPerPixelYAxis() {
         return unitsPerPixelYAxis;
     }

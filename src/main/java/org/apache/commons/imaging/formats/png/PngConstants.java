@@ -18,13 +18,21 @@ package org.apache.commons.imaging.formats.png;
 
 import org.apache.commons.imaging.common.BinaryConstant;
 
+/**
+ * PNG format constants.
+ */
 public final class PngConstants {
 
+    /** PNG compression type: deflate/inflate. */
     public static final int COMPRESSION_DEFLATE_INFLATE = 0;
 
+    /** PNG file signature. */
     public static final BinaryConstant PNG_SIGNATURE = new BinaryConstant(new byte[] { (byte) 0x89, 'P', 'N', 'G', '\r', '\n', 0x1A, '\n', });
 
+    /** Compression type: inflate/deflate. */
     public static final byte COMPRESSION_TYPE_INFLATE_DEFLATE = 0;
+
+    /** Filter method: adaptive. */
     public static final byte FILTER_METHOD_ADAPTIVE = 0;
 
     /*
@@ -39,6 +47,7 @@ public final class PngConstants {
      * to be reconstructed when the alpha channel is not retained in the PNG image.
      */
 
+    /** XMP metadata keyword. */
     public static final String XMP_KEYWORD = "XML:com.adobe.xmp";
 
     /**

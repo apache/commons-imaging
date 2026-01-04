@@ -100,14 +100,29 @@ public final class PngChunkIccp extends PngChunk {
         }
     }
 
+    /**
+     * Gets a copy of the compressed profile data.
+     *
+     * @return the compressed profile data.
+     */
     public byte[] getCompressedProfile() {
         return compressedProfile.clone();
     }
 
+    /**
+     * Gets the compression method.
+     *
+     * @return the compression method.
+     */
     public int getCompressionMethod() {
         return compressionMethod;
     }
 
+    /**
+     * Gets the profile name.
+     *
+     * @return the profile name.
+     */
     public String getProfileName() {
         return profileName;
     }
