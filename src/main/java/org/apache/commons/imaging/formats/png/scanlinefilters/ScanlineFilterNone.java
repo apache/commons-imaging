@@ -20,7 +20,17 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImagingException;
 
+/**
+ * PNG scanline filter with no filtering (direct copy).
+ */
 public class ScanlineFilterNone implements ScanlineFilter {
+
+    /**
+     * Constructs a new instance.
+     */
+    public ScanlineFilterNone() {
+        // Default constructor
+    }
 
     @Override
     public void unfilter(final byte[] src, final byte[] dst, final byte[] up) throws ImagingException, IOException {

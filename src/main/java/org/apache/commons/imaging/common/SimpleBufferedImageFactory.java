@@ -19,7 +19,18 @@ package org.apache.commons.imaging.common;
 
 import java.awt.image.BufferedImage;
 
+/**
+ * Simple factory for creating buffered images.
+ */
 public class SimpleBufferedImageFactory implements BufferedImageFactory {
+
+    /**
+     * Constructs a new instance.
+     */
+    public SimpleBufferedImageFactory() {
+        // Default constructor
+    }
+
     @Override
     public BufferedImage getColorBufferedImage(final int width, final int height, final boolean hasAlpha) {
         if (hasAlpha) {

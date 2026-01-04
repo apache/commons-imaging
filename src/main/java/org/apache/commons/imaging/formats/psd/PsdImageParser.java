@@ -60,8 +60,14 @@ public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> im
     private static final int PSD_SECTION_IMAGE_DATA = 4;
     private static final int PSD_HEADER_LENGTH = 26;
     private static final int COLOR_MODE_INDEXED = 2;
+
+    /** Image resource ID for ICC profile. */
     public static final int IMAGE_RESOURCE_ID_ICC_PROFILE = 0x040F;
+
+    /** Image resource ID for XMP. */
     public static final int IMAGE_RESOURCE_ID_XMP = 0x0424;
+
+    /** Block name for XMP. */
     public static final String BLOCK_NAME_XMP = "XMP";
 
     /**

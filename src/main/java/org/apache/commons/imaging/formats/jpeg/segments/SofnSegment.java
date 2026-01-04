@@ -31,13 +31,34 @@ import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
 public final class SofnSegment extends AbstractSegment {
 
+    /**
+     * JPEG component information.
+     */
     public static class Component {
+
+        /** Shallow size constant. */
         static final int SHALLOW_SIZE = 32;
+
+        /** Component identifier. */
         public final int componentIdentifier;
+
+        /** Horizontal sampling factor. */
         public final int horizontalSamplingFactor;
+
+        /** Vertical sampling factor. */
         public final int verticalSamplingFactor;
+
+        /** Quantization table destination selector. */
         public final int quantTabDestSelector;
 
+        /**
+         * Constructs a component.
+         *
+         * @param componentIdentifier the component identifier.
+         * @param horizontalSamplingFactor the horizontal sampling factor.
+         * @param veritcalSamplingFactor the vertical sampling factor.
+         * @param quantTabDestSelector the quantization table destination selector.
+         */
         public Component(final int componentIdentifier, final int horizontalSamplingFactor, final int veritcalSamplingFactor, final int quantTabDestSelector) {
             this.componentIdentifier = componentIdentifier;
             this.horizontalSamplingFactor = horizontalSamplingFactor;
@@ -47,13 +68,29 @@ public final class SofnSegment extends AbstractSegment {
     }
 
     private static final Logger LOGGER = Logger.getLogger(SofnSegment.class.getName());
+
+    /** Image width. */
     public final int width;
+
+    /** Image height. */
     public final int height;
+
+    /** Number of components. */
     public final int numberOfComponents;
+
+    /** Precision. */
     public final int precision;
 
     private final Component[] components;
 
+    /**
+     * Constructs a SOFn segment.
+     *
+     * @param marker the marker.
+     * @param segmentData the segment data.
+     * @throws IOException if an I/O error occurs.
+     * @throws ImagingException if an imaging error occurs.
+     */
     public SofnSegment(final int marker, final byte[] segmentData) throws IOException, ImagingException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }

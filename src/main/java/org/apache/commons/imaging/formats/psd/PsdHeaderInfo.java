@@ -22,18 +22,44 @@ import java.io.StringWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * PSD (Photoshop Document) header information.
+ */
 public class PsdHeaderInfo {
 
     private static final Logger LOGGER = Logger.getLogger(PsdHeaderInfo.class.getName());
 
+    /** PSD version. */
     public final int version;
+
     private final byte[] reserved;
+
+    /** Number of channels. */
     public final int channels;
+
+    /** Number of rows (height). */
     public final int rows;
+
+    /** Number of columns (width). */
     public final int columns;
+
+    /** Bit depth. */
     public final int depth;
+
+    /** Color mode. */
     public final int mode;
 
+    /**
+     * Constructs PSD header info.
+     *
+     * @param version the version.
+     * @param reserved reserved bytes.
+     * @param channels number of channels.
+     * @param rows number of rows.
+     * @param columns number of columns.
+     * @param depth bit depth.
+     * @param mode color mode.
+     */
     public PsdHeaderInfo(final int version, final byte[] reserved, final int channels, final int rows, final int columns, final int depth, final int mode) {
         this.version = version;
         this.reserved = reserved.clone();
@@ -45,6 +71,9 @@ public class PsdHeaderInfo {
 
     }
 
+    /**
+     * Dumps header info to logger.
+     */
     public void dump() {
         try (StringWriter sw = new StringWriter();
                 PrintWriter pw = new PrintWriter(sw)) {
@@ -57,6 +86,11 @@ public class PsdHeaderInfo {
         }
     }
 
+    /**
+     * Dumps header info to print writer.
+     *
+     * @param pw the print writer.
+     */
     public void dump(final PrintWriter pw) {
         pw.println("");
         pw.println("Header");
@@ -71,6 +105,11 @@ public class PsdHeaderInfo {
         pw.flush();
     }
 
+    /**
+     * Gets a copy of the reserved bytes.
+     *
+     * @return the reserved bytes.
+     */
     public byte[] getReserved() {
         return reserved.clone();
     }

@@ -23,5 +23,11 @@ import org.apache.commons.imaging.ImagingParameters;
  * @since 1.0-alpha3
  */
 public class RgbeImagingParameters extends ImagingParameters<RgbeImagingParameters> {
-    // empty
+
+    /**
+     * Constructs a new instance.
+     */
+    public RgbeImagingParameters() {
+        // Default constructor
+    }
 }

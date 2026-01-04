@@ -20,9 +20,18 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImagingException;
 
+/**
+ * PNG scanline filter using Paeth predictor.
+ */
 public class ScanlineFilterPaeth implements ScanlineFilter {
+
     private final int bytesPerPixel;
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param bytesPerPixel the number of bytes per pixel.
+     */
     public ScanlineFilterPaeth(final int bytesPerPixel) {
         this.bytesPerPixel = bytesPerPixel;
     }

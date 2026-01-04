@@ -18,6 +18,9 @@ package org.apache.commons.imaging.palette;
 
 import java.util.Objects;
 
+/**
+ * Simple palette implementation.
+ */
 public class SimplePalette implements Palette {
 
     private final int[] palette;

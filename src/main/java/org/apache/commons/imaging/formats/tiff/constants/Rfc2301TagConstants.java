@@ -45,53 +45,103 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShorts;
  */
 public final class Rfc2301TagConstants {
 
+    /** TIFF tag for bad fax lines. */
     public static final TagInfoShortOrLong TIFF_TAG_BAD_FAX_LINES = new TagInfoShortOrLong("BadFaxLines", 0x0146, 1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
+    /** TIFF tag for clean fax data. */
     public static final TagInfoShort TIFF_TAG_CLEAN_FAX_DATA = new TagInfoShort("CleanFaxData", 0x0147, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+
+    /** Clean fax data value: clean. */
     public static final int CLEAN_FAX_DATA_VALUE_CLEAN = 0;
+
+    /** Clean fax data value: regenerated. */
     public static final int CLEAN_FAX_DATA_VALUE_REGENERATED = 1;
+
+    /** Clean fax data value: unclean. */
     public static final int CLEAN_FAX_DATA_VALUE_UNCLEAN = 2;
 
+    /** TIFF tag for consecutive bad fax lines. */
     public static final TagInfoShortOrLong TIFF_TAG_CONSECUTIVE_BAD_FAX_LINES = new TagInfoShortOrLong("ConsecutiveBadFaxLines", 0x0148, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
+    /** TIFF tag for global parameters IFD. */
     public static final TagInfoDirectory TIFF_TAG_GLOBAL_PARAMETERS_IFD = new TagInfoDirectory("GlobalParametersIFD", 0x0190,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
+    /** TIFF tag for profile type. */
     public static final TagInfoLong TIFF_TAG_PROFILE_TYPE = new TagInfoLong("ProfileType", 0x0191, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+
+    /** Profile type value: unspecified. */
     public static final int PROFILE_TYPE_VALUE_UNSPECIFIED = 0;
+
+    /** Profile type value: group 3 fax. */
     public static final int PROFILE_TYPE_VALUE_GROUP_3_FAX = 1;
 
+    /** TIFF tag for fax profile. */
     public static final TagInfoByte TIFF_TAG_FAX_PROFILE = new TagInfoByte("FaxProfile", 0x0192, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+
+    /** Fax profile value: unknown. */
     public static final int FAX_PROFILE_VALUE_UNKNOWN = 0;
+
+    /** Fax profile value: minimal B&amp;W lossless. */
     public static final int FAX_PROFILE_VALUE_MINIMAL_B_AND_W_LOSSLESS_S = 1;
+
+    /** Fax profile value: extended B&amp;W lossless. */
     public static final int FAX_PROFILE_VALUE_EXTENDED_B_AND_W_LOSSLESS_F = 2;
+
+    /** Fax profile value: lossless JBIG B&amp;W. */
     public static final int FAX_PROFILE_VALUE_LOSSLESS_JBIG_B_AND_W_J = 3;
+
+    /** Fax profile value: lossy color and grayscale. */
     public static final int FAX_PROFILE_VALUE_LOSSY_COLOR_AND_GRAYSCALE_C = 4;
+
+    /** Fax profile value: lossless color and grayscale. */
     public static final int FAX_PROFILE_VALUE_LOSSLESS_COLOR_AND_GRAYSCALE_L = 5;
+
+    /** Fax profile value: mixed raster content. */
     public static final int FAX_PROFILE_VALUE_MIXED_RASTER_CONTENT_M = 6;
 
+    /** TIFF tag for coding methods. */
     public static final TagInfoLong TIFF_TAG_CODING_METHODS = new TagInfoLong("CodingMethods", 0x0193, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+
+    /** Coding methods value: T4 1D. */
     public static final int CODING_METHODS_VALUE_T4_1D = 2;
+
+    /** Coding methods value: T4 2D. */
     public static final int CODING_METHODS_VALUE_T4_2D = 4;
+
+    /** Coding methods value: T6. */
     public static final int CODING_METHODS_VALUE_T6 = 8;
+
+    /** Coding methods value: T82 T85. */
     public static final int CODING_METHODS_VALUE_T82_T85 = 16;
+
+    /** Coding methods value: T81. */
     public static final int CODING_METHODS_VALUE_T81 = 32;
+
+    /** Coding methods value: T82 T43. */
     public static final int CODING_METHODS_VALUE_T82_T43 = 64;
 
+    /** TIFF tag for version year. */
     public static final TagInfoBytes TIFF_TAG_VERSION_YEAR = new TagInfoBytes("VersionYear", 0x0194, 4, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
+    /** TIFF tag for mode number. */
     public static final TagInfoByte TIFF_TAG_MODE_NUMBER = new TagInfoByte("ModeNumber", 0x0195, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
+    /** TIFF tag for decode. */
     public static final TagInfoRationals TIFF_TAG_DECODE = new TagInfoRationals("Decode", 0x01b1, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
+    /** TIFF tag for default image color. */
     public static final TagInfoShorts TIFF_TAG_DEFAULT_IMAGE_COLOR = new TagInfoShorts("DefaultImageColor", 0x01b2, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
+    /** TIFF tag for strip row counts. */
     public static final TagInfoLongs TIFF_TAG_STRIP_ROW_COUNTS = new TagInfoLongs("StripRowCounts", 0x022f, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
+    /** TIFF tag for image layer. */
     public static final TagInfoShortOrLong TIFF_TAG_IMAGE_LAYER = new TagInfoShortOrLong("ImageLayer", 0x87ac, 2, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
+    /** All RFC 2301 tags. */
     public static final List<TagInfo> ALL_RFC_2301_TAGS = Collections.unmodifiableList(Arrays.asList(TIFF_TAG_BAD_FAX_LINES, TIFF_TAG_CLEAN_FAX_DATA,
             TIFF_TAG_CONSECUTIVE_BAD_FAX_LINES, TIFF_TAG_GLOBAL_PARAMETERS_IFD, TIFF_TAG_PROFILE_TYPE, TIFF_TAG_FAX_PROFILE, TIFF_TAG_CODING_METHODS,
             TIFF_TAG_VERSION_YEAR, TIFF_TAG_MODE_NUMBER, TIFF_TAG_DECODE, TIFF_TAG_DEFAULT_IMAGE_COLOR, TIFF_TAG_STRIP_ROW_COUNTS, TIFF_TAG_IMAGE_LAYER));

@@ -28,12 +28,30 @@ import org.apache.commons.imaging.common.Allocator;
 
 public final class SosSegment extends AbstractSegment {
 
+    /**
+     * JPEG SOS component information.
+     */
     public static class Component {
+
+        /** Shallow size constant. */
         static final int SHALLOW_SIZE = 24;
+
+        /** Scan component selector. */
         public final int scanComponentSelector;
+
+        /** DC coding table selector. */
         public final int dcCodingTableSelector;
+
+        /** AC coding table selector. */
         public final int acCodingTableSelector;
 
+        /**
+         * Constructs a component.
+         *
+         * @param scanComponentSelector the scan component selector.
+         * @param dcCodingTableSelector the DC coding table selector.
+         * @param acCodingTableSelector the AC coding table selector.
+         */
         public Component(final int scanComponentSelector, final int dcCodingTableSelector, final int acCodingTableSelector) {
             this.scanComponentSelector = scanComponentSelector;
             this.dcCodingTableSelector = dcCodingTableSelector;
@@ -42,14 +60,31 @@ public final class SosSegment extends AbstractSegment {
     }
 
     private static final Logger LOGGER = Logger.getLogger(SosSegment.class.getName());
+
+    /** Number of components. */
     public final int numberOfComponents;
+
     private final Component[] components;
+
+    /** Start of spectral selection. */
     public final int startOfSpectralSelection;
+
+    /** End of spectral selection. */
     public final int endOfSpectralSelection;
+
+    /** Successive approximation bit high. */
     public final int successiveApproximationBitHigh;
 
+    /** Successive approximation bit low. */
     public final int successiveApproximationBitLow;
 
+    /**
+     * Constructs a SOS segment.
+     *
+     * @param marker the marker.
+     * @param segmentData the segment data.
+     * @throws IOException if an I/O error occurs.
+     */
     public SosSegment(final int marker, final byte[] segmentData) throws IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }

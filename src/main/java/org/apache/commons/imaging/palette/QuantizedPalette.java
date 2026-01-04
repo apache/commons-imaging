@@ -22,12 +22,21 @@ import java.util.List;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 
+/**
+ * Palette with quantized color space.
+ */
 public class QuantizedPalette implements Palette {
 
     private final int precision;
     private final List<ColorSpaceSubset> subsets;
     private final ColorSpaceSubset[] straight;
 
+    /**
+     * Constructs a quantized palette.
+     *
+     * @param subsets the color space subsets.
+     * @param precision the precision.
+     */
     public QuantizedPalette(final List<ColorSpaceSubset> subsets, final int precision) {
         this.subsets = subsets == null ? Collections.emptyList() : Collections.unmodifiableList(subsets);
         this.precision = precision;

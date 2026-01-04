@@ -19,7 +19,18 @@ package org.apache.commons.imaging.common;
 
 import java.awt.image.BufferedImage;
 
+/**
+ * Factory for creating RGB buffered images.
+ */
 public class RgbBufferedImageFactory implements BufferedImageFactory {
+
+    /**
+     * Constructs a new instance.
+     */
+    public RgbBufferedImageFactory() {
+        // Default constructor
+    }
+
     @Override
     public BufferedImage getColorBufferedImage(final int width, final int height, final boolean hasAlpha) {
         if (hasAlpha) {

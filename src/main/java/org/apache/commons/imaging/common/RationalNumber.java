@@ -51,6 +51,8 @@ public class RationalNumber extends Number {
 
     // int-precision tolerance
     private static final double TOLERANCE = 1E-8;
+
+    /** Shallow size constant. */
     public static final int SHALLOW_SIZE = 32;
 
     static RationalNumber factoryMethod(long n, long d) {
@@ -170,17 +172,21 @@ public class RationalNumber extends Number {
     // of 32 bit unsigned integers. Since Java does not have an
     // unsigned type, this class widens the type to long in order
     // to avoid unintended negative numbers.
+
+    /** The numerator value. */
     public final long numerator;
 
+    /** The divisor value. */
     public final long divisor;
 
+    /** Whether this is an unsigned type. */
     public final boolean unsignedType;
 
     /**
-     * Constructs an instance based on signed integers
+     * Constructs an instance based on signed integers.
      *
-     * @param numerator a 32-bit signed integer
-     * @param divisor   a non-zero 32-bit signed integer
+     * @param numerator a 32-bit signed integer.
+     * @param divisor   a non-zero 32-bit signed integer.
      */
     public RationalNumber(final int numerator, final int divisor) {
         this.numerator = numerator;
@@ -278,6 +284,11 @@ public class RationalNumber extends Number {
         return new RationalNumber(-n, d, false);
     }
 
+    /**
+     * Converts to display string.
+     *
+     * @return the display string.
+     */
     public String toDisplayString() {
         if (numerator % divisor == 0) {
             return Long.toString(numerator / divisor);

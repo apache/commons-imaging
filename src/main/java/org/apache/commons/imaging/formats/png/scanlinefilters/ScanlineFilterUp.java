@@ -20,7 +20,17 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImagingException;
 
+/**
+ * PNG scanline filter using subtraction from up pixel.
+ */
 public class ScanlineFilterUp implements ScanlineFilter {
+
+    /**
+     * Constructs a new instance.
+     */
+    public ScanlineFilterUp() {
+        // Default constructor
+    }
 
     @Override
     public void unfilter(final byte[] src, final byte[] dst, final byte[] up) throws ImagingException, IOException {

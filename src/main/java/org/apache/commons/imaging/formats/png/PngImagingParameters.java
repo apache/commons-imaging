@@ -27,6 +27,7 @@ import org.apache.commons.imaging.common.XmpImagingParameters;
  */
 public class PngImagingParameters extends XmpImagingParameters<PngImagingParameters> {
 
+    /** Default bit depth value. */
     public static final byte DEFAULT_BIT_DEPTH = 8;
 
     /**
@@ -62,22 +63,54 @@ public class PngImagingParameters extends XmpImagingParameters<PngImagingParamet
      */
     private List<? extends AbstractPngText> textChunks;
 
+    /**
+     * Constructs a new instance.
+     */
+    public PngImagingParameters() {
+        // Default constructor
+    }
+
+    /**
+     * Gets the bit depth.
+     *
+     * @return the bit depth.
+     */
     public byte getBitDepth() {
         return bitDepth;
     }
 
+    /**
+     * Gets the physical scale.
+     *
+     * @return the physical scale.
+     */
     public PhysicalScale getPhysicalScale() {
         return physicalScale;
     }
 
+    /**
+     * Gets the text chunks.
+     *
+     * @return the text chunks.
+     */
     public List<? extends AbstractPngText> getTextChunks() {
         return textChunks != null ? Collections.unmodifiableList(textChunks) : null;
     }
 
+    /**
+     * Checks if forcing indexed color.
+     *
+     * @return true if forcing indexed color, false otherwise.
+     */
     public boolean isForceIndexedColor() {
         return forceIndexedColor;
     }
 
+    /**
+     * Checks if forcing true color.
+     *
+     * @return true if forcing true color, false otherwise.
+     */
     public boolean isForceTrueColor() {
         return forceTrueColor;
     }
@@ -91,21 +124,45 @@ public class PngImagingParameters extends XmpImagingParameters<PngImagingParamet
         return predictorEnabled;
     }
 
+    /**
+     * Sets the bit depth.
+     *
+     * @param bitDepth the bit depth.
+     * @return this instance.
+     */
     public PngImagingParameters setBitDepth(final byte bitDepth) {
         this.bitDepth = bitDepth;
         return asThis();
     }
 
+    /**
+     * Sets whether to force indexed color.
+     *
+     * @param forceIndexedColor whether to force indexed color.
+     * @return this instance.
+     */
     public PngImagingParameters setForceIndexedColor(final boolean forceIndexedColor) {
         this.forceIndexedColor = forceIndexedColor;
         return asThis();
     }
 
+    /**
+     * Sets whether to force true color.
+     *
+     * @param forceTrueColor whether to force true color.
+     * @return this instance.
+     */
     public PngImagingParameters setForceTrueColor(final boolean forceTrueColor) {
         this.forceTrueColor = forceTrueColor;
         return asThis();
     }
 
+    /**
+     * Sets the physical scale.
+     *
+     * @param physicalScale the physical scale.
+     * @return this instance.
+     */
     public PngImagingParameters setPhysicalScale(final PhysicalScale physicalScale) {
         this.physicalScale = physicalScale;
         return asThis();
@@ -124,6 +181,12 @@ public class PngImagingParameters extends XmpImagingParameters<PngImagingParamet
         return asThis();
     }
 
+    /**
+     * Sets the text chunks.
+     *
+     * @param textChunks the text chunks.
+     * @return this instance.
+     */
     public PngImagingParameters setTextChunks(final List<? extends AbstractPngText> textChunks) {
         this.textChunks = Collections.unmodifiableList(textChunks);
         return asThis();

@@ -20,8 +20,20 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImagingException;
 
+/**
+ * Interface for PNG scanline filtering.
+ */
 public interface ScanlineFilter {
 
+    /**
+     * Unfilters a scanline.
+     *
+     * @param src the source bytes.
+     * @param dst the destination bytes.
+     * @param up the previous scanline bytes.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     void unfilter(byte[] src, byte[] dst, byte[] up) throws ImagingException, IOException;
 
 }

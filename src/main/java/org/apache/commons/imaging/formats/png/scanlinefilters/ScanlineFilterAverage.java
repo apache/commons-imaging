@@ -20,9 +20,18 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImagingException;
 
+/**
+ * PNG scanline filter using average of left and up pixels.
+ */
 public class ScanlineFilterAverage implements ScanlineFilter {
+
     private final int bytesPerPixel;
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param bytesPerPixel the number of bytes per pixel.
+     */
     public ScanlineFilterAverage(final int bytesPerPixel) {
         this.bytesPerPixel = bytesPerPixel;
     }
