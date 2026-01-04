@@ -28,6 +28,7 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
  * TIFF field type for double-precision floating point values.
  */
 public class FieldTypeDouble extends AbstractFieldType {
+
     /**
      * Constructs a new double field type.
      *

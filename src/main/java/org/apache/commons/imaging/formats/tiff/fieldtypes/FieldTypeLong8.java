@@ -27,6 +27,7 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
  * Provides an implementation of the 8-byte integer field type specified by the BigTIFF extensions to the TIFF format.
  */
 public class FieldTypeLong8 extends AbstractFieldType {
+
     /**
      * Constructs a new 64-bit long field type.
      *

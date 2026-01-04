@@ -35,6 +35,7 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.io.FileUtils;
 
 public class WriteExifMetadataExample {
+
     /**
      * This example illustrates how to add/update EXIF metadata in a JPEG file.
      *

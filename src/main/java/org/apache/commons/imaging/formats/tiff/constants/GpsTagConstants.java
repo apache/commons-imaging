@@ -90,6 +90,7 @@ public final class GpsTagConstants {
 
     /** GPS measure mode tag. */
     public static final TagInfoAscii GPS_TAG_GPS_MEASURE_MODE = new TagInfoAscii("GPSMeasureMode", 0x000a, 2, TiffDirectoryType.EXIF_DIRECTORY_GPS);
+
     /** GPS measure mode value: 2-dimensional measurement. */
     public static final int GPS_TAG_GPS_MEASURE_MODE_VALUE_2_DIMENSIONAL_MEASUREMENT = 2;
 
@@ -107,6 +108,7 @@ public final class GpsTagConstants {
 
     /** GPS speed reference value: miles per hour. */
     public static final String GPS_TAG_GPS_SPEED_REF_VALUE_MPH = "M";
+
     /** GPS speed reference value: knots. */
     public static final String GPS_TAG_GPS_SPEED_REF_VALUE_KNOTS = "N";
 
@@ -184,6 +186,7 @@ public final class GpsTagConstants {
 
     /** GPS destination distance reference value: miles. */
     public static final String GPS_TAG_GPS_DEST_DISTANCE_REF_VALUE_MILES = "M";
+
     /** GPS destination distance reference value: nautical miles. */
     public static final String GPS_TAG_GPS_DEST_DISTANCE_REF_VALUE_NAUTICAL_MILES = "N";
 

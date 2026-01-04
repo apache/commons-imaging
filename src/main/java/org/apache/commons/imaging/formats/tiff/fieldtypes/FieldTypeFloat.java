@@ -27,6 +27,7 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
  * TIFF field type for single-precision floating point values.
  */
 public class FieldTypeFloat extends AbstractFieldType {
+
     /**
      * Constructs a new float field type.
      *

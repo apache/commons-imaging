@@ -29,6 +29,7 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
  * TIFF field type for rational number values.
  */
 public class FieldTypeRational extends AbstractFieldType {
+
     /**
      * Constructs a new rational field type.
      *

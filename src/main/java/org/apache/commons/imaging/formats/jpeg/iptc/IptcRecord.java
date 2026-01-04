@@ -22,8 +22,10 @@ import java.util.Comparator;
  * Represents an IPTC record, a single key-value pair of Photoshop IPTC data.
  */
 public class IptcRecord {
+
     /** Comparator for sorting IPTC records by type. */
     public static final Comparator<IptcRecord> COMPARATOR = Comparator.comparingInt(e -> e.iptcType.getType());
+
     /** The IPTC type. */
     public final IptcType iptcType;
     private final String value;

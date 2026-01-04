@@ -30,22 +30,31 @@ public class ImageInfo {
 
     /** Color type enumeration for images. */
     public enum ColorType {
+
         /** Black and white images. */
         BW("Black and White"),
+
         /** Grayscale images. */
         GRAYSCALE("Grayscale"),
+
         /** RGB color images. */
         RGB("RGB"),
+
         /** CMYK color images. */
         CMYK("CMYK"),
+
         /** YCbCr color images. */
         YCbCr("YCbCr"),
+
         /** YCCK color images. */
         YCCK("YCCK"),
+
         /** YCC color images. */
         YCC("YCC"),
+
         /** Other color type. */
         OTHER("Other"),
+
         /** Unknown color type. */
         UNKNOWN("Unknown");
 
@@ -63,32 +72,46 @@ public class ImageInfo {
 
     /** Compression algorithm enumeration for images. */
     public enum CompressionAlgorithm {
+
         /** Unknown compression. */
         UNKNOWN("Unknown"),
+
         /** No compression. */
         NONE("None"),
+
         /** LZW compression. */
         LZW("LZW"),
+
         /** PackBits compression. */
         PACKBITS("PackBits"),
+
         /** JPEG compression (TIFF obsolete). */
         JPEG_TIFF_OBSOLETE("JPEG Obsolete (TIFF only)"),
+
         /** JPEG compression. */
         JPEG("JPEG"),
+
         /** RLE: Run-Length Encoding. */
         RLE("RLE: Run-Length Encoding"),
+
         /** Adaptive RLE compression. */
         ADAPTIVE_RLE("Adaptive RLE"),
+
         /** Photoshop compression. */
         PSD("Photoshop"),
+
         /** PNG Filter compression. */
         PNG_FILTER("PNG Filter"),
+
         /** CCITT Group 3 1-Dimensional Modified Huffman run-length encoding. */
         CCITT_GROUP_3("CCITT Group 3 1-Dimensional Modified Huffman run-length encoding."),
+
         /** CCITT Group 4 compression. */
         CCITT_GROUP_4("CCITT Group 4"),
+
         /** CCITT 1D compression. */
         CCITT_1D("CCITT 1D"),
+
         /** DEFLATE (ZIP) compression. */
         DEFLATE("DEFLATE (ZIP)");
 

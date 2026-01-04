@@ -22,6 +22,7 @@ package org.apache.commons.imaging.formats.png;
  * @since 1.0-alpha6
  */
 enum Extension {
+
     /**
      * @see <a href="https://ftp-osl.osuosl.org/pub/libpng/documents/pngext-1.5.0.html">Extensions to the PNG 1.2 Specification, Version 1.5.0</a>
      */

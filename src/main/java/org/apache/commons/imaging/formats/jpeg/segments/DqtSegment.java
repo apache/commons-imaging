@@ -35,6 +35,7 @@ public final class DqtSegment extends AbstractSegment {
      * A quantization table for JPEG compression.
      */
     public static class QuantizationTable {
+
         /** The precision of the quantization table (0=8-bit, 1=16-bit). */
         public final int precision;
 

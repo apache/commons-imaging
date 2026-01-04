@@ -27,6 +27,7 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
  * TIFF field type for 16-bit unsigned short values.
  */
 public class FieldTypeShort extends AbstractFieldType {
+
     /**
      * Constructs a new short field type.
      *

@@ -39,10 +39,13 @@ public class IccTag {
 
     /** The tag signature. */
     public final int signature;
+
     /** The offset of the tag data. */
     public final int offset;
+
     /** The length of the tag data. */
     public final int length;
+
     /** The ICC tag type. */
     public final IccTagType fIccTagType;
     private byte[] data;

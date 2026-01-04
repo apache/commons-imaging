@@ -32,6 +32,7 @@ import org.junit.jupiter.api.Test;
  * Basic tests for JpegImageParser.
  */
 class JpegImageParserTest {
+
     /**
      * Image created with The Gimp 2.8
      *

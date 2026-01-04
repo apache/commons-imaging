@@ -68,20 +68,28 @@ public final class DngTagConstants {
 
     /** CFA layout value: rectangular. */
     public static final int CFALAYOUT_VALUE_RECTANGULAR = 1;
+
     /** CFA layout value: even columns offset down 1/2 row. */
     public static final int CFALAYOUT_VALUE_EVEN_COLUMNS_OFFSET_DOWN_1_2_ROW = 2;
+
     /** CFA layout value: even columns offset up 1/2 row. */
     public static final int CFALAYOUT_VALUE_EVEN_COLUMNS_OFFSET_UP_1_2_ROW = 3;
+
     /** CFA layout value: even rows offset right 1/2 column. */
     public static final int CFALAYOUT_VALUE_EVEN_ROWS_OFFSET_RIGHT_1_2_COLUMN = 4;
+
     /** CFA layout value: even rows offset left 1/2 column. */
     public static final int CFALAYOUT_VALUE_EVEN_ROWS_OFFSET_LEFT_1_2_COLUMN = 5;
+
     /** CFA layout value: even rows offset up 1/2 row, even columns offset left 1/2 column. */
     public static final int CFALAYOUT_VALUE_EVEN_ROWS_OFFSET_UP_1_2_ROW_EVEN_COLUMNS_OFFSET_LEFT_1_2_COLUMN = 6;
+
     /** CFA layout value: even rows offset up 1/2 row, even columns offset right 1/2 column. */
     public static final int CFALAYOUT_VALUE_EVEN_ROWS_OFFSET_UP_1_2_ROW_EVEN_COLUMNS_OFFSET_RIGHT_1_2_COLUMN = 7;
+
     /** CFA layout value: even rows offset down 1/2 row, even columns offset left 1/2 column. */
     public static final int CFALAYOUT_VALUE_EVEN_ROWS_OFFSET_DOWN_1_2_ROW_EVEN_COLUMNS_OFFSET_LEFT_1_2_COLUMN = 8;
+
     /** CFA layout value: even rows offset down 1/2 row, even columns offset right 1/2 column. */
     public static final int CFALAYOUT_VALUE_EVEN_ROWS_OFFSET_DOWN_1_2_ROW_EVEN_COLUMNS_OFFSET_RIGHT_1_2_COLUMN = 9;
 
@@ -188,8 +196,10 @@ public final class DngTagConstants {
 
     /** Maker note safety tag. */
     public static final TagInfoShort EXIF_TAG_MAKER_NOTE_SAFETY = new TagInfoShort("MakerNoteSafety", 0xc635, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
+
     /** Maker note safety value: unsafe. */
     public static final int MAKER_NOTE_SAFETY_VALUE_UNSAFE = 0;
+
     /** Maker note safety value: safe. */
     public static final int MAKER_NOTE_SAFETY_VALUE_SAFE = 1;
 
@@ -359,8 +369,10 @@ public final class DngTagConstants {
 
     /** Colorimetric reference tag. */
     public static final TagInfoShort EXIF_TAG_COLORIMETRIC_REFERENCE = new TagInfoShort("ColorimetricReference", 0xc6bf, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
+
     /** Colorimetric reference value: scene referred. */
     public static final short COLORIMETRIC_REFERENCE_VALUE_SCENE_REFERRED = 0;
+
     /** Colorimetric reference value: output referred. */
     public static final short COLORIMETRIC_REFERENCE_VALUE_OUTPUT_REFERRED = 1;
 
@@ -404,12 +416,16 @@ public final class DngTagConstants {
 
     /** Profile embed policy tag. */
     public static final TagInfoLong EXIF_TAG_PROFILE_EMBED_POLICY = new TagInfoLong("ProfileEmbedPolicy", 0xc6fd, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+
     /** Profile embed policy value: allow copying. */
     public static final int PROFILE_EMBED_POLICY_VALUE_ALLOW_COPYING = 0;
+
     /** Profile embed policy value: embed if used. */
     public static final int PROFILE_EMBED_POLICY_VALUE_EMBED_IF_USED = 1;
+
     /** Profile embed policy value: embed never. */
     public static final int PROFILE_EMBED_POLICY_VALUE_EMBED_NEVER = 2;
+
     /** Profile embed policy value: no restrictions. */
     public static final int PROFILE_EMBED_POLICY_VALUE_NO_RESTRICTIONS = 3;
 
@@ -443,14 +459,19 @@ public final class DngTagConstants {
 
     /** Preview colorspace tag. */
     public static final TagInfoLong EXIF_TAG_PREVIEW_COLORSPACE = new TagInfoLong("PreviewColorspace", 0xc71a, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+
     /** Preview colorspace value: unknown. */
     public static final int PREVIEW_COLORSPACE_VALUE_UNKNOWN = 0;
+
     /** Preview colorspace value: gray gamma 2.2. */
     public static final int PREVIEW_COLORSPACE_VALUE_GRAY_GAMMA_2_2 = 1;
+
     /** Preview colorspace value: sRGB. */
     public static final int PREVIEW_COLORSPACE_VALUE_sRGB = 2;
+
     /** Preview colorspace value: Adobe RGB. */
     public static final int PREVIEW_COLORSPACE_VALUE_ADOBE_RGB = 3;
+
     /** Preview colorspace value: ProPhoto RGB. */
     public static final int PREVIEW_COLORSPACE_VALUE_PROPHOTO_RGB = 4;
 

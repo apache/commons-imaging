@@ -21,6 +21,7 @@ package org.apache.commons.imaging.formats.tiff;
  * JPEG image data within a TIFF file.
  */
 public class JpegImageData extends AbstractTiffElement.DataElement {
+
     /**
      * Constructs a new JPEG image data element.
      *

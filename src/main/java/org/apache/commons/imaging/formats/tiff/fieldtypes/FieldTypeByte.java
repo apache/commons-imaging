@@ -25,6 +25,7 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
  * TIFF field type for byte values.
  */
 public class FieldTypeByte extends AbstractFieldType {
+
     /**
      * Constructs a new byte field type.
      *

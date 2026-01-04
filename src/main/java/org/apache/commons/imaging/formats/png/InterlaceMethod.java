@@ -25,6 +25,7 @@ public enum InterlaceMethod {
 
     /** No interlacing. */
     NONE(false),
+
     /** Adam7 interlacing. */
     ADAM7(true);
 

@@ -32,6 +32,7 @@ import org.apache.commons.lang3.StringUtils;
  * FIXME replace this by a parser generated via ANTLR (if we really need it?!)
  */
 public class BasicCParser {
+
     /**
      * Parses the hexadecimal-base escape-sequence found at index {@code i} of {@code string}.
      *

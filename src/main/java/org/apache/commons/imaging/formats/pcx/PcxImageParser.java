@@ -71,41 +71,58 @@ public class PcxImageParser extends AbstractImageParser<PcxImagingParameters> {
         public static final int ENCODING_RLE = 1;
         public static final int PALETTE_INFO_COLOR = 1;
         public static final int PALETTE_INFO_GRAYSCALE = 2;
+
         /** Always 10 = ZSoft .pcx. */
         public final int manufacturer;
+
         /**
          * Version: 0 = PC Paintbrush 2.5, 2 = PC Paintbrush 2.8 with palette, 3 = PC Paintbrush 2.8 w/o palette, 4 = PC Paintbrush for Windows, 5 = PC
          * Paintbrush >= 3.0.
          */
         public final int version;
+
         /** Encoding: 0 = very old uncompressed format, 1 = .pcx run length encoding. */
         public final int encoding;
+
         /** Bits ***PER PLANE*** for each pixel. */
         public final int bitsPerPixel;
+
         /** Window xMin. */
         public final int xMin;
+
         /** Window yMin. */
         public final int yMin;
+
         /** Window xMax. */
         public final int xMax;
+
         /** Window yMax. */
         public final int yMax;
+
         /** Horizontal dpi. */
         public final int hDpi;
+
         /** Vertical dpi. */
         public final int vDpi;
+
         /** Palette for <= 16 colors. */
         public final int[] colormap;
+
         /** Always 0. */
         public final int reserved;
+
         /** Number of color planes. */
         public final int nPlanes;
+
         /** Number of bytes per scanline plane, must be an even number. */
         public final int bytesPerLine;
+
         /** 1 = Color/BW, 2 = Grayscale, ignored in Paintbrush IV/IV+. */
         public final int paletteInfo;
+
         /** Horizontal screen size, in pixels. PaintBrush >= IV only. */
         public final int hScreenSize;
+
         /** Vertical screen size, in pixels. PaintBrush >= IV only. */
         public final int vScreenSize;
 

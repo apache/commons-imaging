@@ -104,7 +104,6 @@ public final class MicrosoftHdPhotoTagConstants {
     public static final BinaryConstant PIXEL_FORMAT_VALUE_32_BIT_CMYK = create((byte) 0x1c);
 
     /** Pixel format: 64-bit RGBA Fixed Point. */
-    /** Pixel format: 64-bit RGBA Fixed Point. */
     public static final BinaryConstant PIXEL_FORMAT_VALUE_64_BIT_RGBA_FIXED_POINT = create((byte) 0x1d);
 
     /** Pixel format: 128-bit RGBA Fixed Point. */

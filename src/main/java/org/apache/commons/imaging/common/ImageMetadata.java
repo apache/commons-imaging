@@ -22,6 +22,7 @@ import java.util.List;
  * Image metadata.
  */
 public interface ImageMetadata {
+
     /**
      * Represents a single metadata item.
      */

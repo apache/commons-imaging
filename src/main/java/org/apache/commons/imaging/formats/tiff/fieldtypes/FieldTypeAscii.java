@@ -28,6 +28,7 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
  * TIFF field type for ASCII strings.
  */
 public class FieldTypeAscii extends AbstractFieldType {
+
     /**
      * Constructs a new ASCII field type.
      *

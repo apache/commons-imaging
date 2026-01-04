@@ -57,6 +57,7 @@ public abstract class AbstractPngText {
      * Represents a simple text chunk (tEXt).
      */
     public static class Text extends AbstractPngText {
+
         /**
          * Constructs a tEXt chunk.
          *
@@ -72,6 +73,7 @@ public abstract class AbstractPngText {
      * Represents a compressed text chunk (zTXt).
      */
     public static class Ztxt extends AbstractPngText {
+
         /**
          * Constructs a zTXt chunk.
          *

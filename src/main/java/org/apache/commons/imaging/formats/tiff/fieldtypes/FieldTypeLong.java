@@ -27,6 +27,7 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
  * TIFF field type for 32-bit unsigned long values.
  */
 public class FieldTypeLong extends AbstractFieldType {
+
     /**
      * Constructs a new long field type.
      *

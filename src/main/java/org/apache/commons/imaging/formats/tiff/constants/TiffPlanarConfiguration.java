@@ -25,6 +25,7 @@ public enum TiffPlanarConfiguration {
      * Indicates that data is stored in an interleaved format, so that component values for each pixel are contiguous in the file.
      */
     CHUNKY(TiffTagConstants.PLANAR_CONFIGURATION_VALUE_CHUNKY),
+
     /**
      * Indicates that data is stored in a non-interleaved format, component values for each pixel are separated into distinct planes.
      */

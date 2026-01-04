@@ -28,6 +28,7 @@ public class PcxImagingParameters extends ImagingParameters<PcxImagingParameters
 
     private int bitDepth = -1;
     private int compression = PcxConstants.PCX_COMPRESSION_UNCOMPRESSED;
+
     /**
      * Constructs a new instance.
      */

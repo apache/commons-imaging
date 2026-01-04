@@ -25,6 +25,7 @@ import org.apache.commons.imaging.common.ImageBuilder;
  * Photometric interpreter for RGB color space images.
  */
 public class PhotometricInterpreterRgb extends AbstractPhotometricInterpreter {
+
     /**
      * Constructs a new RGB photometric interpreter.
      *

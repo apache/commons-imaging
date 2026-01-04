@@ -65,6 +65,7 @@ public abstract class AbstractTiffElement {
      * Represents a stub TIFF element with no specific data.
      */
     public static final class Stub extends AbstractTiffElement {
+
         /**
          * Constructs a new stub element.
          *

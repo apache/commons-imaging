@@ -31,30 +31,43 @@ public class IccProfileInfo {
     private static final Logger LOGGER = Logger.getLogger(IccProfileInfo.class.getName());
 
     private final byte[] data;
+
     /** The profile size in bytes. */
     public final int profileSize;
+
     /** The CMM type signature. */
     public final int cmmTypeSignature;
+
     /** The profile version. */
     public final int profileVersion;
+
     /** The profile/device class signature. */
     public final int profileDeviceClassSignature;
+
     /** The color space signature. */
     public final int colorSpace;
+
     /** The profile connection space signature. */
     public final int profileConnectionSpace;
+
     /** The profile file signature. */
     public final int profileFileSignature;
+
     /** The primary platform signature. */
     public final int primaryPlatformSignature;
+
     /** Various profile flags. */
     public final int variousFlags;
+
     /** The device manufacturer signature. */
     public final int deviceManufacturer;
+
     /** The device model signature. */
     public final int deviceModel;
+
     /** The rendering intent. */
     public final int renderingIntent;
+
     /** The profile creator signature. */
     public final int profileCreatorSignature;
     private final byte[] profileId;

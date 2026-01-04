@@ -20,6 +20,7 @@ package org.apache.commons.imaging.formats.jpeg.iptc;
  * IPTC metadata types.
  */
 public interface IptcType {
+
     /**
      * Gets the name of this IPTC type.
      *
