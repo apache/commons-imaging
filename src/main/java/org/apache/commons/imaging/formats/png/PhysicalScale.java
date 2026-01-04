@@ -26,10 +26,24 @@ public final class PhysicalScale {
     /** Undefined physical scale. */
     public static final PhysicalScale UNDEFINED = createFromMeters(-1.0, -1.0);
 
+    /**
+     * Creates a physical scale from meters.
+     *
+     * @param x horizontal units per pixel in meters.
+     * @param y vertical units per pixel in meters.
+     * @return the physical scale.
+     */
     public static PhysicalScale createFromMeters(final double x, final double y) {
         return new PhysicalScale(METER_UNITS, x, y);
     }
 
+    /**
+     * Creates a physical scale from radians.
+     *
+     * @param x horizontal units per pixel in radians.
+     * @param y vertical units per pixel in radians.
+     * @return the physical scale.
+     */
     public static PhysicalScale createFromRadians(final double x, final double y) {
         return new PhysicalScale(RADIAN_UNITS, x, y);
     }
@@ -46,18 +60,38 @@ public final class PhysicalScale {
         this.verticalUnitsPerPixel = verticalUnitsPerPixel;
     }
 
+    /**
+     * Gets the horizontal units per pixel.
+     *
+     * @return the horizontal units per pixel.
+     */
     public double getHorizontalUnitsPerPixel() {
         return horizontalUnitsPerPixel;
     }
 
+    /**
+     * Gets the vertical units per pixel.
+     *
+     * @return the vertical units per pixel.
+     */
     public double getVerticalUnitsPerPixel() {
         return verticalUnitsPerPixel;
     }
 
+    /**
+     * Checks if the units are in meters.
+     *
+     * @return true if units are in meters, false otherwise.
+     */
     public boolean isInMeters() {
         return METER_UNITS == units;
     }
 
+    /**
+     * Checks if the units are in radians.
+     *
+     * @return true if units are in radians, false otherwise.
+     */
     public boolean isInRadians() {
         return RADIAN_UNITS == units;
     }

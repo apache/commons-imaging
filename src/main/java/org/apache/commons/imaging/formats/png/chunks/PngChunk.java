@@ -78,10 +78,20 @@ public class PngChunk extends BinaryFileParser {
         return bytes.clone();
     }
 
+    /**
+     * Gets the chunk type.
+     *
+     * @return the chunk type.
+     */
     public int getChunkType() {
         return chunkType;
     }
 
+    /**
+     * Gets the CRC value.
+     *
+     * @return the CRC.
+     */
     public int getCrc() {
         return crc;
     }
@@ -99,6 +109,11 @@ public class PngChunk extends BinaryFileParser {
         return new ByteArrayInputStream(bytes);
     }
 
+    /**
+     * Gets the chunk length.
+     *
+     * @return the length.
+     */
     public int getLength() {
         return length;
     }
@@ -112,18 +127,38 @@ public class PngChunk extends BinaryFileParser {
         return propertyBits.clone();
     }
 
+    /**
+     * Checks if this is an ancillary chunk.
+     *
+     * @return true if ancillary, false otherwise.
+     */
     public boolean isAncillary() {
         return ancillary;
     }
 
+    /**
+     * Checks if this is a private chunk.
+     *
+     * @return true if private, false otherwise.
+     */
     public boolean isPrivate() {
         return isPrivate;
     }
 
+    /**
+     * Checks if this chunk is reserved.
+     *
+     * @return true if reserved, false otherwise.
+     */
     public boolean isReserved() {
         return reserved;
     }
 
+    /**
+     * Checks if this chunk is safe to copy.
+     *
+     * @return true if safe to copy, false otherwise.
+     */
     public boolean isSafeToCopy() {
         return safeToCopy;
     }

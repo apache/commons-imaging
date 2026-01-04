@@ -21,10 +21,22 @@ import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+/**
+ * PNG gAMA chunk with image gamma.
+ */
 public final class PngChunkGama extends PngChunk {
 
     private final int gamma;
 
+    /**
+     * Constructs a PNG gAMA chunk.
+     *
+     * @param length the chunk length.
+     * @param chunkType the chunk type.
+     * @param crc the CRC.
+     * @param bytes the chunk bytes.
+     * @throws IOException if an I/O error occurs.
+     */
     public PngChunkGama(final int length, final int chunkType, final int crc, final byte[] bytes) throws IOException {
         super(length, chunkType, crc, bytes);
 
@@ -32,6 +44,11 @@ public final class PngChunkGama extends PngChunk {
         gamma = read4Bytes("Gamma", is, "Not a Valid PNG File: gAMA Corrupt", getByteOrder());
     }
 
+    /**
+     * Gets the gamma value.
+     *
+     * @return the gamma value.
+     */
     public double getGamma() {
         return 1.0 / (gamma / 100000.0);
     }
