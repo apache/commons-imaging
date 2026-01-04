@@ -26,18 +26,18 @@ import org.apache.commons.imaging.ImagingException;
  * Median cut implementation that cuts along the longest axis.
  */
 public class LongestAxisMedianCut implements MedianCut {
-    /**
-     * Constructs a new instance.
-     */
-    public LongestAxisMedianCut() {
-    }
-
     private static final Comparator<ColorGroup> COMPARATOR = (cg1, cg2) -> {
         if (cg1.maxDiff == cg2.maxDiff) {
             return cg2.diffTotal - cg1.diffTotal;
         }
         return cg2.maxDiff - cg1.maxDiff;
     };
+
+    /**
+     * Constructs a new instance.
+     */
+    public LongestAxisMedianCut() {
+    }
 
     private void doCut(final ColorGroup colorGroup, final ColorComponent mode, final List<ColorGroup> colorGroups, final boolean ignoreAlpha)
             throws ImagingException {

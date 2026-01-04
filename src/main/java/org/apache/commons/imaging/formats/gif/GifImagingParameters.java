@@ -27,12 +27,6 @@ import org.apache.commons.imaging.common.XmpImagingParameters;
 public class GifImagingParameters extends XmpImagingParameters<GifImagingParameters> {
 
     /**
-     * Constructs a new instance.
-     */
-    public GifImagingParameters() {
-    }
-
-    /**
      * Gets whether to stop reading before image data from the parameters.
      *
      * @param params the parameters.
@@ -43,6 +37,12 @@ public class GifImagingParameters extends XmpImagingParameters<GifImagingParamet
     }
 
     private boolean stopReadingBeforeImageData;
+
+    /**
+     * Constructs a new instance.
+     */
+    public GifImagingParameters() {
+    }
 
     /**
      * Gets whether to stop reading before image data.

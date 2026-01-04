@@ -24,15 +24,15 @@ import org.apache.commons.imaging.ImagingParameters;
  */
 public class PcxImagingParameters extends ImagingParameters<PcxImagingParameters> {
 
+    private int planes = -1;
+
+    private int bitDepth = -1;
+    private int compression = PcxConstants.PCX_COMPRESSION_UNCOMPRESSED;
     /**
      * Constructs a new instance.
      */
     public PcxImagingParameters() {
     }
-
-    private int planes = -1;
-    private int bitDepth = -1;
-    private int compression = PcxConstants.PCX_COMPRESSION_UNCOMPRESSED;
 
     /**
      * Gets the bit depth.
