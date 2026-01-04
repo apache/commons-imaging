@@ -14,7 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/****************************************************************
+
+/**
  * Explanation of Use and Rationale For Procedures
  *
  * This class is intended to serve as a "test stand" for loading
