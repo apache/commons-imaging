@@ -22,6 +22,8 @@ package org.apache.commons.imaging.formats.png;
 public final class PhysicalScale {
     private static final int METER_UNITS = 1;
     private static final int RADIAN_UNITS = 2;
+
+    /** Undefined physical scale. */
     public static final PhysicalScale UNDEFINED = createFromMeters(-1.0, -1.0);
 
     public static PhysicalScale createFromMeters(final double x, final double y) {

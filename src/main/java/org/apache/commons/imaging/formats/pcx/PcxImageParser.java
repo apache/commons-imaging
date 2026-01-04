@@ -49,6 +49,9 @@ import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ImageMetadata;
 
+/**
+ * Parses PCX (PC Paintbrush) images.
+ */
 public class PcxImageParser extends AbstractImageParser<PcxImagingParameters> {
     // ZSoft's official spec is at [BROKEN URL] http://www.qzx.com/pc-gpe/pcx.txt
     // (among other places) but it's pretty thin. The fileformat.fine document
@@ -68,32 +71,43 @@ public class PcxImageParser extends AbstractImageParser<PcxImagingParameters> {
         public static final int ENCODING_RLE = 1;
         public static final int PALETTE_INFO_COLOR = 1;
         public static final int PALETTE_INFO_GRAYSCALE = 2;
-        public final int manufacturer; // Always 10 = ZSoft .pcx
-        public final int version; // 0 = PC Paintbrush 2.5
-                                  // 2 = PC Paintbrush 2.8 with palette
-                                  // 3 = PC Paintbrush 2.8 w/o palette
-                                  // 4 = PC Paintbrush for Windows
-                                  // 5 = PC Paintbrush >= 3.0
-        public final int encoding; // 0 = very old uncompressed format, 1 = .pcx
-                                   // run length encoding
-        public final int bitsPerPixel; // Bits ***PER PLANE*** for each pixel
-        public final int xMin; // window
+        /** Always 10 = ZSoft .pcx. */
+        public final int manufacturer;
+        /**
+         * Version: 0 = PC Paintbrush 2.5, 2 = PC Paintbrush 2.8 with palette, 3 = PC Paintbrush 2.8 w/o palette, 4 = PC Paintbrush for Windows, 5 = PC
+         * Paintbrush >= 3.0.
+         */
+        public final int version;
+        /** Encoding: 0 = very old uncompressed format, 1 = .pcx run length encoding. */
+        public final int encoding;
+        /** Bits ***PER PLANE*** for each pixel. */
+        public final int bitsPerPixel;
+        /** Window xMin. */
+        public final int xMin;
+        /** Window yMin. */
         public final int yMin;
+        /** Window xMax. */
         public final int xMax;
+        /** Window yMax. */
         public final int yMax;
-        public final int hDpi; // horizontal dpi
-        public final int vDpi; // vertical dpi
-        public final int[] colormap; // palette for <= 16 colors
-        public final int reserved; // Always 0
-        public final int nPlanes; // Number of color planes
-        public final int bytesPerLine; // Number of bytes per scanline plane,
-                                       // must be an even number.
-        public final int paletteInfo; // 1 = Color/BW, 2 = Grayscale, ignored in
-                                      // Paintbrush IV/IV+
-        public final int hScreenSize; // horizontal screen size, in pixels.
-                                      // PaintBrush >= IV only.
-        public final int vScreenSize; // vertical screen size, in pixels.
-                                      // PaintBrush >= IV only.
+        /** Horizontal dpi. */
+        public final int hDpi;
+        /** Vertical dpi. */
+        public final int vDpi;
+        /** Palette for <= 16 colors. */
+        public final int[] colormap;
+        /** Always 0. */
+        public final int reserved;
+        /** Number of color planes. */
+        public final int nPlanes;
+        /** Number of bytes per scanline plane, must be an even number. */
+        public final int bytesPerLine;
+        /** 1 = Color/BW, 2 = Grayscale, ignored in Paintbrush IV/IV+. */
+        public final int paletteInfo;
+        /** Horizontal screen size, in pixels. PaintBrush >= IV only. */
+        public final int hScreenSize;
+        /** Vertical screen size, in pixels. PaintBrush >= IV only. */
+        public final int vScreenSize;
 
         PcxHeader(final int manufacturer, final int version, final int encoding, final int bitsPerPixel, final int xMin, final int yMin, final int xMax,
                 final int yMax, final int hDpi, final int vDpi, final int[] colormap, final int reserved, final int nPlanes, final int bytesPerLine,

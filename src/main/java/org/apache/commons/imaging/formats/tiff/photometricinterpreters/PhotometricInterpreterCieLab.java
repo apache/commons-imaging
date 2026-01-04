@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.imaging.formats.tiff.photometricinterpreters;
 
 import java.io.IOException;
@@ -22,7 +23,20 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.color.ColorConversions;
 import org.apache.commons.imaging.common.ImageBuilder;
 
+/**
+ * Photometric interpreter for CIE L*a*b* color space images.
+ */
 public class PhotometricInterpreterCieLab extends AbstractPhotometricInterpreter {
+
+    /**
+     * Constructs a new CIE L*a*b* photometric interpreter.
+     *
+     * @param samplesPerPixel the samples per pixel.
+     * @param bitsPerSample   the bits per sample.
+     * @param predictor       the predictor.
+     * @param width           the image width.
+     * @param height          the image height.
+     */
     public PhotometricInterpreterCieLab(final int samplesPerPixel, final int[] bitsPerSample, final int predictor, final int width, final int height) {
         super(samplesPerPixel, bitsPerSample, predictor, width, height);
     }
@@ -32,9 +46,7 @@ public class PhotometricInterpreterCieLab extends AbstractPhotometricInterpreter
         final int cieL = samples[0];
         final int cieA = (byte) samples[1];
         final int cieB = (byte) samples[2];
-
         final int rgb = ColorConversions.convertCieLabToArgbTest(cieL, cieA, cieB);
         imageBuilder.setRgb(x, y, rgb);
     }
-
 }

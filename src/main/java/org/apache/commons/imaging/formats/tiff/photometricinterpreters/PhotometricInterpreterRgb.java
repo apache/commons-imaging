@@ -21,7 +21,19 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
+/**
+ * Photometric interpreter for RGB color space images.
+ */
 public class PhotometricInterpreterRgb extends AbstractPhotometricInterpreter {
+    /**
+     * Constructs a new RGB photometric interpreter.
+     *
+     * @param samplesPerPixel the samples per pixel.
+     * @param bitsPerSample the bits per sample.
+     * @param predictor the predictor.
+     * @param width the image width.
+     * @param height the image height.
+     */
     public PhotometricInterpreterRgb(final int samplesPerPixel, final int[] bitsPerSample, final int predictor, final int width, final int height) {
         super(samplesPerPixel, bitsPerSample, predictor, width, height);
     }

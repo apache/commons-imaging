@@ -49,8 +49,21 @@ public class PaletteFactory {
 
     private static final Logger LOGGER = Logger.getLogger(PaletteFactory.class.getName());
 
+    /** Number of color components (in bits). */
     public static final int COMPONENTS = 3; // in bits
 
+    /**
+     * Constructs a new instance.
+     */
+    public PaletteFactory() {
+    }
+
+    /**
+     * Counts the number of distinct transparent colors in an image.
+     *
+     * @param src the source image.
+     * @return 0 if no transparent colors, 1 if one transparent color, 2 if more than one.
+     */
     public int countTransparentColors(final BufferedImage src) {
         final ColorModel cm = src.getColorModel();
         if (!cm.hasAlpha()) {
@@ -82,6 +95,12 @@ public class PaletteFactory {
         return 1;
     }
 
+    /**
+     * Counts the number of distinct transparent colors in an RGB array.
+     *
+     * @param rgbs the RGB values.
+     * @return 0 if no transparent colors, 1 if one transparent color, 2 if more than one.
+     */
     public int countTrasparentColors(final int[] rgbs) {
         int first = -1;
 
@@ -272,10 +291,23 @@ public class PaletteFactory {
         return sum;
     }
 
+    /**
+     * Checks if the image has transparency.
+     *
+     * @param src the source image.
+     * @return true if the image has any transparency, false otherwise.
+     */
     public boolean hasTransparency(final BufferedImage src) {
         return hasTransparency(src, 255);
     }
 
+    /**
+     * Checks if the image has transparency below a threshold.
+     *
+     * @param src the source image.
+     * @param threshold the alpha threshold (0-255).
+     * @return true if any pixel has alpha below threshold, false otherwise.
+     */
     public boolean hasTransparency(final BufferedImage src, final int threshold) {
         final int width = src.getWidth();
         final int height = src.getHeight();
@@ -296,6 +328,12 @@ public class PaletteFactory {
         return false;
     }
 
+    /**
+     * Checks if the image is grayscale.
+     *
+     * @param src the source image.
+     * @return true if the image is grayscale, false otherwise.
+     */
     public boolean isGrayscale(final BufferedImage src) {
         final int width = src.getWidth();
         final int height = src.getHeight();

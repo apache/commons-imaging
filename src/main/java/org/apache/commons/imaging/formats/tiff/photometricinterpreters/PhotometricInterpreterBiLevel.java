@@ -21,11 +21,24 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
+/**
+ * Photometric interpreter for bi-level (black and white) images.
+ */
 public class PhotometricInterpreterBiLevel extends AbstractPhotometricInterpreter {
     private final boolean invert;
 
     // private final int bitsPerPixel;
 
+    /**
+     * Constructs a new bi-level photometric interpreter.
+     *
+     * @param samplesPerPixel the samples per pixel.
+     * @param bitsPerSample the bits per sample.
+     * @param predictor the predictor.
+     * @param width the image width.
+     * @param height the image height.
+     * @param invert whether to invert the colors.
+     */
     public PhotometricInterpreterBiLevel(final int samplesPerPixel, final int[] bitsPerSample, final int predictor, final int width, final int height,
             final boolean invert) {
         super(samplesPerPixel, bitsPerSample, predictor, width, height);

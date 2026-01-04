@@ -24,32 +24,71 @@ import org.apache.commons.imaging.ImagingParameters;
  */
 public class PcxImagingParameters extends ImagingParameters<PcxImagingParameters> {
 
+    /**
+     * Constructs a new instance.
+     */
+    public PcxImagingParameters() {
+    }
+
     private int planes = -1;
     private int bitDepth = -1;
     private int compression = PcxConstants.PCX_COMPRESSION_UNCOMPRESSED;
 
+    /**
+     * Gets the bit depth.
+     *
+     * @return the bit depth.
+     */
     public int getBitDepth() {
         return bitDepth;
     }
 
+    /**
+     * Gets the compression type.
+     *
+     * @return the compression type.
+     */
     public int getCompression() {
         return compression;
     }
 
+    /**
+     * Gets the number of planes.
+     *
+     * @return the number of planes.
+     */
     public int getPlanes() {
         return planes;
     }
 
+    /**
+     * Sets the bit depth.
+     *
+     * @param bitDepth the bit depth.
+     * @return this instance.
+     */
     public PcxImagingParameters setBitDepth(final int bitDepth) {
         this.bitDepth = bitDepth;
         return asThis();
     }
 
+    /**
+     * Sets the compression type.
+     *
+     * @param compression the compression type.
+     * @return this instance.
+     */
     public PcxImagingParameters setCompression(final int compression) {
         this.compression = compression;
         return asThis();
     }
 
+    /**
+     * Sets the number of planes.
+     *
+     * @param planes the number of planes.
+     * @return this instance.
+     */
     public PcxImagingParameters setPlanes(final int planes) {
         this.planes = planes;
         return asThis();

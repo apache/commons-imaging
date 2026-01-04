@@ -25,6 +25,9 @@ import org.apache.commons.imaging.common.AllocationRequestException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.ImageBuilder;
 
+/**
+ * Photometric interpreter for palette-based (indexed color) images.
+ */
 public final class PhotometricInterpreterPalette extends AbstractPhotometricInterpreter {
 
     /**

@@ -12,10 +12,18 @@
  *  limitations under the License.
  *  under the License.
  */
+
 package org.apache.commons.imaging.formats.pcx;
 
+/**
+ * PCX format constants.
+ */
 public final class PcxConstants {
+
+    /** PCX compression: Uncompressed. */
     public static final int PCX_COMPRESSION_UNCOMPRESSED = 0;
+
+    /** PCX compression: RLE (Run-Length Encoding). */
     public static final int PCX_COMPRESSION_RLE = 1;
 
     private PcxConstants() {

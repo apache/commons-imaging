@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.imaging.formats.tiff.photometricinterpreters;
 
 import java.io.IOException;
@@ -22,21 +23,31 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.color.ColorConversions;
 import org.apache.commons.imaging.common.ImageBuilder;
 
+/**
+ * Photometric interpreter for CMYK color space images.
+ */
 public class PhotometricInterpreterCmyk extends AbstractPhotometricInterpreter {
+
+    /**
+     * Constructs a new CMYK photometric interpreter.
+     *
+     * @param samplesPerPixel the samples per pixel.
+     * @param bitsPerSample   the bits per sample.
+     * @param predictor       the predictor.
+     * @param width           the image width.
+     * @param height          the image height.
+     */
     public PhotometricInterpreterCmyk(final int samplesPerPixel, final int[] bitsPerSample, final int predictor, final int width, final int height) {
         super(samplesPerPixel, bitsPerSample, predictor, width, height);
     }
 
     @Override
     public void interpretPixel(final ImageBuilder imageBuilder, final int[] samples, final int x, final int y) throws ImagingException, IOException {
-
         final int sc = samples[0];
         final int sm = samples[1];
         final int sy = samples[2];
         final int sk = samples[3];
-
         final int rgb = ColorConversions.convertCmykToRgb(sc, sm, sy, sk);
         imageBuilder.setRgb(x, y, rgb);
     }
-
 }

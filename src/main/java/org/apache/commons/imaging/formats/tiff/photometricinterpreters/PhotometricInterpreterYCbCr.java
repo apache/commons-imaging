@@ -21,6 +21,9 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
+/**
+ * Photometric interpreter for YCbCr (YUV) color space images.
+ */
 public class PhotometricInterpreterYCbCr extends AbstractPhotometricInterpreter {
 
     /**
@@ -47,10 +50,27 @@ public class PhotometricInterpreterYCbCr extends AbstractPhotometricInterpreter 
         return alpha << 24 | r << 16 | g << 8 | b << 0;
     }
 
+    /**
+     * Limits a value to a specified range.
+     *
+     * @param value the value to limit.
+     * @param min the minimum value.
+     * @param max the maximum value.
+     * @return the limited value.
+     */
     public static int limit(final int value, final int min, final int max) {
         return Math.min(max, Math.max(min, value));
     }
 
+    /**
+     * Constructs a new YCbCr photometric interpreter.
+     *
+     * @param samplesPerPixel the samples per pixel.
+     * @param bitsPerSample the bits per sample.
+     * @param predictor the predictor.
+     * @param width the image width.
+     * @param height the image height.
+     */
     public PhotometricInterpreterYCbCr(final int samplesPerPixel, final int[] bitsPerSample, final int predictor, final int width, final int height) {
         super(samplesPerPixel, bitsPerSample, predictor, width, height);
     }

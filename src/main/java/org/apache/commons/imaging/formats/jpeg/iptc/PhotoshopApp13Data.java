@@ -21,21 +21,42 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Photoshop APP13 segment data containing IPTC records and blocks.
+ */
 public class PhotoshopApp13Data {
     private final boolean forceUtf8Encoding;
     private final List<IptcRecord> records;
     private final List<IptcBlock> rawBlocks;
 
+    /**
+     * Constructs Photoshop APP13 data.
+     *
+     * @param records the IPTC records.
+     * @param rawBlocks the raw IPTC blocks.
+     */
     public PhotoshopApp13Data(final List<IptcRecord> records, final List<IptcBlock> rawBlocks) {
         this(records, rawBlocks, false);
     }
 
+    /**
+     * Constructs Photoshop APP13 data.
+     *
+     * @param records the IPTC records.
+     * @param rawBlocks the raw IPTC blocks.
+     * @param forceUtf8Encoding whether to force UTF-8 encoding.
+     */
     public PhotoshopApp13Data(final List<IptcRecord> records, final List<IptcBlock> rawBlocks, final boolean forceUtf8Encoding) {
         this.rawBlocks = rawBlocks == null ? Collections.emptyList() : Collections.unmodifiableList(rawBlocks);
         this.records = records == null ? Collections.emptyList() : Collections.unmodifiableList(records);
         this.forceUtf8Encoding = forceUtf8Encoding;
     }
 
+    /**
+     * Gets the non-IPTC blocks.
+     *
+     * @return list of non-IPTC blocks.
+     */
     public List<IptcBlock> getNonIptcBlocks() {
         final List<IptcBlock> result = new ArrayList<>();
         for (final IptcBlock block : rawBlocks) {
@@ -46,14 +67,29 @@ public class PhotoshopApp13Data {
         return result;
     }
 
+    /**
+     * Gets the raw IPTC blocks.
+     *
+     * @return list of raw blocks.
+     */
     public List<IptcBlock> getRawBlocks() {
         return new ArrayList<>(rawBlocks);
     }
 
+    /**
+     * Gets the IPTC records.
+     *
+     * @return list of IPTC records.
+     */
     public List<IptcRecord> getRecords() {
         return new ArrayList<>(records);
     }
 
+    /**
+     * Checks if UTF-8 encoding is forced.
+     *
+     * @return true if UTF-8 encoding is forced, false otherwise.
+     */
     public boolean isForceUtf8Encoding() {
         return forceUtf8Encoding;
     }

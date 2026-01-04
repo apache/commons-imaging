@@ -97,6 +97,15 @@ public class MedianCutQuantizer {
         return colorMap;
     }
 
+    /**
+     * Processes an image to create a palette using median cut quantization.
+     *
+     * @param image the image to process.
+     * @param maxColors the maximum number of colors in the palette.
+     * @param medianCut the median cut algorithm to use.
+     * @return the generated palette.
+     * @throws ImagingException if an imaging error occurs.
+     */
     public Palette process(final BufferedImage image, final int maxColors, final MedianCut medianCut) throws ImagingException {
         final Map<Integer, ColorCount> colorMap = groupColors(image, maxColors);
 
