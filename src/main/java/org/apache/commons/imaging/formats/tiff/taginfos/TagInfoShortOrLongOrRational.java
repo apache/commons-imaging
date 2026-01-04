@@ -23,19 +23,52 @@ import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
+/**
+ * Tag info for short or long or rational field type.
+ */
 public class TagInfoShortOrLongOrRational extends TagInfo {
+
+    /**
+     * Constructs a new instance.
+     *
+     * @param name the tag name.
+     * @param tag the tag number.
+     * @param length the length.
+     * @param directoryType the directory type.
+     */
     public TagInfoShortOrLongOrRational(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
         super(name, tag, AbstractFieldType.SHORT_OR_LONG_OR_RATIONAL, length, directoryType);
     }
 
+    /**
+     * Encodes int values.
+     *
+     * @param byteOrder the byte order.
+     * @param values the values.
+     * @return the encoded bytes.
+     */
     public byte[] encodeValue(final ByteOrder byteOrder, final int... values) {
         return ByteConversions.toBytes(values, byteOrder);
     }
 
+    /**
+     * Encodes rational values.
+     *
+     * @param byteOrder the byte order.
+     * @param values the values.
+     * @return the encoded bytes.
+     */
     public byte[] encodeValue(final ByteOrder byteOrder, final RationalNumber... values) {
         return ByteConversions.toBytes(values, byteOrder);
     }
 
+    /**
+     * Encodes short values.
+     *
+     * @param byteOrder the byte order.
+     * @param values the values.
+     * @return the encoded bytes.
+     */
     public byte[] encodeValue(final ByteOrder byteOrder, final short... values) {
         return ByteConversions.toBytes(values, byteOrder);
     }

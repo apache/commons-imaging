@@ -21,11 +21,29 @@ import java.nio.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
+/**
+ * Tag info for signed byte field type.
+ */
 public class TagInfoSByte extends TagInfo {
+
+    /**
+     * Constructs a new instance.
+     *
+     * @param name the tag name.
+     * @param tag the tag number.
+     * @param directoryType the directory type.
+     */
     public TagInfoSByte(final String name, final int tag, final TiffDirectoryType directoryType) {
         super(name, tag, AbstractFieldType.SBYTE, 1, directoryType);
     }
 
+    /**
+     * Encodes a value.
+     *
+     * @param byteOrder the byte order.
+     * @param value the value.
+     * @return the encoded bytes.
+     */
     public byte[] encodeValue(final ByteOrder byteOrder, final byte value) {
         return new byte[] { value };
     }

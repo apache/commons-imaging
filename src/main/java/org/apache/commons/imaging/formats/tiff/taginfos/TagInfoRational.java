@@ -23,15 +23,40 @@ import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
+/**
+ * Tag info for rational field type.
+ */
 public class TagInfoRational extends TagInfo {
+
+    /**
+     * Constructs a new instance.
+     *
+     * @param name the tag name.
+     * @param tag the tag number.
+     * @param directoryType the directory type.
+     */
     public TagInfoRational(final String name, final int tag, final TiffDirectoryType directoryType) {
         super(name, tag, AbstractFieldType.RATIONAL, 1, directoryType);
     }
 
+    /**
+     * Encodes a value.
+     *
+     * @param byteOrder the byte order.
+     * @param value the value.
+     * @return the encoded bytes.
+     */
     public byte[] encodeValue(final ByteOrder byteOrder, final RationalNumber value) {
         return ByteConversions.toBytes(value, byteOrder);
     }
 
+    /**
+     * Gets the value.
+     *
+     * @param byteOrder the byte order.
+     * @param bytes the bytes.
+     * @return the rational number value.
+     */
     public RationalNumber getValue(final ByteOrder byteOrder, final byte[] bytes) {
         return ByteConversions.toRational(bytes, byteOrder, true);
     }

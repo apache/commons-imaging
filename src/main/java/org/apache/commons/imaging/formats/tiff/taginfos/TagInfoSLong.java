@@ -22,15 +22,40 @@ import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
+/**
+ * Tag info for signed long field type.
+ */
 public class TagInfoSLong extends TagInfo {
+
+    /**
+     * Constructs a new instance.
+     *
+     * @param name the tag name.
+     * @param tag the tag number.
+     * @param directoryType the directory type.
+     */
     public TagInfoSLong(final String name, final int tag, final TiffDirectoryType directoryType) {
         super(name, tag, AbstractFieldType.SLONG, 1, directoryType);
     }
 
+    /**
+     * Encodes a value.
+     *
+     * @param byteOrder the byte order.
+     * @param value the value.
+     * @return the encoded bytes.
+     */
     public byte[] encodeValue(final ByteOrder byteOrder, final int value) {
         return ByteConversions.toBytes(value, byteOrder);
     }
 
+    /**
+     * Gets the value.
+     *
+     * @param byteOrder the byte order.
+     * @param bytes the bytes.
+     * @return the integer value.
+     */
     public int getValue(final ByteOrder byteOrder, final byte[] bytes) {
         return ByteConversions.toInt(bytes, byteOrder);
     }

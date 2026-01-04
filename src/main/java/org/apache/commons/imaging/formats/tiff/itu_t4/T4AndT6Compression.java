@@ -23,12 +23,19 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.formats.tiff.itu_t4.T4_T6_Tables.Entry;
 
+/**
+ * T4 and T6 compression implementation for TIFF.
+ */
 public final class T4AndT6Compression {
+
     private static final HuffmanTree<Integer> WHITE_RUN_LENGTHS = new HuffmanTree<>();
     private static final HuffmanTree<Integer> BLACK_RUN_LENGTHS = new HuffmanTree<>();
     private static final HuffmanTree<Entry> CONTROL_CODES = new HuffmanTree<>();
 
+    /** White color constant. */
     public static final int WHITE = 0;
+
+    /** Black color constant. */
     public static final int BLACK = 1;
 
     static {
@@ -165,6 +172,16 @@ public final class T4AndT6Compression {
         return a2;
     }
 
+    /**
+     * Compresses data using T4 1D compression.
+     *
+     * @param uncompressed the uncompressed data.
+     * @param width the image width.
+     * @param height the image height.
+     * @param hasFill whether to use fill bits.
+     * @return the compressed data.
+     * @throws ImagingException if an imaging error occurs.
+     */
     public static byte[] compressT4_1D(final byte[] uncompressed, final int width, final int height, final boolean hasFill) throws ImagingException {
         final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(new ByteArrayInputStream(uncompressed));
         try (BitArrayOutputStream outputStream = new BitArrayOutputStream()) {
@@ -194,6 +211,17 @@ public final class T4AndT6Compression {
         }
     }
 
+    /**
+     * Compresses data using T4 2D compression.
+     *
+     * @param uncompressed the uncompressed data.
+     * @param width the image width.
+     * @param height the image height.
+     * @param hasFill whether to use fill bits.
+     * @param parameterK the K parameter.
+     * @return the compressed data.
+     * @throws ImagingException if an imaging error occurs.
+     */
     public static byte[] compressT4_2D(final byte[] uncompressed, final int width, final int height, final boolean hasFill, final int parameterK)
             throws ImagingException {
         final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(new ByteArrayInputStream(uncompressed));
@@ -272,6 +300,15 @@ public final class T4AndT6Compression {
         return outputStream.toByteArray();
     }
 
+    /**
+     * Compresses data using T6 compression.
+     *
+     * @param uncompressed the uncompressed data.
+     * @param width the image width.
+     * @param height the image height.
+     * @return the compressed data.
+     * @throws ImagingException if an imaging error occurs.
+     */
     public static byte[] compressT6(final byte[] uncompressed, final int width, final int height) throws ImagingException {
         try (ByteArrayInputStream bais = new ByteArrayInputStream(uncompressed);
                 BitInputStreamFlexible inputStream = new BitInputStreamFlexible(bais)) {

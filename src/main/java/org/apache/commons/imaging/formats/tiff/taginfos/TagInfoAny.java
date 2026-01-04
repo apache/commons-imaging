@@ -19,7 +19,19 @@ package org.apache.commons.imaging.formats.tiff.taginfos;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
+/**
+ * Tag info for any field type.
+ */
 public class TagInfoAny extends TagInfo {
+
+    /**
+     * Constructs a new instance.
+     *
+     * @param name the tag name.
+     * @param tag the tag number.
+     * @param length the length.
+     * @param directoryType the directory type.
+     */
     public TagInfoAny(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
         super(name, tag, AbstractFieldType.ANY, length, directoryType);
     }

@@ -63,6 +63,13 @@ public final class TagInfoGpsText extends TagInfo {
             TEXT_ENCODING_UNDEFINED, //
     };
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param name the tag name.
+     * @param tag the tag number.
+     * @param exifDirectory the EXIF directory.
+     */
     public TagInfoGpsText(final String name, final int tag, final TiffDirectoryType exifDirectory) {
         super(name, tag, AbstractFieldType.UNDEFINED, LENGTH_UNKNOWN, exifDirectory);
     }

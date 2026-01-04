@@ -22,15 +22,41 @@ import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
+/**
+ * Tag info for shorts (array) field type.
+ */
 public class TagInfoShorts extends TagInfo {
+
+    /**
+     * Constructs a new instance.
+     *
+     * @param name the tag name.
+     * @param tag the tag number.
+     * @param length the length.
+     * @param directoryType the directory type.
+     */
     public TagInfoShorts(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
         super(name, tag, AbstractFieldType.SHORT, length, directoryType);
     }
 
+    /**
+     * Encodes values.
+     *
+     * @param byteOrder the byte order.
+     * @param values the values.
+     * @return the encoded bytes.
+     */
     public byte[] encodeValue(final ByteOrder byteOrder, final short... values) {
         return ByteConversions.toBytes(values, byteOrder);
     }
 
+    /**
+     * Gets the values.
+     *
+     * @param byteOrder the byte order.
+     * @param bytes the bytes.
+     * @return the short array values.
+     */
     public short[] getValue(final ByteOrder byteOrder, final byte[] bytes) {
         return ByteConversions.toShorts(bytes, byteOrder);
     }

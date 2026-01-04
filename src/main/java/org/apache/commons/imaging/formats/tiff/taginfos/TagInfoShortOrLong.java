@@ -22,19 +22,54 @@ import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
+/**
+ * Tag info for short or long field type.
+ */
 public class TagInfoShortOrLong extends TagInfo {
+
+    /**
+     * Constructs a new instance.
+     *
+     * @param name the tag name.
+     * @param tag the tag number.
+     * @param length the length.
+     * @param directoryType the directory type.
+     */
     public TagInfoShortOrLong(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
         super(name, tag, AbstractFieldType.SHORT_OR_LONG, length, directoryType, false);
     }
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param name the tag name.
+     * @param tag the tag number.
+     * @param length the length.
+     * @param directoryType the directory type.
+     * @param isOffset whether this is an offset tag.
+     */
     public TagInfoShortOrLong(final String name, final int tag, final int length, final TiffDirectoryType directoryType, final boolean isOffset) {
         super(name, tag, AbstractFieldType.SHORT_OR_LONG, length, directoryType, isOffset);
     }
 
+    /**
+     * Encodes int values.
+     *
+     * @param byteOrder the byte order.
+     * @param values the values.
+     * @return the encoded bytes.
+     */
     public byte[] encodeValue(final ByteOrder byteOrder, final int... values) {
         return ByteConversions.toBytes(values, byteOrder);
     }
 
+    /**
+     * Encodes short values.
+     *
+     * @param byteOrder the byte order.
+     * @param values the values.
+     * @return the encoded bytes.
+     */
     public byte[] encodeValue(final ByteOrder byteOrder, final short... values) {
         return ByteConversions.toBytes(values, byteOrder);
     }

@@ -29,6 +29,9 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
+/**
+ * JPEG SOFn (Start of Frame) segment.
+ */
 public final class SofnSegment extends AbstractSegment {
 
     /**
@@ -95,6 +98,15 @@ public final class SofnSegment extends AbstractSegment {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
+    /**
+     * Constructs a SOFn segment.
+     *
+     * @param marker the marker.
+     * @param markerLength the marker length.
+     * @param is the input stream.
+     * @throws IOException if an I/O error occurs.
+     * @throws ImagingException if an imaging error occurs.
+     */
     public SofnSegment(final int marker, final int markerLength, final InputStream is) throws IOException, ImagingException {
         super(marker, markerLength);
 

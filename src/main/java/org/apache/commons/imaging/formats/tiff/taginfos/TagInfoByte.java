@@ -22,19 +22,53 @@ import java.util.List;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
+/**
+ * Tag info for byte field type.
+ */
 public class TagInfoByte extends TagInfo {
+
+    /**
+     * Constructs a new instance.
+     *
+     * @param name the tag name.
+     * @param tag the tag number.
+     * @param abstractFieldType the field type.
+     * @param directoryType the directory type.
+     */
     public TagInfoByte(final String name, final int tag, final AbstractFieldType abstractFieldType, final TiffDirectoryType directoryType) {
         super(name, tag, abstractFieldType, 1, directoryType);
     }
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param name the tag name.
+     * @param tag the tag number.
+     * @param abstractFieldTypes the field types.
+     * @param directoryType the directory type.
+     */
     public TagInfoByte(final String name, final int tag, final List<AbstractFieldType> abstractFieldTypes, final TiffDirectoryType directoryType) {
         super(name, tag, abstractFieldTypes, 1, directoryType);
     }
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param name the tag name.
+     * @param tag the tag number.
+     * @param directoryType the directory type.
+     */
     public TagInfoByte(final String name, final int tag, final TiffDirectoryType directoryType) {
         super(name, tag, AbstractFieldType.BYTE, 1, directoryType);
     }
 
+    /**
+     * Encodes a value.
+     *
+     * @param byteOrder the byte order.
+     * @param value the value.
+     * @return the encoded bytes.
+     */
     public byte[] encodeValue(final ByteOrder byteOrder, final byte value) {
         return new byte[] { value };
     }

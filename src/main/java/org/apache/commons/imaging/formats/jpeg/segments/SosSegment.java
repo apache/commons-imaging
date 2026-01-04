@@ -26,6 +26,9 @@ import java.util.logging.Logger;
 
 import org.apache.commons.imaging.common.Allocator;
 
+/**
+ * JPEG SOS (Start of Scan) segment.
+ */
 public final class SosSegment extends AbstractSegment {
 
     /**
@@ -89,6 +92,14 @@ public final class SosSegment extends AbstractSegment {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
+    /**
+     * Constructs a SOS segment.
+     *
+     * @param marker the marker.
+     * @param markerLength the marker length.
+     * @param is the input stream.
+     * @throws IOException if an I/O error occurs.
+     */
     public SosSegment(final int marker, final int markerLength, final InputStream is) throws IOException {
         super(marker, markerLength);
 

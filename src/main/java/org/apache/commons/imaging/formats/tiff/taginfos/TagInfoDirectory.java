@@ -30,6 +30,13 @@ public class TagInfoDirectory extends TagInfoLong {
 
     private static final List<AbstractFieldType> fieldList = Collections.unmodifiableList(Arrays.asList(AbstractFieldType.LONG, AbstractFieldType.IFD));
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param name the tag name.
+     * @param tag the tag number.
+     * @param directoryType the directory type.
+     */
     public TagInfoDirectory(final String name, final int tag, final TiffDirectoryType directoryType) {
         super(name, tag, fieldList, 1, directoryType, true);
     }
