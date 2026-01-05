@@ -24,4 +24,11 @@ import org.apache.commons.imaging.common.XmpImagingParameters;
  * @since 1.0.0-alpha4
  */
 public class WebPImagingParameters extends XmpImagingParameters<WebPImagingParameters> {
+
+    /**
+     * Constructs a new instance.
+     */
+    public WebPImagingParameters() {
+        // Default constructor
+    }
 }

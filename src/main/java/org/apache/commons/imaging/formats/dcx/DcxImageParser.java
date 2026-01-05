@@ -41,7 +41,7 @@ import org.apache.commons.imaging.formats.pcx.PcxImageParser;
 import org.apache.commons.imaging.formats.pcx.PcxImagingParameters;
 
 /**
- * Parser for DCX (multi-page PCX) image format.
+ * Parses the DCX (multi-page PCX) image format.
  */
 public class DcxImageParser extends AbstractImageParser<PcxImagingParameters> {
     private static final class DcxHeader {

@@ -38,7 +38,7 @@ import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.ImageMetadata;
 
 /**
- * Parser for Radiance HDR images
+ * Parses Radiance HDR images.
  */
 public class RgbeImageParser extends AbstractImageParser<RgbeImagingParameters> {
 

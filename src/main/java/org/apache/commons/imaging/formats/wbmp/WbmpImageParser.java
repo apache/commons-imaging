@@ -40,7 +40,7 @@ import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.ImageMetadata;
 
 /**
- * Parser for Wireless Bitmap (WBMP) images.
+ * Parses Wireless Bitmap (WBMP) images.
  */
 public class WbmpImageParser extends AbstractImageParser<WbmpImagingParameters> {
 

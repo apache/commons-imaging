@@ -47,7 +47,7 @@ import org.apache.commons.imaging.common.BasicCParser;
 import org.apache.commons.imaging.common.ImageMetadata;
 
 /**
- * Parser for X BitMap (XBM) image format.
+ * Parses the X BitMap (XBM) image format.
  */
 public class XbmImageParser extends AbstractImageParser<XbmImagingParameters> {
 

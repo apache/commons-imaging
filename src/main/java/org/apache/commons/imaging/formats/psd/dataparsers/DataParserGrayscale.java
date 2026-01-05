@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.psd.dataparsers;
 import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
 /**
- * Parser for grayscale mode PSD image data.
+ * Parses grayscale mode PSD image data.
  */
 public class DataParserGrayscale extends AbstractDataParser {
 

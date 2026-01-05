@@ -52,7 +52,7 @@ import org.apache.commons.imaging.palette.SimplePalette;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * Parser for X PixMap (XPM) image format.
+ * Parses the X PixMap (XPM) image format.
  */
 public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
 

@@ -40,6 +40,14 @@ public class JpegRewriter extends BinaryFileParser {
      * Abstracts JFIF pieces.
      */
     protected abstract static class JFIFPiece {
+
+        /**
+         * Constructs a new instance.
+         */
+        protected JFIFPiece() {
+            // Default constructor
+        }
+
         @Override
         public String toString() {
             return "[" + this.getClass().getName() + "]";

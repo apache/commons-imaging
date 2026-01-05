@@ -41,7 +41,7 @@ import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.palette.PaletteFactory;
 
 /**
- * Parser for PNM (Portable aNyMap) image format.
+ * Parses the PNM (Portable aNyMap) image format.
  */
 public class PnmImageParser extends AbstractImageParser<PnmImagingParameters> {
 

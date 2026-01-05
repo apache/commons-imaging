@@ -44,7 +44,7 @@ import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.internal.Debug;
 
 /**
- * Parser for IPTC (International Press Telecommunications Council) metadata in JPEG images.
+ * Parses IPTC (International Press Telecommunications Council) metadata in JPEG images.
  */
 public class IptcParser extends BinaryFileParser {
 

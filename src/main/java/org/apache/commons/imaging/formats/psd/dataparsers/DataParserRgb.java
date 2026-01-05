@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.psd.dataparsers;
 import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
 /**
- * Parser for RGB color mode PSD image data.
+ * Parses RGB color mode PSD image data.
  */
 public class DataParserRgb extends AbstractDataParser {
 

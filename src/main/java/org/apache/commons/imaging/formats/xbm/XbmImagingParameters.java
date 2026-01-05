@@ -23,5 +23,11 @@ import org.apache.commons.imaging.ImagingParameters;
  * @since 1.0-alpha3
  */
 public class XbmImagingParameters extends ImagingParameters<XbmImagingParameters> {
-    // empty
+
+    /**
+     * Constructs a new instance.
+     */
+    public XbmImagingParameters() {
+        // Default constructor
+    }
 }

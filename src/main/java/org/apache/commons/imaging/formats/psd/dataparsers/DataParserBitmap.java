@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.psd.dataparsers;
 import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
 /**
- * Parser for bitmap mode PSD image data.
+ * Parses bitmap mode PSD image data.
  */
 public class DataParserBitmap extends AbstractDataParser {
 

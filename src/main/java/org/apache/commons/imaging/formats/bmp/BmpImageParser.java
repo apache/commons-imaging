@@ -49,7 +49,7 @@ import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 
 /**
- * Parser for BMP (Windows Bitmap) image format.
+ * Parses the BMP (Windows Bitmap) image format.
  */
 public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
 

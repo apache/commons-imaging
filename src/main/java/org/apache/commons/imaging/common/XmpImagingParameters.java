@@ -27,6 +27,13 @@ import org.apache.commons.imaging.ImagingParameters;
  */
 public class XmpImagingParameters<E extends XmpImagingParameters<E>> extends ImagingParameters<E> {
 
+    /**
+     * Constructs a new instance.
+     */
+    public XmpImagingParameters() {
+        // Default constructor
+    }
+
     private String xmpXml;
 
     /**

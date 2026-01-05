@@ -20,7 +20,7 @@ import org.apache.commons.imaging.color.ColorConversions;
 import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
 /**
- * Parser for CMYK mode PSD image data.
+ * Parses CMYK mode PSD image data.
  */
 public class DataParserCmyk extends AbstractDataParser {
 

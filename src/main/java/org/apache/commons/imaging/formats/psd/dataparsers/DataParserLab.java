@@ -20,7 +20,7 @@ import org.apache.commons.imaging.color.ColorConversions;
 import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
 /**
- * Parser for Lab color mode PSD image data.
+ * Parses Lab color mode PSD image data.
  */
 public class DataParserLab extends AbstractDataParser {
 

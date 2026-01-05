@@ -38,7 +38,7 @@ import org.apache.commons.imaging.common.AbstractBinaryOutputStream;
 import org.apache.commons.imaging.common.ImageMetadata;
 
 /**
- * Parser for Apple Icon Image (.icns) format.
+ * Parses the Apple Icon Image (.icns) format.
  */
 public class IcnsImageParser extends AbstractImageParser<IcnsImagingParameters> {
     private static final class IcnsContents {
