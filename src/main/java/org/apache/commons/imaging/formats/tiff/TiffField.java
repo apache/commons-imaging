@@ -41,7 +41,17 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
  */
 public class TiffField {
 
+    /**
+     * Represents an oversized field value that is stored outside the IFD entry.
+     */
     public final class OversizeValueElement extends AbstractTiffElement {
+
+        /**
+         * Constructs a new instance.
+         *
+         * @param offset the offset.
+         * @param length the length.
+         */
         public OversizeValueElement(final int offset, final int length) {
             super(offset, length);
         }
@@ -53,6 +63,7 @@ public class TiffField {
     }
 
     private static final Logger LOGGER = Logger.getLogger(TiffField.class.getName());
+
     private final TagInfo tagInfo;
     private final int tag;
     private final int directoryType;
@@ -61,9 +72,20 @@ public class TiffField {
     private final long offset;
     private final byte[] value;
     private final ByteOrder byteOrder;
-
     private final int sortHint;
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param tag the tag number.
+     * @param directoryType the directory type.
+     * @param abstractFieldType the field type.
+     * @param count the count.
+     * @param offset the offset.
+     * @param value the value bytes.
+     * @param byteOrder the byte order.
+     * @param sortHint the sort hint.
+     */
     public TiffField(final int tag, final int directoryType, final AbstractFieldType abstractFieldType, final long count, final long offset, final byte[] value,
             final ByteOrder byteOrder, final int sortHint) {
 
@@ -79,6 +101,9 @@ public class TiffField {
         tagInfo = TiffTags.getTag(directoryType, tag);
     }
 
+    /**
+     * Dumps field information to the logger.
+     */
     public void dump() {
         try (StringWriter sw = new StringWriter();
                 PrintWriter pw = new PrintWriter(sw)) {
@@ -91,10 +116,21 @@ public class TiffField {
         }
     }
 
+    /**
+     * Dumps field information to a PrintWriter.
+     *
+     * @param pw the PrintWriter.
+     */
     public void dump(final PrintWriter pw) {
         dump(pw, null);
     }
 
+    /**
+     * Dumps field information to a PrintWriter with an optional prefix.
+     *
+     * @param pw the PrintWriter.
+     * @param prefix the prefix string, or null.
+     */
     public void dump(final PrintWriter pw, final String prefix) {
         if (prefix != null) {
             pw.print(prefix + ": ");
@@ -105,7 +141,7 @@ public class TiffField {
     }
 
     /**
-     * Returns a copy of the raw value of the field.
+     * Gets a copy of the raw value of the field.
      *
      * @return the value of the field, in the byte order of the field.
      */
@@ -114,7 +150,7 @@ public class TiffField {
     }
 
     /**
-     * Returns the field's byte order.
+     * Gets the field's byte order.
      *
      * @return the byte order
      */
@@ -123,7 +159,7 @@ public class TiffField {
     }
 
     /**
-     * The length of the field's value.
+     * Gets the length of the field's value.
      *
      * @return the length, in bytes.
      */
@@ -132,7 +168,7 @@ public class TiffField {
     }
 
     /**
-     * Returns the field's count, derived from bytes 4-7.
+     * Gets the field's count, derived from bytes 4-7.
      *
      * @return the count
      */
@@ -140,14 +176,30 @@ public class TiffField {
         return count;
     }
 
+    /**
+     * Gets a description of this field without the value.
+     *
+     * @return the description.
+     */
     public String getDescriptionWithoutValue() {
         return getTag() + " (0x" + Integer.toHexString(getTag()) + ": " + getTagInfo().name + "): ";
     }
 
+    /**
+     * Gets the directory type.
+     *
+     * @return the directory type.
+     */
     public int getDirectoryType() {
         return directoryType;
     }
 
+    /**
+     * Gets the field value as a double array.
+     *
+     * @return the double array value.
+     * @throws ImagingException if the value cannot be converted.
+     */
     public double[] getDoubleArrayValue() throws ImagingException {
         final Object o = getValue();
         // if (o == null)
@@ -189,6 +241,12 @@ public class TiffField {
         // return null;
     }
 
+    /**
+     * Gets the field value as a single double.
+     *
+     * @return the double value.
+     * @throws ImagingException if the value is missing or cannot be converted.
+     */
     public double getDoubleValue() throws ImagingException {
         final Object o = getValue();
         if (o == null) {
@@ -199,7 +257,7 @@ public class TiffField {
     }
 
     /**
-     * Returns the field's type, derived from bytes 2-3.
+     * Gets the field's type, derived from bytes 2-3.
      *
      * @return the field's type, as a {@code FieldType} object.
      */
@@ -207,10 +265,21 @@ public class TiffField {
         return abstractFieldType;
     }
 
+    /**
+     * Gets the field type name.
+     *
+     * @return the field type name.
+     */
     public String getFieldTypeName() {
         return getFieldType().getName();
     }
 
+    /**
+     * Gets the field value as an int array.
+     *
+     * @return the int array value.
+     * @throws ImagingException if the value cannot be converted.
+     */
     public int[] getIntArrayValue() throws ImagingException {
         final Object o = getValue();
         // if (o == null)
@@ -248,6 +317,12 @@ public class TiffField {
         // return null;
     }
 
+    /**
+     * Gets the field value as a single int.
+     *
+     * @return the int value.
+     * @throws ImagingException if the value is missing or cannot be converted.
+     */
     public int getIntValue() throws ImagingException {
         final Object o = getValue();
         if (o == null) {
@@ -257,6 +332,12 @@ public class TiffField {
         return ((Number) o).intValue();
     }
 
+    /**
+     * Gets the int value or sum of array values.
+     *
+     * @return the int value or sum.
+     * @throws ImagingException if an error occurs.
+     */
     public int getIntValueOrArraySum() throws ImagingException {
         final Object o = getValue();
         // if (o == null)
@@ -346,26 +427,42 @@ public class TiffField {
     }
 
     /**
-     * Returns the TIFF field's offset/value field, derived from bytes 8-11.
+     * Gets the TIFF field's offset/value field, derived from bytes 8-11.
      *
      * @return the field's offset in a {@code long} of 4 packed bytes, or its inlined value &lt;= 4 bytes long encoded in the field's byte order.
      */
-    public int getOffset() {
+    public long getOffset() {
         return (int) offset;
     }
 
+    /**
+     * Gets the oversized value element if this field has one.
+     *
+     * @return the oversized value element, or null.
+     */
     public AbstractTiffElement getOversizeValueElement() {
         if (isLocalValue()) {
             return null;
         }
 
-        return new OversizeValueElement(getOffset(), value.length);
+        return new OversizeValueElement((int) getOffset(), value.length);
     }
 
+    /**
+     * Gets the sort hint for ordering fields.
+     *
+     * @return the sort hint.
+     */
     public int getSortHint() {
         return sortHint;
     }
 
+    /**
+     * Gets the field's string value.
+     *
+     * @return the string value.
+     * @throws ImagingException if an error occurs.
+     */
     public String getStringValue() throws ImagingException {
         final Object o = getValue();
         if (o == null) {
@@ -378,18 +475,28 @@ public class TiffField {
     }
 
     /**
-     * Returns the field's tag, derived from bytes 0-1.
+     * Gets the field's tag, derived from bytes 0-1.
      *
-     * @return the tag, as an {@code int} in which only the lowest 2 bytes are set
+     * @return the tag, as an {@code int} in which only the lowest 2 bytes are set.
      */
     public int getTag() {
         return tag;
     }
 
+    /**
+     * Gets tag information.
+     *
+     * @return the tag info.
+     */
     public TagInfo getTagInfo() {
         return tagInfo;
     }
 
+    /**
+     * Gets the tag name.
+     *
+     * @return the tag name.
+     */
     public String getTagName() {
         if (getTagInfo() == TiffTagConstants.TIFF_TAG_UNKNOWN) {
             return getTagInfo().name + " (0x" + Integer.toHexString(getTag()) + ")";
@@ -397,11 +504,22 @@ public class TiffField {
         return getTagInfo().name;
     }
 
+    /**
+     * Gets the value of the field.
+     *
+     * @return the value of the field.
+     * @throws ImagingException if an error occurs.
+     */
     public Object getValue() throws ImagingException {
         // System.out.print("getValue");
         return getTagInfo().getValue(this);
     }
 
+    /**
+     * Gets a description of the field's value.
+     *
+     * @return the value description.
+     */
     public String getValueDescription() {
         try {
             return getValueDescription(getValue());

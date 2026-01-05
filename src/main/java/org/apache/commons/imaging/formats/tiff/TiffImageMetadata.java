@@ -47,15 +47,31 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputField;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 
+/**
+ * TIFF image metadata.
+ */
 public class TiffImageMetadata extends GenericImageMetadata {
+
+    /**
+     * Represents a TIFF directory as metadata.
+     */
     public static class Directory extends GenericImageMetadata implements ImageMetadataItem {
         // private BufferedImage thumbnail;
 
+        /**
+         * The directory type.
+         */
         public final int type;
 
         private final TiffDirectory directory;
         private final ByteOrder byteOrder;
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param byteOrder the byte order.
+         * @param directory the TIFF directory.
+         */
         public Directory(final ByteOrder byteOrder, final TiffDirectory directory) {
             this.type = directory.type;
             this.directory = directory;
@@ -129,10 +145,22 @@ public class TiffImageMetadata extends GenericImageMetadata {
             }
         }
 
+        /**
+         * Gets the thumbnail image.
+         *
+         * @return the thumbnail image.
+         * @throws ImagingException if an imaging error occurs.
+         * @throws IOException if an I/O error occurs.
+         */
         public BufferedImage getThumbnail() throws ImagingException, IOException {
             return directory.getTiffImage(byteOrder);
         }
 
+        /**
+         * Gets the TIFF image data.
+         *
+         * @return the TIFF image data.
+         */
         public AbstractTiffImageData getTiffImageData() {
             return directory.getTiffImageData();
         }
@@ -183,6 +211,12 @@ public class TiffImageMetadata extends GenericImageMetadata {
             throw new ImagingException("Unknown latitude ref: \"" + latitudeRef + "\"");
         }
 
+        /**
+         * Gets the longitude as degrees east.
+         *
+         * @return the longitude in degrees east (negative for west).
+         * @throws ImagingException if the longitude reference is invalid.
+         */
         public double getLongitudeAsDegreesEast() throws ImagingException {
             final double result = longitudeDegrees.doubleValue() + longitudeMinutes.doubleValue() / 60.0 + longitudeSeconds.doubleValue() / 3600.0;
 
@@ -209,9 +243,17 @@ public class TiffImageMetadata extends GenericImageMetadata {
 
     }
 
+    /**
+     * Represents a single TIFF metadata item.
+     */
     public static class TiffMetadataItem extends GenericImageMetadataItem {
         private final TiffField entry;
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param entry the TIFF field.
+         */
         public TiffMetadataItem(final TiffField entry) {
             // super(entry.getTagName() + " (" + entry.getFieldTypeName() + ")",
             super(entry.getTagName(), entry.getValueDescription());

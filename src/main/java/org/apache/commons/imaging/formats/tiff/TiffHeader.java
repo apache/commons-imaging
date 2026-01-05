@@ -20,12 +20,39 @@ import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 
+/**
+ * The header of a TIFF file.
+ */
 public class TiffHeader extends AbstractTiffElement {
+
+    /**
+     * The byte order used in the TIFF file.
+     */
     public final ByteOrder byteOrder;
+
+    /**
+     * The TIFF version number.
+     */
     public final int tiffVersion;
+
+    /**
+     * The offset to the first Image File Directory (IFD).
+     */
     public final long offsetToFirstIFD;
+
+    /**
+     * Whether this is a BigTIFF file.
+     */
     public final boolean bigTiff;
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param byteOrder the byte order.
+     * @param tiffVersion the TIFF version.
+     * @param offsetToFirstIFD the offset to the first IFD.
+     * @param bigTiff whether this is a BigTIFF file.
+     */
     public TiffHeader(final ByteOrder byteOrder, final int tiffVersion, final long offsetToFirstIFD, final boolean bigTiff) {
         super(0, TiffConstants.HEADER_SIZE);
 

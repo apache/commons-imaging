@@ -64,6 +64,9 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoXpString;
  */
 public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffField> {
 
+    /**
+     * An element containing image data within a TIFF directory.
+     */
     public static final class ImageDataElement extends AbstractTiffElement {
 
         /**
