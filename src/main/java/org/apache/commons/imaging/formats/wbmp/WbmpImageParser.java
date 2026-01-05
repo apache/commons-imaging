@@ -39,8 +39,14 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.ImageMetadata;
 
+/**
+ * Parser for Wireless Bitmap (WBMP) images.
+ */
 public class WbmpImageParser extends AbstractImageParser<WbmpImagingParameters> {
 
+    /**
+     * WBMP header structure.
+     */
     static class WbmpHeader {
         final int typeField;
         final byte fixHeaderField;
