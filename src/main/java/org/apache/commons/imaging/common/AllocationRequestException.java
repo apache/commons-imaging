@@ -32,8 +32,10 @@ public class AllocationRequestException extends ImagingRuntimeException {
         return String.format("Allocation limit %,d exceeded: %,d", limit, request);
     }
 
+    /** The allocation limit. */
     private final int limit;
 
+    /** The allocation request. */
     private final BigInteger request;
 
     /**

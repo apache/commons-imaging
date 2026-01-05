@@ -29,10 +29,21 @@ public class XmpImagingParameters<E extends XmpImagingParameters<E>> extends Ima
 
     private String xmpXml;
 
+    /**
+     * Gets the XMP XML.
+     *
+     * @return the XMP XML.
+     */
     public String getXmpXml() {
         return xmpXml;
     }
 
+    /**
+     * Sets the XMP XML.
+     *
+     * @param xmpXml the XMP XML.
+     * @return this instance.
+     */
     public E setXmpXml(final String xmpXml) {
         this.xmpXml = xmpXml;
         return asThis();
