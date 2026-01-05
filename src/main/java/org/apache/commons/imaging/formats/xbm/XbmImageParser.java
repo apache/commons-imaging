@@ -46,8 +46,14 @@ import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BasicCParser;
 import org.apache.commons.imaging.common.ImageMetadata;
 
+/**
+ * Parser for X BitMap (XBM) image format.
+ */
 public class XbmImageParser extends AbstractImageParser<XbmImagingParameters> {
 
+    /**
+     * XBM header structure.
+     */
     private static final class XbmHeader {
         final int height;
         final int width;
