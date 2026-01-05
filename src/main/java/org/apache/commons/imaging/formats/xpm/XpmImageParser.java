@@ -51,8 +51,14 @@ import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * Parser for X PixMap (XPM) image format.
+ */
 public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
 
+    /**
+     * XPM palette entry.
+     */
     private static final class PaletteEntry {
         int colorArgb;
         int gray4LevelArgb;
