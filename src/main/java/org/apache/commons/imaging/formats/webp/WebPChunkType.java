@@ -40,46 +40,64 @@ import org.apache.commons.imaging.formats.webp.chunks.WebPChunkXyzw;
 public enum WebPChunkType {
 
     /**
+     * Alpha channel chunk.
+     *
      * @see WebPChunkAlph
      */
     ALPH(WebPChunkAlph::new),
 
     /**
+     * VP8 lossy bitstream chunk.
+     *
      * @see WebPChunkVp8
      */
     VP8(WebPChunkVp8::new),
 
     /**
+     * VP8L lossless bitstream chunk.
+     *
      * @see WebPChunkVp8l
      */
     VP8L(WebPChunkVp8l::new),
 
     /**
+     * VP8X extended file format chunk.
+     *
      * @see WebPChunkVp8x
      */
     VP8X(WebPChunkVp8x::new),
 
     /**
+     * Animation parameters chunk.
+     *
      * @see WebPChunkAnim
      */
     ANIM(WebPChunkAnim::new),
 
     /**
+     * Animation frame chunk.
+     *
      * @see WebPChunkAnmf
      */
     ANMF(WebPChunkAnmf::new),
 
     /**
+     * ICC profile chunk.
+     *
      * @see WebPChunkIccp
      */
     ICCP(WebPChunkIccp::new),
 
     /**
+     * EXIF metadata chunk.
+     *
      * @see WebPChunkExif
      */
     EXIF(WebPChunkExif::new),
 
     /**
+     * XMP metadata chunk.
+     *
      * @see WebPChunkXml
      */
     XMP(WebPChunkXml::new);
