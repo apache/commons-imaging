@@ -78,22 +78,51 @@ public class TiffImageMetadata extends GenericImageMetadata {
             this.byteOrder = byteOrder;
         }
 
+        /**
+         * Adds a TIFF field as a metadata item.
+         *
+         * @param entry the TIFF field to add.
+         */
         public void add(final TiffField entry) {
             add(new TiffMetadataItem(entry));
         }
 
+        /**
+         * Finds a field by tag.
+         *
+         * @param tagInfo the tag information.
+         * @return the field, or null if not found.
+         * @throws ImagingException if an error occurs.
+         */
         public TiffField findField(final TagInfo tagInfo) throws ImagingException {
             return directory.findField(tagInfo);
         }
 
+        /**
+         * Gets all fields in this directory.
+         *
+         * @return the list of fields.
+         */
         public List<TiffField> getAllFields() {
             return directory.getDirectoryEntries();
         }
 
+        /**
+         * Gets JPEG image data if present.
+         *
+         * @return the JPEG image data, or null.
+         */
         public JpegImageData getJpegImageData() {
             return directory.getJpegImageData();
         }
 
+        /**
+         * Gets the output directory for writing.
+         *
+         * @param byteOrder the byte order to use.
+         * @return the output directory.
+         * @throws ImagingException if an error occurs.
+         */
         public TiffOutputDirectory getOutputDirectory(final ByteOrder byteOrder) throws ImagingException {
             try {
                 final TiffOutputDirectory dstDir = new TiffOutputDirectory(type, byteOrder);
@@ -175,17 +204,63 @@ public class TiffImageMetadata extends GenericImageMetadata {
 
     }
 
+    /**
+     * Contains GPS location information from TIFF metadata.
+     */
     public static class GpsInfo {
+
+        /**
+         * Latitude reference (N or S).
+         */
         public final String latitudeRef;
+
+        /**
+         * Longitude reference (E or W).
+         */
         public final String longitudeRef;
 
+        /**
+         * Latitude degrees.
+         */
         public final RationalNumber latitudeDegrees;
+
+        /**
+         * Latitude minutes.
+         */
         public final RationalNumber latitudeMinutes;
+
+        /**
+         * Latitude seconds.
+         */
         public final RationalNumber latitudeSeconds;
+
+        /**
+         * Longitude degrees.
+         */
         public final RationalNumber longitudeDegrees;
+
+        /**
+         * Longitude minutes.
+         */
         public final RationalNumber longitudeMinutes;
+
+        /**
+         * Longitude seconds.
+         */
         public final RationalNumber longitudeSeconds;
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param latitudeRef the latitude reference.
+         * @param longitudeRef the longitude reference.
+         * @param latitudeDegrees the latitude degrees.
+         * @param latitudeMinutes the latitude minutes.
+         * @param latitudeSeconds the latitude seconds.
+         * @param longitudeDegrees the longitude degrees.
+         * @param longitudeMinutes the longitude minutes.
+         * @param longitudeSeconds the longitude seconds.
+         */
         public GpsInfo(final String latitudeRef, final String longitudeRef, final RationalNumber latitudeDegrees, final RationalNumber latitudeMinutes,
                 final RationalNumber latitudeSeconds, final RationalNumber longitudeDegrees, final RationalNumber longitudeMinutes,
                 final RationalNumber longitudeSeconds) {
@@ -199,6 +274,12 @@ public class TiffImageMetadata extends GenericImageMetadata {
             this.longitudeSeconds = longitudeSeconds;
         }
 
+        /**
+         * Gets the latitude as degrees north.
+         *
+         * @return the latitude in degrees north (negative for south).
+         * @throws ImagingException if the latitude reference is invalid.
+         */
         public double getLatitudeAsDegreesNorth() throws ImagingException {
             final double result = latitudeDegrees.doubleValue() + latitudeMinutes.doubleValue() / 60.0 + latitudeSeconds.doubleValue() / 3600.0;
 
@@ -260,18 +341,37 @@ public class TiffImageMetadata extends GenericImageMetadata {
             this.entry = entry;
         }
 
+        /**
+         * Gets the TIFF field.
+         *
+         * @return the TIFF field.
+         */
         public TiffField getTiffField() {
             return entry;
         }
 
     }
 
+    /**
+     * The TIFF contents.
+     */
     public final TiffContents contents;
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param contents the TIFF contents.
+     */
     public TiffImageMetadata(final TiffContents contents) {
         this.contents = contents;
     }
 
+    /**
+     * Finds a directory by type.
+     *
+     * @param directoryType the directory type.
+     * @return the directory, or null if not found.
+     */
     public TiffDirectory findDirectory(final int directoryType) {
         final List<? extends ImageMetadataItem> directories = getDirectories();
         for (final ImageMetadataItem directory1 : directories) {
@@ -283,10 +383,25 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return null;
     }
 
+    /**
+     * Finds a field by tag.
+     *
+     * @param tagInfo the tag information.
+     * @return the field, or null if not found.
+     * @throws ImagingException if an error occurs.
+     */
     public TiffField findField(final TagInfo tagInfo) throws ImagingException {
         return findField(tagInfo, false);
     }
 
+    /**
+     * Finds a field by tag with directory matching option.
+     *
+     * @param tagInfo the tag information.
+     * @param exactDirectoryMatch whether to require exact directory match.
+     * @return the field, or null if not found.
+     * @throws ImagingException if an error occurs.
+     */
     public TiffField findField(final TagInfo tagInfo, final boolean exactDirectoryMatch) throws ImagingException {
         // Please keep this method in sync with TiffField's getTag()
         final Integer tagCount = TiffTags.getTagCount(tagInfo.tag);
@@ -328,6 +443,11 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return null;
     }
 
+    /**
+     * Gets all fields from all directories.
+     *
+     * @return the list of all fields.
+     */
     public List<TiffField> getAllFields() {
         final List<TiffField> result = new ArrayList<>();
         final List<? extends ImageMetadataItem> directories = getDirectories();
@@ -338,10 +458,22 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return result;
     }
 
+    /**
+     * Gets all directories.
+     *
+     * @return the list of directories.
+     */
     public List<? extends ImageMetadataItem> getDirectories() {
         return super.getItems();
     }
 
+    /**
+     * Gets the value of a field.
+     *
+     * @param tag the tag.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs.
+     */
     public Object getFieldValue(final TagInfo tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -350,6 +482,13 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return field.getValue();
     }
 
+    /**
+     * Gets the value of an ASCII field.
+     *
+     * @param tag the tag.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs.
+     */
     public String[] getFieldValue(final TagInfoAscii tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -362,6 +501,13 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of a byte field.
+     *
+     * @param tag the tag.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs.
+     */
     public byte[] getFieldValue(final TagInfoByte tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -373,6 +519,13 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return field.getByteArrayValue();
     }
 
+    /**
+     * Gets the value of a doubles field.
+     *
+     * @param tag the tag.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs.
+     */
     public double[] getFieldValue(final TagInfoDoubles tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -385,6 +538,13 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of a floats field.
+     *
+     * @param tag the tag.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs.
+     */
     public float[] getFieldValue(final TagInfoFloats tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -397,6 +557,13 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of a GPS text field.
+     *
+     * @param tag the tag.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs.
+     */
     public String getFieldValue(final TagInfoGpsText tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -405,6 +572,13 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return tag.getValue(field);
     }
 
+    /**
+     * Gets the value of a longs field.
+     *
+     * @param tag the tag.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs.
+     */
     public int[] getFieldValue(final TagInfoLongs tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -417,6 +591,13 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of a rationals field.
+     *
+     * @param tag the tag.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs.
+     */
     public RationalNumber[] getFieldValue(final TagInfoRationals tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -429,6 +610,13 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of a signed bytes field.
+     *
+     * @param tag the tag.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs.
+     */
     public byte[] getFieldValue(final TagInfoSBytes tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -440,6 +628,13 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return field.getByteArrayValue();
     }
 
+    /**
+     * Gets the value of a shorts field.
+     *
+     * @param tag the tag.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs.
+     */
     public short[] getFieldValue(final TagInfoShorts tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -452,6 +647,13 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of a signed longs field.
+     *
+     * @param tag the tag.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs.
+     */
     public int[] getFieldValue(final TagInfoSLongs tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -464,6 +666,13 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of a signed rationals field.
+     *
+     * @param tag the tag.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs.
+     */
     public RationalNumber[] getFieldValue(final TagInfoSRationals tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -476,6 +685,13 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of a signed shorts field.
+     *
+     * @param tag the tag.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs.
+     */
     public short[] getFieldValue(final TagInfoSShorts tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -488,6 +704,13 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of an XP string field.
+     *
+     * @param tag the tag.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs.
+     */
     public String getFieldValue(final TagInfoXpString tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -496,6 +719,12 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return tag.getValue(field);
     }
 
+    /**
+     * Gets GPS information from metadata.
+     *
+     * @return the GPS info, or null if not available.
+     * @throws ImagingException if an error occurs.
+     */
     public GpsInfo getGpsInfo() throws ImagingException {
         final TiffDirectory gpsDirectory = findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_GPS);
         if (null == gpsDirectory) {
@@ -546,6 +775,12 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return result;
     }
 
+    /**
+     * Gets an output set for writing.
+     *
+     * @return the output set.
+     * @throws ImagingException if an error occurs.
+     */
     public TiffOutputSet getOutputSet() throws ImagingException {
         final ByteOrder byteOrder = contents.header.byteOrder;
         final TiffOutputSet result = new TiffOutputSet(byteOrder);

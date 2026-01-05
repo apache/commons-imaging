@@ -87,6 +87,15 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
         return null;
     }
 
+    /**
+     * Collects raw image data from all directories.
+     *
+     * @param byteSource the byte source.
+     * @param params the imaging parameters.
+     * @return the list of raw image data.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     public List<byte[]> collectRawImageData(final ByteSource byteSource, final TiffImagingParameters params) throws ImagingException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffContents contents = new TiffReader(params != null && params.isStrict()).readDirectories(byteSource, true, formatCompliance);
@@ -235,6 +244,16 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
         return result;
     }
 
+    /**
+     * Gets a buffered image from a TIFF directory.
+     *
+     * @param directory the TIFF directory.
+     * @param byteOrder the byte order.
+     * @param params the imaging parameters.
+     * @return the buffered image.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     protected BufferedImage getBufferedImage(final TiffDirectory directory, final ByteOrder byteOrder, final TiffImagingParameters params)
             throws ImagingException, IOException {
         final short compressionFieldValue;

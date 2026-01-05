@@ -41,6 +41,9 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoDirectory;
 
+/**
+ * TIFF file reader.
+ */
 public class TiffReader extends BinaryFileParser {
 
     private static class Collector implements Listener {
@@ -110,15 +113,47 @@ public class TiffReader extends BinaryFileParser {
         }
     }
 
+    /**
+     * Listener interface for TIFF reading callbacks.
+     */
     public interface Listener {
+
+        /**
+         * Called when a directory is encountered.
+         *
+         * @param directory the directory.
+         * @return true to continue reading, false to stop.
+         */
         boolean addDirectory(TiffDirectory directory);
 
+        /**
+         * Called when a field is encountered.
+         *
+         * @param field the field.
+         * @return true to continue reading, false to stop.
+         */
         boolean addField(TiffField field);
 
+        /**
+         * Determines whether image data should be read.
+         *
+         * @return true to read image data, false otherwise.
+         */
         boolean readImageData();
 
+        /**
+         * Determines whether offset directories should be read.
+         *
+         * @return true to read offset directories, false otherwise.
+         */
         boolean readOffsetDirectories();
 
+        /**
+         * Called when the TIFF header is read.
+         *
+         * @param tiffHeader the TIFF header.
+         * @return true to continue reading, false to stop.
+         */
         boolean setTiffHeader(TiffHeader tiffHeader);
     }
 
@@ -127,6 +162,11 @@ public class TiffReader extends BinaryFileParser {
     private boolean standardTiff;
     private int entryMaxValueLength;
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param strict true for strict parsing, false otherwise.
+     */
     public TiffReader(final boolean strict) {
         this.strict = strict;
     }
@@ -207,10 +247,29 @@ public class TiffReader extends BinaryFileParser {
         return new AbstractTiffImageData.Tiles(data, tileWidth, tileLength);
     }
 
+    /**
+     * Reads TIFF data from the byte source.
+     *
+     * @param byteSource the byte source.
+     * @param formatCompliance the format compliance.
+     * @param listener the listener for callbacks.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     public void read(final ByteSource byteSource, final FormatCompliance formatCompliance, final Listener listener) throws ImagingException, IOException {
         readDirectories(byteSource, formatCompliance, listener);
     }
 
+    /**
+     * Reads the contents of a TIFF file.
+     *
+     * @param byteSource the byte source.
+     * @param params the imaging parameters.
+     * @param formatCompliance the format compliance.
+     * @return the TIFF contents.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     public TiffContents readContents(final ByteSource byteSource, final TiffImagingParameters params, final FormatCompliance formatCompliance)
             throws ImagingException, IOException {
 
@@ -219,6 +278,16 @@ public class TiffReader extends BinaryFileParser {
         return collector.getContents();
     }
 
+    /**
+     * Reads all directories from a TIFF file.
+     *
+     * @param byteSource the byte source.
+     * @param readImageData true to read image data, false otherwise.
+     * @param formatCompliance the format compliance.
+     * @return the TIFF contents.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     public TiffContents readDirectories(final ByteSource byteSource, final boolean readImageData, final FormatCompliance formatCompliance)
             throws ImagingException, IOException {
         final TiffImagingParameters params = new TiffImagingParameters();
@@ -418,6 +487,16 @@ public class TiffReader extends BinaryFileParser {
         return readDirectory(byteSource, offset, dirType, formatCompliance, listener, ignoreNextDirectory, visited);
     }
 
+    /**
+     * Reads only the first directory from a TIFF file.
+     *
+     * @param byteSource the byte source.
+     * @param readImageData true to read image data, false otherwise.
+     * @param formatCompliance the format compliance.
+     * @return the TIFF contents containing only the first directory.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     public TiffContents readFirstDirectory(final ByteSource byteSource, final boolean readImageData, final FormatCompliance formatCompliance)
             throws ImagingException, IOException {
         final Collector collector = new FirstDirectoryCollector(readImageData);

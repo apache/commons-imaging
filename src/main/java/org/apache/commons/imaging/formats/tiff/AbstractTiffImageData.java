@@ -62,6 +62,7 @@ public abstract class AbstractTiffImageData {
 
         private final AbstractTiffElement.DataElement[] strips;
         // public final byte strips[][];
+
         /** The number of rows per strip. */
         public final int rowsPerStrip;
 

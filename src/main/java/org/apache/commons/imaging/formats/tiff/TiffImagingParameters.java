@@ -108,14 +108,29 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
         subImageHeight = 0;
     }
 
+    /**
+     * Gets the compression algorithm.
+     *
+     * @return the compression algorithm, or null if not set.
+     */
     public Integer getCompression() {
         return compression;
     }
 
+    /**
+     * Gets the custom photometric interpreter.
+     *
+     * @return the custom photometric interpreter, or null if not set.
+     */
     public AbstractPhotometricInterpreter getCustomPhotometricInterpreter() {
         return customPhotometricInterpreter;
     }
 
+    /**
+     * Gets the LZW compression block size.
+     *
+     * @return the LZW compression block size, or null if not set.
+     */
     public Integer getLzwCompressionBlockSize() {
         return lzwCompressionBlockSize;
     }
@@ -165,14 +180,29 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
         return subImageY;
     }
 
+    /**
+     * Gets the T.4 options.
+     *
+     * @return the T.4 options, or null if not set.
+     */
     public Integer getT4Options() {
         return t4Options;
     }
 
+    /**
+     * Gets the T.6 options.
+     *
+     * @return the T.6 options, or null if not set.
+     */
     public Integer getT6Options() {
         return t6Options;
     }
 
+    /**
+     * Gets whether to read thumbnails.
+     *
+     * @return true if thumbnails should be read.
+     */
     public boolean isReadThumbnails() {
         return readThumbnails;
     }
@@ -186,16 +216,34 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
         return subImageWidth > 0 && subImageHeight > 0;
     }
 
+    /**
+     * Sets the compression algorithm.
+     *
+     * @param compression the compression algorithm.
+     * @return this instance.
+     */
     public TiffImagingParameters setCompression(final Integer compression) {
         this.compression = compression;
         return asThis();
     }
 
+    /**
+     * Sets the custom photometric interpreter.
+     *
+     * @param customPhotometricInterpreter the custom photometric interpreter.
+     * @return this instance.
+     */
     public TiffImagingParameters setCustomPhotometricInterpreter(final AbstractPhotometricInterpreter customPhotometricInterpreter) {
         this.customPhotometricInterpreter = customPhotometricInterpreter;
         return asThis();
     }
 
+    /**
+     * Sets the LZW compression block size.
+     *
+     * @param lzwCompressionBlockSize the LZW compression block size.
+     * @return this instance.
+     */
     public TiffImagingParameters setLzwCompressionBlockSize(final Integer lzwCompressionBlockSize) {
         this.lzwCompressionBlockSize = lzwCompressionBlockSize;
         return asThis();
@@ -213,6 +261,12 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
         return asThis();
     }
 
+    /**
+     * Sets whether to read thumbnails.
+     *
+     * @param readThumbnails true to read thumbnails.
+     * @return this instance.
+     */
     public TiffImagingParameters setReadThumbnails(final boolean readThumbnails) {
         this.readThumbnails = readThumbnails;
         return asThis();
@@ -223,6 +277,7 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
      * source images.
      * <p>
      * Note that the corner x and y coordinates must be positive integers (zero or greater). The width and height must be greater than zero.
+     * </p>
      *
      * @param x      pixel coordinate of the upper-left corner of the source image, must be zero or greater.
      * @param y      pixel coordinate of the upper-left corner of the source image, must be zero or greater.
@@ -244,11 +299,23 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
         return asThis();
     }
 
+    /**
+     * Sets the T.4 options.
+     *
+     * @param t4Options the T.4 options.
+     * @return this instance.
+     */
     public TiffImagingParameters setT4Options(final Integer t4Options) {
         this.t4Options = t4Options;
         return asThis();
     }
 
+    /**
+     * Sets the T.6 options.
+     *
+     * @param t6Options the T.6 options.
+     * @return this instance.
+     */
     public TiffImagingParameters setT6Options(final Integer t6Options) {
         this.t6Options = t6Options;
         return asThis();
