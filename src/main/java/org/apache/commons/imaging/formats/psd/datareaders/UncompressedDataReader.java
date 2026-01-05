@@ -30,10 +30,18 @@ import org.apache.commons.imaging.formats.psd.dataparsers.AbstractDataParser;
 import org.apache.commons.imaging.mylzw.BitsToByteInputStream;
 import org.apache.commons.imaging.mylzw.MyBitInputStream;
 
+/**
+ * Data reader for uncompressed PSD image data.
+ */
 public class UncompressedDataReader implements DataReader {
 
     private final AbstractDataParser dataParser;
 
+    /**
+     * Constructs a new uncompressed data reader.
+     *
+     * @param dataParser the data parser.
+     */
     public UncompressedDataReader(final AbstractDataParser dataParser) {
         this.dataParser = dataParser;
     }
