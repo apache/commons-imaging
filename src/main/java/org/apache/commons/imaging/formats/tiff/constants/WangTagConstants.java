@@ -28,8 +28,10 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoBytes;
  */
 public final class WangTagConstants {
 
+    /** EXIF tag: Wang Annotation. */
     public static final TagInfoBytes EXIF_TAG_WANG_ANNOTATION = new TagInfoBytes("WangAnnotation", 0x80a4, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
+    /** List of all Wang tags. */
     public static final List<TagInfo> ALL_WANG_TAGS = Collections.unmodifiableList(Arrays.<TagInfo>asList(EXIF_TAG_WANG_ANNOTATION));
 
     private WangTagConstants() {
