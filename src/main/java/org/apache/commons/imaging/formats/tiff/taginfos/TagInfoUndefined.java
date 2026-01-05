@@ -19,7 +19,18 @@ package org.apache.commons.imaging.formats.tiff.taginfos;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 
+/**
+ * Tag info for undefined field type.
+ */
 public class TagInfoUndefined extends TagInfoByte {
+
+    /**
+     * Constructs a new instance.
+     *
+     * @param name the tag name.
+     * @param tag the tag number.
+     * @param directoryType the directory type.
+     */
     public TagInfoUndefined(final String name, final int tag, final TiffDirectoryType directoryType) {
         super(name, tag, AbstractFieldType.UNDEFINED, directoryType);
     }

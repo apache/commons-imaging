@@ -29,6 +29,14 @@ import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
  * Windows XP onwards store some tags using UTF-16LE, but the field type is byte - here we deal with this.
  */
 public class TagInfoXpString extends TagInfo {
+
+    /**
+     * Constructs a new instance.
+     *
+     * @param name the tag name.
+     * @param tag the tag number.
+     * @param directoryType the directory type.
+     */
     public TagInfoXpString(final String name, final int tag, final TiffDirectoryType directoryType) {
         super(name, tag, AbstractFieldType.BYTE, LENGTH_UNKNOWN, directoryType);
     }

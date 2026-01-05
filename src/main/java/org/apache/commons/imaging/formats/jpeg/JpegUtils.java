@@ -27,18 +27,54 @@ import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.io.IOUtils;
 
+/**
+ * JPEG utility methods.
+ */
 public class JpegUtils extends BinaryFileParser {
+
+    /**
+     * Visitor interface for traversing JPEG segments.
+     */
     public interface Visitor {
-        // return false to exit before reading image data.
+
+        /**
+         * Called when beginning SOS (Start of Scan) segment.
+         *
+         * @return false to exit before reading image data.
+         */
         boolean beginSos();
 
-        // return false to exit traversal.
+        /**
+         * Called when visiting a segment.
+         *
+         * @param marker the marker.
+         * @param markerBytes the marker bytes.
+         * @param segmentLength the segment length.
+         * @param segmentLengthBytes the segment length bytes.
+         * @param segmentData the segment data.
+         * @return false to exit traversal.
+         * @throws ImagingException if an imaging error occurs.
+         * @throws IOException if an I/O error occurs.
+         */
         boolean visitSegment(int marker, byte[] markerBytes, int segmentLength, byte[] segmentLengthBytes, byte[] segmentData)
                 throws ImagingException, IOException;
 
+        /**
+         * Called when visiting SOS segment.
+         *
+         * @param marker the marker.
+         * @param markerBytes the marker bytes.
+         * @param imageData the image data.
+         */
         void visitSos(int marker, byte[] markerBytes, byte[] imageData);
     }
 
+    /**
+     * Gets the marker name.
+     *
+     * @param marker the marker.
+     * @return the marker name.
+     */
     public static String getMarkerName(final int marker) {
         switch (marker) {
         case JpegConstants.SOS_MARKER:
@@ -123,6 +159,13 @@ public class JpegUtils extends BinaryFileParser {
         // empty
     }
 
+    /**
+     * Dumps JFIF data.
+     *
+     * @param byteSource the byte source.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     public void dumpJfif(final ByteSource byteSource) throws ImagingException, IOException {
         final Visitor visitor = new Visitor() {
             // return false to exit before reading image data.
@@ -150,6 +193,14 @@ public class JpegUtils extends BinaryFileParser {
         traverseJfif(byteSource, visitor);
     }
 
+    /**
+     * Traverses JFIF data with a visitor.
+     *
+     * @param byteSource the byte source.
+     * @param visitor the visitor.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     public void traverseJfif(final ByteSource byteSource, final Visitor visitor) throws ImagingException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             BinaryFunctions.readAndVerifyBytes(is, JpegConstants.SOI, "Not a Valid JPEG File: doesn't begin with 0xffd8");

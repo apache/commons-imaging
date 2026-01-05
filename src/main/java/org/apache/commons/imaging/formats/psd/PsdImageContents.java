@@ -22,17 +22,37 @@ import java.io.StringWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * PSD image contents.
+ */
 public class PsdImageContents {
 
     private static final Logger LOGGER = Logger.getLogger(PsdImageContents.class.getName());
 
+    /** PSD header information. */
     public final PsdHeaderInfo header;
 
+    /** Color mode data length. */
     public final int colorModeDataLength;
+
+    /** Image resources length. */
     public final int imageResourcesLength;
+
+    /** Layer and mask data length. */
     public final int layerAndMaskDataLength;
+
+    /** Compression type. */
     public final int compression;
 
+    /**
+     * Constructs PSD image contents.
+     *
+     * @param header the header information.
+     * @param colorModeDataLength the color mode data length.
+     * @param imageResourcesLength the image resources length.
+     * @param layerAndMaskDataLength the layer and mask data length.
+     * @param compression the compression type.
+     */
     public PsdImageContents(final PsdHeaderInfo header,
 
             final int colorModeDataLength, final int imageResourcesLength, final int layerAndMaskDataLength, final int compression) {
@@ -43,6 +63,9 @@ public class PsdImageContents {
         this.compression = compression;
     }
 
+    /**
+     * Dumps contents to logger.
+     */
     public void dump() {
         try (StringWriter sw = new StringWriter();
                 PrintWriter pw = new PrintWriter(sw)) {
@@ -55,6 +78,11 @@ public class PsdImageContents {
         }
     }
 
+    /**
+     * Dumps contents to print writer.
+     *
+     * @param pw the print writer.
+     */
     public void dump(final PrintWriter pw) {
         pw.println("");
         pw.println("ImageContents");

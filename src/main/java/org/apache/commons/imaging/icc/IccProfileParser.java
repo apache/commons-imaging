@@ -33,6 +33,9 @@ import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.io.IOUtils;
 
+/**
+ * ICC profile parser.
+ */
 public class IccProfileParser extends BinaryFileParser {
 
     private static final Logger LOGGER = Logger.getLogger(IccProfileParser.class.getName());
@@ -44,6 +47,13 @@ public class IccProfileParser extends BinaryFileParser {
         // empty
     }
 
+    /**
+     * Gets ICC profile info from bytes.
+     *
+     * @param bytes the bytes.
+     * @return the ICC profile info or null if bytes is null.
+     * @throws IOException if an I/O error occurs.
+     */
     public IccProfileInfo getIccProfileInfo(final byte[] bytes) throws IOException {
         if (bytes == null) {
             return null;
@@ -51,6 +61,13 @@ public class IccProfileParser extends BinaryFileParser {
         return getIccProfileInfo(ByteSource.array(bytes));
     }
 
+    /**
+     * Gets ICC profile info from byte source.
+     *
+     * @param byteSource the byte source.
+     * @return the ICC profile info.
+     * @throws IOException if an I/O error occurs.
+     */
     public IccProfileInfo getIccProfileInfo(final ByteSource byteSource) throws IOException {
         // TODO Throw instead of logging?
         final IccProfileInfo result;
@@ -68,6 +85,13 @@ public class IccProfileParser extends BinaryFileParser {
         return result;
     }
 
+    /**
+     * Gets ICC profile info from file.
+     *
+     * @param file the file.
+     * @return the ICC profile info or null if file is null.
+     * @throws IOException if an I/O error occurs.
+     */
     public IccProfileInfo getIccProfileInfo(final File file) throws IOException {
         if (file == null) {
             return null;
@@ -76,6 +100,13 @@ public class IccProfileParser extends BinaryFileParser {
         return getIccProfileInfo(ByteSource.file(file));
     }
 
+    /**
+     * Gets ICC profile info from ICC_Profile.
+     *
+     * @param iccProfile the ICC profile.
+     * @return the ICC profile info or null if iccProfile is null.
+     * @throws IOException if an I/O error occurs.
+     */
     public IccProfileInfo getIccProfileInfo(final ICC_Profile iccProfile) throws IOException {
         if (iccProfile == null) {
             return null;
@@ -94,10 +125,24 @@ public class IccProfileParser extends BinaryFileParser {
         return null;
     }
 
+    /**
+     * Checks if the profile is sRGB.
+     *
+     * @param bytes the bytes.
+     * @return true if sRGB, false otherwise.
+     * @throws IOException if an I/O error occurs.
+     */
     public boolean isSrgb(final byte[] bytes) throws IOException {
         return isSrgb(ByteSource.array(bytes));
     }
 
+    /**
+     * Checks if the profile is sRGB.
+     *
+     * @param byteSource the byte source.
+     * @return true if sRGB, false otherwise.
+     * @throws IOException if an I/O error occurs.
+     */
     public boolean isSrgb(final ByteSource byteSource) throws IOException {
         // setDebug(true);
 

@@ -35,20 +35,39 @@ import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.internal.Debug;
 
+/**
+ * JPEG image metadata.
+ */
 public class JpegImageMetadata implements ImageMetadata {
+
     private static final String NEWLINE = System.lineSeparator();
     private final JpegPhotoshopMetadata photoshop;
     private final TiffImageMetadata exif;
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param photoshop the Photoshop metadata.
+     * @param exif the EXIF metadata.
+     */
     public JpegImageMetadata(final JpegPhotoshopMetadata photoshop, final TiffImageMetadata exif) {
         this.photoshop = photoshop;
         this.exif = exif;
     }
 
+    /**
+     * Dumps metadata to debug output.
+     */
     public void dump() {
         Debug.debug(this.toString());
     }
 
+    /**
+     * Finds an EXIF value.
+     *
+     * @param tagInfo the tag info.
+     * @return the TIFF field or null if not found.
+     */
     public TiffField findExifValue(final TagInfo tagInfo) {
         try {
             return exif != null ? exif.findField(tagInfo) : null;
@@ -57,6 +76,12 @@ public class JpegImageMetadata implements ImageMetadata {
         }
     }
 
+    /**
+     * Finds an EXIF value with exact match.
+     *
+     * @param tagInfo the tag info.
+     * @return the TIFF field or null if not found.
+     */
     public TiffField findExifValueWithExactMatch(final TagInfo tagInfo) {
         try {
             return exif != null ? exif.findField(tagInfo, true) : null;
@@ -65,6 +90,11 @@ public class JpegImageMetadata implements ImageMetadata {
         }
     }
 
+    /**
+     * Gets the EXIF metadata.
+     *
+     * @return the EXIF metadata.
+     */
     public TiffImageMetadata getExif() {
         return exif;
     }
@@ -73,8 +103,8 @@ public class JpegImageMetadata implements ImageMetadata {
      * Gets the thumbnail image if available.
      *
      * @return the thumbnail image. May be {@code null} if no image could be found.
-     * @throws ImagingException if it fails to read the image
-     * @throws IOException      if it fails to get the thumbnail or to read the image data
+     * @throws ImagingException if it fails to read the image.
+     * @throws IOException      if it fails to get the thumbnail or to read the image data.
      */
     public BufferedImage getExifThumbnail() throws ImagingException, IOException {
 
@@ -174,10 +204,20 @@ public class JpegImageMetadata implements ImageMetadata {
         return result;
     }
 
+    /**
+     * Gets the Photoshop metadata.
+     *
+     * @return the Photoshop metadata.
+     */
     public JpegPhotoshopMetadata getPhotoshop() {
         return photoshop;
     }
 
+    /**
+     * Gets the raw image data.
+     *
+     * @return the raw image data or null if not found.
+     */
     public AbstractTiffImageData getRawImageData() {
         if (exif == null) {
             return null;

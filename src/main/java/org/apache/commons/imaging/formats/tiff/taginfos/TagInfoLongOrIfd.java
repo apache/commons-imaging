@@ -63,6 +63,13 @@ public class TagInfoLongOrIfd extends TagInfo {
         return ByteConversions.toBytes(values, byteOrder);
     }
 
+    /**
+     * Gets the values.
+     *
+     * @param byteOrder the byte order.
+     * @param bytes the bytes.
+     * @return the integer array values.
+     */
     public int[] getValue(final ByteOrder byteOrder, final byte[] bytes) {
         return ByteConversions.toInts(bytes, byteOrder);
     }

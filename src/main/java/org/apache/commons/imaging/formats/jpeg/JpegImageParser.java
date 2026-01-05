@@ -63,6 +63,9 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.lang3.ArrayUtils;
 
+/**
+ * JPEG image parser.
+ */
 public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> implements XmpEmbeddable<JpegImagingParameters> {
 
     private static final Logger LOGGER = Logger.getLogger(JpegImageParser.class.getName());
@@ -70,6 +73,12 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
     private static final String DEFAULT_EXTENSION = ImageFormats.JPEG.getDefaultExtension();
     private static final String[] ACCEPTED_EXTENSIONS = ImageFormats.JPEG.getExtensions();
 
+    /**
+     * Checks if the segment is an EXIF APP1 segment.
+     *
+     * @param segment the segment.
+     * @return true if EXIF APP1 segment, false otherwise.
+     */
     public static boolean isExifApp1Segment(final AbstractGenericSegment segment) {
         return JpegConstants.EXIF_IDENTIFIER_CODE.isStartOf(segment.getSegmentData());
     }
@@ -226,6 +235,15 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
         return new JpegImagingParameters();
     }
 
+    /**
+     * Gets EXIF metadata.
+     *
+     * @param byteSource the byte source.
+     * @param params the TIFF imaging parameters.
+     * @return the EXIF metadata or null if not found.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     public TiffImageMetadata getExifMetadata(final ByteSource byteSource, TiffImagingParameters params) throws ImagingException, IOException {
         final byte[] bytes = getExifRawData(byteSource);
         if (null == bytes) {
@@ -240,6 +258,14 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
         return (TiffImageMetadata) new TiffImageParser().getMetadata(bytes, params);
     }
 
+    /**
+     * Gets raw EXIF data.
+     *
+     * @param byteSource the byte source.
+     * @return the raw EXIF data or null if not found.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     public byte[] getExifRawData(final ByteSource byteSource) throws ImagingException, IOException {
         final List<AbstractSegment> abstractSegments = readSegments(byteSource, new int[] { JpegConstants.JPEG_APP1_MARKER, }, false);
 

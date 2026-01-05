@@ -25,13 +25,27 @@ import java.util.Map;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 
+/**
+ * LZW compressor implementation.
+ */
 public class MyLzwCompressor {
+
+    /**
+     * Byte array wrapper for hash map keys.
+     */
     private static final class ByteArray {
         private final byte[] bytes;
         private final int start;
         private final int length;
         private final int hash;
 
+        /**
+         * Constructs a byte array wrapper.
+         *
+         * @param bytes the bytes.
+         * @param start the start index.
+         * @param length the length.
+         */
         ByteArray(final byte[] bytes, final int start, final int length) {
             this.bytes = bytes;
             this.start = start;
@@ -75,13 +89,38 @@ public class MyLzwCompressor {
         }
     }
 
+    /**
+     * Listener interface for LZW compression events.
+     */
     public interface Listener {
+
+        /**
+         * Called for clear code.
+         *
+         * @param code the code.
+         */
         void clearCode(int code);
 
+        /**
+         * Called for data code.
+         *
+         * @param code the code.
+         */
         void dataCode(int code);
 
+        /**
+         * Called for end of information code.
+         *
+         * @param code the code.
+         */
         void eoiCode(int code);
 
+        /**
+         * Initializes the listener.
+         *
+         * @param clearCode the clear code.
+         * @param eoiCode the end of information code.
+         */
         void init(int clearCode, int eoiCode);
     }
 
@@ -98,10 +137,25 @@ public class MyLzwCompressor {
 
     private final Map<ByteArray, Integer> map = new HashMap<>();
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param initialCodeSize the initial code size.
+     * @param byteOrder the byte order.
+     * @param earlyLimit whether to use early limit.
+     */
     public MyLzwCompressor(final int initialCodeSize, final ByteOrder byteOrder, final boolean earlyLimit) {
         this(initialCodeSize, byteOrder, earlyLimit, null);
     }
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param initialCodeSize the initial code size.
+     * @param byteOrder the byte order.
+     * @param earlyLimit whether to use early limit.
+     * @param listener the listener.
+     */
     public MyLzwCompressor(final int initialCodeSize, final ByteOrder byteOrder, final boolean earlyLimit, final Listener listener) {
         this.listener = listener;
         this.byteOrder = byteOrder;
@@ -172,6 +226,13 @@ public class MyLzwCompressor {
         return code;
     }
 
+    /**
+     * Compresses data using LZW compression.
+     *
+     * @param bytes the bytes to compress.
+     * @return the compressed bytes.
+     * @throws IOException if an I/O error occurs.
+     */
     public byte[] compress(final byte[] bytes) throws IOException {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream(Allocator.checkByteArray(bytes.length));
                 MyBitOutputStream bos = new MyBitOutputStream(baos, byteOrder)) {

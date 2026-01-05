@@ -23,6 +23,14 @@ import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
  * A TIFF tag whose definition isn't known.
  */
 public final class TagInfoUnknown extends TagInfoByte {
+
+    /**
+     * Constructs a new instance.
+     *
+     * @param name the tag name.
+     * @param tag the tag number.
+     * @param exifDirectory the EXIF directory.
+     */
     public TagInfoUnknown(final String name, final int tag, final TiffDirectoryType exifDirectory) {
         super(name, tag, AbstractFieldType.ANY, exifDirectory);
     }
