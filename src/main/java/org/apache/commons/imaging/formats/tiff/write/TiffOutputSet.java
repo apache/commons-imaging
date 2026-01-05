@@ -30,20 +30,42 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.internal.Debug;
 
+/**
+ * Represents a complete TIFF output set containing multiple directories.
+ */
 public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
 
     private static final String NEWLINE = System.lineSeparator();
+
+    /**
+     * The byte order for this output set.
+     */
     public final ByteOrder byteOrder;
+
     private final List<TiffOutputDirectory> directories = new ArrayList<>();
 
+    /**
+     * Constructs a new instance with default byte order.
+     */
     public TiffOutputSet() {
         this(DEFAULT_TIFF_BYTE_ORDER);
     }
 
+    /**
+     * Constructs a new instance with the specified byte order.
+     *
+     * @param byteOrder the byte order.
+     */
     public TiffOutputSet(final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
     }
 
+    /**
+     * Adds a directory to this output set.
+     *
+     * @param directory the directory to add.
+     * @throws ImagingException if a directory of that type already exists.
+     */
     public void addDirectory(final TiffOutputDirectory directory) throws ImagingException {
         if (null != findDirectory(directory.getType())) {
             throw new ImagingException("Output set already contains a directory of that type.");
@@ -51,18 +73,36 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
         directories.add(directory);
     }
 
+    /**
+     * Adds an EXIF directory to this output set.
+     *
+     * @return the new EXIF directory.
+     * @throws ImagingException if an EXIF directory already exists.
+     */
     public TiffOutputDirectory addExifDirectory() throws ImagingException {
         final TiffOutputDirectory result = new TiffOutputDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_EXIF, byteOrder);
         addDirectory(result);
         return result;
     }
 
+    /**
+     * Adds a GPS directory to this output set.
+     *
+     * @return the new GPS directory.
+     * @throws ImagingException if a GPS directory already exists.
+     */
     public TiffOutputDirectory addGpsDirectory() throws ImagingException {
         final TiffOutputDirectory result = new TiffOutputDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_GPS, byteOrder);
         addDirectory(result);
         return result;
     }
 
+    /**
+     * Adds an Interoperability directory to this output set.
+     *
+     * @return the new Interoperability directory.
+     * @throws ImagingException if an Interoperability directory already exists.
+     */
     public TiffOutputDirectory addInteroperabilityDirectory() throws ImagingException {
         getOrCreateExifDirectory();
 
@@ -71,16 +111,31 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
         return result;
     }
 
+    /**
+     * Adds a Root directory to this output set.
+     *
+     * @return the new Root directory.
+     * @throws ImagingException if a Root directory already exists.
+     */
     public TiffOutputDirectory addRootDirectory() throws ImagingException {
         final TiffOutputDirectory result = new TiffOutputDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT, byteOrder);
         addDirectory(result);
         return result;
     }
 
+    /**
+     * Dumps the content of this TIFF output set to the debug output.
+     */
     public void dump() {
         Debug.debug(this.toString());
     }
 
+    /**
+     * Finds a directory of the specified type in this output set.
+     *
+     * @param directoryType the type of the directory to find.
+     * @return the found directory, or null if no such directory exists.
+     */
     public TiffOutputDirectory findDirectory(final int directoryType) {
         for (final TiffOutputDirectory directory : directories) {
             if (directory.getType() == directoryType) {
@@ -90,6 +145,12 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
         return null;
     }
 
+    /**
+     * Finds a field with the specified tag in this output set.
+     *
+     * @param tag the tag of the field to find.
+     * @return the found field, or null if no such field exists.
+     */
     public TiffOutputField findField(final int tag) {
         for (final TiffOutputDirectory directory : directories) {
             final TiffOutputField field = directory.findField(tag);
@@ -100,26 +161,58 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
         return null;
     }
 
+    /**
+     * Finds a field with the specified tag info in this output set.
+     *
+     * @param tagInfo the tag info of the field to find.
+     * @return the found field, or null if no such field exists.
+     */
     public TiffOutputField findField(final TagInfo tagInfo) {
         return findField(tagInfo.tag);
     }
 
+    /**
+     * Gets a list of all directories in this output set.
+     *
+     * @return a list of all directories.
+     */
     public List<TiffOutputDirectory> getDirectories() {
         return new ArrayList<>(directories);
     }
 
+    /**
+     * Gets the EXIF directory in this output set.
+     *
+     * @return the EXIF directory, or null if no EXIF directory exists.
+     */
     public TiffOutputDirectory getExifDirectory() {
         return findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_EXIF);
     }
 
+    /**
+     * Gets the GPS directory in this output set.
+     *
+     * @return the GPS directory, or null if no GPS directory exists.
+     */
     public TiffOutputDirectory getGpsDirectory() {
         return findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_GPS);
     }
 
+    /**
+     * Gets the Interoperability directory in this output set.
+     *
+     * @return the Interoperability directory, or null if no Interoperability directory exists.
+     */
     public TiffOutputDirectory getInteroperabilityDirectory() {
         return findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_INTEROPERABILITY);
     }
 
+    /**
+     * Gets the EXIF directory in this output set, creating it if it doesn't exist.
+     *
+     * @return the EXIF directory.
+     * @throws ImagingException if it fails to create the directory.
+     */
     public TiffOutputDirectory getOrCreateExifDirectory() throws ImagingException {
         // EXIF directory requires root directory.
         getOrCreateRootDirectory();
@@ -131,6 +224,12 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
         return addExifDirectory();
     }
 
+    /**
+     * Gets the GPS directory in this output set, creating it if it doesn't exist.
+     *
+     * @return the GPS directory.
+     * @throws ImagingException if it fails to create the directory.
+     */
     public TiffOutputDirectory getOrCreateGpsDirectory() throws ImagingException {
         // GPS directory requires EXIF directory
         getOrCreateExifDirectory();
@@ -142,6 +241,12 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
         return addGpsDirectory();
     }
 
+    /**
+     * Gets the Root directory in this output set, creating it if it doesn't exist.
+     *
+     * @return the Root directory.
+     * @throws ImagingException if it fails to create the directory.
+     */
     public TiffOutputDirectory getOrCreateRootDirectory() throws ImagingException {
         final TiffOutputDirectory result = findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT);
         if (null != result) {
@@ -150,6 +255,13 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
         return addRootDirectory();
     }
 
+    /**
+     * Gets all output items from all directories in this output set.
+     *
+     * @param outputSummary the output summary.
+     * @return the list of all output items.
+     * @throws ImagingException if an error occurs.
+     */
     protected List<AbstractTiffOutputItem> getOutputItems(final TiffOutputSummary outputSummary) throws ImagingException {
         final List<AbstractTiffOutputItem> result = new ArrayList<>();
 
@@ -160,10 +272,20 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
         return result;
     }
 
+    /**
+     * Gets the Root directory in this output set.
+     *
+     * @return the Root directory.
+     */
     public TiffOutputDirectory getRootDirectory() {
         return findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT);
     }
 
+    /**
+     * Checks if this output set is empty (i.e., contains no directories).
+     *
+     * @return true if this output set is empty, false otherwise.
+     */
     public boolean isEmpty() {
         return directories.isEmpty();
     }
@@ -173,12 +295,22 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
         return directories.iterator();
     }
 
+    /**
+     * Removes a field with the specified tag from all directories in this output set.
+     *
+     * @param tag the tag of the field to remove.
+     */
     public void removeField(final int tag) {
         for (final TiffOutputDirectory directory : directories) {
             directory.removeField(tag);
         }
     }
 
+    /**
+     * Removes a field with the specified tag info from all directories in this output set.
+     *
+     * @param tagInfo the tag info of the field to remove.
+     */
     public void removeField(final TagInfo tagInfo) {
         removeField(tagInfo.tag);
     }
@@ -244,6 +376,12 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
         return toString(null);
     }
 
+    /**
+     * Gets a string representation with optional prefix.
+     *
+     * @param prefix the prefix, or null.
+     * @return the string representation.
+     */
     public String toString(String prefix) {
         if (prefix == null) {
             prefix = "";

@@ -57,21 +57,51 @@ abstract class AbstractTiffOutputItem {
         }
     }
 
+    /**
+     * Undefined offset value constant.
+     */
     public static final long UNDEFINED_VALUE = -1;
 
     private long offset = UNDEFINED_VALUE;
 
+    /**
+     * Gets a description of this item.
+     *
+     * @return the item description.
+     */
     public abstract String getItemDescription();
 
+    /**
+     * Gets the length of this item in bytes.
+     *
+     * @return the item length.
+     */
     public abstract int getItemLength();
 
+    /**
+     * Gets the offset of this item.
+     *
+     * @return the offset.
+     */
     protected long getOffset() {
         return offset;
     }
 
+    /**
+     * Sets the offset of this item.
+     *
+     * @param offset the offset.
+     */
     protected void setOffset(final long offset) {
         this.offset = offset;
     }
 
+    /**
+     * Writes this item to the output stream.
+     *
+     * @param bos the output stream.
+     * @throws IOException if an I/O error occurs.
+     * @throws ImagingException if an imaging error occurs.
+     */
     public abstract void writeItem(AbstractBinaryOutputStream bos) throws IOException, ImagingException;
 }

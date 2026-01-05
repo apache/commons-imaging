@@ -27,22 +27,58 @@ import org.apache.commons.imaging.common.AbstractBinaryOutputStream;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 
+/**
+ * Represents a TIFF output field.
+ */
 public class TiffOutputField {
     private static final String NEWLINE = System.lineSeparator();
 
+    /**
+     * Creates an offset field.
+     *
+     * @param tagInfo the tag info.
+     * @param byteOrder the byte order.
+     * @return the offset field.
+     * @throws ImagingException if an error occurs.
+     */
     protected static TiffOutputField createOffsetField(final TagInfo tagInfo, final ByteOrder byteOrder) throws ImagingException {
         return new TiffOutputField(tagInfo, AbstractFieldType.LONG, 1, AbstractFieldType.LONG.writeData(0, byteOrder));
     }
 
+    /**
+     * The tag number.
+     */
     public final int tag;
+
+    /**
+     * The tag info.
+     */
     public final TagInfo tagInfo;
+
+    /**
+     * The field type.
+     */
     public final AbstractFieldType abstractFieldType;
+
+    /**
+     * The value count.
+     */
     public final int count;
+
     private byte[] bytes;
     private final AbstractTiffOutputItem.Value separateValueItem;
 
     private int sortHint = -1;
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param tag the tag number.
+     * @param tagInfo the tag info.
+     * @param abstractFieldType the field type.
+     * @param count the value count.
+     * @param bytes the field data.
+     */
     public TiffOutputField(final int tag, final TagInfo tagInfo, final AbstractFieldType abstractFieldType, final int count, final byte[] bytes) {
         this.tag = tag;
         this.tagInfo = tagInfo;
@@ -58,6 +94,14 @@ public class TiffOutputField {
         }
     }
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param tagInfo the tag info.
+     * @param abstractFieldType the field type.
+     * @param count the value count.
+     * @param bytes the field data.
+     */
     public TiffOutputField(final TagInfo tagInfo, final AbstractFieldType abstractFieldType, final int count, final byte[] bytes) {
         this(tagInfo.tag, tagInfo, abstractFieldType, count, bytes);
     }
@@ -71,14 +115,29 @@ public class TiffOutputField {
         return Arrays.copyOf(this.bytes, this.bytes.length);
     }
 
+    /**
+     * Gets the separate value item if this field is not a local value.
+     *
+     * @return the separate value item, or null.
+     */
     protected AbstractTiffOutputItem getSeperateValue() {
         return separateValueItem;
     }
 
+    /**
+     * Gets the sort hint.
+     *
+     * @return the sort hint.
+     */
     public int getSortHint() {
         return sortHint;
     }
 
+    /**
+     * Checks if this field's value fits in the tag entry.
+     *
+     * @return true if the value is local.
+     */
     protected final boolean isLocalValue() {
         return bytes.length <= ENTRY_MAX_VALUE_LENGTH;
     }
@@ -108,6 +167,11 @@ public class TiffOutputField {
         // + tagInfo.getDescription());
     }
 
+    /**
+     * Sets the sort hint for this field.
+     *
+     * @param sortHint the sort hint.
+     */
     public void setSortHint(final int sortHint) {
         this.sortHint = sortHint;
     }
@@ -117,6 +181,12 @@ public class TiffOutputField {
         return toString(null);
     }
 
+    /**
+     * Gets a string representation with optional prefix.
+     *
+     * @param prefix the prefix, or null.
+     * @return the string representation.
+     */
     public String toString(String prefix) {
         if (prefix == null) {
             prefix = "";
@@ -139,6 +209,13 @@ public class TiffOutputField {
         return result.toString();
     }
 
+    /**
+     * Writes this field to the output stream.
+     *
+     * @param bos the output stream.
+     * @throws IOException if an I/O error occurs.
+     * @throws ImagingException if an imaging error occurs.
+     */
     protected void writeField(final AbstractBinaryOutputStream bos) throws IOException, ImagingException {
         bos.write2Bytes(tag);
         bos.write2Bytes(abstractFieldType.getType());

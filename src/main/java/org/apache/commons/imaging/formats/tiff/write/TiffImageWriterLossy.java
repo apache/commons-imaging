@@ -26,12 +26,23 @@ import java.util.List;
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.AbstractBinaryOutputStream;
 
+/**
+ * TIFF lossy image writer.
+ */
 public class TiffImageWriterLossy extends AbstractTiffImageWriter {
 
+    /**
+     * Constructs a new instance with default byte order.
+     */
     public TiffImageWriterLossy() {
         // with default byte order
     }
 
+    /**
+     * Constructs a new instance with the specified byte order.
+     *
+     * @param byteOrder the byte order.
+     */
     public TiffImageWriterLossy(final ByteOrder byteOrder) {
         super(byteOrder);
     }
