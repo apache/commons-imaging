@@ -23,9 +23,18 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImagingException;
 
+/**
+ * Transparency filter for grayscale PNG images.
+ */
 public final class TransparencyFilterGrayscale extends AbstractTransparencyFilter {
     private final int transparentColor;
 
+    /**
+     * Constructs a new transparency filter for grayscale images.
+     *
+     * @param bytes the transparency chunk data.
+     * @throws IOException if an I/O error occurs.
+     */
     public TransparencyFilterGrayscale(final byte[] bytes) throws IOException {
         super(bytes);
 

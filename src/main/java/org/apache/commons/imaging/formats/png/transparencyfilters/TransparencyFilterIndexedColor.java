@@ -20,8 +20,16 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImagingException;
 
+/**
+ * Transparency filter for indexed color PNG images.
+ */
 public class TransparencyFilterIndexedColor extends AbstractTransparencyFilter {
 
+    /**
+     * Constructs a new transparency filter for indexed color images.
+     *
+     * @param bytes the transparency chunk data.
+     */
     public TransparencyFilterIndexedColor(final byte[] bytes) {
         super(bytes);
     }

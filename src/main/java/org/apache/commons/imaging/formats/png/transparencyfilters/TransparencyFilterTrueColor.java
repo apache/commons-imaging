@@ -23,9 +23,18 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImagingException;
 
+/**
+ * Transparency filter for true color PNG images.
+ */
 public final class TransparencyFilterTrueColor extends AbstractTransparencyFilter {
     private final int transparentColor;
 
+    /**
+     * Constructs a new transparency filter for true color images.
+     *
+     * @param bytes the transparency chunk data.
+     * @throws IOException if an I/O error occurs.
+     */
     public TransparencyFilterTrueColor(final byte[] bytes) throws IOException {
         super(bytes);
 
