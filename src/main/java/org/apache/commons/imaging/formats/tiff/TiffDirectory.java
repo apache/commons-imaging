@@ -65,6 +65,13 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoXpString;
 public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffField> {
 
     public static final class ImageDataElement extends AbstractTiffElement {
+
+        /**
+         * Constructs a new instance.
+         *
+         * @param offset the offset.
+         * @param length the length.
+         */
         public ImageDataElement(final long offset, final int length) {
             super(offset, length);
         }
@@ -75,6 +82,12 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         }
     }
 
+    /**
+     * Gets a description for a directory type.
+     *
+     * @param type the directory type.
+     * @return the description.
+     */
     public static String description(final int type) {
         switch (type) {
         case TiffDirectoryConstants.DIRECTORY_TYPE_UNKNOWN:
@@ -104,14 +117,35 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
      */
     private final ByteOrder headerByteOrder;
 
+    /**
+     * JPEG image data if present.
+     */
     private JpegImageData jpegImageData;
 
+    /**
+     * Offset to the next directory.
+     */
     private final long nextDirectoryOffset;
 
+    /**
+     * TIFF image data if present.
+     */
     private AbstractTiffImageData abstractTiffImageData;
 
+    /**
+     * The directory type.
+     */
     public final int type;
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param type the directory type.
+     * @param entries the list of fields.
+     * @param offset the offset.
+     * @param nextDirectoryOffset the next directory offset.
+     * @param byteOrder the byte order.
+     */
     public TiffDirectory(final int type, final List<TiffField> entries, final long offset, final long nextDirectoryOffset, final ByteOrder byteOrder) {
         super(offset,
                 TiffConstants.DIRECTORY_HEADER_LENGTH + entries.size() * TiffConstants.ENTRY_LENGTH + TiffConstants.DIRECTORY_FOOTER_LENGTH);
@@ -122,19 +156,42 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         this.headerByteOrder = byteOrder;
     }
 
+    /**
+     * Gets a description of this directory's type.
+     *
+     * @return the description.
+     */
     public String description() {
         return description(type);
     }
 
+    /**
+     * Dumps all field information for debugging.
+     */
     public void dump() {
         entries.forEach(TiffField::dump);
     }
 
+    /**
+     * Finds a field by tag.
+     *
+     * @param tag the tag to search for.
+     * @return the field, or null if not found.
+     * @throws ImagingException if an error occurs.
+     */
     public TiffField findField(final TagInfo tag) throws ImagingException {
         final boolean failIfMissing = false;
         return findField(tag, failIfMissing);
     }
 
+    /**
+     * Finds a field by tag.
+     *
+     * @param tag the tag to search for.
+     * @param failIfMissing whether to throw an exception if not found.
+     * @return the field, or null if not found.
+     * @throws ImagingException if an error occurs or field is missing and failIfMissing is true.
+     */
     public TiffField findField(final TagInfo tag, final boolean failIfMissing) throws ImagingException {
         for (final TiffField field : entries) {
             if (field.getTag() == tag.tag) {
@@ -158,6 +215,11 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return headerByteOrder;
     }
 
+    /**
+     * Gets a copy of all directory entries.
+     *
+     * @return the list of fields.
+     */
     public List<TiffField> getDirectoryEntries() {
         return new ArrayList<>(entries);
     }
@@ -176,6 +238,13 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return result.toString();
     }
 
+    /**
+     * Gets the value of a field.
+     *
+     * @param tag the tag.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs.
+     */
     public Object getFieldValue(final TagInfo tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -184,6 +253,14 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return field.getValue();
     }
 
+    /**
+     * Gets the value of an ASCII field.
+     *
+     * @param tag the tag.
+     * @param mustExist whether the field must exist.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs or field is missing and mustExist is true.
+     */
     public String[] getFieldValue(final TagInfoAscii tag, final boolean mustExist) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -202,6 +279,13 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of a byte field.
+     *
+     * @param tag the tag.
+     * @return the field value.
+     * @throws ImagingException if an error occurs or field is missing.
+     */
     public byte getFieldValue(final TagInfoByte tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -216,6 +300,14 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return field.getByteArrayValue()[0];
     }
 
+    /**
+     * Gets the value of a bytes field.
+     *
+     * @param tag the tag.
+     * @param mustExist whether the field must exist.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs or field is missing and mustExist is true.
+     */
     public byte[] getFieldValue(final TagInfoBytes tag, final boolean mustExist) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -233,6 +325,13 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return field.getByteArrayValue();
     }
 
+    /**
+     * Gets the value of a double field.
+     *
+     * @param tag the tag.
+     * @return the field value.
+     * @throws ImagingException if an error occurs or field is missing.
+     */
     public double getFieldValue(final TagInfoDouble tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -248,6 +347,14 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of a doubles field.
+     *
+     * @param tag the tag.
+     * @param mustExist whether the field must exist.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs or field is missing and mustExist is true.
+     */
     public double[] getFieldValue(final TagInfoDoubles tag, final boolean mustExist) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -266,6 +373,13 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of a float field.
+     *
+     * @param tag the tag.
+     * @return the field value.
+     * @throws ImagingException if an error occurs or field is missing.
+     */
     public float getFieldValue(final TagInfoFloat tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -281,6 +395,14 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of a floats field.
+     *
+     * @param tag the tag.
+     * @param mustExist whether the field must exist.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs or field is missing and mustExist is true.
+     */
     public float[] getFieldValue(final TagInfoFloats tag, final boolean mustExist) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -299,6 +421,14 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of a GPS text field.
+     *
+     * @param tag the tag.
+     * @param mustExist whether the field must exist.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs or field is missing and mustExist is true.
+     */
     public String getFieldValue(final TagInfoGpsText tag, final boolean mustExist) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -307,9 +437,22 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
             }
             return null;
         }
+        if (!tag.dataTypes.contains(field.getFieldType())) {
+            if (mustExist) {
+                throw new ImagingException("Required field \"" + tag.name + "\" has incorrect type " + field.getFieldType().getName());
+            }
+            return null;
+        }
         return tag.getValue(field);
     }
 
+    /**
+     * Gets the value of a long field.
+     *
+     * @param tag the tag.
+     * @return the field value.
+     * @throws ImagingException if an error occurs or field is missing.
+     */
     public int getFieldValue(final TagInfoLong tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -325,6 +468,14 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of a longs field.
+     *
+     * @param tag the tag.
+     * @param mustExist whether the field must exist.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs or field is missing and mustExist is true.
+     */
     public int[] getFieldValue(final TagInfoLongs tag, final boolean mustExist) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -343,6 +494,13 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of a rational field.
+     *
+     * @param tag the tag.
+     * @return the field value.
+     * @throws ImagingException if an error occurs or field is missing.
+     */
     public RationalNumber getFieldValue(final TagInfoRational tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -358,6 +516,14 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of a rationals field.
+     *
+     * @param tag the tag.
+     * @param mustExist whether the field must exist.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs or field is missing and mustExist is true.
+     */
     public RationalNumber[] getFieldValue(final TagInfoRationals tag, final boolean mustExist) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -376,6 +542,13 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of a signed byte field.
+     *
+     * @param tag the tag.
+     * @return the field value.
+     * @throws ImagingException if an error occurs or field is missing.
+     */
     public byte getFieldValue(final TagInfoSByte tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -390,6 +563,14 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return field.getByteArrayValue()[0];
     }
 
+    /**
+     * Gets the value of a signed bytes field.
+     *
+     * @param tag the tag.
+     * @param mustExist whether the field must exist.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs or field is missing and mustExist is true.
+     */
     public byte[] getFieldValue(final TagInfoSBytes tag, final boolean mustExist) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -407,6 +588,13 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return field.getByteArrayValue();
     }
 
+    /**
+     * Gets the value of a short field.
+     *
+     * @param tag the tag.
+     * @return the field value.
+     * @throws ImagingException if an error occurs or field is missing.
+     */
     public short getFieldValue(final TagInfoShort tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -422,6 +610,14 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of a short or long field.
+     *
+     * @param tag the tag.
+     * @param mustExist whether the field must exist.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs or field is missing and mustExist is true.
+     */
     public int[] getFieldValue(final TagInfoShortOrLong tag, final boolean mustExist) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -443,6 +639,14 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return ByteConversions.toInts(bytes, field.getByteOrder());
     }
 
+    /**
+     * Gets the value of a shorts field.
+     *
+     * @param tag the tag.
+     * @param mustExist whether the field must exist.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs or field is missing and mustExist is true.
+     */
     public short[] getFieldValue(final TagInfoShorts tag, final boolean mustExist) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -461,6 +665,13 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of a signed long field.
+     *
+     * @param tag the tag.
+     * @return the field value.
+     * @throws ImagingException if an error occurs or field is missing.
+     */
     public int getFieldValue(final TagInfoSLong tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -476,6 +687,14 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of a signed longs field.
+     *
+     * @param tag the tag.
+     * @param mustExist whether the field must exist.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs or field is missing and mustExist is true.
+     */
     public int[] getFieldValue(final TagInfoSLongs tag, final boolean mustExist) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -494,6 +713,13 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of a signed rational field.
+     *
+     * @param tag the tag.
+     * @return the field value.
+     * @throws ImagingException if an error occurs or field is missing.
+     */
     public RationalNumber getFieldValue(final TagInfoSRational tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -509,6 +735,14 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of a signed rationals field.
+     *
+     * @param tag the tag.
+     * @param mustExist whether the field must exist.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs or field is missing and mustExist is true.
+     */
     public RationalNumber[] getFieldValue(final TagInfoSRationals tag, final boolean mustExist) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -527,6 +761,13 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of a signed short field.
+     *
+     * @param tag the tag.
+     * @return the field value.
+     * @throws ImagingException if an error occurs or field is missing.
+     */
     public short getFieldValue(final TagInfoSShort tag) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -542,6 +783,14 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of a signed shorts field.
+     *
+     * @param tag the tag.
+     * @param mustExist whether the field must exist.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs or field is missing and mustExist is true.
+     */
     public short[] getFieldValue(final TagInfoSShorts tag, final boolean mustExist) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -560,6 +809,14 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
+    /**
+     * Gets the value of an XP string field.
+     *
+     * @param tag the tag.
+     * @param mustExist whether the field must exist.
+     * @return the field value, or null if not found.
+     * @throws ImagingException if an error occurs or field is missing and mustExist is true.
+     */
     public String getFieldValue(final TagInfoXpString tag, final boolean mustExist) throws ImagingException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -568,13 +825,30 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
             }
             return null;
         }
+        if (!tag.dataTypes.contains(field.getFieldType())) {
+            if (mustExist) {
+                throw new ImagingException("Required field \"" + tag.name + "\" has incorrect type " + field.getFieldType().getName());
+            }
+            return null;
+        }
         return tag.getValue(field);
     }
 
+    /**
+     * Gets the JPEG image data.
+     *
+     * @return the JPEG image data, or null if not available.
+     */
     public JpegImageData getJpegImageData() {
         return jpegImageData;
     }
 
+    /**
+     * Gets the JPEG raw image data element.
+     *
+     * @return the image data element.
+     * @throws ImagingException if an error occurs.
+     */
     public ImageDataElement getJpegRawImageDataElement() throws ImagingException {
         final TiffField jpegInterchangeFormat = findField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT);
         final TiffField jpegInterchangeFormatLength = findField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT_LENGTH);
@@ -588,6 +862,11 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         throw new ImagingException("Couldn't find image data.");
     }
 
+    /**
+     * Gets the offset to the next directory.
+     *
+     * @return the next directory offset.
+     */
     public long getNextDirectoryOffset() {
         return nextDirectoryOffset;
     }
@@ -599,9 +878,11 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
      * TIFF directories that provide numerical data do not directly specify images, though it is possible to interpret the data as an image using this library.
      * TIFF files may contain multiple directories which are allowed to have different formats. Thus it is possible for a TIFF file to contain a mix of image
      * and floating-point raster data.
+     * </p>
      * <p>
      * If desired, sub-image data can be read from the file by using a Java Map instance to specify the subsection of the image that is required. The following
      * code illustrates the approach:
+     * </p>
      *
      * <pre>
      * int x; // coordinate (column) of corner of sub-image
@@ -617,10 +898,10 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
      * TiffRasterData raster = directory.readFloatingPointRasterData(params);
      * </pre>
      *
-     * @param params an optional parameter map instance
-     * @return a valid instance
-     * @throws ImagingException in the event of incompatible or malformed data
-     * @throws IOException      in the event of an I/O error
+     * @param params an optional parameter map instance.
+     * @return a valid instance.
+     * @throws ImagingException in the event of incompatible or malformed data.
+     * @throws IOException      in the event of an I/O error.
      */
     public AbstractTiffRasterData getRasterData(final TiffImagingParameters params) throws ImagingException, IOException {
 
@@ -628,6 +909,14 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return parser.getRasterData(this, headerByteOrder, params);
     }
 
+    /**
+     * Gets raw image data elements from offset and byte count fields.
+     *
+     * @param offsetsField the offsets field.
+     * @param byteCountsField the byte counts field.
+     * @return the list of image data elements.
+     * @throws ImagingException if an error occurs.
+     */
     private List<ImageDataElement> getRawImageDataElements(final TiffField offsetsField, final TiffField byteCountsField) throws ImagingException {
         final long[] offsets = offsetsField.getLongArrayValue();
         final int[] byteCounts = byteCountsField.getIntArrayValue();
@@ -643,6 +932,13 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return result;
     }
 
+    /**
+     * Gets a single ASCII field value.
+     *
+     * @param tag the tag.
+     * @return the field value.
+     * @throws ImagingException if an error occurs or field is missing.
+     */
     public String getSingleFieldValue(final TagInfoAscii tag) throws ImagingException {
         final String[] result = getFieldValue(tag, true);
         if (result.length != 1) {
@@ -651,6 +947,13 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return result[0];
     }
 
+    /**
+     * Gets a single short or long field value.
+     *
+     * @param tag the tag.
+     * @return the field value.
+     * @throws ImagingException if an error occurs or field is missing.
+     */
     public int getSingleFieldValue(final TagInfoShortOrLong tag) throws ImagingException {
         final int[] result = getFieldValue(tag, true);
         if (result.length != 1) {
@@ -728,10 +1031,21 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return new TiffImageParser().getBufferedImage(this, headerByteOrder, params);
     }
 
+    /**
+     * Gets the TIFF image data.
+     *
+     * @return the TIFF image data, or null if not available.
+     */
     public AbstractTiffImageData getTiffImageData() {
         return abstractTiffImageData;
     }
 
+    /**
+     * Gets the raw TIFF image data elements.
+     *
+     * @return the list of image data elements.
+     * @throws ImagingException if an error occurs.
+     */
     public List<ImageDataElement> getTiffRawImageDataElements() throws ImagingException {
         final TiffField tileOffsets = findField(TiffTagConstants.TIFF_TAG_TILE_OFFSETS);
         final TiffField tileByteCounts = findField(TiffTagConstants.TIFF_TAG_TILE_BYTE_COUNTS);
@@ -747,6 +1061,12 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         throw new ImagingException("Couldn't find image data.");
     }
 
+    /**
+     * Checks if this directory has JPEG image data.
+     *
+     * @return true if JPEG image data is present, false otherwise.
+     * @throws ImagingException if an error occurs.
+     */
     public boolean hasJpegImageData() throws ImagingException {
         return null != findField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT);
     }
@@ -766,6 +1086,12 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
 
     }
 
+    /**
+     * Checks if this directory has TIFF image data.
+     *
+     * @return true if TIFF image data is present, false otherwise.
+     * @throws ImagingException if an error occurs.
+     */
     public boolean hasTiffImageData() throws ImagingException {
         if (null != findField(TiffTagConstants.TIFF_TAG_TILE_OFFSETS)) {
             return true;
@@ -790,6 +1116,12 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
                 || s[0] == TiffTagConstants.SAMPLE_FORMAT_VALUE_TWOS_COMPLEMENT_SIGNED_INTEGER);
     }
 
+    /**
+     * Checks if image data is stored in strips (as opposed to tiles).
+     *
+     * @return true if data is in strips, false if in tiles.
+     * @throws ImagingException if an error occurs.
+     */
     public boolean imageDataInStrips() throws ImagingException {
         final TiffField tileOffsets = findField(TiffTagConstants.TIFF_TAG_TILE_OFFSETS);
         final TiffField tileByteCounts = findField(TiffTagConstants.TIFF_TAG_TILE_BYTE_COUNTS);
@@ -810,14 +1142,29 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
         return entries.iterator();
     }
 
+    /**
+     * Sets the JPEG image data.
+     *
+     * @param value the JPEG image data.
+     */
     public void setJpegImageData(final JpegImageData value) {
         this.jpegImageData = value;
     }
 
+    /**
+     * Sets the TIFF image data.
+     *
+     * @param rawImageData the TIFF image data.
+     */
     public void setTiffImageData(final AbstractTiffImageData rawImageData) {
         this.abstractTiffImageData = rawImageData;
     }
 
+    /**
+     * Gets the number of fields in this directory.
+     *
+     * @return the number of fields.
+     */
     public int size() {
         return entries.size();
     }

@@ -35,6 +35,10 @@ import org.apache.commons.imaging.formats.jpeg.iptc.IptcParser;
  * Interface for Exif write/update/remove functionality for Jpeg/JFIF images.
  */
 public class JpegRewriter extends BinaryFileParser {
+
+    /**
+     * Abstracts JFIF pieces.
+     */
     protected abstract static class JFIFPiece {
         @Override
         public String toString() {
@@ -293,10 +297,27 @@ public class JpegRewriter extends BinaryFileParser {
         return new JFIFPieces(pieces, segmentPieces);
     }
 
+    /**
+     * Filters segments using a filter.
+     *
+     * @param <T> the piece type.
+     * @param segments the segments.
+     * @param filter the filter.
+     * @return the filtered segments.
+     */
     protected <T extends JFIFPiece> List<T> filterSegments(final List<T> segments, final SegmentFilter filter) {
         return filterSegments(segments, filter, false);
     }
 
+    /**
+     * Filters segments using a filter with optional reverse logic.
+     *
+     * @param <T> the piece type.
+     * @param segments the segments.
+     * @param filter the filter.
+     * @param reverse whether to reverse the filter logic.
+     * @return the filtered segments.
+     */
     protected <T extends JFIFPiece> List<T> filterSegments(final List<T> segments, final SegmentFilter filter, final boolean reverse) {
         final List<T> result = new ArrayList<>();
 

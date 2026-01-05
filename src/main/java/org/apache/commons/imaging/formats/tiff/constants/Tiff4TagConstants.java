@@ -31,13 +31,25 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
  */
 public final class Tiff4TagConstants {
 
+    /** TIFF tag for color response unit. */
     public static final TagInfoShort TIFF_TAG_COLOR_RESPONSE_UNIT = new TagInfoShort("ColorResponseUnit", 0x12C, TiffDirectoryType.TIFF_DIRECTORY_ROOT);
+
+    /** Color response unit value 0.1. */
     public static final int COLOR_RESPONSE_UNIT_VALUE_0_1 = 1;
+
+    /** Color response unit value 0.01. */
     public static final int COLOR_RESPONSE_UNIT_VALUE_0_01 = 2;
+
+    /** Color response unit value 0.001. */
     public static final int COLOR_RESPONSE_UNIT_VALUE_0_001 = 3;
+
+    /** Color response unit value 0.0001. */
     public static final int COLOR_RESPONSE_UNIT_VALUE_0_0001 = 4;
+
+    /** Color response unit value 0.00001. */
     public static final int COLOR_RESPONSE_UNIT_VALUE_0_00001 = 5;
 
+    /** List of all TIFF 4 tags. */
     public static final List<TagInfo> ALL_TIFF_4_TAGS = Collections.unmodifiableList(Arrays.<TagInfo>asList(TIFF_TAG_COLOR_RESPONSE_UNIT));
 
     private Tiff4TagConstants() {

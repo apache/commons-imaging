@@ -49,6 +49,9 @@ import org.apache.commons.imaging.formats.psd.datareaders.UncompressedDataReader
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
+/**
+ * Parses Adobe Photoshop PSD image files.
+ */
 public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> implements XmpEmbeddable {
 
     private static final String DEFAULT_EXTENSION = ImageFormats.PSD.getDefaultExtension();

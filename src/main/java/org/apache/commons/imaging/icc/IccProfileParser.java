@@ -177,10 +177,24 @@ public class IccProfileParser extends BinaryFileParser {
         }
     }
 
+    /**
+     * Checks if the ICC profile from file is sRGB.
+     *
+     * @param file the file.
+     * @return true if sRGB, false otherwise.
+     * @throws IOException if an I/O error occurs.
+     */
     public boolean isSrgb(final File file) throws IOException {
         return isSrgb(ByteSource.file(file));
     }
 
+    /**
+     * Checks if the ICC_Profile is sRGB.
+     *
+     * @param iccProfile the ICC profile.
+     * @return true if sRGB, false otherwise.
+     * @throws IOException if an I/O error occurs.
+     */
     public boolean isSrgb(final ICC_Profile iccProfile) throws IOException {
         return isSrgb(ByteSource.array(iccProfile.getData()));
     }

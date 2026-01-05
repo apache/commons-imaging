@@ -689,6 +689,15 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
         return "Jpeg-Custom";
     }
 
+    /**
+     * Gets Photoshop metadata.
+     *
+     * @param byteSource the byte source.
+     * @param params the imaging parameters.
+     * @return the Photoshop metadata or null if not found.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     public JpegPhotoshopMetadata getPhotoshopMetadata(final ByteSource byteSource, final JpegImagingParameters params) throws ImagingException, IOException {
         final List<AbstractSegment> abstractSegments = readSegments(byteSource, new int[] { JpegConstants.JPEG_APP13_MARKER, }, false);
 
@@ -718,11 +727,12 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
 
     /**
      * Extracts embedded XML metadata as XML string.
-     * <p>
      *
      * @param byteSource File containing image data.
      * @param params     Map of optional parameters, defined in ImagingConstants.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
      */
     @Override
     public String getXmpXml(final ByteSource byteSource, final XmpImagingParameters<JpegImagingParameters> params) throws ImagingException, IOException {
@@ -768,6 +778,14 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
         return result.get(0);
     }
 
+    /**
+     * Checks if the image has an EXIF segment.
+     *
+     * @param byteSource the byte source.
+     * @return true if EXIF segment is present, false otherwise.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     public boolean hasExifSegment(final ByteSource byteSource) throws ImagingException, IOException {
         final boolean[] result = { false, };
 
@@ -805,6 +823,14 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
         return result[0];
     }
 
+    /**
+     * Checks if the image has an IPTC segment.
+     *
+     * @param byteSource the byte source.
+     * @return true if IPTC segment is present, false otherwise.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     public boolean hasIptcSegment(final ByteSource byteSource) throws ImagingException, IOException {
         final boolean[] result = { false, };
 
@@ -842,6 +868,14 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
         return result[0];
     }
 
+    /**
+     * Checks if the image has an XMP segment.
+     *
+     * @param byteSource the byte source.
+     * @return true if XMP segment is present, false otherwise.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     public boolean hasXmpSegment(final ByteSource byteSource) throws ImagingException, IOException {
         final boolean[] result = { false, };
 
@@ -882,6 +916,16 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
         return ArrayUtils.contains(markers, marker);
     }
 
+    /**
+     * Reads segments from JPEG image.
+     *
+     * @param byteSource the byte source.
+     * @param markers the markers to read.
+     * @param returnAfterFirst whether to return after first match.
+     * @return the list of segments.
+     * @throws ImagingException if an imaging error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     public List<AbstractSegment> readSegments(final ByteSource byteSource, final int[] markers, final boolean returnAfterFirst)
             throws ImagingException, IOException {
         final List<AbstractSegment> result = new ArrayList<>();

@@ -372,7 +372,7 @@ public class IptcParser extends BinaryFileParser {
 
     // private void writeIPTCRecord(BinaryOutputStream bos, )
 
-    /*
+    /**
      * In practice, App13 segments are only used for Photoshop/IPTC metadata. However, we should not treat App13 signatures without Photoshop's signature as
      * Photoshop/IPTC segments.
      *

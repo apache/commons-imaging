@@ -24,18 +24,44 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.internal.Debug;
 
+/**
+ * The contents of a TIFF file including header, directories, and fields.
+ */
 public class TiffContents {
 
+    /**
+     * The TIFF header.
+     */
     public final TiffHeader header;
+
+    /**
+     * The list of TIFF directories.
+     */
     public final List<TiffDirectory> directories;
+
+    /**
+     * The list of TIFF fields.
+     */
     public final List<TiffField> tiffFields;
 
+    /**
+     * Constructs a new instance.
+     *
+     * @param tiffHeader the TIFF header.
+     * @param directories the list of directories.
+     * @param tiffFields the list of fields.
+     */
     public TiffContents(final TiffHeader tiffHeader, final List<TiffDirectory> directories, final List<TiffField> tiffFields) {
         this.header = tiffHeader;
         this.directories = Collections.unmodifiableList(directories);
         this.tiffFields = Collections.unmodifiableList(tiffFields);
     }
 
+    /**
+     * Dissects the TIFF structure for debugging purposes.
+     *
+     * @throws ImagingException if an error occurs during dissection.
+     */
     public void dissect() throws ImagingException {
         final List<AbstractTiffElement> elements = getElements();
 
@@ -63,6 +89,13 @@ public class TiffContents {
         Debug.debug();
     }
 
+    /**
+     * Finds a field by tag.
+     *
+     * @param tag the tag to search for.
+     * @return the field, or null if not found.
+     * @throws ImagingException if an error occurs during search.
+     */
     public TiffField findField(final TagInfo tag) throws ImagingException {
         for (final TiffDirectory directory : directories) {
             final TiffField field = directory.findField(tag);
@@ -74,6 +107,12 @@ public class TiffContents {
         return null;
     }
 
+    /**
+     * Gets all TIFF elements including header, directories, and field data.
+     *
+     * @return the list of elements.
+     * @throws ImagingException if an error occurs.
+     */
     public List<AbstractTiffElement> getElements() throws ImagingException {
         final List<AbstractTiffElement> result = new ArrayList<>();
 
