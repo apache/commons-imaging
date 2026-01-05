@@ -98,6 +98,8 @@ public final class WebPChunkVp8x extends AbstractWebPChunk {
     }
 
     /**
+     * Gets the canvas height.
+     *
      * @return the canvas height.
      */
     public int getCanvasHeight() {
@@ -105,6 +107,8 @@ public final class WebPChunkVp8x extends AbstractWebPChunk {
     }
 
     /**
+     * Gets the canvas width.
+     *
      * @return the canvas width.
      */
     public int getCanvasWidth() {
@@ -112,6 +116,8 @@ public final class WebPChunkVp8x extends AbstractWebPChunk {
     }
 
     /**
+     * Checks whether the chunk has alpha enabled.
+     *
      * @return whether the chunk has alpha enabled.
      */
     public boolean hasAlpha() {
@@ -119,6 +125,8 @@ public final class WebPChunkVp8x extends AbstractWebPChunk {
     }
 
     /**
+     * Checks if the chunk contains an animation.
+     *
      * @return if the chunk contains an animation.
      */
     public boolean hasAnimation() {
@@ -126,6 +134,8 @@ public final class WebPChunkVp8x extends AbstractWebPChunk {
     }
 
     /**
+     * Checks whether the chunk has EXIF data.
+     *
      * @return whether the chunk has EXIF data.
      */
     public boolean hasExif() {
@@ -133,6 +143,8 @@ public final class WebPChunkVp8x extends AbstractWebPChunk {
     }
 
     /**
+     * Checks whether the chunk has ICC enabled.
+     *
      * @return whether the chunk has ICC enabled.
      */
     public boolean hasIcc() {
@@ -140,6 +152,8 @@ public final class WebPChunkVp8x extends AbstractWebPChunk {
     }
 
     /**
+     * Checks whether the chunk has XMP.
+     *
      * @return whether the chunk has XMP.
      */
     public boolean hasXmp() {

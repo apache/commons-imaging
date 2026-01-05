@@ -85,6 +85,8 @@ public final class WebPChunkVp8l extends AbstractWebPChunk {
     }
 
     /**
+     * Gets the image height.
+     *
      * @return the image height.
      */
     public int getImageHeight() {
@@ -92,6 +94,8 @@ public final class WebPChunkVp8l extends AbstractWebPChunk {
     }
 
     /**
+     * Gets the image width.
+     *
      * @return the image width.
      */
     public int getImageWidth() {
@@ -99,6 +103,8 @@ public final class WebPChunkVp8l extends AbstractWebPChunk {
     }
 
     /**
+     * Gets the version number.
+     *
      * @return the version number.
      */
     public int getVersionNumber() {
@@ -106,6 +112,8 @@ public final class WebPChunkVp8l extends AbstractWebPChunk {
     }
 
     /**
+     * Checks whether the image has an alpha channel.
+     *
      * @return whether the image has an alpha channel or not.
      */
     public boolean hasAlpha() {

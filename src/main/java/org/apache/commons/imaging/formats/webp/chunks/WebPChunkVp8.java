@@ -130,6 +130,8 @@ public final class WebPChunkVp8 extends AbstractWebPChunk {
     }
 
     /**
+     * Gets the height of the image.
+     *
      * @return the height.
      */
     public int getHeight() {
@@ -137,6 +139,8 @@ public final class WebPChunkVp8 extends AbstractWebPChunk {
     }
 
     /**
+     * Gets the horizontal scale.
+     *
      * @return the horizontal scale.
      */
     public int getHorizontalScale() {
@@ -144,6 +148,8 @@ public final class WebPChunkVp8 extends AbstractWebPChunk {
     }
 
     /**
+     * Gets the version number.
+     *
      * @return the version number.
      */
     public int getVersionNumber() {
@@ -151,6 +157,8 @@ public final class WebPChunkVp8 extends AbstractWebPChunk {
     }
 
     /**
+     * Gets the vertical scale.
+     *
      * @return the vertical scale.
      */
     public int getVerticalScale() {
@@ -158,6 +166,8 @@ public final class WebPChunkVp8 extends AbstractWebPChunk {
     }
 
     /**
+     * Gets the width of the image.
+     *
      * @return the width.
      */
     public int getWidth() {

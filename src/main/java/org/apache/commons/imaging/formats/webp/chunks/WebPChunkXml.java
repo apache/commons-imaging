@@ -54,6 +54,8 @@ public final class WebPChunkXml extends AbstractWebPChunk {
     }
 
     /**
+     * Gets the XML content.
+     *
      * @return the XML.
      */
     public String getXml() {
