@@ -243,8 +243,8 @@ class ApacheImagingSpeedAndMemoryTest {
                 byteSource = null;
                 params = null;
                 tiffImageParser = null;
-            } catch (final IOException ioex) {
-                ioex.printStackTrace();
+            } catch (final IOException e) {
+                e.printStackTrace();
                 System.exit(-1);
             }
             try {
@@ -255,9 +255,10 @@ class ApacheImagingSpeedAndMemoryTest {
                 // suggesting that the code should be modified
                 Runtime.getRuntime().gc();
                 Thread.sleep(1000);
-            } catch (final InterruptedException iex) {
+            } catch (final InterruptedException e) {
                 // this isn't fatal, but shouldn't happen
-                iex.printStackTrace();
+                Thread.currentThread().interrupt();
+                e.printStackTrace();
             }
         }
     }
