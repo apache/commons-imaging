@@ -282,11 +282,15 @@ public class TiffImageMetadata extends GenericImageMetadata {
          */
         public double getLatitudeAsDegreesNorth() throws ImagingException {
             final double result = latitudeDegrees.doubleValue() + latitudeMinutes.doubleValue() / 60.0 + latitudeSeconds.doubleValue() / 3600.0;
-
-            if (latitudeRef.trim().equalsIgnoreCase("n")) {
+            /* Due to some HEIC file converters to JPG longitude and latitude strings gets converted from UNICODE 
+             * with wrong UTF-8 coding. e.g. North "N" have hex bytes hex:4e ef bf bd<br/>
+             * For that reason latitudeRef.trim().equalsIgnoreCase("n") fails. My suggestion 
+             * is to use substring(0, 1) instead of trim()
+             */
+            if (latitudeRef.substring(0, 1).equalsIgnoreCase("n")) {
                 return result;
             }
-            if (latitudeRef.trim().equalsIgnoreCase("s")) {
+            if (latitudeRef.substring(0, 1).equalsIgnoreCase("s")) {
                 return -result;
             }
             throw new ImagingException("Unknown latitude ref: \"" + latitudeRef + "\"");
@@ -301,10 +305,10 @@ public class TiffImageMetadata extends GenericImageMetadata {
         public double getLongitudeAsDegreesEast() throws ImagingException {
             final double result = longitudeDegrees.doubleValue() + longitudeMinutes.doubleValue() / 60.0 + longitudeSeconds.doubleValue() / 3600.0;
 
-            if (longitudeRef.trim().equalsIgnoreCase("e")) {
+            if (longitudeRef.substring(0, 1).equalsIgnoreCase("e")) {
                 return result;
             }
-            if (longitudeRef.trim().equalsIgnoreCase("w")) {
+            if (longitudeRef.substring(0, 1).equalsIgnoreCase("w")) {
                 return -result;
             }
             throw new ImagingException("Unknown longitude ref: \"" + longitudeRef + "\"");
