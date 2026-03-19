@@ -46,5 +46,10 @@
                 <a href="https://issues.apache.org/jira/browse/IMAGING-379">this issue</a> could be a good start.
             </p>
         </section>
-    </body>
+    <section name="Safe Deserialization">
+      <p>
+      For information about safe deserialization, please see <a href="https://commons.apache.org/io/description.html#Safe_Deserialization">Safe Deserialization</a>.
+      </p>
+    </section>
+  </body>
 </document>
