@@ -17,7 +17,7 @@
 package org.apache.commons.imaging.formats.tiff.constants;
 
 /**
- * TIFF directory types.
+ * Enumerates TIFF directory types.
  */
 public enum TiffDirectoryType {
 

@@ -17,7 +17,7 @@
 package org.apache.commons.imaging.formats.jpeg.iptc;
 
 /**
- * Enumeration of IPTC (International Press Telecommunications Council) metadata record types.
+ * Enumerates IPTC (International Press Telecommunications Council) metadata record types.
  */
 public enum IptcTypes implements IptcType {
 

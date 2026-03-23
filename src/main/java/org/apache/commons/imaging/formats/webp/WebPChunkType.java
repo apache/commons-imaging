@@ -33,7 +33,7 @@ import org.apache.commons.imaging.formats.webp.chunks.WebPChunkXml;
 import org.apache.commons.imaging.formats.webp.chunks.WebPChunkXyzw;
 
 /**
- * WebP chunk type.
+ * Enumerates WebP chunk types.
  *
  * @since 1.0.0-alpha4
  */

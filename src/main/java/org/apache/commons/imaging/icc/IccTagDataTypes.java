@@ -28,7 +28,7 @@ import java.util.logging.Logger;
 import org.apache.commons.imaging.ImagingException;
 
 /**
- * ICC tag data types enumeration.
+ * Enumerates ICC tag data types.
  */
 public enum IccTagDataTypes implements IccTagDataType {
 

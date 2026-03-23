@@ -33,7 +33,7 @@ import org.apache.commons.imaging.formats.png.chunks.PngChunkText;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkZtxt;
 
 /**
- * Type of PNG chunk.
+ * Enumerates types of PNG chunks.
  *
  * @see <a href="https://www.w3.org/TR/png/#11Chunks">Portable Network Graphics Specification - Chunk specifications</a>
  */

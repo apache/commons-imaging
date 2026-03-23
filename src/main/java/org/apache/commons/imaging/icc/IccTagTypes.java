@@ -18,7 +18,7 @@
 package org.apache.commons.imaging.icc;
 
 /**
- * Enumeration of ICC profile tag types.
+ * Enumerates of ICC profile tag types.
  */
 public enum IccTagTypes implements IccTagType {
 

@@ -28,7 +28,7 @@ import java.util.logging.Logger;
  */
 public class ImageInfo {
 
-    /** Color type enumeration for images. */
+    /** Enumerates Color types for images. */
     public enum ColorType {
 
         /** Black and white images. */
@@ -70,7 +70,7 @@ public class ImageInfo {
         }
     }
 
-    /** Compression algorithm enumeration for images. */
+    /** Enumerates compression algorithm enumeration for images. */
     public enum CompressionAlgorithm {
 
         /** Unknown compression. */

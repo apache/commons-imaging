@@ -17,7 +17,7 @@
 package org.apache.commons.imaging.formats.tiff;
 
 /**
- * Provides an enumeration indicating the type of data for an instance of a TiffRasterData class.
+ * Enumerates the type of data for an instance of a TiffRasterData class.
  */
 public enum TiffRasterDataType {
 

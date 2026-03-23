@@ -20,7 +20,7 @@ package org.apache.commons.imaging.formats.png;
 import java.util.Arrays;
 
 /**
- * PNG color type enumeration.
+ * Enumerates PNG color types.
  */
 public enum PngColorType {
 

@@ -17,7 +17,7 @@
 package org.apache.commons.imaging.formats.tiff.constants;
 
 /**
- * Defines options for the organization of data in a TIFF file.
+ * Enumerates options for the organization of data in a TIFF file.
  */
 public enum TiffPlanarConfiguration {
 

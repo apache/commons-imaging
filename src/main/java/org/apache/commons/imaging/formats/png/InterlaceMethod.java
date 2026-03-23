@@ -17,7 +17,7 @@
 package org.apache.commons.imaging.formats.png;
 
 /**
- * Interlace methods.
+ * Enumerates interlace methods.
  *
  * @see <a href="https://www.w3.org/TR/png/#8Interlace">Portable Network Graphics Specification - Interlacing and pass extraction</a>
  */
