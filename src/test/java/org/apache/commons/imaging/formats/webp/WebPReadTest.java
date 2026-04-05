@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.formats.webp;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -31,7 +32,6 @@ import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.formats.webp.chunks.WebPChunkIccp;
 import org.apache.commons.imaging.internal.Debug;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -77,7 +77,7 @@ class WebPReadTest extends AbstractWebPTest {
         Debug.debug("imageFile", imageFile);
 
         final ImageMetadata metadata = Imaging.getMetadata(imageFile);
-        Assertions.assertFalse(metadata instanceof File); // Dummy check to avoid unused warning (it may be null)
+        assertFalse(metadata instanceof File); // Dummy check to avoid unused warning (it may be null)
 
         final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
         assertNotNull(imageInfo);
