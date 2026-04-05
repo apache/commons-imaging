@@ -50,9 +50,8 @@ class WebPReadTest extends AbstractWebPTest {
     void testBufferedImageNotSupported() throws IOException {
         final File emptyWebP = new File(WebPReadTest.class.getResource("/images/webp/empty/empty-100x100.webp").getFile());
         final WebPImageParser parser = new WebPImageParser();
-        final ImagingException exception = assertThrows(ImagingException.class, () -> {
-            parser.getBufferedImage(ByteSource.file(emptyWebP), parser.getDefaultParameters());
-        });
+        final ImagingException exception = assertThrows(ImagingException.class,
+                () -> parser.getBufferedImage(ByteSource.file(emptyWebP), parser.getDefaultParameters()));
         assertTrue(exception.getMessage().contains("Reading WebP files is currently not supported"));
     }
 
@@ -91,9 +90,7 @@ class WebPReadTest extends AbstractWebPTest {
      */
     @Test
     void testWebPChunkInvalidSizeBytes() {
-        final ImagingException exception = assertThrows(ImagingException.class, () -> {
-            new WebPChunkIccp(0, 10, new byte[] {});
-        });
+        final ImagingException exception = assertThrows(ImagingException.class, () -> new WebPChunkIccp(0, 10, new byte[] {}));
         assertEquals("Chunk size must match bytes length", exception.getMessage());
     }
 }
