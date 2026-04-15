@@ -119,7 +119,7 @@ public final class SofnSegment extends AbstractSegment {
         width = read2Bytes("width", is, "Not a Valid JPEG File", getByteOrder());
         numberOfComponents = readByte("numberOfComponents", is, "Not a Valid JPEG File");
         if (numberOfComponents < 0) {
-            throw new ImagingException("The number of components in a SOF0Segment cannot be less than 0!");
+            throw new ImagingException("The number of components in a SOF0Segment cannot be less than 0.");
         }
         components = Allocator.array(numberOfComponents, Component[]::new, Component.SHALLOW_SIZE);
         for (int i = 0; i < numberOfComponents; i++) {

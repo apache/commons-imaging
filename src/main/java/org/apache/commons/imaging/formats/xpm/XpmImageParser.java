@@ -289,7 +289,7 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
             return 0x00000000;
         }
         if (color.charAt(0) == '%') {
-            throw new ImagingException("HSV colors are not implemented even in the XPM specification!");
+            throw new ImagingException("HSV colors are not implemented even in the XPM specification.");
         }
         if ("None".equals(color)) {
             return 0x00000000;
