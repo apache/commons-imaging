@@ -15,6 +15,7 @@
 
 package org.apache.commons.imaging.common;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.nio.ByteOrder;
@@ -51,5 +52,31 @@ class BinaryFileFunctionsTest extends AbstractImagingTest {
 
         final byte[] bytesBE = ByteConversions.toBytes(TARGET_LONG, ByteOrder.BIG_ENDIAN);
         assertEquals(ByteConversions.toLong(bytesBE, ByteOrder.BIG_ENDIAN), TARGET_LONG);
+    }
+    @Test
+    void testIntToByteConversion() {
+        final int target = 0x01020304;
+        final byte[] bytesLE = ByteConversions.toBytes(target, ByteOrder.LITTLE_ENDIAN);
+        assertEquals(ByteConversions.toInt(bytesLE, ByteOrder.LITTLE_ENDIAN), target);
+
+        final byte[] bytesBE = ByteConversions.toBytes(target, ByteOrder.BIG_ENDIAN);
+        assertEquals(ByteConversions.toInt(bytesBE, ByteOrder.BIG_ENDIAN), target);
+    }
+
+    @Test
+    void testShortToByteConversion() {
+        final short target = 0x0102;
+        final byte[] bytesLE = ByteConversions.toBytes(target, ByteOrder.LITTLE_ENDIAN);
+        assertEquals(ByteConversions.toShort(bytesLE, ByteOrder.LITTLE_ENDIAN), target);
+
+        final byte[] bytesBE = ByteConversions.toBytes(target, ByteOrder.BIG_ENDIAN);
+        assertEquals(ByteConversions.toShort(bytesBE, ByteOrder.BIG_ENDIAN), target);
+    }
+
+    @Test
+    void testArrayConversions() {
+        final int[] targets = {0x01020304, 0x05060708};
+        final byte[] bytesBE = ByteConversions.toBytes(targets, ByteOrder.BIG_ENDIAN);
+        assertArrayEquals(targets, ByteConversions.toInts(bytesBE, ByteOrder.BIG_ENDIAN));
     }
 }
