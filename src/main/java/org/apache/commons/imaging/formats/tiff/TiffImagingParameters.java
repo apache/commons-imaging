@@ -27,13 +27,6 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParameters> {
 
     /**
-     * Constructs a new instance.
-     */
-    public TiffImagingParameters() {
-        // Default constructor
-    }
-
-    /**
      * Indicates whether to read embedded thumbnails or not. Only applies to read EXIF metadata from JPEG/JFIF files.
      *
      * <p>
@@ -106,6 +99,13 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
      * </p>
      */
     private Integer t6Options;
+
+    /**
+     * Constructs a new instance.
+     */
+    public TiffImagingParameters() {
+        // Default constructor
+    }
 
     /**
      * Clears settings for sub-image. Subsequent read operations will retrieve the entire image.
