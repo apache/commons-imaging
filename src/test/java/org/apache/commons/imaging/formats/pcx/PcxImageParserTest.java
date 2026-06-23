@@ -26,8 +26,8 @@ class PcxImageParserTest {
 
     /**
      * A 24-bit PCX header whose width and height are both 65536 makes {@code rowLength * ySize} overflow {@code int} and wrap to a tiny value, which used to
-     * slip past the {@link AllocationRequestException} guard and allocate an undersized buffer. The size is now computed in {@code long}, so the real request is
-     * rejected.
+     * slip past the {@link AllocationRequestException} guard and allocate an undersized buffer. The size is now computed in {@code long}, so the real
+     * request is rejected.
      */
     @Test
     void testBufferSizeOverflow() {
