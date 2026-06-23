@@ -62,7 +62,7 @@ public final class Allocator {
      * @see #check(int)
      */
     public static <T> T[] array(final int request, final IntFunction<T[]> factory, final int eltShallowByteSize) {
-        check(request * eltShallowByteSize);
+        check(request, eltShallowByteSize);
         return factory.apply(request);
     }
 
@@ -76,7 +76,7 @@ public final class Allocator {
      * @see #check(int)
      */
     public static <T> ArrayList<T> arrayList(final int request) {
-        check(24 + request * 4); // 4 bytes per element
+        check(request, Integer.BYTES); // 4 bytes per element
         return apply(request, ArrayList::new);
     }
 
