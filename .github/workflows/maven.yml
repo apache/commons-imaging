@@ -28,12 +28,12 @@ jobs:
       max-parallel: 20
       matrix:
         os: [windows-latest, macos-latest, ubuntu-latest]
-        java: [ 8, 11, 17, 21 ]
+        java: [ 8, 11, 17, 21, 25 ]
         experimental: [false]
         # Keep same order below (os, java experimental)
         include:
             - os: ubuntu-latest
-              java: 25
+              java: 26
               experimental: false
             - os: ubuntu-latest
               java: 27-ea
