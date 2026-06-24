@@ -17,43 +17,21 @@
 
 package org.apache.commons.imaging.common;
 
-import org.apache.commons.imaging.ImagingParameters;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-/**
- * Parameters for formats that support Xmp.
- *
- * @param <E> this type
- * @since 1.0-alpha3
- */
-public class XmpImagingParameters<E extends XmpImagingParameters<E>> extends ImagingParameters<E> {
+import org.junit.jupiter.api.Test;
 
-    private String xmpXml;
+class AllocatorTest {
 
-    /**
-     * Constructs a new instance.
-     */
-    public XmpImagingParameters() {
-        // Default constructor
+    /** 107374183 * 40 overflows int to 24, slipping past the byte-cost limit. */
+    @Test
+    void testArrayOverflowIsRejected() {
+        assertThrows(AllocationRequestException.class, () -> Allocator.array(107374183, Object[]::new, 40));
     }
 
-    /**
-     * Gets the XMP XML.
-     *
-     * @return the XMP XML.
-     */
-    public String getXmpXml() {
-        return xmpXml;
+    /** 536870912 * Integer.BYTES overflows int to a negative value. */
+    @Test
+    void testArrayListOverflowIsRejected() {
+        assertThrows(AllocationRequestException.class, () -> Allocator.arrayList(536870912));
     }
-
-    /**
-     * Sets the XMP XML.
-     *
-     * @param xmpXml the XMP XML.
-     * @return this instance.
-     */
-    public E setXmpXml(final String xmpXml) {
-        this.xmpXml = xmpXml;
-        return asThis();
-    }
-
 }
