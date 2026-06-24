@@ -118,10 +118,10 @@ final class ColorGroup {
 
         for (final ColorCount color : colorCounts) {
             countTotal += color.count;
-            alphaTotal += (long) color.count * color.alpha;
-            redTotal += (long) color.count * color.red;
-            greenTotal += (long) color.count * color.green;
-            blueTotal += (long) color.count * color.blue;
+            alphaTotal += color.count * color.alpha;
+            redTotal += color.count * color.red;
+            greenTotal += color.count * color.green;
+            blueTotal += color.count * color.blue;
         }
 
         final int alpha = ignoreAlpha ? 0xff : (int) Math.round((double) alphaTotal / countTotal);
