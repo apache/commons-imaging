@@ -308,7 +308,7 @@ public class JpegRewriter extends BinaryFileParser {
     /**
      * Filters segments using a filter.
      *
-     * @param <T> the piece type.
+     * @param <T> The piece type.
      * @param segments the segments.
      * @param filter the filter.
      * @return the filtered segments.
@@ -320,7 +320,7 @@ public class JpegRewriter extends BinaryFileParser {
     /**
      * Filters segments using a filter with optional reverse logic.
      *
-     * @param <T> the piece type.
+     * @param <T> The piece type.
      * @param segments the segments.
      * @param filter the filter.
      * @param reverse whether to reverse the filter logic.
@@ -345,7 +345,7 @@ public class JpegRewriter extends BinaryFileParser {
     /**
      * Finds Photoshop APP13 segments.
      *
-     * @param <T> the piece type.
+     * @param <T> The piece type.
      * @param segments the segments.
      * @return the filtered segments.
      */
@@ -356,8 +356,8 @@ public class JpegRewriter extends BinaryFileParser {
     /**
      * Inserts new segments after last APP segment.
      *
-     * @param <T> the piece type.
-     * @param <U> the new piece type.
+     * @param <T> The piece type.
+     * @param <U> The new piece type.
      * @param segments the segments.
      * @param newSegments the new segments to insert.
      * @return the combined segments.
@@ -394,8 +394,8 @@ public class JpegRewriter extends BinaryFileParser {
     /**
      * Inserts new segments before first APP segment.
      *
-     * @param <T> the piece type.
-     * @param <U> the new piece type.
+     * @param <T> The piece type.
+     * @param <U> The new piece type.
      * @param segments the segments.
      * @param newSegments the new segments to insert.
      * @return the combined segments.
@@ -427,7 +427,7 @@ public class JpegRewriter extends BinaryFileParser {
     /**
      * Removes EXIF segments.
      *
-     * @param <T> the piece type.
+     * @param <T> The piece type.
      * @param segments the segments.
      * @return the filtered segments.
      */
@@ -438,7 +438,7 @@ public class JpegRewriter extends BinaryFileParser {
     /**
      * Removes Photoshop APP13 segments.
      *
-     * @param <T> the piece type.
+     * @param <T> The piece type.
      * @param segments the segments.
      * @return the filtered segments.
      */
@@ -449,7 +449,7 @@ public class JpegRewriter extends BinaryFileParser {
     /**
      * Removes XMP segments.
      *
-     * @param <T> the piece type.
+     * @param <T> The piece type.
      * @param segments the segments.
      * @return the filtered segments.
      */
