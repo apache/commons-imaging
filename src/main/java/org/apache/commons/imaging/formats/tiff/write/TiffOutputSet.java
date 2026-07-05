@@ -67,7 +67,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
      * @throws ImagingException if a directory of that type already exists.
      */
     public void addDirectory(final TiffOutputDirectory directory) throws ImagingException {
-        if (null != findDirectory(directory.getType())) {
+        if (findDirectory(directory.getType()) != null) {
             throw new ImagingException("Output set already contains a directory of that type.");
         }
         directories.add(directory);
@@ -154,7 +154,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     public TiffOutputField findField(final int tag) {
         for (final TiffOutputDirectory directory : directories) {
             final TiffOutputField field = directory.findField(tag);
-            if (null != field) {
+            if (field != null) {
                 return field;
             }
         }
@@ -218,7 +218,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
         getOrCreateRootDirectory();
 
         final TiffOutputDirectory result = findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_EXIF);
-        if (null != result) {
+        if (result != null) {
             return result;
         }
         return addExifDirectory();
@@ -235,7 +235,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
         getOrCreateExifDirectory();
 
         final TiffOutputDirectory result = findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_GPS);
-        if (null != result) {
+        if (result != null) {
             return result;
         }
         return addGpsDirectory();
@@ -249,7 +249,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
      */
     public TiffOutputDirectory getOrCreateRootDirectory() throws ImagingException {
         final TiffOutputDirectory result = findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT);
-        if (null != result) {
+        if (result != null) {
             return result;
         }
         return addRootDirectory();

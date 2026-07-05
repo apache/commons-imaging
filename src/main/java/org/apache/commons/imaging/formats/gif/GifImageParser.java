@@ -934,7 +934,7 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
                 bos.write((byte) 0); // terminator
             }
 
-            if (null != xmpXml) {
+            if (xmpXml != null) {
                 bos.write(EXTENSION_CODE);
                 bos.write(APPLICATION_EXTENSION_LABEL);
 

@@ -154,7 +154,7 @@ public class TiffImageWriterLossless extends AbstractTiffImageWriter {
                 }
                 index = lastElementByte;
             }
-            if (null != start) {
+            if (start != null) {
                 rewritableElements.add(new AbstractTiffElement.Stub(start.offset, (int) (index - start.offset)));
             }
 

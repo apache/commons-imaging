@@ -314,7 +314,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
             // dumpOptionalNumberTag(entries, TIFF_TAG_ORIENTATION);
             // dumpOptionalNumberTag(entries, TIFF_TAG_PLANAR_CONFIGURATION);
             final TiffField predictorField = directory.findField(TiffTagConstants.TIFF_TAG_PREDICTOR);
-            if (null != predictorField) {
+            if (predictorField != null) {
                 predictor = predictorField.getIntValueOrArraySum();
             }
         }
@@ -791,7 +791,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
             // dumpOptionalNumberTag(entries, TIFF_TAG_ORIENTATION);
             // dumpOptionalNumberTag(entries, TIFF_TAG_PLANAR_CONFIGURATION);
             final TiffField predictorField = directory.findField(TiffTagConstants.TIFF_TAG_PREDICTOR);
-            if (null != predictorField) {
+            if (predictorField != null) {
                 predictor = predictorField.getIntValueOrArraySum();
             }
         }

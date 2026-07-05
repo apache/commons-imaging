@@ -166,7 +166,7 @@ public class MyLzwCompressor {
         clearCode = 1 << initialCodeSize;
         eoiCode = clearCode + 1;
 
-        if (null != listener) {
+        if (listener != null) {
             listener.init(clearCode, eoiCode);
         }
 
@@ -293,7 +293,7 @@ public class MyLzwCompressor {
     }
 
     private void writeClearCode(final MyBitOutputStream bos) throws IOException {
-        if (null != listener) {
+        if (listener != null) {
             listener.dataCode(clearCode);
         }
         writeCode(bos, clearCode);
@@ -304,14 +304,14 @@ public class MyLzwCompressor {
     }
 
     private void writeDataCode(final MyBitOutputStream bos, final int code) throws IOException {
-        if (null != listener) {
+        if (listener != null) {
             listener.dataCode(code);
         }
         writeCode(bos, code);
     }
 
     private void writeEoiCode(final MyBitOutputStream bos) throws IOException {
-        if (null != listener) {
+        if (listener != null) {
             listener.eoiCode(eoiCode);
         }
         writeCode(bos, eoiCode);

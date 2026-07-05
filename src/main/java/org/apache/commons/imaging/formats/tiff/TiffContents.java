@@ -79,7 +79,7 @@ public class TiffContents {
             Debug.debug("element, start: " + element.offset + ", length: " + element.length + ", end: " + (element.offset + element.length) + ": "
                     + element.getElementDescription());
             final String verbosity = element.getElementDescription();
-            if (null != verbosity) {
+            if (verbosity != null) {
                 Debug.debug(verbosity);
             }
 
@@ -99,7 +99,7 @@ public class TiffContents {
     public TiffField findField(final TagInfo tag) throws ImagingException {
         for (final TiffDirectory directory : directories) {
             final TiffField field = directory.findField(tag);
-            if (null != field) {
+            if (field != null) {
                 return field;
             }
         }
@@ -123,7 +123,7 @@ public class TiffContents {
 
             for (final TiffField field : directory) {
                 final AbstractTiffElement oversizeValue = field.getOversizeValueElement();
-                if (null != oversizeValue) {
+                if (oversizeValue != null) {
                     result.add(oversizeValue);
                 }
             }

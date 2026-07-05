@@ -55,11 +55,11 @@ public class WriteExifMetadataExample {
             // note that metadata might be null if no metadata is found.
             final ImageMetadata metadata = Imaging.getMetadata(jpegImageFile);
             final JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
-            if (null != jpegMetadata) {
+            if (jpegMetadata != null) {
                 // note that exif might be null if no Exif metadata is found.
                 final TiffImageMetadata exif = jpegMetadata.getExif();
 
-                if (null != exif) {
+                if (exif != null) {
                     // TiffImageMetadata class is immutable (read-only).
                     // TiffOutputSet class represents the Exif data to write.
                     //
@@ -143,11 +143,11 @@ public class WriteExifMetadataExample {
             // note that metadata might be null if no metadata is found.
             final ImageMetadata metadata = Imaging.getMetadata(jpegImageFile);
             final JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
-            if (null != jpegMetadata) {
+            if (jpegMetadata != null) {
                 // note that exif might be null if no Exif metadata is found.
                 final TiffImageMetadata exif = jpegMetadata.getExif();
 
-                if (null != exif) {
+                if (exif != null) {
                     // TiffImageMetadata class is immutable (read-only).
                     // TiffOutputSet class represents the Exif data to write.
                     //
@@ -186,7 +186,7 @@ public class WriteExifMetadataExample {
                 // the constants in ExifTagConstants.java or go to Phil Harvey's
                 // EXIF website.
                 final TiffOutputDirectory exifDirectory = outputSet.getExifDirectory();
-                if (null != exifDirectory) {
+                if (exifDirectory != null) {
                     exifDirectory.removeField(ExifTagConstants.EXIF_TAG_APERTURE_VALUE);
                 }
             }
@@ -212,11 +212,11 @@ public class WriteExifMetadataExample {
             // note that metadata might be null if no metadata is found.
             final ImageMetadata metadata = Imaging.getMetadata(jpegImageFile);
             final JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
-            if (null != jpegMetadata) {
+            if (jpegMetadata != null) {
                 // note that exif might be null if no Exif metadata is found.
                 final TiffImageMetadata exif = jpegMetadata.getExif();
 
-                if (null != exif) {
+                if (exif != null) {
                     // TiffImageMetadata class is immutable (read-only).
                     // TiffOutputSet class represents the Exif data to write.
                     //

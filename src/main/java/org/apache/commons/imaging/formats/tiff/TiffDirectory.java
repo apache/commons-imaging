@@ -1071,7 +1071,7 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
      * @throws ImagingException if an error occurs.
      */
     public boolean hasJpegImageData() throws ImagingException {
-        return null != findField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT);
+        return findField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT) != null;
     }
 
     /**
@@ -1096,11 +1096,10 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
      * @throws ImagingException if an error occurs.
      */
     public boolean hasTiffImageData() throws ImagingException {
-        if (null != findField(TiffTagConstants.TIFF_TAG_TILE_OFFSETS)) {
+        if (findField(TiffTagConstants.TIFF_TAG_TILE_OFFSETS) != null) {
             return true;
         }
-
-        return null != findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS);
+        return findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS) != null;
     }
 
     /**

@@ -185,7 +185,7 @@ public class SurveyTiffFile {
         int predictor = -1;
 
         final TiffField predictorField = directory.findField(TiffTagConstants.TIFF_TAG_PREDICTOR);
-        if (null != predictorField) {
+        if (predictorField != null) {
             predictor = predictorField.getIntValueOrArraySum();
         }
 
@@ -337,7 +337,7 @@ public class SurveyTiffFile {
             if (imageDataInStrips) {
                 final TiffField rowsPerStripField = directory.findField(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP);
                 rowsPerStrip = Integer.MAX_VALUE;
-                if (null != rowsPerStripField) {
+                if (rowsPerStripField != null) {
                     rowsPerStrip = rowsPerStripField.getIntValue();
                 } else {
                     final TiffField imageHeight = directory.findField(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH);

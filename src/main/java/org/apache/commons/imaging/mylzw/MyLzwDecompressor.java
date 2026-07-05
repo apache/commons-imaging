@@ -95,7 +95,7 @@ public final class MyLzwDecompressor {
         clearCode = 1 << initialCodeSize;
         eoiCode = clearCode + 1;
 
-        if (null != listener) {
+        if (listener != null) {
             listener.init(clearCode, eoiCode);
         }
 
@@ -192,7 +192,7 @@ public final class MyLzwDecompressor {
     private int getNextCode(final MyBitInputStream is) throws IOException {
         final int code = is.readBits(codeSize);
 
-        if (null != listener) {
+        if (listener != null) {
             listener.code(code);
         }
         return code;
