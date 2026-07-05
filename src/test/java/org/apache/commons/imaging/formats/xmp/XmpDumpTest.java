@@ -41,7 +41,7 @@ class XmpDumpTest extends AbstractImagingTest {
             Debug.debug();
 
             final String xmpXml = Imaging.getXmpXml(imageFile);
-            if (null == xmpXml) {
+            if (xmpXml == null) {
                 continue;
             }
 

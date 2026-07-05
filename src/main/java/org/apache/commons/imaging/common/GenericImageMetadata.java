@@ -118,7 +118,7 @@ public class GenericImageMetadata implements ImageMetadata {
 
     @Override
     public String toString(String prefix) {
-        if (null == prefix) {
+        if (prefix == null) {
             prefix = "";
         }
 

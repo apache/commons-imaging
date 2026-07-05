@@ -727,7 +727,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
      */
     public GpsInfo getGpsInfo() throws ImagingException {
         final TiffDirectory gpsDirectory = findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_GPS);
-        if (null == gpsDirectory) {
+        if (gpsDirectory == null) {
             return null;
         }
 

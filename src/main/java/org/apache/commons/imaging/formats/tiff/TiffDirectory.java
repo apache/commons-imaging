@@ -973,7 +973,7 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
      * @throws IOException      in the event of an I/O error.
      */
     public BufferedImage getTiffImage() throws ImagingException, IOException {
-        if (null == abstractTiffImageData) {
+        if (abstractTiffImageData == null) {
             return null;
         }
 
@@ -1008,7 +1008,7 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
      * @throws IOException      in the event of an I/O error.
      */
     public BufferedImage getTiffImage(final ByteOrder byteOrder, final TiffImagingParameters params) throws ImagingException, IOException {
-        if (null == abstractTiffImageData) {
+        if (abstractTiffImageData == null) {
             return null;
         }
 
@@ -1027,7 +1027,7 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
      * @throws IOException      in the event of an I/O error.
      */
     public BufferedImage getTiffImage(final TiffImagingParameters params) throws ImagingException, IOException {
-        if (null == abstractTiffImageData) {
+        if (abstractTiffImageData == null) {
             return null;
         }
 

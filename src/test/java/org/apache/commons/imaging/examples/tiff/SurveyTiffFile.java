@@ -350,12 +350,12 @@ public class SurveyTiffFile {
                 }
             } else {
                 final TiffField tileWidthField = directory.findField(TiffTagConstants.TIFF_TAG_TILE_WIDTH);
-                if (null == tileWidthField) {
+                if (tileWidthField == null) {
                     throw new ImagingException("Can't find tile width field.");
                 }
                 tileWidth = tileWidthField.getIntValue();
                 final TiffField tileLengthField = directory.findField(TiffTagConstants.TIFF_TAG_TILE_LENGTH);
-                if (null == tileLengthField) {
+                if (tileLengthField == null) {
                     throw new ImagingException("Can't find tile length field.");
                 }
                 tileHeight = tileLengthField.getIntValue();

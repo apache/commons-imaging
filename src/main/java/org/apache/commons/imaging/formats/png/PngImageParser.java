@@ -368,7 +368,7 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
     public TiffImageMetadata getExifMetadata(final ByteSource byteSource, TiffImagingParameters params)
             throws ImagingException, IOException {
         final byte[] bytes = getExifRawData(byteSource);
-        if (null == bytes) {
+        if (bytes == null) {
             return null;
         }
 

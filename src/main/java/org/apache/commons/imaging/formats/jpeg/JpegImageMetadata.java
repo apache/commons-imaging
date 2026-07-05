@@ -249,7 +249,7 @@ public class JpegImageMetadata implements ImageMetadata {
         final StringBuilder result = new StringBuilder();
 
         result.append(prefix);
-        if (null == exif) {
+        if (exif == null) {
             result.append("No Exif metadata.");
         } else {
             result.append("Exif metadata:");
@@ -261,7 +261,7 @@ public class JpegImageMetadata implements ImageMetadata {
         result.append(NEWLINE);
 
         result.append(prefix);
-        if (null == photoshop) {
+        if (photoshop == null) {
             result.append("No Photoshop (IPTC) metadata.");
         } else {
             result.append("Photoshop (IPTC) metadata:");

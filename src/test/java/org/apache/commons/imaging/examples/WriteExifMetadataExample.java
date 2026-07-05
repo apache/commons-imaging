@@ -75,7 +75,7 @@ public class WriteExifMetadataExample {
             // if file does not contain any exif metadata, we create an empty
             // set of exif metadata. Otherwise, we keep all of the other
             // existing tags.
-            if (null == outputSet) {
+            if (outputSet == null) {
                 outputSet = new TiffOutputSet();
             }
 
@@ -160,7 +160,7 @@ public class WriteExifMetadataExample {
                 }
             }
 
-            if (null == outputSet) {
+            if (outputSet == null) {
                 // file does not contain any exif metadata. We don't need to
                 // update the file; just copy it.
                 FileUtils.copyFile(jpegImageFile, dst);
@@ -232,7 +232,7 @@ public class WriteExifMetadataExample {
             // if file does not contain any exif metadata, we create an empty
             // set of exif metadata. Otherwise, we keep all of the other
             // existing tags.
-            if (null == outputSet) {
+            if (outputSet == null) {
                 outputSet = new TiffOutputSet();
             }
 

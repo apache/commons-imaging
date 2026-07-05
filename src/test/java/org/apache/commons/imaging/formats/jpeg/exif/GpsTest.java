@@ -47,17 +47,17 @@ class GpsTest extends AbstractExifTest {
         }
 
         final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(imageFile);
-        if (null == metadata) {
+        if (metadata == null) {
             return;
         }
 
         final TiffImageMetadata exifMetadata = metadata.getExif();
-        if (null == exifMetadata) {
+        if (exifMetadata == null) {
             return;
         }
 
         final TiffImageMetadata.GpsInfo gpsInfo = exifMetadata.getGpsInfo();
-        if (null == gpsInfo) {
+        if (gpsInfo == null) {
             return;
         }
 

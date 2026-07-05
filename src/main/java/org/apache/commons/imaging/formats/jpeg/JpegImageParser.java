@@ -246,7 +246,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
      */
     public TiffImageMetadata getExifMetadata(final ByteSource byteSource, TiffImagingParameters params) throws ImagingException, IOException {
         final byte[] bytes = getExifRawData(byteSource);
-        if (null == bytes) {
+        if (bytes == null) {
             return null;
         }
 
@@ -677,7 +677,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
 
         final JpegPhotoshopMetadata photoshop = getPhotoshopMetadata(byteSource, params);
 
-        if (null == exif && null == photoshop) {
+        if (exif == null && photoshop == null) {
             return null;
         }
 
@@ -719,7 +719,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
             }
         }
 
-        if (null == photoshopApp13Data) {
+        if (photoshopApp13Data == null) {
             return null;
         }
         return new JpegPhotoshopMetadata(photoshopApp13Data);
