@@ -157,7 +157,7 @@ public final class IptcConstants {
     /** Image resource block: Unicode alpha names: {@value}. */
     public static final int IMAGE_RESOURCE_BLOCK_UNICODE_ALPHA_NAMES = 0x0415;
 
-    /** Image resource block: indexed colour table count: {@value}. */
+    /** Image resource block: indexed color table count: {@value}. */
     public static final int IMAGE_RESOURCE_BLOCK_INDEXED_COLOUR_TABLE_COUNT = 0x0416;
 
     /** Image resource block: transparent index: {@value}. */
