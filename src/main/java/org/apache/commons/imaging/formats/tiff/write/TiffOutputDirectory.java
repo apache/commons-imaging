@@ -741,7 +741,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
         removeFieldIfPresent(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT_LENGTH);
 
         TiffOutputField jpegOffsetField = null;
-        if (null != jpegImageData) {
+        if (jpegImageData != null) {
             jpegOffsetField = new TiffOutputField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT, AbstractFieldType.LONG, 1,
                     new byte[ENTRY_MAX_VALUE_LENGTH]);
             add(jpegOffsetField);
@@ -761,7 +761,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
 
         final TiffOutputField imageDataOffsetField;
         ImageDataOffsets imageDataInfo = null;
-        if (null != abstractTiffImageData) {
+        if (abstractTiffImageData != null) {
             final boolean stripsNotTiles = abstractTiffImageData.stripsNotTiles();
 
             final TagInfo offsetTag;
@@ -808,13 +808,13 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
             // outputSummary.add(item, field);
         }
 
-        if (null != imageDataInfo) {
+        if (imageDataInfo != null) {
             Collections.addAll(result, imageDataInfo.outputItems);
 
             outputSummary.addTiffImageData(imageDataInfo);
         }
 
-        if (null != jpegImageData) {
+        if (jpegImageData != null) {
             final AbstractTiffOutputItem item = new AbstractTiffOutputItem.Value("JPEG image data", jpegImageData.getData());
             result.add(item);
             outputSummary.add(item, jpegOffsetField);
@@ -881,7 +881,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
 
     private void removeFieldIfPresent(final TagInfo tagInfo) {
         final TiffOutputField field = findField(tagInfo);
-        if (null != field) {
+        if (field != null) {
             fields.remove(field);
         }
     }

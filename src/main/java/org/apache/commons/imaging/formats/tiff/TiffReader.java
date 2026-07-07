@@ -216,7 +216,7 @@ public class TiffReader extends BinaryFileParser {
             //
             int rowsPerStrip = Integer.MAX_VALUE;
 
-            if (null != rowsPerStripField) {
+            if (rowsPerStripField != null) {
                 rowsPerStrip = rowsPerStripField.getIntValue();
             } else {
                 final TiffField imageHeight = directory.findField(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH);
@@ -233,13 +233,13 @@ public class TiffReader extends BinaryFileParser {
             return new AbstractTiffImageData.Strips(data, rowsPerStrip);
         }
         final TiffField tileWidthField = directory.findField(TiffTagConstants.TIFF_TAG_TILE_WIDTH);
-        if (null == tileWidthField) {
+        if (tileWidthField == null) {
             throw new ImagingException("Can't find tile width field.");
         }
         final int tileWidth = tileWidthField.getIntValue();
 
         final TiffField tileLengthField = directory.findField(TiffTagConstants.TIFF_TAG_TILE_LENGTH);
-        if (null == tileLengthField) {
+        if (tileLengthField == null) {
             throw new ImagingException("Can't find tile length field.");
         }
         final int tileLength = tileLengthField.getIntValue();

@@ -238,7 +238,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
         final ByteOrder byteOrder = reader.getByteOrder();
         final TiffDirectory directory = contents.directories.get(0);
         final BufferedImage result = directory.getTiffImage(byteOrder, params);
-        if (null == result) {
+        if (result == null) {
             throw new ImagingException("TIFF does not contain an image.");
         }
         return result;
@@ -314,7 +314,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
             // dumpOptionalNumberTag(entries, TIFF_TAG_ORIENTATION);
             // dumpOptionalNumberTag(entries, TIFF_TAG_PLANAR_CONFIGURATION);
             final TiffField predictorField = directory.findField(TiffTagConstants.TIFF_TAG_PREDICTOR);
-            if (null != predictorField) {
+            if (predictorField != null) {
                 predictor = predictorField.getIntValueOrArraySum();
             }
         }
@@ -373,7 +373,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
             if (photometricInterpretation != TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_RGB || bitsPerPixel != 24) {
                 throw new ImagingException("For planar configuration 2, only 24 bit RGB is currently supported");
             }
-            if (null == directory.findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS)) {
+            if (directory.findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS) == null) {
                 throw new ImagingException("For planar configuration 2, only strips-organization is supported");
             }
         }
@@ -791,7 +791,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
             // dumpOptionalNumberTag(entries, TIFF_TAG_ORIENTATION);
             // dumpOptionalNumberTag(entries, TIFF_TAG_PLANAR_CONFIGURATION);
             final TiffField predictorField = directory.findField(TiffTagConstants.TIFF_TAG_PREDICTOR);
-            if (null != predictorField) {
+            if (predictorField != null) {
                 predictor = predictorField.getIntValueOrArraySum();
             }
         }

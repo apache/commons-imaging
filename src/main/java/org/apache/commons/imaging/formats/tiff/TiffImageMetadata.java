@@ -132,7 +132,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
                     final TiffMetadataItem item = (TiffMetadataItem) entry;
                     final TiffField srcField = item.getTiffField();
 
-                    if (null != dstDir.findField(srcField.getTag())) {
+                    if (dstDir.findField(srcField.getTag()) != null) {
                         // ignore duplicate tags in a directory.
                         continue;
                     }
@@ -727,7 +727,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
      */
     public GpsInfo getGpsInfo() throws ImagingException {
         final TiffDirectory gpsDirectory = findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_GPS);
-        if (null == gpsDirectory) {
+        if (gpsDirectory == null) {
             return null;
         }
 
@@ -789,7 +789,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
         for (final ImageMetadataItem srcDir1 : srcDirs) {
             final Directory srcDir = (Directory) srcDir1;
 
-            if (null != result.findDirectory(srcDir.type)) {
+            if (result.findDirectory(srcDir.type) != null) {
                 // Certain cameras right directories more than once.
                 // This is a bug.
                 // Ignore second directory of a given type.

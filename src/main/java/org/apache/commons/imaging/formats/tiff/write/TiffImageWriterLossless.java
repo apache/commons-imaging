@@ -154,7 +154,7 @@ public class TiffImageWriterLossless extends AbstractTiffImageWriter {
                 }
                 index = lastElementByte;
             }
-            if (null != start) {
+            if (start != null) {
                 rewritableElements.add(new AbstractTiffElement.Stub(start.offset, (int) (index - start.offset)));
             }
 
@@ -208,7 +208,7 @@ public class TiffImageWriterLossless extends AbstractTiffImageWriter {
                 }
                 bestFit = element;
             }
-            if (null == bestFit) {
+            if (bestFit == null) {
                 // we couldn't place this item. overflow.
                 if ((overflowIndex & 1L) != 0) {
                     overflowIndex += 1;

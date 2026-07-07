@@ -55,11 +55,11 @@ public class WriteExifMetadataExample {
             // note that metadata might be null if no metadata is found.
             final ImageMetadata metadata = Imaging.getMetadata(jpegImageFile);
             final JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
-            if (null != jpegMetadata) {
+            if (jpegMetadata != null) {
                 // note that exif might be null if no Exif metadata is found.
                 final TiffImageMetadata exif = jpegMetadata.getExif();
 
-                if (null != exif) {
+                if (exif != null) {
                     // TiffImageMetadata class is immutable (read-only).
                     // TiffOutputSet class represents the Exif data to write.
                     //
@@ -75,7 +75,7 @@ public class WriteExifMetadataExample {
             // if file does not contain any exif metadata, we create an empty
             // set of exif metadata. Otherwise, we keep all of the other
             // existing tags.
-            if (null == outputSet) {
+            if (outputSet == null) {
                 outputSet = new TiffOutputSet();
             }
 
@@ -143,11 +143,11 @@ public class WriteExifMetadataExample {
             // note that metadata might be null if no metadata is found.
             final ImageMetadata metadata = Imaging.getMetadata(jpegImageFile);
             final JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
-            if (null != jpegMetadata) {
+            if (jpegMetadata != null) {
                 // note that exif might be null if no Exif metadata is found.
                 final TiffImageMetadata exif = jpegMetadata.getExif();
 
-                if (null != exif) {
+                if (exif != null) {
                     // TiffImageMetadata class is immutable (read-only).
                     // TiffOutputSet class represents the Exif data to write.
                     //
@@ -160,7 +160,7 @@ public class WriteExifMetadataExample {
                 }
             }
 
-            if (null == outputSet) {
+            if (outputSet == null) {
                 // file does not contain any exif metadata. We don't need to
                 // update the file; just copy it.
                 FileUtils.copyFile(jpegImageFile, dst);
@@ -186,7 +186,7 @@ public class WriteExifMetadataExample {
                 // the constants in ExifTagConstants.java or go to Phil Harvey's
                 // EXIF website.
                 final TiffOutputDirectory exifDirectory = outputSet.getExifDirectory();
-                if (null != exifDirectory) {
+                if (exifDirectory != null) {
                     exifDirectory.removeField(ExifTagConstants.EXIF_TAG_APERTURE_VALUE);
                 }
             }
@@ -212,11 +212,11 @@ public class WriteExifMetadataExample {
             // note that metadata might be null if no metadata is found.
             final ImageMetadata metadata = Imaging.getMetadata(jpegImageFile);
             final JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
-            if (null != jpegMetadata) {
+            if (jpegMetadata != null) {
                 // note that exif might be null if no Exif metadata is found.
                 final TiffImageMetadata exif = jpegMetadata.getExif();
 
-                if (null != exif) {
+                if (exif != null) {
                     // TiffImageMetadata class is immutable (read-only).
                     // TiffOutputSet class represents the Exif data to write.
                     //
@@ -232,7 +232,7 @@ public class WriteExifMetadataExample {
             // if file does not contain any exif metadata, we create an empty
             // set of exif metadata. Otherwise, we keep all of the other
             // existing tags.
-            if (null == outputSet) {
+            if (outputSet == null) {
                 outputSet = new TiffOutputSet();
             }
 

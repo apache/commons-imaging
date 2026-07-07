@@ -72,9 +72,9 @@ public class MetadataExample {
 
             // simple interface to GPS data
             final TiffImageMetadata exifMetadata = jpegMetadata.getExif();
-            if (null != exifMetadata) {
+            if (exifMetadata != null) {
                 final TiffImageMetadata.GpsInfo gpsInfo = exifMetadata.getGpsInfo();
-                if (null != gpsInfo) {
+                if (gpsInfo != null) {
                     final String gpsDescription = gpsInfo.toString();
                     final double longitude = gpsInfo.getLongitudeAsDegreesEast();
                     final double latitude = gpsInfo.getLatitudeAsDegreesNorth();

@@ -55,10 +55,10 @@ public class XmpUpdateTest<E extends XmpImagingParameters<E>> extends AbstractIm
             }
 
             String xmpXml = Imaging.getXmpXml(imageFile);
-            if (null == xmpXml && imageFormat.equals(ImageFormats.GIF)) {
+            if (xmpXml == null && imageFormat.equals(ImageFormats.GIF)) {
                 xmpXml = "temporary test until I can locate a GIF with XMP in the wild.";
             }
-            if (null == xmpXml) {
+            if (xmpXml == null) {
                 continue;
             }
 

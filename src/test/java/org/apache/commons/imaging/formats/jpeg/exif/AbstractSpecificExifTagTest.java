@@ -47,14 +47,14 @@ public abstract class AbstractSpecificExifTagTest extends AbstractExifTest {
 
         // note that metadata might be null if no metadata is found.
         final ImageMetadata metadata = Imaging.getMetadata(imageFile);
-        if (null == metadata) {
+        if (metadata == null) {
             return;
         }
         final JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
 
         // note that exif might be null if no Exif metadata is found.
         final TiffImageMetadata exif = jpegMetadata.getExif();
-        if (null == exif) {
+        if (exif == null) {
             return;
         }
 

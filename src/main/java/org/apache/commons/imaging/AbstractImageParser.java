@@ -339,7 +339,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
 
         final BufferedImageFactory result = params.getBufferedImageFactory();
 
-        if (null != result) {
+        if (result != null) {
             return result;
         }
 

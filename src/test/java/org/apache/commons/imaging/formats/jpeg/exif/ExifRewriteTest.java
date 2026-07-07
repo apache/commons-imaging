@@ -207,13 +207,13 @@ class ExifRewriteTest extends AbstractExifTest {
                 new JpegUtils().dumpJfif(byteSource);
 
                 final JpegImageMetadata oldMetadata = (JpegImageMetadata) Imaging.getMetadata(imageFile);
-                if (null == oldMetadata) {
+                if (oldMetadata == null) {
                     continue;
                 }
                 assertNotNull(oldMetadata);
 
                 final TiffImageMetadata oldExifMetadata = oldMetadata.getExif();
-                if (null == oldExifMetadata) {
+                if (oldExifMetadata == null) {
                     continue;
                 }
                 assertNotNull(oldExifMetadata);

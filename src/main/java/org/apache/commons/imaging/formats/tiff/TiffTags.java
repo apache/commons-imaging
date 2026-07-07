@@ -64,7 +64,7 @@ final class TiffTags {
     static TagInfo getTag(final int directoryType, final int tag) {
         final List<TagInfo> possibleMatches = ALL_TAG_MAP.get(tag);
 
-        if (null == possibleMatches) {
+        if (possibleMatches == null) {
             return TiffTagConstants.TIFF_TAG_UNKNOWN;
         }
 

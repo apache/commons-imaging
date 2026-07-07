@@ -82,7 +82,7 @@ final class RgbeInfo implements Closeable {
     }
 
     ImageMetadata getMetadata() throws IOException, ImagingException {
-        if (null == metadata) {
+        if (metadata == null) {
             readMetadata();
         }
         return metadata;

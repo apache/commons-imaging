@@ -320,7 +320,7 @@ public abstract class AbstractTiffImageWriter {
 
             // set up chain of directory references for "normal" directories.
             final TiffOutputDirectory directory = directoryTypeMap.get(index);
-            if (null != previousDirectory) {
+            if (previousDirectory != null) {
                 previousDirectory.setNextDirectory(directory);
             }
             previousDirectory = directory;
@@ -611,7 +611,7 @@ public abstract class AbstractTiffImageWriter {
             directory.add(TiffTagConstants.TIFF_TAG_T6_OPTIONS, t6Options);
         }
 
-        if (null != xmpXml) {
+        if (xmpXml != null) {
             final byte[] xmpXmlBytes = xmpXml.getBytes(StandardCharsets.UTF_8);
             directory.add(TiffTagConstants.TIFF_TAG_XMP, xmpXmlBytes);
         }

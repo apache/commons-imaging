@@ -69,7 +69,7 @@ public class GenericImageMetadata implements ImageMetadata {
         @Override
         public String toString(final String prefix) {
             final String result = keyword + ": " + text;
-            if (null != prefix) {
+            if (prefix != null) {
                 return prefix + result;
             }
             return result;
@@ -118,7 +118,7 @@ public class GenericImageMetadata implements ImageMetadata {
 
     @Override
     public String toString(String prefix) {
-        if (null == prefix) {
+        if (prefix == null) {
             prefix = "";
         }
 
@@ -127,7 +127,7 @@ public class GenericImageMetadata implements ImageMetadata {
             if (i > 0) {
                 result.append(NEWLINE);
             }
-            // if (null != prefix)
+            // if (prefix != null)
             // result.append(prefix);
 
             final ImageMetadataItem item = items.get(i);
