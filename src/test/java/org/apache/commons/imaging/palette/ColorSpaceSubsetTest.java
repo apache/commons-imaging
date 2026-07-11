@@ -79,12 +79,32 @@ public class ColorSpaceSubsetTest {
     }
 
     @Test
+    public void testDump() {
+        // Just verify it doesn't throw anything
+        final ColorSpaceSubset subset = new ColorSpaceSubset(100, 8);
+        subset.rgb = 0x123456;
+        subset.dump("Test");
+        subset.dumpJustRgb("TestJustRgb");
+    }
+
+    @Test
     public void testGetArea() {
         final int[] mins = { 10, 20, 30 };
         final int[] maxs = { 15, 25, 35 };
         // diffs are 6, 6, 6
         final ColorSpaceSubset subset = new ColorSpaceSubset(100, 8, mins, maxs);
         assertEquals(6 * 6 * 6, subset.getArea());
+    }
+
+    @Test
+    public void testRgbComparator() {
+        final ColorSpaceSubset subset1 = new ColorSpaceSubset(100, 8);
+        subset1.rgb = 0x102030;
+        final ColorSpaceSubset subset2 = new ColorSpaceSubset(100, 8);
+        subset2.rgb = 0x102040;
+        assertTrue(ColorSpaceSubset.RGB_COMPARATOR.compare(subset1, subset2) < 0);
+        assertTrue(ColorSpaceSubset.RGB_COMPARATOR.compare(subset2, subset1) > 0);
+        assertEquals(0, ColorSpaceSubset.RGB_COMPARATOR.compare(subset1, subset1));
     }
 
     @Test
@@ -110,25 +130,5 @@ public class ColorSpaceSubsetTest {
         // average red = (10 * 64 + 10 * 128) / 20 = (640 + 1280) / 20 = 1920 / 20 = 96
         // rgb = (96 << 16) | (96 << 8) | 96
         assertEquals(0x606060, subset.rgb & 0xffffff);
-    }
-
-    @Test
-    public void testRgbComparator() {
-        final ColorSpaceSubset subset1 = new ColorSpaceSubset(100, 8);
-        subset1.rgb = 0x102030;
-        final ColorSpaceSubset subset2 = new ColorSpaceSubset(100, 8);
-        subset2.rgb = 0x102040;
-        assertTrue(ColorSpaceSubset.RGB_COMPARATOR.compare(subset1, subset2) < 0);
-        assertTrue(ColorSpaceSubset.RGB_COMPARATOR.compare(subset2, subset1) > 0);
-        assertEquals(0, ColorSpaceSubset.RGB_COMPARATOR.compare(subset1, subset1));
-    }
-
-    @Test
-    public void testDump() {
-        // Just verify it doesn't throw anything
-        final ColorSpaceSubset subset = new ColorSpaceSubset(100, 8);
-        subset.rgb = 0x123456;
-        subset.dump("Test");
-        subset.dumpJustRgb("TestJustRgb");
     }
 }

@@ -28,6 +28,13 @@ class BinaryFileFunctionsTest extends AbstractImagingTest {
     private static final long TARGET_LONG = 0x01020304_05060708L;
 
     @Test
+    void testArrayConversions() {
+        final int[] targets = {0x01020304, 0x05060708};
+        final byte[] bytesBE = ByteConversions.toBytes(targets, ByteOrder.BIG_ENDIAN);
+        assertArrayEquals(targets, ByteConversions.toInts(bytesBE, ByteOrder.BIG_ENDIAN));
+    }
+
+    @Test
     void testDoubleToByteConversion() {
         final byte[] bytesLE = ByteConversions.toBytes(1.0, ByteOrder.LITTLE_ENDIAN);
         assertEquals(ByteConversions.toDouble(bytesLE, ByteOrder.LITTLE_ENDIAN), 1.0, 0);
@@ -44,15 +51,6 @@ class BinaryFileFunctionsTest extends AbstractImagingTest {
         final byte[] bytesBE = ByteConversions.toBytes(1.0f, ByteOrder.BIG_ENDIAN);
         assertEquals(ByteConversions.toFloat(bytesBE, ByteOrder.BIG_ENDIAN), 1.0f, 0f);
     }
-
-    @Test
-    void testLongToByteConversion() {
-        final byte[] bytesLE = ByteConversions.toBytes(TARGET_LONG, ByteOrder.LITTLE_ENDIAN);
-        assertEquals(ByteConversions.toLong(bytesLE, ByteOrder.LITTLE_ENDIAN), TARGET_LONG);
-
-        final byte[] bytesBE = ByteConversions.toBytes(TARGET_LONG, ByteOrder.BIG_ENDIAN);
-        assertEquals(ByteConversions.toLong(bytesBE, ByteOrder.BIG_ENDIAN), TARGET_LONG);
-    }
     @Test
     void testIntToByteConversion() {
         final int target = 0x01020304;
@@ -64,6 +62,15 @@ class BinaryFileFunctionsTest extends AbstractImagingTest {
     }
 
     @Test
+    void testLongToByteConversion() {
+        final byte[] bytesLE = ByteConversions.toBytes(TARGET_LONG, ByteOrder.LITTLE_ENDIAN);
+        assertEquals(ByteConversions.toLong(bytesLE, ByteOrder.LITTLE_ENDIAN), TARGET_LONG);
+
+        final byte[] bytesBE = ByteConversions.toBytes(TARGET_LONG, ByteOrder.BIG_ENDIAN);
+        assertEquals(ByteConversions.toLong(bytesBE, ByteOrder.BIG_ENDIAN), TARGET_LONG);
+    }
+
+    @Test
     void testShortToByteConversion() {
         final short target = 0x0102;
         final byte[] bytesLE = ByteConversions.toBytes(target, ByteOrder.LITTLE_ENDIAN);
@@ -71,12 +78,5 @@ class BinaryFileFunctionsTest extends AbstractImagingTest {
 
         final byte[] bytesBE = ByteConversions.toBytes(target, ByteOrder.BIG_ENDIAN);
         assertEquals(ByteConversions.toShort(bytesBE, ByteOrder.BIG_ENDIAN), target);
-    }
-
-    @Test
-    void testArrayConversions() {
-        final int[] targets = {0x01020304, 0x05060708};
-        final byte[] bytesBE = ByteConversions.toBytes(targets, ByteOrder.BIG_ENDIAN);
-        assertArrayEquals(targets, ByteConversions.toInts(bytesBE, ByteOrder.BIG_ENDIAN));
     }
 }

@@ -36,21 +36,6 @@ import org.junit.jupiter.api.Test;
 public class TiffClassesTest {
 
     @Test
-    public void testTiffHeader() {
-        final ByteOrder byteOrder = ByteOrder.LITTLE_ENDIAN;
-        final int tiffVersion = 42;
-        final long offsetToFirstIFD = 8;
-        final boolean bigTiff = false;
-        final TiffHeader header = new TiffHeader(byteOrder, tiffVersion, offsetToFirstIFD, bigTiff);
-        assertEquals(byteOrder, header.byteOrder);
-        assertEquals(tiffVersion, header.tiffVersion);
-        assertEquals(offsetToFirstIFD, header.offsetToFirstIFD);
-        assertEquals(bigTiff, header.bigTiff);
-        assertEquals("TIFF Header", header.getElementDescription());
-        assertEquals(0, header.offset);
-    }
-
-    @Test
     public void testTiffContents() throws ImagingException {
         final TiffHeader header = new TiffHeader(ByteOrder.LITTLE_ENDIAN, 42, 8, false);
         final List<TiffDirectory> directories = new ArrayList<>();
@@ -67,49 +52,16 @@ public class TiffClassesTest {
     }
 
     @Test
-    public void testTiffRasterDataType() {
-        assertEquals(TiffRasterDataType.INTEGER, TiffRasterDataType.valueOf("INTEGER"));
-        assertEquals(TiffRasterDataType.FLOAT, TiffRasterDataType.valueOf("FLOAT"));
-        assertEquals(2, TiffRasterDataType.values().length);
-    }
-
-    @Test
-    public void testTiffRasterStatistics() {
-        final float[] data = { 1.0f, 2.0f, Float.NaN, 3.0f, 4.0f, 5.0f };
-        final TiffRasterDataFloat raster = new TiffRasterDataFloat(2, 3, data);
-        final TiffRasterStatistics stats = new TiffRasterStatistics(raster, 5.0f);
-        assertEquals(1, stats.getCountOfNulls());
-        assertEquals(4, stats.getCountOfSamples());
-        assertEquals(5.0f, stats.getExcludedValue());
-        assertEquals(4.0f, stats.getMaxValue());
-        assertEquals(1.0f, stats.getMinValue());
-        assertEquals(2.5f, stats.getMeanValue(), 0.001f);
-        assertTrue(stats.isAnExcludedValueSet());
-        final TiffRasterStatistics statsNoExcluded = new TiffRasterStatistics(raster, Float.NaN);
-        assertEquals(5, statsNoExcluded.getCountOfSamples());
-        assertFalse(statsNoExcluded.isAnExcludedValueSet());
-    }
-
-    @Test
-    public void testTiffRasterStatisticsAllNaN() {
-        final float[] data = { Float.NaN, Float.NaN };
-        final TiffRasterDataFloat raster = new TiffRasterDataFloat(1, 2, data);
-        final TiffRasterStatistics stats = new TiffRasterStatistics(raster, Float.NaN);
-        assertEquals(2, stats.getCountOfNulls());
-        assertEquals(0, stats.getCountOfSamples());
-        assertEquals(0.0f, stats.getMeanValue());
-        assertEquals(Float.POSITIVE_INFINITY, stats.getMinValue());
-        assertEquals(Float.NEGATIVE_INFINITY, stats.getMaxValue());
-    }
-
-    @Test
-    public void testTiffTags() {
-        assertNotNull(TiffTags.getTag(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT, TiffTagConstants.TIFF_TAG_COMPRESSION.tag));
-        assertEquals(TiffTagConstants.TIFF_TAG_COMPRESSION.name,
-                TiffTags.getTag(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT, TiffTagConstants.TIFF_TAG_COMPRESSION.tag).name);
-        // Unknown tag
-        assertEquals(TiffTagConstants.TIFF_TAG_UNKNOWN.name, TiffTags.getTag(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT, -1).name);
-        assertNotNull(TiffTags.getTagCount(TiffTagConstants.TIFF_TAG_COMPRESSION.tag));
+    public void testTiffDirectory() {
+        final List<TiffField> entries = new ArrayList<>();
+        final TiffDirectory directory = new TiffDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT, entries, 0, 0, ByteOrder.LITTLE_ENDIAN);
+        assertEquals(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT, directory.type);
+        assertEquals(0, directory.offset);
+        assertEquals(0, directory.getNextDirectoryOffset());
+        assertEquals(ByteOrder.LITTLE_ENDIAN, directory.getByteOrder());
+        assertNotNull(directory.getElementDescription());
+        assertEquals(0, directory.size());
+        assertFalse(directory.iterator().hasNext());
     }
 
     @Test
@@ -130,16 +82,18 @@ public class TiffClassesTest {
     }
 
     @Test
-    public void testTiffDirectory() {
-        final List<TiffField> entries = new ArrayList<>();
-        final TiffDirectory directory = new TiffDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT, entries, 0, 0, ByteOrder.LITTLE_ENDIAN);
-        assertEquals(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT, directory.type);
-        assertEquals(0, directory.offset);
-        assertEquals(0, directory.getNextDirectoryOffset());
-        assertEquals(ByteOrder.LITTLE_ENDIAN, directory.getByteOrder());
-        assertNotNull(directory.getElementDescription());
-        assertEquals(0, directory.size());
-        assertFalse(directory.iterator().hasNext());
+    public void testTiffHeader() {
+        final ByteOrder byteOrder = ByteOrder.LITTLE_ENDIAN;
+        final int tiffVersion = 42;
+        final long offsetToFirstIFD = 8;
+        final boolean bigTiff = false;
+        final TiffHeader header = new TiffHeader(byteOrder, tiffVersion, offsetToFirstIFD, bigTiff);
+        assertEquals(byteOrder, header.byteOrder);
+        assertEquals(tiffVersion, header.tiffVersion);
+        assertEquals(offsetToFirstIFD, header.offsetToFirstIFD);
+        assertEquals(bigTiff, header.bigTiff);
+        assertEquals("TIFF Header", header.getElementDescription());
+        assertEquals(0, header.offset);
     }
 
     @Test
@@ -199,5 +153,51 @@ public class TiffClassesTest {
         assertEquals(20, intData[3]);
         assertNotNull(raster.getData());
         assertNotNull(raster.getSimpleStatistics());
+    }
+
+    @Test
+    public void testTiffRasterDataType() {
+        assertEquals(TiffRasterDataType.INTEGER, TiffRasterDataType.valueOf("INTEGER"));
+        assertEquals(TiffRasterDataType.FLOAT, TiffRasterDataType.valueOf("FLOAT"));
+        assertEquals(2, TiffRasterDataType.values().length);
+    }
+
+    @Test
+    public void testTiffRasterStatistics() {
+        final float[] data = { 1.0f, 2.0f, Float.NaN, 3.0f, 4.0f, 5.0f };
+        final TiffRasterDataFloat raster = new TiffRasterDataFloat(2, 3, data);
+        final TiffRasterStatistics stats = new TiffRasterStatistics(raster, 5.0f);
+        assertEquals(1, stats.getCountOfNulls());
+        assertEquals(4, stats.getCountOfSamples());
+        assertEquals(5.0f, stats.getExcludedValue());
+        assertEquals(4.0f, stats.getMaxValue());
+        assertEquals(1.0f, stats.getMinValue());
+        assertEquals(2.5f, stats.getMeanValue(), 0.001f);
+        assertTrue(stats.isAnExcludedValueSet());
+        final TiffRasterStatistics statsNoExcluded = new TiffRasterStatistics(raster, Float.NaN);
+        assertEquals(5, statsNoExcluded.getCountOfSamples());
+        assertFalse(statsNoExcluded.isAnExcludedValueSet());
+    }
+
+    @Test
+    public void testTiffRasterStatisticsAllNaN() {
+        final float[] data = { Float.NaN, Float.NaN };
+        final TiffRasterDataFloat raster = new TiffRasterDataFloat(1, 2, data);
+        final TiffRasterStatistics stats = new TiffRasterStatistics(raster, Float.NaN);
+        assertEquals(2, stats.getCountOfNulls());
+        assertEquals(0, stats.getCountOfSamples());
+        assertEquals(0.0f, stats.getMeanValue());
+        assertEquals(Float.POSITIVE_INFINITY, stats.getMinValue());
+        assertEquals(Float.NEGATIVE_INFINITY, stats.getMaxValue());
+    }
+
+    @Test
+    public void testTiffTags() {
+        assertNotNull(TiffTags.getTag(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT, TiffTagConstants.TIFF_TAG_COMPRESSION.tag));
+        assertEquals(TiffTagConstants.TIFF_TAG_COMPRESSION.name,
+                TiffTags.getTag(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT, TiffTagConstants.TIFF_TAG_COMPRESSION.tag).name);
+        // Unknown tag
+        assertEquals(TiffTagConstants.TIFF_TAG_UNKNOWN.name, TiffTags.getTag(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT, -1).name);
+        assertNotNull(TiffTags.getTagCount(TiffTagConstants.TIFF_TAG_COMPRESSION.tag));
     }
 }

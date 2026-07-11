@@ -45,21 +45,6 @@ public class PixelParserBitFieldsTest {
     }
 
     @Test
-    public void testGetNextRgb_32Bit_WithAlpha() throws IOException {
-        final BmpHeaderInfo bhi = new BmpHeaderInfo((byte) 0, (byte) 0, 0, 0, 0, 0, 1, 1, 1, 32, 3, 0, 0, 0, 0, 0, 0x00FF0000, // red
-                0x0000FF00, // green
-                0x000000FF, // blue
-                0xFF000000, // alpha
-                0, null, 0, 0, 0, 0, 0, 0, 0);
-        // Data: ARGB = 0x80402010
-        // Little endian: 0x10, 0x20, 0x40, 0x80
-        final byte[] imageData = { 0x10, 0x20, 0x40, (byte) 0x80 };
-        final PixelParserBitFields parser = new PixelParserBitFields(bhi, null, imageData);
-        final int rgb = parser.getNextRgb();
-        assertEquals(0x80402010, rgb);
-    }
-
-    @Test
     public void testGetNextRgb_24Bit() throws IOException {
         final BmpHeaderInfo bhi = new BmpHeaderInfo((byte) 0, (byte) 0, 0, 0, 0, 0, 1, 1, 1, 24, 3, 0, 0, 0, 0, 0, 0x00FF0000, // red
                 0x0000FF00, // green
@@ -72,6 +57,21 @@ public class PixelParserBitFieldsTest {
         final PixelParserBitFields parser = new PixelParserBitFields(bhi, null, imageData);
         final int rgb = parser.getNextRgb();
         assertEquals(0xFF112233, rgb);
+    }
+
+    @Test
+    public void testGetNextRgb_32Bit_WithAlpha() throws IOException {
+        final BmpHeaderInfo bhi = new BmpHeaderInfo((byte) 0, (byte) 0, 0, 0, 0, 0, 1, 1, 1, 32, 3, 0, 0, 0, 0, 0, 0x00FF0000, // red
+                0x0000FF00, // green
+                0x000000FF, // blue
+                0xFF000000, // alpha
+                0, null, 0, 0, 0, 0, 0, 0, 0);
+        // Data: ARGB = 0x80402010
+        // Little endian: 0x10, 0x20, 0x40, 0x80
+        final byte[] imageData = { 0x10, 0x20, 0x40, (byte) 0x80 };
+        final PixelParserBitFields parser = new PixelParserBitFields(bhi, null, imageData);
+        final int rgb = parser.getNextRgb();
+        assertEquals(0x80402010, rgb);
     }
 
     @Test

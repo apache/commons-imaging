@@ -49,67 +49,6 @@ public class LongestAxisMedianCutTest {
     }
 
     @Test
-    public void testPerformNextMedianCutWithIgnoreAlpha() throws ImagingException {
-        final LongestAxisMedianCut medianCut = new LongestAxisMedianCut();
-        final List<ColorGroup> colorGroups = new ArrayList<>();
-        final List<ColorCount> colorCounts = new ArrayList<>();
-        // Alpha variation: 0 to 200
-        // Red variation: 0 to 100
-        for (int i = 0; i <= 100; i++) {
-            // ARGB: i*2, i, 0, 0
-            colorCounts.add(new ColorCount(i * 2 << 24 | i << 16));
-        }
-        final ColorGroup root = new ColorGroup(colorCounts, true);
-        colorGroups.add(root);
-        // If ignoreAlpha is true, Red should be the longest axis (100) even though Alpha has 200 range
-        medianCut.performNextMedianCut(colorGroups, true);
-        assertEquals(2, colorGroups.size());
-        final ColorGroup cg1 = colorGroups.get(0);
-        final ColorGroup cg2 = colorGroups.get(1);
-        // Both should have same green and blue (0)
-        assertEquals(0, cg1.minGreen);
-        assertEquals(0, cg1.maxGreen);
-        assertEquals(0, cg2.minGreen);
-        assertEquals(0, cg2.maxGreen);
-    }
-
-    @Test
-    public void testPerformNextMedianCutSingleColor() throws ImagingException {
-        final LongestAxisMedianCut medianCut = new LongestAxisMedianCut();
-        final List<ColorGroup> colorGroups = new ArrayList<>();
-        final List<ColorCount> colorCounts = new ArrayList<>();
-        colorCounts.add(new ColorCount(0xff000000));
-        final ColorGroup root = new ColorGroup(colorCounts, false);
-        colorGroups.add(root);
-        // maxDiff is 0, should return false
-        final boolean result = medianCut.performNextMedianCut(colorGroups, false);
-        assertFalse(result);
-        assertEquals(1, colorGroups.size());
-    }
-
-    @Test
-    public void testPerformNextMedianCutDetailed() throws ImagingException {
-        final LongestAxisMedianCut medianCut = new LongestAxisMedianCut();
-        final List<ColorGroup> colorGroups = new ArrayList<>();
-        final List<ColorCount> colorCounts = new ArrayList<>();
-        // Create 10 pixels of color 1 and 10 pixels of color 2
-        final ColorCount cc1 = new ColorCount(0xff000000); // Black
-        cc1.count = 10;
-        colorCounts.add(cc1);
-        final ColorCount cc2 = new ColorCount(0xffff0000); // Red
-        cc2.count = 10;
-        colorCounts.add(cc2);
-        final ColorGroup root = new ColorGroup(colorCounts, false);
-        colorGroups.add(root);
-        final boolean result = medianCut.performNextMedianCut(colorGroups, false);
-        assertTrue(result);
-        assertEquals(2, colorGroups.size());
-        // Each group should have 10 points
-        assertEquals(10, colorGroups.get(0).totalPoints);
-        assertEquals(10, colorGroups.get(1).totalPoints);
-    }
-
-    @Test
     public void testPerformNextMedianCutAllAxes() throws ImagingException {
         final LongestAxisMedianCut medianCut = new LongestAxisMedianCut();
         // Test Green axis
@@ -145,34 +84,6 @@ public class LongestAxisMedianCutTest {
             assertTrue(medianCut.performNextMedianCut(colorGroups, false));
             assertEquals(2, colorGroups.size());
         }
-    }
-
-    @Test
-    public void testPerformNextMedianCutMultipleGroups() throws ImagingException {
-        final LongestAxisMedianCut medianCut = new LongestAxisMedianCut();
-        final List<ColorGroup> colorGroups = new ArrayList<>();
-        // Group 1: Range 10 (Red)
-        final List<ColorCount> counts1 = new ArrayList<>();
-        counts1.add(new ColorCount(0xff000000));
-        counts1.add(new ColorCount(0xff0a0000));
-        colorGroups.add(new ColorGroup(counts1, false));
-        // Group 2: Range 20 (Red)
-        final List<ColorCount> counts2 = new ArrayList<>();
-        counts2.add(new ColorCount(0xff000000));
-        counts2.add(new ColorCount(0xff140000));
-        colorGroups.add(new ColorGroup(counts2, false));
-        // Should cut Group 2 because it has larger maxDiff (20 > 10)
-        assertTrue(medianCut.performNextMedianCut(colorGroups, false));
-        assertEquals(3, colorGroups.size());
-        // Check that one group still has range 10, and two new groups are created from the range 20 group
-        boolean foundRange10 = false;
-        for (final ColorGroup cg : colorGroups) {
-            if (cg.maxDiff == 10) {
-                foundRange10 = true;
-                break;
-            }
-        }
-        assertTrue(foundRange10);
     }
 
     @Test
@@ -219,6 +130,56 @@ public class LongestAxisMedianCutTest {
     }
 
     @Test
+    public void testPerformNextMedianCutDetailed() throws ImagingException {
+        final LongestAxisMedianCut medianCut = new LongestAxisMedianCut();
+        final List<ColorGroup> colorGroups = new ArrayList<>();
+        final List<ColorCount> colorCounts = new ArrayList<>();
+        // Create 10 pixels of color 1 and 10 pixels of color 2
+        final ColorCount cc1 = new ColorCount(0xff000000); // Black
+        cc1.count = 10;
+        colorCounts.add(cc1);
+        final ColorCount cc2 = new ColorCount(0xffff0000); // Red
+        cc2.count = 10;
+        colorCounts.add(cc2);
+        final ColorGroup root = new ColorGroup(colorCounts, false);
+        colorGroups.add(root);
+        final boolean result = medianCut.performNextMedianCut(colorGroups, false);
+        assertTrue(result);
+        assertEquals(2, colorGroups.size());
+        // Each group should have 10 points
+        assertEquals(10, colorGroups.get(0).totalPoints);
+        assertEquals(10, colorGroups.get(1).totalPoints);
+    }
+
+    @Test
+    public void testPerformNextMedianCutMultipleGroups() throws ImagingException {
+        final LongestAxisMedianCut medianCut = new LongestAxisMedianCut();
+        final List<ColorGroup> colorGroups = new ArrayList<>();
+        // Group 1: Range 10 (Red)
+        final List<ColorCount> counts1 = new ArrayList<>();
+        counts1.add(new ColorCount(0xff000000));
+        counts1.add(new ColorCount(0xff0a0000));
+        colorGroups.add(new ColorGroup(counts1, false));
+        // Group 2: Range 20 (Red)
+        final List<ColorCount> counts2 = new ArrayList<>();
+        counts2.add(new ColorCount(0xff000000));
+        counts2.add(new ColorCount(0xff140000));
+        colorGroups.add(new ColorGroup(counts2, false));
+        // Should cut Group 2 because it has larger maxDiff (20 > 10)
+        assertTrue(medianCut.performNextMedianCut(colorGroups, false));
+        assertEquals(3, colorGroups.size());
+        // Check that one group still has range 10, and two new groups are created from the range 20 group
+        boolean foundRange10 = false;
+        for (final ColorGroup cg : colorGroups) {
+            if (cg.maxDiff == 10) {
+                foundRange10 = true;
+                break;
+            }
+        }
+        assertTrue(foundRange10);
+    }
+
+    @Test
     public void testPerformNextMedianCutOldDiffSmaller() throws ImagingException {
         final LongestAxisMedianCut medianCut = new LongestAxisMedianCut();
         final List<ColorGroup> colorGroups = new ArrayList<>();
@@ -256,5 +217,44 @@ public class LongestAxisMedianCutTest {
         }
         assertTrue(found4);
         assertTrue(found6);
+    }
+
+    @Test
+    public void testPerformNextMedianCutSingleColor() throws ImagingException {
+        final LongestAxisMedianCut medianCut = new LongestAxisMedianCut();
+        final List<ColorGroup> colorGroups = new ArrayList<>();
+        final List<ColorCount> colorCounts = new ArrayList<>();
+        colorCounts.add(new ColorCount(0xff000000));
+        final ColorGroup root = new ColorGroup(colorCounts, false);
+        colorGroups.add(root);
+        // maxDiff is 0, should return false
+        final boolean result = medianCut.performNextMedianCut(colorGroups, false);
+        assertFalse(result);
+        assertEquals(1, colorGroups.size());
+    }
+
+    @Test
+    public void testPerformNextMedianCutWithIgnoreAlpha() throws ImagingException {
+        final LongestAxisMedianCut medianCut = new LongestAxisMedianCut();
+        final List<ColorGroup> colorGroups = new ArrayList<>();
+        final List<ColorCount> colorCounts = new ArrayList<>();
+        // Alpha variation: 0 to 200
+        // Red variation: 0 to 100
+        for (int i = 0; i <= 100; i++) {
+            // ARGB: i*2, i, 0, 0
+            colorCounts.add(new ColorCount(i * 2 << 24 | i << 16));
+        }
+        final ColorGroup root = new ColorGroup(colorCounts, true);
+        colorGroups.add(root);
+        // If ignoreAlpha is true, Red should be the longest axis (100) even though Alpha has 200 range
+        medianCut.performNextMedianCut(colorGroups, true);
+        assertEquals(2, colorGroups.size());
+        final ColorGroup cg1 = colorGroups.get(0);
+        final ColorGroup cg2 = colorGroups.get(1);
+        // Both should have same green and blue (0)
+        assertEquals(0, cg1.minGreen);
+        assertEquals(0, cg1.maxGreen);
+        assertEquals(0, cg2.minGreen);
+        assertEquals(0, cg2.maxGreen);
     }
 }

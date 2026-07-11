@@ -38,39 +38,10 @@ import org.junit.jupiter.api.Test;
 public class RgbeParserTest {
 
     @Test
-    public void testRgbeImageParserBasics() {
-        final RgbeImageParser parser = new RgbeImageParser();
-        assertEquals("Radiance HDR", parser.getName());
-        assertEquals("hdr", parser.getDefaultExtension());
-        final String[] extensions = parser.getAcceptedExtensions();
-        assertTrue(extensions.length > 0);
-        final ImageFormat[] types = parser.getAcceptedTypes();
-        assertEquals(1, types.length);
-        assertEquals(ImageFormats.RGBE, types[0]);
-        assertNotNull(parser.getDefaultParameters());
-    }
-
-    @Test
-    public void testRgbeImagingParameters() {
-        final RgbeImagingParameters params = new RgbeImagingParameters();
-        assertNotNull(params);
-    }
-
-    @Test
     public void testGetIccProfileBytes() throws IOException {
         final RgbeImageParser parser = new RgbeImageParser();
         final byte[] bytes = "#?RADIANCE\n\n-Y 1 +X 1\n".getBytes(StandardCharsets.US_ASCII);
         assertNull(parser.getIccProfileBytes(ByteSource.array(bytes), new RgbeImagingParameters()));
-    }
-
-    @Test
-    public void testGetMetadata() throws IOException {
-        final RgbeImageParser parser = new RgbeImageParser();
-        final String header = "#?RADIANCE\nFORMAT=32-bit_rle_rgbe\nEXPOSURE=1.0\n\n-Y 1 +X 1\n";
-        final byte[] bytes = header.getBytes(StandardCharsets.US_ASCII);
-        final ImageMetadata metadata = parser.getMetadata(ByteSource.array(bytes), new RgbeImagingParameters());
-        assertNotNull(metadata);
-        assertEquals(2, metadata.getItems().size());
     }
 
     @Test
@@ -96,6 +67,16 @@ public class RgbeParserTest {
     }
 
     @Test
+    public void testGetMetadata() throws IOException {
+        final RgbeImageParser parser = new RgbeImageParser();
+        final String header = "#?RADIANCE\nFORMAT=32-bit_rle_rgbe\nEXPOSURE=1.0\n\n-Y 1 +X 1\n";
+        final byte[] bytes = header.getBytes(StandardCharsets.US_ASCII);
+        final ImageMetadata metadata = parser.getMetadata(ByteSource.array(bytes), new RgbeImagingParameters());
+        assertNotNull(metadata);
+        assertEquals(2, metadata.getItems().size());
+    }
+
+    @Test
     public void testInvalidHeader() {
         final RgbeImageParser parser = new RgbeImageParser();
         final byte[] bytes = "INVALID".getBytes(StandardCharsets.US_ASCII);
@@ -108,5 +89,24 @@ public class RgbeParserTest {
         final String header = "#?RADIANCE\n\nINVALID_RESOLUTION\n";
         final byte[] bytes = header.getBytes(StandardCharsets.US_ASCII);
         assertThrows(ImagingException.class, () -> parser.getImageSize(ByteSource.array(bytes), new RgbeImagingParameters()));
+    }
+
+    @Test
+    public void testRgbeImageParserBasics() {
+        final RgbeImageParser parser = new RgbeImageParser();
+        assertEquals("Radiance HDR", parser.getName());
+        assertEquals("hdr", parser.getDefaultExtension());
+        final String[] extensions = parser.getAcceptedExtensions();
+        assertTrue(extensions.length > 0);
+        final ImageFormat[] types = parser.getAcceptedTypes();
+        assertEquals(1, types.length);
+        assertEquals(ImageFormats.RGBE, types[0]);
+        assertNotNull(parser.getDefaultParameters());
+    }
+
+    @Test
+    public void testRgbeImagingParameters() {
+        final RgbeImagingParameters params = new RgbeImagingParameters();
+        assertNotNull(params);
     }
 }

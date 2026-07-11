@@ -32,30 +32,6 @@ import org.junit.jupiter.api.Test;
 public class XpmParserTest {
 
     @Test
-    public void testXpmHeader() throws Exception {
-        // XpmHeader is private static final, use reflection to test it
-        final Class<?> headerClass = Class.forName("org.apache.commons.imaging.formats.xpm.XpmImageParser$XpmHeader");
-        final Constructor<?> constructor = headerClass.getDeclaredConstructor(int.class, int.class, int.class, int.class, int.class, int.class, boolean.class);
-        constructor.setAccessible(true);
-        final Object header = constructor.newInstance(10, 20, 2, 1, 5, 5, true);
-        final StringWriter sw = new StringWriter();
-        final PrintWriter pw = new PrintWriter(sw);
-        final Method dumpMethod = headerClass.getMethod("dump", PrintWriter.class);
-        dumpMethod.invoke(header, pw);
-        pw.flush();
-        final String output = sw.toString();
-        assertNotNull(output);
-        // Using contains because exact line endings might vary by OS
-        assertTrue(output.contains("Width: 10"));
-        assertTrue(output.contains("Height: 20"));
-        assertTrue(output.contains("NumColors: 2"));
-        assertTrue(output.contains("NumCharsPerPixel: 1"));
-        assertTrue(output.contains("X hotspot: 5"));
-        assertTrue(output.contains("Y hotspot: 5"));
-        assertTrue(output.contains("XpmExt: true"));
-    }
-
-    @Test
     public void testPaletteEntry() throws Exception {
         final Class<?> entryClass = Class.forName("org.apache.commons.imaging.formats.xpm.XpmImageParser$PaletteEntry");
         final Constructor<?> constructor = entryClass.getDeclaredConstructor();
@@ -105,19 +81,6 @@ public class XpmParserTest {
     }
 
     @Test
-    public void testXpmImagingParameters() {
-        final XpmImagingParameters params = new XpmImagingParameters();
-        assertNotNull(params);
-    }
-
-    @Test
-    public void testXpmImageParserBasics() {
-        final XpmImageParser parser = new XpmImageParser();
-        assertEquals("X PixMap", parser.getName());
-        assertEquals("xpm", parser.getDefaultExtension());
-    }
-
-    @Test
     public void testParseColor() throws Exception {
         final XpmImageParser parser = new XpmImageParser();
         final Method parseColorMethod = XpmImageParser.class.getDeclaredMethod("parseColor", String.class);
@@ -135,5 +98,42 @@ public class XpmParserTest {
         assertEquals(0xFF0000FF, parseColorMethod.invoke(parser, "BLUE"));
         // Unknown color name
         assertEquals(0x00000000, parseColorMethod.invoke(parser, "nonexistent_color_name"));
+    }
+
+    @Test
+    public void testXpmHeader() throws Exception {
+        // XpmHeader is private static final, use reflection to test it
+        final Class<?> headerClass = Class.forName("org.apache.commons.imaging.formats.xpm.XpmImageParser$XpmHeader");
+        final Constructor<?> constructor = headerClass.getDeclaredConstructor(int.class, int.class, int.class, int.class, int.class, int.class, boolean.class);
+        constructor.setAccessible(true);
+        final Object header = constructor.newInstance(10, 20, 2, 1, 5, 5, true);
+        final StringWriter sw = new StringWriter();
+        final PrintWriter pw = new PrintWriter(sw);
+        final Method dumpMethod = headerClass.getMethod("dump", PrintWriter.class);
+        dumpMethod.invoke(header, pw);
+        pw.flush();
+        final String output = sw.toString();
+        assertNotNull(output);
+        // Using contains because exact line endings might vary by OS
+        assertTrue(output.contains("Width: 10"));
+        assertTrue(output.contains("Height: 20"));
+        assertTrue(output.contains("NumColors: 2"));
+        assertTrue(output.contains("NumCharsPerPixel: 1"));
+        assertTrue(output.contains("X hotspot: 5"));
+        assertTrue(output.contains("Y hotspot: 5"));
+        assertTrue(output.contains("XpmExt: true"));
+    }
+
+    @Test
+    public void testXpmImageParserBasics() {
+        final XpmImageParser parser = new XpmImageParser();
+        assertEquals("X PixMap", parser.getName());
+        assertEquals("xpm", parser.getDefaultExtension());
+    }
+
+    @Test
+    public void testXpmImagingParameters() {
+        final XpmImagingParameters params = new XpmImagingParameters();
+        assertNotNull(params);
     }
 }

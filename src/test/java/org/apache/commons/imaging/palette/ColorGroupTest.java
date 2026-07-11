@@ -60,6 +60,12 @@ public class ColorGroupTest {
     }
 
     @Test
+    public void testConstructorEmpty() {
+        final List<ColorCount> colorCounts = new ArrayList<>();
+        assertThrows(ImagingException.class, () -> new ColorGroup(colorCounts, false));
+    }
+
+    @Test
     public void testConstructorWithIgnoreAlpha() throws ImagingException {
         final List<ColorCount> colorCounts = new ArrayList<>();
         final ColorCount cc1 = new ColorCount(0xFF000000);
@@ -76,12 +82,6 @@ public class ColorGroupTest {
         assertEquals(255, group.maxDiff);
         assertEquals(765, group.diffTotal);
         assertTrue(group.ignoreAlpha);
-    }
-
-    @Test
-    public void testConstructorEmpty() {
-        final List<ColorCount> colorCounts = new ArrayList<>();
-        assertThrows(ImagingException.class, () -> new ColorGroup(colorCounts, false));
     }
 
     @Test

@@ -36,11 +36,6 @@ public class BinaryFunctionsTest {
     }
 
     @Test
-    public void testQuadsToByteArray() {
-        assertArrayEquals(new byte[] { 1, 2, 3, 4 }, BinaryFunctions.quadsToByteArray(0x01020304));
-    }
-
-    @Test
     public void testCompareBytes() {
         final byte[] a = { 1, 2, 3, 4, 5 };
         final byte[] b = { 0, 2, 3, 4, 6 };
@@ -50,13 +45,15 @@ public class BinaryFunctionsTest {
     }
 
     @Test
-    public void testStartsWith() {
-        final byte[] haystack = { 1, 2, 3, 4, 5 };
-        final byte[] needle = { 1, 2, 3 };
-        final byte[] wrongNeedle = { 1, 2, 4 };
-        assertTrue(BinaryFunctions.startsWith(haystack, needle));
-        assertFalse(BinaryFunctions.startsWith(haystack, wrongNeedle));
-        assertFalse(BinaryFunctions.startsWith(needle, haystack));
+    public void testCopyOfRange() {
+        final byte[] original = { 1, 2, 3, 4, 5 };
+        final byte[] copy = BinaryFunctions.copyOfRange(original, 1, 3);
+        assertArrayEquals(new byte[] { 2, 3, 4 }, copy);
+    }
+
+    @Test
+    public void testQuadsToByteArray() {
+        assertArrayEquals(new byte[] { 1, 2, 3, 4 }, BinaryFunctions.quadsToByteArray(0x01020304));
     }
 
     @Test
@@ -68,9 +65,12 @@ public class BinaryFunctionsTest {
     }
 
     @Test
-    public void testCopyOfRange() {
-        final byte[] original = { 1, 2, 3, 4, 5 };
-        final byte[] copy = BinaryFunctions.copyOfRange(original, 1, 3);
-        assertArrayEquals(new byte[] { 2, 3, 4 }, copy);
+    public void testStartsWith() {
+        final byte[] haystack = { 1, 2, 3, 4, 5 };
+        final byte[] needle = { 1, 2, 3 };
+        final byte[] wrongNeedle = { 1, 2, 4 };
+        assertTrue(BinaryFunctions.startsWith(haystack, needle));
+        assertFalse(BinaryFunctions.startsWith(haystack, wrongNeedle));
+        assertFalse(BinaryFunctions.startsWith(needle, haystack));
     }
 }

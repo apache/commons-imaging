@@ -23,15 +23,15 @@ import org.junit.jupiter.api.Test;
 
 class AllocatorTest {
 
-    /** 107374183 * 40 overflows int to 24, slipping past the byte-cost limit. */
-    @Test
-    void testArrayOverflowIsRejected() {
-        assertThrows(AllocationRequestException.class, () -> Allocator.array(107374183, Object[]::new, 40));
-    }
-
     /** 536870912 * Integer.BYTES overflows int to a negative value. */
     @Test
     void testArrayListOverflowIsRejected() {
         assertThrows(AllocationRequestException.class, () -> Allocator.arrayList(536870912));
+    }
+
+    /** 107374183 * 40 overflows int to 24, slipping past the byte-cost limit. */
+    @Test
+    void testArrayOverflowIsRejected() {
+        assertThrows(AllocationRequestException.class, () -> Allocator.array(107374183, Object[]::new, 40));
     }
 }

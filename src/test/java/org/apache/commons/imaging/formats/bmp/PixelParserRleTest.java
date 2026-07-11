@@ -33,42 +33,6 @@ public class PixelParserRleTest {
     };
 
     @Test
-    public void testProcessImage_Rle8() throws IOException {
-        final BmpHeaderInfo bhi = new BmpHeaderInfo((byte) 0, (byte) 0, 0, 0, 0, 0, 2, 2, 1, 8, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0);
-        // RLE8 data:
-        // 02 01 -> Encoded mode: repeat color index 1, 2 times
-        // 00 00 -> Escape mode: End of line
-        // 02 02 -> Encoded mode: repeat color index 2, 2 times
-        // 00 01 -> Escape mode: End of file
-        final byte[] imageData = { 0x02, 0x01, 0x00, 0x00, 0x02, 0x02, 0x00, 0x01 };
-        final PixelParserRle parser = new PixelParserRle(bhi, COLOR_TABLE, imageData);
-        final ImageBuilder imageBuilder = new ImageBuilder(2, 2, false);
-        parser.processImage(imageBuilder);
-        // Row 1 (bottom row in BMP, y=1)
-        assertEquals(0xFFFFFFFF, imageBuilder.getRgb(0, 1));
-        assertEquals(0xFFFFFFFF, imageBuilder.getRgb(1, 1));
-        // Row 0 (y=0)
-        assertEquals(0xFFFF0000, imageBuilder.getRgb(0, 0));
-        assertEquals(0xFFFF0000, imageBuilder.getRgb(1, 0));
-    }
-
-    @Test
-    public void testProcessImage_Rle4() throws IOException {
-        final BmpHeaderInfo bhi = new BmpHeaderInfo((byte) 0, (byte) 0, 0, 0, 0, 0, 4, 1, 1, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0);
-        // RLE4 data:
-        // 04 23 -> Encoded mode: repeat colors index 2 and 3, 4 times (2, 3, 2, 3)
-        // 00 01 -> Escape mode: End of file
-        final byte[] imageData = { 0x04, 0x23, 0x00, 0x01 };
-        final PixelParserRle parser = new PixelParserRle(bhi, COLOR_TABLE, imageData);
-        final ImageBuilder imageBuilder = new ImageBuilder(4, 1, false);
-        parser.processImage(imageBuilder);
-        assertEquals(0xFFFF0000, imageBuilder.getRgb(0, 0)); // 2
-        assertEquals(0xFF00FF00, imageBuilder.getRgb(1, 0)); // 3
-        assertEquals(0xFFFF0000, imageBuilder.getRgb(2, 0)); // 2
-        assertEquals(0xFF00FF00, imageBuilder.getRgb(3, 0)); // 3
-    }
-
-    @Test
     public void testProcessImage_AbsoluteMode_Rle8() throws IOException {
         final BmpHeaderInfo bhi = new BmpHeaderInfo((byte) 0, (byte) 0, 0, 0, 0, 0, 3, 1, 1, 8, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0);
         // 00 03 01 02 03 00 -> Absolute mode: 3 pixels (1, 2, 3).
@@ -98,5 +62,41 @@ public class PixelParserRleTest {
         final ImageBuilder imageBuilder = new ImageBuilder(4, 4, false);
         parser.processImage(imageBuilder);
         assertEquals(0xFFFF0000, imageBuilder.getRgb(1, 2));
+    }
+
+    @Test
+    public void testProcessImage_Rle4() throws IOException {
+        final BmpHeaderInfo bhi = new BmpHeaderInfo((byte) 0, (byte) 0, 0, 0, 0, 0, 4, 1, 1, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0);
+        // RLE4 data:
+        // 04 23 -> Encoded mode: repeat colors index 2 and 3, 4 times (2, 3, 2, 3)
+        // 00 01 -> Escape mode: End of file
+        final byte[] imageData = { 0x04, 0x23, 0x00, 0x01 };
+        final PixelParserRle parser = new PixelParserRle(bhi, COLOR_TABLE, imageData);
+        final ImageBuilder imageBuilder = new ImageBuilder(4, 1, false);
+        parser.processImage(imageBuilder);
+        assertEquals(0xFFFF0000, imageBuilder.getRgb(0, 0)); // 2
+        assertEquals(0xFF00FF00, imageBuilder.getRgb(1, 0)); // 3
+        assertEquals(0xFFFF0000, imageBuilder.getRgb(2, 0)); // 2
+        assertEquals(0xFF00FF00, imageBuilder.getRgb(3, 0)); // 3
+    }
+
+    @Test
+    public void testProcessImage_Rle8() throws IOException {
+        final BmpHeaderInfo bhi = new BmpHeaderInfo((byte) 0, (byte) 0, 0, 0, 0, 0, 2, 2, 1, 8, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0);
+        // RLE8 data:
+        // 02 01 -> Encoded mode: repeat color index 1, 2 times
+        // 00 00 -> Escape mode: End of line
+        // 02 02 -> Encoded mode: repeat color index 2, 2 times
+        // 00 01 -> Escape mode: End of file
+        final byte[] imageData = { 0x02, 0x01, 0x00, 0x00, 0x02, 0x02, 0x00, 0x01 };
+        final PixelParserRle parser = new PixelParserRle(bhi, COLOR_TABLE, imageData);
+        final ImageBuilder imageBuilder = new ImageBuilder(2, 2, false);
+        parser.processImage(imageBuilder);
+        // Row 1 (bottom row in BMP, y=1)
+        assertEquals(0xFFFFFFFF, imageBuilder.getRgb(0, 1));
+        assertEquals(0xFFFFFFFF, imageBuilder.getRgb(1, 1));
+        // Row 0 (y=0)
+        assertEquals(0xFFFF0000, imageBuilder.getRgb(0, 0));
+        assertEquals(0xFFFF0000, imageBuilder.getRgb(1, 0));
     }
 }

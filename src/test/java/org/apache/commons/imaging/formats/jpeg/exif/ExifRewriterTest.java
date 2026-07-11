@@ -42,6 +42,68 @@ import org.junit.jupiter.api.Test;
 public class ExifRewriterTest extends AbstractExifTest {
 
     @Test
+    public void testAddExifToImageWithJfif() throws Exception {
+        // Create a minimal JPEG with SOI and JFIF (APP0) and SOS
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        baos.write(0xFF);
+        baos.write(0xD8); // SOI
+        baos.write(0xFF);
+        baos.write(0xE0); // APP0 (JFIF)
+        baos.write(0x00);
+        baos.write(0x10); // Length (16)
+        baos.write("JFIF".getBytes());
+        baos.write(0); // Version
+        baos.write(new byte[9]); // Rest of JFIF
+        baos.write(0xFF);
+        baos.write(0xDA); // SOS
+        baos.write(0x00);
+        baos.write(0x0C); // Length
+        baos.write(new byte[10]); // SOS data
+        baos.write(0xFF);
+        baos.write(0xD9); // EOI
+        final byte[] imageBytes = baos.toByteArray();
+        final TiffOutputSet outputSet = new TiffOutputSet();
+        outputSet.getOrCreateRootDirectory();
+        final ByteArrayOutputStream os = new ByteArrayOutputStream();
+        new ExifRewriter().updateExifMetadataLossy(imageBytes, os, outputSet);
+        final byte[] outBytes = os.toByteArray();
+        assertTrue(hasExifData("test.jpg", outBytes));
+        // Check that EXIF (APP1) is AFTER JFIF (APP0)
+        // SOI (2) + JFIF (16+2=18) = 20
+        // Next marker at index 20 should be APP1 (0xFFE1)
+        assertEquals((byte) 0xFF, outBytes[20]);
+        assertEquals((byte) 0xE1, outBytes[21]);
+    }
+
+    @Test
+    public void testAddExifToImageWithoutExif() throws Exception {
+        // Find a JPEG image without EXIF
+        final File imageFile = getTestImage(file -> file.getName().toLowerCase().endsWith(".jpg") && !hasExifData(file));
+        assertNotNull(imageFile);
+        final TiffOutputSet outputSet = new TiffOutputSet();
+        final TiffOutputDirectory root = outputSet.getOrCreateRootDirectory();
+        root.add(ExifTagConstants.EXIF_TAG_EXIF_VERSION, (byte) 1, (byte) 2, (byte) 3, (byte) 4);
+        final ByteArrayOutputStream os = new ByteArrayOutputStream();
+        new ExifRewriter().updateExifMetadataLossy(imageFile, os, outputSet);
+        final byte[] outBytes = os.toByteArray();
+        assertTrue(hasExifData("test.jpg", outBytes));
+    }
+
+    @Test
+    public void testImagingOverflowException() throws Exception {
+        final File imageFile = getImageWithExifData();
+        final TiffOutputSet outputSet = new TiffOutputSet();
+        final TiffOutputDirectory root = outputSet.getOrCreateRootDirectory();
+        // Add a very large field to exceed 64KB limit of APP1 segment
+        final byte[] largeData = new byte[70000];
+        root.add(ExifTagConstants.EXIF_TAG_MAKER_NOTE, largeData);
+        final ByteArrayOutputStream os = new ByteArrayOutputStream();
+        assertThrows(ImagingOverflowException.class, () -> {
+            new ExifRewriter().updateExifMetadataLossy(imageFile, os, outputSet);
+        });
+    }
+
+    @Test
     public void testRemoveExifMetadata_ByteArray() throws Exception {
         final File imageFile = getImageWithExifData();
         final byte[] imageBytes = Files.readAllBytes(imageFile.toPath());
@@ -157,67 +219,5 @@ public class ExifRewriterTest extends AbstractExifTest {
             assertNotNull(outBytes);
             assertTrue(hasExifData("test.jpg", outBytes));
         }
-    }
-
-    @Test
-    public void testAddExifToImageWithoutExif() throws Exception {
-        // Find a JPEG image without EXIF
-        final File imageFile = getTestImage(file -> file.getName().toLowerCase().endsWith(".jpg") && !hasExifData(file));
-        assertNotNull(imageFile);
-        final TiffOutputSet outputSet = new TiffOutputSet();
-        final TiffOutputDirectory root = outputSet.getOrCreateRootDirectory();
-        root.add(ExifTagConstants.EXIF_TAG_EXIF_VERSION, (byte) 1, (byte) 2, (byte) 3, (byte) 4);
-        final ByteArrayOutputStream os = new ByteArrayOutputStream();
-        new ExifRewriter().updateExifMetadataLossy(imageFile, os, outputSet);
-        final byte[] outBytes = os.toByteArray();
-        assertTrue(hasExifData("test.jpg", outBytes));
-    }
-
-    @Test
-    public void testAddExifToImageWithJfif() throws Exception {
-        // Create a minimal JPEG with SOI and JFIF (APP0) and SOS
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        baos.write(0xFF);
-        baos.write(0xD8); // SOI
-        baos.write(0xFF);
-        baos.write(0xE0); // APP0 (JFIF)
-        baos.write(0x00);
-        baos.write(0x10); // Length (16)
-        baos.write("JFIF".getBytes());
-        baos.write(0); // Version
-        baos.write(new byte[9]); // Rest of JFIF
-        baos.write(0xFF);
-        baos.write(0xDA); // SOS
-        baos.write(0x00);
-        baos.write(0x0C); // Length
-        baos.write(new byte[10]); // SOS data
-        baos.write(0xFF);
-        baos.write(0xD9); // EOI
-        final byte[] imageBytes = baos.toByteArray();
-        final TiffOutputSet outputSet = new TiffOutputSet();
-        outputSet.getOrCreateRootDirectory();
-        final ByteArrayOutputStream os = new ByteArrayOutputStream();
-        new ExifRewriter().updateExifMetadataLossy(imageBytes, os, outputSet);
-        final byte[] outBytes = os.toByteArray();
-        assertTrue(hasExifData("test.jpg", outBytes));
-        // Check that EXIF (APP1) is AFTER JFIF (APP0)
-        // SOI (2) + JFIF (16+2=18) = 20
-        // Next marker at index 20 should be APP1 (0xFFE1)
-        assertEquals((byte) 0xFF, outBytes[20]);
-        assertEquals((byte) 0xE1, outBytes[21]);
-    }
-
-    @Test
-    public void testImagingOverflowException() throws Exception {
-        final File imageFile = getImageWithExifData();
-        final TiffOutputSet outputSet = new TiffOutputSet();
-        final TiffOutputDirectory root = outputSet.getOrCreateRootDirectory();
-        // Add a very large field to exceed 64KB limit of APP1 segment
-        final byte[] largeData = new byte[70000];
-        root.add(ExifTagConstants.EXIF_TAG_MAKER_NOTE, largeData);
-        final ByteArrayOutputStream os = new ByteArrayOutputStream();
-        assertThrows(ImagingOverflowException.class, () -> {
-            new ExifRewriter().updateExifMetadataLossy(imageFile, os, outputSet);
-        });
     }
 }
