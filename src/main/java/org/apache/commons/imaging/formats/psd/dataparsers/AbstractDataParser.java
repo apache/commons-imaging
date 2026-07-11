@@ -37,7 +37,7 @@ public abstract class AbstractDataParser {
     /**
      * Gets the number of basic color channels.
      *
-     * @return the number of basic channels.
+     * @return The number of basic channels.
      */
     public abstract int getBasicChannelsCount();
 
@@ -48,7 +48,7 @@ public abstract class AbstractDataParser {
      * @param x the x coordinate.
      * @param y the y coordinate.
      * @param imageContents the image contents.
-     * @return the RGB value.
+     * @return The RGB value.
      */
     protected abstract int getRgb(int[][][] data, int x, int y, PsdImageContents imageContents);
 

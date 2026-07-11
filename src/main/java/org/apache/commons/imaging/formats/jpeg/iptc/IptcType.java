@@ -24,14 +24,14 @@ public interface IptcType {
     /**
      * Gets the name of this IPTC type.
      *
-     * @return the name.
+     * @return The name.
      */
     String getName();
 
     /**
      * Gets the type number.
      *
-     * @return the type number.
+     * @return The type number.
      */
     int getType();
 

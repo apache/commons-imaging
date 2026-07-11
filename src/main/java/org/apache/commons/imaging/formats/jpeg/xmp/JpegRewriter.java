@@ -152,7 +152,7 @@ public class JpegRewriter extends BinaryFileParser {
         /**
          * Gets the segment data.
          *
-         * @return the segment data.
+         * @return The segment data.
          */
         public byte[] getSegmentData() {
             return segmentData.clone();
@@ -268,7 +268,7 @@ public class JpegRewriter extends BinaryFileParser {
      * Analyzes JFIF structure.
      *
      * @param byteSource the byte source.
-     * @return the JFIF pieces.
+     * @return The JFIF pieces.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
      */
@@ -311,7 +311,7 @@ public class JpegRewriter extends BinaryFileParser {
      * @param <T> The piece type.
      * @param segments the segments.
      * @param filter the filter.
-     * @return the filtered segments.
+     * @return The filtered segments.
      */
     protected <T extends JFIFPiece> List<T> filterSegments(final List<T> segments, final SegmentFilter filter) {
         return filterSegments(segments, filter, false);
@@ -324,7 +324,7 @@ public class JpegRewriter extends BinaryFileParser {
      * @param segments the segments.
      * @param filter the filter.
      * @param reverse whether to reverse the filter logic.
-     * @return the filtered segments.
+     * @return The filtered segments.
      */
     protected <T extends JFIFPiece> List<T> filterSegments(final List<T> segments, final SegmentFilter filter, final boolean reverse) {
         final List<T> result = new ArrayList<>();
@@ -347,7 +347,7 @@ public class JpegRewriter extends BinaryFileParser {
      *
      * @param <T> The piece type.
      * @param segments the segments.
-     * @return the filtered segments.
+     * @return The filtered segments.
      */
     protected <T extends JFIFPiece> List<T> findPhotoshopApp13Segments(final List<T> segments) {
         return filterSegments(segments, PHOTOSHOP_APP13_SEGMENT_FILTER, true);
@@ -360,7 +360,7 @@ public class JpegRewriter extends BinaryFileParser {
      * @param <U> The new piece type.
      * @param segments the segments.
      * @param newSegments the new segments to insert.
-     * @return the combined segments.
+     * @return The combined segments.
      * @throws ImagingException if an imaging error occurs.
      */
     protected <T extends JFIFPiece, U extends JFIFPiece> List<JFIFPiece> insertAfterLastAppSegments(final List<T> segments, final List<U> newSegments)
@@ -398,7 +398,7 @@ public class JpegRewriter extends BinaryFileParser {
      * @param <U> The new piece type.
      * @param segments the segments.
      * @param newSegments the new segments to insert.
-     * @return the combined segments.
+     * @return The combined segments.
      * @throws ImagingException if an imaging error occurs.
      */
     protected <T extends JFIFPiece, U extends JFIFPiece> List<JFIFPiece> insertBeforeFirstAppSegments(final List<T> segments, final List<U> newSegments)
@@ -429,7 +429,7 @@ public class JpegRewriter extends BinaryFileParser {
      *
      * @param <T> The piece type.
      * @param segments the segments.
-     * @return the filtered segments.
+     * @return The filtered segments.
      */
     protected <T extends JFIFPiece> List<T> removeExifSegments(final List<T> segments) {
         return filterSegments(segments, EXIF_SEGMENT_FILTER);
@@ -440,7 +440,7 @@ public class JpegRewriter extends BinaryFileParser {
      *
      * @param <T> The piece type.
      * @param segments the segments.
-     * @return the filtered segments.
+     * @return The filtered segments.
      */
     protected <T extends JFIFPiece> List<T> removePhotoshopApp13Segments(final List<T> segments) {
         return filterSegments(segments, PHOTOSHOP_APP13_SEGMENT_FILTER);
@@ -451,7 +451,7 @@ public class JpegRewriter extends BinaryFileParser {
      *
      * @param <T> The piece type.
      * @param segments the segments.
-     * @return the filtered segments.
+     * @return The filtered segments.
      */
     protected <T extends JFIFPiece> List<T> removeXmpSegments(final List<T> segments) {
         return filterSegments(segments, XMP_SEGMENT_FILTER);

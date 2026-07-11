@@ -108,7 +108,7 @@ public class PsdHeaderInfo {
     /**
      * Gets a copy of the reserved bytes.
      *
-     * @return the reserved bytes.
+     * @return The reserved bytes.
      */
     public byte[] getReserved() {
         return reserved.clone();

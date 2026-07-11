@@ -31,7 +31,7 @@ public final class PackBits {
      * Compresses byte data using PackBits compression.
      *
      * @param bytes the bytes to compress.
-     * @return the compressed bytes.
+     * @return The compressed bytes.
      * @throws IOException if an I/O error occurs.
      */
     public static byte[] compress(final byte[] bytes) throws IOException {
@@ -88,7 +88,7 @@ public final class PackBits {
      *
      * @param bytes the compressed bytes.
      * @param expected the expected number of decompressed bytes.
-     * @return the decompressed bytes.
+     * @return The decompressed bytes.
      * @throws ImagingException if the data is corrupt or incomplete.
      */
     public static byte[] decompress(final byte[] bytes, final int expected) throws ImagingException {

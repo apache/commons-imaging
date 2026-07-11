@@ -72,7 +72,7 @@ final class JpegInputStream {
     /**
      * Returns the value from current field (as {@code InputStream.read()} would do) and set the position of the pointer to the next field to read.
      *
-     * @return the value from current field (as {@code InputStream.read()} would do).
+     * @return The value from current field (as {@code InputStream.read()} would do).
      * @throws IllegalStateException if the stream hasn't any other value.
      */
     int read() {

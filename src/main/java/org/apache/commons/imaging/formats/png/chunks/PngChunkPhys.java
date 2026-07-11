@@ -69,7 +69,7 @@ public final class PngChunkPhys extends PngChunk {
     /**
      * Gets the unit specifier (0 = unknown, 1 = meter).
      *
-     * @return the unit specifier.
+     * @return The unit specifier.
      */
     public int getUnitSpecifier() {
         return unitSpecifier;

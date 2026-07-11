@@ -38,7 +38,7 @@ public class ByteSource {
      * Creates a ByteSource from a byte array.
      *
      * @param array the byte array.
-     * @return the ByteSource.
+     * @return The ByteSource.
      */
     public static ByteSource array(final byte[] array) {
         return new ByteSource(new ByteArrayOrigin(array), null);
@@ -49,7 +49,7 @@ public class ByteSource {
      *
      * @param array the byte array.
      * @param name the name.
-     * @return the ByteSource.
+     * @return The ByteSource.
      */
     public static ByteSource array(final byte[] array, final String name) {
         return new ByteSource(new ByteArrayOrigin(array), name);
@@ -59,7 +59,7 @@ public class ByteSource {
      * Creates a ByteSource from a file.
      *
      * @param file the file.
-     * @return the ByteSource.
+     * @return The ByteSource.
      */
     public static ByteSource file(final File file) {
         return new ByteSource(new FileOrigin(file), file.getName());
@@ -70,7 +70,7 @@ public class ByteSource {
      *
      * @param byteSource the byte source.
      * @param skip the number of bytes to skip.
-     * @return the input stream.
+     * @return The input stream.
      * @throws IOException if an I/O error occurs.
      */
     public static final InputStream getInputStream(final ByteSource byteSource, final long skip) throws IOException {
@@ -93,7 +93,7 @@ public class ByteSource {
      *
      * @param is the input stream.
      * @param name the name.
-     * @return the ByteSource.
+     * @return The ByteSource.
      * @throws IOException if an I/O error occurs.
      */
     public static ByteSource inputStream(final InputStream is, final String name) throws IOException {
@@ -104,7 +104,7 @@ public class ByteSource {
      * Creates a ByteSource from a path.
      *
      * @param file the path.
-     * @return the ByteSource.
+     * @return The ByteSource.
      */
     public static ByteSource path(final Path file) {
         return new ByteSource(new PathOrigin(file), Objects.toString(file.getFileName(), null));
@@ -129,7 +129,7 @@ public class ByteSource {
      *
      * @param position the position.
      * @param length the length.
-     * @return the byte array.
+     * @return The byte array.
      * @throws IOException if an I/O error occurs.
      */
     public byte[] getByteArray(final long position, final int length) throws IOException {
@@ -139,7 +139,7 @@ public class ByteSource {
     /**
      * Gets the file name.
      *
-     * @return the file name.
+     * @return The file name.
      */
     public final String getFileName() {
         return fileName;
@@ -148,7 +148,7 @@ public class ByteSource {
     /**
      * Gets an input stream.
      *
-     * @return the input stream.
+     * @return The input stream.
      * @throws IOException if an I/O error occurs.
      */
     public InputStream getInputStream() throws IOException {
@@ -158,7 +158,7 @@ public class ByteSource {
     /**
      * This operation can be VERY expensive; for InputStream byte sources, the entire stream must be drained to determine its length.
      *
-     * @return the length.
+     * @return The length.
      * @throws IOException if an I/O error occurs.
      */
     public long size() throws IOException {

@@ -136,7 +136,7 @@ public final class SofnSegment extends AbstractSegment {
     /**
      * Returns a copy of all the components.
      *
-     * @return the components
+     * @return The components
      */
     public Component[] getComponents() {
         return components.clone();
@@ -146,7 +146,7 @@ public final class SofnSegment extends AbstractSegment {
      * Returns the component at the specified index.
      *
      * @param index the array index
-     * @return the component
+     * @return The component
      */
     public Component getComponents(final int index) {
         return components[index];

@@ -76,7 +76,7 @@ public enum TiffDirectoryType {
      * Gets the EXIF directory type for the given type code.
      *
      * @param type the directory type code.
-     * @return the directory type, or {@link #EXIF_DIRECTORY_UNKNOWN} if not found.
+     * @return The directory type, or {@link #EXIF_DIRECTORY_UNKNOWN} if not found.
      */
     public static TiffDirectoryType getExifDirectoryType(final int type) {
 

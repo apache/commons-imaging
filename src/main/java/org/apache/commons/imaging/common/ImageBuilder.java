@@ -162,7 +162,7 @@ public final class ImageBuilder {
      *
      * @param x the X coordinate of the pixel to be read
      * @param y the Y coordinate of the pixel to be read
-     * @return the RGB or ARGB pixel value
+     * @return The RGB or ARGB pixel value
      */
     public int getRgb(final int x, final int y) {
         final int rowOffset = y * width;

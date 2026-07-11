@@ -132,7 +132,7 @@ public final class DhtSegment extends AbstractSegment {
          * Gets the Huffman value at the specified index.
          *
          * @param i the index.
-         * @return the Huffman value.
+         * @return The Huffman value.
          */
         public int getHuffVal(final int i) {
             return huffVal[i];
@@ -142,7 +142,7 @@ public final class DhtSegment extends AbstractSegment {
          * Gets the maximum code for the specified bit length.
          *
          * @param i the bit length.
-         * @return the maximum code.
+         * @return The maximum code.
          */
         public int getMaxCode(final int i) {
             return maxCode[i];
@@ -152,7 +152,7 @@ public final class DhtSegment extends AbstractSegment {
          * Gets the minimum code for the specified bit length.
          *
          * @param i the bit length.
-         * @return the minimum code.
+         * @return The minimum code.
          */
         public int getMinCode(final int i) {
             return minCode[i];
@@ -162,7 +162,7 @@ public final class DhtSegment extends AbstractSegment {
          * Gets the value pointer for the specified bit length.
          *
          * @param i the bit length.
-         * @return the value pointer.
+         * @return The value pointer.
          */
         public int getValPtr(final int i) {
             return valPtr[i];

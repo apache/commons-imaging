@@ -73,7 +73,7 @@ public class PngImagingParameters extends XmpImagingParameters<PngImagingParamet
     /**
      * Gets the bit depth.
      *
-     * @return the bit depth.
+     * @return The bit depth.
      */
     public byte getBitDepth() {
         return bitDepth;
@@ -82,7 +82,7 @@ public class PngImagingParameters extends XmpImagingParameters<PngImagingParamet
     /**
      * Gets the physical scale.
      *
-     * @return the physical scale.
+     * @return The physical scale.
      */
     public PhysicalScale getPhysicalScale() {
         return physicalScale;
@@ -91,7 +91,7 @@ public class PngImagingParameters extends XmpImagingParameters<PngImagingParamet
     /**
      * Gets the text chunks.
      *
-     * @return the text chunks.
+     * @return The text chunks.
      */
     public List<? extends AbstractPngText> getTextChunks() {
         return textChunks != null ? Collections.unmodifiableList(textChunks) : null;

@@ -363,7 +363,7 @@ public class PaletteFactory {
      * {@linkplain #makeExactRgbPaletteSimple} for large images but uses 2 mebibytes of working memory. Treats all the colors as opaque.
      *
      * @param src the image whose palette to build
-     * @return the palette
+     * @return The palette
      */
     public Palette makeExactRgbPaletteFancy(final BufferedImage src) {
         // map what rgb values have been used
@@ -420,7 +420,7 @@ public class PaletteFactory {
      *
      * @param src the image whose palette to build
      * @param max the maximum number of colors the palette can contain
-     * @return the complete palette of {@code max} or less colors, or {@code null} if more than {@code max} colors are necessary
+     * @return The complete palette of {@code max} or less colors, or {@code null} if more than {@code max} colors are necessary
      */
     public SimplePalette makeExactRgbPaletteSimple(final BufferedImage src, final int max) {
         // This is not efficient for large values of max, say, max > 256;
@@ -458,7 +458,7 @@ public class PaletteFactory {
      * @param src         the image whose palette to build
      * @param transparent whether to consider the alpha values
      * @param max         the maximum number of colors the palette can contain
-     * @return the palette of at most {@code max} colors
+     * @return The palette of at most {@code max} colors
      * @throws ImagingException if it fails to process the palette
      */
     public Palette makeQuantizedRgbaPalette(final BufferedImage src, final boolean transparent, final int max) throws ImagingException {
@@ -472,7 +472,7 @@ public class PaletteFactory {
      *
      * @param src the image whose palette to build
      * @param max the maximum number of colors the palette can contain
-     * @return the palette of at most {@code max} colors
+     * @return The palette of at most {@code max} colors
      */
     public Palette makeQuantizedRgbPalette(final BufferedImage src, final int max) {
         final int precision = 6; // in bits

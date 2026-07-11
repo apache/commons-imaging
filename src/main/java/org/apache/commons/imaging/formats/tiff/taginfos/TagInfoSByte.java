@@ -42,7 +42,7 @@ public class TagInfoSByte extends TagInfo {
      *
      * @param byteOrder the byte order.
      * @param value the value.
-     * @return the encoded bytes.
+     * @return The encoded bytes.
      */
     public byte[] encodeValue(final ByteOrder byteOrder, final byte value) {
         return new byte[] { value };

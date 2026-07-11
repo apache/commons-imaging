@@ -82,7 +82,7 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
      * Gets the chunk type name from chunk type integer.
      *
      * @param chunkType the chunk type.
-     * @return the chunk type name as a string.
+     * @return The chunk type name as a string.
      */
     public static String getChunkTypeName(final int chunkType) {
         final StringBuilder result = new StringBuilder();

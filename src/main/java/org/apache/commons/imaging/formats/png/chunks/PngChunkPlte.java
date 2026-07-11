@@ -75,7 +75,7 @@ public final class PngChunkPlte extends PngChunk {
     /**
      * Gets a copy of the RGB palette.
      *
-     * @return the RGB palette.
+     * @return The RGB palette.
      */
     public int[] getRgb() {
         return rgb.clone();
@@ -96,7 +96,7 @@ public final class PngChunkPlte extends PngChunk {
      * Gets the RGB value at the specified palette index.
      *
      * @param index the palette index.
-     * @return the RGB value.
+     * @return The RGB value.
      * @throws ImagingException if the index is out of bounds.
      */
     public int getRgb(final int index) throws ImagingException {

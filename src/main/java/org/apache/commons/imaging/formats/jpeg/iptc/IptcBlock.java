@@ -64,7 +64,7 @@ public class IptcBlock {
     /**
      * Gets the block type.
      *
-     * @return the block type.
+     * @return The block type.
      */
     public int getBlockType() {
         return blockType;

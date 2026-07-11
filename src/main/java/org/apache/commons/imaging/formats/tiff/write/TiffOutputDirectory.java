@@ -666,7 +666,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Gets a description of this directory.
      *
-     * @return the description.
+     * @return The description.
      */
     public String description() {
         return TiffDirectory.description(getType());
@@ -680,7 +680,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
      * </p>
      *
      * @param tag the tag specifying the field
-     * @return the field matching tagInfo or null, if the field isn't present
+     * @return The field matching tagInfo or null, if the field isn't present
      * @see #findField(TagInfo)
      */
     public TiffOutputField findField(final int tag) {
@@ -700,7 +700,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
      * </p>
      *
      * @param tagInfo the TagInfo specifying the field
-     * @return the field matching tagInfo or null, if the field isn't present
+     * @return The field matching tagInfo or null, if the field isn't present
      * @see #findField(int)
      */
     public TiffOutputField findField(final TagInfo tagInfo) {
@@ -731,7 +731,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
      * Gets all output items from this directory including fields and image data.
      *
      * @param outputSummary the output summary.
-     * @return the list of output items.
+     * @return The list of output items.
      * @throws ImagingException if an error occurs.
      */
     protected List<AbstractTiffOutputItem> getOutputItems(final TiffOutputSummary outputSummary) throws ImagingException {
@@ -826,7 +826,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Gets the raw JPEG image data.
      *
-     * @return the JPEG image data, or null if not present.
+     * @return The JPEG image data, or null if not present.
      */
     public JpegImageData getRawJpegImageData() {
         return jpegImageData;
@@ -835,7 +835,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Gets the raw TIFF image data.
      *
-     * @return the TIFF image data, or null if not present.
+     * @return The TIFF image data, or null if not present.
      */
     public AbstractTiffImageData getRawTiffImageData() {
         return abstractTiffImageData;
@@ -844,7 +844,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Gets the directory type.
      *
-     * @return the directory type.
+     * @return The directory type.
      */
     public int getType() {
         return type;

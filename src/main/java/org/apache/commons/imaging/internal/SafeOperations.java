@@ -29,7 +29,7 @@ public final class SafeOperations {
      * Applies {@link Math#addExact(int, int)} to a variable length array of integers.
      *
      * @param values variable length array of integers.
-     * @return the values safely added.
+     * @return The values safely added.
      */
     public static int add(final int... values) {
         if (values == null || values.length < 2) {

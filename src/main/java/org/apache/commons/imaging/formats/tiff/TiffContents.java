@@ -93,7 +93,7 @@ public class TiffContents {
      * Finds a field by tag.
      *
      * @param tag the tag to search for.
-     * @return the field, or null if not found.
+     * @return The field, or null if not found.
      * @throws ImagingException if an error occurs during search.
      */
     public TiffField findField(final TagInfo tag) throws ImagingException {
@@ -110,7 +110,7 @@ public class TiffContents {
     /**
      * Gets all TIFF elements including header, directories, and field data.
      *
-     * @return the list of elements.
+     * @return The list of elements.
      * @throws ImagingException if an error occurs.
      */
     public List<AbstractTiffElement> getElements() throws ImagingException {

@@ -396,7 +396,7 @@ public class SurveyTiffFile {
      * Trims spaces from a range of characters intended for a CSV output
      *
      * @param source the standard source file
-     * @return the equivalent string with spaces removed.
+     * @return The equivalent string with spaces removed.
      */
     private String trimForCsv(final StringBuilder source) {
         int n = source.length();

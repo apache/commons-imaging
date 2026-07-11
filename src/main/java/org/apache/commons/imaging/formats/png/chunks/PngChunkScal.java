@@ -64,7 +64,7 @@ public final class PngChunkScal extends PngChunk {
     /**
      * Gets the unit specifier (1 = meter, 2 = radian).
      *
-     * @return the unit specifier.
+     * @return The unit specifier.
      */
     public int getUnitSpecifier() {
         return unitSpecifier;

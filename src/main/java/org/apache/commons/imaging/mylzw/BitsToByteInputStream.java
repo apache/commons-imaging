@@ -47,7 +47,7 @@ public class BitsToByteInputStream extends FilterInputStream {
      * Reads the specified number of bits and adjusts to the desired depth.
      *
      * @param bitCount the number of bits to read.
-     * @return the adjusted value.
+     * @return The adjusted value.
      * @throws IOException if an I/O error occurs.
      */
     public int readBits(final int bitCount) throws IOException {
@@ -66,7 +66,7 @@ public class BitsToByteInputStream extends FilterInputStream {
      *
      * @param sampleBits the number of bits per sample.
      * @param length the number of samples to read.
-     * @return the array of values.
+     * @return The array of values.
      * @throws IOException if an I/O error occurs.
      */
     public int[] readBitsArray(final int sampleBits, final int length) throws IOException {

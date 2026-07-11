@@ -118,7 +118,7 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
     /**
      * Gets the compression algorithm.
      *
-     * @return the compression algorithm, or null if not set.
+     * @return The compression algorithm, or null if not set.
      */
     public Integer getCompression() {
         return compression;
@@ -127,7 +127,7 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
     /**
      * Gets the custom photometric interpreter.
      *
-     * @return the custom photometric interpreter, or null if not set.
+     * @return The custom photometric interpreter, or null if not set.
      */
     public AbstractPhotometricInterpreter getCustomPhotometricInterpreter() {
         return customPhotometricInterpreter;
@@ -136,7 +136,7 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
     /**
      * Gets the LZW compression block size.
      *
-     * @return the LZW compression block size, or null if not set.
+     * @return The LZW compression block size, or null if not set.
      */
     public Integer getLzwCompressionBlockSize() {
         return lzwCompressionBlockSize;
@@ -190,7 +190,7 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
     /**
      * Gets the T.4 options.
      *
-     * @return the T.4 options, or null if not set.
+     * @return The T.4 options, or null if not set.
      */
     public Integer getT4Options() {
         return t4Options;
@@ -199,7 +199,7 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
     /**
      * Gets the T.6 options.
      *
-     * @return the T.6 options, or null if not set.
+     * @return The T.6 options, or null if not set.
      */
     public Integer getT6Options() {
         return t6Options;

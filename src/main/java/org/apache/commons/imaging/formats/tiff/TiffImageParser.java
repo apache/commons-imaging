@@ -92,7 +92,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
      *
      * @param byteSource the byte source.
      * @param params the imaging parameters.
-     * @return the list of raw image data.
+     * @return The list of raw image data.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
      */
@@ -250,7 +250,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
      * @param directory the TIFF directory.
      * @param byteOrder the byte order.
      * @param params the imaging parameters.
-     * @return the buffered image.
+     * @return The buffered image.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
      */

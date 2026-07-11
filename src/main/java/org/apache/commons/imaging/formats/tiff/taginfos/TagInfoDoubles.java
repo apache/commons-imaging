@@ -44,7 +44,7 @@ public class TagInfoDoubles extends TagInfo {
      *
      * @param byteOrder the byte order.
      * @param values the values.
-     * @return the encoded bytes.
+     * @return The encoded bytes.
      */
     public byte[] encodeValue(final ByteOrder byteOrder, final double... values) {
         return ByteConversions.toBytes(values, byteOrder);
@@ -55,7 +55,7 @@ public class TagInfoDoubles extends TagInfo {
      *
      * @param byteOrder the byte order.
      * @param bytes the bytes.
-     * @return the double array values.
+     * @return The double array values.
      */
     public double[] getValue(final ByteOrder byteOrder, final byte[] bytes) {
         return ByteConversions.toDoubles(bytes, byteOrder);

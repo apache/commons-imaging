@@ -44,7 +44,7 @@ public class IptcRecord {
     /**
      * Gets the IPTC type name.
      *
-     * @return the IPTC type name.
+     * @return The IPTC type name.
      */
     public String getIptcTypeName() {
         return iptcType.getName();
@@ -53,7 +53,7 @@ public class IptcRecord {
     /**
      * Gets the value.
      *
-     * @return the value.
+     * @return The value.
      */
     public String getValue() {
         return value;

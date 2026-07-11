@@ -70,7 +70,7 @@ public class App14Segment extends AppnSegment {
     /**
      * Gets the Adobe color transform value.
      *
-     * @return the color transform value.
+     * @return The color transform value.
      */
     public int getAdobeColorTransform() {
         return 0xff & getSegmentData(11);

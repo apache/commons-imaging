@@ -38,7 +38,7 @@ public class TiffOutputField {
      *
      * @param tagInfo the tag info.
      * @param byteOrder the byte order.
-     * @return the offset field.
+     * @return The offset field.
      * @throws ImagingException if an error occurs.
      */
     protected static TiffOutputField createOffsetField(final TagInfo tagInfo, final ByteOrder byteOrder) throws ImagingException {
@@ -118,7 +118,7 @@ public class TiffOutputField {
     /**
      * Gets the separate value item if this field is not a local value.
      *
-     * @return the separate value item, or null.
+     * @return The separate value item, or null.
      */
     protected AbstractTiffOutputItem getSeperateValue() {
         return separateValueItem;
@@ -127,7 +127,7 @@ public class TiffOutputField {
     /**
      * Gets the sort hint.
      *
-     * @return the sort hint.
+     * @return The sort hint.
      */
     public int getSortHint() {
         return sortHint;
@@ -185,7 +185,7 @@ public class TiffOutputField {
      * Gets a string representation with optional prefix.
      *
      * @param prefix the prefix, or null.
-     * @return the string representation.
+     * @return The string representation.
      */
     public String toString(String prefix) {
         if (prefix == null) {

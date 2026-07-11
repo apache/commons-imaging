@@ -96,7 +96,7 @@ public abstract class AbstractWebPChunk extends BinaryFileParser {
     /**
      * Gets the chunk size.
      *
-     * @return the chunk size.
+     * @return The chunk size.
      */
     public int getChunkSize() {
         return chunkSize;
@@ -105,7 +105,7 @@ public abstract class AbstractWebPChunk extends BinaryFileParser {
     /**
      * Gets the payload size.
      *
-     * @return the payload size.
+     * @return The payload size.
      */
     public int getPayloadSize() {
         return size;
@@ -114,7 +114,7 @@ public abstract class AbstractWebPChunk extends BinaryFileParser {
     /**
      * Gets the chunk type.
      *
-     * @return the chunk type.
+     * @return The chunk type.
      */
     public int getType() {
         return type;
@@ -123,7 +123,7 @@ public abstract class AbstractWebPChunk extends BinaryFileParser {
     /**
      * Gets the description of the chunk type.
      *
-     * @return the description of the chunk type.
+     * @return The description of the chunk type.
      */
     public String getTypeDescription() {
         return new String(new byte[] { (byte) (type & 0xff), (byte) (type >> 8 & 0xff), (byte) (type >> 16 & 0xff), (byte) (type >> 24 & 0xff) },

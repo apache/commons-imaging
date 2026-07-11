@@ -56,7 +56,7 @@ public class PhotometricInterpreterYCbCr extends AbstractPhotometricInterpreter 
      * @param value the value to limit.
      * @param min the minimum value.
      * @param max the maximum value.
-     * @return the limited value.
+     * @return The limited value.
      */
     public static int limit(final int value, final int min, final int max) {
         return Math.min(max, Math.max(min, value));

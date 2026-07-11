@@ -93,7 +93,7 @@ public class RationalNumber extends Number {
      * Calculate rational number using successive approximations.
      *
      * @param value rational number double value
-     * @return the RationalNumber representation of the double value
+     * @return The RationalNumber representation of the double value
      */
     public static RationalNumber valueOf(double value) {
         if (value >= Integer.MAX_VALUE) {
@@ -287,7 +287,7 @@ public class RationalNumber extends Number {
     /**
      * Converts to display string.
      *
-     * @return the display string.
+     * @return The display string.
      */
     public String toDisplayString() {
         if (numerator % divisor == 0) {

@@ -42,7 +42,7 @@ public abstract class AbstractTransparencyFilter extends BinaryFileParser {
      *
      * @param rgb the RGB value.
      * @param index the pixel index.
-     * @return the filtered RGB value.
+     * @return The filtered RGB value.
      * @throws ImagingException if the image format is invalid.
      * @throws IOException if an I/O error occurs.
      */
@@ -61,7 +61,7 @@ public abstract class AbstractTransparencyFilter extends BinaryFileParser {
     /**
      * Gets the length.
      *
-     * @return the length
+     * @return The length
      */
     public int getLength() {
         return bytes.length;

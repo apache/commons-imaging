@@ -39,7 +39,7 @@ public class XmpImagingParameters<E extends XmpImagingParameters<E>> extends Ima
     /**
      * Gets the XMP XML.
      *
-     * @return the XMP XML.
+     * @return The XMP XML.
      */
     public String getXmpXml() {
         return xmpXml;

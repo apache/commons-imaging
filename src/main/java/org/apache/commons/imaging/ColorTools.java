@@ -54,7 +54,7 @@ public class ColorTools {
      * @param bi the source image.
      * @param from the source color space.
      * @param to the target color space.
-     * @return the converted image.
+     * @return The converted image.
      */
     public BufferedImage convertBetweenColorSpaces(BufferedImage bi, final ColorSpace from, final ColorSpace to) {
         final RenderingHints hints = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
@@ -76,7 +76,7 @@ public class ColorTools {
      * @param bi the source image.
      * @param from the source color space.
      * @param to the target color space.
-     * @return the converted image.
+     * @return The converted image.
      */
     public BufferedImage convertBetweenColorSpacesX2(BufferedImage bi, final ColorSpace from, final ColorSpace to) {
         final RenderingHints hints = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
@@ -106,7 +106,7 @@ public class ColorTools {
      * @param bi the source image.
      * @param from the source ICC profile.
      * @param to the target ICC profile.
-     * @return the converted image.
+     * @return The converted image.
      */
     public BufferedImage convertBetweenIccProfiles(final BufferedImage bi, final ICC_Profile from, final ICC_Profile to) {
         final ICC_ColorSpace csFrom = new ICC_ColorSpace(from);
@@ -120,7 +120,7 @@ public class ColorTools {
      *
      * @param bi the source image.
      * @param from the source color space.
-     * @return the converted image.
+     * @return The converted image.
      */
     protected BufferedImage convertFromColorSpace(final BufferedImage bi, final ColorSpace from) {
         final ColorModel srgbCM = ColorModel.getRGBdefault();
@@ -132,7 +132,7 @@ public class ColorTools {
      *
      * @param bi the source image.
      * @param to the target color space.
-     * @return the converted image.
+     * @return The converted image.
      */
     public BufferedImage convertToColorSpace(final BufferedImage bi, final ColorSpace to) {
         final ColorSpace from = bi.getColorModel().getColorSpace();
@@ -153,7 +153,7 @@ public class ColorTools {
      *
      * @param bi the source image.
      * @param to the target ICC profile.
-     * @return the converted image.
+     * @return The converted image.
      */
     public BufferedImage convertToIccProfile(final BufferedImage bi, final ICC_Profile to) {
         final ICC_ColorSpace csTo = new ICC_ColorSpace(to);
@@ -164,7 +164,7 @@ public class ColorTools {
      * Converts an image to sRGB color space.
      *
      * @param bi the source image.
-     * @return the converted image.
+     * @return The converted image.
      */
     public BufferedImage convertTosRgb(final BufferedImage bi) {
         final ColorModel srgbCM = ColorModel.getRGBdefault();
@@ -176,7 +176,7 @@ public class ColorTools {
      *
      * @param src the source image.
      * @param file the file containing the ICC profile.
-     * @return the corrected image.
+     * @return The corrected image.
      * @throws ImagingException if the image format is invalid.
      * @throws IOException if an I/O error occurs.
      */
@@ -207,7 +207,7 @@ public class ColorTools {
      *
      * @param bi the source image.
      * @param cs the target color space.
-     * @return the derived color model.
+     * @return The derived color model.
      * @throws ImagingOpException if the color model cannot be derived.
      */
     public ColorModel deriveColorModel(final BufferedImage bi, final ColorSpace cs) throws ImagingOpException {
@@ -221,7 +221,7 @@ public class ColorTools {
      * @param bi the source image.
      * @param cs the target color space.
      * @param forceNoAlpha whether to force no alpha channel.
-     * @return the derived color model.
+     * @return The derived color model.
      * @throws ImagingOpException if the color model cannot be derived.
      */
     public ColorModel deriveColorModel(final BufferedImage bi, final ColorSpace cs, final boolean forceNoAlpha) throws ImagingOpException {
@@ -234,7 +234,7 @@ public class ColorTools {
      * @param colorModel the source color model.
      * @param cs the target color space.
      * @param forceNoAlpha whether to force no alpha channel.
-     * @return the derived color model.
+     * @return The derived color model.
      * @throws ImagingOpException if the color model cannot be derived.
      */
     public ColorModel deriveColorModel(final ColorModel colorModel, final ColorSpace cs, final boolean forceNoAlpha) throws ImagingOpException {
@@ -286,7 +286,7 @@ public class ColorTools {
      *
      * @param bi the source image.
      * @param cm the new color model.
-     * @return the relabeled image.
+     * @return The relabeled image.
      * @throws ImagingOpException if the relabeling fails.
      */
     public BufferedImage relabelColorSpace(final BufferedImage bi, final ColorModel cm) throws ImagingOpException {
@@ -304,7 +304,7 @@ public class ColorTools {
      *
      * @param bi the source image.
      * @param cs the new color space.
-     * @return the relabeled image.
+     * @return The relabeled image.
      * @throws ImagingOpException if the relabeling fails.
      */
     public BufferedImage relabelColorSpace(final BufferedImage bi, final ColorSpace cs) throws ImagingOpException {
@@ -325,7 +325,7 @@ public class ColorTools {
      *
      * @param bi the source image.
      * @param profile the new ICC profile.
-     * @return the relabeled image.
+     * @return The relabeled image.
      * @throws ImagingOpException if the relabeling fails.
      */
     public BufferedImage relabelColorSpace(final BufferedImage bi, final ICC_Profile profile) throws ImagingOpException {

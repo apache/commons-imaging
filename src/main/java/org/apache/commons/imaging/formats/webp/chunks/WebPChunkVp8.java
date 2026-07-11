@@ -132,7 +132,7 @@ public final class WebPChunkVp8 extends AbstractWebPChunk {
     /**
      * Gets the height of the image.
      *
-     * @return the height.
+     * @return The height.
      */
     public int getHeight() {
         return height;
@@ -141,7 +141,7 @@ public final class WebPChunkVp8 extends AbstractWebPChunk {
     /**
      * Gets the horizontal scale.
      *
-     * @return the horizontal scale.
+     * @return The horizontal scale.
      */
     public int getHorizontalScale() {
         return horizontalScale;
@@ -150,7 +150,7 @@ public final class WebPChunkVp8 extends AbstractWebPChunk {
     /**
      * Gets the version number.
      *
-     * @return the version number.
+     * @return The version number.
      */
     public int getVersionNumber() {
         return versionNumber;
@@ -159,7 +159,7 @@ public final class WebPChunkVp8 extends AbstractWebPChunk {
     /**
      * Gets the vertical scale.
      *
-     * @return the vertical scale.
+     * @return The vertical scale.
      */
     public int getVerticalScale() {
         return verticalScale;
@@ -168,7 +168,7 @@ public final class WebPChunkVp8 extends AbstractWebPChunk {
     /**
      * Gets the width of the image.
      *
-     * @return the width.
+     * @return The width.
      */
     public int getWidth() {
         return width;

@@ -43,7 +43,7 @@ public class PnmImagingParameters extends ImagingParameters<PnmImagingParameters
     /**
      * Gets the subtype.
      *
-     * @return the subtype.
+     * @return The subtype.
      */
     public ImageFormats getSubtype() {
         return subtype;

@@ -73,7 +73,7 @@ public class JpegUtils extends BinaryFileParser {
      * Gets the marker name.
      *
      * @param marker the marker.
-     * @return the marker name.
+     * @return The marker name.
      */
     public static String getMarkerName(final int marker) {
         switch (marker) {

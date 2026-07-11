@@ -38,7 +38,7 @@ public class PcxImagingParameters extends ImagingParameters<PcxImagingParameters
     /**
      * Gets the bit depth.
      *
-     * @return the bit depth.
+     * @return The bit depth.
      */
     public int getBitDepth() {
         return bitDepth;
@@ -47,7 +47,7 @@ public class PcxImagingParameters extends ImagingParameters<PcxImagingParameters
     /**
      * Gets the compression type.
      *
-     * @return the compression type.
+     * @return The compression type.
      */
     public int getCompression() {
         return compression;
@@ -56,7 +56,7 @@ public class PcxImagingParameters extends ImagingParameters<PcxImagingParameters
     /**
      * Gets the number of planes.
      *
-     * @return the number of planes.
+     * @return The number of planes.
      */
     public int getPlanes() {
         return planes;

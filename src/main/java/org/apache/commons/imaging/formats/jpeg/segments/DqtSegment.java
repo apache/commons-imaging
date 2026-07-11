@@ -60,7 +60,7 @@ public final class DqtSegment extends AbstractSegment {
         /**
          * Gets the quantization table elements.
          *
-         * @return the elements.
+         * @return The elements.
          */
         public int[] getElements() {
             return elements;

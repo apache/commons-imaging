@@ -31,7 +31,7 @@ public final class PhysicalScale {
      *
      * @param x horizontal units per pixel in meters.
      * @param y vertical units per pixel in meters.
-     * @return the physical scale.
+     * @return The physical scale.
      */
     public static PhysicalScale createFromMeters(final double x, final double y) {
         return new PhysicalScale(METER_UNITS, x, y);
@@ -42,7 +42,7 @@ public final class PhysicalScale {
      *
      * @param x horizontal units per pixel in radians.
      * @param y vertical units per pixel in radians.
-     * @return the physical scale.
+     * @return The physical scale.
      */
     public static PhysicalScale createFromRadians(final double x, final double y) {
         return new PhysicalScale(RADIAN_UNITS, x, y);
@@ -63,7 +63,7 @@ public final class PhysicalScale {
     /**
      * Gets the horizontal units per pixel.
      *
-     * @return the horizontal units per pixel.
+     * @return The horizontal units per pixel.
      */
     public double getHorizontalUnitsPerPixel() {
         return horizontalUnitsPerPixel;
@@ -72,7 +72,7 @@ public final class PhysicalScale {
     /**
      * Gets the vertical units per pixel.
      *
-     * @return the vertical units per pixel.
+     * @return The vertical units per pixel.
      */
     public double getVerticalUnitsPerPixel() {
         return verticalUnitsPerPixel;

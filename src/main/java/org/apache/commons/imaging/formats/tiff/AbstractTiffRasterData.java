@@ -76,7 +76,7 @@ public abstract class AbstractTiffRasterData {
      * @param x the x coordinate.
      * @param y the y coordinate.
      * @param i the sample index.
-     * @return the computed array index.
+     * @return The computed array index.
      * @throws IllegalArgumentException if coordinates or sample index are out of range.
      */
     protected final int checkCoordinatesAndComputeIndex(final int x, final int y, final int i) {
@@ -98,7 +98,7 @@ public abstract class AbstractTiffRasterData {
      * <p>
      * See the class API documentation above for notes on accessing array elements.
      *
-     * @return the data content stored in this instance.
+     * @return The data content stored in this instance.
      */
     public abstract float[] getData();
 
@@ -112,7 +112,7 @@ public abstract class AbstractTiffRasterData {
     /**
      * Gets the height (number of rows) of the raster.
      *
-     * @return the height of the raster.
+     * @return The height of the raster.
      */
     public final int getHeight() {
         return height;
@@ -127,7 +127,7 @@ public abstract class AbstractTiffRasterData {
      * <p>
      * See the class API documentation above for notes on accessing array elements.
      *
-     * @return the data content stored in this instance.
+     * @return The data content stored in this instance.
      */
     public abstract int[] getIntData();
 
@@ -136,7 +136,7 @@ public abstract class AbstractTiffRasterData {
      *
      * @param x integer coordinate in the columnar direction.
      * @param y integer coordinate in the row direction.
-     * @return the value stored at the specified location.
+     * @return The value stored at the specified location.
      */
     public abstract int getIntValue(int x, int y);
 
@@ -146,7 +146,7 @@ public abstract class AbstractTiffRasterData {
      * @param x integer coordinate in the columnar direction.
      * @param y integer coordinate in the row direction.
      * @param i integer sample index (for data sets giving multiple samples per raster cell).
-     * @return the value stored at the specified location.
+     * @return The value stored at the specified location.
      */
     public abstract int getIntValue(int x, int y, int i);
 
@@ -179,7 +179,7 @@ public abstract class AbstractTiffRasterData {
      *
      * @param x integer coordinate in the columnar direction.
      * @param y integer coordinate in the row direction.
-     * @return the value stored at the specified location; potentially a Float&#46;NaN.
+     * @return The value stored at the specified location; potentially a Float&#46;NaN.
      */
     public abstract float getValue(int x, int y);
 
@@ -189,14 +189,14 @@ public abstract class AbstractTiffRasterData {
      * @param x integer coordinate in the columnar direction.
      * @param y integer coordinate in the row direction.
      * @param i integer sample index.
-     * @return the value stored at the specified location; potentially a Float&#46;NaN.
+     * @return The value stored at the specified location; potentially a Float&#46;NaN.
      */
     public abstract float getValue(int x, int y, int i);
 
     /**
      * Gets the width (number of columns) of the raster.
      *
-     * @return the width of the raster
+     * @return The width of the raster
      */
     public final int getWidth() {
         return width;

@@ -151,7 +151,7 @@ public final class SosSegment extends AbstractSegment {
      * Gets a component at the specified index.
      *
      * @param index the component index
-     * @return the component
+     * @return The component
      */
     public Component getComponents(final int index) {
         return components[index];

@@ -43,7 +43,7 @@ public class BasicCParser {
      * @param i             the index of the escape-sequence in the string
      * @param stringBuilder the stringBuilder to append the escape-char to
      * @param string        the string whose chars are parsed
-     * @return the new index i
+     * @return The new index i
      * @since 1.0-alpha3
      */
     private static int appendHex(int i, final StringBuilder stringBuilder, final String string) throws ImagingException {
@@ -73,7 +73,7 @@ public class BasicCParser {
      * @param i             the index of the escape-sequence in the string
      * @param stringBuilder the stringBuilder to append the escape-char to
      * @param string        the string whose chars are parsed
-     * @return the new index i
+     * @return The new index i
      * @since 1.0-alpha3
      */
     private static int appendOct(int i, final StringBuilder stringBuilder, final String string) {
@@ -104,7 +104,7 @@ public class BasicCParser {
      * @param i             the index of the escape-char in the string
      * @param stringBuilder the stringBuilder to append the escape-char to
      * @param string        the string whose chars are parsed
-     * @return the new index i
+     * @return The new index i
      * @since 1.0-alpha3
      */
     private static int parseEscape(int i, final StringBuilder stringBuilder, final String string) throws ImagingException {
@@ -166,7 +166,7 @@ public class BasicCParser {
      * @param is the input stream to preprocess.
      * @param firstComment StringBuilder to capture the first comment, or null to ignore.
      * @param defines map to store preprocessor definitions.
-     * @return the preprocessed output as a ByteArrayOutputStream.
+     * @return The preprocessed output as a ByteArrayOutputStream.
      * @throws IOException if an I/O error occurs.
      * @throws ImagingException if parsing fails.
      */
@@ -354,7 +354,7 @@ public class BasicCParser {
      * Tokenizes a row by splitting on whitespace.
      *
      * @param row the row to tokenize.
-     * @return the array of tokens.
+     * @return The array of tokens.
      */
     public static String[] tokenizeRow(final String row) {
         final String[] tokens = row.split("[ \t]");
@@ -421,7 +421,7 @@ public class BasicCParser {
     /**
      * Reads the next token from the input stream.
      *
-     * @return the next token as a string, or null if end of stream.
+     * @return The next token as a string, or null if end of stream.
      * @throws IOException if an I/O error occurs.
      * @throws ImagingException if parsing fails.
      */

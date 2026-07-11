@@ -45,7 +45,7 @@ public abstract class AbstractTiffElement {
         /**
          * Gets a copy of the element data.
          *
-         * @return the data.
+         * @return The data.
          */
         public byte[] getData() {
             return data.clone();
@@ -54,7 +54,7 @@ public abstract class AbstractTiffElement {
         /**
          * Gets the length of the data.
          *
-         * @return the data length.
+         * @return The data length.
          */
         public int getDataLength() {
             return data.length;
@@ -106,7 +106,7 @@ public abstract class AbstractTiffElement {
     /**
      * Gets a description of this element.
      *
-     * @return the element description.
+     * @return The element description.
      */
     public abstract String getElementDescription();
 }

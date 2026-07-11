@@ -47,7 +47,7 @@ public final class PngChunkGama extends PngChunk {
     /**
      * Gets the gamma value.
      *
-     * @return the gamma value.
+     * @return The gamma value.
      */
     public double getGamma() {
         return 1.0 / (gamma / 100000.0);

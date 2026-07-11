@@ -87,7 +87,7 @@ public final class WebPChunkVp8l extends AbstractWebPChunk {
     /**
      * Gets the image height.
      *
-     * @return the image height.
+     * @return The image height.
      */
     public int getImageHeight() {
         return imageHeight;
@@ -96,7 +96,7 @@ public final class WebPChunkVp8l extends AbstractWebPChunk {
     /**
      * Gets the image width.
      *
-     * @return the image width.
+     * @return The image width.
      */
     public int getImageWidth() {
         return imageWidth;
@@ -105,7 +105,7 @@ public final class WebPChunkVp8l extends AbstractWebPChunk {
     /**
      * Gets the version number.
      *
-     * @return the version number.
+     * @return The version number.
      */
     public int getVersionNumber() {
         return versionNumber;

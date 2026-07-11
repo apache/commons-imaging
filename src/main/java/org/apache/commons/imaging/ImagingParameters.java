@@ -78,7 +78,7 @@ public class ImagingParameters<E extends ImagingParameters<E>> {
     /**
      * Gets the buffered image factory.
      *
-     * @return the buffered image factory, or null if not set.
+     * @return The buffered image factory, or null if not set.
      */
     public BufferedImageFactory getBufferedImageFactory() {
         return bufferedImageFactory;
@@ -87,7 +87,7 @@ public class ImagingParameters<E extends ImagingParameters<E>> {
     /**
      * Gets the file name.
      *
-     * @return the file name, or null if not set.
+     * @return The file name, or null if not set.
      */
     public String getFileName() {
         return fileName;
@@ -96,7 +96,7 @@ public class ImagingParameters<E extends ImagingParameters<E>> {
     /**
      * Gets the pixel density.
      *
-     * @return the pixel density, or null if not set.
+     * @return The pixel density, or null if not set.
      */
     public PixelDensity getPixelDensity() {
         return pixelDensity;

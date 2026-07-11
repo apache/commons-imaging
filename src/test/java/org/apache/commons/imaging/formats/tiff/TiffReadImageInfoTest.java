@@ -50,7 +50,7 @@ class TiffReadImageInfoTest extends AbstractTiffTest {
      *
      * @param info   a valid instance obtained from TiffImageParser
      * @param target the target data field string
-     * @return the value
+     * @return The value
      */
     private String getValue(final ImageInfo info, final String target) {
         final String s = info.toString();

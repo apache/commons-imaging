@@ -51,7 +51,7 @@ public class IccProfileParser extends BinaryFileParser {
      * Gets ICC profile info from bytes.
      *
      * @param bytes the bytes.
-     * @return the ICC profile info or null if bytes is null.
+     * @return The ICC profile info or null if bytes is null.
      * @throws IOException if an I/O error occurs.
      */
     public IccProfileInfo getIccProfileInfo(final byte[] bytes) throws IOException {
@@ -65,7 +65,7 @@ public class IccProfileParser extends BinaryFileParser {
      * Gets ICC profile info from byte source.
      *
      * @param byteSource the byte source.
-     * @return the ICC profile info.
+     * @return The ICC profile info.
      * @throws IOException if an I/O error occurs.
      */
     public IccProfileInfo getIccProfileInfo(final ByteSource byteSource) throws IOException {
@@ -89,7 +89,7 @@ public class IccProfileParser extends BinaryFileParser {
      * Gets ICC profile info from file.
      *
      * @param file the file.
-     * @return the ICC profile info or null if file is null.
+     * @return The ICC profile info or null if file is null.
      * @throws IOException if an I/O error occurs.
      */
     public IccProfileInfo getIccProfileInfo(final File file) throws IOException {
@@ -104,7 +104,7 @@ public class IccProfileParser extends BinaryFileParser {
      * Gets ICC profile info from ICC_Profile.
      *
      * @param iccProfile the ICC profile.
-     * @return the ICC profile info or null if iccProfile is null.
+     * @return The ICC profile info or null if iccProfile is null.
      * @throws IOException if an I/O error occurs.
      */
     public IccProfileInfo getIccProfileInfo(final ICC_Profile iccProfile) throws IOException {

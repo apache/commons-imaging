@@ -240,7 +240,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
      *
      * @param byteSource the byte source.
      * @param params the TIFF imaging parameters.
-     * @return the EXIF metadata or null if not found.
+     * @return The EXIF metadata or null if not found.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
      */
@@ -262,7 +262,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
      * Gets raw EXIF data.
      *
      * @param byteSource the byte source.
-     * @return the raw EXIF data or null if not found.
+     * @return The raw EXIF data or null if not found.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
      */
@@ -694,7 +694,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
      *
      * @param byteSource the byte source.
      * @param params the imaging parameters.
-     * @return the Photoshop metadata or null if not found.
+     * @return The Photoshop metadata or null if not found.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
      */
@@ -922,7 +922,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
      * @param byteSource the byte source.
      * @param markers the markers to read.
      * @param returnAfterFirst whether to return after first match.
-     * @return the list of segments.
+     * @return The list of segments.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
      */

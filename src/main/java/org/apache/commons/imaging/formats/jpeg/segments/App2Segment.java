@@ -100,7 +100,7 @@ public final class App2Segment extends AppnSegment implements Comparable<App2Seg
     /**
      * Gets the ICC profile bytes.
      *
-     * @return the ICC bytes, or {@code null} if not present.
+     * @return The ICC bytes, or {@code null} if not present.
      */
     public byte[] getIccBytes() {
         return iccBytes != null ? iccBytes.clone() : null;

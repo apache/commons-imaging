@@ -121,7 +121,7 @@ public final class PngChunkItxt extends AbstractPngTextChunk {
     /**
      * Gets the translated keyword.
      *
-     * @return the translated keyword.
+     * @return The translated keyword.
      */
     public String getTranslatedKeyword() {
         return translatedKeyword;

@@ -49,7 +49,7 @@ public class JpegXmpParser extends BinaryFileParser {
      * Parses XMP metadata from a JPEG segment.
      *
      * @param segmentData the segment data.
-     * @return the XMP metadata as a string.
+     * @return The XMP metadata as a string.
      * @throws ImagingException if the segment is not a valid XMP segment.
      */
     public String parseXmpJpegSegment(final byte[] segmentData) throws ImagingException {

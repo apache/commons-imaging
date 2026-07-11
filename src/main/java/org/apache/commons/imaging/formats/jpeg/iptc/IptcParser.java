@@ -349,7 +349,7 @@ public class IptcParser extends BinaryFileParser {
      *
      * @param bytes the segment data bytes.
      * @param strict whether to use strict parsing mode.
-     * @return the parsed Photoshop APP13 data.
+     * @return The parsed Photoshop APP13 data.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
      */
@@ -401,7 +401,7 @@ public class IptcParser extends BinaryFileParser {
      *
      * @param bytes the segment data bytes.
      * @param params the imaging parameters.
-     * @return the parsed Photoshop APP13 data.
+     * @return The parsed Photoshop APP13 data.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
      */
@@ -416,7 +416,7 @@ public class IptcParser extends BinaryFileParser {
      * Writes IPTC records to a byte array block.
      *
      * @param elements the list of IPTC records to write.
-     * @return the byte array containing the IPTC block.
+     * @return The byte array containing the IPTC block.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
      */
@@ -429,7 +429,7 @@ public class IptcParser extends BinaryFileParser {
      *
      * @param elements the list of IPTC records to write.
      * @param forceUtf8Encoding whether to force UTF-8 encoding.
-     * @return the byte array containing the IPTC block.
+     * @return The byte array containing the IPTC block.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
      */
@@ -508,7 +508,7 @@ public class IptcParser extends BinaryFileParser {
      * Writes Photoshop APP13 segment data.
      *
      * @param data the Photoshop APP13 data to write.
-     * @return the byte array containing the APP13 segment.
+     * @return The byte array containing the APP13 segment.
      * @throws IOException if an I/O error occurs.
      * @throws ImagingException if an imaging error occurs.
      */

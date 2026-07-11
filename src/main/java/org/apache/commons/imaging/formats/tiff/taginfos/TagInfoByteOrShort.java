@@ -44,7 +44,7 @@ public class TagInfoByteOrShort extends TagInfo {
      *
      * @param byteOrder the byte order.
      * @param values the values.
-     * @return the encoded bytes.
+     * @return The encoded bytes.
      */
     public byte[] encodeValue(final ByteOrder byteOrder, final byte... values) {
         return values;
@@ -55,7 +55,7 @@ public class TagInfoByteOrShort extends TagInfo {
      *
      * @param byteOrder the byte order.
      * @param values the values.
-     * @return the encoded bytes.
+     * @return The encoded bytes.
      */
     public byte[] encodeValue(final ByteOrder byteOrder, final short... values) {
         return ByteConversions.toBytes(values, byteOrder);

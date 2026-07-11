@@ -54,14 +54,14 @@ public abstract class AbstractSegment extends BinaryFileParser {
     /**
      * Gets the description.
      *
-     * @return the description.
+     * @return The description.
      */
     public abstract String getDescription();
 
     /**
      * Gets the type.
      *
-     * @return the type.
+     * @return The type.
      */
     public String getSegmentType() {
         switch (marker) {

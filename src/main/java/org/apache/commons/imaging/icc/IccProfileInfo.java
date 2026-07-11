@@ -147,7 +147,7 @@ public class IccProfileInfo {
     /**
      * Gets the ICC tags.
      *
-     * @return the array of ICC tags.
+     * @return The array of ICC tags.
      */
     public IccTag[] getTags() {
         return tags;

@@ -96,7 +96,7 @@ public class BinaryFileParser {
     /**
      * Gets the byte order used by this parser.
      *
-     * @return the byte order.
+     * @return The byte order.
      */
     public ByteOrder getByteOrder() {
         return byteOrder;

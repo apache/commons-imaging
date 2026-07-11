@@ -68,7 +68,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
      * of restart markers found is equal to the number of start positions minus one (because restart markers are between intervals).
      *
      * @param scanPayload array to examine
-     * @return the start positions
+     * @return The start positions
      */
     static List<Integer> getIntervalStartPositions(final int[] scanPayload) {
         final List<Integer> intervalStarts = new ArrayList<>();
@@ -183,7 +183,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
      * Decodes a JPEG image from a byte source.
      *
      * @param byteSource the byte source containing the JPEG data.
-     * @return the decoded BufferedImage.
+     * @return The decoded BufferedImage.
      * @throws IOException if an I/O error occurs.
      * @throws ImagingException if an imaging error occurs.
      */

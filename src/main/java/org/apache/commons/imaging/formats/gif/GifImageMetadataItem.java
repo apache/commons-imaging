@@ -38,7 +38,7 @@ public class GifImageMetadataItem implements ImageMetadata.ImageMetadataItem {
     /**
      * Gets the frame delay in milliseconds.
      *
-     * @return the delay.
+     * @return The delay.
      */
     public int getDelay() {
         return delay;
@@ -47,7 +47,7 @@ public class GifImageMetadataItem implements ImageMetadata.ImageMetadataItem {
     /**
      * Gets the disposal method for this frame.
      *
-     * @return the disposal method.
+     * @return The disposal method.
      */
     public DisposalMethod getDisposalMethod() {
         return disposalMethod;
@@ -56,7 +56,7 @@ public class GifImageMetadataItem implements ImageMetadata.ImageMetadataItem {
     /**
      * Gets the left position of the frame.
      *
-     * @return the left position in pixels.
+     * @return The left position in pixels.
      */
     public int getLeftPosition() {
         return leftPosition;
@@ -65,7 +65,7 @@ public class GifImageMetadataItem implements ImageMetadata.ImageMetadataItem {
     /**
      * Gets the top position of the frame.
      *
-     * @return the top position in pixels.
+     * @return The top position in pixels.
      */
     public int getTopPosition() {
         return topPosition;

@@ -44,7 +44,7 @@ public class TagInfoRational extends TagInfo {
      *
      * @param byteOrder the byte order.
      * @param value the value.
-     * @return the encoded bytes.
+     * @return The encoded bytes.
      */
     public byte[] encodeValue(final ByteOrder byteOrder, final RationalNumber value) {
         return ByteConversions.toBytes(value, byteOrder);
@@ -55,7 +55,7 @@ public class TagInfoRational extends TagInfo {
      *
      * @param byteOrder the byte order.
      * @param bytes the bytes.
-     * @return the rational number value.
+     * @return The rational number value.
      */
     public RationalNumber getValue(final ByteOrder byteOrder, final byte[] bytes) {
         return ByteConversions.toRational(bytes, byteOrder, true);

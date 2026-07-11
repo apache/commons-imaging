@@ -230,7 +230,7 @@ public class MyLzwCompressor {
      * Compresses data using LZW compression.
      *
      * @param bytes the bytes to compress.
-     * @return the compressed bytes.
+     * @return The compressed bytes.
      * @throws IOException if an I/O error occurs.
      */
     public byte[] compress(final byte[] bytes) throws IOException {

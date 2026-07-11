@@ -100,7 +100,7 @@ public final class WebPChunkVp8x extends AbstractWebPChunk {
     /**
      * Gets the canvas height.
      *
-     * @return the canvas height.
+     * @return The canvas height.
      */
     public int getCanvasHeight() {
         return canvasHeight;
@@ -109,7 +109,7 @@ public final class WebPChunkVp8x extends AbstractWebPChunk {
     /**
      * Gets the canvas width.
      *
-     * @return the canvas width.
+     * @return The canvas width.
      */
     public int getCanvasWidth() {
         return canvasWidth;

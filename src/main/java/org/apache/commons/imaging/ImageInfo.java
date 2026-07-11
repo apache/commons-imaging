@@ -278,7 +278,7 @@ public class ImageInfo {
     /**
      * Returns a string with the name of the image file format.
      *
-     * @return the name of the image file format.
+     * @return The name of the image file format.
      * @see #getFormat()
      */
     public String getFormatName() {

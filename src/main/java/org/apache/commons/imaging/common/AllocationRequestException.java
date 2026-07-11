@@ -89,7 +89,7 @@ public class AllocationRequestException extends ImagingRuntimeException {
     /**
      * Gets the allocation limit.
      *
-     * @return the allocation limit.
+     * @return The allocation limit.
      */
     public int getLimit() {
         return limit;
@@ -98,7 +98,7 @@ public class AllocationRequestException extends ImagingRuntimeException {
     /**
      * Gets the allocation request.
      *
-     * @return the allocation request.
+     * @return The allocation request.
      */
     public BigInteger getRequest() {
         return request;

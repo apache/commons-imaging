@@ -81,7 +81,7 @@ public class App13Segment extends AppnSegment {
      * Parses the Photoshop segment data.
      *
      * @param params the imaging parameters.
-     * @return the parsed Photoshop APP13 data, or {@code null} if not a Photoshop segment.
+     * @return The parsed Photoshop APP13 data, or {@code null} if not a Photoshop segment.
      * @throws ImagingException if the image format is invalid.
      * @throws IOException if an I/O error occurs.
      */

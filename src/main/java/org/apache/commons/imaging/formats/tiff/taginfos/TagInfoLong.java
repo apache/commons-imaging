@@ -71,7 +71,7 @@ public class TagInfoLong extends TagInfo {
      *
      * @param byteOrder the byte order.
      * @param value the value.
-     * @return the encoded bytes.
+     * @return The encoded bytes.
      */
     public byte[] encodeValue(final ByteOrder byteOrder, final int value) {
         return ByteConversions.toBytes(value, byteOrder);
@@ -82,7 +82,7 @@ public class TagInfoLong extends TagInfo {
      *
      * @param byteOrder the byte order.
      * @param bytes the bytes.
-     * @return the integer value.
+     * @return The integer value.
      */
     public int getValue(final ByteOrder byteOrder, final byte[] bytes) {
         return ByteConversions.toInt(bytes, byteOrder);

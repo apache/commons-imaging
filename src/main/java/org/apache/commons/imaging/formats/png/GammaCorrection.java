@@ -54,7 +54,7 @@ public class GammaCorrection {
      * Corrects an ARGB pixel value for gamma.
      *
      * @param pixel the ARGB pixel value.
-     * @return the gamma-corrected pixel value.
+     * @return The gamma-corrected pixel value.
      */
     public int correctArgb(final int pixel) {
         final int alpha = 0xff000000 & pixel;
@@ -73,7 +73,7 @@ public class GammaCorrection {
      * Corrects a sample value using the lookup table.
      *
      * @param sample the sample value.
-     * @return the corrected sample value.
+     * @return The corrected sample value.
      */
     public int correctSample(final int sample) {
         return lookupTable[sample];

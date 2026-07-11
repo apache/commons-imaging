@@ -46,7 +46,7 @@ public class TagInfoAscii extends TagInfo {
      *
      * @param byteOrder the byte order.
      * @param values the values.
-     * @return the encoded bytes.
+     * @return The encoded bytes.
      * @throws ImagingException if an imaging error occurs.
      */
     public byte[] encodeValue(final ByteOrder byteOrder, final String... values) throws ImagingException {
@@ -58,7 +58,7 @@ public class TagInfoAscii extends TagInfo {
      *
      * @param byteOrder the byte order.
      * @param bytes the bytes.
-     * @return the string array value.
+     * @return The string array value.
      */
     public String[] getValue(final ByteOrder byteOrder, final byte[] bytes) {
         int nullCount = 0;

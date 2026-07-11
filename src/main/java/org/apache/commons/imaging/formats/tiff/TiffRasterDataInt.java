@@ -96,7 +96,7 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
      * Returns an array of floating-point equivalents to the integer values stored in this instance. To do so, a float array is allocated and each integer value
      * in the source data is cast to a float.
      *
-     * @return the floating-point equivalents of the content stored in this instance.
+     * @return The floating-point equivalents of the content stored in this instance.
      */
     @Override
     public float[] getData() {
@@ -135,7 +135,7 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
      *
      * @param x integer coordinate in the columnar direction
      * @param y integer coordinate in the row direction
-     * @return the value stored at the specified location
+     * @return The value stored at the specified location
      */
     @Override
     public int getIntValue(final int x, final int y) {
@@ -148,7 +148,7 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
      * @param x integer coordinate in the columnar direction
      * @param y integer coordinate in the row direction
      * @param i integer sample index (for data sets giving multiple samples per raster cell).
-     * @return the value stored at the specified location
+     * @return The value stored at the specified location
      */
     @Override
     public int getIntValue(final int x, final int y, final int i) {
@@ -181,7 +181,7 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
      *
      * @param x integer coordinate in the columnar direction
      * @param y integer coordinate in the row direction
-     * @return the value stored at the specified location; potentially a Float&#46;NaN.
+     * @return The value stored at the specified location; potentially a Float&#46;NaN.
      */
     @Override
     public float getValue(final int x, final int y) {
@@ -194,7 +194,7 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
      * @param x integer coordinate in the columnar direction
      * @param y integer coordinate in the row direction
      * @param i integer sample index (for data sets giving multiple samples per raster cell.
-     * @return the value stored at the specified location; potentially a Float&#46;NaN.
+     * @return The value stored at the specified location; potentially a Float&#46;NaN.
      */
     @Override
     public float getValue(final int x, final int y, final int i) {

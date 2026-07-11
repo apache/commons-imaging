@@ -73,7 +73,7 @@ public final class PngChunkZtxt extends AbstractPngTextChunk {
     /**
      * Gets the keyword.
      *
-     * @return the keyword.
+     * @return The keyword.
      */
     @Override
     public String getKeyword() {
@@ -83,7 +83,7 @@ public final class PngChunkZtxt extends AbstractPngTextChunk {
     /**
      * Gets the text.
      *
-     * @return the text.
+     * @return The text.
      */
     @Override
     public String getText() {

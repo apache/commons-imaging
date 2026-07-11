@@ -58,7 +58,7 @@ public abstract class AbstractTiffImageWriter {
      * Calculates the padding length needed for image data alignment.
      *
      * @param dataLength the length of the data.
-     * @return the padding length.
+     * @return The padding length.
      */
     protected static int imageDataPaddingLength(final int dataLength) {
         return (4 - dataLength % 4) % 4;

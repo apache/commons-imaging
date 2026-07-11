@@ -73,7 +73,7 @@ public final class PngChunkIhdr extends PngChunk {
     /**
      * Gets the bit depth.
      *
-     * @return the bit depth.
+     * @return The bit depth.
      */
     public int getBitDepth() {
         return bitDepth;
@@ -82,7 +82,7 @@ public final class PngChunkIhdr extends PngChunk {
     /**
      * Gets the compression method.
      *
-     * @return the compression method.
+     * @return The compression method.
      */
     public int getCompressionMethod() {
         return compressionMethod;
@@ -91,7 +91,7 @@ public final class PngChunkIhdr extends PngChunk {
     /**
      * Gets the filter method.
      *
-     * @return the filter method.
+     * @return The filter method.
      */
     public int getFilterMethod() {
         return filterMethod;
@@ -100,7 +100,7 @@ public final class PngChunkIhdr extends PngChunk {
     /**
      * Gets the image height.
      *
-     * @return the height.
+     * @return The height.
      */
     public int getHeight() {
         return height;
@@ -109,7 +109,7 @@ public final class PngChunkIhdr extends PngChunk {
     /**
      * Gets the interlace method.
      *
-     * @return the interlace method.
+     * @return The interlace method.
      */
     public InterlaceMethod getInterlaceMethod() {
         return interlaceMethod;
@@ -118,7 +118,7 @@ public final class PngChunkIhdr extends PngChunk {
     /**
      * Gets the PNG color type.
      *
-     * @return the PNG color type.
+     * @return The PNG color type.
      */
     public PngColorType getPngColorType() {
         return pngColorType;
@@ -127,7 +127,7 @@ public final class PngChunkIhdr extends PngChunk {
     /**
      * Gets the image width.
      *
-     * @return the width.
+     * @return The width.
      */
     public int getWidth() {
         return width;

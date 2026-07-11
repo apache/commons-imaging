@@ -66,7 +66,7 @@ public class JpegImageMetadata implements ImageMetadata {
      * Finds an EXIF value.
      *
      * @param tagInfo the tag info.
-     * @return the TIFF field or null if not found.
+     * @return The TIFF field or null if not found.
      */
     public TiffField findExifValue(final TagInfo tagInfo) {
         try {
@@ -80,7 +80,7 @@ public class JpegImageMetadata implements ImageMetadata {
      * Finds an EXIF value with exact match.
      *
      * @param tagInfo the tag info.
-     * @return the TIFF field or null if not found.
+     * @return The TIFF field or null if not found.
      */
     public TiffField findExifValueWithExactMatch(final TagInfo tagInfo) {
         try {
@@ -93,7 +93,7 @@ public class JpegImageMetadata implements ImageMetadata {
     /**
      * Gets the EXIF metadata.
      *
-     * @return the EXIF metadata.
+     * @return The EXIF metadata.
      */
     public TiffImageMetadata getExif() {
         return exif;
@@ -102,7 +102,7 @@ public class JpegImageMetadata implements ImageMetadata {
     /**
      * Gets the thumbnail image if available.
      *
-     * @return the thumbnail image. May be {@code null} if no image could be found.
+     * @return The thumbnail image. May be {@code null} if no image could be found.
      * @throws ImagingException if it fails to read the image.
      * @throws IOException      if it fails to get the thumbnail or to read the image data.
      */
@@ -207,7 +207,7 @@ public class JpegImageMetadata implements ImageMetadata {
     /**
      * Gets the Photoshop metadata.
      *
-     * @return the Photoshop metadata.
+     * @return The Photoshop metadata.
      */
     public JpegPhotoshopMetadata getPhotoshop() {
         return photoshop;
@@ -216,7 +216,7 @@ public class JpegImageMetadata implements ImageMetadata {
     /**
      * Gets the raw image data.
      *
-     * @return the raw image data or null if not found.
+     * @return The raw image data or null if not found.
      */
     public AbstractTiffImageData getRawImageData() {
         if (exif == null) {

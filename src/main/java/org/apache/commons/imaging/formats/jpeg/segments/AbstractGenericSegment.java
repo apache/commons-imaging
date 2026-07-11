@@ -75,7 +75,7 @@ public abstract class AbstractGenericSegment extends AbstractSegment {
     /**
      * Returns a copy of the segment's contents, excluding the marker and length bytes at the beginning.
      *
-     * @return the segment's contents.
+     * @return The segment's contents.
      */
     public byte[] getSegmentData() {
         return segmentData.clone();
@@ -85,7 +85,7 @@ public abstract class AbstractGenericSegment extends AbstractSegment {
      * Returns a specific byte of the segment's contents, excluding the marker and length bytes at the beginning.
      *
      * @param offset segment offset.
-     * @return the bye in the segment's contents.
+     * @return The bye in the segment's contents.
      * @see AbstractGenericSegment#getSegmentData()
      */
     protected byte getSegmentData(final int offset) {
@@ -96,7 +96,7 @@ public abstract class AbstractGenericSegment extends AbstractSegment {
      * Convert the bytes to a String
      *
      * @param encoding segment encoding
-     * @return the encoded bytes
+     * @return The encoded bytes
      */
     public String getSegmentDataAsString(final Charset encoding) {
         return new String(segmentData, encoding);

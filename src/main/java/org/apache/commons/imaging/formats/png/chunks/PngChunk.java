@@ -72,7 +72,7 @@ public class PngChunk extends BinaryFileParser {
     /**
      * Gets a copy of the chunk bytes.
      *
-     * @return the chunk bytes
+     * @return The chunk bytes
      */
     public byte[] getBytes() {
         return bytes.clone();
@@ -81,7 +81,7 @@ public class PngChunk extends BinaryFileParser {
     /**
      * Gets the chunk type.
      *
-     * @return the chunk type.
+     * @return The chunk type.
      */
     public int getChunkType() {
         return chunkType;
@@ -90,7 +90,7 @@ public class PngChunk extends BinaryFileParser {
     /**
      * Gets the CRC value.
      *
-     * @return the CRC.
+     * @return The CRC.
      */
     public int getCrc() {
         return crc;
@@ -112,7 +112,7 @@ public class PngChunk extends BinaryFileParser {
     /**
      * Gets the chunk length.
      *
-     * @return the length.
+     * @return The length.
      */
     public int getLength() {
         return length;
@@ -121,7 +121,7 @@ public class PngChunk extends BinaryFileParser {
     /**
      * Gets a copy of the chunk property bits.
      *
-     * @return the chunk property bits
+     * @return The chunk property bits
      */
     public boolean[] getPropertyBits() {
         return propertyBits.clone();

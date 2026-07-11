@@ -24,7 +24,7 @@ public interface ImageFormat {
     /**
      * Gets the default file extension.
      *
-     * @return the default file extension.
+     * @return The default file extension.
      */
     String getDefaultExtension();
 

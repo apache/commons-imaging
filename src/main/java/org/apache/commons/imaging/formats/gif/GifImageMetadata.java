@@ -41,7 +41,7 @@ public class GifImageMetadata implements ImageMetadata {
     /**
      * Gets the image height.
      *
-     * @return the height in pixels.
+     * @return The height in pixels.
      */
     public int getHeight() {
         return height;
@@ -55,7 +55,7 @@ public class GifImageMetadata implements ImageMetadata {
     /**
      * Gets the image width.
      *
-     * @return the width in pixels.
+     * @return The width in pixels.
      */
     public int getWidth() {
         return width;

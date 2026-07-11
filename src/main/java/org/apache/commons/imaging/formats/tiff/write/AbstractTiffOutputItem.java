@@ -67,21 +67,21 @@ abstract class AbstractTiffOutputItem {
     /**
      * Gets a description of this item.
      *
-     * @return the item description.
+     * @return The item description.
      */
     public abstract String getItemDescription();
 
     /**
      * Gets the length of this item in bytes.
      *
-     * @return the item length.
+     * @return The item length.
      */
     public abstract int getItemLength();
 
     /**
      * Gets the offset of this item.
      *
-     * @return the offset.
+     * @return The offset.
      */
     protected long getOffset() {
         return offset;

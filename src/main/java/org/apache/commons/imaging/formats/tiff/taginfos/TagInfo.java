@@ -143,7 +143,7 @@ public class TagInfo {
      * @param abstractFieldType the field type.
      * @param value the value.
      * @param byteOrder the byte order.
-     * @return the encoded bytes.
+     * @return The encoded bytes.
      * @throws ImagingException if an imaging error occurs.
      */
     public byte[] encodeValue(final AbstractFieldType abstractFieldType, final Object value, final ByteOrder byteOrder) throws ImagingException {
@@ -153,7 +153,7 @@ public class TagInfo {
     /**
      * Gets the description.
      *
-     * @return the description.
+     * @return The description.
      */
     public String getDescription() {
         return tag + " (0x" + Integer.toHexString(tag) + ": " + name + "): ";
@@ -163,7 +163,7 @@ public class TagInfo {
      * Gets the value from a TIFF field.
      *
      * @param entry the TIFF field whose value to return.
-     * @return the value of the TIFF field.
+     * @return The value of the TIFF field.
      * @throws ImagingException thrown by subclasses.
      */
     public Object getValue(final TiffField entry) throws ImagingException {

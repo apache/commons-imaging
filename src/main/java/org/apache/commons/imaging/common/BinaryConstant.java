@@ -61,7 +61,7 @@ public class BinaryConstant {
      * Gets the byte at the specified index.
      *
      * @param i the index.
-     * @return the byte at the specified index.
+     * @return The byte at the specified index.
      */
     public byte get(final int i) {
         return value[i];
@@ -85,7 +85,7 @@ public class BinaryConstant {
     /**
      * Gets the raw byte array value (internal use).
      *
-     * @return the raw value.
+     * @return The raw value.
      */
     byte[] rawValue() {
         return value;
@@ -94,7 +94,7 @@ public class BinaryConstant {
     /**
      * Gets the size of this binary constant.
      *
-     * @return the size in bytes.
+     * @return The size in bytes.
      */
     public int size() {
         return value.length;

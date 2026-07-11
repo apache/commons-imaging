@@ -30,7 +30,7 @@ public final class PixelDensity {
      *
      * @param x horizontal density in pixels per centimetre.
      * @param y vertical density in pixels per centimetre.
-     * @return the pixel density.
+     * @return The pixel density.
      */
     public static PixelDensity createFromPixelsPerCentimetre(final double x, final double y) {
         return new PixelDensity(x, y, PIXEL_PER_CENTIMETRE);
@@ -41,7 +41,7 @@ public final class PixelDensity {
      *
      * @param x horizontal density in pixels per inch.
      * @param y vertical density in pixels per inch.
-     * @return the pixel density.
+     * @return The pixel density.
      */
     public static PixelDensity createFromPixelsPerInch(final double x, final double y) {
         return new PixelDensity(x, y, PIXEL_PER_INCH);
@@ -52,7 +52,7 @@ public final class PixelDensity {
      *
      * @param x horizontal density in pixels per metre.
      * @param y vertical density in pixels per metre.
-     * @return the pixel density.
+     * @return The pixel density.
      */
     public static PixelDensity createFromPixelsPerMetre(final double x, final double y) {
         return new PixelDensity(x, y, PIXEL_PER_METRE);
@@ -63,7 +63,7 @@ public final class PixelDensity {
      *
      * @param x horizontal density (unitless).
      * @param y vertical density (unitless).
-     * @return the pixel density.
+     * @return The pixel density.
      */
     public static PixelDensity createUnitless(final double x, final double y) {
         return new PixelDensity(x, y, PIXEL_NO_UNIT);
@@ -85,7 +85,7 @@ public final class PixelDensity {
     /**
      * Gets the raw horizontal density.
      *
-     * @return the raw horizontal density.
+     * @return The raw horizontal density.
      */
     public double getRawHorizontalDensity() {
         return horizontalDensity;
@@ -94,7 +94,7 @@ public final class PixelDensity {
     /**
      * Gets the raw vertical density.
      *
-     * @return the raw vertical density.
+     * @return The raw vertical density.
      */
     public double getRawVerticalDensity() {
         return verticalDensity;
@@ -103,7 +103,7 @@ public final class PixelDensity {
     /**
      * Gets the horizontal density in pixels per centimetre.
      *
-     * @return the horizontal density in pixels per centimetre.
+     * @return The horizontal density in pixels per centimetre.
      */
     public double horizontalDensityCentimetres() {
         if (isInCentimetres()) {
@@ -115,7 +115,7 @@ public final class PixelDensity {
     /**
      * Gets the horizontal density in pixels per inch.
      *
-     * @return the horizontal density in pixels per inch.
+     * @return The horizontal density in pixels per inch.
      */
     public double horizontalDensityInches() {
         if (isInInches()) {
@@ -127,7 +127,7 @@ public final class PixelDensity {
     /**
      * Gets the horizontal density in pixels per metre.
      *
-     * @return the horizontal density in pixels per metre.
+     * @return The horizontal density in pixels per metre.
      */
     public double horizontalDensityMetres() {
         if (isInMetres()) {
@@ -175,7 +175,7 @@ public final class PixelDensity {
     /**
      * Gets the vertical density in pixels per centimetre.
      *
-     * @return the vertical density in pixels per centimetre.
+     * @return The vertical density in pixels per centimetre.
      */
     public double verticalDensityCentimetres() {
         if (isInCentimetres()) {
@@ -187,7 +187,7 @@ public final class PixelDensity {
     /**
      * Gets the vertical density in pixels per inch.
      *
-     * @return the vertical density in pixels per inch.
+     * @return The vertical density in pixels per inch.
      */
     public double verticalDensityInches() {
         if (isInInches()) {
@@ -199,7 +199,7 @@ public final class PixelDensity {
     /**
      * Gets the vertical density in pixels per metre.
      *
-     * @return the vertical density in pixels per metre.
+     * @return The vertical density in pixels per metre.
      */
     public double verticalDensityMetres() {
         if (isInMetres()) {

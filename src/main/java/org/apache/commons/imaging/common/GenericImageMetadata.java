@@ -46,7 +46,7 @@ public class GenericImageMetadata implements ImageMetadata {
         /**
          * Gets the keyword.
          *
-         * @return the keyword.
+         * @return The keyword.
          */
         public String getKeyword() {
             return keyword;
@@ -55,7 +55,7 @@ public class GenericImageMetadata implements ImageMetadata {
         /**
          * Gets the text value.
          *
-         * @return the text value.
+         * @return The text value.
          */
         public String getText() {
             return text;

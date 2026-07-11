@@ -117,7 +117,7 @@ public final class T4AndT6Compression {
      * @param uncompressed uncompressed byte data
      * @param width        image width
      * @param height       image height
-     * @return the compressed data
+     * @return The compressed data
      * @throws ImagingException if it fails to write the compressed data
      */
     public static byte[] compressModifiedHuffman(final byte[] uncompressed, final int width, final int height) throws ImagingException {
@@ -179,7 +179,7 @@ public final class T4AndT6Compression {
      * @param width the image width.
      * @param height the image height.
      * @param hasFill whether to use fill bits.
-     * @return the compressed data.
+     * @return The compressed data.
      * @throws ImagingException if an imaging error occurs.
      */
     public static byte[] compressT4_1D(final byte[] uncompressed, final int width, final int height, final boolean hasFill) throws ImagingException {
@@ -219,7 +219,7 @@ public final class T4AndT6Compression {
      * @param height the image height.
      * @param hasFill whether to use fill bits.
      * @param parameterK the K parameter.
-     * @return the compressed data.
+     * @return The compressed data.
      * @throws ImagingException if an imaging error occurs.
      */
     public static byte[] compressT4_2D(final byte[] uncompressed, final int width, final int height, final boolean hasFill, final int parameterK)
@@ -306,7 +306,7 @@ public final class T4AndT6Compression {
      * @param uncompressed the uncompressed data.
      * @param width the image width.
      * @param height the image height.
-     * @return the compressed data.
+     * @return The compressed data.
      * @throws ImagingException if an imaging error occurs.
      */
     public static byte[] compressT6(final byte[] uncompressed, final int width, final int height) throws ImagingException {
@@ -368,7 +368,7 @@ public final class T4AndT6Compression {
      * @param compressed compressed byte data
      * @param width      image width
      * @param height     image height
-     * @return the compressed data
+     * @return The compressed data
      * @throws ImagingException if it fails to read the compressed data
      */
     public static byte[] decompressModifiedHuffman(final byte[] compressed, final int width, final int height) throws ImagingException {
@@ -407,7 +407,7 @@ public final class T4AndT6Compression {
      * @param width      image width
      * @param height     image height
      * @param hasFill    used to check the end of line
-     * @return the decompressed data
+     * @return The decompressed data
      * @throws ImagingException if it fails to read the compressed data
      */
     public static byte[] decompressT4_1D(final byte[] compressed, final int width, final int height, final boolean hasFill) throws ImagingException {
@@ -451,7 +451,7 @@ public final class T4AndT6Compression {
      * @param width      image width
      * @param height     image height
      * @param hasFill    used to check the end of line
-     * @return the decompressed data
+     * @return The decompressed data
      * @throws ImagingException if it fails to read the compressed data
      */
     public static byte[] decompressT4_2D(final byte[] compressed, final int width, final int height, final boolean hasFill) throws ImagingException {
@@ -556,7 +556,7 @@ public final class T4AndT6Compression {
      * @param compressed compressed byte data
      * @param width      image width
      * @param height     image height
-     * @return the decompressed data
+     * @return The decompressed data
      * @throws ImagingException if it fails to read the compressed data
      */
     public static byte[] decompressT6(final byte[] compressed, final int width, final int height) throws ImagingException {

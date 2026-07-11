@@ -266,7 +266,7 @@ public class TiffReader extends BinaryFileParser {
      * @param byteSource the byte source.
      * @param params the imaging parameters.
      * @param formatCompliance the format compliance.
-     * @return the TIFF contents.
+     * @return The TIFF contents.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
      */
@@ -284,7 +284,7 @@ public class TiffReader extends BinaryFileParser {
      * @param byteSource the byte source.
      * @param readImageData true to read image data, false otherwise.
      * @param formatCompliance the format compliance.
-     * @return the TIFF contents.
+     * @return The TIFF contents.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
      */
@@ -493,7 +493,7 @@ public class TiffReader extends BinaryFileParser {
      * @param byteSource the byte source.
      * @param readImageData true to read image data, false otherwise.
      * @param formatCompliance the format compliance.
-     * @return the TIFF contents containing only the first directory.
+     * @return The TIFF contents containing only the first directory.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
      */

@@ -58,7 +58,7 @@ public enum PngColorType {
      * Gets the color type corresponding to the given value.
      *
      * @param value the color type value.
-     * @return the color type, or null if not found.
+     * @return The color type, or null if not found.
      */
     public static PngColorType getColorType(final int value) {
         for (final PngColorType type : values()) {

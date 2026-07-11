@@ -195,7 +195,7 @@ public abstract class AbstractImageDataReader {
      * Applies the predictor to the samples.
      *
      * @param samples the samples array.
-     * @return the modified samples array.
+     * @return The modified samples array.
      */
     protected int[] applyPredictor(final int[] samples) {
         if (predictor == 2) {
@@ -236,7 +236,7 @@ public abstract class AbstractImageDataReader {
      * @param expectedSize the expected size of the decompressed data.
      * @param tileWidth the tile width.
      * @param tileHeight the tile height.
-     * @return the decompressed data.
+     * @return The decompressed data.
      * @throws ImagingException if the image format is invalid.
      * @throws IOException if an I/O error occurs.
      */

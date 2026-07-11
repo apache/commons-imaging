@@ -123,7 +123,7 @@ public final class Allocator {
      * </p>
      *
      * @param request an allocation request.
-     * @return the request.
+     * @return The request.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      */
     public static int check(final int request) {
@@ -141,7 +141,7 @@ public final class Allocator {
      *
      * @param request     an allocation request count.
      * @param elementSize The element size.
-     * @return the request.
+     * @return The request.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      */
     public static int check(final int request, final int elementSize) {
@@ -165,7 +165,7 @@ public final class Allocator {
      *
      * @param request     an allocation request count is cast down to an int.
      * @param elementSize The element size.
-     * @return the request.
+     * @return The request.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      */
     public static int check(final long request, final int elementSize) {

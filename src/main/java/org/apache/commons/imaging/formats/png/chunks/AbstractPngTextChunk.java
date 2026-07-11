@@ -38,21 +38,21 @@ public abstract class AbstractPngTextChunk extends PngChunk {
     /**
      * Gets the text contents of this chunk.
      *
-     * @return the text contents.
+     * @return The text contents.
      */
     public abstract AbstractPngText getContents();
 
     /**
      * Gets the keyword of this text chunk.
      *
-     * @return the keyword.
+     * @return The keyword.
      */
     public abstract String getKeyword();
 
     /**
      * Gets the text value of this text chunk.
      *
-     * @return the text.
+     * @return The text.
      */
     public abstract String getText();
 

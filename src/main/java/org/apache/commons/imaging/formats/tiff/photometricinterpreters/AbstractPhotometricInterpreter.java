@@ -65,7 +65,7 @@ public abstract class AbstractPhotometricInterpreter {
      * Gets the bits per sample at the specified offset.
      *
      * @param offset the sample offset.
-     * @return the bits per sample.
+     * @return The bits per sample.
      */
     protected int getBitsPerSample(final int offset) {
         return bitsPerSample[offset];

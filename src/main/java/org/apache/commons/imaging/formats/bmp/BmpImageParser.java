@@ -130,7 +130,7 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
      *
      * @param inputStream the input stream to read from.
      * @param params the imaging parameters.
-     * @return the BufferedImage.
+     * @return The BufferedImage.
      * @throws ImagingException if the image format is invalid.
      * @throws IOException if an I/O error occurs.
      */

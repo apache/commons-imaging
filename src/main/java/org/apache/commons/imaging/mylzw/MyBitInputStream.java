@@ -70,7 +70,7 @@ public class MyBitInputStream extends FilterInputStream {
      * Reads specified number of bits.
      *
      * @param sampleBits number of bits to read.
-     * @return the bits as an integer.
+     * @return The bits as an integer.
      * @throws IOException if I/O error occurs.
      */
     public int readBits(final int sampleBits) throws IOException {

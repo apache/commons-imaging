@@ -95,7 +95,7 @@ public abstract class AbstractTiffImageData {
          * Gets the image data at the specified offset.
          *
          * @param offset the offset index.
-         * @return the data element.
+         * @return The data element.
          */
         public AbstractTiffElement.DataElement getImageData(final int offset) {
             return strips[offset];
@@ -104,7 +104,7 @@ public abstract class AbstractTiffImageData {
         /**
          * Gets the number of strips in the image.
          *
-         * @return the number of strips.
+         * @return The number of strips.
          */
         public int getImageDataLength() {
             return strips.length;
@@ -216,7 +216,7 @@ public abstract class AbstractTiffImageData {
      * @param compression the compression type.
      * @param planarConfiguration the planar configuration.
      * @param byteOrder the byte order.
-     * @return the data reader.
+     * @return The data reader.
      * @throws IOException if an I/O error occurs.
      * @throws ImagingException if the image format is invalid.
      */
@@ -227,7 +227,7 @@ public abstract class AbstractTiffImageData {
     /**
      * Gets the image data elements.
      *
-     * @return the array of data elements.
+     * @return The array of data elements.
      */
     public abstract AbstractTiffElement.DataElement[] getImageData();
 

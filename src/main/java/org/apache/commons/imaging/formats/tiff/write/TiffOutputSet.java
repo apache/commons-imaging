@@ -76,7 +76,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     /**
      * Adds an EXIF directory to this output set.
      *
-     * @return the new EXIF directory.
+     * @return The new EXIF directory.
      * @throws ImagingException if an EXIF directory already exists.
      */
     public TiffOutputDirectory addExifDirectory() throws ImagingException {
@@ -88,7 +88,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     /**
      * Adds a GPS directory to this output set.
      *
-     * @return the new GPS directory.
+     * @return The new GPS directory.
      * @throws ImagingException if a GPS directory already exists.
      */
     public TiffOutputDirectory addGpsDirectory() throws ImagingException {
@@ -100,7 +100,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     /**
      * Adds an Interoperability directory to this output set.
      *
-     * @return the new Interoperability directory.
+     * @return The new Interoperability directory.
      * @throws ImagingException if an Interoperability directory already exists.
      */
     public TiffOutputDirectory addInteroperabilityDirectory() throws ImagingException {
@@ -114,7 +114,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     /**
      * Adds a Root directory to this output set.
      *
-     * @return the new Root directory.
+     * @return The new Root directory.
      * @throws ImagingException if a Root directory already exists.
      */
     public TiffOutputDirectory addRootDirectory() throws ImagingException {
@@ -134,7 +134,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
      * Finds a directory of the specified type in this output set.
      *
      * @param directoryType the type of the directory to find.
-     * @return the found directory, or null if no such directory exists.
+     * @return The found directory, or null if no such directory exists.
      */
     public TiffOutputDirectory findDirectory(final int directoryType) {
         for (final TiffOutputDirectory directory : directories) {
@@ -149,7 +149,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
      * Finds a field with the specified tag in this output set.
      *
      * @param tag the tag of the field to find.
-     * @return the found field, or null if no such field exists.
+     * @return The found field, or null if no such field exists.
      */
     public TiffOutputField findField(final int tag) {
         for (final TiffOutputDirectory directory : directories) {
@@ -165,7 +165,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
      * Finds a field with the specified tag info in this output set.
      *
      * @param tagInfo the tag info of the field to find.
-     * @return the found field, or null if no such field exists.
+     * @return The found field, or null if no such field exists.
      */
     public TiffOutputField findField(final TagInfo tagInfo) {
         return findField(tagInfo.tag);
@@ -183,7 +183,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     /**
      * Gets the EXIF directory in this output set.
      *
-     * @return the EXIF directory, or null if no EXIF directory exists.
+     * @return The EXIF directory, or null if no EXIF directory exists.
      */
     public TiffOutputDirectory getExifDirectory() {
         return findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_EXIF);
@@ -192,7 +192,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     /**
      * Gets the GPS directory in this output set.
      *
-     * @return the GPS directory, or null if no GPS directory exists.
+     * @return The GPS directory, or null if no GPS directory exists.
      */
     public TiffOutputDirectory getGpsDirectory() {
         return findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_GPS);
@@ -201,7 +201,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     /**
      * Gets the Interoperability directory in this output set.
      *
-     * @return the Interoperability directory, or null if no Interoperability directory exists.
+     * @return The Interoperability directory, or null if no Interoperability directory exists.
      */
     public TiffOutputDirectory getInteroperabilityDirectory() {
         return findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_INTEROPERABILITY);
@@ -210,7 +210,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     /**
      * Gets the EXIF directory in this output set, creating it if it doesn't exist.
      *
-     * @return the EXIF directory.
+     * @return The EXIF directory.
      * @throws ImagingException if it fails to create the directory.
      */
     public TiffOutputDirectory getOrCreateExifDirectory() throws ImagingException {
@@ -227,7 +227,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     /**
      * Gets the GPS directory in this output set, creating it if it doesn't exist.
      *
-     * @return the GPS directory.
+     * @return The GPS directory.
      * @throws ImagingException if it fails to create the directory.
      */
     public TiffOutputDirectory getOrCreateGpsDirectory() throws ImagingException {
@@ -244,7 +244,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     /**
      * Gets the Root directory in this output set, creating it if it doesn't exist.
      *
-     * @return the Root directory.
+     * @return The Root directory.
      * @throws ImagingException if it fails to create the directory.
      */
     public TiffOutputDirectory getOrCreateRootDirectory() throws ImagingException {
@@ -259,7 +259,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
      * Gets all output items from all directories in this output set.
      *
      * @param outputSummary the output summary.
-     * @return the list of all output items.
+     * @return The list of all output items.
      * @throws ImagingException if an error occurs.
      */
     protected List<AbstractTiffOutputItem> getOutputItems(final TiffOutputSummary outputSummary) throws ImagingException {
@@ -275,7 +275,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     /**
      * Gets the Root directory in this output set.
      *
-     * @return the Root directory.
+     * @return The Root directory.
      */
     public TiffOutputDirectory getRootDirectory() {
         return findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT);
@@ -380,7 +380,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
      * Gets a string representation with optional prefix.
      *
      * @param prefix the prefix, or null.
-     * @return the string representation.
+     * @return The string representation.
      */
     public String toString(String prefix) {
         if (prefix == null) {

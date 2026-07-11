@@ -103,7 +103,7 @@ public final class PngChunkIccp extends PngChunk {
     /**
      * Gets a copy of the compressed profile data.
      *
-     * @return the compressed profile data.
+     * @return The compressed profile data.
      */
     public byte[] getCompressedProfile() {
         return compressedProfile.clone();
@@ -112,7 +112,7 @@ public final class PngChunkIccp extends PngChunk {
     /**
      * Gets the compression method.
      *
-     * @return the compression method.
+     * @return The compression method.
      */
     public int getCompressionMethod() {
         return compressionMethod;
@@ -121,7 +121,7 @@ public final class PngChunkIccp extends PngChunk {
     /**
      * Gets the profile name.
      *
-     * @return the profile name.
+     * @return The profile name.
      */
     public String getProfileName() {
         return profileName;
@@ -130,7 +130,7 @@ public final class PngChunkIccp extends PngChunk {
     /**
      * Gets a copy of the uncompressed profile data.
      *
-     * @return the uncompressed profile data
+     * @return The uncompressed profile data
      */
     public byte[] getUncompressedProfile() {
         return uncompressedProfile.clone();
