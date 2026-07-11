@@ -30,7 +30,7 @@ public class ScanlineFilterSub implements ScanlineFilter {
     /**
      * Constructs a new instance.
      *
-     * @param bytesPerPixel the number of bytes per pixel.
+     * @param bytesPerPixel The number of bytes per pixel.
      */
     public ScanlineFilterSub(final int bytesPerPixel) {
         this.bytesPerPixel = bytesPerPixel;

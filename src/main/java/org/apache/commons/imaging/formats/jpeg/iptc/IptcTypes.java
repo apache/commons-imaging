@@ -195,7 +195,7 @@ public enum IptcTypes implements IptcType {
     /**
      * Gets an unknown IPTC type for the specified type number.
      *
-     * @param type the type number.
+     * @param type The type number.
      * @return An unknown IPTC type.
      */
     public static IptcType getUnknown(final int type) {

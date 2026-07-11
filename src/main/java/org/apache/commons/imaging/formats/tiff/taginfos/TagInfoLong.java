@@ -31,11 +31,11 @@ public class TagInfoLong extends TagInfo {
     /**
      * Constructs a new instance.
      *
-     * @param name the tag name.
-     * @param tag the tag number.
-     * @param dataTypes the data types.
-     * @param length the length.
-     * @param exifDirectory the EXIF directory.
+     * @param name The tag name.
+     * @param tag The tag number.
+     * @param dataTypes The data types.
+     * @param length The length.
+     * @param exifDirectory The EXIF directory.
      * @param isOffset whether this is an offset tag.
      */
     public TagInfoLong(final String name, final int tag, final List<AbstractFieldType> dataTypes, final int length, final TiffDirectoryType exifDirectory,
@@ -46,9 +46,9 @@ public class TagInfoLong extends TagInfo {
     /**
      * Constructs a new instance.
      *
-     * @param name the tag name.
-     * @param tag the tag number.
-     * @param directoryType the directory type.
+     * @param name The tag name.
+     * @param tag The tag number.
+     * @param directoryType The directory type.
      */
     public TagInfoLong(final String name, final int tag, final TiffDirectoryType directoryType) {
         super(name, tag, AbstractFieldType.LONG, 1, directoryType);
@@ -57,9 +57,9 @@ public class TagInfoLong extends TagInfo {
     /**
      * Constructs a new instance.
      *
-     * @param name the tag name.
-     * @param tag the tag number.
-     * @param directoryType the directory type.
+     * @param name The tag name.
+     * @param tag The tag number.
+     * @param directoryType The directory type.
      * @param isOffset whether this is an offset tag.
      */
     public TagInfoLong(final String name, final int tag, final TiffDirectoryType directoryType, final boolean isOffset) {
@@ -69,8 +69,8 @@ public class TagInfoLong extends TagInfo {
     /**
      * Encodes a value.
      *
-     * @param byteOrder the byte order.
-     * @param value the value.
+     * @param byteOrder The byte order.
+     * @param value The value.
      * @return The encoded bytes.
      */
     public byte[] encodeValue(final ByteOrder byteOrder, final int value) {
@@ -80,8 +80,8 @@ public class TagInfoLong extends TagInfo {
     /**
      * Gets the value.
      *
-     * @param byteOrder the byte order.
-     * @param bytes the bytes.
+     * @param byteOrder The byte order.
+     * @param bytes The bytes.
      * @return The integer value.
      */
     public int getValue(final ByteOrder byteOrder, final byte[] bytes) {

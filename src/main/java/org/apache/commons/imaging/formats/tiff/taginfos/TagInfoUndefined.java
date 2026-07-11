@@ -27,9 +27,9 @@ public class TagInfoUndefined extends TagInfoByte {
     /**
      * Constructs a new instance.
      *
-     * @param name the tag name.
-     * @param tag the tag number.
-     * @param directoryType the directory type.
+     * @param name The tag name.
+     * @param tag The tag number.
+     * @param directoryType The directory type.
      */
     public TagInfoUndefined(final String name, final int tag, final TiffDirectoryType directoryType) {
         super(name, tag, AbstractFieldType.UNDEFINED, directoryType);

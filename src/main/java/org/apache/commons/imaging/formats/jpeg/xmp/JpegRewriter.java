@@ -56,7 +56,7 @@ public class JpegRewriter extends BinaryFileParser {
         /**
          * Writes the piece to output stream.
          *
-         * @param os the output stream.
+         * @param os The output stream.
          * @throws IOException if an I/O error occurs.
          */
         protected abstract void write(OutputStream os) throws IOException;
@@ -72,8 +72,8 @@ public class JpegRewriter extends BinaryFileParser {
         /**
          * Constructs image data piece.
          *
-         * @param markerBytes the marker bytes.
-         * @param imageData the image data.
+         * @param markerBytes The marker bytes.
+         * @param imageData The image data.
          */
         JFIFPieceImageData(final byte[] markerBytes, final byte[] imageData) {
             this.markerBytes = markerBytes;
@@ -126,8 +126,8 @@ public class JpegRewriter extends BinaryFileParser {
         /**
          * Constructs a segment piece.
          *
-         * @param marker the marker.
-         * @param segmentData the segment data.
+         * @param marker The marker.
+         * @param segmentData The segment data.
          */
         public JFIFPieceSegment(final int marker, final byte[] segmentData) {
             this(marker, ByteConversions.toBytes((short) marker, JPEG_BYTE_ORDER), ByteConversions.toBytes((short) (segmentData.length + 2), JPEG_BYTE_ORDER),
@@ -137,10 +137,10 @@ public class JpegRewriter extends BinaryFileParser {
         /**
          * Constructs a segment piece.
          *
-         * @param marker the marker.
-         * @param markerBytes the marker bytes.
-         * @param segmentLengthBytes the segment length bytes.
-         * @param segmentData the segment data.
+         * @param marker The marker.
+         * @param markerBytes The marker bytes.
+         * @param segmentLengthBytes The segment length bytes.
+         * @param segmentData The segment data.
          */
         JFIFPieceSegment(final int marker, final byte[] markerBytes, final byte[] segmentLengthBytes, final byte[] segmentData) {
             this.marker = marker;
@@ -243,7 +243,7 @@ public class JpegRewriter extends BinaryFileParser {
         /**
          * Filters a segment.
          *
-         * @param segment the segment.
+         * @param segment The segment.
          * @return true to include, false to exclude.
          */
         boolean filter(JFIFPieceSegment segment);
@@ -267,7 +267,7 @@ public class JpegRewriter extends BinaryFileParser {
     /**
      * Analyzes JFIF structure.
      *
-     * @param byteSource the byte source.
+     * @param byteSource The byte source.
      * @return The JFIF pieces.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
@@ -309,8 +309,8 @@ public class JpegRewriter extends BinaryFileParser {
      * Filters segments using a filter.
      *
      * @param <T> The piece type.
-     * @param segments the segments.
-     * @param filter the filter.
+     * @param segments The segments.
+     * @param filter The filter.
      * @return The filtered segments.
      */
     protected <T extends JFIFPiece> List<T> filterSegments(final List<T> segments, final SegmentFilter filter) {
@@ -321,8 +321,8 @@ public class JpegRewriter extends BinaryFileParser {
      * Filters segments using a filter with optional reverse logic.
      *
      * @param <T> The piece type.
-     * @param segments the segments.
-     * @param filter the filter.
+     * @param segments The segments.
+     * @param filter The filter.
      * @param reverse whether to reverse the filter logic.
      * @return The filtered segments.
      */
@@ -346,7 +346,7 @@ public class JpegRewriter extends BinaryFileParser {
      * Finds Photoshop APP13 segments.
      *
      * @param <T> The piece type.
-     * @param segments the segments.
+     * @param segments The segments.
      * @return The filtered segments.
      */
     protected <T extends JFIFPiece> List<T> findPhotoshopApp13Segments(final List<T> segments) {
@@ -358,8 +358,8 @@ public class JpegRewriter extends BinaryFileParser {
      *
      * @param <T> The piece type.
      * @param <U> The new piece type.
-     * @param segments the segments.
-     * @param newSegments the new segments to insert.
+     * @param segments The segments.
+     * @param newSegments The new segments to insert.
      * @return The combined segments.
      * @throws ImagingException if an imaging error occurs.
      */
@@ -396,8 +396,8 @@ public class JpegRewriter extends BinaryFileParser {
      *
      * @param <T> The piece type.
      * @param <U> The new piece type.
-     * @param segments the segments.
-     * @param newSegments the new segments to insert.
+     * @param segments The segments.
+     * @param newSegments The new segments to insert.
      * @return The combined segments.
      * @throws ImagingException if an imaging error occurs.
      */
@@ -428,7 +428,7 @@ public class JpegRewriter extends BinaryFileParser {
      * Removes EXIF segments.
      *
      * @param <T> The piece type.
-     * @param segments the segments.
+     * @param segments The segments.
      * @return The filtered segments.
      */
     protected <T extends JFIFPiece> List<T> removeExifSegments(final List<T> segments) {
@@ -439,7 +439,7 @@ public class JpegRewriter extends BinaryFileParser {
      * Removes Photoshop APP13 segments.
      *
      * @param <T> The piece type.
-     * @param segments the segments.
+     * @param segments The segments.
      * @return The filtered segments.
      */
     protected <T extends JFIFPiece> List<T> removePhotoshopApp13Segments(final List<T> segments) {
@@ -450,7 +450,7 @@ public class JpegRewriter extends BinaryFileParser {
      * Removes XMP segments.
      *
      * @param <T> The piece type.
-     * @param segments the segments.
+     * @param segments The segments.
      * @return The filtered segments.
      */
     protected <T extends JFIFPiece> List<T> removeXmpSegments(final List<T> segments) {
@@ -477,8 +477,8 @@ public class JpegRewriter extends BinaryFileParser {
     /**
      * Writes segments to output stream.
      *
-     * @param outputStream the output stream.
-     * @param segments the segments to write.
+     * @param outputStream The output stream.
+     * @param segments The segments to write.
      * @throws IOException if an I/O error occurs.
      */
     protected void writeSegments(final OutputStream outputStream, final List<? extends JFIFPiece> segments) throws IOException {

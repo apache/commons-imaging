@@ -61,8 +61,8 @@ public final class JfifSegment extends AbstractSegment {
     /**
      * Constructs a new JFIF segment from segment data.
      *
-     * @param marker      the segment marker.
-     * @param segmentData the segment data bytes.
+     * @param marker      The segment marker.
+     * @param segmentData The segment data bytes.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException      if an I/O error occurs.
      */
@@ -73,9 +73,9 @@ public final class JfifSegment extends AbstractSegment {
     /**
      * Constructs a new JFIF segment from an input stream.
      *
-     * @param marker       the segment marker.
-     * @param markerLength the marker length.
-     * @param is           the input stream.
+     * @param marker       The segment marker.
+     * @param markerLength The marker length.
+     * @param is           The input stream.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException      if an I/O error occurs.
      */

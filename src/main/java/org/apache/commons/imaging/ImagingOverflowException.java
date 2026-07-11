@@ -27,7 +27,7 @@ public class ImagingOverflowException extends ImagingException {
     /**
      * Constructs a new imaging overflow exception with the specified message.
      *
-     * @param message the detail message.
+     * @param message The detail message.
      */
     public ImagingOverflowException(final String message) {
         super(message);

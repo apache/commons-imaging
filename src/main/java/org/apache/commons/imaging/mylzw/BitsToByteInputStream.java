@@ -30,8 +30,8 @@ public class BitsToByteInputStream extends FilterInputStream {
     /**
      * Constructs a new BitsToByteInputStream.
      *
-     * @param is the MyBitInputStream to read from.
-     * @param desiredDepth the desired bit depth.
+     * @param is The MyBitInputStream to read from.
+     * @param desiredDepth The desired bit depth.
      */
     public BitsToByteInputStream(final MyBitInputStream is, final int desiredDepth) {
         super(is);
@@ -46,7 +46,7 @@ public class BitsToByteInputStream extends FilterInputStream {
     /**
      * Reads the specified number of bits and adjusts to the desired depth.
      *
-     * @param bitCount the number of bits to read.
+     * @param bitCount The number of bits to read.
      * @return The adjusted value.
      * @throws IOException if an I/O error occurs.
      */
@@ -64,8 +64,8 @@ public class BitsToByteInputStream extends FilterInputStream {
     /**
      * Reads an array of bit values.
      *
-     * @param sampleBits the number of bits per sample.
-     * @param length the number of samples to read.
+     * @param sampleBits The number of bits per sample.
+     * @param length The number of samples to read.
      * @return The array of values.
      * @throws IOException if an I/O error occurs.
      */

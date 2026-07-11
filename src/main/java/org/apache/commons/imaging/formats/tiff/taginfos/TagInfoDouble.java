@@ -30,9 +30,9 @@ public class TagInfoDouble extends TagInfo {
     /**
      * Constructs a new instance.
      *
-     * @param name the tag name.
-     * @param tag the tag number.
-     * @param directoryType the directory type.
+     * @param name The tag name.
+     * @param tag The tag number.
+     * @param directoryType The directory type.
      */
     public TagInfoDouble(final String name, final int tag, final TiffDirectoryType directoryType) {
         super(name, tag, AbstractFieldType.DOUBLE, 1, directoryType);
@@ -41,8 +41,8 @@ public class TagInfoDouble extends TagInfo {
     /**
      * Encodes a value.
      *
-     * @param byteOrder the byte order.
-     * @param value the value.
+     * @param byteOrder The byte order.
+     * @param value The value.
      * @return The encoded bytes.
      */
     public byte[] encodeValue(final ByteOrder byteOrder, final double value) {
@@ -52,8 +52,8 @@ public class TagInfoDouble extends TagInfo {
     /**
      * Gets the value.
      *
-     * @param byteOrder the byte order.
-     * @param bytes the bytes.
+     * @param byteOrder The byte order.
+     * @param bytes The bytes.
      * @return The double value.
      */
     public double getValue(final ByteOrder byteOrder, final byte[] bytes) {

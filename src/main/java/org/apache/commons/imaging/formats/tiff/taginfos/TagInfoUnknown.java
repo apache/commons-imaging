@@ -27,9 +27,9 @@ public final class TagInfoUnknown extends TagInfoByte {
     /**
      * Constructs a new instance.
      *
-     * @param name the tag name.
-     * @param tag the tag number.
-     * @param exifDirectory the EXIF directory.
+     * @param name The tag name.
+     * @param tag The tag number.
+     * @param exifDirectory The EXIF directory.
      */
     public TagInfoUnknown(final String name, final int tag, final TiffDirectoryType exifDirectory) {
         super(name, tag, AbstractFieldType.ANY, exifDirectory);

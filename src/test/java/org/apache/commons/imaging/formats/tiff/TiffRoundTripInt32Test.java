@@ -66,11 +66,11 @@ class TiffRoundTripInt32Test extends AbstractTiffTest {
      * or Tiles. When processing strips, there is always one column of blocks and each strip is exactly the full width of the image. When processing tiles,
      * there may be one or more columns of blocks and the block coverage may extend beyond both the last row and last column.
      *
-     * @param s            an array of the grid of output values in row major order
-     * @param width        the width of the overall image
-     * @param height       the height of the overall image
-     * @param nRowsInBlock the number of rows in the Strip or Tile
-     * @param nColsInBlock the number of columns in the Strip or Tile
+     * @param s            An array of the grid of output values in row major order
+     * @param width        The width of the overall image
+     * @param height       The height of the overall image
+     * @param nRowsInBlock The number of rows in the Strip or Tile
+     * @param nColsInBlock The number of columns in the Strip or Tile
      * @param byteOrder    little-endian or big-endian
      * @return A two-dimensional array of bytes dimensioned by the number of blocks and samples
      */

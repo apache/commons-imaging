@@ -175,9 +175,9 @@ public final class T4AndT6Compression {
     /**
      * Compresses data using T4 1D compression.
      *
-     * @param uncompressed the uncompressed data.
-     * @param width the image width.
-     * @param height the image height.
+     * @param uncompressed The uncompressed data.
+     * @param width The image width.
+     * @param height The image height.
      * @param hasFill whether to use fill bits.
      * @return The compressed data.
      * @throws ImagingException if an imaging error occurs.
@@ -214,11 +214,11 @@ public final class T4AndT6Compression {
     /**
      * Compresses data using T4 2D compression.
      *
-     * @param uncompressed the uncompressed data.
-     * @param width the image width.
-     * @param height the image height.
+     * @param uncompressed The uncompressed data.
+     * @param width The image width.
+     * @param height The image height.
      * @param hasFill whether to use fill bits.
-     * @param parameterK the K parameter.
+     * @param parameterK The K parameter.
      * @return The compressed data.
      * @throws ImagingException if an imaging error occurs.
      */
@@ -303,9 +303,9 @@ public final class T4AndT6Compression {
     /**
      * Compresses data using T6 compression.
      *
-     * @param uncompressed the uncompressed data.
-     * @param width the image width.
-     * @param height the image height.
+     * @param uncompressed The uncompressed data.
+     * @param width The image width.
+     * @param height The image height.
      * @return The compressed data.
      * @throws ImagingException if an imaging error occurs.
      */

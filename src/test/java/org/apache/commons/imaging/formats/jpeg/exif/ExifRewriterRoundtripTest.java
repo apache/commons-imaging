@@ -207,7 +207,7 @@ class ExifRewriterRoundtripTest extends AbstractExifTest {
      * Does the round-trip test, by loading EXIF data, and comparing it with the
      * data from a duplicated file.
      *
-     * @param sourceFile the input file.
+     * @param sourceFile The input file.
      * @throws Exception if it fails to read the test image or create the duplicated file.
      */
     @ParameterizedTest

@@ -38,7 +38,7 @@ public final class WebPImageMetadata extends GenericImageMetadata {
     /**
      * Create a new WebP image metadata object.
      *
-     * @param exif the Exif metadata.
+     * @param exif The Exif metadata.
      */
     public WebPImageMetadata(final TiffImageMetadata exif) {
         this.exif = exif;

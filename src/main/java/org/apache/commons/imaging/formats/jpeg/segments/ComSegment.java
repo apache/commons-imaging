@@ -28,8 +28,8 @@ public class ComSegment extends AbstractGenericSegment {
     /**
      * Constructs a COM segment from segment data.
      *
-     * @param marker the segment marker.
-     * @param segmentData the segment data.
+     * @param marker The segment marker.
+     * @param segmentData The segment data.
      */
     public ComSegment(final int marker, final byte[] segmentData) {
         super(marker, segmentData);
@@ -38,9 +38,9 @@ public class ComSegment extends AbstractGenericSegment {
     /**
      * Constructs a COM segment by reading from an input stream.
      *
-     * @param marker the segment marker.
-     * @param markerLength the marker length.
-     * @param is the input stream to read from.
+     * @param marker The segment marker.
+     * @param markerLength The marker length.
+     * @param is The input stream to read from.
      * @throws IOException if an I/O error occurs.
      */
     public ComSegment(final int marker, final int markerLength, final InputStream is) throws IOException {

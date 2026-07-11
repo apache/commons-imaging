@@ -35,10 +35,10 @@ public final class PngChunkPlte extends PngChunk {
     /**
      * Constructs a PNG PLTE chunk.
      *
-     * @param length the chunk length.
-     * @param chunkType the chunk type.
-     * @param crc the CRC.
-     * @param bytes the chunk bytes.
+     * @param length The chunk length.
+     * @param chunkType The chunk type.
+     * @param crc The CRC.
+     * @param bytes The chunk bytes.
      * @throws ImagingException if the chunk is corrupt.
      * @throws IOException if an I/O error occurs.
      */
@@ -66,7 +66,7 @@ public final class PngChunkPlte extends PngChunk {
     /**
      * Applies gamma correction to the palette.
      *
-     * @param gammaCorrection the gamma correction to apply.
+     * @param gammaCorrection The gamma correction to apply.
      */
     public void correct(final GammaCorrection gammaCorrection) {
         Arrays.setAll(rgb, i -> gammaCorrection.correctArgb(rgb[i]));
@@ -95,7 +95,7 @@ public final class PngChunkPlte extends PngChunk {
     /**
      * Gets the RGB value at the specified palette index.
      *
-     * @param index the palette index.
+     * @param index The palette index.
      * @return The RGB value.
      * @throws ImagingException if the index is out of bounds.
      */

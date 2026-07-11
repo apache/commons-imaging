@@ -36,8 +36,8 @@ public class TiffOutputField {
     /**
      * Creates an offset field.
      *
-     * @param tagInfo the tag info.
-     * @param byteOrder the byte order.
+     * @param tagInfo The tag info.
+     * @param byteOrder The byte order.
      * @return The offset field.
      * @throws ImagingException if an error occurs.
      */
@@ -73,11 +73,11 @@ public class TiffOutputField {
     /**
      * Constructs a new instance.
      *
-     * @param tag the tag number.
-     * @param tagInfo the tag info.
-     * @param abstractFieldType the field type.
-     * @param count the value count.
-     * @param bytes the field data.
+     * @param tag The tag number.
+     * @param tagInfo The tag info.
+     * @param abstractFieldType The field type.
+     * @param count The value count.
+     * @param bytes The field data.
      */
     public TiffOutputField(final int tag, final TagInfo tagInfo, final AbstractFieldType abstractFieldType, final int count, final byte[] bytes) {
         this.tag = tag;
@@ -97,10 +97,10 @@ public class TiffOutputField {
     /**
      * Constructs a new instance.
      *
-     * @param tagInfo the tag info.
-     * @param abstractFieldType the field type.
-     * @param count the value count.
-     * @param bytes the field data.
+     * @param tagInfo The tag info.
+     * @param abstractFieldType The field type.
+     * @param count The value count.
+     * @param bytes The field data.
      */
     public TiffOutputField(final TagInfo tagInfo, final AbstractFieldType abstractFieldType, final int count, final byte[] bytes) {
         this(tagInfo.tag, tagInfo, abstractFieldType, count, bytes);
@@ -170,7 +170,7 @@ public class TiffOutputField {
     /**
      * Sets the sort hint for this field.
      *
-     * @param sortHint the sort hint.
+     * @param sortHint The sort hint.
      */
     public void setSortHint(final int sortHint) {
         this.sortHint = sortHint;
@@ -184,7 +184,7 @@ public class TiffOutputField {
     /**
      * Gets a string representation with optional prefix.
      *
-     * @param prefix the prefix, or null.
+     * @param prefix The prefix, or null.
      * @return The string representation.
      */
     public String toString(String prefix) {
@@ -212,7 +212,7 @@ public class TiffOutputField {
     /**
      * Writes this field to the output stream.
      *
-     * @param bos the output stream.
+     * @param bos The output stream.
      * @throws IOException if an I/O error occurs.
      * @throws ImagingException if an imaging error occurs.
      */

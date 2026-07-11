@@ -30,7 +30,7 @@ public class ScanlineFilterAverage implements ScanlineFilter {
     /**
      * Constructs a new instance.
      *
-     * @param bytesPerPixel the number of bytes per pixel.
+     * @param bytesPerPixel The number of bytes per pixel.
      */
     public ScanlineFilterAverage(final int bytesPerPixel) {
         this.bytesPerPixel = bytesPerPixel;

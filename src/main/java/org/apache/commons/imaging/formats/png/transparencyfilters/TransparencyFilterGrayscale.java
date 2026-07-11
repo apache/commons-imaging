@@ -32,7 +32,7 @@ public final class TransparencyFilterGrayscale extends AbstractTransparencyFilte
     /**
      * Constructs a new transparency filter for grayscale images.
      *
-     * @param bytes the transparency chunk data.
+     * @param bytes The transparency chunk data.
      * @throws IOException if an I/O error occurs.
      */
     public TransparencyFilterGrayscale(final byte[] bytes) throws IOException {

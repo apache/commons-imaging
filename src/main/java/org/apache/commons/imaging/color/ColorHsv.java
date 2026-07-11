@@ -95,9 +95,9 @@ public final class ColorHsv {
     /**
      * Constructs a new ColorHsv.
      *
-     * @param h the hue component (0-360).
-     * @param s the saturation component (0-100).
-     * @param v the value component (0-100).
+     * @param h The hue component (0-360).
+     * @param s The saturation component (0-100).
+     * @param v The value component (0-100).
      */
     public ColorHsv(final double h, final double s, final double v) {
         this.h = h;

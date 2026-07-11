@@ -28,8 +28,8 @@ public class ImagingFormatException extends ImagingRuntimeException {
      * Constructs a new exception with the specified detail message. The cause is not initialized, and may subsequently be initialized by a call to
      * {@link #initCause}.
      *
-     * @param format the detail message format per {@link String#format(String, Object...)}.
-     * @param args   the detail message argument per {@link String#format(String, Object...)}.
+     * @param format The detail message format per {@link String#format(String, Object...)}.
+     * @param args   The detail message argument per {@link String#format(String, Object...)}.
      */
     public ImagingFormatException(final String format, final Object... args) {
         super(String.format(format, args));
@@ -41,8 +41,8 @@ public class ImagingFormatException extends ImagingRuntimeException {
      * Note that the detail message associated with {@code cause} is <em>not</em> automatically incorporated in this exception's detail message.
      * </p>
      *
-     * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
-     * @param cause   the cause (which is saved for later retrieval by the {@link #getCause()} method). (A {@code null} value is permitted, and indicates that
+     * @param message The detail message (which is saved for later retrieval by the {@link #getMessage()} method).
+     * @param cause   The cause (which is saved for later retrieval by the {@link #getCause()} method). (A {@code null} value is permitted, and indicates that
      *                the cause is nonexistent or unknown.)
      */
     public ImagingFormatException(final String message, final Throwable cause) {

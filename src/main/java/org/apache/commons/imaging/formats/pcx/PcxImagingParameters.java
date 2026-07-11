@@ -65,7 +65,7 @@ public class PcxImagingParameters extends ImagingParameters<PcxImagingParameters
     /**
      * Sets the bit depth.
      *
-     * @param bitDepth the bit depth.
+     * @param bitDepth The bit depth.
      * @return this instance.
      */
     public PcxImagingParameters setBitDepth(final int bitDepth) {
@@ -76,7 +76,7 @@ public class PcxImagingParameters extends ImagingParameters<PcxImagingParameters
     /**
      * Sets the compression type.
      *
-     * @param compression the compression type.
+     * @param compression The compression type.
      * @return this instance.
      */
     public PcxImagingParameters setCompression(final int compression) {
@@ -87,7 +87,7 @@ public class PcxImagingParameters extends ImagingParameters<PcxImagingParameters
     /**
      * Sets the number of planes.
      *
-     * @param planes the number of planes.
+     * @param planes The number of planes.
      * @return this instance.
      */
     public PcxImagingParameters setPlanes(final int planes) {

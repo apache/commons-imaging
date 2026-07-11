@@ -31,8 +31,8 @@ public class GammaCorrection {
     /**
      * Constructs a gamma correction with the specified source and destination gamma values.
      *
-     * @param srcGamma the source gamma value.
-     * @param dstGamma the destination gamma value.
+     * @param srcGamma The source gamma value.
+     * @param dstGamma The destination gamma value.
      */
     public GammaCorrection(final double srcGamma, final double dstGamma) {
 
@@ -53,7 +53,7 @@ public class GammaCorrection {
     /**
      * Corrects an ARGB pixel value for gamma.
      *
-     * @param pixel the ARGB pixel value.
+     * @param pixel The ARGB pixel value.
      * @return The gamma-corrected pixel value.
      */
     public int correctArgb(final int pixel) {
@@ -72,7 +72,7 @@ public class GammaCorrection {
     /**
      * Corrects a sample value using the lookup table.
      *
-     * @param sample the sample value.
+     * @param sample The sample value.
      * @return The corrected sample value.
      */
     public int correctSample(final int sample) {

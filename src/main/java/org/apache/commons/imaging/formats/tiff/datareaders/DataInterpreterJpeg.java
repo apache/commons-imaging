@@ -46,13 +46,13 @@ final class DataInterpreterJpeg {
      * bounds-checking in the transfer loops.
      * </p>
      *
-     * @param directory      the source directory containing JPEG tables
-     * @param workingBuilder the output image-builder to receive pixels.
+     * @param directory      The source directory containing JPEG tables
+     * @param workingBuilder The output image-builder to receive pixels.
      * @param xBlock         column offset of the block within the workingBuilder
      * @param yBlock         row offset of the block within the workingBuilder
-     * @param blockWidth     the width of the block (may be smaller than the full width of the JPEG image obtained from the source data)
-     * @param blockHeight    the height of the block (may be smaller than the full height of the JPEG image obtained from the source data)
-     * @param compressed     the raw bytes from the TIFF source file
+     * @param blockWidth     The width of the block (may be smaller than the full width of the JPEG image obtained from the source data)
+     * @param blockHeight    The height of the block (may be smaller than the full height of the JPEG image obtained from the source data)
+     * @param compressed     The raw bytes from the TIFF source file
      * @throws ImagingException in the event of an unsupported feature or JPEG-specific encoding error
      * @throws IOException      in the event of an unrecoverable I/O error
      */

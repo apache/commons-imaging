@@ -33,9 +33,9 @@ public class IptcBlock {
     /**
      * Constructs a new IPTC block.
      *
-     * @param blockType the block type.
-     * @param blockNameBytes the block name bytes.
-     * @param blockData the block data.
+     * @param blockType The block type.
+     * @param blockNameBytes The block name bytes.
+     * @param blockData The block data.
      */
     public IptcBlock(final int blockType, final byte[] blockNameBytes, final byte[] blockData) {
         this.blockData = Objects.requireNonNull(blockData, "blockData");

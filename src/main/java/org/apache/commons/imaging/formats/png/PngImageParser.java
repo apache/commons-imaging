@@ -81,7 +81,7 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
     /**
      * Gets the chunk type name from chunk type integer.
      *
-     * @param chunkType the chunk type.
+     * @param chunkType The chunk type.
      * @return The chunk type name as a string.
      */
     public static String getChunkTypeName(final int chunkType) {
@@ -656,8 +656,8 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
     /**
      * Checks if the PNG image has the specified chunk type.
      *
-     * @param byteSource the byte source.
-     * @param chunkType the chunk type to check.
+     * @param byteSource The byte source.
+     * @param chunkType The chunk type to check.
      * @return true if chunk type exists, false otherwise.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
@@ -742,7 +742,7 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
     /**
      * Reads reads the signature.
      *
-     * @param in an input stream.
+     * @param in An input stream.
      * @throws ImagingException In the event that the specified content does not conform to the format of the specific parser implementation.
      * @throws IOException      In the event of unsuccessful data read operation.
      */

@@ -85,7 +85,7 @@ public class TiffImageWriterLossless extends AbstractTiffImageWriter {
     /**
      * Constructs a new instance.
      *
-     * @param exifBytes the EXIF bytes.
+     * @param exifBytes The EXIF bytes.
      */
     public TiffImageWriterLossless(final byte[] exifBytes) {
         this.exifBytes = exifBytes;
@@ -94,8 +94,8 @@ public class TiffImageWriterLossless extends AbstractTiffImageWriter {
     /**
      * Constructs a new instance.
      *
-     * @param byteOrder the byte order.
-     * @param exifBytes the EXIF bytes.
+     * @param byteOrder The byte order.
+     * @param exifBytes The EXIF bytes.
      */
     public TiffImageWriterLossless(final ByteOrder byteOrder, final byte[] exifBytes) {
         super(byteOrder);

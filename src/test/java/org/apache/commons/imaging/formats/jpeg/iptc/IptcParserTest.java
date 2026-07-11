@@ -55,7 +55,7 @@ class IptcParserTest {
      * cannot be represented in charset ISO-8859-1.
      * </p>
      *
-     * @param value     the value to test
+     * @param value     The value to test
      * @param forceUtf8 if UTF-8 encoding should be forced
      *
      */

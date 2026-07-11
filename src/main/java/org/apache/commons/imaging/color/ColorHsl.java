@@ -95,9 +95,9 @@ public final class ColorHsl {
     /**
      * Constructs a new ColorHsl.
      *
-     * @param h the hue component (0-360).
-     * @param s the saturation component (0-100).
-     * @param l the lightness component (0-100).
+     * @param h The hue component (0-360).
+     * @param s The saturation component (0-100).
+     * @param l The lightness component (0-100).
      */
     public ColorHsl(final double h, final double s, final double l) {
         this.h = h;

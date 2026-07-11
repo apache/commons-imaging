@@ -100,7 +100,7 @@ public class IptcParser extends BinaryFileParser {
     /**
      * Checks if the segment data contains Photoshop JPEG segment data.
      *
-     * @param segmentData the segment data to check.
+     * @param segmentData The segment data to check.
      * @return true if this is a Photoshop JPEG segment, false otherwise.
      */
     public boolean isPhotoshopJpegSegment(final byte[] segmentData) {
@@ -115,7 +115,7 @@ public class IptcParser extends BinaryFileParser {
     /**
      * Parses all IPTC blocks from the byte array.
      *
-     * @param bytes the byte array containing IPTC data.
+     * @param bytes The byte array containing IPTC data.
      * @param strict whether to use strict parsing mode.
      * @return A list of IPTC blocks.
      * @throws ImagingException if an imaging error occurs.
@@ -218,7 +218,7 @@ public class IptcParser extends BinaryFileParser {
     /**
      * Parses IPTC records from a block of bytes.
      *
-     * @param bytes the byte array containing IPTC data.
+     * @param bytes The byte array containing IPTC data.
      * @return A list of IPTC records.
      */
     protected List<IptcRecord> parseIptcBlock(final byte[] bytes) {
@@ -347,7 +347,7 @@ public class IptcParser extends BinaryFileParser {
     /**
      * Parses Photoshop APP13 segment data to extract IPTC metadata.
      *
-     * @param bytes the segment data bytes.
+     * @param bytes The segment data bytes.
      * @param strict whether to use strict parsing mode.
      * @return The parsed Photoshop APP13 data.
      * @throws ImagingException if an imaging error occurs.
@@ -399,8 +399,8 @@ public class IptcParser extends BinaryFileParser {
      *
      * Some IPTC blocks are missing this first "record version" record, so we don't require it.
      *
-     * @param bytes the segment data bytes.
-     * @param params the imaging parameters.
+     * @param bytes The segment data bytes.
+     * @param params The imaging parameters.
      * @return The parsed Photoshop APP13 data.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
@@ -415,7 +415,7 @@ public class IptcParser extends BinaryFileParser {
     /**
      * Writes IPTC records to a byte array block.
      *
-     * @param elements the list of IPTC records to write.
+     * @param elements The list of IPTC records to write.
      * @return The byte array containing the IPTC block.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
@@ -427,7 +427,7 @@ public class IptcParser extends BinaryFileParser {
     /**
      * Writes IPTC records to a byte array block with optional UTF-8 encoding.
      *
-     * @param elements the list of IPTC records to write.
+     * @param elements The list of IPTC records to write.
      * @param forceUtf8Encoding whether to force UTF-8 encoding.
      * @return The byte array containing the IPTC block.
      * @throws ImagingException if an imaging error occurs.
@@ -507,7 +507,7 @@ public class IptcParser extends BinaryFileParser {
     /**
      * Writes Photoshop APP13 segment data.
      *
-     * @param data the Photoshop APP13 data to write.
+     * @param data The Photoshop APP13 data to write.
      * @return The byte array containing the APP13 segment.
      * @throws IOException if an I/O error occurs.
      * @throws ImagingException if an imaging error occurs.

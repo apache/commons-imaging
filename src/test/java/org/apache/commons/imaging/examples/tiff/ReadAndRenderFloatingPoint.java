@@ -46,7 +46,7 @@ public class ReadAndRenderFloatingPoint {
     /**
      * Reads the content of a TIFF file containing floating-point data and renders it using a gray-scale palette.
      *
-     * @param args the command line arguments giving the path to an input TIFF file and an output JPEG.
+     * @param args The command line arguments giving the path to an input TIFF file and an output JPEG.
      * @throws org.apache.commons.imaging.ImagingException in the event of an internal data format or version compatibility error reading the image.
      * @throws IOException                                 in the event of an I/O error.
      */

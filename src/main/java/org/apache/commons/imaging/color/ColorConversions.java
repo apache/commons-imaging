@@ -40,9 +40,9 @@ public final class ColorConversions {
     /**
      * Converts CIE L*a*b* color to ARGB (test version).
      *
-     * @param cieL the L* value.
-     * @param cieA the a* value.
-     * @param cieB the b* value.
+     * @param cieL The L* value.
+     * @param cieA The a* value.
+     * @param cieB The b* value.
      * @return The ARGB color value.
      */
     public static int convertCieLabToArgbTest(final int cieL, final int cieA, final int cieB) {
@@ -92,7 +92,7 @@ public final class ColorConversions {
     /**
      * Converts CIE L*a*b* to CIE LCH.
      *
-     * @param cielab the CIE L*a*b* color.
+     * @param cielab The CIE L*a*b* color.
      * @return The CIE LCH color.
      */
     public static ColorCieLch convertCieLabToCieLch(final ColorCieLab cielab) {
@@ -102,9 +102,9 @@ public final class ColorConversions {
     /**
      * Converts CIE L*a*b* to CIE LCH.
      *
-     * @param l the L* value.
-     * @param a the a* value.
-     * @param b the b* value.
+     * @param l The L* value.
+     * @param a The a* value.
+     * @param b The b* value.
      * @return The CIE LCH color.
      */
     public static ColorCieLch convertCieLabToCieLch(final double l, final double a, final double b) {
@@ -124,7 +124,7 @@ public final class ColorConversions {
     /**
      * Converts CIE L*a*b* to DIN99b Lab.
      *
-     * @param cie the CIE L*a*b* color.
+     * @param cie The CIE L*a*b* color.
      * @return The DIN99b Lab color.
      */
     public static ColorDin99Lab convertCieLabToDin99bLab(final ColorCieLab cie) {
@@ -134,9 +134,9 @@ public final class ColorConversions {
     /**
      * Converts CIE L*a*b* to DIN99b Lab.
      *
-     * @param l the L* value.
-     * @param a the a* value.
-     * @param b the b* value.
+     * @param l The L* value.
+     * @param a The a* value.
+     * @param b The b* value.
      * @return The DIN99b Lab color.
      */
     public static ColorDin99Lab convertCieLabToDin99bLab(final double l, final double a, final double b) {
@@ -208,7 +208,7 @@ public final class ColorConversions {
     /**
      * Converts CIE L*a*b* to CIE XYZ.
      *
-     * @param cielab the CIE L*a*b* color.
+     * @param cielab The CIE L*a*b* color.
      * @return The CIE XYZ color.
      */
     public static ColorXyz convertCieLabToXyz(final ColorCieLab cielab) {
@@ -218,9 +218,9 @@ public final class ColorConversions {
     /**
      * Converts CIE L*a*b* to CIE XYZ.
      *
-     * @param l the L* value.
-     * @param a the a* value.
-     * @param b the b* value.
+     * @param l The L* value.
+     * @param a The a* value.
+     * @param b The b* value.
      * @return The CIE XYZ color.
      */
     public static ColorXyz convertCieLabToXyz(final double l, final double a, final double b) {
@@ -243,7 +243,7 @@ public final class ColorConversions {
     /**
      * Converts CIE LCH to CIE L*a*b*.
      *
-     * @param cielch the CIE LCH color.
+     * @param cielch The CIE LCH color.
      * @return The CIE L*a*b* color.
      */
     public static ColorCieLab convertCieLchToCieLab(final ColorCieLch cielch) {
@@ -253,9 +253,9 @@ public final class ColorConversions {
     /**
      * Converts CIE LCH to CIE L*a*b*.
      *
-     * @param l the L* value.
-     * @param c the C* value.
-     * @param h the h° value.
+     * @param l The L* value.
+     * @param c The C* value.
+     * @param h The h° value.
      * @return The CIE L*a*b* color.
      */
     public static ColorCieLab convertCieLchToCieLab(final double l, final double c, final double h) {
@@ -271,7 +271,7 @@ public final class ColorConversions {
     /**
      * Converts CIE Luv to CIE XYZ.
      *
-     * @param cielch the CIE Luv color.
+     * @param cielch The CIE Luv color.
      * @return The CIE XYZ color.
      */
     public static ColorXyz convertCieLuvToXyz(final ColorCieLuv cielch) {
@@ -281,9 +281,9 @@ public final class ColorConversions {
     /**
      * Converts CIE Luv to CIE XYZ.
      *
-     * @param l the L* value.
-     * @param u the u* value.
-     * @param v the v* value.
+     * @param l The L* value.
+     * @param u The u* value.
+     * @param v The v* value.
      * @return The CIE XYZ color.
      */
     public static ColorXyz convertCieLuvToXyz(final double l, final double u, final double v) {
@@ -306,7 +306,7 @@ public final class ColorConversions {
     /**
      * Converts CMYK to CMY.
      *
-     * @param cmyk the CMYK color.
+     * @param cmyk The CMYK color.
      * @return The CMY color.
      */
     public static ColorCmy convertCmykToCmy(final ColorCmyk cmyk) {
@@ -316,10 +316,10 @@ public final class ColorConversions {
     /**
      * Converts CMYK to CMY.
      *
-     * @param c the cyan value.
-     * @param m the magenta value.
-     * @param y the yellow value.
-     * @param k the black value.
+     * @param c The cyan value.
+     * @param m The magenta value.
+     * @param y The yellow value.
+     * @param k The black value.
      * @return The CMY color.
      */
     public static ColorCmy convertCmykToCmy(double c, double m, double y, final double k) {
@@ -335,10 +335,10 @@ public final class ColorConversions {
     /**
      * Converts CMYK to RGB.
      *
-     * @param c the cyan value.
-     * @param m the magenta value.
-     * @param y the yellow value.
-     * @param k the black value.
+     * @param c The cyan value.
+     * @param m The magenta value.
+     * @param y The yellow value.
+     * @param k The black value.
      * @return The RGB color as int.
      */
     public static int convertCmykToRgb(final int c, final int m, final int y, final int k) {
@@ -353,10 +353,10 @@ public final class ColorConversions {
     /**
      * Converts CMYK to RGB using Adobe formula.
      *
-     * @param sc the cyan value.
-     * @param sm the magenta value.
-     * @param sy the yellow value.
-     * @param sk the black value.
+     * @param sc The cyan value.
+     * @param sm The magenta value.
+     * @param sy The yellow value.
+     * @param sk The black value.
      * @return The RGB color as int.
      */
     public static int convertCmykToRgbAdobe(final int sc, final int sm, final int sy, final int sk) {
@@ -370,7 +370,7 @@ public final class ColorConversions {
     /**
      * Converts CMY to CMYK.
      *
-     * @param cmy the CMY color.
+     * @param cmy The CMY color.
      * @return The CMYK color.
      */
     public static ColorCmyk convertCmyToCmyk(final ColorCmy cmy) {
@@ -406,7 +406,7 @@ public final class ColorConversions {
     /**
      * Converts CMY to RGB.
      *
-     * @param cmy the CMY color.
+     * @param cmy The CMY color.
      * @return The RGB color as int.
      */
     public static int convertCmyToRgb(final ColorCmy cmy) {
@@ -429,7 +429,7 @@ public final class ColorConversions {
     /**
      * Converts DIN99b Lab to CIE L*a*b*.
      *
-     * @param dinb the DIN99b Lab color.
+     * @param dinb The DIN99b Lab color.
      * @return The CIE L*a*b* color.
      */
     public static ColorCieLab convertDin99bLabToCieLab(final ColorDin99Lab dinb) {
@@ -439,9 +439,9 @@ public final class ColorConversions {
     /**
      * Converts DIN99b Lab to CIE L*a*b*.
      *
-     * @param L99b the L99 value.
-     * @param a99b the a99 value.
-     * @param b99b the b99 value.
+     * @param L99b The L99 value.
+     * @param a99b The a99 value.
+     * @param b99b The b99 value.
      * @return The CIE L*a*b* color.
      */
     public static ColorCieLab convertDin99bLabToCieLab(final double L99b, final double a99b, final double b99b) {
@@ -510,7 +510,7 @@ public final class ColorConversions {
     /**
      * Converts HSL to RGB.
      *
-     * @param hsl the HSL color.
+     * @param hsl The HSL color.
      * @return The RGB color as int.
      */
     public static int convertHslToRgb(final ColorHsl hsl) {
@@ -520,9 +520,9 @@ public final class ColorConversions {
     /**
      * Converts HSL to RGB.
      *
-     * @param h the hue value.
-     * @param s the saturation value.
-     * @param l the lightness value.
+     * @param h The hue value.
+     * @param s The saturation value.
+     * @param l The lightness value.
      * @return The RGB color as int.
      */
     public static int convertHslToRgb(final double h, final double s, final double l) {
@@ -556,7 +556,7 @@ public final class ColorConversions {
     /**
      * Converts HSV to RGB.
      *
-     * @param HSV the HSV color.
+     * @param HSV The HSV color.
      * @return The RGB color as int.
      */
     public static int convertHsvToRgb(final ColorHsv HSV) {
@@ -566,9 +566,9 @@ public final class ColorConversions {
     /**
      * Converts HSV to RGB.
      *
-     * @param h the hue value.
-     * @param s the saturation value.
-     * @param v the value (brightness) value.
+     * @param h The hue value.
+     * @param s The saturation value.
+     * @param v The value (brightness) value.
      * @return The RGB color as int.
      */
     public static int convertHsvToRgb(final double h, final double s, final double v) {
@@ -650,7 +650,7 @@ public final class ColorConversions {
     /**
      * Converts Hunter Lab to CIE XYZ.
      *
-     * @param cielab the Hunter Lab color.
+     * @param cielab The Hunter Lab color.
      * @return The CIE XYZ color.
      */
     public static ColorXyz convertHunterLabToXyz(final ColorHunterLab cielab) {
@@ -660,9 +660,9 @@ public final class ColorConversions {
     /**
      * Converts Hunter Lab to CIE XYZ.
      *
-     * @param l the L value.
-     * @param a the a value.
-     * @param b the b value.
+     * @param l The L value.
+     * @param a The a value.
+     * @param b The b value.
      * @return The CIE XYZ color.
      */
     public static ColorXyz convertHunterLabToXyz(final double l, final double a, final double b) {
@@ -680,7 +680,7 @@ public final class ColorConversions {
     /**
      * Converts RGB to CMY.
      *
-     * @param rgb the RGB color as int.
+     * @param rgb The RGB color as int.
      * @return The CMY color.
      */
     public static ColorCmy convertRgbToCmy(final int rgb) {
@@ -701,7 +701,7 @@ public final class ColorConversions {
     /**
      * Converts RGB to HSL.
      *
-     * @param rgb the RGB color as int.
+     * @param rgb The RGB color as int.
      * @return The HSL color.
      */
     public static ColorHsl convertRgbToHsl(final int rgb) {
@@ -783,7 +783,7 @@ public final class ColorConversions {
     /**
      * Converts RGB to HSV.
      *
-     * @param rgb the RGB color as int.
+     * @param rgb The RGB color as int.
      * @return The HSV color.
      */
     public static ColorHsv convertRgbToHsv(final int rgb) {
@@ -873,7 +873,7 @@ public final class ColorConversions {
     /**
      * Converts RGB to CIE XYZ.
      *
-     * @param rgb the RGB color as int.
+     * @param rgb The RGB color as int.
      * @return The CIE XYZ color.
      */
     public static ColorXyz convertRgbToXyz(final int rgb) {
@@ -911,9 +911,9 @@ public final class ColorConversions {
     /**
      * Converts XYZ to CIE Luv.
      *
-     * @param x the X value.
-     * @param y the Y value.
-     * @param z the Z value.
+     * @param x The X value.
+     * @param y The Y value.
+     * @param z The Z value.
      * @return The CIE Luv color.
      */
     public static ColorCieLuv convertXuzToCieLuv(final double x, final double y, final double z) {
@@ -948,7 +948,7 @@ public final class ColorConversions {
     /**
      * Converts CIE XYZ to CIE L*a*b*.
      *
-     * @param xyz the CIE XYZ color.
+     * @param xyz The CIE XYZ color.
      * @return The CIE L*a*b* color.
      */
     public static ColorCieLab convertXyzToCieLab(final ColorXyz xyz) {
@@ -958,9 +958,9 @@ public final class ColorConversions {
     /**
      * Converts CIE XYZ to CIE L*a*b*.
      *
-     * @param x the X value.
-     * @param y the Y value.
-     * @param z the Z value.
+     * @param x The X value.
+     * @param y The Y value.
+     * @param z The Z value.
      * @return The CIE L*a*b* color.
      */
     public static ColorCieLab convertXyzToCieLab(final double x, final double y, final double z) {
@@ -984,7 +984,7 @@ public final class ColorConversions {
     /**
      * Converts CIE XYZ to CIE Luv.
      *
-     * @param xyz the CIE XYZ color.
+     * @param xyz The CIE XYZ color.
      * @return The CIE Luv color.
      */
     public static ColorCieLuv convertXyzToCieLuv(final ColorXyz xyz) {
@@ -994,7 +994,7 @@ public final class ColorConversions {
     /**
      * Converts CIE XYZ to Hunter Lab.
      *
-     * @param xyz the CIE XYZ color.
+     * @param xyz The CIE XYZ color.
      * @return The Hunter Lab color.
      */
     public static ColorHunterLab convertXyzToHunterLab(final ColorXyz xyz) {
@@ -1004,9 +1004,9 @@ public final class ColorConversions {
     /**
      * Converts CIE XYZ to Hunter Lab.
      *
-     * @param x the X value.
-     * @param y the Y value.
-     * @param z the Z value.
+     * @param x The X value.
+     * @param y The Y value.
+     * @param z The Z value.
      * @return The Hunter Lab color.
      */
     public static ColorHunterLab convertXyzToHunterLab(final double x, final double y, final double z) {
@@ -1020,7 +1020,7 @@ public final class ColorConversions {
     /**
      * Converts CIE XYZ to RGB.
      *
-     * @param xyz the CIE XYZ color.
+     * @param xyz The CIE XYZ color.
      * @return The RGB color as int.
      */
     public static int convertXyzToRgb(final ColorXyz xyz) {
@@ -1030,9 +1030,9 @@ public final class ColorConversions {
     /**
      * Converts CIE XYZ to RGB.
      *
-     * @param x the X value.
-     * @param y the Y value.
-     * @param z the Z value.
+     * @param x The X value.
+     * @param y The Y value.
+     * @param z The Z value.
      * @return The RGB color as int.
      */
     public static int convertXyzToRgb(final double x, final double y, final double z) {
@@ -1064,7 +1064,7 @@ public final class ColorConversions {
     /**
      * Converts degrees to radians.
      *
-     * @param degree the angle in degrees.
+     * @param degree The angle in degrees.
      * @return The angle in radians.
      */
     public static double degree2radian(final double degree) {
@@ -1092,7 +1092,7 @@ public final class ColorConversions {
     /**
      * Converts radians to degrees.
      *
-     * @param radian the angle in radians.
+     * @param radian The angle in radians.
      * @return The angle in degrees.
      */
     public static double radian2degree(final double radian) {

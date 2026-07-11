@@ -43,7 +43,7 @@ public interface PaletteEntry {
      * Gets the color assignment associated with the input value. If the input value is not within the covered range of this instance, the return value is
      * undefined (though a null return is often used).
      *
-     * @param f a valid floating point value, or a NaN.
+     * @param f A valid floating point value, or a NaN.
      * @return A valid color instance or, potentially, a null if the floating point input is not within the covered range.
      */
     Color getColor(float f);
@@ -66,7 +66,7 @@ public interface PaletteEntry {
      * Indicates whether the indicated floating-point value is within the range covered by this palette entry and can be assigned a valid color by the
      * implementation.
      *
-     * @param f a valid floating point value, or a NaN.
+     * @param f A valid floating point value, or a NaN.
      * @return true if the entry can assign a color to the entry; otherwise, false.
      */
     boolean isCovered(float f);

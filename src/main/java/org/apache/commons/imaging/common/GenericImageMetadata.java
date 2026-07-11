@@ -35,8 +35,8 @@ public class GenericImageMetadata implements ImageMetadata {
         /**
          * Constructs a new generic image metadata item.
          *
-         * @param keyword the metadata keyword.
-         * @param text the metadata text value.
+         * @param keyword The metadata keyword.
+         * @param text The metadata text value.
          */
         public GenericImageMetadataItem(final String keyword, final String text) {
             this.keyword = keyword;
@@ -90,7 +90,7 @@ public class GenericImageMetadata implements ImageMetadata {
     /**
      * Adds a metadata item.
      *
-     * @param item the metadata item to add.
+     * @param item The metadata item to add.
      */
     public void add(final ImageMetadataItem item) {
         items.add(item);
@@ -99,8 +99,8 @@ public class GenericImageMetadata implements ImageMetadata {
     /**
      * Adds a metadata item with the specified keyword and text.
      *
-     * @param keyword the metadata keyword.
-     * @param text the metadata text value.
+     * @param keyword The metadata keyword.
+     * @param text The metadata text value.
      */
     public void add(final String keyword, final String text) {
         add(new GenericImageMetadataItem(keyword, text));

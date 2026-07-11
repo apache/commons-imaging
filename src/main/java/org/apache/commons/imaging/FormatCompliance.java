@@ -48,7 +48,7 @@ public class FormatCompliance {
     /**
      * Constructs a new FormatCompliance with the specified description.
      *
-     * @param description the description of the format compliance.
+     * @param description The description of the format compliance.
      */
     public FormatCompliance(final String description) {
         this.description = description;
@@ -58,7 +58,7 @@ public class FormatCompliance {
     /**
      * Constructs a new FormatCompliance with the specified description and fail-on-error flag.
      *
-     * @param description the description of the format compliance.
+     * @param description The description of the format compliance.
      * @param failOnError true to throw exceptions on errors, false to only collect comments.
      */
     public FormatCompliance(final String description, final boolean failOnError) {
@@ -69,7 +69,7 @@ public class FormatCompliance {
     /**
      * Adds a comment about a compliance issue.
      *
-     * @param comment the comment to add.
+     * @param comment The comment to add.
      * @throws ImagingException if failOnError is true.
      */
     public void addComment(final String comment) throws ImagingException {
@@ -82,8 +82,8 @@ public class FormatCompliance {
     /**
      * Adds a comment about a compliance issue with a value.
      *
-     * @param comment the comment to add.
-     * @param value the value associated with the comment.
+     * @param comment The comment to add.
+     * @param value The value associated with the comment.
      * @throws ImagingException if failOnError is true.
      */
     public void addComment(final String comment, final int value) throws ImagingException {
@@ -93,10 +93,10 @@ public class FormatCompliance {
     /**
      * Checks if a value is within specified bounds.
      *
-     * @param name the name of the value being checked.
-     * @param min the minimum allowed value.
-     * @param max the maximum allowed value.
-     * @param actual the actual value to check.
+     * @param name The name of the value being checked.
+     * @param min The minimum allowed value.
+     * @param max The maximum allowed value.
+     * @param actual The actual value to check.
      * @return true if the value is within bounds, false otherwise.
      * @throws ImagingException if failOnError is true and the check fails.
      */
@@ -112,9 +112,9 @@ public class FormatCompliance {
     /**
      * Compares an actual value against a valid value.
      *
-     * @param name the name of the value being compared.
-     * @param valid the valid value.
-     * @param actual the actual value to compare.
+     * @param name The name of the value being compared.
+     * @param valid The valid value.
+     * @param actual The actual value to compare.
      * @return true if the actual value matches the valid value, false otherwise.
      * @throws ImagingException if failOnError is true and the comparison fails.
      */
@@ -125,9 +125,9 @@ public class FormatCompliance {
     /**
      * Compares an actual value against an array of valid values.
      *
-     * @param name the name of the value being compared.
-     * @param valid the array of valid values.
-     * @param actual the actual value to compare.
+     * @param name The name of the value being compared.
+     * @param valid The array of valid values.
+     * @param actual The actual value to compare.
      * @return true if the actual value matches any valid value, false otherwise.
      * @throws ImagingException if failOnError is true and the comparison fails.
      */
@@ -161,9 +161,9 @@ public class FormatCompliance {
     /**
      * Compares two byte arrays for equality.
      *
-     * @param name the name of the byte arrays being compared.
-     * @param expected the expected byte array.
-     * @param actual the actual byte array to compare.
+     * @param name The name of the byte arrays being compared.
+     * @param expected The expected byte array.
+     * @param actual The actual byte array to compare.
      * @return true if the arrays are equal, false otherwise.
      * @throws ImagingException if failOnError is true and the comparison fails.
      */
@@ -204,7 +204,7 @@ public class FormatCompliance {
     /**
      * Dumps the format compliance information to the specified PrintWriter.
      *
-     * @param pw the PrintWriter to write to.
+     * @param pw The PrintWriter to write to.
      */
     public void dump(final PrintWriter pw) {
         pw.println("Format Compliance: " + description);

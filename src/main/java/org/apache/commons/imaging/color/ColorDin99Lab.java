@@ -38,9 +38,9 @@ public final class ColorDin99Lab {
     /**
      * Constructs a new ColorDin99Lab.
      *
-     * @param l99 the lightness component.
-     * @param a99 the a color component.
-     * @param b99 the b color component.
+     * @param l99 The lightness component.
+     * @param a99 The a color component.
+     * @param b99 The b color component.
      */
     public ColorDin99Lab(final double l99, final double a99, final double b99) {
         this.l99 = l99;

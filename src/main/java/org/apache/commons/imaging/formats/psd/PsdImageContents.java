@@ -47,11 +47,11 @@ public class PsdImageContents {
     /**
      * Constructs PSD image contents.
      *
-     * @param header the header information.
-     * @param colorModeDataLength the color mode data length.
-     * @param imageResourcesLength the image resources length.
-     * @param layerAndMaskDataLength the layer and mask data length.
-     * @param compression the compression type.
+     * @param header The header information.
+     * @param colorModeDataLength The color mode data length.
+     * @param imageResourcesLength The image resources length.
+     * @param layerAndMaskDataLength The layer and mask data length.
+     * @param compression The compression type.
      */
     public PsdImageContents(final PsdHeaderInfo header,
 
@@ -81,7 +81,7 @@ public class PsdImageContents {
     /**
      * Dumps contents to print writer.
      *
-     * @param pw the print writer.
+     * @param pw The print writer.
      */
     public void dump(final PrintWriter pw) {
         pw.println("");

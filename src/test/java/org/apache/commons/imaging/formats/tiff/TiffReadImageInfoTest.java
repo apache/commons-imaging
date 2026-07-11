@@ -48,8 +48,8 @@ class TiffReadImageInfoTest extends AbstractTiffTest {
      * Gets the value for the target data field within the ImageInfo string. This method expects data fields to be given in the form: parameter name, colon,
      * value, end-of-line
      *
-     * @param info   a valid instance obtained from TiffImageParser
-     * @param target the target data field string
+     * @param info   A valid instance obtained from TiffImageParser
+     * @param target The target data field string
      * @return The value
      */
     private String getValue(final ImageInfo info, final String target) {

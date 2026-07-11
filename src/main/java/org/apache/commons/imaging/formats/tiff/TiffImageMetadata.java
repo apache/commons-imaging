@@ -69,8 +69,8 @@ public class TiffImageMetadata extends GenericImageMetadata {
         /**
          * Constructs a new instance.
          *
-         * @param byteOrder the byte order.
-         * @param directory the TIFF directory.
+         * @param byteOrder The byte order.
+         * @param directory The TIFF directory.
          */
         public Directory(final ByteOrder byteOrder, final TiffDirectory directory) {
             this.type = directory.type;
@@ -81,7 +81,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
         /**
          * Adds a TIFF field as a metadata item.
          *
-         * @param entry the TIFF field to add.
+         * @param entry The TIFF field to add.
          */
         public void add(final TiffField entry) {
             add(new TiffMetadataItem(entry));
@@ -90,7 +90,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
         /**
          * Finds a field by tag.
          *
-         * @param tagInfo the tag information.
+         * @param tagInfo The tag information.
          * @return The field, or null if not found.
          * @throws ImagingException if an error occurs.
          */
@@ -119,7 +119,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
         /**
          * Gets the output directory for writing.
          *
-         * @param byteOrder the byte order to use.
+         * @param byteOrder The byte order to use.
          * @return The output directory.
          * @throws ImagingException if an error occurs.
          */
@@ -252,14 +252,14 @@ public class TiffImageMetadata extends GenericImageMetadata {
         /**
          * Constructs a new instance.
          *
-         * @param latitudeRef the latitude reference.
-         * @param longitudeRef the longitude reference.
-         * @param latitudeDegrees the latitude degrees.
-         * @param latitudeMinutes the latitude minutes.
-         * @param latitudeSeconds the latitude seconds.
-         * @param longitudeDegrees the longitude degrees.
-         * @param longitudeMinutes the longitude minutes.
-         * @param longitudeSeconds the longitude seconds.
+         * @param latitudeRef The latitude reference.
+         * @param longitudeRef The longitude reference.
+         * @param latitudeDegrees The latitude degrees.
+         * @param latitudeMinutes The latitude minutes.
+         * @param latitudeSeconds The latitude seconds.
+         * @param longitudeDegrees The longitude degrees.
+         * @param longitudeMinutes The longitude minutes.
+         * @param longitudeSeconds The longitude seconds.
          */
         public GpsInfo(final String latitudeRef, final String longitudeRef, final RationalNumber latitudeDegrees, final RationalNumber latitudeMinutes,
                 final RationalNumber latitudeSeconds, final RationalNumber longitudeDegrees, final RationalNumber longitudeMinutes,
@@ -333,7 +333,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
         /**
          * Constructs a new instance.
          *
-         * @param entry the TIFF field.
+         * @param entry The TIFF field.
          */
         public TiffMetadataItem(final TiffField entry) {
             // super(entry.getTagName() + " (" + entry.getFieldTypeName() + ")",
@@ -360,7 +360,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
     /**
      * Constructs a new instance.
      *
-     * @param contents the TIFF contents.
+     * @param contents The TIFF contents.
      */
     public TiffImageMetadata(final TiffContents contents) {
         this.contents = contents;
@@ -369,7 +369,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
     /**
      * Finds a directory by type.
      *
-     * @param directoryType the directory type.
+     * @param directoryType The directory type.
      * @return The directory, or null if not found.
      */
     public TiffDirectory findDirectory(final int directoryType) {
@@ -386,7 +386,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
     /**
      * Finds a field by tag.
      *
-     * @param tagInfo the tag information.
+     * @param tagInfo The tag information.
      * @return The field, or null if not found.
      * @throws ImagingException if an error occurs.
      */
@@ -397,7 +397,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
     /**
      * Finds a field by tag with directory matching option.
      *
-     * @param tagInfo the tag information.
+     * @param tagInfo The tag information.
      * @param exactDirectoryMatch whether to require exact directory match.
      * @return The field, or null if not found.
      * @throws ImagingException if an error occurs.
@@ -470,7 +470,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
     /**
      * Gets the value of a field.
      *
-     * @param tag the tag.
+     * @param tag The tag.
      * @return The field value, or null if not found.
      * @throws ImagingException if an error occurs.
      */
@@ -485,7 +485,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
     /**
      * Gets the value of an ASCII field.
      *
-     * @param tag the tag.
+     * @param tag The tag.
      * @return The field value, or null if not found.
      * @throws ImagingException if an error occurs.
      */
@@ -504,7 +504,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
     /**
      * Gets the value of a byte field.
      *
-     * @param tag the tag.
+     * @param tag The tag.
      * @return The field value, or null if not found.
      * @throws ImagingException if an error occurs.
      */
@@ -522,7 +522,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
     /**
      * Gets the value of a doubles field.
      *
-     * @param tag the tag.
+     * @param tag The tag.
      * @return The field value, or null if not found.
      * @throws ImagingException if an error occurs.
      */
@@ -541,7 +541,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
     /**
      * Gets the value of a floats field.
      *
-     * @param tag the tag.
+     * @param tag The tag.
      * @return The field value, or null if not found.
      * @throws ImagingException if an error occurs.
      */
@@ -560,7 +560,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
     /**
      * Gets the value of a GPS text field.
      *
-     * @param tag the tag.
+     * @param tag The tag.
      * @return The field value, or null if not found.
      * @throws ImagingException if an error occurs.
      */
@@ -575,7 +575,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
     /**
      * Gets the value of a longs field.
      *
-     * @param tag the tag.
+     * @param tag The tag.
      * @return The field value, or null if not found.
      * @throws ImagingException if an error occurs.
      */
@@ -594,7 +594,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
     /**
      * Gets the value of a rationals field.
      *
-     * @param tag the tag.
+     * @param tag The tag.
      * @return The field value, or null if not found.
      * @throws ImagingException if an error occurs.
      */
@@ -613,7 +613,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
     /**
      * Gets the value of a signed bytes field.
      *
-     * @param tag the tag.
+     * @param tag The tag.
      * @return The field value, or null if not found.
      * @throws ImagingException if an error occurs.
      */
@@ -631,7 +631,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
     /**
      * Gets the value of a shorts field.
      *
-     * @param tag the tag.
+     * @param tag The tag.
      * @return The field value, or null if not found.
      * @throws ImagingException if an error occurs.
      */
@@ -650,7 +650,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
     /**
      * Gets the value of a signed longs field.
      *
-     * @param tag the tag.
+     * @param tag The tag.
      * @return The field value, or null if not found.
      * @throws ImagingException if an error occurs.
      */
@@ -669,7 +669,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
     /**
      * Gets the value of a signed rationals field.
      *
-     * @param tag the tag.
+     * @param tag The tag.
      * @return The field value, or null if not found.
      * @throws ImagingException if an error occurs.
      */
@@ -688,7 +688,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
     /**
      * Gets the value of a signed shorts field.
      *
-     * @param tag the tag.
+     * @param tag The tag.
      * @return The field value, or null if not found.
      * @throws ImagingException if an error occurs.
      */
@@ -707,7 +707,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
     /**
      * Gets the value of an XP string field.
      *
-     * @param tag the tag.
+     * @param tag The tag.
      * @return The field value, or null if not found.
      * @throws ImagingException if an error occurs.
      */

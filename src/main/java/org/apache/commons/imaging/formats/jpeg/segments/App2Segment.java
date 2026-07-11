@@ -42,8 +42,8 @@ public final class App2Segment extends AppnSegment implements Comparable<App2Seg
     /**
      * Constructs an APP2 segment from segment data.
      *
-     * @param marker the segment marker.
-     * @param segmentData the segment data.
+     * @param marker The segment marker.
+     * @param segmentData The segment data.
      * @throws ImagingException if the image format is invalid.
      * @throws IOException if an I/O error occurs.
      */
@@ -54,9 +54,9 @@ public final class App2Segment extends AppnSegment implements Comparable<App2Seg
     /**
      * Constructs an APP2 segment by reading from an input stream.
      *
-     * @param marker the segment marker.
-     * @param markerLength the marker length.
-     * @param is2 the input stream to read from.
+     * @param marker The segment marker.
+     * @param markerLength The marker length.
+     * @param is2 The input stream to read from.
      * @throws ImagingException if the image format is invalid.
      * @throws IOException if an I/O error occurs.
      */

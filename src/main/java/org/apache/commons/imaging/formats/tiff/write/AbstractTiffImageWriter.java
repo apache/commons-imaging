@@ -57,7 +57,7 @@ public abstract class AbstractTiffImageWriter {
     /**
      * Calculates the padding length needed for image data alignment.
      *
-     * @param dataLength the length of the data.
+     * @param dataLength The length of the data.
      * @return The padding length.
      */
     protected static int imageDataPaddingLength(final int dataLength) {
@@ -77,7 +77,7 @@ public abstract class AbstractTiffImageWriter {
     /**
      * Constructs a new TIFF image writer with the specified byte order.
      *
-     * @param byteOrder the byte order to use.
+     * @param byteOrder The byte order to use.
      */
     public AbstractTiffImageWriter(final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
@@ -97,7 +97,7 @@ public abstract class AbstractTiffImageWriter {
     /**
      * Check an image to see if any of its pixels are non-opaque.
      *
-     * @param src a valid image.
+     * @param src A valid image.
      * @return true if at least one non-opaque pixel is found.
      */
     private boolean checkForActualAlpha(final BufferedImage src) {
@@ -219,7 +219,7 @@ public abstract class AbstractTiffImageWriter {
     /**
      * Validates the TIFF output set directories and returns a summary.
      *
-     * @param outputSet the output set to validate.
+     * @param outputSet The output set to validate.
      * @return A summary of the output set.
      * @throws ImagingException if the directories are invalid.
      */
@@ -383,8 +383,8 @@ public abstract class AbstractTiffImageWriter {
     /**
      * Writes a TIFF output set to an output stream.
      *
-     * @param os the output stream.
-     * @param outputSet the TIFF output set to write.
+     * @param os The output stream.
+     * @param outputSet The TIFF output set to write.
      * @throws IOException if an I/O error occurs.
      * @throws ImagingException if the image format is invalid.
      */
@@ -393,9 +393,9 @@ public abstract class AbstractTiffImageWriter {
     /**
      * Writes a BufferedImage to an output stream in TIFF format.
      *
-     * @param src the source image.
-     * @param os the output stream.
-     * @param params the imaging parameters.
+     * @param src The source image.
+     * @param os The output stream.
+     * @param params The imaging parameters.
      * @throws ImagingException if the image format is invalid.
      * @throws IOException if an I/O error occurs.
      */
@@ -633,7 +633,7 @@ public abstract class AbstractTiffImageWriter {
     /**
      * Writes the TIFF image file header with the default header size.
      *
-     * @param bos the binary output stream.
+     * @param bos The binary output stream.
      * @throws IOException if an I/O error occurs.
      */
     protected void writeImageFileHeader(final AbstractBinaryOutputStream bos) throws IOException {
@@ -643,8 +643,8 @@ public abstract class AbstractTiffImageWriter {
     /**
      * Writes the TIFF image file header with the specified offset to the first IFD.
      *
-     * @param bos the binary output stream.
-     * @param offsetToFirstIFD the offset to the first Image File Directory.
+     * @param bos The binary output stream.
+     * @param offsetToFirstIFD The offset to the first Image File Directory.
      * @throws IOException if an I/O error occurs.
      */
     protected void writeImageFileHeader(final AbstractBinaryOutputStream bos, final long offsetToFirstIFD) throws IOException {

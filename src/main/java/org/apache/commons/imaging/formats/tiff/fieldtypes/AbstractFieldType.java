@@ -164,7 +164,7 @@ public abstract class AbstractFieldType {
     /**
      * Gets a known field type.
      *
-     * @param type the type to find.
+     * @param type The type to find.
      * @return The matching field type.
      * @throws ImagingException thrown when not found.
      */
@@ -186,9 +186,9 @@ public abstract class AbstractFieldType {
     /**
      * Constructs a new instance.
      *
-     * @param type the type.
-     * @param name the name.
-     * @param elementSize the element size.
+     * @param type The type.
+     * @param name The name.
+     * @param elementSize The element size.
      */
     protected AbstractFieldType(final int type, final String name, final int elementSize) {
         this.type = type;
@@ -226,7 +226,7 @@ public abstract class AbstractFieldType {
     /**
      * Gets the value from a TIFF field.
      *
-     * @param entry the TIFF field.
+     * @param entry The TIFF field.
      * @return The value.
      */
     public abstract Object getValue(TiffField entry);

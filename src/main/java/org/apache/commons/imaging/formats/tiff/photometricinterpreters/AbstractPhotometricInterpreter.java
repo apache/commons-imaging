@@ -47,11 +47,11 @@ public abstract class AbstractPhotometricInterpreter {
     /**
      * Constructs a new photometric interpreter.
      *
-     * @param samplesPerPixel the number of samples per pixel.
-     * @param bitsPerSample the bits per sample array.
-     * @param predictor the predictor value.
-     * @param width the image width.
-     * @param height the image height.
+     * @param samplesPerPixel The number of samples per pixel.
+     * @param bitsPerSample The bits per sample array.
+     * @param predictor The predictor value.
+     * @param width The image width.
+     * @param height The image height.
      */
     public AbstractPhotometricInterpreter(final int samplesPerPixel, final int[] bitsPerSample, final int predictor, final int width, final int height) {
         this.samplesPerPixel = samplesPerPixel;
@@ -64,7 +64,7 @@ public abstract class AbstractPhotometricInterpreter {
     /**
      * Gets the bits per sample at the specified offset.
      *
-     * @param offset the sample offset.
+     * @param offset The sample offset.
      * @return The bits per sample.
      */
     protected int getBitsPerSample(final int offset) {
@@ -74,10 +74,10 @@ public abstract class AbstractPhotometricInterpreter {
     /**
      * Interprets a pixel and adds it to the image builder.
      *
-     * @param imageBuilder the image builder.
-     * @param samples the pixel sample values.
-     * @param x the x coordinate.
-     * @param y the y coordinate.
+     * @param imageBuilder The image builder.
+     * @param samples The pixel sample values.
+     * @param x The x coordinate.
+     * @param y The y coordinate.
      * @throws ImagingException if the image format is invalid.
      * @throws IOException if an I/O error occurs.
      */

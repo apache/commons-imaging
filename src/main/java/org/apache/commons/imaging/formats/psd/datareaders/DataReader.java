@@ -32,10 +32,10 @@ public interface DataReader {
     /**
      * Reads image data from an input stream into a BufferedImage.
      *
-     * @param is the input stream.
-     * @param bi the BufferedImage to populate.
-     * @param imageContents the PSD image contents.
-     * @param bfp the binary file parser.
+     * @param is The input stream.
+     * @param bi The BufferedImage to populate.
+     * @param imageContents The PSD image contents.
+     * @param bfp The binary file parser.
      * @throws ImagingException if the image format is invalid.
      * @throws IOException if an I/O error occurs.
      */

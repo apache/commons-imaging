@@ -60,21 +60,21 @@ public final class DataReaderTiled extends AbstractImageDataReader {
     /**
      * Constructs a new data reader for tile-based TIFF images.
      *
-     * @param directory the TIFF directory.
-     * @param photometricInterpreter the photometric interpreter.
-     * @param tileWidth the tile width.
-     * @param tileLength the tile length.
-     * @param bitsPerPixel the bits per pixel.
-     * @param bitsPerSample the bits per sample array.
-     * @param predictor the predictor value.
-     * @param samplesPerPixel the samples per pixel.
-     * @param sampleFormat the sample format.
-     * @param width the image width.
-     * @param height the image height.
-     * @param compression the compression type.
-     * @param planarConfiguration the planar configuration.
-     * @param byteOrder the byte order.
-     * @param imageData the tile image data.
+     * @param directory The TIFF directory.
+     * @param photometricInterpreter The photometric interpreter.
+     * @param tileWidth The tile width.
+     * @param tileLength The tile length.
+     * @param bitsPerPixel The bits per pixel.
+     * @param bitsPerSample The bits per sample array.
+     * @param predictor The predictor value.
+     * @param samplesPerPixel The samples per pixel.
+     * @param sampleFormat The sample format.
+     * @param width The image width.
+     * @param height The image height.
+     * @param compression The compression type.
+     * @param planarConfiguration The planar configuration.
+     * @param byteOrder The byte order.
+     * @param imageData The tile image data.
      */
     public DataReaderTiled(final TiffDirectory directory, final AbstractPhotometricInterpreter photometricInterpreter, final int tileWidth,
             final int tileLength, final int bitsPerPixel, final int[] bitsPerSample, final int predictor, final int samplesPerPixel, final int sampleFormat,

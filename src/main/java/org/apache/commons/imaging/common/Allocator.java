@@ -122,7 +122,7 @@ public final class Allocator {
      * The default limit is {@code #DEFAULT}, override with the system property "org.apache.commons.imaging.common.mylzw.AllocationChecker".
      * </p>
      *
-     * @param request an allocation request.
+     * @param request An allocation request.
      * @return The request.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      */
@@ -139,7 +139,7 @@ public final class Allocator {
      * The default limit is {@code #DEFAULT}, override with the system property "org.apache.commons.imaging.common.mylzw.AllocationChecker".
      * </p>
      *
-     * @param request     an allocation request count.
+     * @param request     An allocation request count.
      * @param elementSize The element size.
      * @return The request.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
@@ -163,7 +163,7 @@ public final class Allocator {
      * The default limit is {@code #DEFAULT}, override with the system property "org.apache.commons.imaging.common.mylzw.AllocationChecker".
      * </p>
      *
-     * @param request     an allocation request count is cast down to an int.
+     * @param request     An allocation request count is cast down to an int.
      * @param elementSize The element size.
      * @return The request.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.

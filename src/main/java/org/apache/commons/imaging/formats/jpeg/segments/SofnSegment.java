@@ -57,10 +57,10 @@ public final class SofnSegment extends AbstractSegment {
         /**
          * Constructs a component.
          *
-         * @param componentIdentifier the component identifier.
-         * @param horizontalSamplingFactor the horizontal sampling factor.
-         * @param veritcalSamplingFactor the vertical sampling factor.
-         * @param quantTabDestSelector the quantization table destination selector.
+         * @param componentIdentifier The component identifier.
+         * @param horizontalSamplingFactor The horizontal sampling factor.
+         * @param veritcalSamplingFactor The vertical sampling factor.
+         * @param quantTabDestSelector The quantization table destination selector.
          */
         public Component(final int componentIdentifier, final int horizontalSamplingFactor, final int veritcalSamplingFactor, final int quantTabDestSelector) {
             this.componentIdentifier = componentIdentifier;
@@ -89,8 +89,8 @@ public final class SofnSegment extends AbstractSegment {
     /**
      * Constructs a SOFn segment.
      *
-     * @param marker the marker.
-     * @param segmentData the segment data.
+     * @param marker The marker.
+     * @param segmentData The segment data.
      * @throws IOException if an I/O error occurs.
      * @throws ImagingException if an imaging error occurs.
      */
@@ -101,9 +101,9 @@ public final class SofnSegment extends AbstractSegment {
     /**
      * Constructs a SOFn segment.
      *
-     * @param marker the marker.
-     * @param markerLength the marker length.
-     * @param is the input stream.
+     * @param marker The marker.
+     * @param markerLength The marker length.
+     * @param is The input stream.
      * @throws IOException if an I/O error occurs.
      * @throws ImagingException if an imaging error occurs.
      */
@@ -145,7 +145,7 @@ public final class SofnSegment extends AbstractSegment {
     /**
      * Returns the component at the specified index.
      *
-     * @param index the array index
+     * @param index The array index
      * @return The component
      */
     public Component getComponents(final int index) {

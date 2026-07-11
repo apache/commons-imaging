@@ -29,7 +29,7 @@ public class DataParserIndexed extends AbstractDataParser {
     /**
      * Constructs a new indexed color data parser.
      *
-     * @param colorModeData the color mode data containing the color table.
+     * @param colorModeData The color mode data containing the color table.
      */
     public DataParserIndexed(final byte[] colorModeData) {
         colorTable = new int[256];

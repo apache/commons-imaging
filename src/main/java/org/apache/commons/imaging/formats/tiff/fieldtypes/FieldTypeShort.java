@@ -31,8 +31,8 @@ public class FieldTypeShort extends AbstractFieldType {
     /**
      * Constructs a new short field type.
      *
-     * @param type the type number.
-     * @param name the type name.
+     * @param type The type number.
+     * @param name The type name.
      */
     public FieldTypeShort(final int type, final String name) {
         super(type, name, 2);

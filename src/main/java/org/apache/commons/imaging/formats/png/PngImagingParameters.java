@@ -127,7 +127,7 @@ public class PngImagingParameters extends XmpImagingParameters<PngImagingParamet
     /**
      * Sets the bit depth.
      *
-     * @param bitDepth the bit depth.
+     * @param bitDepth The bit depth.
      * @return this instance.
      */
     public PngImagingParameters setBitDepth(final byte bitDepth) {
@@ -160,7 +160,7 @@ public class PngImagingParameters extends XmpImagingParameters<PngImagingParamet
     /**
      * Sets the physical scale.
      *
-     * @param physicalScale the physical scale.
+     * @param physicalScale The physical scale.
      * @return this instance.
      */
     public PngImagingParameters setPhysicalScale(final PhysicalScale physicalScale) {
@@ -184,7 +184,7 @@ public class PngImagingParameters extends XmpImagingParameters<PngImagingParamet
     /**
      * Sets the text chunks.
      *
-     * @param textChunks the text chunks.
+     * @param textChunks The text chunks.
      * @return this instance.
      */
     public PngImagingParameters setTextChunks(final List<? extends AbstractPngText> textChunks) {

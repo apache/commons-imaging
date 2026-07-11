@@ -42,9 +42,9 @@ public class MyLzwCompressor {
         /**
          * Constructs a byte array wrapper.
          *
-         * @param bytes the bytes.
-         * @param start the start index.
-         * @param length the length.
+         * @param bytes The bytes.
+         * @param start The start index.
+         * @param length The length.
          */
         ByteArray(final byte[] bytes, final int start, final int length) {
             this.bytes = bytes;
@@ -97,29 +97,29 @@ public class MyLzwCompressor {
         /**
          * Called for clear code.
          *
-         * @param code the code.
+         * @param code The code.
          */
         void clearCode(int code);
 
         /**
          * Called for data code.
          *
-         * @param code the code.
+         * @param code The code.
          */
         void dataCode(int code);
 
         /**
          * Called for end of information code.
          *
-         * @param code the code.
+         * @param code The code.
          */
         void eoiCode(int code);
 
         /**
          * Initializes the listener.
          *
-         * @param clearCode the clear code.
-         * @param eoiCode the end of information code.
+         * @param clearCode The clear code.
+         * @param eoiCode The end of information code.
          */
         void init(int clearCode, int eoiCode);
     }
@@ -140,8 +140,8 @@ public class MyLzwCompressor {
     /**
      * Constructs a new instance.
      *
-     * @param initialCodeSize the initial code size.
-     * @param byteOrder the byte order.
+     * @param initialCodeSize The initial code size.
+     * @param byteOrder The byte order.
      * @param earlyLimit whether to use early limit.
      */
     public MyLzwCompressor(final int initialCodeSize, final ByteOrder byteOrder, final boolean earlyLimit) {
@@ -151,10 +151,10 @@ public class MyLzwCompressor {
     /**
      * Constructs a new instance.
      *
-     * @param initialCodeSize the initial code size.
-     * @param byteOrder the byte order.
+     * @param initialCodeSize The initial code size.
+     * @param byteOrder The byte order.
      * @param earlyLimit whether to use early limit.
-     * @param listener the listener.
+     * @param listener The listener.
      */
     public MyLzwCompressor(final int initialCodeSize, final ByteOrder byteOrder, final boolean earlyLimit, final Listener listener) {
         this.listener = listener;
@@ -229,7 +229,7 @@ public class MyLzwCompressor {
     /**
      * Compresses data using LZW compression.
      *
-     * @param bytes the bytes to compress.
+     * @param bytes The bytes to compress.
      * @return The compressed bytes.
      * @throws IOException if an I/O error occurs.
      */

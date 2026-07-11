@@ -47,9 +47,9 @@ public class TiffContents {
     /**
      * Constructs a new instance.
      *
-     * @param tiffHeader the TIFF header.
-     * @param directories the list of directories.
-     * @param tiffFields the list of fields.
+     * @param tiffHeader The TIFF header.
+     * @param directories The list of directories.
+     * @param tiffFields The list of fields.
      */
     public TiffContents(final TiffHeader tiffHeader, final List<TiffDirectory> directories, final List<TiffField> tiffFields) {
         this.header = tiffHeader;
@@ -92,7 +92,7 @@ public class TiffContents {
     /**
      * Finds a field by tag.
      *
-     * @param tag the tag to search for.
+     * @param tag The tag to search for.
      * @return The field, or null if not found.
      * @throws ImagingException if an error occurs during search.
      */

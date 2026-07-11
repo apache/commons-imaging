@@ -27,8 +27,8 @@ public interface BufferedImageFactory {
     /**
      * Creates a color BufferedImage with the specified dimensions.
      *
-     * @param width the image width.
-     * @param height the image height.
+     * @param width The image width.
+     * @param height The image height.
      * @param hasAlpha whether the image has an alpha channel.
      * @return A new BufferedImage.
      */
@@ -37,8 +37,8 @@ public interface BufferedImageFactory {
     /**
      * Creates a grayscale BufferedImage with the specified dimensions.
      *
-     * @param width the image width.
-     * @param height the image height.
+     * @param width The image width.
+     * @param height The image height.
      * @param hasAlpha whether the image has an alpha channel.
      * @return A new BufferedImage.
      */

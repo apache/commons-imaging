@@ -49,10 +49,10 @@ class TiffAlphaRoundTripTest {
     /**
      * Checks to see if a pixel component (A, R, G, or B) for two specified values are within a specified tolerance.
      *
-     * @param a          the first value
-     * @param b          the second value
-     * @param iShift     a multiple of 8 telling how far to shift values to extract components (24, 16, 8, or zero for ARGB)
-     * @param iTolerance a small positive integer
+     * @param a          The first value
+     * @param b          The second value
+     * @param iShift     A multiple of 8 telling how far to shift values to extract components (24, 16, 8, or zero for ARGB)
+     * @param iTolerance A small positive integer
      * @return true if the components of the values match
      */
     boolean componentMatch(final int a, final int b, final int iShift, final int iTolerance) {

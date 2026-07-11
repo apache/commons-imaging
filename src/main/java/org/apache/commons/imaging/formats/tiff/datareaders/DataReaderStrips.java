@@ -55,20 +55,20 @@ public final class DataReaderStrips extends AbstractImageDataReader {
     /**
      * Constructs a new data reader for strip-based TIFF images.
      *
-     * @param directory the TIFF directory.
-     * @param photometricInterpreter the photometric interpreter.
-     * @param bitsPerPixel the bits per pixel.
-     * @param bitsPerSample the bits per sample array.
-     * @param predictor the predictor value.
-     * @param samplesPerPixel the samples per pixel.
-     * @param sampleFormat the sample format.
-     * @param width the image width.
-     * @param height the image height.
-     * @param compression the compression type.
-     * @param planarConfiguration the planar configuration.
-     * @param byteOrder the byte order.
-     * @param rowsPerStrip the rows per strip.
-     * @param imageData the strip image data.
+     * @param directory The TIFF directory.
+     * @param photometricInterpreter The photometric interpreter.
+     * @param bitsPerPixel The bits per pixel.
+     * @param bitsPerSample The bits per sample array.
+     * @param predictor The predictor value.
+     * @param samplesPerPixel The samples per pixel.
+     * @param sampleFormat The sample format.
+     * @param width The image width.
+     * @param height The image height.
+     * @param compression The compression type.
+     * @param planarConfiguration The planar configuration.
+     * @param byteOrder The byte order.
+     * @param rowsPerStrip The rows per strip.
+     * @param imageData The strip image data.
      */
     public DataReaderStrips(final TiffDirectory directory, final AbstractPhotometricInterpreter photometricInterpreter, final int bitsPerPixel,
             final int[] bitsPerSample, final int predictor, final int samplesPerPixel, final int sampleFormat, final int width, final int height,

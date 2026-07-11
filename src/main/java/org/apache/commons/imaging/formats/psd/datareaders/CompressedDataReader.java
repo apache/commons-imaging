@@ -43,7 +43,7 @@ public class CompressedDataReader implements DataReader {
     /**
      * Constructs a new compressed data reader.
      *
-     * @param dataParser the data parser to use.
+     * @param dataParser The data parser to use.
      */
     public CompressedDataReader(final AbstractDataParser dataParser) {
         this.dataParser = dataParser;

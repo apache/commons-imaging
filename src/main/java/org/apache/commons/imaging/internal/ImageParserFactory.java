@@ -39,7 +39,7 @@ public final class ImageParserFactory {
      * Gets an image parser for the given byte source.
      *
      * @param <T> The imaging parameters type.
-     * @param byteSource the byte source.
+     * @param byteSource The byte source.
      * @return The image parser.
      * @throws IOException if an I/O error occurs.
      */
@@ -60,7 +60,7 @@ public final class ImageParserFactory {
      * Gets an image parser for the given image format.
      *
      * @param <T> The imaging parameters type.
-     * @param format the image format.
+     * @param format The image format.
      * @return The image parser.
      */
     public static <T extends ImagingParameters<T>> AbstractImageParser<T> getImageParser(final ImageFormat format) {
@@ -79,7 +79,7 @@ public final class ImageParserFactory {
      * Gets an image parser for the given file extension.
      *
      * @param <T> The imaging parameters type.
-     * @param fileExtension the file extension.
+     * @param fileExtension The file extension.
      * @return The image parser.
      */
     public static <T extends ImagingParameters<T>> AbstractImageParser<T> getImageParser(final String fileExtension) {

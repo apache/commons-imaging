@@ -45,7 +45,7 @@ public class BinaryFileParser {
     /**
      * Constructs a new instance with the specified byte order.
      *
-     * @param byteOrder the byte order to use.
+     * @param byteOrder The byte order to use.
      */
     public BinaryFileParser(final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
@@ -54,10 +54,10 @@ public class BinaryFileParser {
     /**
      * Debugs a number by printing its representation to a PrintWriter.
      *
-     * @param pw the PrintWriter.
-     * @param msg the message prefix.
-     * @param data the data value.
-     * @param bytes the number of bytes.
+     * @param pw The PrintWriter.
+     * @param msg The message prefix.
+     * @param data The data value.
+     * @param bytes The number of bytes.
      */
     protected final void debugNumber(final PrintWriter pw, final String msg, final int data, final int bytes) {
         pw.print(msg + ": " + data + " (");
@@ -77,9 +77,9 @@ public class BinaryFileParser {
     /**
      * Debugs a number by logging its representation.
      *
-     * @param msg the message prefix.
-     * @param data the data value.
-     * @param bytes the number of bytes.
+     * @param msg The message prefix.
+     * @param data The data value.
+     * @param bytes The number of bytes.
      */
     protected final void debugNumber(final String msg, final int data, final int bytes) {
         try (StringWriter sw = new StringWriter();
@@ -105,7 +105,7 @@ public class BinaryFileParser {
     /**
      * Sets the byte order used by this parser.
      *
-     * @param byteOrder the byte order to set.
+     * @param byteOrder The byte order to set.
      */
     protected void setByteOrder(final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;

@@ -54,7 +54,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     /**
      * Constructs a new instance with the specified byte order.
      *
-     * @param byteOrder the byte order.
+     * @param byteOrder The byte order.
      */
     public TiffOutputSet(final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
@@ -63,7 +63,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     /**
      * Adds a directory to this output set.
      *
-     * @param directory the directory to add.
+     * @param directory The directory to add.
      * @throws ImagingException if a directory of that type already exists.
      */
     public void addDirectory(final TiffOutputDirectory directory) throws ImagingException {
@@ -133,7 +133,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     /**
      * Finds a directory of the specified type in this output set.
      *
-     * @param directoryType the type of the directory to find.
+     * @param directoryType The type of the directory to find.
      * @return The found directory, or null if no such directory exists.
      */
     public TiffOutputDirectory findDirectory(final int directoryType) {
@@ -148,7 +148,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     /**
      * Finds a field with the specified tag in this output set.
      *
-     * @param tag the tag of the field to find.
+     * @param tag The tag of the field to find.
      * @return The found field, or null if no such field exists.
      */
     public TiffOutputField findField(final int tag) {
@@ -164,7 +164,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     /**
      * Finds a field with the specified tag info in this output set.
      *
-     * @param tagInfo the tag info of the field to find.
+     * @param tagInfo The tag info of the field to find.
      * @return The found field, or null if no such field exists.
      */
     public TiffOutputField findField(final TagInfo tagInfo) {
@@ -258,7 +258,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     /**
      * Gets all output items from all directories in this output set.
      *
-     * @param outputSummary the output summary.
+     * @param outputSummary The output summary.
      * @return The list of all output items.
      * @throws ImagingException if an error occurs.
      */
@@ -298,7 +298,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     /**
      * Removes a field with the specified tag from all directories in this output set.
      *
-     * @param tag the tag of the field to remove.
+     * @param tag The tag of the field to remove.
      */
     public void removeField(final int tag) {
         for (final TiffOutputDirectory directory : directories) {
@@ -309,7 +309,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     /**
      * Removes a field with the specified tag info from all directories in this output set.
      *
-     * @param tagInfo the tag info of the field to remove.
+     * @param tagInfo The tag info of the field to remove.
      */
     public void removeField(final TagInfo tagInfo) {
         removeField(tagInfo.tag);
@@ -379,7 +379,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     /**
      * Gets a string representation with optional prefix.
      *
-     * @param prefix the prefix, or null.
+     * @param prefix The prefix, or null.
      * @return The string representation.
      */
     public String toString(String prefix) {

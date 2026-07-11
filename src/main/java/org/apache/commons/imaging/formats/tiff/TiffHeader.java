@@ -48,9 +48,9 @@ public class TiffHeader extends AbstractTiffElement {
     /**
      * Constructs a new instance.
      *
-     * @param byteOrder the byte order.
-     * @param tiffVersion the TIFF version.
-     * @param offsetToFirstIFD the offset to the first IFD.
+     * @param byteOrder The byte order.
+     * @param tiffVersion The TIFF version.
+     * @param offsetToFirstIFD The offset to the first IFD.
      * @param bigTiff whether this is a BigTIFF file.
      */
     public TiffHeader(final ByteOrder byteOrder, final int tiffVersion, final long offsetToFirstIFD, final boolean bigTiff) {

@@ -29,7 +29,7 @@ public interface MedianCut {
     /**
      * Performs the next median cut operation.
      *
-     * @param colorGroups the list of color groups.
+     * @param colorGroups The list of color groups.
      * @param ignoreAlpha whether to ignore alpha channel.
      * @return true if the cut was performed, false otherwise.
      * @throws ImagingException if an imaging error occurs.

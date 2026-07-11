@@ -33,7 +33,7 @@ public interface ImageMetadata {
         /**
          * Gets a string representation with a prefix.
          *
-         * @param prefix the prefix to use.
+         * @param prefix The prefix to use.
          * @return The string representation.
          */
         String toString(String prefix);
@@ -49,7 +49,7 @@ public interface ImageMetadata {
     /**
      * Gets a string representation with a prefix.
      *
-     * @param prefix the prefix to use.
+     * @param prefix The prefix to use.
      * @return The string representation.
      */
     String toString(String prefix);

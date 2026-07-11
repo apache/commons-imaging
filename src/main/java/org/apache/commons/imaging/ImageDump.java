@@ -42,7 +42,7 @@ public class ImageDump {
     /**
      * Dumps image information.
      *
-     * @param src the source image.
+     * @param src The source image.
      * @throws IOException if an I/O error occurs.
      */
     public void dump(final BufferedImage src) throws IOException {
@@ -52,8 +52,8 @@ public class ImageDump {
     /**
      * Dumps image information with a prefix.
      *
-     * @param prefix the prefix for output.
-     * @param src the source image.
+     * @param prefix The prefix for output.
+     * @param src The source image.
      * @throws IOException if an I/O error occurs.
      */
     public void dump(final String prefix, final BufferedImage src) throws IOException {
@@ -65,8 +65,8 @@ public class ImageDump {
     /**
      * Dumps BufferedImage properties.
      *
-     * @param prefix the prefix for output.
-     * @param src the source image.
+     * @param prefix The prefix for output.
+     * @param src The source image.
      */
     public void dumpBiProps(final String prefix, final BufferedImage src) {
         final String[] keys = src.getPropertyNames();
@@ -82,8 +82,8 @@ public class ImageDump {
     /**
      * Dumps color space information.
      *
-     * @param prefix the prefix for output.
-     * @param cs the color space.
+     * @param prefix The prefix for output.
+     * @param cs The color space.
      * @throws IOException if an I/O error occurs.
      */
     public void dumpColorSpace(final String prefix, final ColorSpace cs) throws IOException {

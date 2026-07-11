@@ -33,8 +33,8 @@ public class IptcRecord {
     /**
      * Constructs a new IPTC record.
      *
-     * @param iptcType the IPTC type.
-     * @param value the value.
+     * @param iptcType The IPTC type.
+     * @param value The value.
      */
     public IptcRecord(final IptcType iptcType, final String value) {
         this.iptcType = iptcType;

@@ -76,22 +76,22 @@ public class IccProfileInfo {
     /**
      * Constructs a new ICC profile information object.
      *
-     * @param data the raw profile data.
-     * @param profileSize the profile size in bytes.
-     * @param cmmTypeSignature the CMM type signature.
-     * @param profileVersion the profile version.
-     * @param profileDeviceClassSignature the profile/device class signature.
-     * @param colorSpace the color space signature.
-     * @param profileConnectionSpace the profile connection space signature.
-     * @param profileFileSignature the profile file signature.
-     * @param primaryPlatformSignature the primary platform signature.
+     * @param data The raw profile data.
+     * @param profileSize The profile size in bytes.
+     * @param cmmTypeSignature The CMM type signature.
+     * @param profileVersion The profile version.
+     * @param profileDeviceClassSignature The profile/device class signature.
+     * @param colorSpace The color space signature.
+     * @param profileConnectionSpace The profile connection space signature.
+     * @param profileFileSignature The profile file signature.
+     * @param primaryPlatformSignature The primary platform signature.
      * @param variousFlags various profile flags.
-     * @param deviceManufacturer the device manufacturer signature.
-     * @param deviceModel the device model signature.
-     * @param renderingIntent the rendering intent.
-     * @param profileCreatorSignature the profile creator signature.
-     * @param profileId the profile ID.
-     * @param tags the ICC tags.
+     * @param deviceManufacturer The device manufacturer signature.
+     * @param deviceModel The device model signature.
+     * @param renderingIntent The rendering intent.
+     * @param profileCreatorSignature The profile creator signature.
+     * @param profileId The profile ID.
+     * @param tags The ICC tags.
      */
     public IccProfileInfo(final byte[] data, final int profileSize, final int cmmTypeSignature, final int profileVersion, final int profileDeviceClassSignature,
             final int colorSpace, final int profileConnectionSpace, final int profileFileSignature, final int primaryPlatformSignature, final int variousFlags,
@@ -120,7 +120,7 @@ public class IccProfileInfo {
     /**
      * Dumps the profile information to the logger.
      *
-     * @param prefix the prefix to use for output lines.
+     * @param prefix The prefix to use for output lines.
      */
     public void dump(final String prefix) {
         LOGGER.fine(toString());
@@ -178,7 +178,7 @@ public class IccProfileInfo {
     /**
      * Gets a string representation of this ICC profile information with a prefix.
      *
-     * @param prefix the prefix to use for output lines.
+     * @param prefix The prefix to use for output lines.
      * @return A string representation of the profile information.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.

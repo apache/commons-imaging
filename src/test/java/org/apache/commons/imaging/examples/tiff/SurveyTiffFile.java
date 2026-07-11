@@ -52,7 +52,7 @@ public class SurveyTiffFile {
      * Formats a header allowing space for the maximum length of the file paths in the list. If the comma-separated-value option is set, spaces will be
      * suppressed and commas introduced as separators.
      *
-     * @param maxPathLen the maximum length of a file path (used if csv option is not set)
+     * @param maxPathLen The maximum length of a file path (used if csv option is not set)
      * @param csv        true if formatting is configured for comma-separated-value files.
      * @return A valid string.
      */
@@ -232,7 +232,7 @@ public class SurveyTiffFile {
     /**
      * Prints the legend information to the output stream
      *
-     * @param ps a valid instance
+     * @param ps A valid instance
      */
     void printLegend(final PrintStream ps) {
         ps.println("Legend:");
@@ -256,7 +256,7 @@ public class SurveyTiffFile {
     /**
      * Reformats the header inserting commas and removing spaces
      *
-     * @param s a valid string
+     * @param s A valid string
      * @return A header suitable for a CSV file.
      */
     private String reformatHeaderForCsv(final String s) {
@@ -395,7 +395,7 @@ public class SurveyTiffFile {
     /**
      * Trims spaces from a range of characters intended for a CSV output
      *
-     * @param source the standard source file
+     * @param source The standard source file
      * @return The equivalent string with spaces removed.
      */
     private String trimForCsv(final StringBuilder source) {

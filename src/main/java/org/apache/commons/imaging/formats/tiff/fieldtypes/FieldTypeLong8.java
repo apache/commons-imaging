@@ -31,8 +31,8 @@ public class FieldTypeLong8 extends AbstractFieldType {
     /**
      * Constructs a new 64-bit long field type.
      *
-     * @param type the type number.
-     * @param name the type name.
+     * @param type The type number.
+     * @param name The type name.
      */
     public FieldTypeLong8(final int type, final String name) {
         super(type, name, 8);
@@ -41,7 +41,7 @@ public class FieldTypeLong8 extends AbstractFieldType {
     /**
      * Gets the value(s) for this field in the form of an array of long integers.
      *
-     * @param entry the TIFF field as obtained from the source file.
+     * @param entry The TIFF field as obtained from the source file.
      * @return A valid, potentially empty array of Java long integers.
      */
     @Override

@@ -45,7 +45,7 @@ public abstract class AbstractSegment extends BinaryFileParser {
     /**
      * Dumps the segment information to a print writer.
      *
-     * @param pw the print writer.
+     * @param pw The print writer.
      */
     public void dump(final PrintWriter pw) {
         // empty

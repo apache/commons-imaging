@@ -114,7 +114,7 @@ public class ImagingParameters<E extends ImagingParameters<E>> {
     /**
      * Sets the buffered image factory.
      *
-     * @param bufferedImageFactory the buffered image factory.
+     * @param bufferedImageFactory The buffered image factory.
      * @return this instance.
      */
     public E setBufferedImageFactory(final BufferedImageFactory bufferedImageFactory) {
@@ -125,7 +125,7 @@ public class ImagingParameters<E extends ImagingParameters<E>> {
     /**
      * Sets the file name.
      *
-     * @param fileName the file name.
+     * @param fileName The file name.
      * @return this instance.
      */
     public E setFileName(final String fileName) {
@@ -136,7 +136,7 @@ public class ImagingParameters<E extends ImagingParameters<E>> {
     /**
      * Sets the pixel density.
      *
-     * @param pixelDensity the pixel density.
+     * @param pixelDensity The pixel density.
      * @return this instance.
      */
     public E setPixelDensity(final PixelDensity pixelDensity) {

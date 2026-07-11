@@ -30,7 +30,7 @@ public abstract class AbstractBinaryOutputStream extends FilterOutputStream {
     /**
      * Creates a big-endian binary output stream.
      *
-     * @param outputStream the underlying output stream.
+     * @param outputStream The underlying output stream.
      * @return A big-endian binary output stream.
      */
     public static BigEndianBinaryOutputStream bigEndian(final OutputStream outputStream) {
@@ -40,8 +40,8 @@ public abstract class AbstractBinaryOutputStream extends FilterOutputStream {
     /**
      * Creates a binary output stream with the specified byte order.
      *
-     * @param outputStream the underlying output stream.
-     * @param byteOrder the byte order.
+     * @param outputStream The underlying output stream.
+     * @param byteOrder The byte order.
      * @return A binary output stream with the specified byte order.
      * @throws UnsupportedOperationException if the byte order is not supported.
      */
@@ -61,7 +61,7 @@ public abstract class AbstractBinaryOutputStream extends FilterOutputStream {
     /**
      * Creates a little-endian binary output stream.
      *
-     * @param outputStream the underlying output stream.
+     * @param outputStream The underlying output stream.
      * @return A little-endian binary output stream.
      */
     public static LittleEndianBinaryOutputStream littleEndian(final OutputStream outputStream) {
@@ -71,7 +71,7 @@ public abstract class AbstractBinaryOutputStream extends FilterOutputStream {
     /**
      * Constructs a new binary output stream.
      *
-     * @param outputStream the underlying output stream.
+     * @param outputStream The underlying output stream.
      */
     public AbstractBinaryOutputStream(final OutputStream outputStream) {
         super(outputStream);
@@ -80,7 +80,7 @@ public abstract class AbstractBinaryOutputStream extends FilterOutputStream {
     /**
      * Writes a 2-byte value.
      *
-     * @param value the value to write.
+     * @param value The value to write.
      * @throws IOException if an I/O error occurs.
      */
     public abstract void write2Bytes(int value) throws IOException;
@@ -88,7 +88,7 @@ public abstract class AbstractBinaryOutputStream extends FilterOutputStream {
     /**
      * Writes a 3-byte value.
      *
-     * @param value the value to write.
+     * @param value The value to write.
      * @throws IOException if an I/O error occurs.
      */
     public abstract void write3Bytes(int value) throws IOException;
@@ -96,7 +96,7 @@ public abstract class AbstractBinaryOutputStream extends FilterOutputStream {
     /**
      * Writes a 4-byte value.
      *
-     * @param value the value to write.
+     * @param value The value to write.
      * @throws IOException if an I/O error occurs.
      */
     public abstract void write4Bytes(int value) throws IOException;

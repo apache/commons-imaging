@@ -40,10 +40,10 @@ public final class BinaryFunctions {
     /**
      * Converts four characters to a 32-bit integer (quad).
      *
-     * @param c1 the first character.
-     * @param c2 the second character.
-     * @param c3 the third character.
-     * @param c4 the fourth character.
+     * @param c1 The first character.
+     * @param c2 The second character.
+     * @param c3 The third character.
+     * @param c4 The fourth character.
      * @return The 32-bit integer value.
      */
     public static int charsToQuad(final char c1, final char c2, final char c3, final char c4) {
@@ -53,11 +53,11 @@ public final class BinaryFunctions {
     /**
      * Compares byte arrays for equality within specified ranges.
      *
-     * @param a the first byte array.
-     * @param aStart the starting index in the first array.
-     * @param b the second byte array.
-     * @param bStart the starting index in the second array.
-     * @param length the number of bytes to compare.
+     * @param a The first byte array.
+     * @param aStart The starting index in the first array.
+     * @param b The second byte array.
+     * @param bStart The starting index in the second array.
+     * @param length The number of bytes to compare.
      * @return {@code true} if the ranges are equal, {@code false} otherwise.
      */
     public static boolean compareBytes(final byte[] a, final int aStart, final byte[] b, final int bStart, final int length) {
@@ -78,9 +78,9 @@ public final class BinaryFunctions {
     /**
      * Copies the specified range of the specified array into a new array.
      *
-     * @param original the array from which a range is to be copied.
-     * @param from     the initial index of the range to be copied, inclusive.
-     * @param count    the amount of bytes to copy.
+     * @param original The array from which a range is to be copied.
+     * @param from     The initial index of the range to be copied, inclusive.
+     * @param count    The amount of bytes to copy.
      * @return A new array containing the specified range from the original array, truncated or padded with zeros to obtain the required length.
      */
     public static byte[] copyOfRange(final byte[] original, final int from, final int count) {
@@ -90,8 +90,8 @@ public final class BinaryFunctions {
     /**
      * Copies the start of the specified array into a new array.
      *
-     * @param original the array from which a range is to be copied.
-     * @param count    the amount of bytes to copy.
+     * @param original The array from which a range is to be copied.
+     * @param count    The amount of bytes to copy.
      * @return A new array containing the specified range from the original array, truncated or padded with zeros to obtain the required length.
      */
     public static byte[] copyOfStart(final byte[] original, int count) {
@@ -104,10 +104,10 @@ public final class BinaryFunctions {
     /**
      * Reads bytes from a RandomAccessFile at a specified position.
      *
-     * @param raf the RandomAccessFile to read from.
-     * @param pos the position to start reading.
-     * @param length the number of bytes to read.
-     * @param exception the exception message if length is invalid.
+     * @param raf The RandomAccessFile to read from.
+     * @param pos The position to start reading.
+     * @param length The number of bytes to read.
+     * @param exception The exception message if length is invalid.
      * @return The bytes read.
      * @throws IOException if an I/O error occurs or length is invalid.
      */
@@ -123,8 +123,8 @@ public final class BinaryFunctions {
     /**
      * Finds the index of the first 0 in the array starting at the given index.
      *
-     * @param src  the array to search for the object, may be {@code null}.
-     * @param start  the index to start searching.
+     * @param src  The array to search for the object, may be {@code null}.
+     * @param start  The index to start searching.
      * @param message The ImagingException message if 0 is not found.
      * @return The index of the value within the array,
      * @throws ImagingException Thrown if 0 is not found.
@@ -140,7 +140,7 @@ public final class BinaryFunctions {
     /**
      * Finds the index of the first 0 in the array starting at the given index.
      *
-     * @param src  the array to search for the object, may be {@code null}.
+     * @param src  The array to search for the object, may be {@code null}.
      * @param message The ImagingException message if 0 is not found.
      * @return The index of the value within the array,
      * @throws ImagingException Thrown if 0 is not found.
@@ -152,8 +152,8 @@ public final class BinaryFunctions {
     /**
      * Logs the binary representation of a byte.
      *
-     * @param msg the message prefix.
-     * @param i the byte value.
+     * @param msg The message prefix.
+     * @param i The byte value.
      */
     public static void logByteBits(final String msg, final byte i) {
         LOGGER.finest(msg + ": '" + Integer.toBinaryString(0xff & i));
@@ -162,8 +162,8 @@ public final class BinaryFunctions {
     /**
      * Logs a quad as a character string.
      *
-     * @param msg the message prefix.
-     * @param i the quad value.
+     * @param msg The message prefix.
+     * @param i The quad value.
      */
     public static void logCharQuad(final String msg, final int i) {
         LOGGER.finest(msg + ": '" + (char) (0xff & i >> 24) + (char) (0xff & i >> 16) + (char) (0xff & i >> 8) + (char) (0xff & i >> 0) + "'");
@@ -173,9 +173,9 @@ public final class BinaryFunctions {
     /**
      * Prints a quad as a character string to a PrintWriter.
      *
-     * @param pw the PrintWriter.
-     * @param msg the message prefix.
-     * @param i the quad value.
+     * @param pw The PrintWriter.
+     * @param msg The message prefix.
+     * @param i The quad value.
      */
     public static void printCharQuad(final PrintWriter pw, final String msg, final int i) {
         pw.println(msg + ": '" + (char) (0xff & i >> 24) + (char) (0xff & i >> 16) + (char) (0xff & i >> 8) + (char) (0xff & i >> 0) + "'");
@@ -199,10 +199,10 @@ public final class BinaryFunctions {
     /**
      * Reads 2 bytes from an input stream in the specified byte order.
      *
-     * @param name the field name (for debugging).
-     * @param in the input stream.
-     * @param exception the exception message if read fails.
-     * @param byteOrder the byte order.
+     * @param name The field name (for debugging).
+     * @param in The input stream.
+     * @param exception The exception message if read fails.
+     * @param byteOrder The byte order.
      * @return The 16-bit value.
      * @throws IOException if an I/O error occurs.
      */
@@ -224,10 +224,10 @@ public final class BinaryFunctions {
     /**
      * Reads 3 bytes from an input stream in the specified byte order.
      *
-     * @param name the field name (for debugging).
-     * @param in the input stream.
-     * @param exception the exception message if read fails.
-     * @param byteOrder the byte order.
+     * @param name The field name (for debugging).
+     * @param in The input stream.
+     * @param exception The exception message if read fails.
+     * @param byteOrder The byte order.
      * @return The 24-bit value.
      * @throws IOException if an I/O error occurs.
      */
@@ -250,10 +250,10 @@ public final class BinaryFunctions {
     /**
      * Reads 4 bytes from an input stream in the specified byte order.
      *
-     * @param name the field name (for debugging).
-     * @param in the input stream.
-     * @param exception the exception message if read fails.
-     * @param byteOrder the byte order.
+     * @param name The field name (for debugging).
+     * @param in The input stream.
+     * @param exception The exception message if read fails.
+     * @param byteOrder The byte order.
      * @return The 32-bit value.
      * @throws IOException if an I/O error occurs.
      */
@@ -277,10 +277,10 @@ public final class BinaryFunctions {
     /**
      * Reads eight bytes from the specified input stream, adjust for byte order, and return a long integer.
      *
-     * @param name      a descriptive identifier used for diagnostic purposes
-     * @param in        a valid input stream
+     * @param name      A descriptive identifier used for diagnostic purposes
+     * @param in        A valid input stream
      * @param exception application-defined message to be used for constructing an exception if an error condition is triggered.
-     * @param byteOrder the order in which the InputStream marshals data
+     * @param byteOrder The order in which the InputStream marshals data
      * @return A long integer interpreted from next 8 bytes in the InputStream
      * @throws IOException in the event of a non-recoverable error, such as an attempt to read past the end of file.
      */
@@ -308,9 +308,9 @@ public final class BinaryFunctions {
     /**
      * Reads and verifies bytes match a BinaryConstant.
      *
-     * @param in the input stream.
-     * @param expected the expected binary constant.
-     * @param exception the exception message if bytes don't match.
+     * @param in The input stream.
+     * @param expected The expected binary constant.
+     * @param exception The exception message if bytes don't match.
      * @throws ImagingException if the bytes don't match or EOF is reached.
      * @throws IOException if an I/O error occurs.
      */
@@ -321,9 +321,9 @@ public final class BinaryFunctions {
     /**
      * Reads and verifies bytes match an expected byte array.
      *
-     * @param in the input stream.
-     * @param expected the expected byte array.
-     * @param exception the exception message if bytes don't match.
+     * @param in The input stream.
+     * @param expected The expected byte array.
+     * @param exception The exception message if bytes don't match.
      * @throws ImagingException if the bytes don't match or EOF is reached.
      * @throws IOException if an I/O error occurs.
      */
@@ -343,9 +343,9 @@ public final class BinaryFunctions {
     /**
      * Reads a single byte from an input stream.
      *
-     * @param name the field name (for debugging).
-     * @param in the input stream.
-     * @param exceptionMessage the exception message if read fails.
+     * @param name The field name (for debugging).
+     * @param in The input stream.
+     * @param exceptionMessage The exception message if read fails.
      * @return The byte read.
      * @throws IOException if an I/O error occurs.
      */
@@ -360,8 +360,8 @@ public final class BinaryFunctions {
     /**
      * Reads a specified number of bytes from an input stream.
      *
-     * @param in the input stream.
-     * @param count the number of bytes to read.
+     * @param in The input stream.
+     * @param count The number of bytes to read.
      * @return The bytes read.
      * @throws IOException if an I/O error occurs.
      */
@@ -372,9 +372,9 @@ public final class BinaryFunctions {
     /**
      * Reads a specified number of bytes from an input stream.
      *
-     * @param name the field name (for debugging).
-     * @param in the input stream.
-     * @param length the number of bytes to read.
+     * @param name The field name (for debugging).
+     * @param in The input stream.
+     * @param length The number of bytes to read.
      * @return The bytes read.
      * @throws IOException if an I/O error occurs.
      */
@@ -385,10 +385,10 @@ public final class BinaryFunctions {
     /**
      * Reads a specified number of bytes from an input stream with a custom exception message.
      *
-     * @param name the field name (for debugging).
-     * @param in the input stream.
-     * @param length the number of bytes to read.
-     * @param exception the exception message if read fails.
+     * @param name The field name (for debugging).
+     * @param in The input stream.
+     * @param length The number of bytes to read.
+     * @param exception The exception message if read fails.
      * @return The bytes read.
      * @throws IOException if an I/O error occurs.
      */
@@ -403,9 +403,9 @@ public final class BinaryFunctions {
     /**
      * Gets the remaining bytes from a byte array starting at a specified offset.
      *
-     * @param name the field name (for debugging).
-     * @param bytes the source byte array.
-     * @param count the starting offset.
+     * @param name The field name (for debugging).
+     * @param bytes The source byte array.
+     * @param count The starting offset.
      * @return The remaining bytes.
      */
     public static byte[] remainingBytes(final String name, final byte[] bytes, final int count) {
@@ -419,8 +419,8 @@ public final class BinaryFunctions {
      * <p>
      * Returns {@code true} if it found the quad, and {@code false} otherwise.
      *
-     * @param quad a quad (the needle).
-     * @param in  an input stream (the haystack).
+     * @param quad A quad (the needle).
+     * @param in  An input stream (the haystack).
      * @return {@code true} if it found the quad, and {@code false} otherwise.
      * @throws IOException if it fails to read from the given input stream.
      */
@@ -444,8 +444,8 @@ public final class BinaryFunctions {
     /**
      * Skips a specified number of bytes in an input stream.
      *
-     * @param in the input stream.
-     * @param skip the number of bytes to skip.
+     * @param in The input stream.
+     * @param skip The number of bytes to skip.
      * @return The number of bytes actually skipped.
      * @throws IOException if an I/O error occurs.
      */
@@ -456,9 +456,9 @@ public final class BinaryFunctions {
     /**
      * Skips a specified number of bytes in an input stream with a custom exception message.
      *
-     * @param in the input stream.
-     * @param skip the number of bytes to skip.
-     * @param exMessage the exception message if skip fails.
+     * @param in The input stream.
+     * @param skip The number of bytes to skip.
+     * @param exMessage The exception message if skip fails.
      * @return The number of bytes actually skipped.
      * @throws IOException if an I/O error occurs.
      */
@@ -473,8 +473,8 @@ public final class BinaryFunctions {
     /**
      * Tests whether a byte array starts with a specified byte sequence.
      *
-     * @param buffer the buffer to test.
-     * @param search the byte sequence to search for.
+     * @param buffer The buffer to test.
+     * @param search The byte sequence to search for.
      * @return {@code true} if the buffer starts with the search sequence, {@code false} otherwise.
      */
     public static boolean startsWith(final byte[] buffer, final byte[] search) {

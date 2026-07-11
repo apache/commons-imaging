@@ -62,7 +62,7 @@ class TiffFloatingPointReadTest {
     /**
      * Gets a file from the TIFF test directory that contains floating-point data.
      *
-     * @param name a valid file name
+     * @param name A valid file name
      * @return A valid file reference.
      */
     private File getTiffFile(final String name) {
@@ -75,10 +75,10 @@ class TiffFloatingPointReadTest {
      * Reads a TIFF file using a PhotometricInterpreter with entries for the specified range of values and an arbitrary no-data value. If the image is
      * successfully read, the interpreter instance will be returned.
      *
-     * @param target the specified TIFF file
-     * @param f0     the expected minimum bound or lower
-     * @param f1     the expected maximum bound or higher
-     * @param fNot   an arbitrary non-data value or NaN
+     * @param target The specified TIFF file
+     * @param f0     The expected minimum bound or lower
+     * @param f1     The expected maximum bound or higher
+     * @param fNot   An arbitrary non-data value or NaN
      * @return if successful, a valid photometric interpreter.
      * @throws ImagingException in the event of an unsupported or malformed file data element.
      * @throws IOException      in the event of an I/O error
@@ -110,8 +110,8 @@ class TiffFloatingPointReadTest {
     /**
      * Reads the floating-point content from a TIFF file.
      *
-     * @param target the specified TIFF file
-     * @param params an optional map of parameters for reading.
+     * @param target The specified TIFF file
+     * @param params An optional map of parameters for reading.
      * @return if successful, a valid raster data instance
      * @throws ImagingException in the event of an unsupported or malformed file data element.
      * @throws IOException      in the event of an I/O error

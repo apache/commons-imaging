@@ -41,10 +41,10 @@ public abstract class AbstractPngText {
         /**
          * Constructs an iTXt chunk.
          *
-         * @param keyword the keyword.
-         * @param text the text.
-         * @param languageTag the language tag.
-         * @param translatedKeyword the translated keyword.
+         * @param keyword The keyword.
+         * @param text The text.
+         * @param languageTag The language tag.
+         * @param translatedKeyword The translated keyword.
          */
         public Itxt(final String keyword, final String text, final String languageTag, final String translatedKeyword) {
             super(keyword, text);
@@ -61,8 +61,8 @@ public abstract class AbstractPngText {
         /**
          * Constructs a tEXt chunk.
          *
-         * @param keyword the keyword.
-         * @param text the text.
+         * @param keyword The keyword.
+         * @param text The text.
          */
         public Text(final String keyword, final String text) {
             super(keyword, text);
@@ -77,8 +77,8 @@ public abstract class AbstractPngText {
         /**
          * Constructs a zTXt chunk.
          *
-         * @param keyword the keyword.
-         * @param text the text.
+         * @param keyword The keyword.
+         * @param text The text.
          */
         public Ztxt(final String keyword, final String text) {
             super(keyword, text);
@@ -94,8 +94,8 @@ public abstract class AbstractPngText {
     /**
      * Constructs a PNG text chunk.
      *
-     * @param keyword the keyword.
-     * @param text the text.
+     * @param keyword The keyword.
+     * @param text The text.
      */
     public AbstractPngText(final String keyword, final String text) {
         this.keyword = keyword;

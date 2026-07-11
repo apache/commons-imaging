@@ -42,10 +42,10 @@ public final class PngChunkIhdr extends PngChunk {
     /**
      * Constructs a PNG IHDR chunk.
      *
-     * @param length the chunk length.
-     * @param chunkType the chunk type.
-     * @param crc the CRC.
-     * @param bytes the chunk bytes.
+     * @param length The chunk length.
+     * @param chunkType The chunk type.
+     * @param crc The CRC.
+     * @param bytes The chunk bytes.
      * @throws ImagingException if the chunk is corrupt.
      * @throws IOException if an I/O error occurs.
      */

@@ -94,7 +94,7 @@ class TiffJpegTest extends AbstractTiffTest {
      * will use JPEG based compression with an alternate geometry (strips, tiles, etc.). Because JPEG is lossy, we define a match as values of pixels that
      * produce gray tones withing a threshold.
      *
-     * @param testSet an array of 2 or more TIFF file names
+     * @param testSet An array of 2 or more TIFF file names
      * @throws IOException in the event of an unexpected I/O exception
      */
     private void processTestSet(final String[] testSet) throws IOException {

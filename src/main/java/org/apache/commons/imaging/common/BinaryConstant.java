@@ -29,7 +29,7 @@ public class BinaryConstant {
     /**
      * Constructs a binary constant from a byte array.
      *
-     * @param value the byte array value.
+     * @param value The byte array value.
      */
     public BinaryConstant(final byte[] value) {
         this.value = value.clone();
@@ -38,7 +38,7 @@ public class BinaryConstant {
     /**
      * Tests whether the given byte array equals this constant.
      *
-     * @param bytes the byte array to compare.
+     * @param bytes The byte array to compare.
      * @return {@code true} if the arrays are equal, {@code false} otherwise.
      */
     public boolean equals(final byte[] bytes) {
@@ -60,7 +60,7 @@ public class BinaryConstant {
     /**
      * Gets the byte at the specified index.
      *
-     * @param i the index.
+     * @param i The index.
      * @return The byte at the specified index.
      */
     public byte get(final int i) {
@@ -103,7 +103,7 @@ public class BinaryConstant {
     /**
      * Writes this binary constant to an output stream.
      *
-     * @param os the output stream.
+     * @param os The output stream.
      * @throws IOException if an I/O error occurs.
      */
     public void writeTo(final OutputStream os) throws IOException {

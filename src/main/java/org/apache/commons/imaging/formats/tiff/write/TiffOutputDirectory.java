@@ -92,8 +92,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Constructs a new instance.
      *
-     * @param type the directory type.
-     * @param byteOrder the byte order.
+     * @param type The directory type.
+     * @param byteOrder The byte order.
      */
     public TiffOutputDirectory(final int type, final ByteOrder byteOrder) {
         this.type = type;
@@ -103,8 +103,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds an ASCII field.
      *
-     * @param tagInfo the tag info.
-     * @param values the string values.
+     * @param tagInfo The tag info.
+     * @param values The string values.
      * @throws ImagingException if the values are invalid.
      */
     public void add(final TagInfoAscii tagInfo, final String... values) throws ImagingException {
@@ -119,8 +119,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds an ASCII or byte field with string values.
      *
-     * @param tagInfo the tag info.
-     * @param values the string values.
+     * @param tagInfo The tag info.
+     * @param values The string values.
      * @throws ImagingException if the values are invalid.
      */
     public void add(final TagInfoAsciiOrByte tagInfo, final String... values) throws ImagingException {
@@ -135,8 +135,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds an ASCII or rational field with rational values.
      *
-     * @param tagInfo the tag info.
-     * @param values the rational values.
+     * @param tagInfo The tag info.
+     * @param values The rational values.
      * @throws ImagingException if the values are invalid.
      */
     public void add(final TagInfoAsciiOrRational tagInfo, final RationalNumber... values) throws ImagingException {
@@ -151,8 +151,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds an ASCII or rational field with string values.
      *
-     * @param tagInfo the tag info.
-     * @param values the string values.
+     * @param tagInfo The tag info.
+     * @param values The string values.
      * @throws ImagingException if the values are invalid.
      */
     public void add(final TagInfoAsciiOrRational tagInfo, final String... values) throws ImagingException {
@@ -167,8 +167,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a byte field.
      *
-     * @param tagInfo the tag info.
-     * @param value the byte value.
+     * @param tagInfo The tag info.
+     * @param value The byte value.
      * @throws ImagingException if the value is invalid.
      */
     public void add(final TagInfoByte tagInfo, final byte value) throws ImagingException {
@@ -183,8 +183,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a byte or short field with byte values.
      *
-     * @param tagInfo the tag info.
-     * @param values the byte values.
+     * @param tagInfo The tag info.
+     * @param values The byte values.
      * @throws ImagingException if the values are invalid.
      */
     public void add(final TagInfoByteOrShort tagInfo, final byte... values) throws ImagingException {
@@ -199,8 +199,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a byte or short field with short values.
      *
-     * @param tagInfo the tag info.
-     * @param values the short values.
+     * @param tagInfo The tag info.
+     * @param values The short values.
      * @throws ImagingException if the values are invalid.
      */
     public void add(final TagInfoByteOrShort tagInfo, final short... values) throws ImagingException {
@@ -215,8 +215,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a bytes field.
      *
-     * @param tagInfo the tag info.
-     * @param values the byte values.
+     * @param tagInfo The tag info.
+     * @param values The byte values.
      * @throws ImagingException if the values are invalid.
      */
     public void add(final TagInfoBytes tagInfo, final byte... values) throws ImagingException {
@@ -231,8 +231,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a double field.
      *
-     * @param tagInfo the tag info.
-     * @param value the double value.
+     * @param tagInfo The tag info.
+     * @param value The double value.
      * @throws ImagingException if the value is invalid.
      */
     public void add(final TagInfoDouble tagInfo, final double value) throws ImagingException {
@@ -247,8 +247,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a doubles field.
      *
-     * @param tagInfo the tag info.
-     * @param values the double values.
+     * @param tagInfo The tag info.
+     * @param values The double values.
      * @throws ImagingException if the values are invalid.
      */
     public void add(final TagInfoDoubles tagInfo, final double... values) throws ImagingException {
@@ -263,8 +263,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a float field.
      *
-     * @param tagInfo the tag info.
-     * @param value the float value.
+     * @param tagInfo The tag info.
+     * @param value The float value.
      * @throws ImagingException if the value is invalid.
      */
     public void add(final TagInfoFloat tagInfo, final float value) throws ImagingException {
@@ -279,8 +279,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a floats field.
      *
-     * @param tagInfo the tag info.
-     * @param values the float values.
+     * @param tagInfo The tag info.
+     * @param values The float values.
      * @throws ImagingException if the values are invalid.
      */
     public void add(final TagInfoFloats tagInfo, final float... values) throws ImagingException {
@@ -295,8 +295,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a GPS text field.
      *
-     * @param tagInfo the tag info.
-     * @param value the string value.
+     * @param tagInfo The tag info.
+     * @param value The string value.
      * @throws ImagingException if the value is invalid.
      */
     public void add(final TagInfoGpsText tagInfo, final String value) throws ImagingException {
@@ -308,8 +308,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a long field.
      *
-     * @param tagInfo the tag info.
-     * @param value the int value.
+     * @param tagInfo The tag info.
+     * @param value The int value.
      * @throws ImagingException if the value is invalid.
      */
     public void add(final TagInfoLong tagInfo, final int value) throws ImagingException {
@@ -324,8 +324,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a longs field.
      *
-     * @param tagInfo the tag info.
-     * @param values the int values.
+     * @param tagInfo The tag info.
+     * @param values The int values.
      * @throws ImagingException if the values are invalid.
      */
     public void add(final TagInfoLongs tagInfo, final int... values) throws ImagingException {
@@ -340,8 +340,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a rational field.
      *
-     * @param tagInfo the tag info.
-     * @param value the rational value.
+     * @param tagInfo The tag info.
+     * @param value The rational value.
      * @throws ImagingException if the value is invalid.
      */
     public void add(final TagInfoRational tagInfo, final RationalNumber value) throws ImagingException {
@@ -356,8 +356,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a rationals field.
      *
-     * @param tagInfo the tag info.
-     * @param values the rational values.
+     * @param tagInfo The tag info.
+     * @param values The rational values.
      * @throws ImagingException if the values are invalid.
      */
     public void add(final TagInfoRationals tagInfo, final RationalNumber... values) throws ImagingException {
@@ -372,8 +372,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a signed byte field.
      *
-     * @param tagInfo the tag info.
-     * @param value the byte value.
+     * @param tagInfo The tag info.
+     * @param value The byte value.
      * @throws ImagingException if the value is invalid.
      */
     public void add(final TagInfoSByte tagInfo, final byte value) throws ImagingException {
@@ -388,8 +388,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a signed bytes field.
      *
-     * @param tagInfo the tag info.
-     * @param values the byte values.
+     * @param tagInfo The tag info.
+     * @param values The byte values.
      * @throws ImagingException if the values are invalid.
      */
     public void add(final TagInfoSBytes tagInfo, final byte... values) throws ImagingException {
@@ -404,8 +404,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a short field.
      *
-     * @param tagInfo the tag info.
-     * @param value the short value.
+     * @param tagInfo The tag info.
+     * @param value The short value.
      * @throws ImagingException if the value is invalid.
      */
     public void add(final TagInfoShort tagInfo, final short value) throws ImagingException {
@@ -420,8 +420,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a short or long field with int values.
      *
-     * @param tagInfo the tag info.
-     * @param values the int values.
+     * @param tagInfo The tag info.
+     * @param values The int values.
      * @throws ImagingException if the values are invalid.
      */
     public void add(final TagInfoShortOrLong tagInfo, final int... values) throws ImagingException {
@@ -436,8 +436,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a short or long field with short values.
      *
-     * @param tagInfo the tag info.
-     * @param values the short values.
+     * @param tagInfo The tag info.
+     * @param values The short values.
      * @throws ImagingException if the values are invalid.
      */
     public void add(final TagInfoShortOrLong tagInfo, final short... values) throws ImagingException {
@@ -452,8 +452,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a short or long or rational field with int values.
      *
-     * @param tagInfo the tag info.
-     * @param values the int values.
+     * @param tagInfo The tag info.
+     * @param values The int values.
      * @throws ImagingException if the values are invalid.
      */
     public void add(final TagInfoShortOrLongOrRational tagInfo, final int... values) throws ImagingException {
@@ -468,8 +468,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a short or long or rational field with rational values.
      *
-     * @param tagInfo the tag info.
-     * @param values the rational values.
+     * @param tagInfo The tag info.
+     * @param values The rational values.
      * @throws ImagingException if the values are invalid.
      */
     public void add(final TagInfoShortOrLongOrRational tagInfo, final RationalNumber... values) throws ImagingException {
@@ -484,8 +484,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a short or long or rational field with short values.
      *
-     * @param tagInfo the tag info.
-     * @param values the short values.
+     * @param tagInfo The tag info.
+     * @param values The short values.
      * @throws ImagingException if the values are invalid.
      */
     public void add(final TagInfoShortOrLongOrRational tagInfo, final short... values) throws ImagingException {
@@ -500,8 +500,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a short or rational field with rational values.
      *
-     * @param tagInfo the tag info.
-     * @param values the rational values.
+     * @param tagInfo The tag info.
+     * @param values The rational values.
      * @throws ImagingException if the values are invalid.
      */
     public void add(final TagInfoShortOrRational tagInfo, final RationalNumber... values) throws ImagingException {
@@ -516,8 +516,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a short or rational field with short values.
      *
-     * @param tagInfo the tag info.
-     * @param values the short values.
+     * @param tagInfo The tag info.
+     * @param values The short values.
      * @throws ImagingException if the values are invalid.
      */
     public void add(final TagInfoShortOrRational tagInfo, final short... values) throws ImagingException {
@@ -532,8 +532,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a shorts field.
      *
-     * @param tagInfo the tag info.
-     * @param values the short values.
+     * @param tagInfo The tag info.
+     * @param values The short values.
      * @throws ImagingException if the values are invalid.
      */
     public void add(final TagInfoShorts tagInfo, final short... values) throws ImagingException {
@@ -548,8 +548,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a signed long field.
      *
-     * @param tagInfo the tag info.
-     * @param value the int value.
+     * @param tagInfo The tag info.
+     * @param value The int value.
      * @throws ImagingException if the value is invalid.
      */
     public void add(final TagInfoSLong tagInfo, final int value) throws ImagingException {
@@ -564,8 +564,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a signed longs field.
      *
-     * @param tagInfo the tag info.
-     * @param values the int values.
+     * @param tagInfo The tag info.
+     * @param values The int values.
      * @throws ImagingException if the values are invalid.
      */
     public void add(final TagInfoSLongs tagInfo, final int... values) throws ImagingException {
@@ -580,8 +580,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a signed rational field.
      *
-     * @param tagInfo the tag info.
-     * @param value the rational value.
+     * @param tagInfo The tag info.
+     * @param value The rational value.
      * @throws ImagingException if the value is invalid.
      */
     public void add(final TagInfoSRational tagInfo, final RationalNumber value) throws ImagingException {
@@ -596,8 +596,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a signed rationals field.
      *
-     * @param tagInfo the tag info.
-     * @param values the rational values.
+     * @param tagInfo The tag info.
+     * @param values The rational values.
      * @throws ImagingException if the values are invalid.
      */
     public void add(final TagInfoSRationals tagInfo, final RationalNumber... values) throws ImagingException {
@@ -612,8 +612,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a signed short field.
      *
-     * @param tagInfo the tag info.
-     * @param value the short value.
+     * @param tagInfo The tag info.
+     * @param value The short value.
      * @throws ImagingException if the value is invalid.
      */
     public void add(final TagInfoSShort tagInfo, final short value) throws ImagingException {
@@ -628,8 +628,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a signed shorts field.
      *
-     * @param tagInfo the tag info.
-     * @param values the short values.
+     * @param tagInfo The tag info.
+     * @param values The short values.
      * @throws ImagingException if the values are invalid.
      */
     public void add(final TagInfoSShorts tagInfo, final short... values) throws ImagingException {
@@ -644,8 +644,8 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds an XP string field.
      *
-     * @param tagInfo the tag info.
-     * @param value the string value.
+     * @param tagInfo The tag info.
+     * @param value The string value.
      * @throws ImagingException if the value is invalid.
      */
     public void add(final TagInfoXpString tagInfo, final String value) throws ImagingException {
@@ -657,7 +657,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Adds a field to this directory.
      *
-     * @param field the field to add.
+     * @param field The field to add.
      */
     public void add(final TiffOutputField field) {
         fields.add(field);
@@ -679,7 +679,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
      * If there is no field matching the given tag, null will be returned.
      * </p>
      *
-     * @param tag the tag specifying the field
+     * @param tag The tag specifying the field
      * @return The field matching tagInfo or null, if the field isn't present
      * @see #findField(TagInfo)
      */
@@ -699,7 +699,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
      * If there is no field matching the given TagInfo, null will be returned.
      * </p>
      *
-     * @param tagInfo the TagInfo specifying the field
+     * @param tagInfo The TagInfo specifying the field
      * @return The field matching tagInfo or null, if the field isn't present
      * @see #findField(int)
      */
@@ -730,7 +730,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Gets all output items from this directory including fields and image data.
      *
-     * @param outputSummary the output summary.
+     * @param outputSummary The output summary.
      * @return The list of output items.
      * @throws ImagingException if an error occurs.
      */
@@ -858,7 +858,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Removes a field from this directory.
      *
-     * @param tag the tag of the field to remove.
+     * @param tag The tag of the field to remove.
      */
     public void removeField(final int tag) {
         final List<TiffOutputField> matches = new ArrayList<>();
@@ -873,7 +873,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Removes a field from this directory.
      *
-     * @param tagInfo the tag info of the field to remove.
+     * @param tagInfo The tag info of the field to remove.
      */
     public void removeField(final TagInfo tagInfo) {
         removeField(tagInfo.tag);
@@ -889,7 +889,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Sets the JPEG image data.
      *
-     * @param rawJpegImageData the JPEG image data.
+     * @param rawJpegImageData The JPEG image data.
      */
     public void setJpegImageData(final JpegImageData rawJpegImageData) {
         this.jpegImageData = rawJpegImageData;
@@ -898,7 +898,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Sets the next directory.
      *
-     * @param nextDirectory the next directory.
+     * @param nextDirectory The next directory.
      */
     public void setNextDirectory(final TiffOutputDirectory nextDirectory) {
         this.nextDirectory = nextDirectory;
@@ -907,7 +907,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Sets the TIFF image data.
      *
-     * @param rawTiffImageData the TIFF image data.
+     * @param rawTiffImageData The TIFF image data.
      */
     public void setTiffImageData(final AbstractTiffImageData rawTiffImageData) {
         this.abstractTiffImageData = rawTiffImageData;

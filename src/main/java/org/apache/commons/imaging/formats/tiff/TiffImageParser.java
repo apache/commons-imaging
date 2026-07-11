@@ -90,8 +90,8 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
     /**
      * Collects raw image data from all directories.
      *
-     * @param byteSource the byte source.
-     * @param params the imaging parameters.
+     * @param byteSource The byte source.
+     * @param params The imaging parameters.
      * @return The list of raw image data.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
@@ -247,9 +247,9 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
     /**
      * Gets a buffered image from a TIFF directory.
      *
-     * @param directory the TIFF directory.
-     * @param byteOrder the byte order.
-     * @param params the imaging parameters.
+     * @param directory The TIFF directory.
+     * @param byteOrder The byte order.
+     * @param params The imaging parameters.
      * @return The buffered image.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
@@ -716,9 +716,9 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
      * TiffRasterData raster = readFloatingPointRasterData(directory, byteOrder, params);
      * </pre>
      *
-     * @param directory the TIFF directory pointing to the data to be extracted (TIFF files may contain multiple directories)
-     * @param byteOrder the byte order of the data to be extracted
-     * @param params    an optional parameter object instance
+     * @param directory The TIFF directory pointing to the data to be extracted (TIFF files may contain multiple directories)
+     * @param byteOrder The byte order of the data to be extracted
+     * @param params    An optional parameter object instance
      * @return A valid instance
      * @throws ImagingException in the event of incompatible or malformed data
      * @throws IOException      in the event of an I/O error

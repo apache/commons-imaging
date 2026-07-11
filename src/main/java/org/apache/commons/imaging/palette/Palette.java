@@ -26,7 +26,7 @@ public interface Palette {
     /**
      * Gets the color for a given palette index.
      *
-     * @param index the palette index to look up
+     * @param index The palette index to look up
      * @return The color in ARGB format
      */
     int getEntry(int index);
@@ -34,7 +34,7 @@ public interface Palette {
     /**
      * Gets the palette index for a given color.
      *
-     * @param rgb the color to look up
+     * @param rgb The color to look up
      * @return The palette index
      * @throws ImagingException if it fails to read the palette index
      */

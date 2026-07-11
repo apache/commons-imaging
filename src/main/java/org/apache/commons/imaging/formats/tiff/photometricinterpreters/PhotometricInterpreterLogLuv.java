@@ -49,11 +49,11 @@ public class PhotometricInterpreterLogLuv extends AbstractPhotometricInterpreter
     /**
      * Constructs a new LogLuv photometric interpreter.
      *
-     * @param samplesPerPixel the samples per pixel.
-     * @param bitsPerSample the bits per sample.
-     * @param predictor the predictor.
-     * @param width the image width.
-     * @param height the image height.
+     * @param samplesPerPixel The samples per pixel.
+     * @param bitsPerSample The bits per sample.
+     * @param predictor The predictor.
+     * @param width The image width.
+     * @param height The image height.
      */
     public PhotometricInterpreterLogLuv(final int samplesPerPixel, final int[] bitsPerSample, final int predictor, final int width, final int height) {
         super(samplesPerPixel, bitsPerSample, predictor, width, height);
@@ -63,7 +63,7 @@ public class PhotometricInterpreterLogLuv extends AbstractPhotometricInterpreter
      * Receives a triplet tristimulus values (CIE XYZ) and then does a CIELAB-CIEXYZ conversion (consult Wikipedia link for formula), where the CIELAB values
      * are used to calculate the tristimulus values of the reference white point.
      *
-     * @param tristimulusValues the XYZ tristimulus values
+     * @param tristimulusValues The XYZ tristimulus values
      * @return RGB values
      * @see <a href="https://en.wikipedia.org/wiki/CIELAB_color_space">CIELAB color space</a>
      */

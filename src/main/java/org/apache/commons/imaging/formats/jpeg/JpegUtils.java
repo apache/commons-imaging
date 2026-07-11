@@ -47,11 +47,11 @@ public class JpegUtils extends BinaryFileParser {
         /**
          * Called when visiting a segment.
          *
-         * @param marker the marker.
-         * @param markerBytes the marker bytes.
-         * @param segmentLength the segment length.
-         * @param segmentLengthBytes the segment length bytes.
-         * @param segmentData the segment data.
+         * @param marker The marker.
+         * @param markerBytes The marker bytes.
+         * @param segmentLength The segment length.
+         * @param segmentLengthBytes The segment length bytes.
+         * @param segmentData The segment data.
          * @return false to exit traversal.
          * @throws ImagingException if an imaging error occurs.
          * @throws IOException if an I/O error occurs.
@@ -62,9 +62,9 @@ public class JpegUtils extends BinaryFileParser {
         /**
          * Called when visiting SOS segment.
          *
-         * @param marker the marker.
-         * @param markerBytes the marker bytes.
-         * @param imageData the image data.
+         * @param marker The marker.
+         * @param markerBytes The marker bytes.
+         * @param imageData The image data.
          */
         void visitSos(int marker, byte[] markerBytes, byte[] imageData);
     }
@@ -72,7 +72,7 @@ public class JpegUtils extends BinaryFileParser {
     /**
      * Gets the marker name.
      *
-     * @param marker the marker.
+     * @param marker The marker.
      * @return The marker name.
      */
     public static String getMarkerName(final int marker) {
@@ -162,7 +162,7 @@ public class JpegUtils extends BinaryFileParser {
     /**
      * Dumps JFIF data.
      *
-     * @param byteSource the byte source.
+     * @param byteSource The byte source.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
      */
@@ -196,8 +196,8 @@ public class JpegUtils extends BinaryFileParser {
     /**
      * Traverses JFIF data with a visitor.
      *
-     * @param byteSource the byte source.
-     * @param visitor the visitor.
+     * @param byteSource The byte source.
+     * @param visitor The visitor.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
      */

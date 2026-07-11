@@ -29,7 +29,7 @@ public class GifImagingParameters extends XmpImagingParameters<GifImagingParamet
     /**
      * Gets whether to stop reading before image data from the parameters.
      *
-     * @param params the parameters.
+     * @param params The parameters.
      * @return true if should stop reading before image data, false otherwise.
      */
     public static boolean getStopReadingBeforeImageData(final GifImagingParameters params) {

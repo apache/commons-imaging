@@ -28,9 +28,9 @@ public interface ScanlineFilter {
     /**
      * Unfilters a scanline.
      *
-     * @param src the source bytes.
-     * @param dst the destination bytes.
-     * @param up the previous scanline bytes.
+     * @param src The source bytes.
+     * @param dst The destination bytes.
+     * @param up The previous scanline bytes.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
      */

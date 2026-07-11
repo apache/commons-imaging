@@ -50,7 +50,7 @@ public class IccProfileParser extends BinaryFileParser {
     /**
      * Gets ICC profile info from bytes.
      *
-     * @param bytes the bytes.
+     * @param bytes The bytes.
      * @return The ICC profile info or null if bytes is null.
      * @throws IOException if an I/O error occurs.
      */
@@ -64,7 +64,7 @@ public class IccProfileParser extends BinaryFileParser {
     /**
      * Gets ICC profile info from byte source.
      *
-     * @param byteSource the byte source.
+     * @param byteSource The byte source.
      * @return The ICC profile info.
      * @throws IOException if an I/O error occurs.
      */
@@ -88,7 +88,7 @@ public class IccProfileParser extends BinaryFileParser {
     /**
      * Gets ICC profile info from file.
      *
-     * @param file the file.
+     * @param file The file.
      * @return The ICC profile info or null if file is null.
      * @throws IOException if an I/O error occurs.
      */
@@ -103,7 +103,7 @@ public class IccProfileParser extends BinaryFileParser {
     /**
      * Gets ICC profile info from ICC_Profile.
      *
-     * @param iccProfile the ICC profile.
+     * @param iccProfile The ICC profile.
      * @return The ICC profile info or null if iccProfile is null.
      * @throws IOException if an I/O error occurs.
      */
@@ -128,7 +128,7 @@ public class IccProfileParser extends BinaryFileParser {
     /**
      * Checks if the profile is sRGB.
      *
-     * @param bytes the bytes.
+     * @param bytes The bytes.
      * @return true if sRGB, false otherwise.
      * @throws IOException if an I/O error occurs.
      */
@@ -139,7 +139,7 @@ public class IccProfileParser extends BinaryFileParser {
     /**
      * Checks if the profile is sRGB.
      *
-     * @param byteSource the byte source.
+     * @param byteSource The byte source.
      * @return true if sRGB, false otherwise.
      * @throws IOException if an I/O error occurs.
      */
@@ -180,7 +180,7 @@ public class IccProfileParser extends BinaryFileParser {
     /**
      * Checks if the ICC profile from file is sRGB.
      *
-     * @param file the file.
+     * @param file The file.
      * @return true if sRGB, false otherwise.
      * @throws IOException if an I/O error occurs.
      */
@@ -191,7 +191,7 @@ public class IccProfileParser extends BinaryFileParser {
     /**
      * Checks if the ICC_Profile is sRGB.
      *
-     * @param iccProfile the ICC profile.
+     * @param iccProfile The ICC profile.
      * @return true if sRGB, false otherwise.
      * @throws IOException if an I/O error occurs.
      */

@@ -26,10 +26,10 @@ public abstract class AbstractPngTextChunk extends PngChunk {
     /**
      * Constructs a new PNG text chunk.
      *
-     * @param length the length of the chunk data.
-     * @param chunkType the chunk type.
-     * @param crc the CRC value.
-     * @param bytes the chunk data bytes.
+     * @param length The length of the chunk data.
+     * @param chunkType The chunk type.
+     * @param crc The CRC value.
+     * @param bytes The chunk data bytes.
      */
     public AbstractPngTextChunk(final int length, final int chunkType, final int crc, final byte[] bytes) {
         super(length, chunkType, crc, bytes);

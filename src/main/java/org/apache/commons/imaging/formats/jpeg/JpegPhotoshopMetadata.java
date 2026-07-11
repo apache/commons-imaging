@@ -35,7 +35,7 @@ public class JpegPhotoshopMetadata extends GenericImageMetadata {
     /**
      * Constructs metadata from Photoshop APP13 data.
      *
-     * @param photoshopApp13Data the Photoshop APP13 data.
+     * @param photoshopApp13Data The Photoshop APP13 data.
      */
     public JpegPhotoshopMetadata(final PhotoshopApp13Data photoshopApp13Data) {
         this.photoshopApp13Data = photoshopApp13Data;

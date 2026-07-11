@@ -41,7 +41,7 @@ public class TiffImageWriterLossy extends AbstractTiffImageWriter {
     /**
      * Constructs a new instance with the specified byte order.
      *
-     * @param byteOrder the byte order.
+     * @param byteOrder The byte order.
      */
     public TiffImageWriterLossy(final ByteOrder byteOrder) {
         super(byteOrder);

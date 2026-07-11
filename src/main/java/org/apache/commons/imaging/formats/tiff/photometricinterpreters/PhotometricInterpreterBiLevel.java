@@ -32,11 +32,11 @@ public class PhotometricInterpreterBiLevel extends AbstractPhotometricInterprete
     /**
      * Constructs a new bi-level photometric interpreter.
      *
-     * @param samplesPerPixel the samples per pixel.
-     * @param bitsPerSample the bits per sample.
-     * @param predictor the predictor.
-     * @param width the image width.
-     * @param height the image height.
+     * @param samplesPerPixel The samples per pixel.
+     * @param bitsPerSample The bits per sample.
+     * @param predictor The predictor.
+     * @param width The image width.
+     * @param height The image height.
      * @param invert whether to invert the colors.
      */
     public PhotometricInterpreterBiLevel(final int samplesPerPixel, final int[] bitsPerSample, final int predictor, final int width, final int height,

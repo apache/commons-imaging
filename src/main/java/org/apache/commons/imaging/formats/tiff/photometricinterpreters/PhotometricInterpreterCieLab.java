@@ -31,11 +31,11 @@ public class PhotometricInterpreterCieLab extends AbstractPhotometricInterpreter
     /**
      * Constructs a new CIE L*a*b* photometric interpreter.
      *
-     * @param samplesPerPixel the samples per pixel.
-     * @param bitsPerSample   the bits per sample.
-     * @param predictor       the predictor.
-     * @param width           the image width.
-     * @param height          the image height.
+     * @param samplesPerPixel The samples per pixel.
+     * @param bitsPerSample   The bits per sample.
+     * @param predictor       The predictor.
+     * @param width           The image width.
+     * @param height          The image height.
      */
     public PhotometricInterpreterCieLab(final int samplesPerPixel, final int[] bitsPerSample, final int predictor, final int width, final int height) {
         super(samplesPerPixel, bitsPerSample, predictor, width, height);

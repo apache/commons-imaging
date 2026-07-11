@@ -28,7 +28,7 @@ public class TransparencyFilterIndexedColor extends AbstractTransparencyFilter {
     /**
      * Constructs a new transparency filter for indexed color images.
      *
-     * @param bytes the transparency chunk data.
+     * @param bytes The transparency chunk data.
      */
     public TransparencyFilterIndexedColor(final byte[] bytes) {
         super(bytes);

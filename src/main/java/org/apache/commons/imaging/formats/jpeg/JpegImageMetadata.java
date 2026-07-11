@@ -47,8 +47,8 @@ public class JpegImageMetadata implements ImageMetadata {
     /**
      * Constructs a new instance.
      *
-     * @param photoshop the Photoshop metadata.
-     * @param exif the EXIF metadata.
+     * @param photoshop The Photoshop metadata.
+     * @param exif The EXIF metadata.
      */
     public JpegImageMetadata(final JpegPhotoshopMetadata photoshop, final TiffImageMetadata exif) {
         this.photoshop = photoshop;
@@ -65,7 +65,7 @@ public class JpegImageMetadata implements ImageMetadata {
     /**
      * Finds an EXIF value.
      *
-     * @param tagInfo the tag info.
+     * @param tagInfo The tag info.
      * @return The TIFF field or null if not found.
      */
     public TiffField findExifValue(final TagInfo tagInfo) {
@@ -79,7 +79,7 @@ public class JpegImageMetadata implements ImageMetadata {
     /**
      * Finds an EXIF value with exact match.
      *
-     * @param tagInfo the tag info.
+     * @param tagInfo The tag info.
      * @return The TIFF field or null if not found.
      */
     public TiffField findExifValueWithExactMatch(final TagInfo tagInfo) {

@@ -49,8 +49,8 @@ public class TiffField {
         /**
          * Constructs a new instance.
          *
-         * @param offset the offset.
-         * @param length the length.
+         * @param offset The offset.
+         * @param length The length.
          */
         public OversizeValueElement(final int offset, final int length) {
             super(offset, length);
@@ -77,14 +77,14 @@ public class TiffField {
     /**
      * Constructs a new instance.
      *
-     * @param tag the tag number.
-     * @param directoryType the directory type.
-     * @param abstractFieldType the field type.
-     * @param count the count.
-     * @param offset the offset.
-     * @param value the value bytes.
-     * @param byteOrder the byte order.
-     * @param sortHint the sort hint.
+     * @param tag The tag number.
+     * @param directoryType The directory type.
+     * @param abstractFieldType The field type.
+     * @param count The count.
+     * @param offset The offset.
+     * @param value The value bytes.
+     * @param byteOrder The byte order.
+     * @param sortHint The sort hint.
      */
     public TiffField(final int tag, final int directoryType, final AbstractFieldType abstractFieldType, final long count, final long offset, final byte[] value,
             final ByteOrder byteOrder, final int sortHint) {
@@ -119,7 +119,7 @@ public class TiffField {
     /**
      * Dumps field information to a PrintWriter.
      *
-     * @param pw the PrintWriter.
+     * @param pw The PrintWriter.
      */
     public void dump(final PrintWriter pw) {
         dump(pw, null);
@@ -128,8 +128,8 @@ public class TiffField {
     /**
      * Dumps field information to a PrintWriter with an optional prefix.
      *
-     * @param pw the PrintWriter.
-     * @param prefix the prefix string, or null.
+     * @param pw The PrintWriter.
+     * @param prefix The prefix string, or null.
      */
     public void dump(final PrintWriter pw, final String prefix) {
         if (prefix != null) {

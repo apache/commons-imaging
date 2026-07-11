@@ -157,24 +157,24 @@ public class ImageInfo {
     /**
      * Constructs a new ImageInfo with the specified properties.
      *
-     * @param formatDetails the format version details.
-     * @param bitsPerPixel the number of bits per pixel.
-     * @param comments the list of comments.
-     * @param format the image format.
-     * @param formatName the format name.
-     * @param height the image height.
-     * @param mimeType the MIME type.
-     * @param numberOfImages the number of images.
-     * @param physicalHeightDpi the physical height DPI.
-     * @param physicalHeightInch the physical height in inches.
-     * @param physicalWidthDpi the physical width DPI.
-     * @param physicalWidthInch the physical width in inches.
-     * @param width the image width.
+     * @param formatDetails The format version details.
+     * @param bitsPerPixel The number of bits per pixel.
+     * @param comments The list of comments.
+     * @param format The image format.
+     * @param formatName The format name.
+     * @param height The image height.
+     * @param mimeType The MIME type.
+     * @param numberOfImages The number of images.
+     * @param physicalHeightDpi The physical height DPI.
+     * @param physicalHeightInch The physical height in inches.
+     * @param physicalWidthDpi The physical width DPI.
+     * @param physicalWidthInch The physical width in inches.
+     * @param width The image width.
      * @param progressive whether the image is progressive.
      * @param transparent whether the image has transparency.
      * @param usesPalette whether the image uses a palette.
-     * @param colorType the color type.
-     * @param compressionAlgorithm the compression algorithm.
+     * @param colorType The color type.
+     * @param compressionAlgorithm The compression algorithm.
      */
     public ImageInfo(final String formatDetails, final int bitsPerPixel, final List<String> comments, final ImageFormat format, final String formatName,
             final int height, final String mimeType, final int numberOfImages, final int physicalHeightDpi, final float physicalHeightInch,
@@ -416,8 +416,8 @@ public class ImageInfo {
     /**
      * Writes the image information to a PrintWriter with a prefix.
      *
-     * @param pw the PrintWriter.
-     * @param prefix the prefix (currently unused).
+     * @param pw The PrintWriter.
+     * @param prefix The prefix (currently unused).
      */
     public void toString(final PrintWriter pw, final String prefix) {
         pw.println("Format Details: " + formatDetails);

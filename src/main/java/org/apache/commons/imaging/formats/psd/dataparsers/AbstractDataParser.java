@@ -44,10 +44,10 @@ public abstract class AbstractDataParser {
     /**
      * Gets the RGB value for a pixel at the specified coordinates.
      *
-     * @param data the image data array.
-     * @param x the x coordinate.
-     * @param y the y coordinate.
-     * @param imageContents the image contents.
+     * @param data The image data array.
+     * @param x The x coordinate.
+     * @param y The y coordinate.
+     * @param imageContents The image contents.
      * @return The RGB value.
      */
     protected abstract int getRgb(int[][][] data, int x, int y, PsdImageContents imageContents);
@@ -55,9 +55,9 @@ public abstract class AbstractDataParser {
     /**
      * Parses the image data and populates a BufferedImage.
      *
-     * @param data the image data array.
-     * @param bi the BufferedImage to populate.
-     * @param imageContents the image contents.
+     * @param data The image data array.
+     * @param bi The BufferedImage to populate.
+     * @param imageContents The image contents.
      */
     public final void parseData(final int[][][] data, final BufferedImage bi, final PsdImageContents imageContents) {
         final DataBuffer buffer = bi.getRaster().getDataBuffer();

@@ -56,9 +56,9 @@ public class TagInfo {
     /**
      * Constructs a new instance.
      *
-     * @param name the tag name.
-     * @param tag the tag number.
-     * @param dataType the data type.
+     * @param name The tag name.
+     * @param tag The tag number.
+     * @param dataType The data type.
      */
     public TagInfo(final String name, final int tag, final AbstractFieldType dataType) {
         this(name, tag, dataType, LENGTH_UNKNOWN, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
@@ -67,10 +67,10 @@ public class TagInfo {
     /**
      * Constructs a new instance.
      *
-     * @param name the tag name.
-     * @param tag the tag number.
-     * @param dataType the data type.
-     * @param length the length.
+     * @param name The tag name.
+     * @param tag The tag number.
+     * @param dataType The data type.
+     * @param length The length.
      */
     public TagInfo(final String name, final int tag, final AbstractFieldType dataType, final int length) {
         this(name, tag, Arrays.asList(dataType), length, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
@@ -79,11 +79,11 @@ public class TagInfo {
     /**
      * Constructs a new instance.
      *
-     * @param name the tag name.
-     * @param tag the tag number.
-     * @param dataType the data type.
-     * @param length the length.
-     * @param exifDirectory the EXIF directory.
+     * @param name The tag name.
+     * @param tag The tag number.
+     * @param dataType The data type.
+     * @param length The length.
+     * @param exifDirectory The EXIF directory.
      */
     public TagInfo(final String name, final int tag, final AbstractFieldType dataType, final int length, final TiffDirectoryType exifDirectory) {
         this(name, tag, Arrays.asList(dataType), length, exifDirectory);
@@ -92,11 +92,11 @@ public class TagInfo {
     /**
      * Constructs a new instance.
      *
-     * @param name the tag name.
-     * @param tag the tag number.
-     * @param dataType the data type.
-     * @param length the length.
-     * @param exifDirectory the EXIF directory.
+     * @param name The tag name.
+     * @param tag The tag number.
+     * @param dataType The data type.
+     * @param length The length.
+     * @param exifDirectory The EXIF directory.
      * @param isOffset whether this is an offset tag.
      */
     public TagInfo(final String name, final int tag, final AbstractFieldType dataType, final int length, final TiffDirectoryType exifDirectory,
@@ -107,11 +107,11 @@ public class TagInfo {
     /**
      * Constructs a new instance.
      *
-     * @param name the tag name.
-     * @param tag the tag number.
-     * @param dataTypes the data types.
-     * @param length the length.
-     * @param exifDirectory the EXIF directory.
+     * @param name The tag name.
+     * @param tag The tag number.
+     * @param dataTypes The data types.
+     * @param length The length.
+     * @param exifDirectory The EXIF directory.
      */
     public TagInfo(final String name, final int tag, final List<AbstractFieldType> dataTypes, final int length, final TiffDirectoryType exifDirectory) {
         this(name, tag, dataTypes, length, exifDirectory, false);
@@ -120,11 +120,11 @@ public class TagInfo {
     /**
      * Constructs a new instance.
      *
-     * @param name the tag name.
-     * @param tag the tag number.
-     * @param dataTypes the data types.
-     * @param length the length.
-     * @param exifDirectory the EXIF directory.
+     * @param name The tag name.
+     * @param tag The tag number.
+     * @param dataTypes The data types.
+     * @param length The length.
+     * @param exifDirectory The EXIF directory.
      * @param isOffset whether this is an offset tag.
      */
     public TagInfo(final String name, final int tag, final List<AbstractFieldType> dataTypes, final int length, final TiffDirectoryType exifDirectory,
@@ -140,9 +140,9 @@ public class TagInfo {
     /**
      * Encodes a value.
      *
-     * @param abstractFieldType the field type.
-     * @param value the value.
-     * @param byteOrder the byte order.
+     * @param abstractFieldType The field type.
+     * @param value The value.
+     * @param byteOrder The byte order.
      * @return The encoded bytes.
      * @throws ImagingException if an imaging error occurs.
      */
@@ -162,7 +162,7 @@ public class TagInfo {
     /**
      * Gets the value from a TIFF field.
      *
-     * @param entry the TIFF field whose value to return.
+     * @param entry The TIFF field whose value to return.
      * @return The value of the TIFF field.
      * @throws ImagingException thrown by subclasses.
      */

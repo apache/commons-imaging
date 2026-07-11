@@ -41,9 +41,9 @@ public final class PaletteEntryForRange implements PaletteEntry {
     /**
      * Constructs a palette entry for the range of values v0 &le; f &lt; v1. A single color will be returned for all values in range
      *
-     * @param v0    the lower bounds (inclusive) of the covered range of values
-     * @param v1    the upper bounds (non-inclusive) of the covered range of value
-     * @param color the color assigned to value v0
+     * @param v0    The lower bounds (inclusive) of the covered range of values
+     * @param v1    The upper bounds (non-inclusive) of the covered range of value
+     * @param color The color assigned to value v0
      */
     public PaletteEntryForRange(final float v0, final float v1, final Color color) {
         this.v0 = v0;
@@ -73,10 +73,10 @@ public final class PaletteEntryForRange implements PaletteEntry {
     /**
      * Constructs a palette entry for the range of values v0 &le; f &lt; v1. The return color value will be interpolated between the two specified colors.
      *
-     * @param v0     the lower bounds (inclusive) of the covered range of values
-     * @param v1     the upper bounds (non-inclusive) of the covered range of value
-     * @param color0 the color assigned to value v0
-     * @param color1 the color assigned to value v1
+     * @param v0     The lower bounds (inclusive) of the covered range of values
+     * @param v1     The upper bounds (non-inclusive) of the covered range of value
+     * @param color0 The color assigned to value v0
+     * @param color1 The color assigned to value v1
      */
     public PaletteEntryForRange(final float v0, final float v1, final Color color0, final Color color1) {
         this.v0 = v0;

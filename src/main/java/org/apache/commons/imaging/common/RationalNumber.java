@@ -185,8 +185,8 @@ public class RationalNumber extends Number {
     /**
      * Constructs an instance based on signed integers.
      *
-     * @param numerator a 32-bit signed integer.
-     * @param divisor   a non-zero 32-bit signed integer.
+     * @param numerator A 32-bit signed integer.
+     * @param divisor   A non-zero 32-bit signed integer.
      */
     public RationalNumber(final int numerator, final int divisor) {
         this.numerator = numerator;
@@ -197,8 +197,8 @@ public class RationalNumber extends Number {
     /**
      * Constructs an instance supports either signed or unsigned integers.
      *
-     * @param numerator    a numerator in the indicated form (signed or unsigned)
-     * @param divisor      a non-zero divisor in the indicated form (signed or unsigned)
+     * @param numerator    A numerator in the indicated form (signed or unsigned)
+     * @param divisor      A non-zero divisor in the indicated form (signed or unsigned)
      * @param unsignedType indicates whether the input values are to be treated as unsigned.
      */
     public RationalNumber(final int numerator, final int divisor, final boolean unsignedType) {
@@ -215,8 +215,8 @@ public class RationalNumber extends Number {
     /**
      * A private constructor for methods such as negate() that create instances of this class using the content of the current instance.
      *
-     * @param numerator    a valid numerator
-     * @param divisor      a valid denominator
+     * @param numerator    A valid numerator
+     * @param divisor      A valid denominator
      * @param unsignedType indicates how numerator and divisor values are to be interpreted.
      */
     private RationalNumber(final long numerator, final long divisor, final boolean unsignedType) {

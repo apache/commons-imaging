@@ -40,9 +40,9 @@ public abstract class AbstractTiffImageData {
         /**
          * Constructs a new data element.
          *
-         * @param offset the offset in the TIFF file.
-         * @param length the length of the data.
-         * @param data the image data.
+         * @param offset The offset in the TIFF file.
+         * @param length The length of the data.
+         * @param data The image data.
          */
         public Data(final long offset, final int length, final byte[] data) {
             super(offset, length, data);
@@ -69,8 +69,8 @@ public abstract class AbstractTiffImageData {
         /**
          * Constructs a new strips data structure.
          *
-         * @param strips the array of strip data elements.
-         * @param rowsPerStrip the number of rows per strip.
+         * @param strips The array of strip data elements.
+         * @param rowsPerStrip The number of rows per strip.
          */
         public Strips(final AbstractTiffElement.DataElement[] strips, final int rowsPerStrip) {
             this.strips = strips;
@@ -94,7 +94,7 @@ public abstract class AbstractTiffImageData {
         /**
          * Gets the image data at the specified offset.
          *
-         * @param offset the offset index.
+         * @param offset The offset index.
          * @return The data element.
          */
         public AbstractTiffElement.DataElement getImageData(final int offset) {
@@ -132,9 +132,9 @@ public abstract class AbstractTiffImageData {
         /**
          * Constructs a new tiles data structure.
          *
-         * @param tiles the array of tile data elements.
-         * @param tileWidth the width of each tile.
-         * @param tileLength the length (height) of each tile.
+         * @param tiles The array of tile data elements.
+         * @param tileWidth The width of each tile.
+         * @param tileLength The length (height) of each tile.
          */
         public Tiles(final AbstractTiffElement.DataElement[] tiles, final int tileWidth, final int tileLength) {
             this.tiles = tiles;
@@ -205,17 +205,17 @@ public abstract class AbstractTiffImageData {
     /**
      * Gets the appropriate data reader for this image data.
      *
-     * @param directory the TIFF directory.
-     * @param photometricInterpreter the photometric interpreter.
-     * @param bitsPerPixel the bits per pixel.
-     * @param bitsPerSample the bits per sample array.
-     * @param predictor the predictor value.
-     * @param samplesPerPixel the samples per pixel.
-     * @param width the image width.
-     * @param height the image height.
-     * @param compression the compression type.
-     * @param planarConfiguration the planar configuration.
-     * @param byteOrder the byte order.
+     * @param directory The TIFF directory.
+     * @param photometricInterpreter The photometric interpreter.
+     * @param bitsPerPixel The bits per pixel.
+     * @param bitsPerSample The bits per sample array.
+     * @param predictor The predictor value.
+     * @param samplesPerPixel The samples per pixel.
+     * @param width The image width.
+     * @param height The image height.
+     * @param compression The compression type.
+     * @param planarConfiguration The planar configuration.
+     * @param byteOrder The byte order.
      * @return The data reader.
      * @throws IOException if an I/O error occurs.
      * @throws ImagingException if the image format is invalid.

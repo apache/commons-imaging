@@ -29,8 +29,8 @@ public class FieldTypeByte extends AbstractFieldType {
     /**
      * Constructs a new byte field type.
      *
-     * @param type the type number.
-     * @param name the type name.
+     * @param type The type number.
+     * @param name The type name.
      */
     public FieldTypeByte(final int type, final String name) {
         super(type, name, 1);

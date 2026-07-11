@@ -24,10 +24,10 @@ public class PngChunkIdat extends PngChunk {
     /**
      * Constructs a PNG IDAT chunk.
      *
-     * @param length the chunk length.
-     * @param chunkType the chunk type.
-     * @param crc the CRC.
-     * @param bytes the chunk bytes.
+     * @param length The chunk length.
+     * @param chunkType The chunk type.
+     * @param crc The CRC.
+     * @param bytes The chunk bytes.
      */
     public PngChunkIdat(final int length, final int chunkType, final int crc, final byte[] bytes) {
         super(length, chunkType, crc, bytes);

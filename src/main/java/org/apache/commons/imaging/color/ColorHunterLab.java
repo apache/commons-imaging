@@ -95,9 +95,9 @@ public final class ColorHunterLab {
     /**
      * Constructs a new ColorHunterLab.
      *
-     * @param l the lightness component.
-     * @param a the a color component.
-     * @param b the b color component.
+     * @param l The lightness component.
+     * @param a The a color component.
+     * @param b The b color component.
      */
     public ColorHunterLab(final double l, final double a, final double b) {
         this.l = l;

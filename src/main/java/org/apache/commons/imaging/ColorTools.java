@@ -51,9 +51,9 @@ public class ColorTools {
     /**
      * Converts an image between color spaces.
      *
-     * @param bi the source image.
-     * @param from the source color space.
-     * @param to the target color space.
+     * @param bi The source image.
+     * @param from The source color space.
+     * @param to The target color space.
      * @return The converted image.
      */
     public BufferedImage convertBetweenColorSpaces(BufferedImage bi, final ColorSpace from, final ColorSpace to) {
@@ -73,9 +73,9 @@ public class ColorTools {
     /**
      * Converts an image between color spaces with double conversion.
      *
-     * @param bi the source image.
-     * @param from the source color space.
-     * @param to the target color space.
+     * @param bi The source image.
+     * @param from The source color space.
+     * @param to The target color space.
      * @return The converted image.
      */
     public BufferedImage convertBetweenColorSpacesX2(BufferedImage bi, final ColorSpace from, final ColorSpace to) {
@@ -103,9 +103,9 @@ public class ColorTools {
     /**
      * Converts an image between ICC profiles.
      *
-     * @param bi the source image.
-     * @param from the source ICC profile.
-     * @param to the target ICC profile.
+     * @param bi The source image.
+     * @param from The source ICC profile.
+     * @param to The target ICC profile.
      * @return The converted image.
      */
     public BufferedImage convertBetweenIccProfiles(final BufferedImage bi, final ICC_Profile from, final ICC_Profile to) {
@@ -118,8 +118,8 @@ public class ColorTools {
     /**
      * Converts an image from a specified color space to sRGB.
      *
-     * @param bi the source image.
-     * @param from the source color space.
+     * @param bi The source image.
+     * @param from The source color space.
      * @return The converted image.
      */
     protected BufferedImage convertFromColorSpace(final BufferedImage bi, final ColorSpace from) {
@@ -130,8 +130,8 @@ public class ColorTools {
     /**
      * Converts an image to a specified color space.
      *
-     * @param bi the source image.
-     * @param to the target color space.
+     * @param bi The source image.
+     * @param to The target color space.
      * @return The converted image.
      */
     public BufferedImage convertToColorSpace(final BufferedImage bi, final ColorSpace to) {
@@ -151,8 +151,8 @@ public class ColorTools {
     /**
      * Converts an image to a specified ICC profile.
      *
-     * @param bi the source image.
-     * @param to the target ICC profile.
+     * @param bi The source image.
+     * @param to The target ICC profile.
      * @return The converted image.
      */
     public BufferedImage convertToIccProfile(final BufferedImage bi, final ICC_Profile to) {
@@ -163,7 +163,7 @@ public class ColorTools {
     /**
      * Converts an image to sRGB color space.
      *
-     * @param bi the source image.
+     * @param bi The source image.
      * @return The converted image.
      */
     public BufferedImage convertTosRgb(final BufferedImage bi) {
@@ -174,8 +174,8 @@ public class ColorTools {
     /**
      * Corrects an image using the ICC profile from a file.
      *
-     * @param src the source image.
-     * @param file the file containing the ICC profile.
+     * @param src The source image.
+     * @param file The file containing the ICC profile.
      * @return The corrected image.
      * @throws ImagingException if the image format is invalid.
      * @throws IOException if an I/O error occurs.
@@ -205,8 +205,8 @@ public class ColorTools {
     /**
      * Derives a color model with a new color space.
      *
-     * @param bi the source image.
-     * @param cs the target color space.
+     * @param bi The source image.
+     * @param cs The target color space.
      * @return The derived color model.
      * @throws ImagingOpException if the color model cannot be derived.
      */
@@ -218,8 +218,8 @@ public class ColorTools {
     /**
      * Derives a color model with a new color space.
      *
-     * @param bi the source image.
-     * @param cs the target color space.
+     * @param bi The source image.
+     * @param cs The target color space.
      * @param forceNoAlpha whether to force no alpha channel.
      * @return The derived color model.
      * @throws ImagingOpException if the color model cannot be derived.
@@ -231,8 +231,8 @@ public class ColorTools {
     /**
      * Derives a color model with a new color space.
      *
-     * @param colorModel the source color model.
-     * @param cs the target color space.
+     * @param colorModel The source color model.
+     * @param cs The target color space.
      * @param forceNoAlpha whether to force no alpha channel.
      * @return The derived color model.
      * @throws ImagingOpException if the color model cannot be derived.
@@ -284,8 +284,8 @@ public class ColorTools {
     /**
      * Relabels a BufferedImage with a new color model.
      *
-     * @param bi the source image.
-     * @param cm the new color model.
+     * @param bi The source image.
+     * @param cm The new color model.
      * @return The relabeled image.
      * @throws ImagingOpException if the relabeling fails.
      */
@@ -302,8 +302,8 @@ public class ColorTools {
     /**
      * Relabels a BufferedImage with a new color space.
      *
-     * @param bi the source image.
-     * @param cs the new color space.
+     * @param bi The source image.
+     * @param cs The new color space.
      * @return The relabeled image.
      * @throws ImagingOpException if the relabeling fails.
      */
@@ -323,8 +323,8 @@ public class ColorTools {
     /**
      * Relabels a BufferedImage with a new ICC profile.
      *
-     * @param bi the source image.
-     * @param profile the new ICC profile.
+     * @param bi The source image.
+     * @param profile The new ICC profile.
      * @return The relabeled image.
      * @throws ImagingOpException if the relabeling fails.
      */

@@ -58,7 +58,7 @@ public class ReadTagsAndImages {
         /**
          * Gets the enumeration value associated with the specified key if any.
          *
-         * @param key a positive integer
+         * @param key A positive integer
          * @return if the key is matched, a value enumeration value; otherwise, a null.
          */
         static CoordinateTransformationCode getValueForKey(final int key) {
@@ -159,9 +159,9 @@ public class ReadTagsAndImages {
      * Extract a sub-string from the ASCII parameters. The ASCII parameters include a vertical-bar symbol to act as a separator between strings. This method
      * includes some safety-checking logic which should not be necessary except in the case of a badly formatted GeoTIFF file.
      *
-     * @param asciiParameters the content of TIFF Tag ID=34737.
-     * @param pos             the position of the sub-string within the content
-     * @param len             the length of the sub-string.
+     * @param asciiParameters The content of TIFF Tag ID=34737.
+     * @param pos             The position of the sub-string within the content
+     * @param len             The length of the sub-string.
      * @return A valid string.
      */
     private static String extractAscii(final String asciiParameters, final int pos, final int len) {
@@ -176,9 +176,9 @@ public class ReadTagsAndImages {
      * entries, this method limits the return value to the first three entries. This method includes some safety-checking logic which should not be necessary
      * except in the case of a badly formed GeoTIFF file.
      *
-     * @param doubleParameters an array of values
-     * @param pos              the starting position of the values for the GeoKey
-     * @param len              the number of values for the GeoKey
+     * @param doubleParameters An array of values
+     * @param pos              The starting position of the values for the GeoKey
+     * @param len              The number of values for the GeoKey
      * @return A formatted string.
      */
     private static String extractDouble(final double[] doubleParameters, final int pos, final int len) {
@@ -202,12 +202,12 @@ public class ReadTagsAndImages {
      * Interprets elements from one row of the GeoKey table, returning a descriptive string where possible. The GeoTIFF specification is extensive, and only a
      * subset of the possible descriptions are supported here.
      *
-     * @param geoKey           a valid GeoKey enumeration
-     * @param ref              the reference (not used at this time)
-     * @param len              the length of the associated string or floating-point value array (if used)
-     * @param valueOrPosition  a single integer value or the position within the associated floating point array
-     * @param doubleParameters an array of doubles
-     * @param asciiParameters  a String consisting of ASCII characters.
+     * @param geoKey           A valid GeoKey enumeration
+     * @param ref              The reference (not used at this time)
+     * @param len              The length of the associated string or floating-point value array (if used)
+     * @param valueOrPosition  A single integer value or the position within the associated floating point array
+     * @param doubleParameters An array of doubles
+     * @param asciiParameters  A String consisting of ASCII characters.
      * @return A valid string, potentially a note to see the specification if a more useful description is not available.
      */
     private static String interpretElements(final GeoKey geoKey, final int ref, final int len, final int valueOrPosition, final double[] doubleParameters,
@@ -324,7 +324,7 @@ public class ReadTagsAndImages {
     /**
      * Open the specified TIFF file and print its metadata (fields) to standard output. If an output root-name is specified, write images to specified path.
      *
-     * @param args the command line arguments
+     * @param args The command line arguments
      * @throws org.apache.commons.imaging.ImagingException in the event of an internal data format or version compatibility error reading the image.
      * @throws IOException                                 in the event of an I/O error.
      */
@@ -413,8 +413,8 @@ public class ReadTagsAndImages {
     /**
      * Checks to see if the directory has GeoTIFF tags and, if so, provides a summary of their content.
      *
-     * @param ps        a valid instance to receive output
-     * @param directory a valid directory
+     * @param ps        A valid instance to receive output
+     * @param directory A valid directory
      * @throws ImagingException in the event of a data-format error or unhandled I/O error.
      */
     private static void summarizeGeoTiffTags(final PrintStream ps, final TiffDirectory directory) throws ImagingException {

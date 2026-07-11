@@ -90,7 +90,7 @@ abstract class AbstractTiffOutputItem {
     /**
      * Sets the offset of this item.
      *
-     * @param offset the offset.
+     * @param offset The offset.
      */
     protected void setOffset(final long offset) {
         this.offset = offset;
@@ -99,7 +99,7 @@ abstract class AbstractTiffOutputItem {
     /**
      * Writes this item to the output stream.
      *
-     * @param bos the output stream.
+     * @param bos The output stream.
      * @throws IOException if an I/O error occurs.
      * @throws ImagingException if an imaging error occurs.
      */

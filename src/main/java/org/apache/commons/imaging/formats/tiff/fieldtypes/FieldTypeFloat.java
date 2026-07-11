@@ -31,8 +31,8 @@ public class FieldTypeFloat extends AbstractFieldType {
     /**
      * Constructs a new float field type.
      *
-     * @param type the type number.
-     * @param name the type name.
+     * @param type The type number.
+     * @param name The type name.
      */
     public FieldTypeFloat(final int type, final String name) {
         super(type, name, 4);

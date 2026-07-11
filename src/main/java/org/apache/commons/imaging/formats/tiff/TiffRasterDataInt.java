@@ -41,8 +41,8 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
     /**
      * Constructs an instance allocating memory for the specified dimensions.
      *
-     * @param width  a value of 1 or greater
-     * @param height a value of 1 or greater
+     * @param width  A value of 1 or greater
+     * @param height A value of 1 or greater
      */
     public TiffRasterDataInt(final int width, final int height) {
         super(width, height, 1);
@@ -52,9 +52,9 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
     /**
      * Constructs an instance allocating memory for the specified dimensions.
      *
-     * @param width           a value of 1 or greater
-     * @param height          a value of 1 or greater
-     * @param samplesPerPixel a value of 1 or greater
+     * @param width           A value of 1 or greater
+     * @param height          A value of 1 or greater
+     * @param samplesPerPixel A value of 1 or greater
      */
     public TiffRasterDataInt(final int width, final int height, final int samplesPerPixel) {
         super(width, height, samplesPerPixel);
@@ -64,10 +64,10 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
     /**
      * Constructs an instance allocating memory for the specified dimensions.
      *
-     * @param width           a value of 1 or greater
-     * @param height          a value of 1 or greater
-     * @param samplesPerPixel a value of 1 or greater
-     * @param data            the data to be stored in the raster.
+     * @param width           A value of 1 or greater
+     * @param height          A value of 1 or greater
+     * @param samplesPerPixel A value of 1 or greater
+     * @param data            The data to be stored in the raster.
      */
     public TiffRasterDataInt(final int width, final int height, final int samplesPerPixel, final int[] data) {
         super(width, height, samplesPerPixel);
@@ -80,9 +80,9 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
     /**
      * Constructs an instance allocating memory for the specified dimensions.
      *
-     * @param width  a value of 1 or greater
-     * @param height a value of 1 or greater
-     * @param data   the data to be stored in the raster.
+     * @param width  A value of 1 or greater
+     * @param height A value of 1 or greater
+     * @param data   The data to be stored in the raster.
      */
     public TiffRasterDataInt(final int width, final int height, final int[] data) {
         super(width, height, 1);
@@ -206,7 +206,7 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
      *
      * @param x     integer coordinate in the columnar direction
      * @param y     integer coordinate in the row direction
-     * @param value the value to be stored at the specified location
+     * @param value The value to be stored at the specified location
      */
     @Override
     public void setIntValue(final int x, final int y, final int value) {
@@ -219,7 +219,7 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
      * @param x     integer coordinate in the columnar direction
      * @param y     integer coordinate in the row direction
      * @param i     integer sample index (for data sets giving multiple samples per raster cell).
-     * @param value the value to be stored at the specified location
+     * @param value The value to be stored at the specified location
      */
     @Override
     public void setIntValue(final int x, final int y, final int i, final int value) {
@@ -231,7 +231,7 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
      *
      * @param x     integer coordinate in the columnar direction
      * @param y     integer coordinate in the row direction
-     * @param value the value to be stored at the specified location; potentially a Float&#46;NaN.
+     * @param value The value to be stored at the specified location; potentially a Float&#46;NaN.
      */
     @Override
     public void setValue(final int x, final int y, final float value) {
@@ -244,7 +244,7 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
      * @param x     integer coordinate in the columnar direction
      * @param y     integer coordinate in the row direction
      * @param i     integer sample index (for data sets giving multiple samples per raster cell).
-     * @param value the value to be stored at the specified location; potentially a Float&#46;NaN.
+     * @param value The value to be stored at the specified location; potentially a Float&#46;NaN.
      */
     @Override
     public void setValue(final int x, final int y, final int i, final float value) {

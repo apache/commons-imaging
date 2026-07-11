@@ -172,7 +172,7 @@ class ApacheImagingSpeedAndMemoryTest {
     /**
      * Create an instance of the speed and memory test class and execute a test loop for the specified file.
      *
-     * @param args the path to the file to be processed
+     * @param args The path to the file to be processed
      */
     public static void main(final String[] args) {
         if (ArrayUtils.isEmpty(args)) {
@@ -186,8 +186,8 @@ class ApacheImagingSpeedAndMemoryTest {
     /**
      * Loads the input file multiple times, measuring the time and memory use for each iteration.
      *
-     * @param fmt  a valid PrintStream for formatting the output
-     * @param name the path for the input image file to be tested
+     * @param fmt  A valid PrintStream for formatting the output
+     * @param name The path for the input image file to be tested
      */
     private void performTest(final PrintStream fmt, final String name) {
         final File target = new File(name);

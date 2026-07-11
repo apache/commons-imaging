@@ -55,7 +55,7 @@ public class AllocationRequestException extends ImagingRuntimeException {
      *
      * @param limit     The allocation limit.
      * @param request   The allocation request.
-     * @param throwable the cause (which is saved for later retrieval by the {@link #getCause()} method). (A {@code null} value is permitted, and indicates that
+     * @param throwable The cause (which is saved for later retrieval by the {@link #getCause()} method). (A {@code null} value is permitted, and indicates that
      *                  the cause is nonexistent or unknown.)
      */
     public AllocationRequestException(final int limit, final BigInteger request, final Throwable throwable) {
@@ -79,7 +79,7 @@ public class AllocationRequestException extends ImagingRuntimeException {
      *
      * @param limit     The allocation limit.
      * @param request   The allocation request.
-     * @param throwable the cause (which is saved for later retrieval by the {@link #getCause()} method). (A {@code null} value is permitted, and indicates that
+     * @param throwable The cause (which is saved for later retrieval by the {@link #getCause()} method). (A {@code null} value is permitted, and indicates that
      *                  the cause is nonexistent or unknown.)
      */
     public AllocationRequestException(final int limit, final long request, final Throwable throwable) {

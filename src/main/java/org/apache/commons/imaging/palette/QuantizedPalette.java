@@ -34,8 +34,8 @@ public class QuantizedPalette implements Palette {
     /**
      * Constructs a quantized palette.
      *
-     * @param subsets the color space subsets.
-     * @param precision the precision.
+     * @param subsets The color space subsets.
+     * @param precision The precision.
      */
     public QuantizedPalette(final List<ColorSpaceSubset> subsets, final int precision) {
         this.subsets = subsets == null ? Collections.emptyList() : Collections.unmodifiableList(subsets);

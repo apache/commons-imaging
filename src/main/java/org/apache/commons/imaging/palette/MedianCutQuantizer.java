@@ -44,8 +44,8 @@ public class MedianCutQuantizer {
     /**
      * Groups colors in the image into a palette of at most maxColors colors.
      *
-     * @param image the image to quantize.
-     * @param maxColors the maximum number of colors in the result.
+     * @param image The image to quantize.
+     * @param maxColors The maximum number of colors in the result.
      * @return A map of colors to their counts.
      */
     public Map<Integer, ColorCount> groupColors(final BufferedImage image, final int maxColors) {
@@ -100,9 +100,9 @@ public class MedianCutQuantizer {
     /**
      * Processes an image to create a palette using median cut quantization.
      *
-     * @param image the image to process.
-     * @param maxColors the maximum number of colors in the palette.
-     * @param medianCut the median cut algorithm to use.
+     * @param image The image to process.
+     * @param maxColors The maximum number of colors in the palette.
+     * @param medianCut The median cut algorithm to use.
      * @return The generated palette.
      * @throws ImagingException if an imaging error occurs.
      */

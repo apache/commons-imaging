@@ -32,8 +32,8 @@ public abstract class AbstractGenericSegment extends AbstractSegment {
     /**
      * Constructs a generic segment with the given marker and segment data.
      *
-     * @param marker the segment marker.
-     * @param bytes the segment data.
+     * @param marker The segment marker.
+     * @param bytes The segment data.
      */
     public AbstractGenericSegment(final int marker, final byte[] bytes) {
         super(marker, bytes.length);
@@ -44,9 +44,9 @@ public abstract class AbstractGenericSegment extends AbstractSegment {
     /**
      * Constructs a generic segment by reading from an input stream.
      *
-     * @param marker the segment marker.
-     * @param markerLength the length of the marker data.
-     * @param is the input stream to read from.
+     * @param marker The segment marker.
+     * @param markerLength The length of the marker data.
+     * @param is The input stream to read from.
      * @throws IOException if an I/O error occurs.
      */
     public AbstractGenericSegment(final int marker, final int markerLength, final InputStream is) throws IOException {
@@ -63,8 +63,8 @@ public abstract class AbstractGenericSegment extends AbstractSegment {
     /**
      * Dumps the segment data to a print writer.
      *
-     * @param pw the print writer.
-     * @param start the starting offset in the segment data.
+     * @param pw The print writer.
+     * @param start The starting offset in the segment data.
      */
     public void dump(final PrintWriter pw, final int start) {
         for (int i = 0; i < 50 && i + start < segmentData.length; i++) {

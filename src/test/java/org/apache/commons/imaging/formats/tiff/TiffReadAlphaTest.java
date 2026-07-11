@@ -42,7 +42,7 @@ class TiffReadAlphaTest {
     /**
      * Gets a file from the TIFF test directory that contains floating-point data.
      *
-     * @param name a valid file name
+     * @param name A valid file name
      * @return A valid file reference.
      */
     private File getTiffFile(final String name) {

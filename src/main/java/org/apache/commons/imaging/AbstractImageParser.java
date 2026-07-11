@@ -109,7 +109,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     /**
      * Constructs a new instance.
      *
-     * @param byteOrder the byte order.
+     * @param byteOrder The byte order.
      */
     public AbstractImageParser(final ByteOrder byteOrder) {
         super(byteOrder);

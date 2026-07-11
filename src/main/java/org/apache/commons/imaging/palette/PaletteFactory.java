@@ -61,7 +61,7 @@ public class PaletteFactory {
     /**
      * Counts the number of distinct transparent colors in an image.
      *
-     * @param src the source image.
+     * @param src The source image.
      * @return 0 if no transparent colors, 1 if one transparent color, 2 if more than one.
      */
     public int countTransparentColors(final BufferedImage src) {
@@ -98,7 +98,7 @@ public class PaletteFactory {
     /**
      * Counts the number of distinct transparent colors in an RGB array.
      *
-     * @param rgbs the RGB values.
+     * @param rgbs The RGB values.
      * @return 0 if no transparent colors, 1 if one transparent color, 2 if more than one.
      */
     public int countTrasparentColors(final int[] rgbs) {
@@ -294,7 +294,7 @@ public class PaletteFactory {
     /**
      * Checks if the image has transparency.
      *
-     * @param src the source image.
+     * @param src The source image.
      * @return true if the image has any transparency, false otherwise.
      */
     public boolean hasTransparency(final BufferedImage src) {
@@ -304,8 +304,8 @@ public class PaletteFactory {
     /**
      * Checks if the image has transparency below a threshold.
      *
-     * @param src the source image.
-     * @param threshold the alpha threshold (0-255).
+     * @param src The source image.
+     * @param threshold The alpha threshold (0-255).
      * @return true if any pixel has alpha below threshold, false otherwise.
      */
     public boolean hasTransparency(final BufferedImage src, final int threshold) {
@@ -331,7 +331,7 @@ public class PaletteFactory {
     /**
      * Checks if the image is grayscale.
      *
-     * @param src the source image.
+     * @param src The source image.
      * @return true if the image is grayscale, false otherwise.
      */
     public boolean isGrayscale(final BufferedImage src) {
@@ -362,7 +362,7 @@ public class PaletteFactory {
      * Builds an exact complete opaque palette containing all the colors in {@code src}, using an algorithm that is faster than
      * {@linkplain #makeExactRgbPaletteSimple} for large images but uses 2 mebibytes of working memory. Treats all the colors as opaque.
      *
-     * @param src the image whose palette to build
+     * @param src The image whose palette to build
      * @return The palette
      */
     public Palette makeExactRgbPaletteFancy(final BufferedImage src) {
@@ -418,8 +418,8 @@ public class PaletteFactory {
      * Builds an exact complete opaque palette containing all the colors in {@code src}, and fails by returning {@code null} if there are more than {@code max}
      * colors necessary to do this.
      *
-     * @param src the image whose palette to build
-     * @param max the maximum number of colors the palette can contain
+     * @param src The image whose palette to build
+     * @param max The maximum number of colors the palette can contain
      * @return The complete palette of {@code max} or less colors, or {@code null} if more than {@code max} colors are necessary
      */
     public SimplePalette makeExactRgbPaletteSimple(final BufferedImage src, final int max) {
@@ -455,9 +455,9 @@ public class PaletteFactory {
      * boxes are split along the longest axis, with each step splitting the box. All bits in each component are used. The Algorithm is slower and seems exact
      * than {@linkplain #makeQuantizedRgbPalette(BufferedImage, int)}.
      *
-     * @param src         the image whose palette to build
+     * @param src         The image whose palette to build
      * @param transparent whether to consider the alpha values
-     * @param max         the maximum number of colors the palette can contain
+     * @param max         The maximum number of colors the palette can contain
      * @return The palette of at most {@code max} colors
      * @throws ImagingException if it fails to process the palette
      */
@@ -470,8 +470,8 @@ public class PaletteFactory {
      * component, and works by splitting the color bounding box most heavily populated by colors along the component which splits the colors in that box most
      * evenly.
      *
-     * @param src the image whose palette to build
-     * @param max the maximum number of colors the palette can contain
+     * @param src The image whose palette to build
+     * @param max The maximum number of colors the palette can contain
      * @return The palette of at most {@code max} colors
      */
     public Palette makeQuantizedRgbPalette(final BufferedImage src, final int max) {

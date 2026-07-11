@@ -40,7 +40,7 @@ public class UncompressedDataReader implements DataReader {
     /**
      * Constructs a new uncompressed data reader.
      *
-     * @param dataParser the data parser.
+     * @param dataParser The data parser.
      */
     public UncompressedDataReader(final AbstractDataParser dataParser) {
         this.dataParser = dataParser;

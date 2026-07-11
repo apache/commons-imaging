@@ -37,8 +37,8 @@ class TiffCcittTest extends AbstractTiffTest {
      * Generates the next combination of elements in the sequence array, with each element having a maximum value of max. Initially, the sequence should be set
      * to minimum values of each element.
      *
-     * @param sequence the array of elements to update
-     * @param max      the maximum value of each element in the sequence
+     * @param sequence The array of elements to update
+     * @param max      The maximum value of each element in the sequence
      * @return false if there is no more combinations (ie. nothing was done), true otherwise
      */
     private static boolean nextCombination(final int[] sequence, final int max) {

@@ -65,8 +65,8 @@ public final class PhotometricInterpreterFloat extends AbstractPhotometricInterp
      * valueWhite. Note that the two values may be given in either ascending order or descending order, but they must not be equal. Infinite values will not
      * result in proper numerical computations.
      *
-     * @param valueBlack the value associated with the dark side of the gray scale
-     * @param valueWhite the value associated with the light side of the gray scale
+     * @param valueBlack The value associated with the dark side of the gray scale
+     * @param valueWhite The value associated with the light side of the gray scale
      */
     public PhotometricInterpreterFloat(final float valueBlack, final float valueWhite) {
         // The abstract base class requires that the following fields
@@ -98,7 +98,7 @@ public final class PhotometricInterpreterFloat extends AbstractPhotometricInterp
      * change in the future. Therefore, it is not recommended. The exception in the use of single-value palette entries which may be used to override the
      * specifications for ranges.
      *
-     * @param paletteEntries a valid, non-empty list of palette entries
+     * @param paletteEntries A valid, non-empty list of palette entries
      */
     public PhotometricInterpreterFloat(final List<PaletteEntry> paletteEntries) {
         // The abstract base class requires that the following fields
@@ -239,7 +239,7 @@ public final class PhotometricInterpreterFloat extends AbstractPhotometricInterp
      * Provides a method for mapping a pixel value to an integer (ARGB) value. This method is not defined for the standard photometric interpreters and is
      * provided as a convenience to applications that are processing data outside the standard TIFF image-reading modules.
      *
-     * @param f the floating point value to be mapped to an ARGB value
+     * @param f The floating point value to be mapped to an ARGB value
      * @return A valid ARGB value, or zero if no palette specification covers the input value.
      */
     public int mapValueToArgb(final float f) {

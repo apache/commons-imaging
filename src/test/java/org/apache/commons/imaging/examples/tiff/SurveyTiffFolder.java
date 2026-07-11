@@ -122,7 +122,7 @@ public class SurveyTiffFolder {
     }
 
     /**
-     * @param args the command line arguments
+     * @param args The command line arguments
      */
     public static void main(final String[] args) {
         if (args.length < 1) {

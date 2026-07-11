@@ -30,10 +30,10 @@ public class TagInfoLongs extends TagInfo {
     /**
      * Constructs a new instance.
      *
-     * @param name the tag name.
-     * @param tag the tag number.
-     * @param length the length.
-     * @param directoryType the directory type.
+     * @param name The tag name.
+     * @param tag The tag number.
+     * @param length The length.
+     * @param directoryType The directory type.
      */
     public TagInfoLongs(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
         super(name, tag, AbstractFieldType.LONG, length, directoryType);
@@ -42,10 +42,10 @@ public class TagInfoLongs extends TagInfo {
     /**
      * Constructs a new instance.
      *
-     * @param name the tag name.
-     * @param tag the tag number.
-     * @param length the length.
-     * @param directoryType the directory type.
+     * @param name The tag name.
+     * @param tag The tag number.
+     * @param length The length.
+     * @param directoryType The directory type.
      * @param isOffset whether this is an offset tag.
      */
     public TagInfoLongs(final String name, final int tag, final int length, final TiffDirectoryType directoryType, final boolean isOffset) {
@@ -55,8 +55,8 @@ public class TagInfoLongs extends TagInfo {
     /**
      * Encodes values.
      *
-     * @param byteOrder the byte order.
-     * @param values the values.
+     * @param byteOrder The byte order.
+     * @param values The values.
      * @return The encoded bytes.
      */
     public byte[] encodeValue(final ByteOrder byteOrder, final int... values) {
@@ -66,8 +66,8 @@ public class TagInfoLongs extends TagInfo {
     /**
      * Gets the values.
      *
-     * @param byteOrder the byte order.
-     * @param bytes the bytes.
+     * @param byteOrder The byte order.
+     * @param bytes The bytes.
      * @return The integer array values.
      */
     public int[] getValue(final ByteOrder byteOrder, final byte[] bytes) {

@@ -32,9 +32,9 @@ public abstract class AbstractTiffElement {
         /**
          * Constructs a new data element.
          *
-         * @param offset the offset in the TIFF file.
-         * @param length the length of the element.
-         * @param data the element data.
+         * @param offset The offset in the TIFF file.
+         * @param length The length of the element.
+         * @param data The element data.
          */
         public DataElement(final long offset, final int length, final byte[] data) {
             super(offset, length);
@@ -69,8 +69,8 @@ public abstract class AbstractTiffElement {
         /**
          * Constructs a new stub element.
          *
-         * @param offset the offset in the TIFF file.
-         * @param length the length of the element.
+         * @param offset The offset in the TIFF file.
+         * @param length The length of the element.
          */
         public Stub(final long offset, final int length) {
             super(offset, length);
@@ -95,8 +95,8 @@ public abstract class AbstractTiffElement {
     /**
      * Constructs a new TIFF element.
      *
-     * @param offset the offset in the TIFF file.
-     * @param length the length of the element.
+     * @param offset The offset in the TIFF file.
+     * @param length The length of the element.
      */
     public AbstractTiffElement(final long offset, final int length) {
         this.offset = offset;

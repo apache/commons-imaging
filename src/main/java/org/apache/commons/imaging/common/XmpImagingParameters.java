@@ -48,7 +48,7 @@ public class XmpImagingParameters<E extends XmpImagingParameters<E>> extends Ima
     /**
      * Sets the XMP XML.
      *
-     * @param xmpXml the XMP XML.
+     * @param xmpXml The XMP XML.
      * @return this instance.
      */
     public E setXmpXml(final String xmpXml) {

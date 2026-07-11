@@ -63,8 +63,8 @@ public final class ImageBuilder {
     /**
      * Constructs an ImageBuilder instance.
      *
-     * @param width    the width of the image to be built
-     * @param height   the height of the image to be built
+     * @param width    The width of the image to be built
+     * @param height   The height of the image to be built
      * @param hasAlpha indicates whether the image has an alpha channel (the selection of alpha channel does not change the memory requirements for the
      *                 ImageBuilder or resulting BufferedImage.
      * @throws RasterFormatException if {@code width} or {@code height} are equal or less than zero
@@ -76,8 +76,8 @@ public final class ImageBuilder {
     /**
      * Constructs an ImageBuilder instance.
      *
-     * @param width                the width of the image to be built
-     * @param height               the height of the image to be built
+     * @param width                The width of the image to be built
+     * @param height               The height of the image to be built
      * @param hasAlpha             indicates whether the image has an alpha channel (the selection of alpha channel does not change the memory requirements for
      *                             the ImageBuilder or resulting BufferedImage.
      * @param isAlphaPremultiplied indicates whether alpha values are pre-multiplied; this setting is relevant only if alpha is true.
@@ -95,10 +95,10 @@ public final class ImageBuilder {
     /**
      * Performs a check on the specified sub-region to verify that it is within the constraints of the ImageBuilder bounds.
      *
-     * @param x the X coordinate of the upper-left corner of the specified rectangular region
-     * @param y the Y coordinate of the upper-left corner of the specified rectangular region
-     * @param w the width of the specified rectangular region
-     * @param h the height of the specified rectangular region
+     * @param x The X coordinate of the upper-left corner of the specified rectangular region
+     * @param y The Y coordinate of the upper-left corner of the specified rectangular region
+     * @param w The width of the specified rectangular region
+     * @param h The height of the specified rectangular region
      * @throws RasterFormatException if width or height are equal or less than zero, or if the subimage is outside raster (on x or y axis)
      */
     private void checkBounds(final int x, final int y, final int w, final int h) {
@@ -160,8 +160,8 @@ public final class ImageBuilder {
      * Gets the RGB or ARGB value for the pixel at the position (x, y) within the image builder pixel field. For performance reasons no bounds checking is
      * applied.
      *
-     * @param x the X coordinate of the pixel to be read
-     * @param y the Y coordinate of the pixel to be read
+     * @param x The X coordinate of the pixel to be read
+     * @param y The Y coordinate of the pixel to be read
      * @return The RGB or ARGB pixel value
      */
     public int getRgb(final int x, final int y) {
@@ -174,10 +174,10 @@ public final class ImageBuilder {
      * within the bounds defined by the ImageBuilder, this method will throw a RasterFormatException. This runtime-exception behavior is consistent with the
      * behavior of the getSubimage method provided by BufferedImage.
      *
-     * @param x the X coordinate of the upper-left corner of the specified rectangular region
-     * @param y the Y coordinate of the upper-left corner of the specified rectangular region
-     * @param w the width of the specified rectangular region
-     * @param h the height of the specified rectangular region
+     * @param x The X coordinate of the upper-left corner of the specified rectangular region
+     * @param y The Y coordinate of the upper-left corner of the specified rectangular region
+     * @param w The width of the specified rectangular region
+     * @param h The height of the specified rectangular region
      * @return A BufferedImage that constructed from the data within the specified rectangular region
      * @throws RasterFormatException f the specified area is not contained within this ImageBuilder
      */
@@ -203,10 +203,10 @@ public final class ImageBuilder {
      * that is not entirely contained within the bounds defined by the ImageBuilder, this method will throw a RasterFormatException. This run- time exception is
      * consistent with the behavior of the getSubimage method provided by BufferedImage.
      *
-     * @param x the X coordinate of the upper-left corner of the specified rectangular region
-     * @param y the Y coordinate of the upper-left corner of the specified rectangular region
-     * @param w the width of the specified rectangular region
-     * @param h the height of the specified rectangular region
+     * @param x The X coordinate of the upper-left corner of the specified rectangular region
+     * @param y The Y coordinate of the upper-left corner of the specified rectangular region
+     * @param w The width of the specified rectangular region
+     * @param h The height of the specified rectangular region
      * @return A valid instance of the specified width and height.
      * @throws RasterFormatException if the specified area is not contained within this ImageBuilder
      */
@@ -248,9 +248,9 @@ public final class ImageBuilder {
     /**
      * Sets the RGB or ARGB value for the pixel at position (x, y) within the image builder pixel field. For performance reasons, no bounds checking is applied.
      *
-     * @param x    the X coordinate of the pixel to be set.
-     * @param y    the Y coordinate of the pixel to be set.
-     * @param argb the RGB or ARGB value to be stored.
+     * @param x    The X coordinate of the pixel to be set.
+     * @param y    The Y coordinate of the pixel to be set.
+     * @param argb The RGB or ARGB value to be stored.
      * @throws ArithmeticException      if the index computation overflows an int.
      * @throws IllegalArgumentException if the resulting index is illegal.
      */

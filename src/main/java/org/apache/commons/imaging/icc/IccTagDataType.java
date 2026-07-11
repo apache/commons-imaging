@@ -25,8 +25,8 @@ interface IccTagDataType {
     /**
      * Dumps the tag data type information.
      *
-     * @param prefix the prefix for output.
-     * @param bytes the data bytes.
+     * @param prefix The prefix for output.
+     * @param bytes The data bytes.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
      */

@@ -34,8 +34,8 @@ public final class PaletteEntryForValue implements PaletteEntry {
      * <p>
      * This class will support color-assignments for Float.NaN.
      *
-     * @param value the color value associated with this palette entry; a Float&#46;NaN is allowed.
-     * @param color the color assigned to value
+     * @param value The color value associated with this palette entry; a Float&#46;NaN is allowed.
+     * @param color The color assigned to value
      */
     public PaletteEntryForValue(final float value, final Color color) {
         if (color == null) {

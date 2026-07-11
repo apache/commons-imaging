@@ -53,9 +53,9 @@ public class PhotometricInterpreterYCbCr extends AbstractPhotometricInterpreter 
     /**
      * Limits a value to a specified range.
      *
-     * @param value the value to limit.
-     * @param min the minimum value.
-     * @param max the maximum value.
+     * @param value The value to limit.
+     * @param min The minimum value.
+     * @param max The maximum value.
      * @return The limited value.
      */
     public static int limit(final int value, final int min, final int max) {
@@ -65,11 +65,11 @@ public class PhotometricInterpreterYCbCr extends AbstractPhotometricInterpreter 
     /**
      * Constructs a new YCbCr photometric interpreter.
      *
-     * @param samplesPerPixel the samples per pixel.
-     * @param bitsPerSample the bits per sample.
-     * @param predictor the predictor.
-     * @param width the image width.
-     * @param height the image height.
+     * @param samplesPerPixel The samples per pixel.
+     * @param bitsPerSample The bits per sample.
+     * @param predictor The predictor.
+     * @param width The image width.
+     * @param height The image height.
      */
     public PhotometricInterpreterYCbCr(final int samplesPerPixel, final int[] bitsPerSample, final int predictor, final int width, final int height) {
         super(samplesPerPixel, bitsPerSample, predictor, width, height);

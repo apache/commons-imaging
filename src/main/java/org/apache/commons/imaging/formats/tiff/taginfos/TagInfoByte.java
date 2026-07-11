@@ -30,10 +30,10 @@ public class TagInfoByte extends TagInfo {
     /**
      * Constructs a new instance.
      *
-     * @param name the tag name.
-     * @param tag the tag number.
-     * @param abstractFieldType the field type.
-     * @param directoryType the directory type.
+     * @param name The tag name.
+     * @param tag The tag number.
+     * @param abstractFieldType The field type.
+     * @param directoryType The directory type.
      */
     public TagInfoByte(final String name, final int tag, final AbstractFieldType abstractFieldType, final TiffDirectoryType directoryType) {
         super(name, tag, abstractFieldType, 1, directoryType);
@@ -42,10 +42,10 @@ public class TagInfoByte extends TagInfo {
     /**
      * Constructs a new instance.
      *
-     * @param name the tag name.
-     * @param tag the tag number.
-     * @param abstractFieldTypes the field types.
-     * @param directoryType the directory type.
+     * @param name The tag name.
+     * @param tag The tag number.
+     * @param abstractFieldTypes The field types.
+     * @param directoryType The directory type.
      */
     public TagInfoByte(final String name, final int tag, final List<AbstractFieldType> abstractFieldTypes, final TiffDirectoryType directoryType) {
         super(name, tag, abstractFieldTypes, 1, directoryType);
@@ -54,9 +54,9 @@ public class TagInfoByte extends TagInfo {
     /**
      * Constructs a new instance.
      *
-     * @param name the tag name.
-     * @param tag the tag number.
-     * @param directoryType the directory type.
+     * @param name The tag name.
+     * @param tag The tag number.
+     * @param directoryType The directory type.
      */
     public TagInfoByte(final String name, final int tag, final TiffDirectoryType directoryType) {
         super(name, tag, AbstractFieldType.BYTE, 1, directoryType);
@@ -65,8 +65,8 @@ public class TagInfoByte extends TagInfo {
     /**
      * Encodes a value.
      *
-     * @param byteOrder the byte order.
-     * @param value the value.
+     * @param byteOrder The byte order.
+     * @param value The value.
      * @return The encoded bytes.
      */
     public byte[] encodeValue(final ByteOrder byteOrder, final byte value) {

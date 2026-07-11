@@ -27,10 +27,10 @@ public class TagInfoAsciiOrRational extends TagInfo {
     /**
      * Constructs a new instance.
      *
-     * @param name the tag name.
-     * @param tag the tag number.
-     * @param length the length.
-     * @param directoryType the directory type.
+     * @param name The tag name.
+     * @param tag The tag number.
+     * @param length The length.
+     * @param directoryType The directory type.
      */
     public TagInfoAsciiOrRational(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
         super(name, tag, AbstractFieldType.ASCII_OR_RATIONAL, length, directoryType, false);

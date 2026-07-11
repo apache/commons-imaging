@@ -52,7 +52,7 @@ public class PsdHeaderInfo {
     /**
      * Constructs PSD header info.
      *
-     * @param version the version.
+     * @param version The version.
      * @param reserved reserved bytes.
      * @param channels number of channels.
      * @param rows number of rows.
@@ -89,7 +89,7 @@ public class PsdHeaderInfo {
     /**
      * Dumps header info to print writer.
      *
-     * @param pw the print writer.
+     * @param pw The print writer.
      */
     public void dump(final PrintWriter pw) {
         pw.println("");

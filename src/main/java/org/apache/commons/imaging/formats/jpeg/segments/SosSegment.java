@@ -51,9 +51,9 @@ public final class SosSegment extends AbstractSegment {
         /**
          * Constructs a component.
          *
-         * @param scanComponentSelector the scan component selector.
-         * @param dcCodingTableSelector the DC coding table selector.
-         * @param acCodingTableSelector the AC coding table selector.
+         * @param scanComponentSelector The scan component selector.
+         * @param dcCodingTableSelector The DC coding table selector.
+         * @param acCodingTableSelector The AC coding table selector.
          */
         public Component(final int scanComponentSelector, final int dcCodingTableSelector, final int acCodingTableSelector) {
             this.scanComponentSelector = scanComponentSelector;
@@ -84,8 +84,8 @@ public final class SosSegment extends AbstractSegment {
     /**
      * Constructs a SOS segment.
      *
-     * @param marker the marker.
-     * @param segmentData the segment data.
+     * @param marker The marker.
+     * @param segmentData The segment data.
      * @throws IOException if an I/O error occurs.
      */
     public SosSegment(final int marker, final byte[] segmentData) throws IOException {
@@ -95,9 +95,9 @@ public final class SosSegment extends AbstractSegment {
     /**
      * Constructs a SOS segment.
      *
-     * @param marker the marker.
-     * @param markerLength the marker length.
-     * @param is the input stream.
+     * @param marker The marker.
+     * @param markerLength The marker length.
+     * @param is The input stream.
      * @throws IOException if an I/O error occurs.
      */
     public SosSegment(final int marker, final int markerLength, final InputStream is) throws IOException {
@@ -150,7 +150,7 @@ public final class SosSegment extends AbstractSegment {
     /**
      * Gets a component at the specified index.
      *
-     * @param index the component index
+     * @param index The component index
      * @return The component
      */
     public Component getComponents(final int index) {

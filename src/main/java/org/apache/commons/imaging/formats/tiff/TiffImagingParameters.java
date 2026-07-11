@@ -226,7 +226,7 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
     /**
      * Sets the compression algorithm.
      *
-     * @param compression the compression algorithm.
+     * @param compression The compression algorithm.
      * @return this instance.
      */
     public TiffImagingParameters setCompression(final Integer compression) {
@@ -237,7 +237,7 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
     /**
      * Sets the custom photometric interpreter.
      *
-     * @param customPhotometricInterpreter the custom photometric interpreter.
+     * @param customPhotometricInterpreter The custom photometric interpreter.
      * @return this instance.
      */
     public TiffImagingParameters setCustomPhotometricInterpreter(final AbstractPhotometricInterpreter customPhotometricInterpreter) {
@@ -248,7 +248,7 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
     /**
      * Sets the LZW compression block size.
      *
-     * @param lzwCompressionBlockSize the LZW compression block size.
+     * @param lzwCompressionBlockSize The LZW compression block size.
      * @return this instance.
      */
     public TiffImagingParameters setLzwCompressionBlockSize(final Integer lzwCompressionBlockSize) {
@@ -309,7 +309,7 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
     /**
      * Sets the T.4 options.
      *
-     * @param t4Options the T.4 options.
+     * @param t4Options The T.4 options.
      * @return this instance.
      */
     public TiffImagingParameters setT4Options(final Integer t4Options) {
@@ -320,7 +320,7 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
     /**
      * Sets the T.6 options.
      *
-     * @param t6Options the T.6 options.
+     * @param t6Options The T.6 options.
      * @return this instance.
      */
     public TiffImagingParameters setT6Options(final Integer t6Options) {

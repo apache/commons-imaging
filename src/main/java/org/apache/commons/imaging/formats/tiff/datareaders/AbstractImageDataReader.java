@@ -165,15 +165,15 @@ public abstract class AbstractImageDataReader {
     /**
      * Constructs a new image data reader.
      *
-     * @param directory the TIFF directory.
-     * @param photometricInterpreter the photometric interpreter.
-     * @param bitsPerSample the bits per sample array.
-     * @param predictor the predictor value.
-     * @param samplesPerPixel the number of samples per pixel.
-     * @param sampleFormat the sample format.
-     * @param width the image width.
-     * @param height the image height.
-     * @param planarConfiguration the planar configuration.
+     * @param directory The TIFF directory.
+     * @param photometricInterpreter The photometric interpreter.
+     * @param bitsPerSample The bits per sample array.
+     * @param predictor The predictor value.
+     * @param samplesPerPixel The number of samples per pixel.
+     * @param sampleFormat The sample format.
+     * @param width The image width.
+     * @param height The image height.
+     * @param planarConfiguration The planar configuration.
      */
     public AbstractImageDataReader(final TiffDirectory directory, final AbstractPhotometricInterpreter photometricInterpreter, final int[] bitsPerSample,
             final int predictor, final int samplesPerPixel, final int sampleFormat, final int width, final int height,
@@ -194,7 +194,7 @@ public abstract class AbstractImageDataReader {
     /**
      * Applies the predictor to the samples.
      *
-     * @param samples the samples array.
+     * @param samples The samples array.
      * @return The modified samples array.
      */
     protected int[] applyPredictor(final int[] samples) {
@@ -212,10 +212,10 @@ public abstract class AbstractImageDataReader {
     /**
      * Applies the predictor to a block of data.
      *
-     * @param width the block width.
-     * @param height the block height.
-     * @param nSamplesPerPixel the number of samples per pixel.
-     * @param p the data block.
+     * @param width The block width.
+     * @param height The block height.
+     * @param nSamplesPerPixel The number of samples per pixel.
+     * @param p The data block.
      */
     protected void applyPredictorToBlock(final int width, final int height, final int nSamplesPerPixel, final byte[] p) {
         final int k = width * nSamplesPerPixel;
@@ -231,11 +231,11 @@ public abstract class AbstractImageDataReader {
     /**
      * Decompresses compressed image data.
      *
-     * @param compressedInput the compressed input data.
-     * @param compression the compression type.
-     * @param expectedSize the expected size of the decompressed data.
-     * @param tileWidth the tile width.
-     * @param tileHeight the tile height.
+     * @param compressedInput The compressed input data.
+     * @param compression The compression type.
+     * @param expectedSize The expected size of the decompressed data.
+     * @param tileWidth The tile width.
+     * @param tileHeight The tile height.
      * @return The decompressed data.
      * @throws ImagingException if the image format is invalid.
      * @throws IOException if an I/O error occurs.
@@ -321,8 +321,8 @@ public abstract class AbstractImageDataReader {
     /**
      * Reads samples and returns them in an int array.
      *
-     * @param bis    the stream to read from.
-     * @param result the samples array to populate, must be the same length as bitsPerSample.length.
+     * @param bis    The stream to read from.
+     * @param result The samples array to populate, must be the same length as bitsPerSample.length.
      * @throws IOException
      */
     void getSamplesAsBytes(final BitInputStream bis, final int[] result) throws IOException {
@@ -345,7 +345,7 @@ public abstract class AbstractImageDataReader {
     /**
      * Checks if all the bits per sample entries are the same size.
      *
-     * @param size the size to check.
+     * @param size The size to check.
      * @return true if all the bits per sample entries are the same.
      */
     protected boolean isHomogenous(final int size) {
@@ -360,7 +360,7 @@ public abstract class AbstractImageDataReader {
     /**
      * Reads the image data from the IFD associated with this instance of ImageDataReader using the optional sub-image specification if desired.
      *
-     * @param subImageSpecification a rectangle describing a sub-region of the image for reading, or a null if the whole image is to be read.
+     * @param subImageSpecification A rectangle describing a sub-region of the image for reading, or a null if the whole image is to be read.
      * @param hasAlpha              indicates that the image has an alpha (transparency) channel (RGB color model only).
      * @param isAlphaPremultiplied  indicates that the image uses the associated alpha channel format (pre-multiplied alpha).
      * @return A valid instance containing the pixel data from the image.
@@ -395,12 +395,12 @@ public abstract class AbstractImageDataReader {
      * @param yBlock       coordinate of block relative to source data
      * @param blockWidth   width of block, in pixels
      * @param blockHeight  height of block in pixels
-     * @param blockData    the data for the block
+     * @param blockData    The data for the block
      * @param xRaster      coordinate of raster relative to source data
      * @param yRaster      coordinate of raster relative to source data
      * @param rasterWidth  width of the raster (always smaller than source data)
      * @param rasterHeight height of the raster (always smaller than source data)
-     * @param rasterData   the raster data.
+     * @param rasterData   The raster data.
      */
     void transferBlockToRaster(final int xBlock, final int yBlock, final int blockWidth, final int blockHeight, final int[] blockData, final int xRaster,
             final int yRaster, final int rasterWidth, final int rasterHeight, final int samplesPerPixel, final float[] rasterData) {
@@ -512,12 +512,12 @@ public abstract class AbstractImageDataReader {
      * @param yBlock       coordinate of block relative to source data.
      * @param blockWidth   width of block, in pixels.
      * @param blockHeight  height of block in pixels.
-     * @param blockData    the data for the block.
+     * @param blockData    The data for the block.
      * @param xRaster      coordinate of raster relative to source data.
      * @param yRaster      coordinate of raster relative to source data.
      * @param rasterWidth  width of the raster (always smaller than source data).
      * @param rasterHeight height of the raster (always smaller than source data).
-     * @param rasterData   the raster data.
+     * @param rasterData   The raster data.
      */
     void transferBlockToRaster(final int xBlock, final int yBlock, final int blockWidth, final int blockHeight, final int[] blockData, final int xRaster,
             final int yRaster, final int rasterWidth, final int rasterHeight, final int[] rasterData) {
@@ -593,12 +593,12 @@ public abstract class AbstractImageDataReader {
      * smaller in the cases where the tiles do not evenly divide the width (for example, a 256 pixel wide tile in a 257 pixel wide image would result in two
      * columns of tiles, the second column having only one column of pixels that were worth extracting.
      *
-     * @param width        the width of the data block to be extracted.
-     * @param height       the height of the data block to be extracted.
-     * @param scanSize     the number of pixels in a single row of the block.
-     * @param bytes        the raw bytes.
-     * @param bitsPerPixel the number of bits per sample, 32 or 64.
-     * @param byteOrder    the byte order for the source data.
+     * @param width        The width of the data block to be extracted.
+     * @param height       The height of the data block to be extracted.
+     * @param scanSize     The number of pixels in a single row of the block.
+     * @param bytes        The raw bytes.
+     * @param bitsPerPixel The number of bits per sample, 32 or 64.
+     * @param byteOrder    The byte order for the source data.
      * @return A valid array of integers in row major order, dimensions scan-size wide and height.
      * @throws ImagingException in the event of an invalid format.
      */
@@ -750,13 +750,13 @@ public abstract class AbstractImageDataReader {
      * parameter may be smaller in the cases where the tiles do not evenly divide the width (for example, a 256 pixel wide tile in a 257 pixel wide image would
      * result in two columns of tiles, the second column having only one column of pixels that were worth extracting.
      *
-     * @param width         the width of the data block to be extracted.
-     * @param height        the height of the data block to be extracted.
-     * @param scanSize      the number of pixels in a single row of the block.
-     * @param bytes         the raw bytes.
-     * @param predictor     the predictor specified by the source, only predictor 3 is supported.
-     * @param bitsPerSample the number of bits per sample, 32 or 64.
-     * @param byteOrder     the byte order for the source data
+     * @param width         The width of the data block to be extracted.
+     * @param height        The height of the data block to be extracted.
+     * @param scanSize      The number of pixels in a single row of the block.
+     * @param bytes         The raw bytes.
+     * @param predictor     The predictor specified by the source, only predictor 3 is supported.
+     * @param bitsPerSample The number of bits per sample, 32 or 64.
+     * @param byteOrder     The byte order for the source data
      * @return A valid array of integers in row major order, dimensions scan-size wide and height.
      */
     protected int[] unpackIntSamples(final int width, final int height, final int scanSize, final byte[] bytes, final int predictor, final int bitsPerSample,

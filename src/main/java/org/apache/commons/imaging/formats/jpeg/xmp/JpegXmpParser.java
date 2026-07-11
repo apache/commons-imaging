@@ -38,7 +38,7 @@ public class JpegXmpParser extends BinaryFileParser {
     /**
      * Checks if the segment data contains XMP metadata.
      *
-     * @param segmentData the segment data.
+     * @param segmentData The segment data.
      * @return true if this is an XMP segment, false otherwise.
      */
     public boolean isXmpJpegSegment(final byte[] segmentData) {
@@ -48,7 +48,7 @@ public class JpegXmpParser extends BinaryFileParser {
     /**
      * Parses XMP metadata from a JPEG segment.
      *
-     * @param segmentData the segment data.
+     * @param segmentData The segment data.
      * @return The XMP metadata as a string.
      * @throws ImagingException if the segment is not a valid XMP segment.
      */

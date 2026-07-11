@@ -95,9 +95,9 @@ public final class ColorXyz {
     /**
      * Constructs a new ColorXyz.
      *
-     * @param x the X tristimulus value.
-     * @param y the Y tristimulus value.
-     * @param z the Z tristimulus value.
+     * @param x The X tristimulus value.
+     * @param y The Y tristimulus value.
+     * @param z The Z tristimulus value.
      */
     public ColorXyz(final double x, final double y, final double z) {
         this.x = x;

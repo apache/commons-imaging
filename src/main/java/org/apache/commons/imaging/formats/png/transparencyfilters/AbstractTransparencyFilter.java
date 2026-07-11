@@ -40,8 +40,8 @@ public abstract class AbstractTransparencyFilter extends BinaryFileParser {
     /**
      * Filters a pixel's RGB value based on transparency information.
      *
-     * @param rgb the RGB value.
-     * @param index the pixel index.
+     * @param rgb The RGB value.
+     * @param index The pixel index.
      * @return The filtered RGB value.
      * @throws ImagingException if the image format is invalid.
      * @throws IOException if an I/O error occurs.

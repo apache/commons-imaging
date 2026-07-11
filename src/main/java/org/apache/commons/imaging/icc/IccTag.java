@@ -55,10 +55,10 @@ public class IccTag {
     /**
      * Constructs a new ICC tag.
      *
-     * @param signature the tag signature.
-     * @param offset the offset of the tag data.
-     * @param length the length of the tag data.
-     * @param fIccTagType the ICC tag type.
+     * @param signature The tag signature.
+     * @param offset The offset of the tag data.
+     * @param length The length of the tag data.
+     * @param fIccTagType The ICC tag type.
      */
     public IccTag(final int signature, final int offset, final int length, final IccTagType fIccTagType) {
         this.signature = signature;
@@ -70,8 +70,8 @@ public class IccTag {
     /**
      * Dumps the tag information to the specified PrintWriter.
      *
-     * @param pw the PrintWriter to write to.
-     * @param prefix the prefix to use for output lines.
+     * @param pw The PrintWriter to write to.
+     * @param prefix The prefix to use for output lines.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
      */
@@ -106,7 +106,7 @@ public class IccTag {
     /**
      * Dumps the tag information to the logger.
      *
-     * @param prefix the prefix to use for output lines.
+     * @param prefix The prefix to use for output lines.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
      */
@@ -133,7 +133,7 @@ public class IccTag {
     /**
      * Sets the tag data.
      *
-     * @param bytes the tag data bytes.
+     * @param bytes The tag data bytes.
      * @throws IOException if an I/O error occurs.
      */
     public void setData(final byte[] bytes) throws IOException {

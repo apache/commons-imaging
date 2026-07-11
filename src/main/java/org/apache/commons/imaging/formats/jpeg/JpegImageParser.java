@@ -76,7 +76,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
     /**
      * Checks if the segment is an EXIF APP1 segment.
      *
-     * @param segment the segment.
+     * @param segment The segment.
      * @return true if EXIF APP1 segment, false otherwise.
      */
     public static boolean isExifApp1Segment(final AbstractGenericSegment segment) {
@@ -238,8 +238,8 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
     /**
      * Gets EXIF metadata.
      *
-     * @param byteSource the byte source.
-     * @param params the TIFF imaging parameters.
+     * @param byteSource The byte source.
+     * @param params The TIFF imaging parameters.
      * @return The EXIF metadata or null if not found.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
@@ -261,7 +261,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
     /**
      * Gets raw EXIF data.
      *
-     * @param byteSource the byte source.
+     * @param byteSource The byte source.
      * @return The raw EXIF data or null if not found.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
@@ -692,8 +692,8 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
     /**
      * Gets Photoshop metadata.
      *
-     * @param byteSource the byte source.
-     * @param params the imaging parameters.
+     * @param byteSource The byte source.
+     * @param params The imaging parameters.
      * @return The Photoshop metadata or null if not found.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
@@ -781,7 +781,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
     /**
      * Checks if the image has an EXIF segment.
      *
-     * @param byteSource the byte source.
+     * @param byteSource The byte source.
      * @return true if EXIF segment is present, false otherwise.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
@@ -826,7 +826,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
     /**
      * Checks if the image has an IPTC segment.
      *
-     * @param byteSource the byte source.
+     * @param byteSource The byte source.
      * @return true if IPTC segment is present, false otherwise.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
@@ -871,7 +871,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
     /**
      * Checks if the image has an XMP segment.
      *
-     * @param byteSource the byte source.
+     * @param byteSource The byte source.
      * @return true if XMP segment is present, false otherwise.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
@@ -919,8 +919,8 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
     /**
      * Reads segments from JPEG image.
      *
-     * @param byteSource the byte source.
-     * @param markers the markers to read.
+     * @param byteSource The byte source.
+     * @param markers The markers to read.
      * @param returnAfterFirst whether to return after first match.
      * @return The list of segments.
      * @throws ImagingException if an imaging error occurs.

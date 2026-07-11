@@ -31,8 +31,8 @@ public class TiffRasterStatistics {
     /**
      * Constructs an instance of this class, tabulating results from the input raster data.
      *
-     * @param raster        the input data
-     * @param excludedValue an optional value to ignore; use Float&#46;NaN if no value is to be ignored.
+     * @param raster        The input data
+     * @param excludedValue An optional value to ignore; use Float&#46;NaN if no value is to be ignored.
      */
     TiffRasterStatistics(final AbstractTiffRasterData raster, final float excludedValue) {
         this.excludedValue = excludedValue;

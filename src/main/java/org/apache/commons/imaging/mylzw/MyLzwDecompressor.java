@@ -39,15 +39,15 @@ public final class MyLzwDecompressor {
         /**
          * Called for each code.
          *
-         * @param code the code.
+         * @param code The code.
          */
         void code(int code);
 
         /**
          * Called on initialization.
          *
-         * @param clearCode the clear code.
-         * @param eoiCode the end-of-information code.
+         * @param clearCode The clear code.
+         * @param eoiCode The end-of-information code.
          */
         void init(int clearCode, int eoiCode);
     }

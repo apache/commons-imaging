@@ -40,9 +40,9 @@ public class BasicCParser {
      * Helper-function for {@code unescapeString()}.
      * </p>
      *
-     * @param i             the index of the escape-sequence in the string
-     * @param stringBuilder the stringBuilder to append the escape-char to
-     * @param string        the string whose chars are parsed
+     * @param i             The index of the escape-sequence in the string
+     * @param stringBuilder The stringBuilder to append the escape-char to
+     * @param string        The string whose chars are parsed
      * @return The new index i
      * @since 1.0-alpha3
      */
@@ -70,9 +70,9 @@ public class BasicCParser {
      * Helper-function for {@code unescapeString()}.
      * </p>
      *
-     * @param i             the index of the escape-sequence in the string
-     * @param stringBuilder the stringBuilder to append the escape-char to
-     * @param string        the string whose chars are parsed
+     * @param i             The index of the escape-sequence in the string
+     * @param stringBuilder The stringBuilder to append the escape-char to
+     * @param string        The string whose chars are parsed
      * @return The new index i
      * @since 1.0-alpha3
      */
@@ -101,9 +101,9 @@ public class BasicCParser {
      * Helper-function for {@code unescapeString()}.
      * </p>
      *
-     * @param i             the index of the escape-char in the string
-     * @param stringBuilder the stringBuilder to append the escape-char to
-     * @param string        the string whose chars are parsed
+     * @param i             The index of the escape-char in the string
+     * @param stringBuilder The stringBuilder to append the escape-char to
+     * @param string        The string whose chars are parsed
      * @return The new index i
      * @since 1.0-alpha3
      */
@@ -163,7 +163,7 @@ public class BasicCParser {
     /**
      * Preprocesses a C-style input stream by handling comments, strings, and directives.
      *
-     * @param is the input stream to preprocess.
+     * @param is The input stream to preprocess.
      * @param firstComment StringBuilder to capture the first comment, or null to ignore.
      * @param defines map to store preprocessor definitions.
      * @return The preprocessed output as a ByteArrayOutputStream.
@@ -353,7 +353,7 @@ public class BasicCParser {
     /**
      * Tokenizes a row by splitting on whitespace.
      *
-     * @param row the row to tokenize.
+     * @param row The row to tokenize.
      * @return The array of tokens.
      */
     public static String[] tokenizeRow(final String row) {
@@ -377,8 +377,8 @@ public class BasicCParser {
     /**
      * Unescapes a C-style string.
      *
-     * @param stringBuilder the builder to append unescaped characters to.
-     * @param string the string to unescape.
+     * @param stringBuilder The builder to append unescaped characters to.
+     * @param string The string to unescape.
      * @throws ImagingException if parsing fails.
      */
     public static void unescapeString(final StringBuilder stringBuilder, final String string) throws ImagingException {
@@ -412,7 +412,7 @@ public class BasicCParser {
     /**
      * Constructs a new BasicCParser.
      *
-     * @param is the input stream to parse.
+     * @param is The input stream to parse.
      */
     public BasicCParser(final ByteArrayInputStream is) {
         this.is = new PushbackInputStream(is);

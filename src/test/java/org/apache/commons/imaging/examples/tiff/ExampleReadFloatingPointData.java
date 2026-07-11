@@ -54,7 +54,7 @@ public class ExampleReadFloatingPointData {
     /**
      * Reads the content of a TIFF file containing floating-point data and obtains some simple statistics
      *
-     * @param args the command line arguments giving the path to an input TIFF file
+     * @param args The command line arguments giving the path to an input TIFF file
      * @throws org.apache.commons.imaging.ImagingException in the event of an internal data format or version compatibility error reading the image.
      * @throws IOException                                 in the event of an I/O error.
      */

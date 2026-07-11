@@ -32,8 +32,8 @@ public class PhotoshopApp13Data {
     /**
      * Constructs Photoshop APP13 data.
      *
-     * @param records the IPTC records.
-     * @param rawBlocks the raw IPTC blocks.
+     * @param records The IPTC records.
+     * @param rawBlocks The raw IPTC blocks.
      */
     public PhotoshopApp13Data(final List<IptcRecord> records, final List<IptcBlock> rawBlocks) {
         this(records, rawBlocks, false);
@@ -42,8 +42,8 @@ public class PhotoshopApp13Data {
     /**
      * Constructs Photoshop APP13 data.
      *
-     * @param records the IPTC records.
-     * @param rawBlocks the raw IPTC blocks.
+     * @param records The IPTC records.
+     * @param rawBlocks The raw IPTC blocks.
      * @param forceUtf8Encoding whether to force UTF-8 encoding.
      */
     public PhotoshopApp13Data(final List<IptcRecord> records, final List<IptcBlock> rawBlocks, final boolean forceUtf8Encoding) {

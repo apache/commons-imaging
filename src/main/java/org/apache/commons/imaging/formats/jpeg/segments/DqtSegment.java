@@ -47,9 +47,9 @@ public final class DqtSegment extends AbstractSegment {
         /**
          * Constructs a new quantization table.
          *
-         * @param precision the precision (0=8-bit, 1=16-bit).
-         * @param destinationIdentifier the destination identifier.
-         * @param elements the quantization table elements.
+         * @param precision The precision (0=8-bit, 1=16-bit).
+         * @param destinationIdentifier The destination identifier.
+         * @param elements The quantization table elements.
          */
         public QuantizationTable(final int precision, final int destinationIdentifier, final int[] elements) {
             this.precision = precision;
@@ -73,8 +73,8 @@ public final class DqtSegment extends AbstractSegment {
     /**
      * Constructs a DQT segment from segment data.
      *
-     * @param marker the segment marker.
-     * @param segmentData the segment data.
+     * @param marker The segment marker.
+     * @param segmentData The segment data.
      * @throws ImagingException if the image format is invalid.
      * @throws IOException if an I/O error occurs.
      */
@@ -85,9 +85,9 @@ public final class DqtSegment extends AbstractSegment {
     /**
      * Constructs a DQT segment by reading from an input stream.
      *
-     * @param marker the segment marker.
-     * @param length the segment length.
-     * @param is the input stream to read from.
+     * @param marker The segment marker.
+     * @param length The segment length.
+     * @param is The input stream to read from.
      * @throws ImagingException if the image format is invalid.
      * @throws IOException if an I/O error occurs.
      */

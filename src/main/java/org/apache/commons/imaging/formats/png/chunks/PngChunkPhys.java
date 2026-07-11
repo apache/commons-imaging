@@ -34,10 +34,10 @@ public final class PngChunkPhys extends PngChunk {
     /**
      * Constructs a PNG pHYs chunk.
      *
-     * @param length the chunk length.
-     * @param chunkType the chunk type.
-     * @param crc the CRC.
-     * @param bytes the chunk bytes.
+     * @param length The chunk length.
+     * @param chunkType The chunk type.
+     * @param crc The CRC.
+     * @param bytes The chunk bytes.
      * @throws IOException if an I/O error occurs.
      */
     public PngChunkPhys(final int length, final int chunkType, final int crc, final byte[] bytes) throws IOException {

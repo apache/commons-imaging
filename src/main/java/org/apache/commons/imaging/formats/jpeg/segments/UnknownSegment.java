@@ -27,8 +27,8 @@ public class UnknownSegment extends AbstractGenericSegment {
     /**
      * Constructs a new unknown segment.
      *
-     * @param marker the marker.
-     * @param bytes the segment data.
+     * @param marker The marker.
+     * @param bytes The segment data.
      */
     public UnknownSegment(final int marker, final byte[] bytes) {
         super(marker, bytes);
@@ -37,9 +37,9 @@ public class UnknownSegment extends AbstractGenericSegment {
     /**
      * Constructs a new unknown segment.
      *
-     * @param marker the marker.
-     * @param markerLength the marker length.
-     * @param is the input stream.
+     * @param marker The marker.
+     * @param markerLength The marker length.
+     * @param is The input stream.
      * @throws IOException if an I/O error occurs.
      */
     public UnknownSegment(final int marker, final int markerLength, final InputStream is) throws IOException {

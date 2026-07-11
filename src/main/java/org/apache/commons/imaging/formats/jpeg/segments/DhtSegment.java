@@ -131,7 +131,7 @@ public final class DhtSegment extends AbstractSegment {
         /**
          * Gets the Huffman value at the specified index.
          *
-         * @param i the index.
+         * @param i The index.
          * @return The Huffman value.
          */
         public int getHuffVal(final int i) {
@@ -141,7 +141,7 @@ public final class DhtSegment extends AbstractSegment {
         /**
          * Gets the maximum code for the specified bit length.
          *
-         * @param i the bit length.
+         * @param i The bit length.
          * @return The maximum code.
          */
         public int getMaxCode(final int i) {
@@ -151,7 +151,7 @@ public final class DhtSegment extends AbstractSegment {
         /**
          * Gets the minimum code for the specified bit length.
          *
-         * @param i the bit length.
+         * @param i The bit length.
          * @return The minimum code.
          */
         public int getMinCode(final int i) {
@@ -161,7 +161,7 @@ public final class DhtSegment extends AbstractSegment {
         /**
          * Gets the value pointer for the specified bit length.
          *
-         * @param i the bit length.
+         * @param i The bit length.
          * @return The value pointer.
          */
         public int getValPtr(final int i) {
@@ -175,8 +175,8 @@ public final class DhtSegment extends AbstractSegment {
     /**
      * Constructs a DHT segment from segment data.
      *
-     * @param marker the segment marker.
-     * @param segmentData the segment data.
+     * @param marker The segment marker.
+     * @param segmentData The segment data.
      * @throws IOException if an I/O error occurs.
      */
     public DhtSegment(final int marker, final byte[] segmentData) throws IOException {
@@ -186,9 +186,9 @@ public final class DhtSegment extends AbstractSegment {
     /**
      * Constructs a DHT segment by reading from an input stream.
      *
-     * @param marker the segment marker.
-     * @param length the segment length.
-     * @param is the input stream to read from.
+     * @param marker The segment marker.
+     * @param length The segment length.
+     * @param is The input stream to read from.
      * @throws IOException if an I/O error occurs.
      */
     public DhtSegment(final int marker, int length, final InputStream is) throws IOException {

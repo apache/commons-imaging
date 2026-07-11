@@ -27,10 +27,10 @@ public class TagInfoUnknowns extends TagInfoBytes {
     /**
      * Constructs a new instance.
      *
-     * @param name the tag name.
-     * @param tag the tag number.
-     * @param length the length.
-     * @param exifDirectory the EXIF directory.
+     * @param name The tag name.
+     * @param tag The tag number.
+     * @param length The length.
+     * @param exifDirectory The EXIF directory.
      */
     public TagInfoUnknowns(final String name, final int tag, final int length, final TiffDirectoryType exifDirectory) {
         super(name, tag, AbstractFieldType.ANY, length, exifDirectory);

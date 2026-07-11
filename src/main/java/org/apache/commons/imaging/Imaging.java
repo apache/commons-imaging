@@ -148,7 +148,7 @@ public final class Imaging {
     /**
      * Gets all images specified by the byte array (some formats may include multiple images within a single data source).
      *
-     * @param bytes a valid array of bytes
+     * @param bytes A valid array of bytes
      * @return A valid (potentially empty) list of BufferedImage objects.
      * @throws ImagingException In the event that the specified content does not conform to the format of the specific parser implementation.
      * @throws IOException      In the event of unsuccessful read or access operation.
@@ -196,7 +196,7 @@ public final class Imaging {
      * info, metadata and ICC profiles from all image formats that provide this data.
      * </p>
      *
-     * @param bytes a valid array of bytes from which to read data.
+     * @param bytes A valid array of bytes from which to read data.
      * @return if successful, a valid buffered image
      * @throws ImagingException in the event of a processing error while reading an image (i.e. a format violation, etc.).
      * @throws IOException      in the event of an unrecoverable I/O exception.
@@ -218,7 +218,7 @@ public final class Imaging {
      * info, metadata and ICC profiles from all image formats that provide this data.
      * </p>
      *
-     * @param file a valid reference to a file containing image data.
+     * @param file A valid reference to a file containing image data.
      * @return if successful, a valid buffered image
      * @throws ImagingException in the event of a processing error while reading an image (i.e. a format violation, etc.).
      * @throws IOException      in the event of an unrecoverable I/O exception.
@@ -236,7 +236,7 @@ public final class Imaging {
      * info, metadata and ICC profiles from all image formats that provide this data.
      * </p>
      *
-     * @param is a valid ImageStream from which to read data.
+     * @param is A valid ImageStream from which to read data.
      * @return if successful, a valid buffered image
      * @throws ImagingException in the event of a processing errorfileName while reading an image (i.e. a format violation, etc.).
      * @throws IOException      in the event of an unrecoverable I/O exception.
@@ -254,8 +254,8 @@ public final class Imaging {
      * info, metadata and ICC profiles from all image formats that provide this data.
      * </p>
      *
-     * @param is       a valid ImageStream from which to read data.
-     * @param fileName the image file name.
+     * @param is       A valid ImageStream from which to read data.
+     * @param fileName The image file name.
      * @return if successful, a valid buffered image
      * @throws ImagingException in the event of a processing error while reading an image (i.e. a format violation, etc.).
      * @throws IOException      in the event of an unrecoverable I/O exception.
@@ -271,7 +271,7 @@ public final class Imaging {
      * This method returns a FormatCompliance object which includes information about the data's compliance to a specific format.
      * </p>
      *
-     * @param bytes a valid array of bytes containing image data.
+     * @param bytes A valid array of bytes containing image data.
      * @return if successful, a valid FormatCompliance object.
      * @throws ImagingException in the event of unreadable data.
      * @throws IOException      in the event of an unrecoverable I/O condition.
@@ -313,7 +313,7 @@ public final class Imaging {
     /**
      * Gets the ICC profile from a byte source.
      *
-     * @param byteSource the byte source.
+     * @param byteSource The byte source.
      * @return The ICC profile, or null if not found.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
@@ -702,7 +702,7 @@ public final class Imaging {
      * with the specified byte values.
      * </p>
      *
-     * @param byteSource a valid ByteSource object potentially supplying data for an image.
+     * @param byteSource A valid ByteSource object potentially supplying data for an image.
      * @return An ImageFormat, such as ImageFormat.IMAGE_FORMAT_JPEG. Returns ImageFormat.IMAGE_FORMAT_UNKNOWN if the image type cannot be determined.
      * @throws IllegalArgumentException in the event of an unsuccessful attempt to read the image data
      * @throws IOException              in the event of an unrecoverable I/O condition.
@@ -881,9 +881,9 @@ public final class Imaging {
      * Imaging package does not fully support all formats, it can read image info, metadata and ICC profiles from all image formats that provide this data.
      * </p>
      *
-     * @param src    a valid BufferedImage object
-     * @param file   the file to which the output image is to be written
-     * @param format the format in which the output image is to be written
+     * @param src    A valid BufferedImage object
+     * @param file   The file to which the output image is to be written
+     * @param format The format in which the output image is to be written
      * @throws ImagingException in the event of a format violation, unsupported image format, etc.
      * @throws IOException      in the event of an unrecoverable I/O exception.
      * @see ImagingConstants
@@ -904,9 +904,9 @@ public final class Imaging {
      * Imaging package does not fully support all formats, it can read image info, metadata and ICC profiles from all image formats that provide this data.
      * </p>
      *
-     * @param src          a valid BufferedImage object
-     * @param outputStream the OutputStream to which the output image is to be written
-     * @param format       the format in which the output image is to be written
+     * @param src          A valid BufferedImage object
+     * @param outputStream The OutputStream to which the output image is to be written
+     * @param format       The format in which the output image is to be written
      * @throws ImagingException in the event of a format violation, unsupported image format, etc.
      * @throws IOException      in the event of an unrecoverable I/O exception.
      * @see ImagingConstants
@@ -929,8 +929,8 @@ public final class Imaging {
      * Imaging package does not fully support all formats, it can read image info, metadata and ICC profiles from all image formats that provide this data.
      * </p>
      *
-     * @param src    a valid BufferedImage object
-     * @param format the format in which the output image is to be written
+     * @param src    A valid BufferedImage object
+     * @param format The format in which the output image is to be written
      * @return if successful, a valid array of bytes.
      * @throws ImagingException in the event of a format violation, unsupported image format, etc.
      * @throws IOException      in the event of an unrecoverable I/O exception.

@@ -37,7 +37,7 @@ public class ByteSource {
     /**
      * Creates a ByteSource from a byte array.
      *
-     * @param array the byte array.
+     * @param array The byte array.
      * @return The ByteSource.
      */
     public static ByteSource array(final byte[] array) {
@@ -47,8 +47,8 @@ public class ByteSource {
     /**
      * Creates a ByteSource from a byte array with a name.
      *
-     * @param array the byte array.
-     * @param name the name.
+     * @param array The byte array.
+     * @param name The name.
      * @return The ByteSource.
      */
     public static ByteSource array(final byte[] array, final String name) {
@@ -58,7 +58,7 @@ public class ByteSource {
     /**
      * Creates a ByteSource from a file.
      *
-     * @param file the file.
+     * @param file The file.
      * @return The ByteSource.
      */
     public static ByteSource file(final File file) {
@@ -68,8 +68,8 @@ public class ByteSource {
     /**
      * Gets an input stream from a ByteSource, skipping the specified number of bytes.
      *
-     * @param byteSource the byte source.
-     * @param skip the number of bytes to skip.
+     * @param byteSource The byte source.
+     * @param skip The number of bytes to skip.
      * @return The input stream.
      * @throws IOException if an I/O error occurs.
      */
@@ -91,8 +91,8 @@ public class ByteSource {
     /**
      * Creates a ByteSource from an input stream.
      *
-     * @param is the input stream.
-     * @param name the name.
+     * @param is The input stream.
+     * @param name The name.
      * @return The ByteSource.
      * @throws IOException if an I/O error occurs.
      */
@@ -103,7 +103,7 @@ public class ByteSource {
     /**
      * Creates a ByteSource from a path.
      *
-     * @param file the path.
+     * @param file The path.
      * @return The ByteSource.
      */
     public static ByteSource path(final Path file) {
@@ -116,8 +116,8 @@ public class ByteSource {
     /**
      * Constructs a new ByteSource.
      *
-     * @param origin the origin.
-     * @param fileName the file name.
+     * @param origin The origin.
+     * @param fileName The file name.
      */
     ByteSource(final AbstractOrigin<?, ?> origin, final String fileName) {
         this.origin = Objects.requireNonNull(origin, "origin");
@@ -127,8 +127,8 @@ public class ByteSource {
     /**
      * Gets a byte array from the specified position.
      *
-     * @param position the position.
-     * @param length the length.
+     * @param position The position.
+     * @param length The length.
      * @return The byte array.
      * @throws IOException if an I/O error occurs.
      */

@@ -74,7 +74,7 @@ public abstract class AbstractWebPChunk extends BinaryFileParser {
     /**
      * Print the chunk to the given stream.
      *
-     * @param pw     a stream to write to.
+     * @param pw     A stream to write to.
      * @param offset chunk offset.
      * @throws ImagingException if the image is invalid.
      * @throws IOException      if it fails to write to the given stream.

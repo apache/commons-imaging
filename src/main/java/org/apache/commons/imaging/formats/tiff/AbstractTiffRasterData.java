@@ -52,9 +52,9 @@ public abstract class AbstractTiffRasterData {
     /**
      * Constructs an instance allocating memory for the specified dimensions.
      *
-     * @param width           a value of 1 or greater.
-     * @param height          a value of 1 or greater.
-     * @param samplesPerPixel a value of 1 or greater.
+     * @param width           A value of 1 or greater.
+     * @param height          A value of 1 or greater.
+     * @param samplesPerPixel A value of 1 or greater.
      */
     public AbstractTiffRasterData(final int width, final int height, final int samplesPerPixel) {
         if (width <= 0 || height <= 0) {
@@ -73,9 +73,9 @@ public abstract class AbstractTiffRasterData {
     /**
      * Checks that coordinates and sample index are within valid ranges and computes the array index.
      *
-     * @param x the x coordinate.
-     * @param y the y coordinate.
-     * @param i the sample index.
+     * @param x The x coordinate.
+     * @param y The y coordinate.
+     * @param i The sample index.
      * @return The computed array index.
      * @throws IllegalArgumentException if coordinates or sample index are out of range.
      */
@@ -207,7 +207,7 @@ public abstract class AbstractTiffRasterData {
      *
      * @param x     integer coordinate in the columnar direction.
      * @param y     integer coordinate in the row direction.
-     * @param value the value to be stored at the specified location.
+     * @param value The value to be stored at the specified location.
      */
     public abstract void setIntValue(int x, int y, int value);
 
@@ -217,7 +217,7 @@ public abstract class AbstractTiffRasterData {
      * @param x     integer coordinate in the columnar direction.
      * @param y     integer coordinate in the row direction.
      * @param i     integer sample index (for data sets giving multiple samples per raster cell).
-     * @param value the value to be stored at the specified location.
+     * @param value The value to be stored at the specified location.
      */
     public abstract void setIntValue(int x, int y, int i, int value);
 
@@ -226,7 +226,7 @@ public abstract class AbstractTiffRasterData {
      *
      * @param x     integer coordinate in the columnar direction.
      * @param y     integer coordinate in the row direction.
-     * @param value the value to be stored at the specified location; potentially a Float&#46;NaN.
+     * @param value The value to be stored at the specified location; potentially a Float&#46;NaN.
      */
     public abstract void setValue(int x, int y, float value);
 
@@ -236,7 +236,7 @@ public abstract class AbstractTiffRasterData {
      * @param x     integer coordinate in the columnar direction.
      * @param y     integer coordinate in the row direction.
      * @param i     integer sample index (for data sets giving multiple samples per raster cell).
-     * @param value the value to be stored at the specified location; potentially a Float&#46;NaN.
+     * @param value The value to be stored at the specified location; potentially a Float&#46;NaN.
      */
     public abstract void setValue(int x, int y, int i, float value);
 }

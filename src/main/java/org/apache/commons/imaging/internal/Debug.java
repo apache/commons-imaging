@@ -81,7 +81,7 @@ public final class Debug {
     /**
      * Logs a debug message.
      *
-     * @param message the message to log.
+     * @param message The message to log.
      */
     public static void debug(final String message) {
         if (LOGGER.isLoggable(Level.FINEST)) {
@@ -141,8 +141,8 @@ public final class Debug {
     /**
      * Logs a debug message with an object value.
      *
-     * @param message the message prefix.
-     * @param value the object value to log.
+     * @param message The message prefix.
+     * @param value The object value to log.
      */
     public static void debug(final String message, final Object value) {
         if (value == null) {
@@ -179,7 +179,7 @@ public final class Debug {
     /**
      * Logs a debug message for a throwable.
      *
-     * @param e the throwable to log.
+     * @param e The throwable to log.
      */
     public static void debug(final Throwable e) {
         debug(getDebug(e));
@@ -188,8 +188,8 @@ public final class Debug {
     /**
      * Logs a debug message for a throwable with an integer value.
      *
-     * @param e the throwable to log.
-     * @param value the integer value.
+     * @param e The throwable to log.
+     * @param value The integer value.
      */
     public static void debug(final Throwable e, final int value) {
         debug(getDebug(e, value));
