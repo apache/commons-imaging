@@ -31,19 +31,16 @@ import org.apache.commons.imaging.test.FileSystemTraversal;
 public abstract class AbstractImagingTest {
 
     public interface ImageFilter {
+
         boolean accept(File file) throws IOException, ImagingException;
     }
 
     private static final List<File> ALL_IMAGES = new ArrayList<>();
-
     static {
         File imagesFolder = ImagingTestConstants.TEST_IMAGE_FOLDER;
-
         imagesFolder = imagesFolder.getAbsoluteFile();
-
         Debug.debug("imagesFolder", imagesFolder);
         assertTrue(imagesFolder.exists());
-
         final FileSystemTraversal.Visitor visitor = (file, progressEstimate) -> {
             if (!Imaging.hasImageFileExtension(file)) {
                 return true;
@@ -64,29 +61,17 @@ public abstract class AbstractImagingTest {
 
     protected static List<File> getTestImages(final ImageFilter filter, final int max) throws IOException, ImagingException {
         final List<File> images = new ArrayList<>();
-
         for (final File file : ALL_IMAGES) {
-            if (!Imaging.hasImageFileExtension(file)) {
+            if (!Imaging.hasImageFileExtension(file) || file.getParentFile().getName().toLowerCase().equals("@broken")
+                    || filter != null && !filter.accept(file)) {
                 continue;
             }
-
-            if (file.getParentFile().getName().toLowerCase().equals("@broken")) {
-                continue;
-            }
-
-            if (filter != null && !filter.accept(file)) {
-                continue;
-            }
-
             images.add(file);
-
             if (max > 0 && images.size() >= max) {
                 break;
             }
         }
-
         assertFalse(images.isEmpty());
-
         return images;
     }
 
@@ -96,9 +81,7 @@ public abstract class AbstractImagingTest {
 
     protected File getTestImage(final ImageFilter filter) throws IOException, ImagingException {
         final List<File> images = getTestImages(filter, 1);
-
         assertFalse(images.isEmpty());
-
         return images.get(0);
     }
 

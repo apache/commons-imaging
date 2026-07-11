@@ -42,10 +42,7 @@ class PngMultipleRoundtripTest extends AbstractPngTest {
         final File[] files = imagesFolder.listFiles();
         for (final File file : files) {
             final File imageFile = file;
-            if (!imageFile.isFile()) {
-                continue;
-            }
-            if (!imageFile.getName().toLowerCase().endsWith(".png")) {
+            if (!imageFile.isFile() || !imageFile.getName().toLowerCase().endsWith(".png")) {
                 continue;
             }
 

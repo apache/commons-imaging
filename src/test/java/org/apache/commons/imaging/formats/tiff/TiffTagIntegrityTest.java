@@ -80,10 +80,7 @@ class TiffTagIntegrityTest extends AbstractImagingTest {
                 obj = field.get(null);
             } catch (final IllegalAccessException illegalAccess) {
             }
-            if (obj == null) {
-                continue;
-            }
-            if (!(obj instanceof TagInfo)) {
+            if (obj == null || !(obj instanceof TagInfo)) {
                 continue;
             }
             final TagInfo src = (TagInfo) obj;

@@ -106,13 +106,7 @@ class ByteSourceImageTest extends AbstractByteSourceTest {
 
         final Method[] methods = ImageInfo.class.getMethods();
         for (final Method method2 : methods) {
-            if (!Modifier.isPublic(method2.getModifiers())) {
-                continue;
-            }
-            if (!method2.getName().startsWith("get")) {
-                continue;
-            }
-            if (method2.getName().equals("getClass")) {
+            if (!Modifier.isPublic(method2.getModifiers()) || !method2.getName().startsWith("get") || method2.getName().equals("getClass")) {
                 continue;
                 // if (method.getGenericParameterTypes().length > 0)
                 // continue;
