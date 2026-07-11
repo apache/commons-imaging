@@ -177,7 +177,7 @@ public final class ByteConversions {
      *
      * @param value     a standard data primitive of type long.
      * @param byteOrder the byte order to be used for encoding.
-     * @return an array of length 8.
+     * @return An array of length 8.
      */
     public static byte[] toBytes(final long value, final ByteOrder byteOrder) {
         final byte[] result = new byte[8];
@@ -446,7 +446,7 @@ public final class ByteConversions {
      *
      * @param bytes     an array of size at least 8
      * @param byteOrder the byte-order for interpreting the input bytes
-     * @return an eight-byte signed integer
+     * @return An eight-byte signed integer
      */
     public static long toLong(final byte[] bytes, final ByteOrder byteOrder) {
         return toLong(bytes, 0, byteOrder);
@@ -474,7 +474,7 @@ public final class ByteConversions {
      *
      * @param bytes     a valid array
      * @param byteOrder the byte-order for interpreting the input bytes
-     * @return an array of zero or more eight-byte signed integers
+     * @return An array of zero or more eight-byte signed integers
      */
     public static long[] toLongs(final byte[] bytes, final ByteOrder byteOrder) {
         return toLongs(bytes, 0, bytes.length, byteOrder);
@@ -492,7 +492,7 @@ public final class ByteConversions {
      * @param bytes        a valid array dimensioned to at least 8.
      * @param byteOrder    the byte order for integer conversion
      * @param unsignedType indicates whether the extracted value is an unsigned type.
-     * @return a valid instance
+     * @return A valid instance
      */
     public static RationalNumber toRational(final byte[] bytes, final ByteOrder byteOrder, final boolean unsignedType) {
         return toRational(bytes, 0, byteOrder, unsignedType);

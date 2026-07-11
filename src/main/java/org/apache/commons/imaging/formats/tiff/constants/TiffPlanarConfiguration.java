@@ -35,7 +35,7 @@ public enum TiffPlanarConfiguration {
      * Interprets an integer code value to determine the enumerated value. Implements lenient rules for handling non-compliant values.
      *
      * @param codeValue an integer code corresponding to the TIFF specification.
-     * @return a valid enumeration.
+     * @return A valid enumeration.
      */
     public static TiffPlanarConfiguration lenientValueOf(final int codeValue) {
         switch (codeValue) {

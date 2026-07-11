@@ -160,7 +160,7 @@ public abstract class AbstractTiffImageData {
          * Gets the height of individual tiles. Note that if the overall image height is not a multiple of the tile height, then the last row of tiles may
          * extend beyond the image height.
          *
-         * @return an integer value greater than zero.
+         * @return An integer value greater than zero.
          */
         public int getTileHeight() {
             return tileLength;
@@ -170,7 +170,7 @@ public abstract class AbstractTiffImageData {
          * Gets the width of individual tiles. Note that if the overall image width is not a multiple of the tile width, then the last column of tiles may
          * extend beyond the image width.
          *
-         * @return an integer value greater than zero.
+         * @return An integer value greater than zero.
          */
         public int getTileWidth() {
             return tileWidth;

@@ -95,7 +95,7 @@ class TiffFloatingPointRoundTripTest extends AbstractTiffTest {
      * @param nRowsInBlock the number of rows in the Strip or Tile
      * @param nColsInBlock the number of columns in the Strip or Tile
      * @param byteOrder    little-endian or big-endian
-     * @return a valid array of equally sized array.
+     * @return A valid array of equally sized array.
      */
     private byte[][] getBytesForOutput32(final float[] f, final int width, final int height, final int nRowsInBlock, final int nColsInBlock,
             final ByteOrder byteOrder) {
@@ -144,7 +144,7 @@ class TiffFloatingPointRoundTripTest extends AbstractTiffTest {
      * @param nRowsInBlock the number of rows in the Strip or Tile
      * @param nColsInBlock the number of columns in the Strip or Tile
      * @param byteOrder    little-endian or big-endian
-     * @return a valid array of equally sized array.
+     * @return A valid array of equally sized array.
      */
     private byte[][] getBytesForOutput64(final float[] f, final int width, final int height, final int nRowsInBlock, final int nColsInBlock,
             final ByteOrder byteOrder) {
@@ -194,7 +194,7 @@ class TiffFloatingPointRoundTripTest extends AbstractTiffTest {
      * Constructs a photometric interpreter. This initialization is performed in a dedicated method to ensure consistency throughout different phases of the
      * test.
      *
-     * @return a valid instance.
+     * @return A valid instance.
      */
     private PhotometricInterpreterFloat getPhotometricInterpreter() {
         return new PhotometricInterpreterFloat(f0, f1 + 1.0e-5f);

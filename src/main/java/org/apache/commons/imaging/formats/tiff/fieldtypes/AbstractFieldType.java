@@ -236,7 +236,7 @@ public abstract class AbstractFieldType {
      *
      * @param obj input.
      * @param byteOrder output byte order; not used by all subclasses.
-     * @return a byte array.
+     * @return A byte array.
      * @throws ImagingException Thrown on a bad input.
      */
     public abstract byte[] writeData(Object obj, ByteOrder byteOrder) throws ImagingException;

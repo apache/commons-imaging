@@ -35,7 +35,7 @@ public interface PaletteEntry {
      * value is undefined (though the value zero is often used).
      *
      * @param f valid floating point value, or a NaN.
-     * @return an integer value
+     * @return An integer value
      */
     int getArgb(float f);
 
@@ -44,7 +44,7 @@ public interface PaletteEntry {
      * undefined (though a null return is often used).
      *
      * @param f a valid floating point value, or a NaN.
-     * @return a valid color instance or, potentially, a null if the floating point input is not within the covered range.
+     * @return A valid color instance or, potentially, a null if the floating point input is not within the covered range.
      */
     Color getColor(float f);
 

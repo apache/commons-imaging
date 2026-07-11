@@ -149,7 +149,7 @@ public final class PhotometricInterpreterFloat extends AbstractPhotometricInterp
     /**
      * Gets the coordinates (x, y) at which the maximum value was identified during processing
      *
-     * @return a valid array of length 2.
+     * @return A valid array of length 2.
      */
     public int[] getMaxXY() {
         return new int[] { xMax, yMax };
@@ -179,7 +179,7 @@ public final class PhotometricInterpreterFloat extends AbstractPhotometricInterp
     /**
      * Gets the coordinates (x, y) at which the minimum value was identified during processing
      *
-     * @return a valid array of length 2.
+     * @return A valid array of length 2.
      */
     public int[] getMinXY() {
         return new int[] { xMin, yMin };
@@ -240,7 +240,7 @@ public final class PhotometricInterpreterFloat extends AbstractPhotometricInterp
      * provided as a convenience to applications that are processing data outside the standard TIFF image-reading modules.
      *
      * @param f the floating point value to be mapped to an ARGB value
-     * @return a valid ARGB value, or zero if no palette specification covers the input value.
+     * @return A valid ARGB value, or zero if no palette specification covers the input value.
      */
     public int mapValueToArgb(final float f) {
 

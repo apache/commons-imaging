@@ -42,7 +42,7 @@ public final class Allocator {
      * @param <T>     The return array type
      * @param request The requested size.
      * @param factory The array factory.
-     * @return a new byte array.
+     * @return A new byte array.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      * @see #check(int)
      */
@@ -57,7 +57,7 @@ public final class Allocator {
      * @param request            The requested size.
      * @param factory            The array factory.
      * @param eltShallowByteSize The shallow byte size of an element.
-     * @return a new byte array.
+     * @return A new byte array.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      * @see #check(int)
      */
@@ -71,7 +71,7 @@ public final class Allocator {
      *
      * @param <T>     The return array type
      * @param request The requested size.
-     * @return a new byte array.
+     * @return A new byte array.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      * @see #check(int)
      */
@@ -84,7 +84,7 @@ public final class Allocator {
      * Allocates a byte array of the requested size.
      *
      * @param request The requested size.
-     * @return a new byte array.
+     * @return A new byte array.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      * @see #check(int, int)
      */
@@ -96,7 +96,7 @@ public final class Allocator {
      * Allocates a byte array of the requested size.
      *
      * @param request The requested size is cast down to an int.
-     * @return a new byte array.
+     * @return A new byte array.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      * @see #check(int, int)
      */
@@ -108,7 +108,7 @@ public final class Allocator {
      * Allocates a char array of the requested size.
      *
      * @param request The requested size.
-     * @return a new char array.
+     * @return A new char array.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      * @see #check(int, int)
      */
@@ -190,7 +190,7 @@ public final class Allocator {
      * Allocates a double array of the requested size.
      *
      * @param request The requested size.
-     * @return a new double array.
+     * @return A new double array.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      * @see #check(int, int)
      */
@@ -202,7 +202,7 @@ public final class Allocator {
      * Allocates a float array of the requested size.
      *
      * @param request The requested size.
-     * @return a new float array.
+     * @return A new float array.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      * @see #check(int, int)
      */
@@ -214,7 +214,7 @@ public final class Allocator {
      * Allocates a int array of the requested size.
      *
      * @param request The requested size.
-     * @return a new int array.
+     * @return A new int array.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      * @see #check(int, int)
      */
@@ -226,7 +226,7 @@ public final class Allocator {
      * Allocates a long array of the requested size.
      *
      * @param request The requested size.
-     * @return a new long array.
+     * @return A new long array.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      * @see #check(int, int)
      */
@@ -238,7 +238,7 @@ public final class Allocator {
      * Allocates a short array of the requested size.
      *
      * @param request The requested size.
-     * @return a new short array.
+     * @return A new short array.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      * @see #check(int, int)
      */

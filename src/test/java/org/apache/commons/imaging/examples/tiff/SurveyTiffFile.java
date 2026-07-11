@@ -54,7 +54,7 @@ public class SurveyTiffFile {
      *
      * @param maxPathLen the maximum length of a file path (used if csv option is not set)
      * @param csv        true if formatting is configured for comma-separated-value files.
-     * @return a valid string.
+     * @return A valid string.
      */
     String formatHeader(final int maxPathLen, final boolean csv) {
         // After some false starts, it turned out that the easiest
@@ -257,7 +257,7 @@ public class SurveyTiffFile {
      * Reformats the header inserting commas and removing spaces
      *
      * @param s a valid string
-     * @return a header suitable for a CSV file.
+     * @return A header suitable for a CSV file.
      */
     private String reformatHeaderForCsv(final String s) {
         final StringBuilder sb = new StringBuilder(s.length());

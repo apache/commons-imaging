@@ -103,7 +103,7 @@ final class ColorGroup {
     /**
      * Gets a copy of the list of color counts.
      *
-     * @return a copy of the list of color counts
+     * @return A copy of the list of color counts
      */
     List<ColorCount> getColorCounts() {
         return new ArrayList<>(colorCounts);

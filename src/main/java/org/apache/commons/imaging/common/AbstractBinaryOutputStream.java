@@ -31,7 +31,7 @@ public abstract class AbstractBinaryOutputStream extends FilterOutputStream {
      * Creates a big-endian binary output stream.
      *
      * @param outputStream the underlying output stream.
-     * @return a big-endian binary output stream.
+     * @return A big-endian binary output stream.
      */
     public static BigEndianBinaryOutputStream bigEndian(final OutputStream outputStream) {
         return new BigEndianBinaryOutputStream(outputStream);
@@ -42,7 +42,7 @@ public abstract class AbstractBinaryOutputStream extends FilterOutputStream {
      *
      * @param outputStream the underlying output stream.
      * @param byteOrder the byte order.
-     * @return a binary output stream with the specified byte order.
+     * @return A binary output stream with the specified byte order.
      * @throws UnsupportedOperationException if the byte order is not supported.
      */
     @SuppressWarnings("resource")
@@ -62,7 +62,7 @@ public abstract class AbstractBinaryOutputStream extends FilterOutputStream {
      * Creates a little-endian binary output stream.
      *
      * @param outputStream the underlying output stream.
-     * @return a little-endian binary output stream.
+     * @return A little-endian binary output stream.
      */
     public static LittleEndianBinaryOutputStream littleEndian(final OutputStream outputStream) {
         return new LittleEndianBinaryOutputStream(outputStream);

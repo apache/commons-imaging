@@ -42,7 +42,7 @@ public class FieldTypeLong8 extends AbstractFieldType {
      * Gets the value(s) for this field in the form of an array of long integers.
      *
      * @param entry the TIFF field as obtained from the source file.
-     * @return a valid, potentially empty array of Java long integers.
+     * @return A valid, potentially empty array of Java long integers.
      */
     @Override
     public Object getValue(final TiffField entry) {

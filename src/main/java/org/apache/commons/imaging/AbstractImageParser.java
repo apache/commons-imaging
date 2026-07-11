@@ -725,7 +725,7 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     /**
      * Gets a descriptive name for the implementation of an ImageParser.
      *
-     * @return a valid, subject-matter-specific string.
+     * @return A valid, subject-matter-specific string.
      */
     public abstract String getName();
 

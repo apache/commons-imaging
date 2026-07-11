@@ -710,7 +710,7 @@ public final class TiffOutputDirectory extends AbstractTiffOutputItem implements
     /**
      * Gets all fields in this directory.
      *
-     * @return a list of all fields.
+     * @return A list of all fields.
      */
     public List<TiffOutputField> getFields() {
         return new ArrayList<>(fields);

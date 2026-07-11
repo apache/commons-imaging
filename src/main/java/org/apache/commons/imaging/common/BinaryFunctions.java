@@ -81,7 +81,7 @@ public final class BinaryFunctions {
      * @param original the array from which a range is to be copied.
      * @param from     the initial index of the range to be copied, inclusive.
      * @param count    the amount of bytes to copy.
-     * @return a new array containing the specified range from the original array, truncated or padded with zeros to obtain the required length.
+     * @return A new array containing the specified range from the original array, truncated or padded with zeros to obtain the required length.
      */
     public static byte[] copyOfRange(final byte[] original, final int from, final int count) {
         return Arrays.copyOfRange(original, from, from + Allocator.checkByteArray(count));
@@ -92,7 +92,7 @@ public final class BinaryFunctions {
      *
      * @param original the array from which a range is to be copied.
      * @param count    the amount of bytes to copy.
-     * @return a new array containing the specified range from the original array, truncated or padded with zeros to obtain the required length.
+     * @return A new array containing the specified range from the original array, truncated or padded with zeros to obtain the required length.
      */
     public static byte[] copyOfStart(final byte[] original, int count) {
         if (count > original.length) {
@@ -185,7 +185,7 @@ public final class BinaryFunctions {
      * Convert a quad into a byte array.
      *
      * @param quad quad.
-     * @return a byte array.
+     * @return A byte array.
      */
     public static byte[] quadsToByteArray(final int quad) {
         final byte[] arr = new byte[4];
@@ -281,7 +281,7 @@ public final class BinaryFunctions {
      * @param in        a valid input stream
      * @param exception application-defined message to be used for constructing an exception if an error condition is triggered.
      * @param byteOrder the order in which the InputStream marshals data
-     * @return a long integer interpreted from next 8 bytes in the InputStream
+     * @return A long integer interpreted from next 8 bytes in the InputStream
      * @throws IOException in the event of a non-recoverable error, such as an attempt to read past the end of file.
      */
     public static long read8Bytes(final String name, final InputStream in, final String exception, final ByteOrder byteOrder) throws IOException {

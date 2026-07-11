@@ -363,7 +363,7 @@ public abstract class AbstractImageDataReader {
      * @param subImageSpecification a rectangle describing a sub-region of the image for reading, or a null if the whole image is to be read.
      * @param hasAlpha              indicates that the image has an alpha (transparency) channel (RGB color model only).
      * @param isAlphaPremultiplied  indicates that the image uses the associated alpha channel format (pre-multiplied alpha).
-     * @return a valid instance containing the pixel data from the image.
+     * @return A valid instance containing the pixel data from the image.
      * @throws IOException      in the event of an unrecoverable I/O error.
      * @throws ImagingException TODO
      */
@@ -375,7 +375,7 @@ public abstract class AbstractImageDataReader {
      * DataReaderTiled assume that this instance is of a compatible data type (floating-point) and that all access checks have already been performed.
      *
      * @param subImage if non-null, instructs the access method to retrieve only a sub-section of the image data.
-     * @return a valid instance
+     * @return A valid instance
      * @throws ImagingException in the event of an incompatible data form.
      * @throws IOException      in the event of I/O error.
      */
@@ -599,7 +599,7 @@ public abstract class AbstractImageDataReader {
      * @param bytes        the raw bytes.
      * @param bitsPerPixel the number of bits per sample, 32 or 64.
      * @param byteOrder    the byte order for the source data.
-     * @return a valid array of integers in row major order, dimensions scan-size wide and height.
+     * @return A valid array of integers in row major order, dimensions scan-size wide and height.
      * @throws ImagingException in the event of an invalid format.
      */
     protected int[] unpackFloatingPointSamples(final int width, final int height, final int scanSize, final byte[] bytes, final int bitsPerPixel,
@@ -757,7 +757,7 @@ public abstract class AbstractImageDataReader {
      * @param predictor     the predictor specified by the source, only predictor 3 is supported.
      * @param bitsPerSample the number of bits per sample, 32 or 64.
      * @param byteOrder     the byte order for the source data
-     * @return a valid array of integers in row major order, dimensions scan-size wide and height.
+     * @return A valid array of integers in row major order, dimensions scan-size wide and height.
      */
     protected int[] unpackIntSamples(final int width, final int height, final int scanSize, final byte[] bytes, final int predictor, final int bitsPerSample,
             final ByteOrder byteOrder) {

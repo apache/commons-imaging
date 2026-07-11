@@ -117,7 +117,7 @@ public class IptcParser extends BinaryFileParser {
      *
      * @param bytes the byte array containing IPTC data.
      * @param strict whether to use strict parsing mode.
-     * @return a list of IPTC blocks.
+     * @return A list of IPTC blocks.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
      */
@@ -219,7 +219,7 @@ public class IptcParser extends BinaryFileParser {
      * Parses IPTC records from a block of bytes.
      *
      * @param bytes the byte array containing IPTC data.
-     * @return a list of IPTC records.
+     * @return A list of IPTC records.
      */
     protected List<IptcRecord> parseIptcBlock(final byte[] bytes) {
         Charset charset = DEFAULT_CHARSET;

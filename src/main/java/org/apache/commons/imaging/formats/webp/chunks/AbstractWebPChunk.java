@@ -87,7 +87,7 @@ public abstract class AbstractWebPChunk extends BinaryFileParser {
     /**
      * Gets a copy of the chunk data as bytes.
      *
-     * @return a copy of the chunk data as bytes.
+     * @return A copy of the chunk data as bytes.
      */
     public byte[] getBytes() {
         return bytes.clone();

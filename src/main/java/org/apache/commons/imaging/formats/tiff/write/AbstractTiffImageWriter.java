@@ -220,7 +220,7 @@ public abstract class AbstractTiffImageWriter {
      * Validates the TIFF output set directories and returns a summary.
      *
      * @param outputSet the output set to validate.
-     * @return a summary of the output set.
+     * @return A summary of the output set.
      * @throws ImagingException if the directories are invalid.
      */
     protected TiffOutputSummary validateDirectories(final TiffOutputSet outputSet) throws ImagingException {

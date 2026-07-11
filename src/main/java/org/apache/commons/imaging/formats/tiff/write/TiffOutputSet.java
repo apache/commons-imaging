@@ -174,7 +174,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
     /**
      * Gets a list of all directories in this output set.
      *
-     * @return a list of all directories.
+     * @return A list of all directories.
      */
     public List<TiffOutputDirectory> getDirectories() {
         return new ArrayList<>(directories);

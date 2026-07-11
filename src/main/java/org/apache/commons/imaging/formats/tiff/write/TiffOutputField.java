@@ -109,7 +109,7 @@ public class TiffOutputField {
     /**
      * Return a copy of the data in this TIFF output field.
      *
-     * @return a copy of the data in this TIFF output field.
+     * @return A copy of the data in this TIFF output field.
      */
     public byte[] getData() {
         return Arrays.copyOf(this.bytes, this.bytes.length);

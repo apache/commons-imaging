@@ -34,7 +34,7 @@ public class FormatCompliance {
     /**
      * Gets the default format compliance instance.
      *
-     * @return a default FormatCompliance instance that ignores errors.
+     * @return A default FormatCompliance instance that ignores errors.
      */
     public static FormatCompliance getDefault() {
         return new FormatCompliance("ignore", false);

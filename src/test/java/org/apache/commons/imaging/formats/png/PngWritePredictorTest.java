@@ -45,7 +45,7 @@ class PngWritePredictorTest {
     /**
      * Populate an integer pixel array for a 256-by-256 image with varied colors across the image area and a white and black line down the main diagonal.
      *
-     * @return a valid array of integers.
+     * @return A valid array of integers.
      */
     private int[] populateARGB() {
         // populate array with a blend of color components

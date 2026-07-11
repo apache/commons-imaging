@@ -52,7 +52,7 @@ public abstract class AbstractTransparencyFilter extends BinaryFileParser {
      * Gets the byte at the given offset.
      *
      * @param offset offset.
-     * @return a byte.
+     * @return A byte.
      */
     public byte getByte(final int offset) {
         return bytes[offset];

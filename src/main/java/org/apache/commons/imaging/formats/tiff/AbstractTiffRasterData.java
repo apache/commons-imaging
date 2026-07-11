@@ -105,7 +105,7 @@ public abstract class AbstractTiffRasterData {
     /**
      * Gets the raster data type from the instance.
      *
-     * @return a valid enumeration value.
+     * @return A valid enumeration value.
      */
     public abstract TiffRasterDataType getDataType();
 
@@ -153,7 +153,7 @@ public abstract class AbstractTiffRasterData {
     /**
      * Gets the number of samples per pixel.
      *
-     * @return a value of 1 or greater.
+     * @return A value of 1 or greater.
      */
     public final int getSamplesPerPixel() {
         return samplesPerPixel;
@@ -162,7 +162,7 @@ public abstract class AbstractTiffRasterData {
     /**
      * Tabulates simple statistics for the raster and returns an instance containing general metadata.
      *
-     * @return a valid instance containing a safe copy of the current simple statistics for the raster.
+     * @return A valid instance containing a safe copy of the current simple statistics for the raster.
      */
     public abstract TiffRasterStatistics getSimpleStatistics();
 
@@ -170,7 +170,7 @@ public abstract class AbstractTiffRasterData {
      * Tabulates simple statistics for the raster excluding the specified value and returns an instance containing general metadata.
      *
      * @param valueToExclude exclude samples with this specified value.
-     * @return a valid instance.
+     * @return A valid instance.
      */
     public abstract TiffRasterStatistics getSimpleStatistics(float valueToExclude);
 

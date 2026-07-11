@@ -172,7 +172,7 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
     /**
      * Gets the X coordinate of a sub-image. This setting is meaningful only if a sub-image is set.
      *
-     * @return a positive integer
+     * @return A positive integer
      */
     public int getSubImageX() {
         return subImageX;
@@ -181,7 +181,7 @@ public class TiffImagingParameters extends XmpImagingParameters<TiffImagingParam
     /**
      * Gets the Y coordinate of a sub-image. This setting is meaningful only if a sub-image is set.
      *
-     * @return a positive integer
+     * @return A positive integer
      */
     public int getSubImageY() {
         return subImageY;

@@ -103,7 +103,7 @@ public class PngChunk extends BinaryFileParser {
      * The caller is responsible for closing the resource.
      * </p>
      *
-     * @return a ByteArrayInputStream for the chunk bytes
+     * @return A ByteArrayInputStream for the chunk bytes
      */
     protected ByteArrayInputStream getDataStream() {
         return new ByteArrayInputStream(bytes);

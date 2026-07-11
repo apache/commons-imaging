@@ -378,7 +378,7 @@ public class TiffField {
     /**
      * Gets the value of the field in the form of an array of eight-byte (long) integers.
      *
-     * @return an valid array of size zero or larger giving signed long integer values.
+     * @return An valid array of size zero or larger giving signed long integer values.
      * @throws ImagingException if the field instance is of an incompatible type or does not contain a valid data element.
      */
     public long[] getLongArrayValue() throws ImagingException {
@@ -415,7 +415,7 @@ public class TiffField {
     /**
      * Gets the value of the field in the form of an eight-byte (long) integer.
      *
-     * @return a signed long integer value.
+     * @return A signed long integer value.
      * @throws ImagingException if the field instance is of an incompatible type or does not contain a valid data element.
      */
     public long getLongValue() throws ImagingException {

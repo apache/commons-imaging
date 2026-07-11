@@ -162,7 +162,7 @@ public class ReadTagsAndImages {
      * @param asciiParameters the content of TIFF Tag ID=34737.
      * @param pos             the position of the sub-string within the content
      * @param len             the length of the sub-string.
-     * @return a valid string.
+     * @return A valid string.
      */
     private static String extractAscii(final String asciiParameters, final int pos, final int len) {
         if (asciiParameters != null && len > 0 && pos + len <= asciiParameters.length()) {
@@ -179,7 +179,7 @@ public class ReadTagsAndImages {
      * @param doubleParameters an array of values
      * @param pos              the starting position of the values for the GeoKey
      * @param len              the number of values for the GeoKey
-     * @return a formatted string.
+     * @return A formatted string.
      */
     private static String extractDouble(final double[] doubleParameters, final int pos, final int len) {
         if (doubleParameters != null && doubleParameters.length >= pos + len) {
@@ -208,7 +208,7 @@ public class ReadTagsAndImages {
      * @param valueOrPosition  a single integer value or the position within the associated floating point array
      * @param doubleParameters an array of doubles
      * @param asciiParameters  a String consisting of ASCII characters.
-     * @return a valid string, potentially a note to see the specification if a more useful description is not available.
+     * @return A valid string, potentially a note to see the specification if a more useful description is not available.
      */
     private static String interpretElements(final GeoKey geoKey, final int ref, final int len, final int valueOrPosition, final double[] doubleParameters,
             final String asciiParameters) {

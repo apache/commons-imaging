@@ -72,7 +72,7 @@ class TiffRoundTripInt32Test extends AbstractTiffTest {
      * @param nRowsInBlock the number of rows in the Strip or Tile
      * @param nColsInBlock the number of columns in the Strip or Tile
      * @param byteOrder    little-endian or big-endian
-     * @return a two-dimensional array of bytes dimensioned by the number of blocks and samples
+     * @return A two-dimensional array of bytes dimensioned by the number of blocks and samples
      */
     private byte[][] getBytesForOutput32(final int[] s, final int width, final int height, final int nRowsInBlock, final int nColsInBlock,
             final ByteOrder byteOrder) {

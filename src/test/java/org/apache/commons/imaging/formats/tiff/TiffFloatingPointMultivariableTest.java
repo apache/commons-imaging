@@ -116,7 +116,7 @@ class TiffFloatingPointMultivariableTest extends AbstractTiffTest {
      * @param nRowsInBlock the number of rows in the Strip or Tile
      * @param nColsInBlock the number of columns in the Strip or Tile
      * @param byteOrder    little-endian or big-endian
-     * @return a valid array of equally sized array.
+     * @return A valid array of equally sized array.
      */
     private byte[][] getBytesForOutput32(final int nRowsInBlock, final int nColsInBlock, final ByteOrder byteOrder, final boolean useTiles,
             final TiffPlanarConfiguration planarConfiguration) {

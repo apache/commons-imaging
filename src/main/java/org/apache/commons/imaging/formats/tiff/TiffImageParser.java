@@ -719,7 +719,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
      * @param directory the TIFF directory pointing to the data to be extracted (TIFF files may contain multiple directories)
      * @param byteOrder the byte order of the data to be extracted
      * @param params    an optional parameter object instance
-     * @return a valid instance
+     * @return A valid instance
      * @throws ImagingException in the event of incompatible or malformed data
      * @throws IOException      in the event of an I/O error
      */

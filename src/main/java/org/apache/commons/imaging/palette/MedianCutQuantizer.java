@@ -46,7 +46,7 @@ public class MedianCutQuantizer {
      *
      * @param image the image to quantize.
      * @param maxColors the maximum number of colors in the result.
-     * @return a map of colors to their counts.
+     * @return A map of colors to their counts.
      */
     public Map<Integer, ColorCount> groupColors(final BufferedImage image, final int maxColors) {
         final int max = Integer.MAX_VALUE;

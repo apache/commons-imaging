@@ -46,7 +46,7 @@ public class IptcBlock {
     /**
      * Gets a copy of the block data.
      *
-     * @return a copy of the block data bytes.
+     * @return A copy of the block data bytes.
      */
     public byte[] getBlockData() {
         return blockData.clone();
@@ -55,7 +55,7 @@ public class IptcBlock {
     /**
      * Gets a copy of the block name bytes.
      *
-     * @return a copy of the block name bytes.
+     * @return A copy of the block name bytes.
      */
     public byte[] getBlockNameBytes() {
         return blockNameBytes.clone();

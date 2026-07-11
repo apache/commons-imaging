@@ -63,7 +63,7 @@ class TiffFloatingPointReadTest {
      * Gets a file from the TIFF test directory that contains floating-point data.
      *
      * @param name a valid file name
-     * @return a valid file reference.
+     * @return A valid file reference.
      */
     private File getTiffFile(final String name) {
         final File tiffFolder = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, "tiff");

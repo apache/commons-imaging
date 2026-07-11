@@ -30,7 +30,7 @@ public interface BufferedImageFactory {
      * @param width the image width.
      * @param height the image height.
      * @param hasAlpha whether the image has an alpha channel.
-     * @return a new BufferedImage.
+     * @return A new BufferedImage.
      */
     BufferedImage getColorBufferedImage(int width, int height, boolean hasAlpha);
 
@@ -40,7 +40,7 @@ public interface BufferedImageFactory {
      * @param width the image width.
      * @param height the image height.
      * @param hasAlpha whether the image has an alpha channel.
-     * @return a new BufferedImage.
+     * @return A new BufferedImage.
      */
     BufferedImage getGrayscaleBufferedImage(int width, int height, boolean hasAlpha);
 }

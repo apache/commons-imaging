@@ -257,7 +257,7 @@ public class RationalNumber extends Number {
      * non-zero common divisor exists. However, if no such divisor exists, there is no numerically correct way to perform the negation. When a negation cannot
      * be performed correctly, this method throws an unchecked exception.
      *
-     * @return a valid instance with a negated value.
+     * @return A valid instance with a negated value.
      */
     public RationalNumber negate() {
         long n = numerator;

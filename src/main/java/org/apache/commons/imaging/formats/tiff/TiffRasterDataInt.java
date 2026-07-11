@@ -110,7 +110,7 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
     /**
      * Gets the raster data type from the instance.
      *
-     * @return a value of TiffRasterDataType&#46;FLOAT.
+     * @return A value of TiffRasterDataType&#46;FLOAT.
      */
     @Override
     public TiffRasterDataType getDataType() {
@@ -123,7 +123,7 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
      * performance and memory conservation. TIFF images that contain floating-point data are often quite large. Sizes of 100 million raster cells are common.
      * Making a redundant copy of such a large in-memory object might exceed the resources available to a Java application.
      *
-     * @return a direct reference to the data array stored in this instance.
+     * @return A direct reference to the data array stored in this instance.
      */
     @Override
     public int[] getIntData() {
@@ -158,7 +158,7 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
     /**
      * Tabulates simple statistics for the raster and returns an instance containing general metadata.
      *
-     * @return a valid instance containing a safe copy of the current simple statistics for the raster.
+     * @return A valid instance containing a safe copy of the current simple statistics for the raster.
      */
     @Override
     public TiffRasterStatistics getSimpleStatistics() {
@@ -169,7 +169,7 @@ public final class TiffRasterDataInt extends AbstractTiffRasterData {
      * Tabulates simple statistics for the raster excluding the specified value and returns an instance containing general metadata.
      *
      * @param valueToExclude exclude samples with this specified value.
-     * @return a valid instance.
+     * @return A valid instance.
      */
     @Override
     public TiffRasterStatistics getSimpleStatistics(final float valueToExclude) {

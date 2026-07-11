@@ -129,7 +129,7 @@ public class IccProfileInfo {
     /**
      * Gets a copy of the raw profile data.
      *
-     * @return a copy of the profile data bytes.
+     * @return A copy of the profile data bytes.
      */
     public byte[] getData() {
         return data.clone();
@@ -138,7 +138,7 @@ public class IccProfileInfo {
     /**
      * Gets a copy of the profile ID.
      *
-     * @return a copy of the profile ID bytes.
+     * @return A copy of the profile ID bytes.
      */
     public byte[] getProfileId() {
         return profileId.clone();
@@ -179,7 +179,7 @@ public class IccProfileInfo {
      * Gets a string representation of this ICC profile information with a prefix.
      *
      * @param prefix the prefix to use for output lines.
-     * @return a string representation of the profile information.
+     * @return A string representation of the profile information.
      * @throws ImagingException if an imaging error occurs.
      * @throws IOException if an I/O error occurs.
      */

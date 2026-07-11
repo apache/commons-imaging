@@ -141,7 +141,7 @@ public final class ImageBuilder {
     /**
      * Create a BufferedImage using the data stored in the ImageBuilder.
      *
-     * @return a valid BufferedImage.
+     * @return A valid BufferedImage.
      */
     public BufferedImage getBufferedImage() {
         return makeBufferedImage(data, width, height, hasAlpha);
@@ -150,7 +150,7 @@ public final class ImageBuilder {
     /**
      * Gets the height of the ImageBuilder pixel field
      *
-     * @return a positive integer
+     * @return A positive integer
      */
     public int getHeight() {
         return height;
@@ -178,7 +178,7 @@ public final class ImageBuilder {
      * @param y the Y coordinate of the upper-left corner of the specified rectangular region
      * @param w the width of the specified rectangular region
      * @param h the height of the specified rectangular region
-     * @return a BufferedImage that constructed from the data within the specified rectangular region
+     * @return A BufferedImage that constructed from the data within the specified rectangular region
      * @throws RasterFormatException f the specified area is not contained within this ImageBuilder
      */
     public BufferedImage getSubimage(final int x, final int y, final int w, final int h) {
@@ -207,7 +207,7 @@ public final class ImageBuilder {
      * @param y the Y coordinate of the upper-left corner of the specified rectangular region
      * @param w the width of the specified rectangular region
      * @param h the height of the specified rectangular region
-     * @return a valid instance of the specified width and height.
+     * @return A valid instance of the specified width and height.
      * @throws RasterFormatException if the specified area is not contained within this ImageBuilder
      */
     public ImageBuilder getSubset(final int x, final int y, final int w, final int h) {
@@ -224,7 +224,7 @@ public final class ImageBuilder {
     /**
      * Gets the width of the ImageBuilder pixel field
      *
-     * @return a positive integer
+     * @return A positive integer
      */
     public int getWidth() {
         return width;

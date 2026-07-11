@@ -231,7 +231,7 @@ public final class GpsTagConstants {
     /**
      * Gets the GPS version.
      *
-     * @return a copy of the GPS version byte array.
+     * @return A copy of the GPS version byte array.
      */
     public static byte[] gpsVersion() {
         return GPS_VERSION.clone();

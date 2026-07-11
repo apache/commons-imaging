@@ -902,7 +902,7 @@ public class TiffDirectory extends AbstractTiffElement implements Iterable<TiffF
      * </pre>
      *
      * @param params an optional parameter map instance.
-     * @return a valid instance.
+     * @return A valid instance.
      * @throws ImagingException in the event of incompatible or malformed data.
      * @throws IOException      in the event of an I/O error.
      */

@@ -50,7 +50,7 @@ public class ComSegment extends AbstractGenericSegment {
     /**
      * Returns a copy of the comment.
      *
-     * @return a copy of the comment's bytes
+     * @return A copy of the comment's bytes
      */
     public byte[] getComment() {
         return getSegmentData();
