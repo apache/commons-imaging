@@ -41,7 +41,7 @@ final class InputStreamByteSource extends ByteSource {
         private boolean triedNext;
 
         Block(final byte[] bytes) {
-            this.bytes = Objects.requireNonNull(bytes);
+            this.bytes = Objects.requireNonNull(bytes, "bytes");
         }
 
         Block getNext() throws IOException {

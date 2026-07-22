@@ -52,7 +52,7 @@ public class PngImageMetadata implements ImageMetadata {
      * @param exif EXIF metadata.
      */
     public PngImageMetadata(final ImageMetadata textualInformation, final TiffImageMetadata exif) {
-        this.textualInformation = Objects.requireNonNull(textualInformation);
+        this.textualInformation = Objects.requireNonNull(textualInformation, "textualInformation");
         this.exif = exif;
     }
 

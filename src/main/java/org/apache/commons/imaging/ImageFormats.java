@@ -95,7 +95,7 @@ public enum ImageFormats implements ImageFormat {
     private final String[] extensions;
 
     ImageFormats(final String... extensions) {
-        this.extensions = Objects.requireNonNull(extensions);
+        this.extensions = Objects.requireNonNull(extensions, "extensions");
     }
 
     @Override
