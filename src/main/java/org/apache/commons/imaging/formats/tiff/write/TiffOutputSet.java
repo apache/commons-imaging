@@ -22,6 +22,7 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.RationalNumber;
@@ -29,6 +30,7 @@ import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.internal.Debug;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Represents a complete TIFF output set containing multiple directories.
@@ -383,9 +385,7 @@ public final class TiffOutputSet implements Iterable<TiffOutputDirectory> {
      * @return The string representation.
      */
     public String toString(String prefix) {
-        if (prefix == null) {
-            prefix = "";
-        }
+        prefix = Objects.toString(prefix, StringUtils.EMPTY);
 
         final StringBuilder result = new StringBuilder(39);
 

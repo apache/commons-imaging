@@ -36,6 +36,7 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -245,7 +246,7 @@ class TiffFloatingPointMultivariableTest extends AbstractTiffTest {
             final TiffPlanarConfiguration planarConfiguration) throws IOException, ImagingException {
 
         final String name = String.format("FpMultiVarRoundTrip_%s_%s%s.tiff", planarConfiguration == TiffPlanarConfiguration.CHUNKY ? "Chunky" : "Planar",
-                useTiles ? "Tiles" : "Strips", usePredictorForTiles ? "_Predictor" : "");
+                useTiles ? "Tiles" : "Strips", usePredictorForTiles ? "_Predictor" : StringUtils.EMPTY);
         final File outputFile = new File(tempDir.toFile(), name);
 
         final int bytesPerSample = 4 * samplesPerPixel;

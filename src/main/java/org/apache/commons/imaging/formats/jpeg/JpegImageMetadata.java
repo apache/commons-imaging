@@ -22,6 +22,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.imageio.ImageIO;
 
@@ -34,6 +35,7 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.internal.Debug;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * JPEG image metadata.
@@ -242,9 +244,7 @@ public class JpegImageMetadata implements ImageMetadata {
 
     @Override
     public String toString(String prefix) {
-        if (prefix == null) {
-            prefix = "";
-        }
+        prefix = Objects.toString(prefix, StringUtils.EMPTY);
 
         final StringBuilder result = new StringBuilder();
 

@@ -23,6 +23,7 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.Allocator;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Tag info for ASCII field type.
@@ -69,7 +70,7 @@ public class TagInfoAscii extends TagInfo {
         }
         final String[] strings = Allocator.array(nullCount + 1, String[]::new, 24);
         int stringsAdded = 0;
-        strings[0] = ""; // if we have a 0 length string
+        strings[0] = StringUtils.EMPTY; // if we have a 0 length string
         int nextStringPos = 0;
         // According to the Exiftool FAQ, [BROKEN URL] http://www.metadataworkinggroup.org
         // specifies that the TIFF ASCII fields are actually UTF-8.

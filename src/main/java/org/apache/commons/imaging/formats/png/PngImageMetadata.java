@@ -99,10 +99,7 @@ public class PngImageMetadata implements ImageMetadata {
 
     @Override
     public String toString(String prefix) {
-        if (prefix == null) {
-            prefix = "";
-        }
-
+        prefix = Objects.toString(prefix, "prefix");
         final StringBuilder result = new StringBuilder();
 
         result.append(prefix);

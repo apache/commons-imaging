@@ -67,6 +67,7 @@ import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.icc.IccProfileParser;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Parses PNG images.
@@ -106,9 +107,7 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
         if (imageInfo == null) {
             return false;
         }
-
-        imageInfo.toString(pw, "");
-
+        imageInfo.toString(pw, StringUtils.EMPTY);
         final List<PngChunk> chunks = readChunks(byteSource, null, false);
         final List<PngChunk> IHDRs = filterChunks(chunks, ChunkType.IHDR);
         if (IHDRs.size() != 1) {
@@ -119,22 +118,16 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
         }
         final PngChunkIhdr pngChunkIHDR = (PngChunkIhdr) IHDRs.get(0);
         pw.println("Color: " + pngChunkIHDR.getPngColorType().name());
-
         pw.println("chunks: " + chunks.size());
-
         if (chunks.isEmpty()) {
             return false;
         }
-
         for (int i = 0; i < chunks.size(); i++) {
             final PngChunk chunk = chunks.get(i);
             BinaryFunctions.printCharQuad(pw, "\t" + i + ": ", chunk.getChunkType());
         }
-
-        pw.println("");
-
+        pw.println();
         pw.flush();
-
         return true;
     }
 

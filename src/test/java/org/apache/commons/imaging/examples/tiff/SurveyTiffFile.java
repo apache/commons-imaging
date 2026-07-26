@@ -41,6 +41,7 @@ import org.apache.commons.imaging.formats.tiff.TiffReader;
 import org.apache.commons.imaging.formats.tiff.constants.TiffEpTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Provides methods to collect data for a tiff file. This class is intended for use with SurveyTiffFolder, though it could be integrated into other
@@ -67,7 +68,7 @@ public class SurveyTiffFile {
         final int k0 = (n - 4) / 2;
         final int k1 = n - 4 - k0;
 
-        final String header = String.format("%" + k0 + "sPath%" + k1 + "s%s", "", "",
+        final String header = String.format("%" + k0 + "sPath%" + k1 + "s%s", StringUtils.EMPTY, StringUtils.EMPTY,
                 "    Size     Layout  Blk_sz     P_conf  Compress  Predict  Data_Fmt   B/P B/S      Photo     ICC_Pro");
         if (csv) {
             return reformatHeaderForCsv(header);
@@ -205,7 +206,7 @@ public class SurveyTiffFile {
         if (sSampleFmt == null || sSampleFmt.length == 0) {
             return "Unknown";
         }
-        String heterogeneous = "";
+        String heterogeneous = StringUtils.EMPTY;
         for (int i = 1; i < sSampleFmt.length; i++) {
             if (sSampleFmt[i] != sSampleFmt[0]) {
                 heterogeneous = "*";
@@ -247,10 +248,10 @@ public class SurveyTiffFile {
         ps.println("  B/S       Bits per sample");
         ps.println("  Photo     Photometric Interpretation (pixel color type)");
         ps.println("  ICC_Pro   Is ICC color profile supplied");
-        ps.println("");
+        ps.println();
         ps.println("  RGBA       RGB with unassociated alpha (transparency)");
         ps.println("  RGBA_Pre-A RGB with associated (premultiplied) alpha");
-        ps.println("");
+        ps.println();
     }
 
     /**

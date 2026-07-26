@@ -27,6 +27,7 @@ import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -59,7 +60,7 @@ class WebPMetadataTest extends AbstractWebPTest {
         assertNotNull(tiffImageMetadata);
 
         // Finds by the tag number.
-        final TagInfo make = new TagInfoAscii("", 271, 0, null);
+        final TagInfo make = new TagInfoAscii(StringUtils.EMPTY, 271, 0, null);
         final Object field = tiffImageMetadata.getFieldValue(make);
         assertEquals("sony", field.toString().trim().toLowerCase());
     }

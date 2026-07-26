@@ -42,6 +42,7 @@ import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.formats.jpeg.JpegImagingParameters;
 import org.apache.commons.imaging.internal.Debug;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Parses IPTC (International Press Telecommunications Council) metadata in JPEG images.
@@ -129,7 +130,7 @@ public class IptcParser extends BinaryFileParser {
             // Note that these are unsigned quantities. Name is always an even
             // number of bytes (including the 1st byte, which is the size.)
 
-            final byte[] idString = BinaryFunctions.readBytes("", bis, JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.size(),
+            final byte[] idString = BinaryFunctions.readBytes(StringUtils.EMPTY, bis, JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.size(),
                     "App13 Segment missing identification string");
             if (!JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.equals(idString)) {
                 throw new ImagingException("Not a Photoshop App13 Segment");
@@ -140,7 +141,8 @@ public class IptcParser extends BinaryFileParser {
             while (true) {
                 final int imageResourceBlockSignature;
                 try {
-                    imageResourceBlockSignature = BinaryFunctions.read4Bytes("", bis, "Image Resource Block missing identification string", APP13_BYTE_ORDER);
+                    imageResourceBlockSignature = BinaryFunctions.read4Bytes(StringUtils.EMPTY, bis, "Image Resource Block missing identification string",
+                            APP13_BYTE_ORDER);
                 } catch (final IOException ioEx) {
                     break;
                 }
@@ -148,7 +150,7 @@ public class IptcParser extends BinaryFileParser {
                     throw new ImagingException("Invalid Image Resource Block Signature");
                 }
 
-                final int blockType = BinaryFunctions.read2Bytes("", bis, "Image Resource Block missing type", APP13_BYTE_ORDER);
+                final int blockType = BinaryFunctions.read2Bytes(StringUtils.EMPTY, bis, "Image Resource Block missing type", APP13_BYTE_ORDER);
                 Debug.debug("blockType: " + blockType + " (0x" + Integer.toHexString(blockType) + ")");
 
                 // skip blocks that the photoshop spec recommends to, see IMAGING-246
@@ -171,7 +173,7 @@ public class IptcParser extends BinaryFileParser {
                     blockNameBytes = ImagingConstants.EMPTY_BYTE_ARRAY;
                 } else {
                     try {
-                        blockNameBytes = BinaryFunctions.readBytes("", bis, blockNameLength, "Invalid Image Resource Block name");
+                        blockNameBytes = BinaryFunctions.readBytes(StringUtils.EMPTY, bis, blockNameLength, "Invalid Image Resource Block name");
                     } catch (final IOException ioEx) {
                         if (strict) {
                             throw ioEx;
@@ -184,7 +186,7 @@ public class IptcParser extends BinaryFileParser {
                     }
                 }
 
-                final int blockSize = BinaryFunctions.read4Bytes("", bis, "Image Resource Block missing size", APP13_BYTE_ORDER);
+                final int blockSize = BinaryFunctions.read4Bytes(StringUtils.EMPTY, bis, "Image Resource Block missing size", APP13_BYTE_ORDER);
                 Debug.debug("blockSize: " + blockSize + " (0x" + Integer.toHexString(blockSize) + ")");
 
                 /*
@@ -196,7 +198,7 @@ public class IptcParser extends BinaryFileParser {
 
                 final byte[] blockData;
                 try {
-                    blockData = BinaryFunctions.readBytes("", bis, blockSize, "Invalid Image Resource Block data");
+                    blockData = BinaryFunctions.readBytes(StringUtils.EMPTY, bis, blockSize, "Invalid Image Resource Block data");
                 } catch (final IOException ioEx) {
                     if (strict) {
                         throw ioEx;

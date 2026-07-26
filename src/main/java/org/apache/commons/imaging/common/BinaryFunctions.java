@@ -28,6 +28,7 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.RandomAccessFiles;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Convenience methods for various binary and I/O operations.
@@ -366,7 +367,7 @@ public final class BinaryFunctions {
      * @throws IOException if an I/O error occurs.
      */
     public static byte[] readBytes(final InputStream in, final int count) throws IOException {
-        return readBytes("", in, count, "Unexpected EOF");
+        return readBytes(StringUtils.EMPTY, in, count, "Unexpected EOF");
     }
 
     /**

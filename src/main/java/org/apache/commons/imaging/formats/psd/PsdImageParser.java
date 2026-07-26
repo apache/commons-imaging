@@ -48,6 +48,7 @@ import org.apache.commons.imaging.formats.psd.datareaders.DataReader;
 import org.apache.commons.imaging.formats.psd.datareaders.UncompressedDataReader;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Parses Adobe Photoshop PSD image files.
@@ -89,7 +90,7 @@ public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> im
             return false;
         }
 
-        fImageData.toString(pw, "");
+        fImageData.toString(pw, StringUtils.EMPTY);
         final PsdImageContents imageContents = readImageContents(byteSource);
 
         imageContents.dump(pw);
@@ -111,7 +112,7 @@ public class PsdImageParser extends AbstractImageParser<PsdImagingParameters> im
                     + " data: " + block.data.length + " type: '" + ImageResourceType.getDescription(block.id) + "' )");
         }
 
-        pw.println("");
+        pw.println();
 
         return true;
     }

@@ -36,6 +36,7 @@ import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.AbstractBinaryOutputStream;
 import org.apache.commons.imaging.common.ImageMetadata;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Parses the Apple Icon Image (.icns) format.
@@ -68,13 +69,13 @@ public class IcnsImageParser extends AbstractImageParser<IcnsImagingParameters> 
             final IcnsType icnsType = IcnsType.findAnyType(type);
             final String typeDescription;
             if (icnsType == null) {
-                typeDescription = "";
+                typeDescription = StringUtils.EMPTY;
             } else {
                 typeDescription = " " + icnsType.toString();
             }
             pw.println("Type: 0x" + Integer.toHexString(type) + " (" + IcnsType.describeType(type) + ")" + typeDescription);
             pw.println("ElementSize: " + elementSize);
-            pw.println("");
+            pw.println();
         }
     }
 
@@ -91,7 +92,7 @@ public class IcnsImageParser extends AbstractImageParser<IcnsImagingParameters> 
             pw.println("IcnsHeader");
             pw.println("Magic: 0x" + Integer.toHexString(magic) + " (" + IcnsType.describeType(magic) + ")");
             pw.println("FileSize: " + fileSize);
-            pw.println("");
+            pw.println();
         }
     }
 

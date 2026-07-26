@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 class TagInfoSShortsTest {
@@ -28,7 +29,7 @@ class TagInfoSShortsTest {
     @Test
     void testEncodeValue() {
         final TiffDirectoryType tiffDirectoryType = TiffDirectoryType.TIFF_DIRECTORY_IFD0;
-        final TagInfoSShorts tagInfoSShorts = new TagInfoSShorts("", 2269, 2269, tiffDirectoryType);
+        final TagInfoSShorts tagInfoSShorts = new TagInfoSShorts(StringUtils.EMPTY, 2269, 2269, tiffDirectoryType);
         final ByteOrder byteOrder = ByteOrder.nativeOrder();
         final short[] shortArray = new short[2];
 

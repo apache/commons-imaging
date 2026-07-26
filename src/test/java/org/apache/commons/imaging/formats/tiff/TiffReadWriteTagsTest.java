@@ -33,6 +33,7 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 class TiffReadWriteTagsTest extends AbstractTiffTest {
@@ -73,7 +74,7 @@ class TiffReadWriteTagsTest extends AbstractTiffTest {
         writer.write(tiff, set);
 
         final TiffReader reader = new TiffReader(true);
-        final FormatCompliance formatCompliance = new FormatCompliance("");
+        final FormatCompliance formatCompliance = new FormatCompliance(StringUtils.EMPTY);
         final TiffContents contents = reader.readDirectories(ByteSource.array(tiff.toByteArray()), true, formatCompliance);
         final TiffDirectory rootDir = contents.directories.get(0);
         assertEquals(description, rootDir.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION));

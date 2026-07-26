@@ -23,6 +23,7 @@ import java.io.File;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTestConstants;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -56,15 +57,15 @@ class TiffReadImageInfoTest extends AbstractTiffTest {
         final String s = info.toString();
         final int i = s.indexOf(target);
         if (i < 0) {
-            return "";
+            return StringUtils.EMPTY;
         }
         final int j = s.indexOf(':', i);
         if (j < 0) {
-            return "";
+            return StringUtils.EMPTY;
         }
         final int k = s.indexOf('\n', j);
         if (k < j) {
-            return "";
+            return StringUtils.EMPTY;
         }
         return s.substring(j + 1, k).trim();
     }

@@ -47,6 +47,7 @@ import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Parses the BMP (Windows Bitmap) image format.
@@ -75,13 +76,9 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
     @Override
     public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource) throws ImagingException, IOException {
         pw.println("bmp.dumpImageFile");
-
         final ImageInfo imageData = getImageInfo(byteSource, null);
-
-        imageData.toString(pw, "");
-
-        pw.println("");
-
+        imageData.toString(pw, StringUtils.EMPTY);
+        pw.println();
         return true;
     }
 

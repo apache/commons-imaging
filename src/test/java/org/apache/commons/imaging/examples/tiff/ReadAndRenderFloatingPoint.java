@@ -117,9 +117,9 @@ public class ReadAndRenderFloatingPoint {
 
         System.out.print("Bits per pixel: ");
         for (int i = 0; i < samplesPerPixel; i++) {
-            System.out.format("%s%d", i > 0 ? ", " : "", bitsPerPixel[i]);
+            System.out.format("%s%d", i > 0 ? ", " : StringUtils.EMPTY, bitsPerPixel[i]);
         }
-        System.out.println("");
+        System.out.println();
 
         // Create a TIFF Photometric Interpreter to perform a grayscale
         // rendering. A Photometric Interpreter is a class that maps a

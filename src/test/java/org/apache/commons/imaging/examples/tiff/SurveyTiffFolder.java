@@ -166,7 +166,7 @@ public class SurveyTiffFolder {
                 surveyFiles(topLevelDir, pathList, maxLen, csv, ps);
             } catch (final IOException ioex) {
                 System.err.println("IOException writing report to " + args[1]);
-                System.err.println("" + ioex.getMessage());
+                System.err.println(ioex.getMessage());
             }
         }
     }

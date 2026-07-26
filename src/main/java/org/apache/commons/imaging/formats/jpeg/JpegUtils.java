@@ -26,6 +26,7 @@ import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * JPEG utility methods.
@@ -186,7 +187,7 @@ public class JpegUtils extends BinaryFileParser {
             @Override
             public void visitSos(final int marker, final byte[] markerBytes, final byte[] imageData) {
                 Debug.debug("SOS marker.  " + imageData.length + " bytes of image data.");
-                Debug.debug("");
+                Debug.debug(StringUtils.EMPTY);
             }
         };
 

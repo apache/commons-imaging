@@ -39,6 +39,7 @@ import org.apache.commons.imaging.bytesource.ByteSource;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.palette.PaletteFactory;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Parses the PNM (Portable aNyMap) image format.
@@ -99,16 +100,12 @@ public class PnmImageParser extends AbstractImageParser<PnmImagingParameters> {
     @Override
     public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource) throws ImagingException, IOException {
         pw.println("pnm.dumpImageFile");
-
         final ImageInfo imageData = getImageInfo(byteSource);
         if (imageData == null) {
             return false;
         }
-
-        imageData.toString(pw, "");
-
-        pw.println("");
-
+        imageData.toString(pw, StringUtils.EMPTY);
+        pw.println();
         return true;
     }
 

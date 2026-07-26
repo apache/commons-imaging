@@ -21,11 +21,13 @@ import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.EN
 import java.io.IOException;
 import java.nio.ByteOrder;
 import java.util.Arrays;
+import java.util.Objects;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.AbstractBinaryOutputStream;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Represents a TIFF output field.
@@ -188,9 +190,7 @@ public class TiffOutputField {
      * @return The string representation.
      */
     public String toString(String prefix) {
-        if (prefix == null) {
-            prefix = "";
-        }
+        prefix = Objects.toString(prefix, StringUtils.EMPTY);
         final StringBuilder result = new StringBuilder();
 
         result.append(prefix);

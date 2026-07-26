@@ -98,7 +98,7 @@ public class IccTag {
 
         }
 
-        pw.println("");
+        pw.println();
         pw.flush();
 
     }

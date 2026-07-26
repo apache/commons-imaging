@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 
 import org.apache.commons.imaging.icc.IccProfileInfo;
 import org.apache.commons.imaging.icc.IccProfileParser;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Used to store metadata and descriptive information extracted from image files.
@@ -46,7 +47,7 @@ public class ImageDump {
      * @throws IOException if an I/O error occurs.
      */
     public void dump(final BufferedImage src) throws IOException {
-        dump("", src);
+        dump(StringUtils.EMPTY, src);
     }
 
     /**

@@ -371,7 +371,7 @@ public class ReadTagsAndImages {
                 ps.println("\n-----------------------------------------------------\n");
             }
 
-            String contentType = "";
+            String contentType = StringUtils.EMPTY;
             if (directory.hasTiffRasterData()) {
                 contentType = "Numeric raster data";
             } else if (directory.hasTiffImageData()) {
@@ -405,7 +405,7 @@ public class ReadTagsAndImages {
                 final BufferedImage bImage = directory.getTiffImage(params);
                 ImageIO.write(bImage, "JPEG", output);
             }
-            ps.println("");
+            ps.println();
             iDirectory++;
         }
     }
@@ -441,7 +441,7 @@ public class ReadTagsAndImages {
             // The TIFF directory does not contain GeoTIFF information
             return;
         }
-        ps.println("");
+        ps.println();
         ps.println("Summary of GeoTIFF Elements ----------------------------");
 
         final short[] bitsPerSample = directory.getFieldValue(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE, false);
@@ -501,7 +501,7 @@ public class ReadTagsAndImages {
             final int ref = elements[k + 1];
             final int len = elements[k + 2];
             final int vop = elements[k + 3];
-            String label = "";
+            String label = StringUtils.EMPTY;
             if (ref == GeoTiffTagConstants.EXIF_TAG_GEO_ASCII_PARAMS_TAG.tag) {
                 label = "(A)";
             } else if (ref == GeoTiffTagConstants.EXIF_TAG_GEO_DOUBLE_PARAMS_TAG.tag) {

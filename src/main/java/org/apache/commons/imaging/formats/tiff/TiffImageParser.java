@@ -54,6 +54,7 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterRgb;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterYCbCr;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Implements methods for reading and writing TIFF files. Instances of this class are invoked from the general Imaging class. Applications that require the use
@@ -123,10 +124,10 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
                     return false;
                 }
 
-                imageData.toString(pw, "");
+                imageData.toString(pw, StringUtils.EMPTY);
             }
 
-            pw.println("");
+            pw.println();
 
             // try
             {
@@ -149,7 +150,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
                     }
                 }
 
-                pw.println("");
+                pw.println();
             }
             // catch (Exception e)
             // {
@@ -160,7 +161,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
 
             return true;
         } finally {
-            pw.println("");
+            pw.println();
         }
     }
 

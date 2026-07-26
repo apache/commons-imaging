@@ -19,14 +19,15 @@ package org.apache.commons.imaging.formats.tiff.itu_t4;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.apache.commons.imaging.ImagingException;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 class HuffmanTreeExceptionTest {
 
     @Test
     void testCreatesHuffmanTreeExceptionTakingString() {
-        final ImagingException huffmanTreeException = new ImagingException("");
-        final ImagingException huffmanTreeExceptionTwo = new ImagingException("", huffmanTreeException);
+        final ImagingException huffmanTreeException = new ImagingException(StringUtils.EMPTY);
+        final ImagingException huffmanTreeExceptionTwo = new ImagingException(StringUtils.EMPTY, huffmanTreeException);
 
         assertNotEquals(huffmanTreeExceptionTwo, huffmanTreeException);
     }

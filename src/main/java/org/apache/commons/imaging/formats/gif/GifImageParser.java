@@ -48,6 +48,7 @@ import org.apache.commons.imaging.mylzw.MyLzwCompressor;
 import org.apache.commons.imaging.mylzw.MyLzwDecompressor;
 import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Parses GIF (Graphics Interchange Format) images.
@@ -124,24 +125,18 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
     @Override
     public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource) throws ImagingException, IOException {
         pw.println("gif.dumpImageFile");
-
         final ImageInfo imageData = getImageInfo(byteSource);
         if (imageData == null) {
             return false;
         }
-
-        imageData.toString(pw, "");
-
+        imageData.toString(pw, StringUtils.EMPTY);
         final GifImageContents blocks = readFile(byteSource, false);
-
         pw.println("gif.blocks: " + blocks.blocks.size());
         for (int i = 0; i < blocks.blocks.size(); i++) {
             final GifBlock gifBlock = blocks.blocks.get(i);
             this.debugNumber(pw, "\t" + i + " (" + gifBlock.getClass().getName() + ")", gifBlock.blockCode, 4);
         }
-
-        pw.println("");
-
+        pw.println();
         return true;
     }
 

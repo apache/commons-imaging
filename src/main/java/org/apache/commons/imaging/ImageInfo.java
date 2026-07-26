@@ -23,6 +23,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * ImageInfo represents a collection of basic properties of an image, such as width, height, format, bit depth, etc.
  */
@@ -404,7 +406,7 @@ public class ImageInfo {
             final StringWriter sw = new StringWriter();
             final PrintWriter pw = new PrintWriter(sw);
 
-            toString(pw, "");
+            toString(pw, StringUtils.EMPTY);
             pw.flush();
 
             return sw.toString();

@@ -216,7 +216,7 @@ public class FormatCompliance {
                 pw.println("\t" + (i + 1) + ": " + comments.get(i));
             }
         }
-        pw.println("");
+        pw.println();
         pw.flush();
     }
 

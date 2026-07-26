@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 class TagInfoSBytesTest {
@@ -28,7 +29,7 @@ class TagInfoSBytesTest {
     @Test
     void testCreatesTagInfoSBytesAndCallsEncodeValue() {
         final TiffDirectoryType tiffDirectoryType = TiffDirectoryType.TIFF_DIRECTORY_IFD3;
-        final TagInfoSBytes tagInfoSBytes = new TagInfoSBytes("", -198, 10, tiffDirectoryType);
+        final TagInfoSBytes tagInfoSBytes = new TagInfoSBytes(StringUtils.EMPTY, -198, 10, tiffDirectoryType);
         final ByteOrder byteOrder = ByteOrder.LITTLE_ENDIAN;
         final byte[] byteArray = new byte[2];
         final byte[] byteArrayTwo = tagInfoSBytes.encodeValue(byteOrder, byteArray);

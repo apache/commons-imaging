@@ -21,17 +21,18 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.nio.ByteOrder;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 class FieldTypeShortTest {
 
     @Test
     void testCreatesFieldTypeShortAndCallsWriteData() {
-        final FieldTypeShort fieldTypeShort = new FieldTypeShort(1234, "");
+        final FieldTypeShort fieldTypeShort = new FieldTypeShort(1234, StringUtils.EMPTY);
         final ByteOrder byteOrder = ByteOrder.LITTLE_ENDIAN;
 
         try {
-            fieldTypeShort.writeData("", byteOrder);
+            fieldTypeShort.writeData(StringUtils.EMPTY, byteOrder);
             fail("Expecting exception: Exception");
         } catch (final Exception e) {
             assertEquals("Invalid data:  (java.lang.String)", e.getMessage());

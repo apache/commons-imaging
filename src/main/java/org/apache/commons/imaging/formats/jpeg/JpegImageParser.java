@@ -62,6 +62,7 @@ import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * JPEG image parser.
@@ -154,10 +155,10 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
                 return false;
             }
 
-            imageInfo.toString(pw, "");
+            imageInfo.toString(pw, StringUtils.EMPTY);
         }
 
-        pw.println("");
+        pw.println();
 
         {
             final List<AbstractSegment> abstractSegments = readSegments(byteSource, null, false);
@@ -177,7 +178,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
                 abstractSegment.dump(pw);
             }
 
-            pw.println("");
+            pw.println();
         }
 
         return true;

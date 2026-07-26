@@ -30,6 +30,8 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Internal-only debug class. Used for collecting extra information when parsing or modifying images or metadata. These methods are useful for troubleshooting
  * and issue analysis, but this should not be used directly by end-users, nor extended in any way. This may change or be removed at any time.
@@ -290,7 +292,7 @@ public final class Debug {
         final String datetime = timestamp.format(new Date()).toLowerCase();
 
         result.append(NEWLINE);
-        result.append("Throwable: " + (e == null ? "" : "(" + e.getClass().getName() + ")") + ":" + datetime + NEWLINE);
+        result.append("Throwable: " + (e == null ? StringUtils.EMPTY : "(" + e.getClass().getName() + ")") + ":" + datetime + NEWLINE);
         result.append("Throwable: " + (e == null ? "null" : e.getLocalizedMessage()) + NEWLINE);
         result.append(NEWLINE);
 

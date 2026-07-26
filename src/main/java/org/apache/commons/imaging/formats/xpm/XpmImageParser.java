@@ -664,7 +664,7 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
             os.write(line.getBytes(StandardCharsets.US_ASCII));
         }
 
-        String separator = "";
+        String separator = StringUtils.EMPTY;
         for (int y = 0; y < src.getHeight(); y++) {
             os.write(separator.getBytes(StandardCharsets.US_ASCII));
             separator = ",\n";

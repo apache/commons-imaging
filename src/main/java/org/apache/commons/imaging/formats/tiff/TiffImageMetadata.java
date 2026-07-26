@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.GenericImageMetadata;
@@ -46,6 +47,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoXpString;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputField;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * TIFF image metadata.
@@ -196,9 +198,9 @@ public class TiffImageMetadata extends GenericImageMetadata {
 
         @Override
         public String toString(final String prefix) {
-            return (prefix != null ? prefix : "") + directory.description() + ": " //
-                    + (getTiffImageData() != null ? " (tiffImageData)" : "") //
-                    + (getJpegImageData() != null ? " (jpegImageData)" : "") //
+            return Objects.toString(prefix, StringUtils.EMPTY) + directory.description() + ": " //
+                    + (getTiffImageData() != null ? " (tiffImageData)" : StringUtils.EMPTY) //
+                    + (getJpegImageData() != null ? " (jpegImageData)" : StringUtils.EMPTY) //
                     + "\n" + super.toString(prefix) + "\n";
         }
 

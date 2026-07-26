@@ -19,6 +19,8 @@ package org.apache.commons.imaging.common;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Generic implementation of image metadata.
  */
@@ -119,7 +121,7 @@ public class GenericImageMetadata implements ImageMetadata {
     @Override
     public String toString(String prefix) {
         if (prefix == null) {
-            prefix = "";
+            prefix = StringUtils.EMPTY;
         }
 
         final StringBuilder result = new StringBuilder();

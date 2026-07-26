@@ -22,6 +22,7 @@ import java.io.StringWriter;
 import java.util.logging.Logger;
 
 import org.apache.commons.imaging.ImagingException;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Provides information about an ICC color profile.
@@ -169,7 +170,7 @@ public class IccProfileInfo {
     @Override
     public String toString() {
         try {
-            return toString("");
+            return toString(StringUtils.EMPTY);
         } catch (final Exception e) {
             return "IccProfileInfo: Error";
         }

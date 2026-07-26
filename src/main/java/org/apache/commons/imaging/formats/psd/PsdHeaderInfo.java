@@ -92,7 +92,7 @@ public class PsdHeaderInfo {
      * @param pw The print writer.
      */
     public void dump(final PrintWriter pw) {
-        pw.println("");
+        pw.println();
         pw.println("Header");
         pw.println("Version: " + version + " (" + Integer.toHexString(version) + ")");
         pw.println("Channels: " + channels + " (" + Integer.toHexString(channels) + ")");
@@ -101,7 +101,7 @@ public class PsdHeaderInfo {
         pw.println("Depth: " + depth + " (" + Integer.toHexString(depth) + ")");
         pw.println("Mode: " + mode + " (" + Integer.toHexString(mode) + ")");
         pw.println("Reserved: " + reserved.length);
-        pw.println("");
+        pw.println();
         pw.flush();
     }
 

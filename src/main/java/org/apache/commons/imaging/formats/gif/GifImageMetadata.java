@@ -19,8 +19,10 @@ package org.apache.commons.imaging.formats.gif;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.commons.imaging.common.ImageMetadata;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Metadata for GIF images.
@@ -63,7 +65,7 @@ public class GifImageMetadata implements ImageMetadata {
 
     @Override
     public String toString(String prefix) {
-        prefix = prefix == null ? "" : prefix;
+        prefix = Objects.toString(prefix, StringUtils.EMPTY);
         final StringBuilder result = new StringBuilder();
         result.append(String.format("%sGIF metadata:", prefix));
         result.append(String.format("%sWidth: %d%s", prefix, width, NEWLINE));

@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageInfo.ColorType;
 import org.apache.commons.imaging.ImageInfo.CompressionAlgorithm;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 class ImageInfoTest {
@@ -110,7 +111,7 @@ class ImageInfoTest {
                 + "Color Type: Black and White\n"
                 + "Uses Palette: false\n";
         // @formatter:on
-        final String testString = imageInfo.toString().replaceAll("\\r", "");
+        final String testString = imageInfo.toString().replaceAll("\\r", StringUtils.EMPTY);
         assertEquals(expected, testString);
     }
 
@@ -160,7 +161,7 @@ class ImageInfoTest {
                 + "Color Type: Black and White\n"
                 + "Uses Palette: false\n";
         // @formatter:on
-        final String testString = imageInfo.toString().replaceAll("\\r", "");
+        final String testString = imageInfo.toString().replaceAll("\\r", StringUtils.EMPTY);
         assertEquals(expected, testString);
     }
 }

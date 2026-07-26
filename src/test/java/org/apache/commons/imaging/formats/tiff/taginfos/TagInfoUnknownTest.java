@@ -19,6 +19,7 @@ package org.apache.commons.imaging.formats.tiff.taginfos;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 class TagInfoUnknownTest {
@@ -26,7 +27,7 @@ class TagInfoUnknownTest {
     @Test
     void testCreatesTagInfoUnknown() {
         final TiffDirectoryType tiffDirectoryType = TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD;
-        new TagInfoUnknown("", 2670, tiffDirectoryType);
+        new TagInfoUnknown(StringUtils.EMPTY, 2670, tiffDirectoryType);
 
         assertEquals(-1, TagInfo.LENGTH_UNKNOWN);
     }

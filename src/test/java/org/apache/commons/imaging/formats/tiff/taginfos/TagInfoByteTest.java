@@ -19,6 +19,7 @@ package org.apache.commons.imaging.formats.tiff.taginfos;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 class TagInfoByteTest {
@@ -26,7 +27,7 @@ class TagInfoByteTest {
     @Test
     void testCreatesTagInfoByteTakingFourArgumentsAndCallsEncodeValue() {
         final TiffDirectoryType tiffDirectoryType = TiffDirectoryType.TIFF_DIRECTORY_IFD0;
-        final TagInfoByte tagInfoByte = new TagInfoByte("", 347, tiffDirectoryType);
+        final TagInfoByte tagInfoByte = new TagInfoByte(StringUtils.EMPTY, 347, tiffDirectoryType);
 
         assertArrayEquals(new byte[] { (byte) 0 }, tagInfoByte.encodeValue(null, (byte) 0));
     }

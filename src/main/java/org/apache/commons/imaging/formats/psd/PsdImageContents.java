@@ -84,7 +84,7 @@ public class PsdImageContents {
      * @param pw The print writer.
      */
     public void dump(final PrintWriter pw) {
-        pw.println("");
+        pw.println();
         pw.println("ImageContents");
         pw.println("Compression: " + compression + " (" + Integer.toHexString(compression) + ")");
         pw.println("ColorModeDataLength: " + colorModeDataLength + " (" + Integer.toHexString(colorModeDataLength) + ")");
@@ -95,7 +95,7 @@ public class PsdImageContents {
         // System.out.println("Mode: " + Mode + " (" + Integer.toHexString(Mode)
         // + ")");
         // System.out.println("Reserved: " + Reserved.length);
-        pw.println("");
+        pw.println();
         pw.flush();
 
     }

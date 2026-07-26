@@ -16,7 +16,10 @@
  */
 package org.apache.commons.imaging.formats.gif;
 
+import java.util.Objects;
+
 import org.apache.commons.imaging.common.ImageMetadata;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Metadata for a single frame in a GIF image.
@@ -73,7 +76,7 @@ public class GifImageMetadataItem implements ImageMetadata.ImageMetadataItem {
 
     @Override
     public String toString(String prefix) {
-        prefix = prefix == null ? "" : prefix;
+        prefix = Objects.toString(prefix, StringUtils.EMPTY);
         final StringBuilder result = new StringBuilder();
         result.append(String.format("%sDelay: %d%s", prefix, delay, NEWLINE));
         result.append(String.format("%sLeft position: %d%s", prefix, leftPosition, NEWLINE));
