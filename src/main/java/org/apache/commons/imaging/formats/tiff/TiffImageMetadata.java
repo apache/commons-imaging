@@ -181,7 +181,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
          *
          * @return The thumbnail image.
          * @throws ImagingException if an imaging error occurs.
-         * @throws IOException if an I/O error occurs.
+         * @throws IOException Thrown if an I/O error occurs.
          */
         public BufferedImage getThumbnail() throws ImagingException, IOException {
             return directory.getTiffImage(byteOrder);

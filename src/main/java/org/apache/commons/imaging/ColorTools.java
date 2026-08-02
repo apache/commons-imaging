@@ -178,7 +178,7 @@ public class ColorTools {
      * @param file The file containing the ICC profile.
      * @return The corrected image.
      * @throws ImagingException if the image format is invalid.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public BufferedImage correctImage(final BufferedImage src, final File file) throws ImagingException, IOException {
         final ICC_Profile icc = Imaging.getIccProfile(file);

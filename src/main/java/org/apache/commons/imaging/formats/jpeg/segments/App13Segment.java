@@ -36,7 +36,7 @@ public class App13Segment extends AppnSegment {
      *
      * @param marker The segment marker.
      * @param segmentData The segment data.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public App13Segment(final int marker, final byte[] segmentData) throws IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
@@ -48,7 +48,7 @@ public class App13Segment extends AppnSegment {
      * @param marker The segment marker.
      * @param markerLength The marker length.
      * @param is The input stream to read from.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public App13Segment(final int marker, final int markerLength, final InputStream is) throws IOException {
         super(marker, markerLength, is);
@@ -83,7 +83,7 @@ public class App13Segment extends AppnSegment {
      * @param params The imaging parameters.
      * @return The parsed Photoshop APP13 data, or {@code null} if not a Photoshop segment.
      * @throws ImagingException if the image format is invalid.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public PhotoshopApp13Data parsePhotoshopSegment(final ImagingParameters<JpegImagingParameters> params) throws ImagingException, IOException {
         /*

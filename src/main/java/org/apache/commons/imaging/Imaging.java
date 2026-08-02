@@ -316,7 +316,7 @@ public final class Imaging {
      * @param byteSource The byte source.
      * @return The ICC profile, or null if not found.
      * @throws ImagingException if an imaging error occurs.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     protected static ICC_Profile getIccProfile(final ByteSource byteSource) throws ImagingException, IOException {
         final byte[] bytes = getIccProfileBytes(byteSource);

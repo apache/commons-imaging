@@ -48,7 +48,7 @@ public class BitsToByteInputStream extends FilterInputStream {
      *
      * @param bitCount The number of bits to read.
      * @return The adjusted value.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public int readBits(final int bitCount) throws IOException {
         int i = ((MyBitInputStream) in).readBits(bitCount);
@@ -67,7 +67,7 @@ public class BitsToByteInputStream extends FilterInputStream {
      * @param sampleBits The number of bits per sample.
      * @param length The number of samples to read.
      * @return The array of values.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public int[] readBitsArray(final int sampleBits, final int length) throws IOException {
         final int[] result = Allocator.intArray(length);

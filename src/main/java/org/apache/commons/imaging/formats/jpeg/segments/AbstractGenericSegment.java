@@ -47,7 +47,7 @@ public abstract class AbstractGenericSegment extends AbstractSegment {
      * @param marker The segment marker.
      * @param markerLength The length of the marker data.
      * @param is The input stream to read from.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public AbstractGenericSegment(final int marker, final int markerLength, final InputStream is) throws IOException {
         super(marker, markerLength);

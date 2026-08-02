@@ -184,7 +184,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
      *
      * @param byteSource The byte source containing the JPEG data.
      * @return The decoded BufferedImage.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      * @throws ImagingException if an imaging error occurs.
      */
     public BufferedImage decode(final ByteSource byteSource) throws IOException, ImagingException {

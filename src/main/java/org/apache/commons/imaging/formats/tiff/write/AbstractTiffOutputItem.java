@@ -100,7 +100,7 @@ abstract class AbstractTiffOutputItem {
      * Writes this item to the output stream.
      *
      * @param bos The output stream.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      * @throws ImagingException if an imaging error occurs.
      */
     public abstract void writeItem(AbstractBinaryOutputStream bos) throws IOException, ImagingException;

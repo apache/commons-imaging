@@ -45,7 +45,7 @@ public final class App2Segment extends AppnSegment implements Comparable<App2Seg
      * @param marker The segment marker.
      * @param segmentData The segment data.
      * @throws ImagingException if the image format is invalid.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public App2Segment(final int marker, final byte[] segmentData) throws ImagingException, IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
@@ -58,7 +58,7 @@ public final class App2Segment extends AppnSegment implements Comparable<App2Seg
      * @param markerLength The marker length.
      * @param is2 The input stream to read from.
      * @throws ImagingException if the image format is invalid.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public App2Segment(final int marker, int markerLength, final InputStream is2) throws ImagingException, IOException {
         super(marker, markerLength, is2);

@@ -95,7 +95,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
      * @param params The imaging parameters.
      * @return The list of raw image data.
      * @throws ImagingException if an imaging error occurs.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public List<byte[]> collectRawImageData(final ByteSource byteSource, final TiffImagingParameters params) throws ImagingException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
@@ -253,7 +253,7 @@ public class TiffImageParser extends AbstractImageParser<TiffImagingParameters> 
      * @param params The imaging parameters.
      * @return The buffered image.
      * @throws ImagingException if an imaging error occurs.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     protected BufferedImage getBufferedImage(final TiffDirectory directory, final ByteOrder byteOrder, final TiffImagingParameters params)
             throws ImagingException, IOException {

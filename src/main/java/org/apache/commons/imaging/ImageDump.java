@@ -44,7 +44,7 @@ public class ImageDump {
      * Dumps image information.
      *
      * @param src The source image.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public void dump(final BufferedImage src) throws IOException {
         dump(StringUtils.EMPTY, src);
@@ -55,7 +55,7 @@ public class ImageDump {
      *
      * @param prefix The prefix for output.
      * @param src The source image.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public void dump(final String prefix, final BufferedImage src) throws IOException {
         LOGGER.fine(prefix + ": dump");
@@ -85,7 +85,7 @@ public class ImageDump {
      *
      * @param prefix The prefix for output.
      * @param cs The color space.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public void dumpColorSpace(final String prefix, final ColorSpace cs) throws IOException {
         LOGGER.fine(prefix + ": type: " + cs.getType() + " (" + toName(cs) + ")");

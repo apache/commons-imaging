@@ -57,7 +57,7 @@ public class JpegRewriter extends BinaryFileParser {
          * Writes the piece to output stream.
          *
          * @param os The output stream.
-         * @throws IOException if an I/O error occurs.
+         * @throws IOException Thrown if an I/O error occurs.
          */
         protected abstract void write(OutputStream os) throws IOException;
     }
@@ -270,7 +270,7 @@ public class JpegRewriter extends BinaryFileParser {
      * @param byteSource The byte source.
      * @return The JFIF pieces.
      * @throws ImagingException if an imaging error occurs.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     protected JFIFPieces analyzeJfif(final ByteSource byteSource) throws ImagingException, IOException {
         final List<JFIFPiece> pieces = new ArrayList<>();
@@ -479,7 +479,7 @@ public class JpegRewriter extends BinaryFileParser {
      *
      * @param outputStream The output stream.
      * @param segments The segments to write.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     protected void writeSegments(final OutputStream outputStream, final List<? extends JFIFPiece> segments) throws IOException {
         try (DataOutputStream os = new DataOutputStream(outputStream)) {

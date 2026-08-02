@@ -653,7 +653,7 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
      * @param chunkType The chunk type to check.
      * @return true if chunk type exists, false otherwise.
      * @throws ImagingException if an imaging error occurs.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public boolean hasChunkType(final ByteSource byteSource, final ChunkType chunkType) throws ImagingException, IOException {
         try (InputStream is = byteSource.getInputStream()) {

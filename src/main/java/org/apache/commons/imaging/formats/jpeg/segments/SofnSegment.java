@@ -91,7 +91,7 @@ public final class SofnSegment extends AbstractSegment {
      *
      * @param marker The marker.
      * @param segmentData The segment data.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      * @throws ImagingException if an imaging error occurs.
      */
     public SofnSegment(final int marker, final byte[] segmentData) throws IOException, ImagingException {
@@ -104,7 +104,7 @@ public final class SofnSegment extends AbstractSegment {
      * @param marker The marker.
      * @param markerLength The marker length.
      * @param is The input stream.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      * @throws ImagingException if an imaging error occurs.
      */
     public SofnSegment(final int marker, final int markerLength, final InputStream is) throws IOException, ImagingException {

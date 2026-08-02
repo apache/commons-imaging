@@ -55,7 +55,7 @@ public class JpegUtils extends BinaryFileParser {
          * @param segmentData The segment data.
          * @return false to exit traversal.
          * @throws ImagingException if an imaging error occurs.
-         * @throws IOException if an I/O error occurs.
+         * @throws IOException Thrown if an I/O error occurs.
          */
         boolean visitSegment(int marker, byte[] markerBytes, int segmentLength, byte[] segmentLengthBytes, byte[] segmentData)
                 throws ImagingException, IOException;
@@ -165,7 +165,7 @@ public class JpegUtils extends BinaryFileParser {
      *
      * @param byteSource The byte source.
      * @throws ImagingException if an imaging error occurs.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public void dumpJfif(final ByteSource byteSource) throws ImagingException, IOException {
         final Visitor visitor = new Visitor() {
@@ -200,7 +200,7 @@ public class JpegUtils extends BinaryFileParser {
      * @param byteSource The byte source.
      * @param visitor The visitor.
      * @throws ImagingException if an imaging error occurs.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public void traverseJfif(final ByteSource byteSource, final Visitor visitor) throws ImagingException, IOException {
         try (InputStream is = byteSource.getInputStream()) {

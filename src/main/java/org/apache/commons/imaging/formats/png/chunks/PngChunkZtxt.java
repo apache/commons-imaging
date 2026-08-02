@@ -44,7 +44,7 @@ public final class PngChunkZtxt extends AbstractPngTextChunk {
      * @param crc The CRC.
      * @param bytes The chunk bytes.
      * @throws ImagingException if the chunk is corrupt.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public PngChunkZtxt(final int length, final int chunkType, final int crc, final byte[] bytes) throws ImagingException, IOException {
         super(length, chunkType, crc, bytes);

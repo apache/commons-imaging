@@ -385,7 +385,7 @@ public abstract class AbstractTiffImageWriter {
      *
      * @param os The output stream.
      * @param outputSet The TIFF output set to write.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      * @throws ImagingException if the image format is invalid.
      */
     public abstract void write(OutputStream os, TiffOutputSet outputSet) throws IOException, ImagingException;
@@ -397,7 +397,7 @@ public abstract class AbstractTiffImageWriter {
      * @param os The output stream.
      * @param params The imaging parameters.
      * @throws ImagingException if the image format is invalid.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public void writeImage(final BufferedImage src, final OutputStream os, final TiffImagingParameters params) throws ImagingException, IOException {
         final TiffOutputSet userExif = params.getOutputSet();
@@ -634,7 +634,7 @@ public abstract class AbstractTiffImageWriter {
      * Writes the TIFF image file header with the default header size.
      *
      * @param bos The binary output stream.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     protected void writeImageFileHeader(final AbstractBinaryOutputStream bos) throws IOException {
         writeImageFileHeader(bos, TiffConstants.HEADER_SIZE);
@@ -645,7 +645,7 @@ public abstract class AbstractTiffImageWriter {
      *
      * @param bos The binary output stream.
      * @param offsetToFirstIFD The offset to the first Image File Directory.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     protected void writeImageFileHeader(final AbstractBinaryOutputStream bos, final long offsetToFirstIFD) throws IOException {
         if (byteOrder == ByteOrder.LITTLE_ENDIAN) {

@@ -129,7 +129,7 @@ public class BmpImageParser extends AbstractImageParser<BmpImagingParameters> {
      * @param params The imaging parameters.
      * @return The BufferedImage.
      * @throws ImagingException if the image format is invalid.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public BufferedImage getBufferedImage(final InputStream inputStream, final BmpImagingParameters params) throws ImagingException, IOException {
         final BmpImageContents ic = readImageContents(inputStream, FormatCompliance.getDefault());

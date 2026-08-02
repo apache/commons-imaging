@@ -42,7 +42,7 @@ class WriteExifMetadataExampleTest extends AbstractExifTest {
     /**
      * Test that there are no odd offsets in the generated TIFF images.
      *
-     * @throws Exception if the test failed for a unexpected reason
+     * @throws Exception Thrown if the test failed for a unexpected reason
      */
     @ParameterizedTest
     @MethodSource("data")

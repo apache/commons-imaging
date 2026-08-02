@@ -36,7 +36,7 @@ import org.junit.jupiter.api.Test;
 class WebPMetadataTest extends AbstractWebPTest {
 
     /**
-     * @throws Exception if it cannot open the images.
+     * @throws Exception Thrown if it cannot open the images.
      */
     @Test
     void testReadAlpha() throws Exception {
@@ -47,7 +47,7 @@ class WebPMetadataTest extends AbstractWebPTest {
     }
 
     /**
-     * @throws Exception if it cannot open the images.
+     * @throws Exception Thrown if it cannot open the images.
      */
     @Test
     void testReadMetadata() throws Exception {
@@ -66,7 +66,7 @@ class WebPMetadataTest extends AbstractWebPTest {
     }
 
     /**
-     * @throws Exception if it cannot open the images.
+     * @throws Exception Thrown if it cannot open the images.
      */
     @Test
     void testReadXmp() throws Exception {

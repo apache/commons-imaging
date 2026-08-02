@@ -177,7 +177,7 @@ public final class DhtSegment extends AbstractSegment {
      *
      * @param marker The segment marker.
      * @param segmentData The segment data.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public DhtSegment(final int marker, final byte[] segmentData) throws IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
@@ -189,7 +189,7 @@ public final class DhtSegment extends AbstractSegment {
      * @param marker The segment marker.
      * @param length The segment length.
      * @param is The input stream to read from.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public DhtSegment(final int marker, int length, final InputStream is) throws IOException {
         super(marker, length);

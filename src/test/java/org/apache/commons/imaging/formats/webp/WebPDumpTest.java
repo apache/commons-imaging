@@ -36,7 +36,7 @@ class WebPDumpTest extends AbstractWebPTest {
 
     /**
      * @param imageFile parameterized test image.
-     * @throws Exception if it cannot open the images.
+     * @throws Exception Thrown if it cannot open the images.
      */
     @ParameterizedTest
     @MethodSource("images")

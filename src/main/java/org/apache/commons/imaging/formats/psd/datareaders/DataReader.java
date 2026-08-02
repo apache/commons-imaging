@@ -37,7 +37,7 @@ public interface DataReader {
      * @param imageContents The PSD image contents.
      * @param bfp The binary file parser.
      * @throws ImagingException if the image format is invalid.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     void readData(InputStream is, BufferedImage bi, PsdImageContents imageContents, BinaryFileParser bfp) throws ImagingException, IOException;
 

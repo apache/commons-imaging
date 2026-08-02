@@ -33,7 +33,7 @@ public final class TransparencyFilterTrueColor extends AbstractTransparencyFilte
      * Constructs a new transparency filter for true color images.
      *
      * @param bytes The transparency chunk data.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public TransparencyFilterTrueColor(final byte[] bytes) throws IOException {
         super(bytes);

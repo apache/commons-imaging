@@ -41,7 +41,7 @@ public final class ImageParserFactory {
      * @param <T> The imaging parameters type.
      * @param byteSource The byte source.
      * @return The image parser.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public static <T extends ImagingParameters<T>> AbstractImageParser<T> getImageParser(final ByteSource byteSource) throws IOException {
         // TODO: circular dependency between Imaging and internal Util class below.

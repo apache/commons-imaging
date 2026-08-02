@@ -73,7 +73,7 @@ public class IccTag {
      * @param pw The PrintWriter to write to.
      * @param prefix The prefix to use for output lines.
      * @throws ImagingException if an imaging error occurs.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public void dump(final PrintWriter pw, final String prefix) throws ImagingException, IOException {
         pw.println(prefix + "tag signature: " + Integer.toHexString(signature) + " (" + new String(new byte[] { (byte) (0xff & signature >> 24),
@@ -108,7 +108,7 @@ public class IccTag {
      *
      * @param prefix The prefix to use for output lines.
      * @throws ImagingException if an imaging error occurs.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public void dump(final String prefix) throws ImagingException, IOException {
         try (StringWriter sw = new StringWriter();
@@ -134,7 +134,7 @@ public class IccTag {
      * Sets the tag data.
      *
      * @param bytes The tag data bytes.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public void setData(final byte[] bytes) throws IOException {
         data = bytes;

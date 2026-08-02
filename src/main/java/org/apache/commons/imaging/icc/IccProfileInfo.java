@@ -182,7 +182,7 @@ public class IccProfileInfo {
      * @param prefix The prefix to use for output lines.
      * @return A string representation of the profile information.
      * @throws ImagingException if an imaging error occurs.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public String toString(final String prefix) throws ImagingException, IOException {
         final StringWriter sw = new StringWriter();

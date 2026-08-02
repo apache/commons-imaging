@@ -28,7 +28,7 @@ interface IccTagDataType {
      * @param prefix The prefix for output.
      * @param bytes The data bytes.
      * @throws ImagingException if an imaging error occurs.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     void dump(String prefix, byte[] bytes) throws ImagingException, IOException;
 

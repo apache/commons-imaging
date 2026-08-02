@@ -79,7 +79,7 @@ public abstract class AbstractPhotometricInterpreter {
      * @param x The x coordinate.
      * @param y The y coordinate.
      * @throws ImagingException if the image format is invalid.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public abstract void interpretPixel(ImageBuilder imageBuilder, int[] samples, int x, int y) throws ImagingException, IOException;
 }

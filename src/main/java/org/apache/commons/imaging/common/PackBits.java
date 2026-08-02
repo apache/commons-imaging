@@ -32,7 +32,7 @@ public final class PackBits {
      *
      * @param bytes The bytes to compress.
      * @return The compressed bytes.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public static byte[] compress(final byte[] bytes) throws IOException {
         // max length 1 extra byte for every 128

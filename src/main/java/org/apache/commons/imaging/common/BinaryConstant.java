@@ -104,7 +104,7 @@ public class BinaryConstant {
      * Writes this binary constant to an output stream.
      *
      * @param os The output stream.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public void writeTo(final OutputStream os) throws IOException {
         for (final byte element : value) {

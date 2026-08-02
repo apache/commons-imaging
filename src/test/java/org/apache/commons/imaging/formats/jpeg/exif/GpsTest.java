@@ -71,7 +71,7 @@ class GpsTest extends AbstractExifTest {
     }
 
     /**
-     * @throws Exception if it cannot open the images.
+     * @throws Exception Thrown if it cannot open the images.
      */
     @Test
     void testReadMetadata() throws Exception {

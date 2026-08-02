@@ -167,7 +167,7 @@ public class BasicCParser {
      * @param firstComment StringBuilder to capture the first comment, or null to ignore.
      * @param defines map to store preprocessor definitions.
      * @return The preprocessed output as a ByteArrayOutputStream.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      * @throws ImagingException if parsing fails.
      */
     public static ByteArrayOutputStream preprocess(final InputStream is, final StringBuilder firstComment, final Map<String, String> defines)
@@ -422,7 +422,7 @@ public class BasicCParser {
      * Reads the next token from the input stream.
      *
      * @return The next token as a string, or null if end of stream.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      * @throws ImagingException if parsing fails.
      */
     public String nextToken() throws IOException, ImagingException {

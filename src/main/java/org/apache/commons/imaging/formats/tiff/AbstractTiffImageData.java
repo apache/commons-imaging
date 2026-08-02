@@ -217,7 +217,7 @@ public abstract class AbstractTiffImageData {
      * @param planarConfiguration The planar configuration.
      * @param byteOrder The byte order.
      * @return The data reader.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      * @throws ImagingException if the image format is invalid.
      */
     public abstract AbstractImageDataReader getDataReader(TiffDirectory directory, AbstractPhotometricInterpreter photometricInterpreter, int bitsPerPixel,

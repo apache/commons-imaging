@@ -40,7 +40,7 @@ public class UnknownSegment extends AbstractGenericSegment {
      * @param marker The marker.
      * @param markerLength The marker length.
      * @param is The input stream.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public UnknownSegment(final int marker, final int markerLength, final InputStream is) throws IOException {
         super(marker, markerLength, is);

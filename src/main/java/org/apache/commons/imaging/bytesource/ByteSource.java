@@ -71,7 +71,7 @@ public class ByteSource {
      * @param byteSource The byte source.
      * @param skip The number of bytes to skip.
      * @return The input stream.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public static final InputStream getInputStream(final ByteSource byteSource, final long skip) throws IOException {
         InputStream is = null;
@@ -94,7 +94,7 @@ public class ByteSource {
      * @param is The input stream.
      * @param name The name.
      * @return The ByteSource.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public static ByteSource inputStream(final InputStream is, final String name) throws IOException {
         return new InputStreamByteSource(is, name);
@@ -130,7 +130,7 @@ public class ByteSource {
      * @param position The position.
      * @param length The length.
      * @return The byte array.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public byte[] getByteArray(final long position, final int length) throws IOException {
         return origin.getByteArray(position, length);
@@ -149,7 +149,7 @@ public class ByteSource {
      * Gets an input stream.
      *
      * @return The input stream.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public InputStream getInputStream() throws IOException {
         return origin.getInputStream();
@@ -159,7 +159,7 @@ public class ByteSource {
      * This operation can be VERY expensive; for InputStream byte sources, the entire stream must be drained to determine its length.
      *
      * @return The length.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public long size() throws IOException {
         return origin.size();

@@ -81,7 +81,7 @@ public abstract class AbstractBinaryOutputStream extends FilterOutputStream {
      * Writes a 2-byte value.
      *
      * @param value The value to write.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public abstract void write2Bytes(int value) throws IOException;
 
@@ -89,7 +89,7 @@ public abstract class AbstractBinaryOutputStream extends FilterOutputStream {
      * Writes a 3-byte value.
      *
      * @param value The value to write.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public abstract void write3Bytes(int value) throws IOException;
 
@@ -97,7 +97,7 @@ public abstract class AbstractBinaryOutputStream extends FilterOutputStream {
      * Writes a 4-byte value.
      *
      * @param value The value to write.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public abstract void write4Bytes(int value) throws IOException;
 }

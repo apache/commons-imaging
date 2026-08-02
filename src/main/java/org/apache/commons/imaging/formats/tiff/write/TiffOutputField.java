@@ -213,7 +213,7 @@ public class TiffOutputField {
      * Writes this field to the output stream.
      *
      * @param bos The output stream.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      * @throws ImagingException if an imaging error occurs.
      */
     protected void writeField(final AbstractBinaryOutputStream bos) throws IOException, ImagingException {

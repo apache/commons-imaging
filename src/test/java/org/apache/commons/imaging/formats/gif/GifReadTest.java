@@ -160,7 +160,7 @@ class GifReadTest extends AbstractGifTest {
      * See Google OSS Fuzz issue 33464
      * </p>
      *
-     * @throws IOException if it fails to read the test image
+     * @throws IOException Thrown if it fails to read the test image
      */
     @Test
     void testUncaughtExceptionOssFuzz33464() throws IOException {
@@ -176,7 +176,7 @@ class GifReadTest extends AbstractGifTest {
      * See Google OSS Fuzz issue 33501
      * </p>
      *
-     * @throws IOException if it fails to read the test image
+     * @throws IOException Thrown if it fails to read the test image
      */
     @Test
     void testUncaughtExceptionOssFuzz33501() throws IOException {
@@ -192,7 +192,7 @@ class GifReadTest extends AbstractGifTest {
      * See Google OSS Fuzz issue 34185
      * </p>
      *
-     * @throws IOException if it fails to read the test image
+     * @throws IOException Thrown if it fails to read the test image
      */
     @Test
     void testUncaughtExceptionOssFuzz34185() throws IOException {

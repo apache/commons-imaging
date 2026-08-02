@@ -76,7 +76,7 @@ public final class DqtSegment extends AbstractSegment {
      * @param marker The segment marker.
      * @param segmentData The segment data.
      * @throws ImagingException if the image format is invalid.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public DqtSegment(final int marker, final byte[] segmentData) throws ImagingException, IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
@@ -89,7 +89,7 @@ public final class DqtSegment extends AbstractSegment {
      * @param length The segment length.
      * @param is The input stream to read from.
      * @throws ImagingException if the image format is invalid.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public DqtSegment(final int marker, int length, final InputStream is) throws ImagingException, IOException {
         super(marker, length);

@@ -231,7 +231,7 @@ public class MyLzwCompressor {
      *
      * @param bytes The bytes to compress.
      * @return The compressed bytes.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public byte[] compress(final byte[] bytes) throws IOException {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream(Allocator.checkByteArray(bytes.length));

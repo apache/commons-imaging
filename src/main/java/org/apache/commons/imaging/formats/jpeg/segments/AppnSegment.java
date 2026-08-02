@@ -32,7 +32,7 @@ public class AppnSegment extends AbstractGenericSegment {
      * @param marker The segment marker.
      * @param markerLength The marker length.
      * @param is The input stream to read from.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public AppnSegment(final int marker, final int markerLength, final InputStream is) throws IOException {
         super(marker, markerLength, is);

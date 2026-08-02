@@ -32,7 +32,7 @@ public interface ScanlineFilter {
      * @param dst The destination bytes.
      * @param up The previous scanline bytes.
      * @throws ImagingException if an imaging error occurs.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     void unfilter(byte[] src, byte[] dst, byte[] up) throws ImagingException, IOException;
 

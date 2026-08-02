@@ -44,7 +44,7 @@ public abstract class AbstractTransparencyFilter extends BinaryFileParser {
      * @param index The pixel index.
      * @return The filtered RGB value.
      * @throws ImagingException if the image format is invalid.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public abstract int filter(int rgb, int index) throws ImagingException, IOException;
 

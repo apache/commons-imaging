@@ -254,7 +254,7 @@ public class TiffReader extends BinaryFileParser {
      * @param formatCompliance The format compliance.
      * @param listener The listener for callbacks.
      * @throws ImagingException if an imaging error occurs.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public void read(final ByteSource byteSource, final FormatCompliance formatCompliance, final Listener listener) throws ImagingException, IOException {
         readDirectories(byteSource, formatCompliance, listener);
@@ -268,7 +268,7 @@ public class TiffReader extends BinaryFileParser {
      * @param formatCompliance The format compliance.
      * @return The TIFF contents.
      * @throws ImagingException if an imaging error occurs.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public TiffContents readContents(final ByteSource byteSource, final TiffImagingParameters params, final FormatCompliance formatCompliance)
             throws ImagingException, IOException {
@@ -286,7 +286,7 @@ public class TiffReader extends BinaryFileParser {
      * @param formatCompliance The format compliance.
      * @return The TIFF contents.
      * @throws ImagingException if an imaging error occurs.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public TiffContents readDirectories(final ByteSource byteSource, final boolean readImageData, final FormatCompliance formatCompliance)
             throws ImagingException, IOException {
@@ -495,7 +495,7 @@ public class TiffReader extends BinaryFileParser {
      * @param formatCompliance The format compliance.
      * @return The TIFF contents containing only the first directory.
      * @throws ImagingException if an imaging error occurs.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public TiffContents readFirstDirectory(final ByteSource byteSource, final boolean readImageData, final FormatCompliance formatCompliance)
             throws ImagingException, IOException {

@@ -52,7 +52,7 @@ public class IccProfileParser extends BinaryFileParser {
      *
      * @param bytes The bytes.
      * @return The ICC profile info or null if bytes is null.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public IccProfileInfo getIccProfileInfo(final byte[] bytes) throws IOException {
         if (bytes == null) {
@@ -66,7 +66,7 @@ public class IccProfileParser extends BinaryFileParser {
      *
      * @param byteSource The byte source.
      * @return The ICC profile info.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public IccProfileInfo getIccProfileInfo(final ByteSource byteSource) throws IOException {
         // TODO Throw instead of logging?
@@ -90,7 +90,7 @@ public class IccProfileParser extends BinaryFileParser {
      *
      * @param file The file.
      * @return The ICC profile info or null if file is null.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public IccProfileInfo getIccProfileInfo(final File file) throws IOException {
         if (file == null) {
@@ -105,7 +105,7 @@ public class IccProfileParser extends BinaryFileParser {
      *
      * @param iccProfile The ICC profile.
      * @return The ICC profile info or null if iccProfile is null.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public IccProfileInfo getIccProfileInfo(final ICC_Profile iccProfile) throws IOException {
         if (iccProfile == null) {
@@ -130,7 +130,7 @@ public class IccProfileParser extends BinaryFileParser {
      *
      * @param bytes The bytes.
      * @return true if sRGB, false otherwise.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public boolean isSrgb(final byte[] bytes) throws IOException {
         return isSrgb(ByteSource.array(bytes));
@@ -141,7 +141,7 @@ public class IccProfileParser extends BinaryFileParser {
      *
      * @param byteSource The byte source.
      * @return true if sRGB, false otherwise.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public boolean isSrgb(final ByteSource byteSource) throws IOException {
         // setDebug(true);
@@ -182,7 +182,7 @@ public class IccProfileParser extends BinaryFileParser {
      *
      * @param file The file.
      * @return true if sRGB, false otherwise.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public boolean isSrgb(final File file) throws IOException {
         return isSrgb(ByteSource.file(file));
@@ -193,7 +193,7 @@ public class IccProfileParser extends BinaryFileParser {
      *
      * @param iccProfile The ICC profile.
      * @return true if sRGB, false otherwise.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public boolean isSrgb(final ICC_Profile iccProfile) throws IOException {
         return isSrgb(ByteSource.array(iccProfile.getData()));

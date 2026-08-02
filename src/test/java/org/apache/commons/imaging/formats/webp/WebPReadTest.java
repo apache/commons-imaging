@@ -44,7 +44,7 @@ class WebPReadTest extends AbstractWebPTest {
     /**
      * Not implemented yet.
      *
-     * @throws IOException if it failed to read the image.
+     * @throws IOException Thrown if it failed to read the image.
      */
     @Test
     void testBufferedImageNotSupported() throws IOException {
@@ -67,7 +67,7 @@ class WebPReadTest extends AbstractWebPTest {
 
     /**
      * @param imageFile parameterized test image.
-     * @throws Exception if it cannot open the images.
+     * @throws Exception Thrown if it cannot open the images.
      */
     @ParameterizedTest
     @MethodSource("images")

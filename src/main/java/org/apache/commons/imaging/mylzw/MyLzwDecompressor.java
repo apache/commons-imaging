@@ -142,7 +142,7 @@ public final class MyLzwDecompressor {
      * @param is input stream.
      * @param expectedLength expected length.
      * @return decompressed bytes.
-     * @throws IOException if I/O error occurs.
+     * @throws IOException Thrown if I/O error occurs.
      */
     public byte[] decompress(final InputStream is, final int expectedLength) throws IOException {
         int code;

@@ -54,7 +54,7 @@ class ExifRewriterRoundtripTest extends AbstractExifTest {
     /**
      * Test data.
      * @return test data.
-     * @throws Exception if it fails to read the images with EXIF.
+     * @throws Exception Thrown if it fails to read the images with EXIF.
      */
     public static Stream<File> data() throws Exception {
         return getImagesWithExifData().stream();
@@ -208,7 +208,7 @@ class ExifRewriterRoundtripTest extends AbstractExifTest {
      * data from a duplicated file.
      *
      * @param sourceFile The input file.
-     * @throws Exception if it fails to read the test image or create the duplicated file.
+     * @throws Exception Thrown if it fails to read the test image or create the duplicated file.
      */
     @ParameterizedTest
     @MethodSource("data")

@@ -75,7 +75,7 @@ class PngReadTest extends AbstractPngTest {
     /**
      * Test reading EXIF from the 'eXIf' chunk in PNG file.
      *
-     * @throws IOException if it fails to read the test image
+     * @throws IOException Thrown if it fails to read the test image
      * @throws ImagingException if it fails to read the test image
      */
     @Test
@@ -128,7 +128,7 @@ class PngReadTest extends AbstractPngTest {
      * See Google OSS Fuzz issue 33691
      * </p>
      *
-     * @throws IOException if it fails to read the test image
+     * @throws IOException Thrown if it fails to read the test image
      */
     @Test
     void testUncaughtExceptionOssFuzz33691() throws IOException {
@@ -144,7 +144,7 @@ class PngReadTest extends AbstractPngTest {
      * See Google OSS Fuzz issue 37607
      * </p>
      *
-     * @throws IOException if it fails to read the test image
+     * @throws IOException Thrown if it fails to read the test image
      */
     @Test
     void testUncaughtExceptionOssFuzz37607() throws IOException {

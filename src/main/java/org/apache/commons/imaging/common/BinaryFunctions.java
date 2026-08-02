@@ -110,7 +110,7 @@ public final class BinaryFunctions {
      * @param length The number of bytes to read.
      * @param exception The exception message if length is invalid.
      * @return The bytes read.
-     * @throws IOException if an I/O error occurs or length is invalid.
+     * @throws IOException Thrown if an I/O error occurs or length is invalid.
      */
     public static byte[] getBytes(final RandomAccessFile raf, final long pos, final int length, final String exception) throws IOException {
         if (length < 0) {
@@ -205,7 +205,7 @@ public final class BinaryFunctions {
      * @param exception The exception message if read fails.
      * @param byteOrder The byte order.
      * @return The 16-bit value.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public static int read2Bytes(final String name, final InputStream in, final String exception, final ByteOrder byteOrder) throws IOException {
         final int byte0 = in.read();
@@ -230,7 +230,7 @@ public final class BinaryFunctions {
      * @param exception The exception message if read fails.
      * @param byteOrder The byte order.
      * @return The 24-bit value.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public static int read3Bytes(final String name, final InputStream in, final String exception, final ByteOrder byteOrder) throws IOException {
         final int byte0 = in.read();
@@ -256,7 +256,7 @@ public final class BinaryFunctions {
      * @param exception The exception message if read fails.
      * @param byteOrder The byte order.
      * @return The 32-bit value.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public static int read4Bytes(final String name, final InputStream in, final String exception, final ByteOrder byteOrder) throws IOException {
         final int byte0 = in.read();
@@ -313,7 +313,7 @@ public final class BinaryFunctions {
      * @param expected The expected binary constant.
      * @param exception The exception message if bytes don't match.
      * @throws ImagingException if the bytes don't match or EOF is reached.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public static void readAndVerifyBytes(final InputStream in, final BinaryConstant expected, final String exception) throws ImagingException, IOException {
         readAndVerifyBytes(in, expected.rawValue(), exception);
@@ -326,7 +326,7 @@ public final class BinaryFunctions {
      * @param expected The expected byte array.
      * @param exception The exception message if bytes don't match.
      * @throws ImagingException if the bytes don't match or EOF is reached.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public static void readAndVerifyBytes(final InputStream in, final byte[] expected, final String exception) throws ImagingException, IOException {
         for (final byte element : expected) {
@@ -348,7 +348,7 @@ public final class BinaryFunctions {
      * @param in The input stream.
      * @param exceptionMessage The exception message if read fails.
      * @return The byte read.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public static byte readByte(final String name, final InputStream in, final String exceptionMessage) throws IOException {
         final int result = in.read();
@@ -364,7 +364,7 @@ public final class BinaryFunctions {
      * @param in The input stream.
      * @param count The number of bytes to read.
      * @return The bytes read.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public static byte[] readBytes(final InputStream in, final int count) throws IOException {
         return readBytes(StringUtils.EMPTY, in, count, "Unexpected EOF");
@@ -377,7 +377,7 @@ public final class BinaryFunctions {
      * @param in The input stream.
      * @param length The number of bytes to read.
      * @return The bytes read.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public static byte[] readBytes(final String name, final InputStream in, final int length) throws IOException {
         return readBytes(name, in, length, name + " could not be read.");
@@ -391,7 +391,7 @@ public final class BinaryFunctions {
      * @param length The number of bytes to read.
      * @param exception The exception message if read fails.
      * @return The bytes read.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public static byte[] readBytes(final String name, final InputStream in, final int length, final String exception) throws IOException {
         try {
@@ -423,7 +423,7 @@ public final class BinaryFunctions {
      * @param quad A quad (the needle).
      * @param in  An input stream (the haystack).
      * @return {@code true} if it found the quad, and {@code false} otherwise.
-     * @throws IOException if it fails to read from the given input stream.
+     * @throws IOException Thrown if it fails to read from the given input stream.
      */
     public static boolean searchQuad(final int quad, final InputStream in) throws IOException {
         final byte[] needle = quadsToByteArray(quad);
@@ -448,7 +448,7 @@ public final class BinaryFunctions {
      * @param in The input stream.
      * @param skip The number of bytes to skip.
      * @return The number of bytes actually skipped.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public static long skipBytes(final InputStream in, final long skip) throws IOException {
         return skipBytes(in, skip, "Couldn't skip bytes");
@@ -461,7 +461,7 @@ public final class BinaryFunctions {
      * @param skip The number of bytes to skip.
      * @param exMessage The exception message if skip fails.
      * @return The number of bytes actually skipped.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     public static long skipBytes(final InputStream in, final long skip, final String exMessage) throws IOException {
         try {

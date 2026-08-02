@@ -238,7 +238,7 @@ public abstract class AbstractImageDataReader {
      * @param tileHeight The tile height.
      * @return The decompressed data.
      * @throws ImagingException if the image format is invalid.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException Thrown if an I/O error occurs.
      */
     protected byte[] decompress(final byte[] compressedInput, final int compression, final int expectedSize, final int tileWidth, final int tileHeight)
             throws ImagingException, IOException {
