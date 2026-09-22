@@ -31,7 +31,7 @@ github:
       # auto-delete head branches after being merged
       del_branch_on_merge: true
 
-    rulesets:
+  rulesets:
       - name: "Protect Main Branches"
         type: branch
         branches:
