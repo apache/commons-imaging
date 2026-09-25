@@ -342,7 +342,7 @@ public class JpegImageParser extends AbstractImageParser<JpegImagingParameters> 
 
         }, false);
 
-        if (SOF_segments == null) {
+        if (SOF_segments == null || SOF_segments.isEmpty()) {
             throw new ImagingException("No SOFN Data Found.");
         }
 
