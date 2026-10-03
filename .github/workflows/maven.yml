@@ -33,10 +33,10 @@ jobs:
         # Keep same order below (os, java experimental)
         include:
             - os: ubuntu-latest
-              java: 26
+              java: 27
               experimental: false
             - os: ubuntu-latest
-              java: 27-ea
+              java: 28-ea
               experimental: true
         
     steps:
