@@ -48,6 +48,7 @@ The <action> type attribute can be add,update,fix,remove.
   <body>
     <release version="1.0.0-alpha7" date="YYYY-MM-DD" description="This release requires Java 8.">
       <!-- FIX -->
+      <action type="fix" due-to="Aryan Ganjoo" issue="IMAGING-389">Fix BinaryFunctions.searchQuad matching for high-bit bytes and overlapping prefixes.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix Apache RAT plugin console warnings.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix Javadoc warnings.</action>
       <action type="fix" dev="ggregory" due-to="alhuda, Gary Gregory">Fix int overflow in PCX image buffer sizing, now throws AllocationRequestException (#552).</action>
