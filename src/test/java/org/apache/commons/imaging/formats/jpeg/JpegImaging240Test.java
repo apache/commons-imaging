@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -77,5 +78,80 @@ class JpegImaging240Test {
     void testNonStrictReaderStillRejectsTruncatedRootDirectoryFooter() {
         final byte[] tiff = { 'I', 'I', 42, 0, 8, 0, 0, 0, 0, 0 };
         assertThrows(IOException.class, () -> new TiffReader(false).readDirectories(ByteSource.array(tiff), false, FormatCompliance.getDefault()));
+    }
+
+    @Test
+    void testNonStrictReaderAcceptsExifDirectoryFooterWithPartialBytesRemaining() throws Exception {
+        final byte[] exif = new JpegImageParser().getExifRawData(ByteSource.file(getImage()));
+        for (int remaining = 1; remaining <= 3; remaining++) {
+            final byte[] partial = Arrays.copyOf(exif, exif.length + remaining);
+            final TiffContents contents = new TiffReader(false).readDirectories(ByteSource.array(partial), false, FormatCompliance.getDefault());
+            assertEquals(2, contents.directories.size(), "remaining=" + remaining);
+            assertEquals(3, contents.directories.get(1).getDirectoryEntries().size(), "remaining=" + remaining);
+        }
+    }
+
+    @Test
+    void testStrictReaderRejectsExifDirectoryFooterWithPartialBytesRemaining() throws Exception {
+        final byte[] exif = new JpegImageParser().getExifRawData(ByteSource.file(getImage()));
+        for (int remaining = 1; remaining <= 3; remaining++) {
+            final byte[] partial = Arrays.copyOf(exif, exif.length + remaining);
+            assertThrows(IOException.class, () -> new TiffReader(true).readDirectories(ByteSource.array(partial), false, FormatCompliance.getDefault()),
+                    "remaining=" + remaining);
+        }
+    }
+
+    @Test
+    void testNonStrictReaderAcceptsBigEndianMissingExifDirectoryFooter() throws Exception {
+        final byte[] tiff = buildBigEndianTiffWithMissingExifFooter();
+        final TiffContents contents = new TiffReader(false).readDirectories(ByteSource.array(tiff), false, FormatCompliance.getDefault());
+        assertEquals(2, contents.directories.size());
+        assertEquals(TiffDirectoryConstants.DIRECTORY_TYPE_EXIF, contents.directories.get(1).type);
+    }
+
+    @Test
+    void testStrictReaderRejectsBigEndianMissingExifDirectoryFooter() throws Exception {
+        final byte[] tiff = buildBigEndianTiffWithMissingExifFooter();
+        assertThrows(IOException.class, () -> new TiffReader(true).readDirectories(ByteSource.array(tiff), false, FormatCompliance.getDefault()));
+    }
+
+    /**
+     * Builds a minimal big-endian (Motorola byte order) standard TIFF whose single root entry points to an EXIF
+     * subdirectory, and whose EXIF subdirectory omits its trailing 4-byte next-directory-offset field, mirroring the
+     * real-world condition that IMAGING-240 addresses but in big-endian byte order.
+     */
+    private static byte[] buildBigEndianTiffWithMissingExifFooter() {
+        final int rootEntryCount = 1;
+        final long subDirectoryOffset = 8 + 2 + rootEntryCount * 12L + 4;
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        out.write('M');
+        out.write('M');
+        writeShortBE(out, 42);
+        writeIntBE(out, 8);
+        writeShortBE(out, rootEntryCount);
+        writeShortBE(out, 0x8769);
+        writeShortBE(out, 4);
+        writeIntBE(out, 1);
+        writeIntBE(out, subDirectoryOffset);
+        writeIntBE(out, 0);
+        writeShortBE(out, 1);
+        writeShortBE(out, 0x0100);
+        writeShortBE(out, 3);
+        writeIntBE(out, 1);
+        writeShortBE(out, 123);
+        writeShortBE(out, 0);
+        return out.toByteArray();
+    }
+
+    private static void writeShortBE(final ByteArrayOutputStream out, final int value) {
+        out.write((value >> 8) & 0xFF);
+        out.write(value & 0xFF);
+    }
+
+    private static void writeIntBE(final ByteArrayOutputStream out, final long value) {
+        out.write((int) ((value >> 24) & 0xFF));
+        out.write((int) ((value >> 16) & 0xFF));
+        out.write((int) ((value >> 8) & 0xFF));
+        out.write((int) (value & 0xFF));
     }
 }
