@@ -36,6 +36,7 @@ import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory.ImageDataElement;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
+import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.AbstractFieldType;
@@ -424,7 +425,16 @@ public class TiffReader extends BinaryFileParser {
                 }
             }
 
-            final long nextDirectoryOffset = 0xFFFFffffL & BinaryFunctions.read4Bytes("nextDirectoryOffset", is, "Not a Valid TIFF File", getByteOrder());
+            final long nextDirectoryOffset;
+            final long directoryEnd = directoryOffset + TiffConstants.DIRECTORY_HEADER_LENGTH + entryCount * TiffConstants.ENTRY_LENGTH;
+            if (standardTiff && ignoreNextDirectory && !strict && byteSource.size() - directoryEnd < TiffConstants.DIRECTORY_FOOTER_LENGTH) {
+                // Some EXIF subdirectories omit the unused next-directory offset.
+                // Preserve their fields without relaxing root-directory or strict parsing.
+                formatCompliance.addComment("Missing next directory offset in EXIF subdirectory");
+                nextDirectoryOffset = 0;
+            } else {
+                nextDirectoryOffset = 0xFFFFffffL & BinaryFunctions.read4Bytes("nextDirectoryOffset", is, "Not a Valid TIFF File", getByteOrder());
+            }
 
             final TiffDirectory directory = new TiffDirectory(dirType, fields, directoryOffset, nextDirectoryOffset, getByteOrder());
 
