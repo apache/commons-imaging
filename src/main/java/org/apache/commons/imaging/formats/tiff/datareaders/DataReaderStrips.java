@@ -244,6 +244,10 @@ public final class DataReaderStrips extends AbstractImageDataReader {
         }
     }
 
+    static int checkStripSize(final long bytesPerStrip) {
+        return Allocator.check(bytesPerStrip, Byte.BYTES);
+    }
+
     @Override
     public ImageBuilder readImageData(final Rectangle subImageSpecification, final boolean hasAlpha, final boolean isAlphaPreMultiplied)
             throws IOException, ImagingException {
@@ -297,6 +301,7 @@ public final class DataReaderStrips extends AbstractImageDataReader {
                 final long rowsInThisStrip = Math.min(rowsRemaining, rowsPerStripLong);
                 final long bytesPerRow = (bitsPerPixel * width + 7) / 8;
                 final long bytesPerStrip = rowsInThisStrip * bytesPerRow;
+                final int expectedSize = checkStripSize(bytesPerStrip);
                 final long pixelsPerStrip = rowsInThisStrip * width;
 
                 final byte[] compressed = imageData.getImageData(strip).getData();
@@ -308,7 +313,7 @@ public final class DataReaderStrips extends AbstractImageDataReader {
                     continue;
                 }
 
-                final byte[] decompressed = decompress(compressed, compression, (int) bytesPerStrip, width, (int) rowsInThisStrip);
+                final byte[] decompressed = decompress(compressed, compression, expectedSize, width, (int) rowsInThisStrip);
 
                 interpretStrip(workingBuilder, decompressed, (int) pixelsPerStrip, yLimit);
             }
@@ -327,13 +332,14 @@ public final class DataReaderStrips extends AbstractImageDataReader {
                 final long rowsInThisStrip = Math.min(rowsRemaining, rowsPerStripLong);
                 final long bytesPerRow = (bitsPerPixel * width + 7) / 8;
                 final long bytesPerStrip = rowsInThisStrip * bytesPerRow;
+                final int expectedSize = checkStripSize(bytesPerStrip);
                 final long pixelsPerStrip = rowsInThisStrip * width;
 
-                final byte[] b = Allocator.byteArray((int) bytesPerStrip);
+                final byte[] b = Allocator.byteArray(expectedSize);
                 for (int iPlane = 0; iPlane < 3; iPlane++) {
                     final int planeStrip = iPlane * nStripsInPlane + strip;
                     final byte[] compressed = imageData.getImageData(planeStrip).getData();
-                    final byte[] decompressed = decompress(compressed, compression, (int) bytesPerStrip, width, (int) rowsInThisStrip);
+                    final byte[] decompressed = decompress(compressed, compression, expectedSize, width, (int) rowsInThisStrip);
                     int index = iPlane;
                     for (final byte element : decompressed) {
                         b[index] = element;
