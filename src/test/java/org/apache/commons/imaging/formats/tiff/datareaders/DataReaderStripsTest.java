@@ -17,11 +17,24 @@
 package org.apache.commons.imaging.formats.tiff.datareaders;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.apache.commons.imaging.common.AllocationRequestException;
 import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.junit.jupiter.api.Test;
 
 class DataReaderStripsTest {
+    @Test
+    void testCheckStripSizeRejectsLongThatWouldOverflowInt() {
+        assertThrows(AllocationRequestException.class, () -> DataReaderStrips.checkStripSize(28_994_135_625L));
+    }
+
+    @Test
+    void testCheckStripSizeReturnsIntForValidRequest() {
+        assertEquals(4096, DataReaderStrips.checkStripSize(4096));
+    }
+
     @Test
     void testApplyPredictor() {
         final int[] bitsPerPixel = { 1, 2, 3 };
