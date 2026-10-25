@@ -31,10 +31,21 @@ final class ScanExpediterSimple extends AbstractScanExpediter {
         super(width, height, is, bi, pngColorType, bitDepth, bitsPerPixel, pngChunkPLTE, gammaCorrection, abstractTransparencyFilter);
     }
 
+    static int getPixelBytesPerScanline(final int bitsPerPixel, final int width) throws ImagingException {
+        if (bitsPerPixel <= 0 || width <= 0) {
+            throw new ImagingException("PNG: invalid scanline dimensions");
+        }
+        final long bitsPerScanLine = (long) bitsPerPixel * width;
+        final long pixelBytesPerScanLine = (bitsPerScanLine + 7) / 8;
+        if (pixelBytesPerScanLine > Integer.MAX_VALUE) {
+            throw new ImagingException("PNG: scanline is too large");
+        }
+        return (int) pixelBytesPerScanLine;
+    }
+
     @Override
     public void drive() throws ImagingException, IOException {
-        final int bitsPerScanLine = bitsPerPixel * width;
-        final int pixelBytesPerScanLine = getBitsToBytesRoundingUp(bitsPerScanLine);
+        final int pixelBytesPerScanLine = getPixelBytesPerScanline(bitsPerPixel, width);
         byte[] prev = null;
 
         for (int y = 0; y < height; y++) {
