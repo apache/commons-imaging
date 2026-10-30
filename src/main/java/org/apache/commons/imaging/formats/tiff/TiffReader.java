@@ -382,7 +382,8 @@ public class TiffReader extends BinaryFileParser {
                     offset = ByteConversions.toLong(offsetBytes, getByteOrder());
                 }
 
-                if (tag == 0) {
+                if (tag == 0 && dirType != TiffDirectoryConstants.DIRECTORY_TYPE_GPS) {
+                    // Tag zero is GPSVersionID in the GPS directory.
                     // skip invalid fields.
                     // These are seen very rarely, but can have invalid value
                     // lengths,
