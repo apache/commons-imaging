@@ -23,7 +23,9 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.imaging.ImageInfo;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
+import org.apache.commons.imaging.common.AllocationRequestException;
 import org.apache.commons.imaging.test.TestResources;
 import org.junit.jupiter.api.Test;
 
@@ -43,6 +45,20 @@ class BmpImageParserTest {
         final File bmp = TestResources.resourceToFile("/images/bmp/IMAGING-279/negative_array_size_exception.bmp");
         final BmpImageParser parser = new BmpImageParser();
         assertThrows(IllegalArgumentException.class, () -> parser.getImageInfo(bmp, new BmpImagingParameters()));
+    }
+
+    /**
+     * For https://issues.apache.org/jira/browse/IMAGING-385.
+     * <p>
+     * The header declares a 2359300 x 65538 RLE4 bitmap. The pixel count does not fit an {@code int}; it used to wrap to 4,980,744, slip past the allocation
+     * limit and then fail with a JDK {@link IllegalArgumentException} when the {@code BufferedImage} was created. It is now rejected with an
+     * {@link AllocationRequestException}.
+     * </p>
+     */
+    @Test
+    void testDimensionsOverflowingInt() {
+        final File bmp = TestResources.resourceToFile("/images/bmp/IMAGING-385/crash-e506da5ae78242d1f3308a35980e95123dde479c.bmp");
+        assertThrows(AllocationRequestException.class, () -> Imaging.getBufferedImage(bmp));
     }
 
     /**

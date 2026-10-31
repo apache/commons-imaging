@@ -223,6 +223,18 @@ public final class Allocator {
     }
 
     /**
+     * Allocates an int array of the requested size.
+     *
+     * @param request The requested size is cast down to an int.
+     * @return A new int array.
+     * @throws AllocationRequestException Thrown when the request does not fit an int or exceeds the limit.
+     * @see #check(long, int)
+     */
+    public static int[] intArray(final long request) {
+        return new int[check(request, Integer.BYTES)];
+    }
+
+    /**
      * Allocates a long array of the requested size.
      *
      * @param request The requested size.

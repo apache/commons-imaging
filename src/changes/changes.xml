@@ -51,6 +51,7 @@ The <action> type attribute can be add,update,fix,remove.
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix Apache RAT plugin console warnings.</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix Javadoc warnings.</action>
       <action type="fix" dev="ggregory" due-to="alhuda, Gary Gregory">Fix int overflow in PCX image buffer sizing, now throws AllocationRequestException (#552).</action>
+      <action issue="IMAGING-385" type="fix" dev="ggregory" due-to="Tim Scheckenbach, Sharang Gupta">Fix int overflow in ImageBuilder pixel array sizing, now throws AllocationRequestException.</action>
       <action type="fix" dev="ggregory" due-to="alhuda, Gary Gregory">Fix int overflow in Allocator.array/arrayList size checks (#551).</action>
       <action type="fix" dev="ggregory" due-to="Gary Gregory">Add messages when throwing NullPointerException.</action>
       <!-- ADD -->
