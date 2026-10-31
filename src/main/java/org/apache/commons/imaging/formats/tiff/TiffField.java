@@ -248,12 +248,7 @@ public class TiffField {
      * @throws ImagingException if the value is missing or cannot be converted.
      */
     public double getDoubleValue() throws ImagingException {
-        final Object o = getValue();
-        if (o == null) {
-            throw new ImagingException("Missing value: " + getTagInfo().getDescription());
-        }
-
-        return ((Number) o).doubleValue();
+        return getNumberValue().doubleValue();
     }
 
     /**
@@ -324,12 +319,7 @@ public class TiffField {
      * @throws ImagingException if the value is missing or cannot be converted.
      */
     public int getIntValue() throws ImagingException {
-        final Object o = getValue();
-        if (o == null) {
-            throw new ImagingException("Missing value: " + getTagInfo().getDescription());
-        }
-
-        return ((Number) o).intValue();
+        return getNumberValue().intValue();
     }
 
     /**
@@ -419,11 +409,25 @@ public class TiffField {
      * @throws ImagingException if the field instance is of an incompatible type or does not contain a valid data element.
      */
     public long getLongValue() throws ImagingException {
+        return getNumberValue().longValue();
+    }
+
+    /**
+     * Gets the field value as a single number.
+     *
+     * @return The number value.
+     * @throws ImagingException if the value is missing or is not a single number, for example the {@code byte[]} that a BYTE field holds when its count is
+     *                          not 1.
+     */
+    private Number getNumberValue() throws ImagingException {
         final Object o = getValue();
         if (o == null) {
             throw new ImagingException("Missing value: " + getTagInfo().getDescription());
         }
-        return ((Number) o).longValue();
+        if (!(o instanceof Number)) {
+            throw new ImagingException("Expected a single number for " + getTagInfo().getDescription() + " but the value is a " + o.getClass().getSimpleName());
+        }
+        return (Number) o;
     }
 
     /**
