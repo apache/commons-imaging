@@ -92,7 +92,7 @@ class TiffRasterDataTest {
     @Test
     void testGetDataType() {
         final TiffRasterDataType dataType = raster.getDataType();
-        assertTrue(dataType == TiffRasterDataType.FLOAT, "Unexpected data type " + dataType.name());
+        assertEquals(TiffRasterDataType.FLOAT, dataType, "Unexpected data type");
     }
 
     /**
@@ -100,7 +100,7 @@ class TiffRasterDataTest {
      */
     @Test
     void testGetHeight() {
-        assertEquals(width, raster.getWidth(), "Improper height stored");
+        assertEquals(height, raster.getHeight(), "Improper height stored");
     }
 
     /**
