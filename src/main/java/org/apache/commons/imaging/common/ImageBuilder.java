@@ -82,10 +82,11 @@ public final class ImageBuilder {
      *                             the ImageBuilder or resulting BufferedImage.
      * @param isAlphaPremultiplied indicates whether alpha values are pre-multiplied; this setting is relevant only if alpha is true.
      * @throws RasterFormatException if {@code width} or {@code height} are equal or less than zero
+     * @throws AllocationRequestException if the number of pixels does not fit an {@code int} or exceeds the allocation limit
      */
     public ImageBuilder(final int width, final int height, final boolean hasAlpha, final boolean isAlphaPremultiplied) {
         checkDimensions(width, height);
-        data = Allocator.intArray(width * height);
+        data = Allocator.intArray((long) width * height);
         this.width = width;
         this.height = height;
         this.hasAlpha = hasAlpha;
