@@ -17,11 +17,17 @@
 package org.apache.commons.imaging.formats.png;
 
 import java.awt.Dimension;
+import java.awt.Transparency;
+import java.awt.color.CMMException;
 import java.awt.color.ColorSpace;
 import java.awt.color.ICC_ColorSpace;
 import java.awt.color.ICC_Profile;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
+import java.awt.image.ComponentColorModel;
+import java.awt.image.DataBuffer;
+import java.awt.image.ImagingOpException;
+import java.awt.image.WritableRaster;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -303,14 +309,22 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
             abstractScanExpediter.drive();
 
             if (iccProfile != null) {
-                final boolean isSrgb = new IccProfileParser().isSrgb(iccProfile);
-                if (!isSrgb) {
-                    final ICC_ColorSpace cs = new ICC_ColorSpace(iccProfile);
+                try {
+                    final boolean isSrgb = new IccProfileParser().isSrgb(iccProfile);
+                    if (!isSrgb) {
+                        final ICC_ColorSpace cs = new ICC_ColorSpace(iccProfile);
 
-                    final ColorModel srgbCM = ColorModel.getRGBdefault();
-                    final ColorSpace csSrgb = srgbCM.getColorSpace();
+                        if (pngColorType.isGreyscale() && hasAlpha && cs.getType() == ColorSpace.TYPE_GRAY) {
+                            result = createGrayAlphaImage(result, cs);
+                        }
 
-                    result = new ColorTools().convertBetweenColorSpaces(result, cs, csSrgb);
+                        final ColorModel srgbCM = ColorModel.getRGBdefault();
+                        final ColorSpace csSrgb = srgbCM.getColorSpace();
+
+                        result = new ColorTools().convertBetweenColorSpaces(result, cs, csSrgb);
+                    }
+                } catch (final CMMException | ImagingOpException | IllegalArgumentException exception) {
+                    throw new ImagingException("PNG: could not apply ICC profile", exception);
                 }
             }
 
@@ -318,6 +332,19 @@ public class PngImageParser extends AbstractImageParser<PngImagingParameters> im
 
         }
 
+    }
+
+    private BufferedImage createGrayAlphaImage(final BufferedImage source, final ColorSpace colorSpace) {
+        final ColorModel colorModel = new ComponentColorModel(colorSpace, true, false, Transparency.TRANSLUCENT, DataBuffer.TYPE_BYTE);
+        final WritableRaster raster = colorModel.createCompatibleWritableRaster(source.getWidth(), source.getHeight());
+        for (int y = 0; y < source.getHeight(); y++) {
+            for (int x = 0; x < source.getWidth(); x++) {
+                final int argb = source.getRGB(x, y);
+                raster.setSample(x, y, 0, argb >> 16 & 0xff);
+                raster.setSample(x, y, 1, argb >>> 24);
+            }
+        }
+        return new BufferedImage(colorModel, raster, false, null);
     }
 
     /**
