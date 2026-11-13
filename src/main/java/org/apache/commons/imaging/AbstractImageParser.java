@@ -746,4 +746,24 @@ public abstract class AbstractImageParser<T extends ImagingParameters<T>> extend
     public void writeImage(final BufferedImage src, final OutputStream os, final T params) throws ImagingException, IOException {
         throw new ImagingException("This image format (" + getName() + ") cannot be written.");
     }
+
+    /**
+     * Writes the content of a BufferedImage to the specified output stream in the given format.
+     *
+     * <p>
+     * A parser whose {@link #getAcceptedTypes()} lists more than one format overrides this method so that the format selects the output; the rest write their
+     * only format and ignore the argument.
+     * </p>
+     *
+     * @param src    An image giving the source content for output.
+     * @param os     A valid output stream for storing the formatted image.
+     * @param format The format the caller asked for; one of {@link #getAcceptedTypes()}.
+     * @throws ImagingException In the event that the output format cannot handle the input image.
+     * @throws IOException      In the event of a write error from the output stream.
+     *
+     * @since 1.0.0-alpha7
+     */
+    protected void writeImageForFormat(final BufferedImage src, final OutputStream os, final ImageFormat format) throws ImagingException, IOException {
+        writeImage(src, os, null);
+    }
 }

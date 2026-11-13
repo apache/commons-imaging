@@ -917,7 +917,7 @@ public final class Imaging {
         Objects.requireNonNull(format, "format");
 
         final AbstractImageParser<?> imageParser = ImageParserFactory.getImageParser(format);
-        imageParser.writeImage(src, outputStream, null);
+        imageParser.writeImageForFormat(src, outputStream, format);
     }
 
     /**
