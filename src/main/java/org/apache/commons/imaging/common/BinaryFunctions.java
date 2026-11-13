@@ -426,17 +426,16 @@ public final class BinaryFunctions {
      * @throws IOException Thrown if it fails to read from the given input stream.
      */
     public static boolean searchQuad(final int quad, final InputStream in) throws IOException {
-        final byte[] needle = quadsToByteArray(quad);
-        int b = -1;
-        int position = 0;
+        // Slide a 4-byte window over the stream, so that bytes >= 0x80 and overlapping partial matches are handled.
+        int window = 0;
+        int count = 0;
+        int b;
         while ((b = in.read()) != -1) {
-            if (needle[position] == b) {
-                position++;
-                if (position == needle.length) {
-                    return true;
-                }
-            } else {
-                position = 0;
+            window = window << 8 | b;
+            if (count < 3) {
+                count++;
+            } else if (window == quad) {
+                return true;
             }
         }
         return false;
