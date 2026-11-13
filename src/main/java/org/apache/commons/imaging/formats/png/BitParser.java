@@ -30,23 +30,28 @@ final class BitParser {
     }
 
     public int getSample(final int pixelIndexInScanline, final int sampleIndex) throws ImagingException {
-        final int pixelIndexBits = bitsPerPixel * pixelIndexInScanline;
-        final int sampleIndexBits = pixelIndexBits + sampleIndex * bitDepth;
-        final int sampleIndexBytes = sampleIndexBits >> 3;
+        final long pixelIndexBits = (long) bitsPerPixel * pixelIndexInScanline;
+        final long sampleIndexBits = pixelIndexBits + (long) sampleIndex * bitDepth;
+        final long sampleIndexBytes = sampleIndexBits >> 3;
+
+        if (sampleIndexBytes < 0 || sampleIndexBytes >= bytes.length || bitDepth == 16 && sampleIndexBytes + 1 >= bytes.length) {
+            throw new ImagingException("PNG: sample is outside the scanline");
+        }
+        final int sampleIndexByte = (int) sampleIndexBytes;
 
         if (bitDepth == 8) {
-            return 0xff & bytes[sampleIndexBytes];
+            return 0xff & bytes[sampleIndexByte];
         }
         if (bitDepth < 8) {
-            int b = 0xff & bytes[sampleIndexBytes];
-            final int bitsToShift = 8 - ((pixelIndexBits & 7) + bitDepth);
+            int b = 0xff & bytes[sampleIndexByte];
+            final int bitsToShift = 8 - ((int) (pixelIndexBits & 7) + bitDepth);
             b >>= bitsToShift;
 
             final int bitmask = (1 << bitDepth) - 1;
             return b & bitmask;
         }
         if (bitDepth == 16) {
-            return (0xff & bytes[sampleIndexBytes]) << 8 | 0xff & bytes[sampleIndexBytes + 1];
+            return (0xff & bytes[sampleIndexByte]) << 8 | 0xff & bytes[sampleIndexByte + 1];
         }
 
         throw new ImagingException("PNG: bad BitDepth: " + bitDepth);
