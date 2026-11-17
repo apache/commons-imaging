@@ -12,6 +12,32 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+##
+
+# See https://github.com/apache/infrastructure-asfyaml?tab=readme-ov-file
+project:
+  metadata:
+    committee: commons
+    key: commons-imaging
+    name: Apache Commons Imaging
+    description: >-
+      The Apache Commons Imaging library reads and writes a variety of image formats, including fast parsing of image info (size, color space, ICC profile, etc.) and metadata.
+      Previously known as Apache Commons Sanselan.
+    short_description: "Apache Commons Imaging (previously Sanselan) is a pure-Java image Library"
+    homepage: https://commons.apache.org/imaging/
+    download_page: https://commons.apache.org/imaging/download_imaging.cgi
+    bug_database: https://issues.apache.org/jira/browse/IMAGING
+    mailing_lists: https://commons.apache.org/mail-lists.html
+    repositories:
+      - https://gitbox.apache.org/repos/asf/commons-imaging
+    categories:
+      - library
+    programming_languages:
+      - Java
+    security_contact: security@commons.apache.org
+    threat_model_link: https://commons.apache.org/imaging/security.html
+    threat_model_src_link: https://raw.githubusercontent.com/apache/commons-imaging/refs/heads/master/src/site/xdoc/security.xml
+
 
 github:
   description: "Apache Commons Imaging (previously Sanselan) is a pure-Java image library"
