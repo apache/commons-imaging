@@ -65,6 +65,35 @@ public class BinaryFunctionsTest {
     }
 
     @Test
+    public void testSearchQuad() throws IOException {
+        final int quad = BinaryFunctions.charsToQuad('8', 'B', 'I', 'M');
+        assertTrue(BinaryFunctions.searchQuad(quad, new ByteArrayInputStream(new byte[] { 0, '8', 'B', 'I', 'M', 1 })));
+        assertFalse(BinaryFunctions.searchQuad(quad, new ByteArrayInputStream(new byte[] { '8', 'B', 'I', 'X' })));
+        assertFalse(BinaryFunctions.searchQuad(quad, new ByteArrayInputStream(new byte[] { '8', 'B', 'I' })));
+    }
+
+    @Test
+    public void testSearchQuadAfterPartialMatch() throws IOException {
+        // The byte that breaks a partial match may itself start the quad.
+        final int quad = BinaryFunctions.charsToQuad('8', 'B', 'I', 'M');
+        final InputStream is = new ByteArrayInputStream(new byte[] { '8', '8', 'B', 'I', 'M', 1 });
+        assertTrue(BinaryFunctions.searchQuad(quad, is));
+        // The stream is left positioned right after the quad.
+        assertEquals(1, is.read());
+        // Overlapping prefix: "AAAB" inside "AAAAB".
+        final int aaab = BinaryFunctions.charsToQuad('A', 'A', 'A', 'B');
+        assertTrue(BinaryFunctions.searchQuad(aaab, new ByteArrayInputStream(new byte[] { 'A', 'A', 'A', 'A', 'B' })));
+    }
+
+    @Test
+    public void testSearchQuadWithHighBitBytes() throws IOException {
+        // Bytes >= 0x80 must match, for example a JPEG SOI + APP0 marker.
+        final InputStream is = new ByteArrayInputStream(new byte[] { 0, (byte) 0xFF, (byte) 0xD8, (byte) 0xFF, (byte) 0xE0, 7 });
+        assertTrue(BinaryFunctions.searchQuad(0xFFD8FFE0, is));
+        assertEquals(7, is.read());
+    }
+
+    @Test
     public void testStartsWith() {
         final byte[] haystack = { 1, 2, 3, 4, 5 };
         final byte[] needle = { 1, 2, 3 };
