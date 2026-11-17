@@ -343,4 +343,13 @@ public class PnmImageParser extends AbstractImageParser<PnmImagingParameters> {
 
         writer.writeImage(src, os, params);
     }
+
+    @Override
+    protected void writeImageForFormat(final BufferedImage src, final OutputStream os, final ImageFormat format) throws ImagingException, IOException {
+        final PnmImagingParameters params = new PnmImagingParameters();
+        if (format instanceof ImageFormats) {
+            params.setSubtype((ImageFormats) format);
+        }
+        writeImage(src, os, params);
+    }
 }
