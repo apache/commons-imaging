@@ -18,6 +18,7 @@ package org.apache.commons.imaging.common;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -88,6 +89,15 @@ class ImageBuilderTest {
     /**
      * Test whether color model is properly applied to buffered images
      */
+    /**
+     * 2359300 * 65538 does not fit an int and wraps to 4,980,744, which used to be accepted and allocate a 19 MB array for an image that has 154 billion
+     * pixels. For https://issues.apache.org/jira/browse/IMAGING-385.
+     */
+    @Test
+    void testConstructorDimensionsOverflowingInt() {
+        assertThrows(AllocationRequestException.class, () -> new ImageBuilder(2359300, 65538, false));
+    }
+
     @Test
     void testImageColorModel() {
         ImageBuilder imageBuilder;
