@@ -443,7 +443,8 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             final int[] preds = Allocator.intArray(sofnSegment.numberOfComponents);
             final ColorModel colorModel;
             final WritableRaster raster;
-            Allocator.check(Integer.BYTES * sofnSegment.width * sofnSegment.height);
+            // Compute the request in long so a large width times height cannot overflow int and slip past the guard.
+            Allocator.check((long) sofnSegment.width * sofnSegment.height, Integer.BYTES);
             switch (sofnSegment.numberOfComponents) {
             case 4:
                 // Special handling for the application-RGB case: TIFF files with
