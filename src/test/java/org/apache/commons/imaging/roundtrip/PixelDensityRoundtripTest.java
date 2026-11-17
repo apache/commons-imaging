@@ -31,7 +31,7 @@ import org.apache.commons.imaging.formats.tiff.TiffImagingParameters;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class PixelDensityRoundtrip extends RoundtripBase {
+public class PixelDensityRoundtripTest extends RoundtripBase {
 
     public static Stream<FormatInfo> testPixelDensityRoundtrip() {
         return Stream.of(FormatInfo.PRESERVING_RESOLUTION_FORMATS);

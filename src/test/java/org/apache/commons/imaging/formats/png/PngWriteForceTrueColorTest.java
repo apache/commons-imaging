@@ -27,7 +27,7 @@ import java.util.List;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 
-public class PngWriteForceTrueColorText extends AbstractPngTest {
+public class PngWriteForceTrueColorTest extends AbstractPngTest {
 
     @Test
     void test() throws Exception {
