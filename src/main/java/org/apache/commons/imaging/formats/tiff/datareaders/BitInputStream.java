@@ -16,6 +16,7 @@
  */
 package org.apache.commons.imaging.formats.tiff.datareaders;
 
+import java.io.EOFException;
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,6 +47,20 @@ final class BitInputStream extends FilterInputStream {
         return bytesRead;
     }
 
+    /**
+     * Reads the next byte of the underlying stream for a bit field.
+     *
+     * @return the byte, from 0 to 255.
+     * @throws IOException if an I/O error occurs, or {@link EOFException} at the end of the stream.
+     */
+    private int readByte() throws IOException {
+        final int b = in.read();
+        if (b < 0) {
+            throw new EOFException("BitInputStream: unexpected end of the image data");
+        }
+        return b;
+    }
+
     @Override
     public int read() throws IOException {
         if (cacheBitsRemaining > 0) {
@@ -58,7 +73,7 @@ final class BitInputStream extends FilterInputStream {
         if (count < 8) {
             if (cacheBitsRemaining == 0) {
                 // fill cache
-                cache = in.read();
+                cache = readByte();
                 cacheBitsRemaining = 8;
                 bytesRead++;
             }
@@ -94,7 +109,7 @@ final class BitInputStream extends FilterInputStream {
 
         if (count == 8) {
             bytesRead++;
-            return in.read();
+            return readByte();
         }
 
         /**
@@ -105,13 +120,13 @@ final class BitInputStream extends FilterInputStream {
             switch (count) {
             case 16:
                 bytesRead += 2;
-                return in.read() << 8 | in.read() << 0;
+                return readByte() << 8 | readByte() << 0;
             case 24:
                 bytesRead += 3;
-                return in.read() << 16 | in.read() << 8 | in.read() << 0;
+                return readByte() << 16 | readByte() << 8 | readByte() << 0;
             case 32:
                 bytesRead += 4;
-                return in.read() << 24 | in.read() << 16 | in.read() << 8 | in.read() << 0;
+                return readByte() << 24 | readByte() << 16 | readByte() << 8 | readByte() << 0;
             default:
                 break;
             }
@@ -119,13 +134,13 @@ final class BitInputStream extends FilterInputStream {
             switch (count) {
             case 16:
                 bytesRead += 2;
-                return in.read() << 0 | in.read() << 8;
+                return readByte() << 0 | readByte() << 8;
             case 24:
                 bytesRead += 3;
-                return in.read() << 0 | in.read() << 8 | in.read() << 16;
+                return readByte() << 0 | readByte() << 8 | readByte() << 16;
             case 32:
                 bytesRead += 4;
-                return in.read() << 0 | in.read() << 8 | in.read() << 16 | in.read() << 24;
+                return readByte() << 0 | readByte() << 8 | readByte() << 16 | readByte() << 24;
             default:
                 break;
             }
