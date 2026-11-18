@@ -89,11 +89,12 @@ final class PbmFileInfo extends AbstractFileInfo {
     @Override
     public int getRgb(final WhiteSpaceReader wsr) throws IOException {
         final int bit = Integer.parseInt(wsr.readtoWhiteSpace());
+        // as in the raw format, 1 is black and 0 is white
         if (bit == 0) {
-            return 0xff000000;
+            return 0xffffffff;
         }
         if (bit == 1) {
-            return 0xffffffff;
+            return 0xff000000;
         }
         throw new ImagingException("PBM: bad bit: " + bit);
     }
