@@ -302,11 +302,11 @@ public class XpmImageParser extends AbstractImageParser<XpmImagingParameters> {
     private boolean parseNextString(final BasicCParser cParser, final StringBuilder stringBuilder) throws IOException, ImagingException {
         stringBuilder.setLength(0);
         String token = cParser.nextToken();
-        if (token.charAt(0) != '"') {
+        if (token == null || token.charAt(0) != '"') {
             throw new ImagingException("Parsing XPM file failed, no string found where expected");
         }
         BasicCParser.unescapeString(stringBuilder, token);
-        for (token = cParser.nextToken(); token.charAt(0) == '"'; token = cParser.nextToken()) {
+        for (token = cParser.nextToken(); token != null && token.charAt(0) == '"'; token = cParser.nextToken()) {
             BasicCParser.unescapeString(stringBuilder, token);
         }
         if (",".equals(token)) {

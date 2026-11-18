@@ -145,7 +145,11 @@ public class WbmpImageParser extends AbstractImageParser<WbmpImagingParameters> 
 
     private BufferedImage readImage(final WbmpHeader wbmpHeader, final InputStream is) throws IOException {
         final int rowLength = (wbmpHeader.width + 7) / 8;
-        final byte[] image = readBytes("Pixels", is, rowLength * wbmpHeader.height, "Error reading image pixels");
+        final long imageLength = (long) rowLength * wbmpHeader.height;
+        if (imageLength > Integer.MAX_VALUE) {
+            throw new ImagingException("WBMP image too large: " + wbmpHeader.width + "x" + wbmpHeader.height);
+        }
+        final byte[] image = readBytes("Pixels", is, (int) imageLength, "Error reading image pixels");
         final DataBufferByte dataBuffer = new DataBufferByte(image, image.length);
         final WritableRaster raster = Raster.createPackedRaster(dataBuffer, wbmpHeader.width, wbmpHeader.height, 1, null);
         final int[] palette = { 0x000000, 0xffffff };

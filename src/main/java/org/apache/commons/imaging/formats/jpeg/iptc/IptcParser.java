@@ -261,6 +261,14 @@ public class IptcParser extends BinaryFileParser {
             // throw new ImageReadException(
             // "Unexpected record prefix in IPTC data.");
 
+            if (index + 3 > bytes.length) {
+                // record type and 2-byte size do not fit
+                if (LOGGER.isLoggable(Level.FINE)) {
+                    LOGGER.fine("Truncated record header in IPTC data.");
+                }
+                return elements;
+            }
+
             final int recordType = 0xff & bytes[index];
             Debug.debug("recordType: " + recordType + " (0x" + Integer.toHexString(recordType) + ")");
             index++;
