@@ -62,6 +62,23 @@ public class PaletteFactoryTest {
         assertEquals(0, factory.countTrasparentColors(rgbs0));
     }
 
+    /**
+     * Tests transparent colors with an alpha of 0x80 or more, whose ARGB value is negative.
+     */
+    @Test
+    void testCountTransparentColorsHighAlpha() {
+        final PaletteFactory factory = new PaletteFactory();
+        assertEquals(1, factory.countTrasparentColors(new int[] { 0x80FFFFFF, 0x80FFFFFF }));
+        assertEquals(2, factory.countTrasparentColors(new int[] { 0x80FFFFFF, 0x80FFFF00 }));
+        assertEquals(2, factory.countTrasparentColors(new int[] { 0xFEFFFFFF, 0x00FFFFFF }));
+        final BufferedImage image = new BufferedImage(2, 1, BufferedImage.TYPE_INT_ARGB);
+        image.setRGB(0, 0, 0x80FFFFFF);
+        image.setRGB(1, 0, 0x80FFFFFF);
+        assertEquals(1, factory.countTransparentColors(image));
+        image.setRGB(1, 0, 0x80FFFF00);
+        assertEquals(2, factory.countTransparentColors(image));
+    }
+
     @Test
     public void testHasTransparency() {
         final PaletteFactory factory = new PaletteFactory();
