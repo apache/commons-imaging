@@ -131,4 +131,18 @@ public class ColorSpaceSubsetTest {
         // rgb = (96 << 16) | (96 << 8) | 96
         assertEquals(0x606060, subset.rgb & 0xffffff);
     }
+
+    /**
+     * Tests the average color of a subset with more pixels than an int product of count and component value can hold (9,000,000 near-white pixels).
+     */
+    @Test
+    void testSetAverageRgbLargeCount() {
+        final int precision = 4;
+        final int[] table = new int[1 << 3 * precision];
+        final int count = 9_000_000;
+        table[15 << 2 * precision | 15 << precision | 15] = count;
+        final ColorSpaceSubset subset = new ColorSpaceSubset(count, precision, new int[] { 15, 15, 15 }, new int[] { 15, 15, 15 });
+        subset.setAverageRgb(table);
+        assertEquals(0xf0f0f0, subset.rgb);
+    }
 }
