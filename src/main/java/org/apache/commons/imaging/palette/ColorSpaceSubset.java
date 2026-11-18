@@ -143,9 +143,9 @@ final class ColorSpaceSubset {
                     // note: order reversed
                     final int idx = blue << 2 * precision | green << 1 * precision | red << 0 * precision;
                     final int count = table[idx];
-                    redsum += count * (red << 8 - precision);
-                    greensum += count * (green << 8 - precision);
-                    bluesum += count * (blue << 8 - precision);
+                    redsum += (long) count * (red << 8 - precision);
+                    greensum += (long) count * (green << 8 - precision);
+                    bluesum += (long) count * (blue << 8 - precision);
                 }
             }
         }
