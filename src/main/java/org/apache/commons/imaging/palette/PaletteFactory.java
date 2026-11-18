@@ -73,14 +73,17 @@ public class PaletteFactory {
         final int width = src.getWidth();
         final int height = src.getHeight();
 
-        int first = -1;
+        // a color with an alpha of 0x80 or more is negative, so it cannot also mark "none yet"
+        boolean found = false;
+        int first = 0;
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 final int rgb = src.getRGB(x, y);
                 final int alpha = 0xff & rgb >> 24;
                 if (alpha < 0xff) {
-                    if (first < 0) {
+                    if (!found) {
+                        found = true;
                         first = rgb;
                     } else if (rgb != first) {
                         return 2; // more than one transparent color;
@@ -89,10 +92,7 @@ public class PaletteFactory {
             }
         }
 
-        if (first < 0) {
-            return 0;
-        }
-        return 1;
+        return found ? 1 : 0;
     }
 
     /**
@@ -102,12 +102,14 @@ public class PaletteFactory {
      * @return 0 if no transparent colors, 1 if one transparent color, 2 if more than one.
      */
     public int countTrasparentColors(final int[] rgbs) {
-        int first = -1;
+        boolean found = false;
+        int first = 0;
 
         for (final int rgb : rgbs) {
             final int alpha = 0xff & rgb >> 24;
             if (alpha < 0xff) {
-                if (first < 0) {
+                if (!found) {
+                    found = true;
                     first = rgb;
                 } else if (rgb != first) {
                     return 2; // more than one transparent color;
@@ -115,10 +117,7 @@ public class PaletteFactory {
             }
         }
 
-        if (first < 0) {
-            return 0;
-        }
-        return 1;
+        return found ? 1 : 0;
     }
 
     private void divide(final List<ColorSpaceSubset> v, final int desiredCount, final int[] table, final int precision) {
