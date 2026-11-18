@@ -39,6 +39,14 @@ final class RgbeInfo implements Closeable {
     private static final Pattern RESOLUTION_STRING = Pattern.compile("-Y (\\d+) \\+X (\\d+)");
     private static final byte[] TWO_TWO = { 0x2, 0x2 };
 
+    private static int readByte(final InputStream in) throws IOException {
+        final int b = in.read();
+        if (b < 0) {
+            throw new ImagingException("Error decompressing RGBE file: unexpected end of the scan line data");
+        }
+        return b;
+    }
+
     private static void decompress(final InputStream in, final byte[] out) throws IOException, ImagingException {
         int position = 0;
         final int total = out.length;
@@ -47,14 +55,18 @@ final class RgbeInfo implements Closeable {
             if (n < 0) {
                 throw new ImagingException("Error decompressing RGBE file");
             }
+            final int count = n > 128 ? n & 0x7f : n;
+            if (count > total - position) {
+                throw new ImagingException("Error decompressing RGBE file: run of " + count + " exceeds the scan line");
+            }
             if (n > 128) {
-                final int value = in.read();
-                for (int i = 0; i < (n & 0x7f); i++) {
+                final int value = readByte(in);
+                for (int i = 0; i < count; i++) {
                     out[position++] = (byte) value;
                 }
             } else {
-                for (int i = 0; i < n; i++) {
-                    out[position++] = (byte) in.read();
+                for (int i = 0; i < count; i++) {
+                    out[position++] = (byte) readByte(in);
                 }
             }
         }
