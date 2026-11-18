@@ -200,4 +200,20 @@ class GifReadTest extends AbstractGifTest {
         final GifImageParser parser = new GifImageParser();
         assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.file(file), new GifImagingParameters()));
     }
+
+    /**
+     * Tests the metadata of a GIF whose image has no Graphic Control Extension (IMAGING-282).
+     */
+    @Test
+    void testMetadataWithoutGraphicControlExtension() throws IOException {
+        // GIF89a, 1x1, two-color global table, one image without a Graphic Control Extension
+        final byte[] bytes = { 'G', 'I', 'F', '8', '9', 'a', 1, 0, 1, 0, (byte) 0x80, 0, 0, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, 0, 0, 0, 0x2C, 0, 0, 0,
+                0, 1, 0, 1, 0, 0, 2, 2, 0x44, 1, 0, 0x3B };
+        final GifImageMetadata metadata = (GifImageMetadata) Imaging.getMetadata(bytes);
+        assertEquals(1, metadata.getItems().size());
+        final GifImageMetadataItem item = metadata.getItems().get(0);
+        assertEquals(0, item.getDelay());
+        assertEquals(DisposalMethod.UNSPECIFIED, item.getDisposalMethod());
+        assertNotNull(Imaging.getBufferedImage(bytes));
+    }
 }
