@@ -26,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.awt.Dimension;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
@@ -108,5 +109,27 @@ public class RgbeParserTest {
     public void testRgbeImagingParameters() {
         final RgbeImagingParameters params = new RgbeImagingParameters();
         assertNotNull(params);
+    }
+
+    private static byte[] hdr(final byte[] scanLine) {
+        final byte[] header = "#?RADIANCE\nFORMAT=32-bit_rle_rgbe\n\n-Y 1 +X 4\n".getBytes(StandardCharsets.US_ASCII);
+        final byte[] bytes = Arrays.copyOf(header, header.length + scanLine.length);
+        System.arraycopy(scanLine, 0, bytes, header.length, scanLine.length);
+        return bytes;
+    }
+
+    /**
+     * Tests that a scan line cut off inside a literal run, or with a run longer than the scan line, is reported.
+     */
+    @Test
+    void testTruncatedAndOverlongRuns() throws IOException {
+        final RgbeImageParser parser = new RgbeImageParser();
+        // 4 pixels, 4 channels, each channel one literal run of 4 bytes
+        final byte[] scanLine = { 2, 2, 0, 4, 4, 1, 2, 3, 4, 4, 1, 2, 3, 4, 4, 1, 2, 3, 4, 4, (byte) 0x81, (byte) 0x81, (byte) 0x81, (byte) 0x81 };
+        assertNotNull(parser.getBufferedImage(ByteSource.array(hdr(scanLine)), new RgbeImagingParameters()));
+        final byte[] truncated = hdr(Arrays.copyOf(scanLine, scanLine.length - 2));
+        assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.array(truncated), new RgbeImagingParameters()));
+        final byte[] overlong = hdr(new byte[] { 2, 2, 0, 4, (byte) (0x80 | 20), 1 });
+        assertThrows(ImagingException.class, () -> parser.getBufferedImage(ByteSource.array(overlong), new RgbeImagingParameters()));
     }
 }
