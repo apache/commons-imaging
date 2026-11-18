@@ -63,14 +63,24 @@ public final class ZlibDeflate {
      * @see Inflater
      */
     public static byte[] decompress(final byte[] bytes, final int expectedSize) throws ImagingException {
+        final Inflater inflater = new Inflater();
         try {
-            final Inflater inflater = new Inflater();
             inflater.setInput(bytes);
             final byte[] result = Allocator.byteArray(expectedSize);
-            inflater.inflate(result);
+            int total = 0;
+            while (total < expectedSize) {
+                final int count = inflater.inflate(result, total, expectedSize - total);
+                if (count == 0) {
+                    // finished early, input exhausted, or a dictionary is needed
+                    throw new ImagingException("Unable to decompress image: expected " + expectedSize + " bytes, got " + total);
+                }
+                total += count;
+            }
             return result;
         } catch (final DataFormatException e) {
             throw new ImagingException("Unable to decompress image", e);
+        } finally {
+            inflater.end();
         }
     }
 
