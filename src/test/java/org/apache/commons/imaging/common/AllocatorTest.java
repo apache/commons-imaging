@@ -17,6 +17,7 @@
 
 package org.apache.commons.imaging.common;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,18 @@ class AllocatorTest {
     @Test
     void testArrayListOverflowIsRejected() {
         assertThrows(AllocationRequestException.class, () -> Allocator.arrayList(536870912));
+    }
+
+    /** 2359300L * 65538 does not fit an int. */
+    @Test
+    void testIntArrayLongRequestOverflowIsRejected() {
+        assertThrows(AllocationRequestException.class, () -> Allocator.intArray(2359300L * 65538));
+    }
+
+    /** A long request that fits an int is allocated as is. */
+    @Test
+    void testIntArrayLongRequest() {
+        assertEquals(3, Allocator.intArray(3L).length);
     }
 
     /** 107374183 * 40 overflows int to 24, slipping past the byte-cost limit. */
