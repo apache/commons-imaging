@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -35,6 +36,18 @@ import org.junit.jupiter.api.Test;
 class PnmImageParserTest {
 
     private static final Charset US_ASCII = StandardCharsets.US_ASCII;
+
+    @Test
+    void testWriteImageHonorsRequestedFormat() throws ImagingException, IOException {
+        final BufferedImage image = new BufferedImage(2, 2, BufferedImage.TYPE_INT_RGB);
+        final ImageFormats[] formats = { ImageFormats.PBM, ImageFormats.PGM, ImageFormats.PPM, ImageFormats.PAM };
+        final String[] magic = { "P4", "P5", "P6", "P7" };
+        for (int i = 0; i < formats.length; i++) {
+            final ByteArrayOutputStream out = new ByteArrayOutputStream();
+            Imaging.writeImage(image, out, formats[i]);
+            assertEquals(magic[i], new String(out.toByteArray(), 0, 2, US_ASCII), formats[i].name());
+        }
+    }
 
     @Test
     void testGetImageInfo_happyCase() throws ImagingException, IOException {
