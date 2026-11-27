@@ -19,10 +19,13 @@ package org.apache.commons.imaging.formats.pnm;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
+import org.apache.commons.imaging.Imaging;
 import org.junit.jupiter.api.Test;
 
 class PbmFileInfoTest {
@@ -43,4 +46,18 @@ class PbmFileInfoTest {
         }
     }
 
+
+    /**
+     * Tests that the plain (P1) and raw (P4) formats decode the same bits to the same colors: 1 is black, 0 is white.
+     */
+    @Test
+    void testPlainAndRawPolarity() throws IOException {
+        final byte[] plain = "P1\n2 1\n0 1\n".getBytes(StandardCharsets.US_ASCII);
+        final byte[] raw = { 'P', '4', '\n', '2', ' ', '1', '\n', 0x40 };
+        for (final byte[] bytes : new byte[][] { plain, raw }) {
+            final BufferedImage image = Imaging.getBufferedImage(bytes);
+            assertEquals(0xffffffff, image.getRGB(0, 0));
+            assertEquals(0xff000000, image.getRGB(1, 0));
+        }
+    }
 }
