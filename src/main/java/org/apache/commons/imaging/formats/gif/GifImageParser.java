@@ -470,8 +470,10 @@ public class GifImageParser extends AbstractImageParser<GifImagingParameters> im
         final List<GifImageData> imageData = findAllImageData(imageContents);
         final List<GifImageMetadataItem> metadataItems = Allocator.arrayList(imageData.size());
         for (final GifImageData id : imageData) {
-            final DisposalMethod disposalMethod = createDisposalMethodFromIntValue(id.gce.dispose);
-            metadataItems.add(new GifImageMetadataItem(id.gce.delay, id.descriptor.imageLeftPosition, id.descriptor.imageTopPosition, disposalMethod));
+            // without a Graphic Control Extension, the image has no delay and no disposal method
+            final int delay = id.gce == null ? 0 : id.gce.delay;
+            final DisposalMethod disposalMethod = id.gce == null ? DisposalMethod.UNSPECIFIED : createDisposalMethodFromIntValue(id.gce.dispose);
+            metadataItems.add(new GifImageMetadataItem(delay, id.descriptor.imageLeftPosition, id.descriptor.imageTopPosition, disposalMethod));
         }
         return new GifImageMetadata(bhi.logicalScreenWidth, bhi.logicalScreenHeight, metadataItems);
     }
