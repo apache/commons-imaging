@@ -42,6 +42,9 @@ public final class PngChunkScal extends PngChunk {
     public PngChunkScal(final int length, final int chunkType, final int crc, final byte[] bytes) throws ImagingException {
         super(length, chunkType, crc, bytes);
 
+        if (bytes.length == 0) {
+            throw new ImagingException("PNG sCAL chunk is empty.");
+        }
         unitSpecifier = bytes[0];
         if (getUnitSpecifier() != 1 && getUnitSpecifier() != 2) {
             throw new ImagingException("PNG sCAL invalid unit specifier: " + getUnitSpecifier());
